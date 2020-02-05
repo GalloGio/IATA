@@ -1,9 +1,9 @@
 @isTest
 private class AMS_OSCAR_Case_Detail_ControllerTest {
-	
+
 	@testSetup static void setup(){
-        //AMS_OSCAR_TestDataFactory.createOSCARtestData();
-        AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
+		//AMS_OSCAR_TestDataFactory.createOSCARtestData();
+		AMS_OSCAR_TestDataFactory.createOSCARtestDataAccHier();
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c limit 1];
 		Case c = [SELECT Id FROM Case WHERE Oscar__c = :oscar.Id];
 
@@ -24,20 +24,21 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			Name ='Combination07',
 			TC_VMFR__c = true,
 			TCA_Sanity_check__c = 'CAD',
-			TCA_Application_withdrawal__c = 'CWD'
-			);
+			TCA_Application_withdrawal__c = 'CWD',
+			Valid_Accreditation_Models__c = 'ALL'
+		);
 
 		insert confs;
 
 	}
-	
+
 	@isTest static void test_OSCARCaseDetail() {
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
 		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
 		pg.getParameters().put('id', c.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
 			AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
@@ -49,18 +50,18 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			System.assert(controller.getExistOscarInspections(), 'No inspections found');
 			System.assert(!controller.getRfPicklistValues().isEmpty());
 
-            Id idCorrRT = controller.corrRT;
-            Boolean bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
-            Boolean bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
-            bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
-            bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
+			Id idCorrRT = controller.corrRT;
+			Boolean bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
+			Boolean bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
+			bIsVATnumberSpecialCase = controller.isVATnumberSpecialCase;
+			bIsBranchAbroadSelected = controller.isBranchAbroadSelected;
 
 		Test.stopTest();
 	}
 
 	@isTest static void test_OSCARCaseDetail2(){
-        Test.startTest();
-        
+		Test.startTest();
+
 		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
 		Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -142,7 +143,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 				BSP__c = settlement.Id
 			);
 			bSPAttributes.add(bSPAttributes2);
-			
+
 			insert bSPAttributes;
 
 			AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
@@ -157,12 +158,12 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			pg.getParameters().put('id', c.Id);
 			Test.setCurrentPage(pg);
 
-			AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();	
-					
+			AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+
 			controller.accreditationObj.Remittance_Frequency__c = controller.getRfPicklistValues()[0].getValue();
 
 			controller.save();
-			
+
 			opCode.Allow_multiple_remittances__c = true;
 			update opcode;
 
@@ -188,159 +189,308 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		Test.stopTest();
 	}
-	
-    @isTest static void test_OSCARCaseDetail3(){
-        
-        AMS_OSCAR__c oscar = [SELECT Id, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '' LIMIT 1];
 
-        Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+	@isTest
+	public static void test_OSCARCaseRemmitancePerState()
+	{
+		Test.startTest();
 
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(
-            Name= 'Testland',
-            Region__c = 'Americas',
-            Iso_code__c = 'TL',
-            ISO_Code_Numeric__c=99,
-            BSP__c = 'Yes',
-            ANG_Enable_NewGen__c = true,
-            OSCAR_enabled__c = true
-        );
+		Case c = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
 
-        insert country;
-        Test.startTest();
-        
-        Account a = new Account(
-            Name='TesteAccount',
-            Location_Class__c = 'P',
-            Location_Type__c = 'HE',
-            Reason_for_creation__c = 'Headquarter is missing',
-            RecordTypeId = aRTId,
-            IATA_ISO_Country__c = country.id
-        );
+		Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-        insert a;   
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name= 'Testland',
+			Region__c = 'Americas',
+			Iso_code__c = 'TL',
+			ISO_Code_Numeric__c=99,
+			BSP__c = 'Yes',
+			ANG_Enable_NewGen__c = true,
+			OSCAR_enabled__c = true
+		);
 
-        AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
+		insert country;
 
-        accredForm.Branch_Office_Country__c = country.Id;
-        accredForm.Location_Class__c = 'P';
-        accredForm.CASS_Number__c = '';
+		Account a = new Account(
+			Name='TesteAccount',
+			Location_Class__c = 'P',
+			Location_Type__c = 'HE',
+			Reason_for_creation__c = 'Headquarter is missing',
+			RecordTypeId = aRTId,
+			IATA_ISO_Country__c = country.id
+		);
 
-        update accredForm;      
+		insert a;
 
-        Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+		AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c][0];
 
-        AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
-            Name = 'test settlement',
-            RecordTypeId = settlementRTId
-        );
+		accredForm.Branch_Office_Country__c = country.Id;
+		accredForm.Location_Class__c = 'P';
+		accredForm.CASS_Number__c = '';
+		accredForm.Remittance_frequency__c = 'W';
 
-        insert settlement;
+		update accredForm;
+
+		AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != ''];
+
+		oscar.Account__c = a.Id;
+		oscar.Process__c = AMS_Utils.NGCHANGES;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
+
+		update oscar;
+
+		Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+			Name = 'test settlement',
+			RecordTypeId = settlementRTId,
+			Remittance_Frequency_per_State__c = true
+		);
+
+		insert settlement;
 
 		country.AMS_Settlement_System__c = settlement.Id;
 		update country;
 
-        AMS_Operation__c opCode = new AMS_Operation__c(
-            Name = 'test operation',
-            Settlement__c = settlement.id,
-            Allow_multiple_remittances__c = true,
-            Country__c = country.id
-        );
+		AMS_Operation__c opCode = new AMS_Operation__c(
+			Name = 'test operation',
+			Settlement__c = settlement.id,
+			Allow_multiple_remittances__c = false,
+			Country__c = country.id
+		);
 
-        insert opCode;
+		insert opCode;
 
-        ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
-            Class_Type__c  = 'P',
-            Remittance_Frequency__c = 'V',
-            Operation__c = opCode.Id,
+		List<ANG_BSP_Attributes__c> bSPAttributes = new List<ANG_BSP_Attributes__c>();
+
+		ANG_BSP_Attributes__c bSPAttributes1 = new ANG_BSP_Attributes__c(
+			Class_Type__c  = 'P',
+			Remittance_Frequency__c = 'D',
+			Operation__c = opCode.Id,
+			BSP__c = settlement.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_BSP_Attributes__c', 'Remittance_Frequency')
+		);
+		bSPAttributes.add(bSPAttributes1);
+
+		ANG_BSP_Attributes__c bSPAttributes2 = new ANG_BSP_Attributes__c(
+			Class_Type__c  = 'P',
+			Remittance_Frequency__c = 'V',
+			Operation__c = opCode.Id,
+			BSP__c = settlement.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_BSP_Attributes__c', 'Remittance_Frequency')
+		);
+		bSPAttributes.add(bSPAttributes2);
+
+		insert bSPAttributes;
+
+		AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
+			Account__c = a.id,
+			Operation__c = opCode.Id
+		);
+
+		insert agencyOp;
+
+
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', c.Id);
+		Test.setCurrentPage(pg);
+
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+
+		controller.accreditationObj.Remittance_Frequency__c = controller.getRfPicklistValues()[0].getValue();
+
+		controller.save();
+
+		opCode.Allow_multiple_remittances__c = true;
+		update opcode;
+
+		controller = new AMS_OSCAR_Case_Detail_Controller();
+
+		controller.oscarobj.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
+		controller.oscarobj.Process__c = AMS_Utils.NGCHANGES;
+		controller.oscarobj.ANG_Type_Of_Change__c = 'VMFR';
+
+		System.assert(!controller.getRfPicklistValues().isEmpty());
+
+		System.assertEquals('4 times per month', controller.remittanceFrequencyToShow);
+
+		controller.accreditationObj.Remittance_Frequency__c = 'V';
+
+		System.assert(controller.remittanceFrequencyToShow.contains('Weekly'));
+
+		controller.accreditationObj.Remittance_Frequency__c = 'V;D';
+
+		System.assert(controller.remittanceFrequencyToShow.contains('Daily'));
+		System.assert(controller.isNewAE == false);
+		System.assert(controller.displayErrorMsg == false);
+
+		System.assertEquals(false, controller.isNewMulticountryAE);
+		System.assertEquals(false, controller.isAEAccount);
+		//System.assertEquals(false, controller.isDuplicatedDGR);
+		//System.assertEquals(null, controller.duplicatedDGR_msg);
+		System.assertEquals(1, controller.getItemsForPreferredRHC().size());
+		System.assertEquals(3, controller.getAvailableAccModel().size());
+		System.assertEquals(2, controller.populateRightOptions(new List<String> { 'W', 'D' }).size());
+		System.assertEquals(1, controller.getRfPicklistValues().size());
+		System.assertEquals(false, controller.isOSCARCorrection);
+		System.assertEquals(false, controller.isStandardAgency);
+
+		Test.stopTest();
+	}
+
+	@isTest static void test_OSCARCaseDetail3(){
+
+		AMS_OSCAR__c oscar = [SELECT Id, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '' LIMIT 1];
+
+		Id aRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name= 'Testland',
+			Region__c = 'Americas',
+			Iso_code__c = 'TL',
+			ISO_Code_Numeric__c=99,
+			BSP__c = 'Yes',
+			ANG_Enable_NewGen__c = true,
+			OSCAR_enabled__c = true
+		);
+
+		insert country;
+		Test.startTest();
+
+		Account a = new Account(
+			Name='TesteAccount',
+			Location_Class__c = 'P',
+			Location_Type__c = 'HE',
+			Reason_for_creation__c = 'Headquarter is missing',
+			RecordTypeId = aRTId,
+			IATA_ISO_Country__c = country.id
+		);
+
+		insert a;
+
+		AMS_Pax_Accreditation_Form__c accredForm = [SELECT Id, Branch_Office_Country__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :oscar.AMS_Online_Accreditation__c];
+
+		accredForm.Branch_Office_Country__c = country.Id;
+		accredForm.Location_Class__c = 'P';
+		accredForm.CASS_Number__c = '';
+
+		update accredForm;
+
+		Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+			Name = 'test settlement',
+			RecordTypeId = settlementRTId
+		);
+
+		insert settlement;
+
+		country.AMS_Settlement_System__c = settlement.Id;
+		update country;
+
+		AMS_Operation__c opCode = new AMS_Operation__c(
+			Name = 'test operation',
+			Settlement__c = settlement.id,
+			Allow_multiple_remittances__c = true,
+			Country__c = country.id
+		);
+
+		insert opCode;
+
+		ANG_BSP_Attributes__c bSPAttributes = new ANG_BSP_Attributes__c(
+			Class_Type__c  = 'P',
+			Remittance_Frequency__c = 'V',
+			Operation__c = opCode.Id,
 			BSP__c = settlement.Id
-        );
+		);
 
-        insert bSPAttributes;
+		insert bSPAttributes;
 
-        AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
-            Account__c = a.id,
-            Operation__c = opCode.Id
-        );
+		AMS_Agency_Operations__c agencyOp = new AMS_Agency_Operations__c(
+			Account__c = a.id,
+			Operation__c = opCode.Id
+		);
 
-        insert agencyOp;
+		insert agencyOp;
 
 
-        PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
-        pg.getParameters().put('id', oscar.Id);
-        Test.setCurrentPage(pg);
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', oscar.Id);
+		Test.setCurrentPage(pg);
 
-        AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();   
-                
-        controller.getRfPicklistValuesAMS();
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+
+		controller.getRfPicklistValuesAMS();
 
 		Test.stopTest();
 	}
 
 	@isTest static void chinaConversionHideStagingAreaTest(){
 
-		Case c = [SELECT Id, OSCAR__c 
-			 	FROM Case 
-			 	WHERE Oscar__c IN 
-                  	(SELECT Id
+		Case c = [SELECT Id, OSCAR__c
+			 	FROM Case
+			 	WHERE Oscar__c IN
+						(SELECT Id
 			 		 FROM AMS_OSCAR__c
 			 		 WHERE AMS_Online_Accreditation__c != ''
-			 		) 
+			 		)
 			 LIMIT 1];
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-		
+
 		oscar.id = c.OSCAR__c;
 		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
-		
-        Test.startTest();
-            update oscar;
-            
-            PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
-            pg.getParameters().put('id', c.Id);
-            Test.setCurrentPage(pg);
-            
-            AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
-    
-            System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
-            System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+
+		Test.startTest();
+			update oscar;
+
+			PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+			pg.getParameters().put('id', c.Id);
+			Test.setCurrentPage(pg);
+
+			AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+
+			System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
+			System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
 		Test.stopTest();
 	}
 
 	@isTest static void chinaConversionShowOscarOnGoingWarningTest(){
-	        
-		Case c = 
-			[SELECT 
-				Id, 
-				OSCAR__c, 
-				AccountId 
-			 FROM 
-			 	Case 
-			 WHERE 
-			 	Oscar__c IN 
-			 		(SELECT 
-			 			Id 
-			 		 FROM 
-			 		 	AMS_OSCAR__c 
-			 		 WHERE 
+
+		Case c =
+			[SELECT
+				Id,
+				OSCAR__c,
+				AccountId
+			 FROM
+			 	Case
+			 WHERE
+			 	Oscar__c IN
+			 		(SELECT
+			 			Id
+			 		 FROM
+			 		 	AMS_OSCAR__c
+			 		 WHERE
 			 		 	AMS_Online_Accreditation__c != ''
-			 		) 
+			 		)
 			 LIMIT 1];
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-		
+
 		oscar.id = c.OSCAR__c;
 		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
-		
+
 		update oscar;
 
-		Account account = 
-			[SELECT 
-				Id, 
-				RecordType.DeveloperName 
-			 FROM 
-			 	Account 
-			 WHERE 
-			 	 Id != :c.AccountId 
+		Account account =
+			[SELECT
+				Id,
+				RecordType.DeveloperName
+			 FROM
+			 	Account
+			 WHERE
+			 	 Id != :c.AccountId
 			 AND RecordType.DeveloperName = 'Standard_Account'
 			][0];
 
@@ -349,50 +499,50 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		pendingOscar.Process__c = AMS_Utils.AGENCYCHANGES;
 		insert pendingOscar;
 
-        Test.startTest();
+		Test.startTest();
 
 		Case oscarCase = new Case(
-			Oscar__c = pendingOscar.Id, 
+			Oscar__c = pendingOscar.Id,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
-	        AccountId = account.Id
-	    );
-        insert oscarCase;
-		
-        AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(
-            Hierarchy_Name__c='Test Hierarchy'
-       	);
-        
-        insert hierarchy;
-        
-        AMS_Agencies_relationhip__c agenciesRel = new AMS_Agencies_relationhip__c(
-            Relationship_details__c='Test',
-            Hierarchy__c = hierarchy.id,
-            Child_Account__c = account.id,
-            Parent_Account__c = c.AccountId
-       	);
-        
-        insert agenciesRel;
-        
+			AccountId = account.Id
+		);
+		insert oscarCase;
+
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(
+			Hierarchy_Name__c='Test Hierarchy'
+		 	);
+
+		insert hierarchy;
+
+		AMS_Agencies_relationhip__c agenciesRel = new AMS_Agencies_relationhip__c(
+			Relationship_details__c='Test',
+			Hierarchy__c = hierarchy.id,
+			Child_Account__c = account.id,
+			Parent_Account__c = c.AccountId
+		 	);
+
+		insert agenciesRel;
+
 		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
 		pg.getParameters().put('id', c.Id);
 		Test.setCurrentPage(pg);
-		
+
 		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
-		
+
 		system.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
 
-        ApexPages.Message[] pageMessages = ApexPages.getMessages();
-		
-        system.debug(pageMessages);
-        
+		ApexPages.Message[] pageMessages = ApexPages.getMessages();
+
+		system.debug(pageMessages);
+
 		System.assertNotEquals(0, pageMessages.size());
 
 		Boolean messageFound = false;
 
 		for(ApexPages.Message message : pageMessages) {
-			
+
 			system.debug('MESSAGE DETAIL: ' + message.getDetail());
-			
+
 			if(message.getDetail().contains(Label.ANG_OnGoing_OSCAR_Warning)){
 				messageFound = true;
 			}
@@ -401,8 +551,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		System.assertEquals(messageFound, true, 'The warning message \'' + Label.ANG_OnGoing_OSCAR_Warning + '\' should be shown');
 
-        Test.stopTest();
-        
+		Test.stopTest();
+
 	}
 
 }

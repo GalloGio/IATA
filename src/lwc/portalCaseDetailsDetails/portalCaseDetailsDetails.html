@@ -5,7 +5,7 @@
     </template>
     <template if:false={loading}>
       <!-- Case details accordion MTSL-811 -->
-      <div if:true={showNewDescriptionSection}>
+      <div if:true={showNewDescriptionSection} class="topLightGrayBorder slds-border_top">
         <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleDescriptionSection}>
           <lightning-icon data-deticon class="darkBlueIcon arrowExpanded" icon-name="utility:chevronright"
             size="xx-small"></lightning-icon>
@@ -24,7 +24,7 @@
         </div>
       </div>
       <!-- Documents accordion -->
-      <div class="topLightGrayBorder">
+      <div class="topLightGrayBorder caseDetailsDocuments">
         <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleDocumentsDetailsSection}>
           <lightning-icon data-docicon class="darkBlueIcon" if:false={showDocumentsSection}
             icon-name="utility:chevronright" size="xx-small"></lightning-icon>
@@ -48,7 +48,7 @@
     </template>
     <template if:false={loading}>
       <!-- Additinal details accordion  MTSL-811 -->
-      <div class="topLightGrayBorder">
+      <div class="topLightGrayBorder caseAditionalDetails">
         <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}
           if:true={showNewDescriptionSection}>
           <lightning-icon data-caseicon class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small">

@@ -14,10 +14,10 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 		Map<Id,Account> accsMap = new Map<Id,Account> ([SELECT Id, IATA_Iso_country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :accountIDsIepAux AND IATA_Iso_country__r.ANG_IEP_Model__c IN :models]);
 		Set<String> existingModels = new Set<String>();
 
-		// we need to know which templates 
+		// we need to know which templates
 		for(Account a : accsMap.values()){
 			existingModels.add(a.IATA_ISo_country__r.ANG_IEP_Model__c);
-			if(existingModels.size() == models.size()) break; 
+			if(existingModels.size() == models.size()) break;
 		}
 
 		if(existingModels.contains('Model A'))
@@ -26,9 +26,9 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 			templateIdB = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.ISSPChangeIEPStatusInProgressToOpen);
 
 		Set<String> roles = ANG_ISSP_IEPMailRecipientsUtils.getIEPDefaultRoles();
-        Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
+		Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
 
-        // Send emails
+		// Send emails
 
 		list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
 
@@ -43,19 +43,19 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 				continue;
 			}
 
-	        for(ID userId : portalAdminUserIDs) {
+			for(ID userId : portalAdminUserIDs) {
 
-	        	if(!accsMap.containsKey(auxId)) continue;
-	        	
-	            Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
-	            emailMsg.setTemplateId(accsMap.get(auxId).IATA_Iso_country__r.ANG_IEP_Model__c == 'Model A' ? templateIdA : templateIdB);
-	            emailMsg.setTargetObjectId(userId);
-	            emailMsg.saveAsActivity = false;
-	            emailMsg.setReplyTo(ENV.Reply_Email);
-	            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+				if(!accsMap.containsKey(auxId)) continue;
 
-	            msgList.add(emailMsg);
-	        }
+				Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage();
+				emailMsg.setTemplateId(accsMap.get(auxId).IATA_Iso_country__r.ANG_IEP_Model__c == 'Model A' ? templateIdA : templateIdB);
+				emailMsg.setTargetObjectId(userId);
+				emailMsg.saveAsActivity = false;
+				emailMsg.setReplyTo(ENV.Reply_Email);
+				emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+
+				msgList.add(emailMsg);
+			}
 		}
 
 		if(!msgList.isEmpty()) {
@@ -70,5 +70,5 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 	global class SendMailInProgressToOpenRequest {
 		@InvocableVariable(required=true)
 		global ID accountId;
-	}	
+	}
 }

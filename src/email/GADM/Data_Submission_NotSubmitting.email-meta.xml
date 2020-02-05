@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Data_Submission_NotSubmitting</name>
+    <style>none</style>
+    <subject>GADM submission not received</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+
+Submission file(s) from *actor* have not been received for *monthsNotSubmitting* months. Continued failure to submit data may result in restricted access to the GADM program.
+
+Please provide the data at your earliest convenience or contact GADM Admin (*email*) for assistance.
+
+GADM Team
+gadm@iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

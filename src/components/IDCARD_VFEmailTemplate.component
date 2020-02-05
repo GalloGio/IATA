@@ -71,6 +71,13 @@
                 </apex:outputText> 
             </td>               
         </tr>
+        <tr>
+            <td>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$ObjectType.ID_Card_Application__c.fields.Physical_Card_Fee__c.Label}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
+                    <apex:param value="{!c.Related_ID_Card_Application__r.Physical_Card_Fee__c}" />
+                </apex:outputText> 
+            </td>               
+        </tr>
         <tr style="display: {!IF(isExpedite, 'table-row', 'none')};">
             <td>
                 <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_ExpediteFee}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
@@ -100,6 +107,14 @@
             <td>
                 <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_TrxDate}</b> {!c.Related_ID_Card_Application__r.Payment_Date__c}" />
             </td>
+        </tr>
+
+        <tr>
+            <td>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$ObjectType.ID_Card_Application__c.fields.ID_Card_Fee_Discount__c.Label}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
+                    <apex:param value="{!c.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c}" />
+                </apex:outputText> 
+            </td>               
         </tr>
         
         <!---------------Taxes ----------------------------- -->

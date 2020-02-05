@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Data_Submission_Upcoming</name>
+    <style>none</style>
+    <subject>GADM submission period</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName}, 
+
+Submission period for *actor* starts *periodStart* and ends *periodEnd*. Please upload your file during this period. 
+
+GADM Team
+gadm@iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,7 +1,7 @@
 /**
-           File: AMS_OscarCaseTriggerHelper_Test.cls
-        Subject: Test Class for AMS_OscarCaseTriggerHelper class.
-        History: amtosantos, 2017-04-17, Initial Release.
+					 File: AMS_OscarCaseTriggerHelper_Test.cls
+				Subject: Test Class for AMS_OscarCaseTriggerHelper class.
+				History: amtosantos, 2017-04-17, Initial Release.
 
 
 */
@@ -28,61 +28,61 @@ private class AMS_OscarCaseTriggerHelper_Test {
 
 		Test.startTest();
 
-        country  = new IATA_ISO_Country__c(
-	      Name = 'Portugal',
-	      ISO_Code__c = 'PT',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = 'Americas'
-        );
+				country  = new IATA_ISO_Country__c(
+				Name = 'Portugal',
+				ISO_Code__c = 'PT',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = 'Americas'
+				);
 
 		countryList.add(country);
 
 		countryList.add(
 			new IATA_ISO_Country__c(
-	      Name = 'Portugal2',
-	      ISO_Code__c = 'P2',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = 'Europe'
+				Name = 'Portugal2',
+				ISO_Code__c = 'P2',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = 'Europe'
 			)
 		);
 
 		countryList.add(
 			new IATA_ISO_Country__c(
-	      Name = 'Portugal3',
-	      ISO_Code__c = 'P3',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = 'China'
+				Name = 'Portugal3',
+				ISO_Code__c = 'P3',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = 'China'
 			)
 		);
 
 		countryList.add(
 			new IATA_ISO_Country__c(
-	      Name = 'Portugal4',
-	      ISO_Code__c = 'P4',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = 'Africa'
+				Name = 'Portugal4',
+				ISO_Code__c = 'P4',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = 'Africa'
 			)
 		);
 
 		countryList.add(
 			new IATA_ISO_Country__c(
-	      Name = 'Portugal5',
-	      ISO_Code__c = 'P5',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = 'Asia'
+				Name = 'Portugal5',
+				ISO_Code__c = 'P5',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = 'Asia'
 			)
 		);
 
 		countryList.add(
 			new IATA_ISO_Country__c(
-	      Name = 'Portugal6',
-	      ISO_Code__c = 'P6',
-	      AIMS_Area_Name__c = 'Lisboa',
-		  Region__c = null
+				Name = 'Portugal6',
+				ISO_Code__c = 'P6',
+				AIMS_Area_Name__c = 'Lisboa',
+			Region__c = null
 			)
 		);
 
-        insert countryList;
+				insert countryList;
 
 		countryAttributeList.add(
 			new AMS_Country_Specific_Attribute__c(
@@ -95,97 +95,97 @@ private class AMS_OscarCaseTriggerHelper_Test {
 
 		insert countryAttributeList;
 
-        account = new Account(
-                Name = 'Test Account',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = country.Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
-        );
+				account = new Account(
+								Name = 'Test Account',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = country.Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+				);
 
 		accountList.add(account);
 
 		accountList.add(
 			new Account(
-                Name = 'Test Account 2',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = countryList[1].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+								Name = 'Test Account 2',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = countryList[1].Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
 		accountList.add(
 			new Account(
-                Name = 'Test Account 2',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = countryList[2].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+								Name = 'Test Account 2',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = countryList[2].Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
 		accountList.add(
 			new Account(
-                Name = 'Test Account 2',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = countryList[3].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+								Name = 'Test Account 2',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = countryList[3].Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
 		accountList.add(
 			new Account(
-                Name = 'Test Account 2',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = countryList[4].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+								Name = 'Test Account 2',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = countryList[4].Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
 		accountList.add(
 			new Account(
-                Name = 'Test Account 2',
-                BillingCity = 'Lisboa',
-                Sector__c = 'Travel Agent',
-                Location_Type__c = 'HO',
-                Location_Class__c = 'C',
-                Status__c = 'Approved',
-                Company_Type__c = 'A',
-                IATACode__c = '100',
-                IATA_ISO_Country__c = countryList[5].Id,
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
+								Name = 'Test Account 2',
+								BillingCity = 'Lisboa',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HO',
+								Location_Class__c = 'C',
+								Status__c = 'Approved',
+								Company_Type__c = 'A',
+								IATACode__c = '100',
+								IATA_ISO_Country__c = countryList[5].Id,
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
 		);
 
-        insert accountList;
+				insert accountList;
 
 		oscarList.add(
 			new AMS_Oscar__c(
@@ -277,7 +277,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 		caseList.add(childCase);
 
 		for (Case zcase : caseList) {
-			zcase.OSCAR__c = oscar.Id; 
+			zcase.OSCAR__c = oscar.Id;
 		}
 
 		AMS_OscarCaseTriggerHelper.removeOscarFromChild(caseList);
@@ -301,7 +301,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 		}
 
 		AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(caseList, oldCaseMap);
-		
+
 // mudar o record type
 		oldCaseMap.clear();
 		for (Case zcase : caseList) {
@@ -341,7 +341,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			}
 		}
 		AMS_OscarCaseTriggerHelper.populateOscarFields(caseList);
-		
+
 		for (Case zcase : caseList) {
 			if (zcase.ParentId == null) {
 				zcase.OSCAR__c = oscar.Id;
@@ -349,7 +349,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			}
 		}
 		AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscarList);
-     
+
 		idSet = AMS_OscarCaseTriggerHelper.caseIrregularityCreated;
 
 		List<Case> nonUniqueCaseList = new List<Case>();
@@ -370,7 +370,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 				Reason1__C = 'CLO - Closure'
 			)
 		);
-		
+
 		// Exception is expected
 		try {
 			insert nonUniqueCaseList;

@@ -1,0 +1,47 @@
+<template>
+
+    <div class="background-white aroundLightGrayBorder cardHeight">
+        <!--div class="slds-is-relative bottomLightGrayBorder">
+            <div class="imageContainer">
+                <img class="serviceImageStyles" src={highlight.imgURL} />
+            </div>
+            <span
+                class="slds-m-left_x-large slds-p-horizontal_x-small slds-p-vertical_xx-small subType text-xxsmall text-gray">
+                {highlight.type}
+            </span>
+        </div-->
+
+        <div class="coverBand slds-is-relative bottomLightGrayBorder" style={highlight.imgURL}>
+            <span
+                class="slds-m-left_x-large slds-p-horizontal_x-small slds-p-vertical_xx-small subType text-xxsmall text-gray">
+                {highlight.type}
+            </span>
+        </div>
+
+        <div class="slds-m-horizontal--x-large slds-m-top--large text-xsmall text-bold fadeTitle" style="height: 55px;"
+            title={highlight.title}>
+            <lightning-formatted-rich-text value={highlight.title}>
+            </lightning-formatted-rich-text>
+
+        </div>
+        <div class="slds-m-horizontal--x-large text-xxsmall text-gray textBoxSize fade text-gray"
+            title={highlight.text}>
+            {highlight.text}
+        </div>
+
+        <div class="lightGrayBorder slds-align--absolute-center"></div>
+
+        <div class="slds-grid slds-wrap">
+            <div class="cursorPointer learMoreLink slds-col slds-p-bottom_small slds-p-top_medium slds-size_1-of-1 slds-text-align--center text-xxsmall" onclick={goToLink}>
+                {highlight.informationButton}
+            </div>
+            <div class="slds-col slds-size_1-of-12"></div>
+            <div class="slds-col slds-p-bottom_large slds-p-top_x-small slds-size_10-of-12 slds-text-align--center">
+                <lightning-button label={highlight.actionButton} class="containedButton fullWidth" onclick={goToAction}>
+                </lightning-button>
+            </div>
+            <div class="slds-col slds-size_1-of-12"></div>
+        </div>
+    </div>
+
+</template>

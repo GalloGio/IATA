@@ -1,6 +1,6 @@
 @isTest
 private class ANG_LocalFinancialCriteriaTest {
-	
+
 	private static final Decimal FS_AMOUNT = 4000;
 	private static final String COUNTRY_CURRENCY = 'USD';
 	private static final Decimal COUNTRY_MIN_RHC_AMOUNT = 5000;
@@ -16,7 +16,7 @@ private class ANG_LocalFinancialCriteriaTest {
 	@testSetup
 	static void setup() {
 
-        Test.startTest();
+		Test.startTest();
 
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
@@ -47,369 +47,369 @@ private class ANG_LocalFinancialCriteriaTest {
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',
 			ISO_Code__c = 'WW'
-		);		
+		);
 
 		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
-			Name = 'Singapore', 
+			Name = 'Singapore',
 			ISO_Code__c = 'SG',
 			AMS_Settlement_System__c = bspSG.Id,
 			ANG_Enable_NewGen__c = true
 		);
 
 		IATA_ISO_Country__c countryHK = new IATA_ISO_Country__c (
-			Name = 'Hong Kong SAR, China', 
+			Name = 'Hong Kong SAR, China',
 			ISO_Code__c = 'HK',
 			AMS_Settlement_System__c = bspHK.Id,
 			ANG_Enable_NewGen__c = true
 		);
 
 		IATA_ISO_Country__c countryMO = new IATA_ISO_Country__c (
-			Name = 'Macao SAR, China', 
+			Name = 'Macao SAR, China',
 			ISO_Code__c = 'MO',
 			AMS_Settlement_System__c = bspMO.Id,
 			ANG_Enable_NewGen__c = true
 		);
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c (
-			Name = 'France', 
+			Name = 'France',
 			ISO_Code__c = 'FR',
 			AMS_Settlement_System__c = bspFR.Id,
 			ANG_Enable_NewGen__c = true
 		);
 
-        insert new List<IATA_ISO_Country__c>{countryWW, countrySG, countryHK, countryMO, countryFR};
+		insert new List<IATA_ISO_Country__c>{countryWW, countrySG, countryHK, countryMO, countryFR};
 
 		Id recTypeCSA = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
-        AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c(
-        	CurrencyIsoCode = COUNTRY_CURRENCY,
-        	RecordTypeId = recTypeCSA,
-        	IATA_ISO_Country__c = countryWW.Id,
-        	ANG_Minimum_RHC_Amount__c = COUNTRY_MIN_RHC_AMOUNT
-        );
+		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c(
+			CurrencyIsoCode = COUNTRY_CURRENCY,
+			RecordTypeId = recTypeCSA,
+			IATA_ISO_Country__c = countryWW.Id,
+			ANG_Minimum_RHC_Amount__c = COUNTRY_MIN_RHC_AMOUNT
+		);
 
-        insert csa;
+		insert csa;
 
-        List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
-
-        bspAttrLst.add(
-        	createBSPAttribute(
-        		bspSG.Id, 
-        		ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG, 
-        		CASH_CONDITION_PERCENTAGE, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		TRUE
-        	)
-        );
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspSG.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_A, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'A', 
-        		0, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspSG.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				CASH_CONDITION_PERCENTAGE,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				TRUE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspSG.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_B, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'B', 
-        		0, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspSG.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_A,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'A',
+				0,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspSG.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_C, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'C', 
-        		0, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspSG.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_B,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'B',
+				0,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG, 
-        		CASH_CONDITION_PERCENTAGE, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		TRUE
-        	)
-        );
+			createBSPAttribute(
+				bspSG.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_C,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'C',
+				0,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_A1, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'A', 
-        		0, 
-        		174, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				CASH_CONDITION_PERCENTAGE,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				TRUE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_A2, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'A', 
-        		175, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_A1,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'A',
+				0,
+				174,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_B1, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'B', 
-        		0, 
-        		84, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_A2,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'A',
+				175,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_B2, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'B', 
-        		85, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_B1,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'B',
+				0,
+				84,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspMO.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_C, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'C', 
-        		0, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_B2,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'B',
+				85,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG, 
-        		CASH_CONDITION_PERCENTAGE, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		TRUE
-        	)
-        );
+			createBSPAttribute(
+				bspMO.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_C,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'C',
+				0,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_A1, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'A', 
-        		0, 
-        		174, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				CASH_CONDITION_PERCENTAGE,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				TRUE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_A2, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'A', 
-        		175, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_A1,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'A',
+				0,
+				174,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_B1, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'B', 
-        		0, 
-        		84, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_A2,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'A',
+				175,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_B2, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'B', 
-        		85, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_B1,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'B',
+				0,
+				84,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspHK.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		FIXED_PERCENTAGE_RISK_C, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC, 
-        		'C', 
-        		0, 
-        		999999999, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_B2,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'B',
+				85,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspFR.Id, 
-        		ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG, 
-        		CASH_CONDITION_PERCENTAGE, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		NULL, 
-        		TRUE
-        	)
-        );
+			createBSPAttribute(
+				bspHK.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				FIXED_PERCENTAGE_RISK_C,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FIXED_PERC,
+				'C',
+				0,
+				999999999,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspFR.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		NULL, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
-        		'A', 
-        		NULL, 
-        		NULL, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspFR.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				CASH_CONDITION_PERCENTAGE,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				TRUE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspFR.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		NULL, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
-        		'B', 
-        		NULL, 
-        		NULL, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspFR.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				NULL,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
+				'A',
+				NULL,
+				NULL,
+				FALSE
+			)
+		);
 
 		bspAttrLst.add(
-        	createBSPAttribute(
-        		bspFR.Id, 
-        		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		NULL, 
-        		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
-        		'C', 
-        		NULL, 
-        		NULL, 
-        		FALSE
-        	)
-        );
+			createBSPAttribute(
+				bspFR.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				NULL,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
+				'B',
+				NULL,
+				NULL,
+				FALSE
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				bspFR.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				NULL,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
+				'C',
+				NULL,
+				NULL,
+				FALSE
+			)
+		);
 
 		insert bspAttrLst;
 
-        Account agentSG = new Account(
-        	Name = 'Agent SG',
-        	IATACode__c ='999999999',
-        	Status__c = AMS_Utils.ACC_S9_APPROVED,
-        	Location_Type__c = AMS_Utils.HE,
-        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-        	IATA_ISO_Country__c = countrySG.Id,
-        	Location_Class__c = 'P',
-        	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A',
-            ANG_Accreditation_Model__c = 'Cash'
-        );
+		Account agentSG = new Account(
+			Name = 'Agent SG',
+			IATACode__c ='999999999',
+			Status__c = AMS_Utils.ACC_S9_APPROVED,
+			Location_Type__c = AMS_Utils.HE,
+			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = countrySG.Id,
+			Location_Class__c = 'P',
+			Remittance_frequency__c = 'M',
+			ANG_HE_RiskStatus__c = 'A',
+			ANG_Accreditation_Model__c = 'Cash'
+		);
 
 		Account agentHK = new Account(
-        	Name = 'Agent HK',
-        	IATACode__c ='999999998',
-        	Status__c = AMS_Utils.ACC_S9_APPROVED,
-        	Location_Type__c = AMS_Utils.HE,
-        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-        	IATA_ISO_Country__c = countryHK.Id,
-        	Location_Class__c = 'P',
-        	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A',
-            ANG_Accreditation_Model__c = 'Cash'
-        );
+			Name = 'Agent HK',
+			IATACode__c ='999999998',
+			Status__c = AMS_Utils.ACC_S9_APPROVED,
+			Location_Type__c = AMS_Utils.HE,
+			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = countryHK.Id,
+			Location_Class__c = 'P',
+			Remittance_frequency__c = 'M',
+			ANG_HE_RiskStatus__c = 'A',
+			ANG_Accreditation_Model__c = 'Cash'
+		);
 
 		Account agentMO = new Account(
-        	Name = 'Agent MO',
-        	IATACode__c ='999999997',
-        	Status__c = AMS_Utils.ACC_S9_APPROVED,
-        	Location_Type__c = AMS_Utils.HE,
-        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-        	IATA_ISO_Country__c = countryMO.Id,
-        	Location_Class__c = 'P',
-        	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A',
-            ANG_Accreditation_Model__c = 'Cash'
-        );
+			Name = 'Agent MO',
+			IATACode__c ='999999997',
+			Status__c = AMS_Utils.ACC_S9_APPROVED,
+			Location_Type__c = AMS_Utils.HE,
+			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = countryMO.Id,
+			Location_Class__c = 'P',
+			Remittance_frequency__c = 'M',
+			ANG_HE_RiskStatus__c = 'A',
+			ANG_Accreditation_Model__c = 'Cash'
+		);
 
 		Account agentFR = new Account(
-        	Name = 'Agent FR',
-        	IATACode__c ='999999996',
-        	Status__c = AMS_Utils.ACC_S9_APPROVED,
-        	Location_Type__c = AMS_Utils.HE,
-        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-        	IATA_ISO_Country__c = countryFR.Id,
-        	Location_Class__c = 'P',
-        	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A',
-            ANG_Accreditation_Model__c = 'Cash'
-        );
-        
-        insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
-            
-        Test.stopTest();
-        
+			Name = 'Agent FR',
+			IATACode__c ='999999996',
+			Status__c = AMS_Utils.ACC_S9_APPROVED,
+			Location_Type__c = AMS_Utils.HE,
+			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = countryFR.Id,
+			Location_Class__c = 'P',
+			Remittance_frequency__c = 'M',
+			ANG_HE_RiskStatus__c = 'A',
+			ANG_Accreditation_Model__c = 'Cash'
+		);
+
+		insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
+
+		Test.stopTest();
+
 	}
 
 	private static ANG_BSP_Attributes__c createBSPAttribute(String bspId, String recTypeId, Decimal percentage, String calcType, String riskStatus, Decimal minFaPoints, Decimal maxFaPoints, Boolean limitCash){
@@ -427,11 +427,11 @@ private class ANG_LocalFinancialCriteriaTest {
 		}
 
 		if(minFaPoints != NULL){
-    		attr.Min_FA_Points__c = minFaPoints;
+			attr.Min_FA_Points__c = minFaPoints;
 		}
 
 		if(maxFaPoints != NULL){
-    		attr.Max_FA_Points__c = maxFaPoints;
+			attr.Max_FA_Points__c = maxFaPoints;
 		}
 
 		return attr;
@@ -440,34 +440,35 @@ private class ANG_LocalFinancialCriteriaTest {
 
 	private static Financial_Security__c createFinancialData(Id acctId){
 		Financial_Institution__c fi = new Financial_Institution__c(
-			Name = 'Financial Institution', 
-			Region__c = 'Asia & Pacific', 
-			Country__c = 'Hong Kong', 
+			Name = 'Financial Institution',
+			Region__c = 'Asia & Pacific',
+			Country__c = 'Hong Kong',
 			Institution_Type__c = 'Bank'
 		);
 
-        insert fi;
+		insert fi;
 
-        Case cc = new Case(AccountId = acctId);
-        insert cc;
+		Case cc = new Case(AccountId = acctId);
+		insert cc;
 
-      	Financial_Security__c fs = new Financial_Security__c(
-      		CurrencyIsoCode = 'EUR', 
-      		Account__c = acctId, 
-      		Amount__c = FS_AMOUNT, 
-      		Expiry_date__c = System.Today().AddDays(100), 
-      		Financial_Institution__c = fi.Id, 
-      		Security_Status__c = 'Active', 
-      		Security_Type__c = 'Bank Guarantee', 
-      		Region__c = 'Asia & Pacific', 
-      		Reception_Date__c = System.today(), 
-      		Reasonforrequest__c = 'New Application',
-      		Reception_Case__c = cc.Id
-     	);
+	  	Financial_Security__c fs = new Financial_Security__c(
+	  		CurrencyIsoCode = 'EUR',
+	  		Account__c = acctId,
+	  		Amount__c = FS_AMOUNT,
+	  		Expiry_date__c = System.Today().AddDays(100),
+	  		Financial_Institution__c = fi.Id,
+	  		Security_Status__c = 'Active',
+	  		Security_Type__c = 'Bank Guarantee',
+	  		Region__c = 'Asia & Pacific',
+	  		Reception_Date__c = System.today(),
+	  		Reasonforrequest__c = 'New Application',
+	  		Reception_Case__c = cc.Id,
+	  		Financial_Security_Validation_Case__c = cc.Id
+	 	);
 
-        insert fs; 
+		insert fs;
 
-        return fs;
+		return fs;
 	}
 
 	@isTest static void rhcAmountEqualsFsCalcTypeTest() {
@@ -479,32 +480,32 @@ private class ANG_LocalFinancialCriteriaTest {
 		);
 
 		insert rhcInfo;
-        
-        Financial_Security__c fs = createFinancialData(acct.Id);
-        
-        rhcInfo.CurrencyIsoCode = 'EUR';
+
+		Financial_Security__c fs = createFinancialData(acct.Id);
+
+		rhcInfo.CurrencyIsoCode = 'EUR';
 		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
 		rhcInfo.ANG_RHC_Amount_Equals_FS__c = TRUE;
-        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
-        
-        update rhcInfo;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
 
-		ANG_RHC_Information__c rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+		update rhcInfo;
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
 		Decimal expectedAmount = (FS_AMOUNT * rhcInfo.RHC_Amount_Equals_FS_Percent__c/100);
-		
+
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
-	
+
 	@isTest static void rhcCashConditionCalcTypeTest() {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
@@ -514,32 +515,32 @@ private class ANG_LocalFinancialCriteriaTest {
 		);
 
 		insert rhcInfo;
-        
+
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
-        rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.CurrencyIsoCode = 'EUR';
 		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
 		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
 		rhcInfo.ANG_CashCondition__c = TRUE;
-        
-        update rhcInfo;
-        
-		ANG_RHC_Information__c rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+
+		update rhcInfo;
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
 		Decimal expectedAmount = (FS_AMOUNT * CASH_CONDITION_PERCENTAGE/100);
-		
+
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
-	
+
 	@isTest static void rhcWithoutCashConditionCalcTypeTest() {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
@@ -549,29 +550,29 @@ private class ANG_LocalFinancialCriteriaTest {
 		);
 
 		insert rhcInfo;
-        
+
 		Financial_Security__c fs = createFinancialData(acct.Id);
-        
-        rhcInfo.CurrencyIsoCode = 'EUR';
+
+		rhcInfo.CurrencyIsoCode = 'EUR';
 		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
 		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
 		rhcInfo.ANG_CashCondition__c = FALSE;
-        
-        update rhcInfo;
 
-		ANG_RHC_Information__c rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-                ANG_CashCondition__c,
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+		update rhcInfo;
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_CashCondition__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
 		Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A/100);
-		
+
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
@@ -579,12 +580,12 @@ private class ANG_LocalFinancialCriteriaTest {
 	@isTest static void rhcFixedPercentageCalcTypeRiskStatusATest() {
 
 		Account agentHK =
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
-				ANG_HE_RiskStatus__c, 
-				Financial_Assessment_Points__c 
-			 FROM 
+				ANG_HE_RiskStatus__c,
+				Financial_Assessment_Points__c
+			 FROM
 			 	Account
 			 WHERE
 			 	Name = 'Agent HK'
@@ -597,12 +598,12 @@ private class ANG_LocalFinancialCriteriaTest {
 	@isTest static void rhcFixedPercentageCalcTypeRiskStatusBTest() {
 
 		Account agentMO =
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
-				ANG_HE_RiskStatus__c, 
-				Financial_Assessment_Points__c 
-			 FROM 
+				ANG_HE_RiskStatus__c,
+				Financial_Assessment_Points__c
+			 FROM
 			 	Account
 			 WHERE
 			 	Name = 'Agent MO'
@@ -613,14 +614,14 @@ private class ANG_LocalFinancialCriteriaTest {
 	}
 
 	@isTest static void rhcFixedPercentageCalcTypeRiskStatusCTest() {
-		
+
 		Account agentMO =
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
-				ANG_HE_RiskStatus__c, 
-				Financial_Assessment_Points__c 
-			 FROM 
+				ANG_HE_RiskStatus__c,
+				Financial_Assessment_Points__c
+			 FROM
 			 	Account
 			 WHERE
 			 	Name = 'Agent MO'
@@ -637,31 +638,31 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		update acct;
 
-        test.startTest();
-        
+		test.startTest();
+
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id, 
-            CurrencyIsoCode = 'EUR',
-            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-            RHC_Amount_Equals_FS_Percent__c = 214
+			ANG_AccountId__c = acct.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			RHC_Amount_Equals_FS_Percent__c = 214
 		);
 
 		insert rhcInfo;
-        
-      	Financial_Security__c fs = createFinancialData(acct.Id);
-        
-		ANG_RHC_Information__c rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+
+	  	Financial_Security__c fs = createFinancialData(acct.Id);
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
 		Decimal expectedAmount = (FS_AMOUNT * firstPercentage/100);
-		
+
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 		if(updatedPoints == NULL) return;
@@ -670,22 +671,22 @@ private class ANG_LocalFinancialCriteriaTest {
 		update acct;
 
 		fs.Amount__c = (FS_AMOUNT*2);
-        update fs;
+		update fs;
 
-		rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+		rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
 		expectedAmount = (FS_AMOUNT * 2 * secondPercentage/100);
-		
+
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
-        test.stopTest();
+		test.stopTest();
 
 	}
 
@@ -698,22 +699,22 @@ private class ANG_LocalFinancialCriteriaTest {
 		);
 
 		insert rhcInfo;
-            
-        Financial_Security__c fs = createFinancialData(acct.Id);
-        
-        rhcInfo.CurrencyIsoCode = 'EUR';
+
+		Financial_Security__c fs = createFinancialData(acct.Id);
+
+		rhcInfo.CurrencyIsoCode = 'EUR';
 		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
 		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
-        
-        update rhcInfo;
 
-		ANG_RHC_Information__c rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
-				ANG_RHC_Amount_Forecasted__c 
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+		update rhcInfo;
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
@@ -725,14 +726,14 @@ private class ANG_LocalFinancialCriteriaTest {
 		rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
 		update rhcInfo;
 
-		rhcUpdated = 
-			[SELECT 
-				ANG_RHC_Amount__c, 
+		rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
 				ANG_RHC_Amount_Forecasted__c,
 				ANG_Exceeding_Financial_Security__c
-			 FROM 
-			 	ANG_RHC_Information__c 
-			 WHERE 
+			 FROM
+			 	ANG_RHC_Information__c
+			 WHERE
 			 	Id = :rhcInfo.Id
 			];
 
@@ -742,130 +743,130 @@ private class ANG_LocalFinancialCriteriaTest {
 
 	}
 
-    @isTest static void triggerRhcCalculationOnPointsChangeTest() {
-        
-        Account agentHK =
-            [SELECT 
-                Id,
-                Financial_Assessment_Points__c 
-             FROM 
-                Account
-             WHERE
-                Name = 'Agent HK'
-            ];
+	@isTest static void triggerRhcCalculationOnPointsChangeTest() {
 
-        agentHK.Financial_Assessment_Points__c = 100;
-        update agentHK;
+		Account agentHK =
+			[SELECT
+				Id,
+				Financial_Assessment_Points__c
+			 FROM
+				Account
+			 WHERE
+				Name = 'Agent HK'
+			];
 
-        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-            ANG_AccountId__c = agentHK.Id
-        );
+		agentHK.Financial_Assessment_Points__c = 100;
+		update agentHK;
 
-        insert rhcInfo;
-        
-        Financial_Security__c fs = createFinancialData(agentHK.Id);
-        
-        rhcInfo.CurrencyIsoCode = 'EUR';
-        rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
-        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 100;
-        
-        update rhcInfo;
+		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = agentHK.Id
+		);
 
-        ANG_RHC_Information__c rhcUpdated = 
-            [SELECT 
-                ANG_RHC_Amount__c, 
-                ANG_RHC_Amount_Forecasted__c 
-             FROM 
-                ANG_RHC_Information__c 
-             WHERE 
-                Id = :rhcInfo.Id
-            ];
+		insert rhcInfo;
 
-        Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A1/100);
-        
-        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		Financial_Security__c fs = createFinancialData(agentHK.Id);
 
-        agentHK.Financial_Assessment_Points__c = 176;
+		rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 100;
 
-        update agentHK;
+		update rhcInfo;
 
-        rhcUpdated = 
-            [SELECT 
-                ANG_RHC_Amount__c, 
-                ANG_RHC_Amount_Forecasted__c 
-             FROM 
-                ANG_RHC_Information__c 
-             WHERE 
-                Id = :rhcInfo.Id
-            ];
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+				ANG_RHC_Information__c
+			 WHERE
+				Id = :rhcInfo.Id
+			];
 
-        expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A2/100);
-        
-        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A1/100);
 
-    }
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
-    @isTest static void rhcSkipFixedPercentageCalcTypeTest() {
-        
-        Account acct =
-            [SELECT 
-                Id,
-                Name,
-                ANG_HE_RiskStatus__c, 
-                Financial_Assessment_Points__c 
-             FROM 
-                Account
-             WHERE
-                Name = 'Agent MO'
-            ];
+		agentHK.Financial_Assessment_Points__c = 176;
 
-        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-            ANG_AccountId__c = acct.Id
-        );
+		update agentHK;
 
-        insert rhcInfo;
-        
-        Financial_Security__c fs = createFinancialData(acct.Id);
-        
-        rhcInfo.CurrencyIsoCode = 'EUR';
-        rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
-        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
-        
-        update rhcInfo;
+		rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+				ANG_RHC_Information__c
+			 WHERE
+				Id = :rhcInfo.Id
+			];
 
-        ANG_RHC_Information__c rhcUpdated = 
-            [SELECT 
-                ANG_RHC_Amount__c, 
-                ANG_RHC_Amount_Forecasted__c 
-             FROM 
-                ANG_RHC_Information__c 
-             WHERE 
-                Id = :rhcInfo.Id
-            ];
+		expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A2/100);
 
-        Decimal expectedMinRHCAmount = ANG_Risk_Helper.currencyConverter(COUNTRY_CURRENCY, COUNTRY_MIN_RHC_AMOUNT, rhcInfo.CurrencyIsoCode);
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
-        System.assert(expectedMinRHCAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+	}
 
-        rhcInfo.ANG_RME_Amount__c = 2000;
-        rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
-        update rhcInfo;
+	@isTest static void rhcSkipFixedPercentageCalcTypeTest() {
 
-        rhcUpdated = 
-            [SELECT 
-                ANG_RHC_Amount__c, 
-                ANG_RHC_Amount_Forecasted__c,
-                ANG_Exceeding_Financial_Security__c
-             FROM 
-                ANG_RHC_Information__c 
-             WHERE 
-                Id = :rhcInfo.Id
-            ];
+		Account acct =
+			[SELECT
+				Id,
+				Name,
+				ANG_HE_RiskStatus__c,
+				Financial_Assessment_Points__c
+			 FROM
+				Account
+			 WHERE
+				Name = 'Agent MO'
+			];
 
-        Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
+		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = acct.Id
+		);
 
-        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		insert rhcInfo;
 
-    }
+		Financial_Security__c fs = createFinancialData(acct.Id);
+
+		rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+
+		update rhcInfo;
+
+		ANG_RHC_Information__c rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c
+			 FROM
+				ANG_RHC_Information__c
+			 WHERE
+				Id = :rhcInfo.Id
+			];
+
+		Decimal expectedMinRHCAmount = ANG_Risk_Helper.currencyConverter(COUNTRY_CURRENCY, COUNTRY_MIN_RHC_AMOUNT, rhcInfo.CurrencyIsoCode);
+
+		System.assert(expectedMinRHCAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+		rhcInfo.ANG_RME_Amount__c = 2000;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
+		update rhcInfo;
+
+		rhcUpdated =
+			[SELECT
+				ANG_RHC_Amount__c,
+				ANG_RHC_Amount_Forecasted__c,
+				ANG_Exceeding_Financial_Security__c
+			 FROM
+				ANG_RHC_Information__c
+			 WHERE
+				Id = :rhcInfo.Id
+			];
+
+		Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
+
+		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+	}
 
 }

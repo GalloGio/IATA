@@ -8,26 +8,26 @@ global class SIDRAliteMassEmailBatch implements Database.Batchable<Case>, Databa
 	private Boolean sendToParentCase;
 	private list<Database.SaveResult> listErrors = new list<Database.SaveResult>();
 
-    public SIDRAliteMassEmailBatch(List<Case> caseList, String type, Boolean sendToParentCase, String sessionId, String apiServerUrl) {
+	public SIDRAliteMassEmailBatch(List<Case> caseList, String type, Boolean sendToParentCase, String sessionId, String apiServerUrl) {
 		this.sessionId = sessionId;
 		this.apiServerUrl = apiServerUrl;
-        this.caseList = caseList;
+		this.caseList = caseList;
 		this.sendToParentCase = sendToParentCase;
-        //this.emailTemplate = emailTemplate;
-        this.type = type;
-    }
+		//this.emailTemplate = emailTemplate;
+		this.type = type;
+	}
 
 	global List<Case> start(Database.BatchableContext BC){
 		return this.caseList;
 	}
 
 	global void execute(Database.BatchableContext BC, List<Case> scope){
-        processCases(scope);
+		processCases(scope);
 	}
 
 	global void finish(Database.BatchableContext BC){
 		processErrors();
-    }
+	}
 
 	@TestVisible
 	private void processErrors() {
@@ -46,93 +46,93 @@ global class SIDRAliteMassEmailBatch implements Database.Batchable<Case>, Databa
 		TransformationHelper.sendEmailSupport('ERROR: SIDRAliteMassEmailBatch', errorDescription);
 	}
 
-    public void processCases(list<Case> listCase) {
-        list<Case> casesToUpdate = new list<Case>();
+	public void processCases(list<Case> listCase) {
+		list<Case> casesToUpdate = new list<Case>();
 
-        if (this.type == 'IRR') {
-            casesToUpdate = casesToUpdateIRR(listCase);
-        }
-        else if (this.type == 'IRR Withdrawal') {
-            casesToUpdate = casesToUpdateIRR_Withdrawal(listCase);
-        }
-        else if (this.type == 'DEF') {
-            casesToUpdate = casesToUpdateDEF(listCase);
-        }
-        else if (this.type == 'DEF Withdrawal') {
-            casesToUpdate = casesToUpdateDEF_Withdrawal(listCase);
-        }
-        else if (this.type == 'REI') {
-            casesToUpdate = casesToUpdateREI(listCase);
-        }
-        else if (this.type == 'TER') {
-            casesToUpdate = casesToUpdateTER(listCase);
-        }
+		if (this.type == 'IRR') {
+			casesToUpdate = casesToUpdateIRR(listCase);
+		}
+		else if (this.type == 'IRR Withdrawal') {
+			casesToUpdate = casesToUpdateIRR_Withdrawal(listCase);
+		}
+		else if (this.type == 'DEF') {
+			casesToUpdate = casesToUpdateDEF(listCase);
+		}
+		else if (this.type == 'DEF Withdrawal') {
+			casesToUpdate = casesToUpdateDEF_Withdrawal(listCase);
+		}
+		else if (this.type == 'REI') {
+			casesToUpdate = casesToUpdateREI(listCase);
+		}
+		else if (this.type == 'TER') {
+			casesToUpdate = casesToUpdateTER(listCase);
+		}
 
 		Database.SaveResult[] listResults = Database.update(casesToUpdate, false);
 		map<Id,Case> mapCases = new map<Id,Case>(casesToUpdate);
 		for (Database.SaveResult result : listResults) {
 			Case cse = mapCases.get(result.getId());
-		    if (result.isSuccess()) {
+			if (result.isSuccess()) {
 				sendCongaMail(cse, this.type);
-		    } else {
+			} else {
 				this.listErrors.add(result);
 			}
 		}
-    }
+	}
 
-    private list<Case> casesToUpdateIRR(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.NOI_sent__c = DateTime.now();
-            cse.Update_AIMS_IRR__c = DateTime.now();
-            //cse.CS_Rep_Acc_IRR_DEF__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateIRR(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.NOI_sent__c = DateTime.now();
+			cse.Update_AIMS_IRR__c = DateTime.now();
+			//cse.CS_Rep_Acc_IRR_DEF__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
-    private list<Case> casesToUpdateIRR_Withdrawal(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.Update_AIMS_IRRWITH__c = DateTime.now();
-            cse.Confirm_IRR_Withdrawal_to_AG__c = DateTime.now();
-            //cse.CS_Rep_ACC_IRR_Withdrawal__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateIRR_Withdrawal(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.Update_AIMS_IRRWITH__c = DateTime.now();
+			cse.Confirm_IRR_Withdrawal_to_AG__c = DateTime.now();
+			//cse.CS_Rep_ACC_IRR_Withdrawal__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
-    private list<Case> casesToUpdateDEF(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.Inform_Agent_DEF__c = Date.today();
-            cse.Update_AIMS_DEF__c = DateTime.now();
-            //cse.CS_Rep_Acc_DEF__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateDEF(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.Inform_Agent_DEF__c = Date.today();
+			cse.Update_AIMS_DEF__c = DateTime.now();
+			//cse.CS_Rep_Acc_DEF__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
-    private list<Case> casesToUpdateDEF_Withdrawal(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.Confirm_Reinstatement_to_AG__c = DateTime.now();
-            cse.Update_AIMS_REI_DEFWITH__c = DateTime.now();
-            //cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateDEF_Withdrawal(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.Confirm_Reinstatement_to_AG__c = DateTime.now();
+			cse.Update_AIMS_REI_DEFWITH__c = DateTime.now();
+			//cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
-    private list<Case> casesToUpdateREI(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.Confirm_Reinstatement_to_AG__c = DateTime.now();
-            cse.Update_AIMS_REI_DEFWITH__c = DateTime.now();
-            //cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateREI(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.Confirm_Reinstatement_to_AG__c = DateTime.now();
+			cse.Update_AIMS_REI_DEFWITH__c = DateTime.now();
+			//cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
-    private list<Case> casesToUpdateTER(list<Case> listCase) {
-        for(Case cse : listCase){
-            cse.Update_AIMS_TER__c = DateTime.now();
-            cse.Notify_TER_to_AG__c = DateTime.now();
-            //cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
-        }
-        return listCase;
-    }
+	private list<Case> casesToUpdateTER(list<Case> listCase) {
+		for(Case cse : listCase){
+			cse.Update_AIMS_TER__c = DateTime.now();
+			cse.Notify_TER_to_AG__c = DateTime.now();
+			//cse.CS_Rep_Acc_REI__c = UserInfo.getUserId();
+		}
+		return listCase;
+	}
 
 	public EmailTemplate getTemplate(Case cse) {
 		try {

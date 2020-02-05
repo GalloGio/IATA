@@ -19,13 +19,13 @@ private class AMS_OSCAR_RollbackTest {
 		/*** Set HO Account ***/
 		Account ho = createAccount(null, 'P', 'HO', country, state, 'HO');
 		insert ho;
-		
+
 
 		/*** Set BR Account ***/
 		Account br = createAccount(null, 'P', 'BR', country, state, 'BR');
 		insert br;
 
-		/*** Set Hierarchy ***/	
+		/*** Set Hierarchy ***/
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c= 'Hierarchy');
 		insert hierarchy;
 
@@ -45,7 +45,7 @@ private class AMS_OSCAR_RollbackTest {
 		List<AMS_Account_Role__c> owners = new List<AMS_Account_Role__c>();
 		AMS_Account_Role__c ownerHO = new AMS_Account_Role__c();
 		ownerHO.Account__c = ho.Id;
-		ownerHO.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');	
+		ownerHO.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		ownerHO.Contact__c = con.Id;
 		ownerHO.Percentage__c = 100;
 		AMS_Account_Role__c ownerBR = ownerHO.clone();
@@ -53,7 +53,7 @@ private class AMS_OSCAR_RollbackTest {
 		owners.add(ownerHO);
 		owners.add(ownerBR);
 		insert owners;
-	}	
+	}
 
 	private static Account createAccount(Id parentId, String locationClass, String locationType, IATA_ISO_Country__c country, IATA_ISO_State__c state, String code) {
 		Account acc = new Account();
@@ -108,7 +108,7 @@ private class AMS_OSCAR_RollbackTest {
 	*/
 	@isTest static void testMethod1() {
 		/*** Set OSCAR ***/
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 		oscar.Name = '123456789';
 		oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 		oscar.Account__c = [SELECT Id FROM Account WHERE Location_Type__c = 'HO' LIMIT 1].Id;
@@ -146,7 +146,7 @@ private class AMS_OSCAR_RollbackTest {
 		/*** Set OSCAR ***/
 		Account acc = [SELECT Id, Name, TradeName__c FROM Account WHERE Location_Type__c = 'BR' LIMIT 1];
 		String tradeName = acc.TradeName__c;
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 		oscar.Name = '123456789';
 		oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 		oscar.Account__c = acc.Id;
@@ -167,14 +167,14 @@ private class AMS_OSCAR_RollbackTest {
 		System.assertEquals(tradeName, acc.TradeName__c);
 
 		Test.stopTest();
-	}	
+	}
 
 	/*
 	 * Test Hierarchy change
 	*/
 	@isTest static void testMethod3() {
 		Account acc = [SELECT Id, Name, TradeName__c, ParentId, Top_Parent__c, Location_Type__c FROM Account WHERE Location_Type__c = 'BR' LIMIT 1];
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 		oscar.Name = '123456789';
 		oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 		oscar.Account__c = acc.Id;
@@ -202,13 +202,13 @@ private class AMS_OSCAR_RollbackTest {
 
 		system.assertEquals(1, hierarchies.size());
 
-		List<AMS_Agencies_relationhip__c> relations = [SELECT Id, Child_Account__c, Parent_Account__c 
-													   FROM AMS_Agencies_relationhip__c
-													   WHERE Hierarchy__c = :hierarchies[0].Id];
+		List<AMS_Agencies_relationhip__c> relations = [SELECT Id, Child_Account__c, Parent_Account__c
+														 FROM AMS_Agencies_relationhip__c
+														 WHERE Hierarchy__c = :hierarchies[0].Id];
 
-		system.assertEquals(1, relations.size());	
-		system.assertEquals(parentId, relations[0].Parent_Account__c);	
-		system.assertEquals(acc.Id,  relations[0].Child_Account__c);	
+		system.assertEquals(1, relations.size());
+		system.assertEquals(parentId, relations[0].Parent_Account__c);
+		system.assertEquals(acc.Id,  relations[0].Child_Account__c);
 
 		Test.stopTest();
 	}

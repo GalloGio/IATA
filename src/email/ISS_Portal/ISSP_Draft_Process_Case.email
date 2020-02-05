@@ -11,6 +11,7 @@
                     'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject,
                     'PCI DSS Compliant',$Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_PCI_DSS_Compliant,
                     'FoP Management', $Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_FoP_Management,
+                    'New HE Multicountry', $Label.ISSP_ANG_Email_HE_Multicountry,
                     $Label.ISSP_AMS_Email_Change_Subject
                 ),
             'Transparency in Payments (TIP)',
@@ -43,7 +44,8 @@
                     relatedTo.Reason1__c=='New HE lite',
                     relatedTo.Reason1__c=='New AE',
                     relatedTo.Reason1__c=='New BR / IP',
-                    relatedTo.Reason1__c=='New BR Abroad'
+                    relatedTo.Reason1__c=='New BR Abroad',
+                    relatedTo.Reason1__c=='New HE Multicountry'
                 ),
                 relatedTo.Description,
                 $Label.ISSP_Email_Draft_Change_Process

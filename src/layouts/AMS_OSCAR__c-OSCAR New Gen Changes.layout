@@ -4,7 +4,6 @@
     <customButtons>ANG_Edit_the_accounts_involved</customButtons>
     <customButtons>Manage_Attachments</customButtons>
     <excludeButtons>Clone</excludeButtons>
-    <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>

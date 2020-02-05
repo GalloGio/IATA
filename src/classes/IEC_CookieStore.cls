@@ -1,10 +1,10 @@
 /**
 
 		Project: eCommerce Enhancements
-	       File: IEC_CookieStore.cls
+				 File: IEC_CookieStore.cls
 	Description: Cookie Management for arbitrary content size.
-	     Author: blue-infinity sa
-	    History: aosantos, 2017-06-20, Initial Release.
+			 Author: blue-infinity sa
+			History: aosantos, 2017-06-20, Initial Release.
 
 
 	Detailed description:
@@ -44,8 +44,8 @@
 	4096 bytes per cookie
 	20 cookies per domain
 	81920 bytes per domain*
-	
-	- * Given 20 cookies of max size 4096 = 81920 bytes. 
+
+	- * Given 20 cookies of max size 4096 = 81920 bytes.
 
 	Cookies are stored as a single string containing name, value, expiry etc.
 	Size limits apply to the entire cookie, not just its value.
@@ -144,7 +144,7 @@ public without sharing class IEC_CookieStore {
 		Cookie[] deleteCookies;
 		List<Cookie> deleteCookieList = new List<Cookie>();
 		Cookie cookie;
-		
+
 		contentBlockNo++;
 		do {
 
@@ -152,7 +152,7 @@ public without sharing class IEC_CookieStore {
 
 			if (cookieMap.containsKey(cookieName)) {
 				cookie = new Cookie(cookieName, '', path, maxAge, isSecure);
-				
+
 				deleteCookieList.add(cookie);
 			} else {
 				cookie = null;
@@ -169,7 +169,7 @@ public without sharing class IEC_CookieStore {
 				deleteCookies[contentBlockNo++] = deleteCookie;
 			}
 		}
-		
+
 		if (cookies != null && cookies.size() > 0) {
 			System.debug('createCookies: ' + cookies);
 

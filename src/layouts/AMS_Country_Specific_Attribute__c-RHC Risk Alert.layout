@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_EmailTemplate_NG__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Email_Template_Internal_Stakeholders__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

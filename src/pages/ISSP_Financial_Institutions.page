@@ -73,6 +73,14 @@
                 function navigateToGDIPortal() {
                     window.open('{!gdiPortalAppURL}', '_blank')
                 }
+
+                function openLearnMore() {
+                    $('[id$="learnMoreModal"]').css('display', 'block'); 
+                }
+
+                function closeLearnMore() {
+                    $('[id$="learnMoreModal"]').css('display', 'none'); 
+                }
             </script>
             <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
             <c:ISSP_CustomNavigation />
@@ -114,13 +122,15 @@
                                         
                                         <apex:outputText value="{!financialInstitution.Name}" rendered="{!financialInstitution.Website__c == ''}"/>
                                         
-                                        <apex:commandButton styleClass="iatabtn iatabtn-main" value="Request GDI Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(userCanRequestGDI, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
+                                        <apex:commandButton styleClass="iatabtn iatabtn-main" value="{!$Label.ANG_ISSP_GDI_Apply}" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(userCanRequestGDI, CONTAINS(financialInstitution.Name, 'Euler Hermes'), NOT(countryIsMulticountryEnabled))}" style="float: right;"/>
 
                                         <apex:outputText value="{!$Label.ISSP_Access_Denied}" rendered="{!AND(gdiAppRightDenied, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
                                         <apex:outputText value="{!$Label.ISSP_Access_Requested}" rendered="{!AND(gdiAppRightRequested, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
-                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, CONTAINS(financialInstitution.Name, 'Euler Hermes'), NOT(countryIsMulticountryEnabled))}" style="float: right;"/>
+
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Learn_More}" onclick="openLearnMore(); return false;" reRender="" rendered="{!countryIsMulticountryEnabled}" style="float: right;"/>
                                         
                                         <apex:facet name="header">
                                             <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
@@ -186,7 +196,29 @@
                                 </div>
                             </apex:outputPanel>
                         </div>
-                        <!-- End Modal GDI Portal App Request --> 
+                        <!-- End Modal GDI Portal App Request -->
+
+                        <!-- Modal Learn More --> 
+                        <div class="modal" id="learnMoreModal" tabindex="-1" role="dialog">
+                            <apex:outputPanel layout="block" id="leranMoreModalContent"> 
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeLearnMore();">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>
+                                                    <apex:outputText value="{!$Label.ANG_ISSP_GDI_Learn_More_Text}"/>
+                                            </b></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <apex:commandButton styleClass="btn_iata_success btn" value="{!$Label.IFAP_close}" onclick="closeLearnMore();" reRender=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <!-- End Modal Learn More -->
                     </apex:form>
                 </div>
             </div>

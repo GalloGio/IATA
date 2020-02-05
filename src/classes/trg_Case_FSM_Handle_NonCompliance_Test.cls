@@ -1,11 +1,11 @@
 @isTest
 private class trg_Case_FSM_Handle_NonCompliance_Test {
 
-    private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
-    private static final string NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
-    public static final String PAX = 'Travel Agent';
+	private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+	private static final string NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+	public static final String PAX = 'Travel Agent';
 	public static final String CARGO = 'Cargo Agent';
-	
+
 	//Create County codes
 	private static list<IATA_ISO_Country__c> CreateCountryCodes(){
 		list<IATA_ISO_Country__c> lsISO = new list<IATA_ISO_Country__c>();
@@ -16,7 +16,7 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 		lsISO.add(new IATA_ISO_Country__c(Name='United Kingdom', ISO_CODE__c='GB', Region__c='Europe'));
 		return lsISO;
 	}
-	
+
 	//Create Account
 	private static void CreateAccounts(list<IATA_ISO_Country__c> lsIso, integer iNumAccnt) {
 		list<Account> listAccount = new list<Account>();
@@ -28,7 +28,7 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 			else
 				listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Cargo Agent', Type = 'IATA Cargo Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID) );
 		}
-		
+
 		insert listAccount;
 //		return listAccount;
 	}
@@ -45,20 +45,20 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	private static list<Case> CreateCases(list<Account> lsAccnt, map<id, id> mapCasesCreated, map<string, EmailTemplate__c> mapTemplates){
 		list<Case> lsCase = new list<Case>();
 		map<id, id> mapContact = new map<id,id>();
-		
+
 		set<id> setAccntId = new set<id>();
-		
+
 		for(Account ac:lsAccnt)
 			setAccntId.add(ac.Id);
-			
+
 		for(Contact c: [select AccountId, Id from Contact where AccountId in:setAccntId])
 			mapContact.put(c.AccountId, c.Id);
-		
+
 		for(Account accnt:lsAccnt){
 			Case newCase = new Case();
 			newCase.RecordTypeId = CASE_RECORDTYPE_FSM;
 			newCase.Reporting_date__c = system.today();
-			newCase.Subject = accnt.Country_ISO_Code__c + '-FS_UPDATE-Sales_Monitoring-2015-01'; 
+			newCase.Subject = accnt.Country_ISO_Code__c + '-FS_UPDATE-Sales_Monitoring-2015-01';
 			newCase.Description = 'Annual Financial Review 2015_';
 			//newCase.ContactId = accnt.Contacts.isEmpty()?null:accnt.Contacts[0].Id;
 			newCase.ContactId = mapContact.get(accnt.Id);
@@ -69,10 +69,10 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 			newCase.Financial_Security_Amount_2__c = 2000;
 			newCase.CurrencyISOCode = 'USD';
 			EmailTemplate__c et = mapTemplates.get('FSM_' + accnt.Country_ISO_Code__c + '_English');
-			
+
 			system.debug(logginglevel.ERROR, 'DTULLO CaseKey: ' + 'FSM_' + accnt.Country_ISO_Code__c + '_English');
 			system.debug(logginglevel.ERROR, 'DTULLO Template: ' + et);
-			
+
 			newCase.Reminder_EmailTemplate__c = et.id;
 			if(mapCasesCreated != null)
 				newCase.ParentId = mapCasesCreated.get(accnt.Id);
@@ -81,46 +81,46 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 		}
 		return lsCase;
 	}
-	
+
 	private static map<string, EmailTemplate__c> CreateTemplates(list<IATA_ISO_Country__c> lsISO){
 		Id recordtypeFSMId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
 		list<EmailTemplate__c> lsET = new list<EmailTemplate__c>();
 		for(IATA_ISO_Country__c iso:lsISO){
 			lsET.add(new EmailTemplate__c(RecordtypeId = recordtypeFSMId, Template_Language__c = 'English', IATA_ISO_Country__c = iso.Id, Agent_Type__c='All'));//, UniqueId__c = ('FSM_' + iso.ISO_CODE__c + '_English')));
 		}
-		
+
 		insert lsET;
 		map<string, EmailTemplate__c> oReturn = new map<string, EmailTemplate__c>();
 		for(EmailTemplate__c et:[select UniqueId__c, Id from EmailTemplate__c]){
 			oReturn.put(et.UniqueId__c, et);
 		}
-		
+
 		return oReturn;
 	}
-	
-	
+
+
 	private static list<Case> CreateFSMCases(){
 		list<IATA_ISO_Country__c> lsISO = CreateCountryCodes();
 		insert lsISO;
 		system.assert(lsISO.size()==5);
-		
+
 		map<string, EmailTemplate__c> mapTemplates = CreateTemplates(lsISO);
 		system.assert(mapTemplates.size()==5);
-		
-		CreateAccounts(lsISO, 2); 
-		
+
+		CreateAccounts(lsISO, 2);
+
 		list<Account> lsAccnt = [select Id, Name, Country_ISO_Code__c,Region_formula__c,CCG_Participant__c from Account];
 		system.assert(lsAccnt.size()==2);
-		
+
 		insert CreateContacts(lsAccnt);
 		system.assert([select id from Contact].size()==lsAccnt.size());
-		
+
 		list<Case> lsCaseFSM = CreateCases(lsAccnt, null, mapTemplates);
 		insert lsCaseFSM;
-		
+
 		return lsCaseFSM;
 	}
-	
+
 	private static Case getNCCase(Case FSMCase){
 		Case NCCase = new Case();
 		NCCase.RecordTypeId = NCRecordTypeID;
@@ -134,15 +134,15 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 		NCCase.New_IFAP_Deadline_date__c = system.today().addDays(10);
 		return NCCase;
 	}
-	
-	
+
+
 	private static list<Case> getFSMCases(){
 		return [Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed
 							, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c
 							, firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c
 							from Case c where RecordTypeId = :CASE_RECORDTYPE_FSM];
 	}
-	
+
 	private static Date getMondayIfOnWeekend(date deaddate){
 		Date RefDate = date.NewInstance(1900,1,7);
 		integer dayOfWeek = math.mod(RefDate.daysBetween(deaddate),7);
@@ -153,58 +153,58 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 		else
 			return deaddate;
 	}
-	
+
 	private static list<Case> getInsertedNCCase(){return [select Id from Case where RecordTypeId=:NCRecordTypeID];}
-	
+
 	//First Non-compliance
 	@isTest
 	static void FirstNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
-		
+
 		list<Case> lsNCCase = new list<Case>();
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		system.assert(lsNCCase.size() == lsCaseFSM.size());
-		
+
 		//Generate Exception (letter NOT sent)
 		try{
 			insert lsNCCase;
-		}catch(Exception e){} 
-		
+		}catch(Exception e){}
+
 		//No NCC Inserted: letter not sent (FS_Deadline_Date__c==null)
 		system.assert(getInsertedNCCase().size()==0);
-		
+
 		//Letter sent (in the future) (Error)
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(10);
-		
+
 		update lsCaseFSM;
-		
-		
+
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size()==0);
-		
+
 		//Letter sent (in the past)
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
-		
+
 		update lsCaseFSM;
-		
+
 		insert lsNCCase;
-		
+
 		//NCC Inserted. one per FSMCase
 		system.assert(getInsertedNCCase().size()==lsCaseFSM.size());
-		
+
 		system.debug(Logginglevel.ERROR, 'DTULLO getInsertedNCCase().size() --> ' + getInsertedNCCase().size());
 		system.debug(Logginglevel.ERROR, 'DTULLO lsCaseFSM().size() --> ' + lsCaseFSM.size());
-		
+
 		//loop through FSMCase and check dates
 		for(Case FSMCase:getFSMCases()){
 			system.debug(Logginglevel.ERROR, 'DTULLO FSMCase.Account.Industry --> ' + FSMCase.Account.Industry);
@@ -212,40 +212,40 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 			if(FSMCase.Account.Industry==PAX){
 				system.assert(FSMCase.FS_Second_Deadline_Date__c == getMondayIfOnWeekend(date.Today().addDays(31)));
 			}
-			
+
 			if(FSMCase.Account.Industry==CARGO){
 				system.assert(FSMCase.FS_Second_Deadline_Date__c == system.today().addDays(10));
 			}
 		}
-		
+
 		test.StopTest();
 	}
-	
-	
+
+
 	//Simulate 2nd non-compliance
 	@isTest
 	static void SecondNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
-		
+
 		//Letter sent (in the past)
 		for(Case CaseFSM:lsCaseFSM)
 			CaseFSM.FS_Deadline_Date__c = system.today().addDays(-10);
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		//Create First non-compliance (correctly)
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		insert lsNCCase;
-		
+
 		system.assert(getInsertedNCCase().size() == lsCaseFSM.size());
-		
+
 		lsNCCase.clear();
 		//Create Second non-compliance Generate Exception: 2nd deadline date > today
 		for(Case FSMCase: lsCaseFSM)
@@ -253,117 +253,117 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 
 		try{
 			insert lsNCCase;
-		}catch(Exception e){} 
-		
+		}catch(Exception e){}
+
 		system.assert(getInsertedNCCase().size()==lsCaseFSM.size());
-		
+
 		//Modify second deadline date (simulate to less than today)
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_Second_Deadline_Date__c = system.today().addDays(-9);
-		
+
 		update lsCaseFSM;
-		
+
 		insert lsNCCase;
-		
+
 		//NCC Inserted. one per FSMCase
 		system.assert(getInsertedNCCase().size()>0);
 		system.assert(getInsertedNCCase().size()==(lsCaseFSM.size()*2));
-		
+
 		//loop through FSMCase and check dates
 		for(Case FSMCase:getFSMCases()){
 			system.assert(FSMCase.secondFSnonComplianceDate__c==system.today());
 			if(FSMCase.Account.Industry==PAX){
 				system.assert(FSMCase.FS_Third_Deadline_Date__c == getMondayIfOnWeekend(Date.newInstance(Date.today().addMonths(2).year(), Date.today().addMonths(2).month(), 1).addDays(-1)));
 			}
-			
+
 			if(FSMCase.Account.Industry==CARGO){
 				system.assert(FSMCase.FS_Third_Deadline_Date__c == system.today().addDays(10));
 			}
 		}
-		
+
 		test.StopTest();
 	}
-	
-	
-	
+
+
+
 	//Simulate 3rd non-compliance
 	@isTest
 	static void ThirdNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		test.StartTest();
-		
+
 		//Letter sent (in the past)
 		for(Case CaseFSM:lsCaseFSM)
 			CaseFSM.FS_Deadline_Date__c = system.today().addDays(-10);
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		//Create First non-compliance (correctly)
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		insert lsNCCase;
-		
+
 		system.assert(getInsertedNCCase().size() == lsCaseFSM.size());
-		
-		
+
+
 		//Create Second non-compliance
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_Second_Deadline_Date__c = system.today().addDays(-9);
-		
+
 		update lsCaseFSM;
-		
+
 		lsNCCase.clear();
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
 
 		try{
 			insert lsNCCase;
-		}catch(Exception e){} 
-		
+		}catch(Exception e){}
+
 		system.assert(getInsertedNCCase().size()==(lsCaseFSM.size()*2));
-		
+
 		//Create 3rd non-compliance. Generate error because 3rd deadline > today()
 		lsNCCase.clear();
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		try{
 			insert lsNCCase;
-		}catch(Exception e){} 
-		
+		}catch(Exception e){}
+
 		system.assert(getInsertedNCCase().size()==(lsCaseFSM.size()*2));
-		
+
 		//Modify second deadline date (simulate to less than today)
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_third_Deadline_Date__c = system.today().addDays(-8);
-		
+
 		update lsCaseFSM;
-		
+
 		insert lsNCCase;
-		
+
 		system.assert(getInsertedNCCase().size()>0);
 		system.assert(getInsertedNCCase().size()==(lsCaseFSM.size()*3));
-		
+
 		//loop through FSMCase and check dates
 		for(Case FSMCase:getFSMCases()){
 			system.assert(FSMCase.FS_third_non_compliance_date__c==system.today());
 		}
-		
+
 		test.StopTest();
 	}
-	
-	
-	
+
+
+
 	//Simulate 4th non-compliance (error)
 	@isTest
 	static void fourthNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
 		//simulate all 3 non-compliance are already sent
 		for(Case FSMCase:lsCaseFSM){
@@ -374,31 +374,31 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 			FSMCase.secondFSnonComplianceDate__c=system.today();
 			FSMCase.FS_third_non_compliance_date__c=system.today();
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		//Create First non-compliance (correctly)
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == 0);
-		
+
 		test.StopTest();
 	}
-	
-	
+
+
 	//Simulate 4th non-compliance (error)
 	@isTest
 	static void CaseClosedTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
 		//simulate all 3 non-compliance are already sent
 		for(Case FSMCase:lsCaseFSM){
@@ -407,78 +407,78 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 			system.debug(Logginglevel.ERROR, 'DTULLO Contact ID --> ' + FSMCase.ContactId);
 			FSMCase.status = 'Closed';
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		//Create First non-compliance (correctly)
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == 0);
-		
+
 		test.StopTest();
 	}
-	
-	
+
+
 	//First Non-compliance: Cargo with wrong New Ifap Deadline Date
 	@isTest
 	static void FirstNonComplianceTestOnlyCargo(){
 		list<Case> lsCaseFSM = CreateFSMCases();
-		
+
 		lsCaseFSM = getFSMCases();
-		
+
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
-		
+
 		list<Case> lsNCCase = new list<Case>();
 		for(Case FSMCase: lsCaseFSM)
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
-		
+
 		update lsCaseFSM;
-		
+
 		for(Case FSMCase: lsCaseFSM){
 			if(FSMCase.Account.Industry == CARGO){
 				lsNCCase.add(getNCCase(FSMCase));
 			}
 		}
-		
+
 		system.assert(lsNCCase.size()>0);
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = null;
 		}
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size()==0);
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = system.today().addDays(-5);
 		}
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size()==0);
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = system.today().addDays(5);
 		}
-		
+
 		insert lsNCCase;
-		
+
 		system.assert(getInsertedNCCase().size()==lsNCCase.size());
-		
+
 		//loop through FSMCase (cargo only) and check dates
 		for(Case FSMCase:getFSMCases()){
 			if(FSMCase.Account.Industry==CARGO){
@@ -486,139 +486,139 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 				system.assert(FSMCase.firstFSnonComplianceDate__c==system.today());
 			}
 		}
-		
+
 		//SECOND NON-COMPLIANCE
 		for(Case FSMCase: lsCaseFSM){
 			FSMCase.FS_Second_Deadline_Date__c = system.today().addDays(-9);
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		lsNCCase.clear();
-		
+
 		for(Case FSMCase: lsCaseFSM){
 			if(FSMCase.Account.Industry == CARGO){
 				lsNCCase.add(getNCCase(FSMCase));
 			}
 		}
-		
+
 		system.assert(lsNCCase.size()>0);
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = null;
 		}
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size()==lsNCCase.size());
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = system.today().addDays(-5);
 		}
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size()==lsNCCase.size());
-		
+
 		for(case NCCase:lsNCCase){
 			NCCase.New_IFAP_Deadline_date__c = system.today().addDays(5);
 		}
-		
+
 		insert lsNCCase;
-		
+
 		system.assert(getInsertedNCCase().size()==lsNCCase.size()*2);
-		
+
 		test.StopTest();
 	}
-	
-	
+
+
 	@isTest
 	static void TestUpdate(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
 		//simulate all 3 non-compliance are already sent
 		for(Case FSMCase:lsCaseFSM){
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == lsCaseFSM.size());
-		
-		
+
+
 		for(Case FSMCase:lsCaseFSM){
 			FSMCase.FS_Deadline_Date__c = null;
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		try{
 			update lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == lsCaseFSM.size());
-		
-		
+
+
 		for(Case FSMCase:lsCaseFSM){
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
 			FSMCase.Status = 'Closed';
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		try{
 			update lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == lsCaseFSM.size());
-		
-		
+
+
 		test.StopTest();
 	}
-	
+
 	@isTest
 	static void TestMultiFSM(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
-		
+
 		test.StartTest();
-		
+
 		for(Case FSMCase:lsCaseFSM){
 			FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
 		}
-		
+
 		update lsCaseFSM;
-		
+
 		list<Case> lsNCCase = new list<Case>();
-		
+
 		//Create First non-compliance (correctly)
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-			
+
 		for(Case FSMCase: lsCaseFSM)
 			lsNCCase.add(getNCCase(FSMCase));
-		
+
 		try{
 			insert lsNCCase;
 		}catch(exception e){}
-		
+
 		system.assert(getInsertedNCCase().size() == 0);
-		
+
 		test.StopTest();
 	}
 }

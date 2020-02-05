@@ -2,7 +2,6 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Snapshot is the ultimate tool for change management, change reporting and compliance documentation for Salesforce Orgs. With SnapShot’s rich interactive GUI, admins can compare and diff Orgs, monitor changes to Orgs, and push customizations between Orgs.</description>
-    <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>SnapShot</label>

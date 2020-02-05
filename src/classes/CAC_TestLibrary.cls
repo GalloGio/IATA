@@ -1,6 +1,6 @@
 /**
  * This is a test library for CAC related classes
- *  - List<GDP_File_Description__c> generateFileDescCACNonRef(): create GDP_File_Description, w/ Product_Type__c : CAC, CACEWS, CACSWS 
+ *  - List<GDP_File_Description__c> generateFileDescCACNonRef(): create GDP_File_Description, w/ Product_Type__c : CAC, CACEWS, CACSWS
  *
  * Original Author: Sonny Leman
  * Change Log:
@@ -9,7 +9,7 @@
  */
 @isTest(seeAllData=false)
 public class CAC_TestLibrary {
-	
+
 	// ========================================================================
 	// name for the GDP_File_Descriptions
 	public static final String CAC_AGENCY_COMPLEX_WEB_REF = 'CAC Agency Complex Webs Reference';
@@ -17,13 +17,13 @@ public class CAC_TestLibrary {
 	public static final String CAC_IDCARD_COMPLEX_WEB_REF = 'CAC IDCard Complex Webs Reference';
 	public static final String CAC_IDCARD_SIMPLE_WEB_REF  = 'CAC IDCard Simple Webs Reference';
 	public static final String CAC_SUBSCRIPTION_DETAIL_REF = 'CAC Subscription Details Reference';
-	
+
 	public static final String CAC_AGENCY_COMPLEX_WEB_SVC = 'CAC Agency Complex Web Service';
 	public static final String CAC_AGENCY_SIMPLE_WEB_SVC = 'CAC Agency Simple Web Service';
 	public static final String CAC_IDCARD_COMPLEX_WEB_SVC = 'CAC IDCard Complex Web Service';
 	public static final String CAC_IDCARD_SIMPLE_WEB_SVC = 'CAC IDCard Simple Web Service';
 	public static final String CAC_SUBSCRIPTION_DETAIL_SVC = 'CAC Subscription Details';
-	
+
 	// ========================================================================
 	// create and insert test GDP_File_Description records
 	// create both the reference and non reference records
@@ -53,7 +53,7 @@ public class CAC_TestLibrary {
 									, Reference_Clause__c = 'Subscription__r.Zuora__SubscriptionStartDate__c <= TODAY AND subscription__r.Zuora__SubscriptionEndDate__c >= TODAY AND Subscription__r.Zuora__Status__c = \'Active\', Service_Target__c = \'Subscription\''
 									, Atom__c = '255'));
 		insert lstCacFileDescRef;
-				
+
 		// insert non references
 		List<GDP_File_Description__c> lstCacFileDescNonRef = new List<GDP_File_Description__c>();
 		lstCacFileDescNonRef.add(new GDP_File_Description__c(Name = 'CAC_AGENCY_COMPLEX_WEB_SVC', Description__c = 'CAC Agency Complex Web Service', File_Format__c = 'Database'
@@ -67,9 +67,9 @@ public class CAC_TestLibrary {
 		lstCacFileDescNonRef.add(new GDP_File_Description__c(Name = 'CAC_SUBSCRIPTION_DETAIL_SVC', Description__c = 'CAC Subscription Details', File_Format__c = 'Database'
 									, File_Naming_Convention__c = 'subscription.txt', Frequency__c = 'Daily', Magnitude__c = 'Master', Product_Type__c = 'CAC', Reference__c = lstCacFileDescRef[4].Id));
 		insert lstCacFileDescNonRef;
-		
+
 		return lstCacFileDescNonRef;
 	} // generateFileDescCACNonRef
-	
+
 
 }

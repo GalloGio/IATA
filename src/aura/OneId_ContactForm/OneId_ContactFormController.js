@@ -31,5 +31,24 @@
                  });
             cmpEvent.fire();
 		}
-	}
+	},
+
+	checkPowerUser : function(component, event) {
+	    let isPowerUser = event.getSource().get('v.value');
+	    let gadmPowerUserEvent = component.getEvent('GADM_PowerUser');
+	    gadmPowerUserEvent.setParams({
+	        'isPowerUser' : isPowerUser
+        });
+        gadmPowerUserEvent.fire();
+    },
+
+    loadInvitation : function(component, event, helper) {
+        let invitationId = event.getParam('value');
+        let serviceName = component.get('v.serviceName');
+        if(! $A.util.isEmpty(invitationId) && serviceName === 'GADM') {
+            helper.getInvitationDetails(component, invitationId);
+        }
+
+    },
+
 })

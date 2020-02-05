@@ -233,14 +233,14 @@ private class AMS_MigrationToolHelperTest {
 	}
 
 
-    static testMethod void test_verifyCaseMigration4() {
-		  
+	static testMethod void test_verifyCaseMigration4() {
+
 		Test.startTest();
 
 		// create test account1
 		Account account1 = new Account();
 		account1.Name = 'Test account';
-        account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+		account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		account1.IATACode__c = '4242424';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
@@ -299,18 +299,18 @@ private class AMS_MigrationToolHelperTest {
 		thecase.Finalized_in_AIMS__c = Date.Today();
 
 		update thecase;
-	
+
 		AMS_MigrationToolHelper.CaseContainer cc = new AMS_MigrationToolHelper.CaseContainer(thecase,false);
 
 		cc = AMS_MigrationToolHelper.migratecases(cc,null);
-		
-        AMS_MigrationToolHelper.fetchAccreditation(thecase.Id);
-            
+
+		AMS_MigrationToolHelper.fetchAccreditation(thecase.Id);
+
 		Test.stopTest();
-		  
+
 	}
 
-        static testMethod void alignOwnersTest() {
+		static testMethod void alignOwnersTest() {
 
 		Test.startTest();
 
@@ -582,16 +582,16 @@ private class AMS_MigrationToolHelperTest {
 		insert new List<AMS_Accreditation_Contact__c> {aContact1, aContact2, aContact3, aContact4, aContact5, aContact6, aContact7, aContact8};
 
 		AMS_Account_Role__c role8 = new AMS_Account_Role__c(
-		    Legacy_System__c = 'AIMS2' ,
-		    Legacy_External_ID__c = 'ASD123124',
-		    Account__c = saamCase.AccountId
+			Legacy_System__c = 'AIMS2' ,
+			Legacy_External_ID__c = 'ASD123124',
+			Account__c = saamCase.AccountId
 		);
 
 		AMS_Account_Role__c role9 = new AMS_Account_Role__c(
-		    Legacy_System__c = 'AIMS2' ,
-		    Legacy_External_ID__c = 'ASD123125',
-		    Owner_Name__c = 'user9 lastnameuser9',
-		    Account__c = saamCase.AccountId
+			Legacy_System__c = 'AIMS2' ,
+			Legacy_External_ID__c = 'ASD123125',
+			Owner_Name__c = 'user9 lastnameuser9',
+			Account__c = saamCase.AccountId
 		);
 
 		Contact xc1 = new Contact(FirstName = 'user7', LastName = 'lastnameuser7', Email = 'testuser2367@gtst.com', AccountId = saamCase.AccountId);
@@ -634,13 +634,13 @@ private class AMS_MigrationToolHelperTest {
 
 
 		Test.stopTest();
-    }
+	}
 	static testMethod void TestCompliant() {
 
 		Test.startTest();
 
-        AMS_MigrationToolHelper a = new AMS_MigrationToolHelper();
-        a.isTestCompliant();
+		AMS_MigrationToolHelper a = new AMS_MigrationToolHelper();
+		a.isTestCompliant();
 		Map<String,String> b = AMS_MigrationToolHelper.newgenCaseReason;
 		Map<String, Id> c = AMS_MigrationToolHelper.oscarNewgenRTMap;
 		Map<String, String> d = AMS_MigrationToolHelper.processTypeMapNewgen;

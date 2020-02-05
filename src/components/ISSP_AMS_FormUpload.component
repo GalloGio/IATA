@@ -145,11 +145,12 @@
         },500);
     }
 
-    function checkIfFileExists(caseId, filename, callback) {
+    function checkIfFileExists(caseId, filename, formId, callback) {
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_AmazonS3_Ctrl.isFileNameUnique}',
             caseId,
             filename,
+            formId,
             function(result, event){
                 if (event.status) {
                     callback(result);
@@ -162,11 +163,12 @@
         );
     }
 
-    function createAmazonFileObject(caseId, filename, fielsize, fileid, callback) {
+    function createAmazonFileObject(caseId, filename, formId, fielsize, fileid, callback) {
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_AmazonS3_Ctrl.createAmazonFileObject}',
             caseId,
             filename,
+            formId,
             fielsize,
             fileid,
             function(result, event){
@@ -243,7 +245,7 @@
                         }
                     } else {
                         $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
-                        checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn,function(result) {
+                        checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn, '{!$CurrentPage.parameters.formId}', function(result) {
                           if (result) {
                             // and then Submit
                             data.submit();
@@ -279,6 +281,7 @@
                     createAmazonFileObject(
                         '{!$CurrentPage.parameters.caseId}',
                         fn,
+                        '{!$CurrentPage.parameters.formId}',
                         data.originalFiles[0].size,
                         "{!reqIdentifier}",
                         function(result) {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Data submission status change</name>
+    <style>none</style>
+    <subject>GADM Submission Status</subject>
+    <textOnly>Dear {!Contact.FirstName} {!Contact.LastName}
+
+Status of the file {!Data_Submission__c.File_Name__c} submitted for {!Data_Submission__c.Account__c} on {!Data_Submission__c.Submission_date__c} has been changed to &quot;{!Data_Submission__c.Status__c}&quot;, the results will be communicated shortly.
+
+GADM Team
+gadm@iata.com</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

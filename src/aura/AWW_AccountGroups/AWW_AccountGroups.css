@@ -1,0 +1,39 @@
+.THIS .bckColor{
+    background: inherit !important;
+}
+
+.THIS .underGroup {
+    background-color: rgb(160, 195, 248);
+}
+
+.THIS .expandRows {
+    cursor: pointer;
+} 
+
+.THIS .th_17 {
+    width: 15%;
+}
+
+.THIS .th_30 {
+    width: 30%;
+}
+
+.THIS .th_11 {
+    width: 11%;
+}
+
+.THIS .th_5 {
+    width: 5%;
+}
+
+.THIS .th_8 {
+    width: 8%;
+}
+
+.THIS .th_9 {
+    width: 9%;
+}
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

@@ -358,7 +358,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>Update_Record</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -474,7 +474,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>Switch_to_standard_contact_RT</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
@@ -529,7 +529,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>IWCheckInvoiceWorksCustomers</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>User.ProfileId</field>
             <operation>contains</operation>
@@ -548,7 +548,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>STD_Opt_out</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.Account_Management_Key_Contact__c</field>
             <operation>equals</operation>
@@ -563,7 +563,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>Update_ID_card_contact_checkbox</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.VER_Number__c</field>
             <operation>notEqual</operation>

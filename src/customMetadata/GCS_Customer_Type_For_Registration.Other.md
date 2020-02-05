@@ -63,8 +63,12 @@
         <value xsi:type="xsd:string">No Search</value>
     </values>
     <values>
+        <field>Send_Email_Notification__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Sub_Categorization_Custom_Label__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Other</value>
     </values>
     <values>
         <field>Type__c</field>

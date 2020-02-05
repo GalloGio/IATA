@@ -37,7 +37,7 @@ public class ISSP_AMC_Company_Codes {
 
 		accountRecord = ISSP_AMC_DAO.getAccountInfo();
 
-		if((accountRecord.Airline_designator__c == null || accountRecord.Airline_designator__c == '') && (accountRecord.IATACode__c == null || accountRecord.IATACode__c == '') && 
+		if((accountRecord.Airline_designator__c == null || accountRecord.Airline_designator__c == '') && (accountRecord.IATACode__c == null || accountRecord.IATACode__c == '') &&
 			(accountRecord.Airline_Prefix__c == null || accountRecord.Airline_Prefix__c == '') && (accountRecord.Baggage_Tag_Range_Code__c == null || accountRecord.Baggage_Tag_Range_Code__c == '') &&
 			(accountRecord.AOC_Expiry_Date__c == null))
 		{

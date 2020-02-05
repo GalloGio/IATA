@@ -1,0 +1,36 @@
+<!--
+ - Created by ukaya01 on 11/07/2019.
+ -->
+
+<!-- Portal Login Header -->
+<template>
+
+    <lightning-layout vertical-align="end" horizontal-align="end" class="loginHeaderWrapper">
+        <div>
+            <img src={logoIcon} class="logoMobile">
+        </div>
+        <div class="slds-p-bottom_xx-large selectorContainer">
+            <lightning-layout-item>
+                <div if:true={chagingLang} class="changingLangSpinner">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <div style="min-height:50px;">
+                    <template if:true={loadingLangs}>
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </template>
+                    <!--if:false={loadingLangs}-->
+                    <div class="languageSelection borderlessCombobox languageSelectWrapper">
+                        <lightning-combobox
+                                name="language"
+                                dropdown-alignment="auto"
+                                value={selectedLang}
+                                options={langOptions}
+                                onchange={handleChangeLang}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </div>
+    </lightning-layout>
+
+</template>

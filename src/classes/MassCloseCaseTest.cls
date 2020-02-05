@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -22,67 +22,67 @@
 @isTest
 private class MassCloseCaseTest {
 
-    static testMethod void myUnitTest() {
-         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete =true;   
-        CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
-        ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
-        
-        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
-        insert isoCountry;
-        
-        Account a = new Account( name ='IFAP ACCT',
-                                 industry = 'pluto',
-                                 IATA_ISO_Country__c=isoCountry.id,
-                                 recordtypeID = hqrt,
-                                 IATACode__c ='1234567',
-                                 Type = 'IATA Cargo Agent',
-                                 billingCountry = 'ss',Location_Type__c = 'AO');
-        insert a;
-        
-        Contact con =new contact(lastname = 'pluto' ,
-                                 firstname = 'Name',
-                                 phone = '123',
-                                 accountid = a.id,
-                                 Financial_Assessment_Contact__c = true);
-        insert con;
-                                
-        date dead = date.today().addDays(40);
-        
-        list<Case> cases = new list<Case>();
-        for(integer i=0;i<3;i++)
-            cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
-                              Status = 'Assessment Performed',
-                              Origin = 'asd',
-                              IFAP_Area__c = 'asda',
-                              Financial_Review_Type__c ='bla',
-                              IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
-                              Deadline_Date__c = dead,
-                              contactid = con.id,
-                              AccountId = a.id,
-                              Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
-                              ));
-        
-        insert cases;
-        
-       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete =false;   
+		static testMethod void myUnitTest() {
+				 TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete =true;
+				CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+				ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+				ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-        CaseChildHelper.noValidationsOnTrgCAseIFAP = false;
-        test.startTest();
-        
-        ApexPages.StandardSetController standardcontroller = new ApexPages.StandardSetController(cases);
-        standardcontroller.setSelected(cases);
-        MassCloseCasesCtrl ctrl = new MassCloseCasesCtrl(standardController);
-        ctrl.CloseCases();
-        system.assertEquals(2,ctrl.pagenumber);
-        
-        ctrl.CloseCases();
-        ctrl.CloseCases();
-        
-        
-        
-        test.stopTest();
-        
-    }
+				IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
+				insert isoCountry;
+
+				Account a = new Account( name ='IFAP ACCT',
+																 industry = 'pluto',
+																 IATA_ISO_Country__c=isoCountry.id,
+																 recordtypeID = hqrt,
+																 IATACode__c ='1234567',
+																 Type = 'IATA Cargo Agent',
+																 billingCountry = 'ss',Location_Type__c = 'AO');
+				insert a;
+
+				Contact con =new contact(lastname = 'pluto' ,
+																 firstname = 'Name',
+																 phone = '123',
+																 accountid = a.id,
+																 Financial_Assessment_Contact__c = true);
+				insert con;
+
+				date dead = date.today().addDays(40);
+
+				list<Case> cases = new list<Case>();
+				for(integer i=0;i<3;i++)
+						cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
+															Status = 'Assessment Performed',
+															Origin = 'asd',
+															IFAP_Area__c = 'asda',
+															Financial_Review_Type__c ='bla',
+															IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+															Deadline_Date__c = dead,
+															contactid = con.id,
+															AccountId = a.id,
+															Assessment_Performed_Date__c = date.today(),
+															Financial_Review_Result__c = 'Satisfactory - No Action'
+															));
+
+				insert cases;
+
+			 TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete =false;
+
+				CaseChildHelper.noValidationsOnTrgCAseIFAP = false;
+				test.startTest();
+
+				ApexPages.StandardSetController standardcontroller = new ApexPages.StandardSetController(cases);
+				standardcontroller.setSelected(cases);
+				MassCloseCasesCtrl ctrl = new MassCloseCasesCtrl(standardController);
+				ctrl.CloseCases();
+				system.assertEquals(2,ctrl.pagenumber);
+
+				ctrl.CloseCases();
+				ctrl.CloseCases();
+
+
+
+				test.stopTest();
+
+		}
 }

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>EMAIL SUBJECT</title>
+
+    <!-- CSS Reset : BEGIN -->
+    <style>
+		/* What it does: Remove spaces around the email design added by some email clients. */
+		/* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+		html, body {
+			margin: 0 auto !important;
+			padding: 0 !important;
+			height: 100% !important;
+			width: 100% !important;
+		}
+
+		/* What it does: Stops email clients resizing small text. */
+		* {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+		}
+
+		/* What it does: Centers email on Android 4.4 */
+		div[style*="margin: 16px 0"] {
+			margin: 0 !important;
+		}
+
+		/* What it does: Stops Outlook from adding extra spacing to tables. */
+		table, td {
+			mso-table-lspace: 0pt !important;
+			mso-table-rspace: 0pt !important;
+		}
+
+		/* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+		table {
+			border-spacing: 0 !important;
+			border-collapse: collapse !important;
+			table-layout: fixed !important;
+			margin: 0 auto !important;
+		}
+		table table table {
+			table-layout: auto;
+		}
+		th{
+			font-weight: normal;
+		}
+
+		/* What it does: Uses a better rendering method when resizing images in IE. */
+		img {
+			-ms-interpolation-mode:bicubic;
+		}
+		a{
+			color: #1e32fa;
+		}
+
+		/* What it does: A work-around for email clients meddling in triggered links. */
+		*[x-apple-data-detectors],  /* iOS */
+		.unstyle-auto-detected-links *,
+		.aBn {
+			border-bottom: 0 !important;
+			cursor: default !important;
+			color: inherit !important;
+			text-decoration: none !important;
+			font-size: inherit !important;
+			font-family: inherit !important;
+			font-weight: inherit !important;
+			line-height: inherit !important;
+		}
+
+		/* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+		.a6S {
+		   display: none !important;
+		   opacity: 0.01 !important;
+	   }
+	   /* If the above doesn't work, add a .g-img class to any image in question. */
+	   img.g-img + div {
+		   display: none !important;
+	   }
+
+	   /* What it does: Prevents underlining the button text in Windows 10 */
+		.button-link {
+			text-decoration: none !important;
+		}
+		a img{
+			border: none;
+		}
+
+		/* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+		/* Create one of these media queries for each additional viewport size you'd like to fix */
+
+		/* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+		@media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+			.email-container {
+				min-width: 320px !important;
+			}
+		}
+		/* iPhone 6, 6S, 7, 8, and X */
+		@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+			.email-container {
+				min-width: 375px !important;
+			}
+		}
+		/* iPhone 6+, 7+, and 8+ */
+		@media only screen and (min-device-width: 414px) {
+			.email-container {
+				min-width: 414px !important;
+			}
+		}
+
+	</style>
+    <!-- CSS Reset : END -->
+
+    <!-- Reset list spacing because Outlook ignores much of our inline CSS. -->
+    <!--[if mso]>
+    <style type="text/css">
+		ul,
+		ol {
+			margin: 0 !important;
+		}
+		li {
+			margin-left: 30px !important;
+		}
+		li.list-item-first {
+			margin-top: 0 !important;
+		}
+		li.list-item-last {
+			margin-bottom: 10px !important;
+		}
+	</style>
+    <![endif]-->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+		/* What it does: Hover styles for buttons */
+		.button-td,
+		.button-a {
+			transition: all 100ms ease-in;
+		}
+
+		/* Media Queries */
+		@media screen and (max-width: 600px) {
+
+			.email-container {
+				width: 100% !important;
+				margin: auto !important;
+			}
+
+			/* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+			.fluid {
+				max-width: 100% !important;
+				height: auto !important;
+				margin-left: auto !important;
+				margin-right: auto !important;
+			}
+
+			/* What it does: Forces table cells into full-width rows. */
+			.stack-column,
+			.stack-column-center {
+				display: block !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				direction: ltr !important;
+			}
+			/* And center justify these ones. */
+			.stack-column-center {
+				text-align: center !important;
+			}
+
+			/* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+			.center-on-narrow {
+				text-align: center !important;
+				display: block !important;
+				margin-left: auto !important;
+				margin-right: auto !important;
+				float: none !important;
+			}
+			table.center-on-narrow {
+				display: inline-block !important;
+			}
+
+			/* What it does: Adjust typography on small screens to improve readability */
+			.email-container p {
+				/*font-size: 16px !important;*/
+			}
+			.email-container p.footer {
+				/*font-size: 11px !important;*/
+			}
+			.spacer{
+				height: 0 !important;
+				width: 0 !important;
+				display: none !important;
+			}
+			.padding-mobile{
+				padding-bottom: 15px !important;
+			}
+			.full-width-img img{
+				width: 100% !important;
+				max-width: 600px !important;
+				height: auto !important;
+			}
+		}
+
+	</style>
+    <!-- Progressive Enhancements : END -->
+
+    <!--[if (mso)|(mso 16)]>
+    <style type="text/css">
+		a {text-decoration: none;}
+	</style>
+    <![endif]-->
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+</head>
+
+<body width="100%" style="margin: 0; mso-line-height-rule: exactly; background-color: #ebeff2;">
+<center style="width: 100%; background-color: #ebeff2; text-align: left;"><!--[if mso | IE]>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ebeff2;">
+        <tr>
+            <td>
+    <![endif]--><!-- Pre-Header : BEGIN -->
+
+    <!-- Pre-Header : BEGIN --><!-- Email Body : BEGIN -->
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0" class="email-container" style="margin: auto; background-color: #ffffff;" width="600">
+        <tbody>
+        <tr>
+            <td align="center" style="padding: 15px 20px; background-color: #ffffff;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                    <tr><!-- Column 1 : BEGIN -->
+                        <td valign="middle">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td class="center-on-narrow" style="text-align: left;"><a href="https://www.iata.org" target="_blank"><img alt="IATA" src="https://go.updates.iata.org/l/123902/2019-03-08/82z27f/123902/282500/iata_blue_logo.png" style="display: block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; margin: 0;" width="85"></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <!-- Column 1 : END -->
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <!-- Logo + Share this email : END --><!-- Header : BEGIN -->
+        <tr>
+            <td style="padding: 15px 30px; font-family: sans-serif; font-size: 12px; line-height: 16px; color: #000000;" class=""><h4 style="margin: 0 0 15px; font-size: 14px; line-height: 125%; color: #1e32fa; font-weight: normal;"></h4>
+                <p> Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},</p>
+                <p style="margin: 0;">Submission file(s) from *actor* have not been received for *monthsNotSubmitting* months. Continued failure to submit data may result in restricted access to the GADM program.</p>
+<p>Please provide the data at your earliest convenience or contact GADM Admin (*email*) for assistance.</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding: 15px 30px; font-family: sans-serif; font-size: 12px; line-height: 16px; color: #000000;" class=""><h4 style="margin: 0 0 15px; font-size: 14px; line-height: 125%; color: #1e32fa; font-weight: normal;"></h4>
+                <p style="margin-bottom: 0.2em;">GADM Team</p>
+                <a href="mailto:gadm@iata.org">gadm@iata.org</a>
+            </td>
+        </tr>
+
+        <!-- Full Size Banner : END --><!-- Email Footer : BEGIN -->
+        <tr>
+            <td style="background-color: #000000; padding: 30px 30px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <td align="center" style="color: #ffffff; text-align: center; font-family: sans-serif; font-size: 12px; color: #ffffff;" valign="top">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tbody>
+                                <tr><!-- Column 1 : BEGIN -->
+                                   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>                                                 
+                                                <!-- Column 1 : END --><!-- Column 2 : BEGIN -->
+                                                <th class="stack-column-center" style="padding: 0 0 0px;" valign="middle" width="30%">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="center-on-narrow" style="padding: 0; text-align: right;"><a href="https://www.twitter.com/iata" style="text-decoration: none;" target="_blank" title="Twitter"><img alt="Twitter" height="22" src="https://go.updates.iata.org/l/123902/2019-03-06/82yqk7/123902/282314/Twitter_Icon.png" style="display: inline-block;" width="22">&nbsp;</a> <a href="https://www.facebook.com/iata.org" style="text-decoration: none;" target="_blank" title="Facebook"><img alt="Facebook" height="22" src="https://go.updates.iata.org/l/123902/2019-03-06/82yqjy/123902/282306/Facebook_Icon.png" style="display: inline-block;" width="22">&nbsp;</a> <a href="https://www.linkedin.com/company/international-air-transport-association-iata" style="text-decoration: none;" target="_blank" title="LinkedIn"><img alt="LinkedIn" height="22" src="https://go.updates.iata.org/l/123902/2019-03-06/82yqjw/123902/282308/Linkedin_Icon.png" style="display: inline-block;" width="21">&nbsp;</a> <a href="http://www.youtube.com/iatatv" style="text-decoration: none;" target="_blank" title="YouTube"><img alt="YouTube" height="22" src="https://go.updates.iata.org/l/123902/2019-03-06/82yqk9/123902/282318/Youtube_Icon.png" style="display: inline-block;" width="22"></a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                                <!-- Column 2 : END -->
+                                            </tr>
+                                            </tbody>
+                                        </table>          
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 24px; color: #ffffff; padding: 15px 0;" class="">
+                                        <p style="margin: 0;">We represent, lead and serve the airline industry</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 12px; color: #ffffff;" class=""><a href="https://www.iata.org/about/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin-right: 5px;" target="_blank">About Us</a> | <a href="https://www.iata.org/whatwedo/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Programs</a> | <a href="https://www.iata.org/policy/Pages/default.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Policy</a> | <a href="https://www.iata.org/publications/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Publications</a> | <a href="https://www.iata.org/services/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Services</a> | <a href="https://www.iata.org/training/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Training</a> | <a href="https://www.iata.org/events/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin: 0 5px;" target="_blank">Events</a> | <a href="https://www.iata.org/pressroom/Pages/index.aspx" style="color: #ffffff; text-decoration: none; margin-left: 5px;" target="_blank">Pressroom</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family: sans-serif; font-size: 11px; color: #ffffff; padding: 15px 0 0;" class="">
+                                        <p style="margin: 0;">IMPORTANT PRIVACY INFORMATION. The International Air Transport Association (IATA) does not sell or rent your email address to any third party. You received this email message due to your membership, participation or interest in IATA. IATA sends various advertisements, promotions and special announcements regarding products and services that we feel may be of interest to you.<br>
+                                            <br>
+                                            © Copyright 2019. All rights reserved.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="color: #ffffff; text-align: left;" valign="top">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                            <tr><!-- Column 1 : BEGIN -->
+                                                <th class="stack-column-center" style="padding: 15px 0 0;" valign="bottom" width="60%">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="font-family: sans-serif; font-size: 11px; color: #ffffff;" class="">
+                                                                <p style="margin: 0; text-align: left;">International Air Transport Association (IATA)<br>
+                                                                    800 Square Victoria, Montreal, H4Z 1M1, Canada</p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                                <!-- Column 1 : END --><!-- Column 2 : BEGIN -->
+                                                <th class="stack-column-center padding-mobile" style="padding: 15px 0 0;" valign="bottom" width="20%">
+                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="center-on-narrow" style="font-family: sans-serif; font-size: 12px; color: #ffffff;">
+                                                                <p style="margin: 0;"><a href="https://www.iata.org/Pages/privacy.aspx" style="color: #ffffff; text-decoration: none;" target="_blank" title="Privacy">Privacy</a> | <a href="https://www.iata.org/Pages/terms.aspx" style="color: #ffffff; text-decoration: none;" target="_blank" title="Legal">Legal</a></p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                                <!-- Column 2 : END --><!-- Column 3 : BEGIN -->
+                                                <th class="stack-column-center" style="text-align: right;" valign="bottom" width="20%">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="center-on-narrow" style="padding: 0; text-align: right;"><a href="https://www.iata.org" target="_blank" title="IATA"><img alt="IATA" height="42" src="https://go.updates.iata.org/l/123902/2019-02-20/82w131/123902/281210/Logo_IATA_Footer.png" style="display: inline-block;" width="65"></a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </th>
+                                                <!-- Column 3 : END -->
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- Email Footer : END -->
+                    </tbody>
+                </table>
+                <!-- Email Body : END --><!--[if mso | IE]>
+                </td>
+                </tr>
+                </table>
+                <![endif]--></center>
+</body>
+</html>

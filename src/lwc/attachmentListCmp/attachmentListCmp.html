@@ -3,10 +3,10 @@
 
         <lightning-datatable columns={documentsColumns} hide-checkbox-column class="attlist slds-scrollable_none"
             is-loading={loading} key-field="Id" data={lstDocuments} onrowaction={handleRowAction}
-            resize-column-disabled=true>
+            resize-column-disabled=true min-column-width="175">
         </lightning-datatable>
 
-        <div class="slds-m-top_x-large slds-border_top slds-p-top_small">
+        <div class="slds-m-top_x-large slds-border_top slds-p-top_small no-print">
             <span class="AddAttButtonContainer">
                 <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
                     onclick={handleAddAttachs}></lightning-button>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div if:false={renderDataTable}
-        class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center noDocContainer">
+        class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center noDocContainer no-print">
         <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-text-align_center">
             <span class="textMediumMessage">{noAttachmentMsg}</span>
         </div>

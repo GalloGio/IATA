@@ -6,6 +6,7 @@ import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrante
 
 import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
 
+import IdCard from '@salesforce/label/c.CSP_Id_Card';
 
 export default class PortalMyProfilePage extends LightningElement {
 
@@ -45,8 +46,11 @@ export default class PortalMyProfilePage extends LightningElement {
 
         getContactDetails().then(result => {
             let contact = result.contact;
+            contact.cardName   = result.cardName   !== undefined ? result.cardName   : undefined;
+            contact.cardPhoto  = result.cardPhoto  !== undefined ? result.cardPhoto  : undefined;
             contact.cardNumber = result.cardNumber !== undefined ? result.cardNumber : undefined;
-            contact.cardDate = result.cardDate !== undefined ? result.cardDate : undefined;
+            contact.cardDate   = result.cardDate   !== undefined ? result.cardDate   : undefined;
+            contact.cardStatus = result.cardStatus !== undefined ? result.cardStatus : undefined;
 
             this.contactInfo = contact;
         });
@@ -87,7 +91,10 @@ export default class PortalMyProfilePage extends LightningElement {
                     'value': sectionMapContactLocal[i].lstFieldWrapper,
                     'key': sectionMapContactLocal[i].cardTitle,
                     'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
-                    'isEditable': sectionMapContactLocal[i].isEditable
+                    'isEditable': sectionMapContactLocal[i].isEditable,
+                    'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
+		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
+                    'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
                 });
             }
 

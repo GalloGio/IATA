@@ -174,7 +174,11 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
+        <fields>IATACode__c</fields>
+        <fields>Email__c</fields>
+        <fields>Phone</fields>
     </miniLayout>
     <relatedLists>
         <fields>FULL_NAME</fields>

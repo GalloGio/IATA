@@ -9,8 +9,8 @@ public class clsCaseCommentManager {
 			caseCommentIds.add(caseComment.Id);
 		}
 		Map<Id, CaseComment> caseCommentsMap = new Map<Id, CaseComment>([Select Id, parentId, Parent.Subject, Parent.CaseNumber, /*Parent.Product_Manager__c,*/
-		        Parent.RecordType.Name, Parent.Product_Manager_ACR__r.Email, CreatedBy.Profile.Name, IsPublished, Parent.ACCA_Owner__r.Email,
-		        parent.ContactId, parent.Contact.Email, parent.Owner.email, parent.owner.Name, CommentBody from CaseComment where Id IN :caseCommentIds AND parentId != null]);
+				Parent.RecordType.Name, Parent.Product_Manager_ACR__r.Email, CreatedBy.Profile.Name, IsPublished, Parent.ACCA_Owner__r.Email,
+				parent.ContactId, parent.Contact.Email, parent.Owner.email, parent.owner.Name, CommentBody from CaseComment where Id IN :caseCommentIds AND parentId != null]);
 
 		String emailTemplateName = 'Self-Service New Comment Notification';
 
@@ -46,8 +46,8 @@ public class clsCaseCommentManager {
 					// ********* ACR &  DPC SR cases Notifications **************
 					// Added by shai Fisher in 31/07/14
 					if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)') ||
-					        (cm.Parent.RecordType.Name == 'Application Change Request (DPC System)') ||
-					        (cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems) - ACCA')) {
+							(cm.Parent.RecordType.Name == 'Application Change Request (DPC System)') ||
+							(cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems) - ACCA')) {
 						if (cm.Parent.Owner.Email != null)
 							ccaddress.add(cm.Parent.Owner.Email);
 

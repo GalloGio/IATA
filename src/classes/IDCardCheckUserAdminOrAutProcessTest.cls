@@ -1,53 +1,53 @@
 @isTest
 private class IDCardCheckUserAdminOrAutProcessTest {
 
-	@testSetup 
-    static void testSetup(){
+	@testSetup
+	static void testSetup(){
 
-    	//create a country
+		//create a country
 		IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
-        country.Name = 'Portugal';
-        country.ISO_Code_Numeric__c = 620;
-        country.AIMS_Area_ID__c = '2';
-        country.ISO_Code__c = 'PT';
-        insert country;
+		country.Name = 'Portugal';
+		country.ISO_Code_Numeric__c = 620;
+		country.AIMS_Area_ID__c = '2';
+		country.ISO_Code__c = 'PT';
+		insert country;
 
 		//create an account
 		Account acc = new Account();
 		acc.Name = 'Account Test';
 		acc.IATACode__c = '1234567';
-        acc.Type = 'IATA Passenger Sales Agent';
+		acc.Type = 'IATA Passenger Sales Agent';
 		acc.IATA_ISO_Country__c = country.Id;
-        acc.Location_Type__c = 'HO';
-        acc.Location_Class__c = 'P';
-        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        insert acc;
+		acc.Location_Type__c = 'HO';
+		acc.Location_Class__c = 'P';
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		insert acc;
 
-        //create a contact
-        Contact con = new Contact();
-        con.LastName = 'IDCard';
-        con.FirstName = 'Contact';
-        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        con.AccountId = acc.Id;
-        con.Email = 'idcardcontact@test.idcard';
-        con.VER_Number_2__c = '1234';
-        insert con;
+		//create a contact
+		Contact con = new Contact();
+		con.LastName = 'IDCard';
+		con.FirstName = 'Contact';
+		con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		con.AccountId = acc.Id;
+		con.Email = 'idcardcontact@test.idcard';
+		con.VER_Number_2__c = '1234';
+		insert con;
 
-        //create an idcard
-      	ID_Card__c idCard = new ID_Card__c();
-        idCard.Related_Contact__c = con.id;
-        idCard.Valid_To_Date__c = Date.today().addMonths(5);
-        idCard.Name_on_ID_Card__c = 'test';
-        idCard.VER_Number__c = '1234';
-        idCard.Sent_to_AIMS_on__c = Datetime.now();
-        idCard.Received_From_AIMS__c = Datetime.now();
-        insert idCard;
+		//create an idcard
+	  	ID_Card__c idCard = new ID_Card__c();
+		idCard.Related_Contact__c = con.id;
+		idCard.Valid_To_Date__c = Date.today().addMonths(5);
+		idCard.Name_on_ID_Card__c = 'test';
+		idCard.VER_Number__c = '1234';
+		idCard.Sent_to_AIMS_on__c = Datetime.now();
+		idCard.Received_From_AIMS__c = Datetime.now();
+		insert idCard;
 
-        //create the users
+		//create the users
 
-        List<User> usersToInsert = new List<User>();
+		List<User> usersToInsert = new List<User>();
 
-        Profile testProfileidfs = [SELECT Id FROM Profile WHERE Name = 'IDFS Passenger - Distribution Solutions'];
+		Profile testProfileidfs = [SELECT Id FROM Profile WHERE Name = 'IDFS Passenger - Distribution Solutions'];
 		User testUser1 = New User();
 		testUser1.Alias = 'idcard';
 		testUser1.Email='idcardIDFS@test.idcard';
@@ -90,24 +90,24 @@ private class IDCardCheckUserAdminOrAutProcessTest {
 		usersToInsert.add(testUser3);
 
 		insert usersToInsert;
-    }
-	
+	}
+
 	@isTest static void testSentToAIMSNull() {
 		// Sent_to_AIMS_on__c = null - nothing to do - no error
 		List<ID_Card__c> idcards = [SELECT Id, Sent_to_AIMS_on__c FROM ID_Card__c];
 
 		try
-    	{
-        	idcards.get(0).Sent_to_AIMS_on__c = null;
-        	update idcards;
-        	System.assert(true); //no exception - everything went as expected
-        } 
-        catch (DmlException e) 
-        {
-        	System.assert(false); //the action should not trow an exception
-    	}
+		{
+			idcards.get(0).Sent_to_AIMS_on__c = null;
+			update idcards;
+			System.assert(true); //no exception - everything went as expected
+		}
+		catch (DmlException e)
+		{
+			System.assert(false); //the action should not trow an exception
+		}
 	}
-	
+
 
 	@isTest static void testReceivedFromAIMSNotNull() {
 		//Sent_to_AIMS_on__c != null
@@ -121,15 +121,15 @@ private class IDCardCheckUserAdminOrAutProcessTest {
 
 		System.runAs(users.get(0)){
 			try
-	    	{
-	        	idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
-	        	update idcards;
-	        	System.assert(true); //no exception - everything went as expected
-	        } 
-	        catch (DmlException e) 
-	        {
-	        	System.assert(false); //the action should not trow an exception
-	    	}
+			{
+				idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
+				update idcards;
+				System.assert(true); //no exception - everything went as expected
+			}
+			catch (DmlException e)
+			{
+				System.assert(false); //the action should not trow an exception
+			}
 		}
 	}
 
@@ -146,15 +146,15 @@ private class IDCardCheckUserAdminOrAutProcessTest {
 
 		System.runAs(users.get(0)){
 			try
-	    	{
-	        	idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
-	        	update idcards;
-	        	System.assert(true); //no exception - everything went as expected
-	        } 
-	        catch (DmlException e) 
-	        {
-	        	System.assert(false); //the action should not trow an exception
-	    	}
+			{
+				idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
+				update idcards;
+				System.assert(true); //no exception - everything went as expected
+			}
+			catch (DmlException e)
+			{
+				System.assert(false); //the action should not trow an exception
+			}
 		}
 	}
 
@@ -171,15 +171,15 @@ private class IDCardCheckUserAdminOrAutProcessTest {
 
 		System.runAs(users.get(0)){
 			try
-	    	{
-	        	idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
-	        	update idcards;
-	        	System.assert(true); //no exception - everything went as expected
-	        } 
-	        catch (DmlException e) 
-	        {
-	        	System.assert(false); //the action should not trow an exception
-	    	}
+			{
+				idcards.get(0).Sent_to_AIMS_on__c = Datetime.now().addDays(-1);
+				update idcards;
+				System.assert(true); //no exception - everything went as expected
+			}
+			catch (DmlException e)
+			{
+				System.assert(false); //the action should not trow an exception
+			}
 		}
 	}
 
@@ -196,16 +196,16 @@ private class IDCardCheckUserAdminOrAutProcessTest {
 
 		System.runAs(users.get(0)){
 			try
-	    	{
-	        	idcards.get(0).Received_From_AIMS__c = null;
-	        	update idcards;
-	        	System.assert(false); //the action should trow an exception
-	        } 
-	        catch (DmlException e) 
-	        {
-	        	System.assert(e.getNumDml() == 1);
-	    	}
+			{
+				idcards.get(0).Received_From_AIMS__c = null;
+				update idcards;
+				System.assert(false); //the action should trow an exception
+			}
+			catch (DmlException e)
+			{
+				System.assert(e.getNumDml() == 1);
+			}
 		}
 	}
-	
+
 }

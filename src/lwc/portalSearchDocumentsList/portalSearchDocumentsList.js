@@ -171,6 +171,12 @@ export default class PortalSearchDocumentsList extends NavigationMixin(Lightning
                 this.loadingMoreResults = false;
             }
 
+            if(filteringObjectAux.documentsComponent.nrResults === 0 && !filteringObjectAux.documentsComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.documentsComponent.show = false;
+            }else if(filteringObjectAux.documentsComponent.nrResults > 0 && !filteringObjectAux.documentsComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.documentsComponent.show = true;
+            }
+            
             const selectedEvent = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "documentsComponent" }});
             this.dispatchEvent(selectedEvent);
 
@@ -224,6 +230,8 @@ export default class PortalSearchDocumentsList extends NavigationMixin(Lightning
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = true;
             filteringObjectAux.documentsComponent.show = true;
+            filteringObjectAux.profileComponent.highlight = false;
+            filteringObjectAux.profileComponent.show = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }

@@ -1,0 +1,43 @@
+<!--
+ - Created by pvavruska on 5/27/2019.
+ -->
+
+<!-- Portal Company Profile Contact Info -->
+<template>
+    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite nineh" style="margin-top:2.5rem;">
+
+        <!-- Header Part -->
+        <div class="slds-m-vertical_small">
+            <div style="display: flex;justify-content: center;align-items: center;">
+
+                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                    <div style="width:100%;">
+                        <span class="text-medium text-bold text-darkGray">Company Contact</span>
+                    </div>
+                </div>
+                <div class="text-xxsmall">
+                    <lightning-icon icon-name="utility:edit" size="x-small" class="darkBlueIcon cursorPointer" onclick={doEdit}></lightning-icon>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Body Part -->
+        <div>
+            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large" style="padding: 1rem; max-width:800px;">
+
+
+
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                    <div class="fieldLabel">E-Mail</div>
+                    <div class="fieldValue">account@email.com</div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                    <div class="fieldLabel">Website</div>
+                    <div class="fieldValue"><a target="_blank" href="https://www.iata.org">www.account.web</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

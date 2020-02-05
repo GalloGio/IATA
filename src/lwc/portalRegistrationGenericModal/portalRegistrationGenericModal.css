@@ -1,0 +1,77 @@
+.outer {
+  display: table;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color:  rgba(0,0,0,.4);
+  z-index: 4004;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.modal2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 200px;
+}
+
+.customPopupInteriorQuarterScreenCentered {
+  min-width: 300px;
+  background-color: #fff;
+  width: 40%;
+  max-width: 550px !important;
+  margin: auto;
+  box-shadow: 5px 5px 20px #808080;
+  border-radius: 1px;
+  border: solid 1px #e2e2e2;
+}
+
+.icon{
+  position:relative; 
+  text-align:center; 
+  top: -48px;
+}
+
+.textAlignCenter {
+    text-align: center;
+  }
+
+.btnModal{
+  /*display: inline-block;
+  width: 100%;*/
+  display: flex;
+}
+
+.secondBtn{
+  border: 1px solid #1e32fa;
+}
+
+.buttonContainer{
+  width: 48%;
+  display: flex;
+}
+
+.marginAuto{
+  margin: auto;
+}
+
+.buttonsWrapper{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.outlinedBtn{
+  box-shadow: none;
+}
+
+.modalTitle{
+  font-size: 18px;
+}

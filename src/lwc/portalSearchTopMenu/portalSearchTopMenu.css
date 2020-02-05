@@ -1,0 +1,91 @@
+.searchBarRow {
+  display: flex;
+  width: auto;
+  position: relative;
+}
+
+.searchBarRow lightning-button {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.searchBarIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchBarBarContainer {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyGrayAreaSize {
+  height: 50px;
+}
+
+.searchBarPosition {
+  position: relative;
+  margin-top: -29px;
+}
+
+.smallSearchSpinner {
+  position: relative;
+  display: inline-block;
+  margin-right: 35px;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.marginTop {
+  margin-top: 3px;
+}
+
+.topMenuSearchResultsList {
+  max-height: calc(730px);
+  overflow: auto;
+}
+.mainContentDiv {
+  position:relative;
+}
+
+.resultsContentDiv {
+  background-color:#fff;
+  position:relative;
+  width:100%;
+  z-index:6;
+  margin: 0px;
+}
+
+.barSpinner{
+  position: relative;
+  display: inline-block;
+  margin-right: 35px;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.slds-backdrop {
+  z-index: 4;
+  background-color: transparent;
+  opacity: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+.onTop {
+  z-index: 5;
+}
+@media only screen and (max-width: 500px) {
+  .searchIconMagnifying {
+    display: none;
+  }
+  .topMenuSearchResultsList {
+    max-height: calc(650px);
+    overflow: auto;
+  }
+}

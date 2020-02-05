@@ -190,6 +190,12 @@ export default class PortalSearchCasesList extends NavigationMixin(LightningElem
                 this.loadingMoreResults = false;
             }
 
+            if(filteringObjectAux.casesComponent.nrResults === 0 && !filteringObjectAux.casesComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.casesComponent.show = false;
+            }else if(filteringObjectAux.casesComponent.nrResults > 0 && !filteringObjectAux.casesComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.casesComponent.show = true;
+            }
+
             const selectedEvent = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "casesComponent" }});
             this.dispatchEvent(selectedEvent);
 
@@ -243,6 +249,8 @@ export default class PortalSearchCasesList extends NavigationMixin(LightningElem
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
+            filteringObjectAux.profileComponent.show = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }

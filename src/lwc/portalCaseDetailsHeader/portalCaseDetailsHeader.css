@@ -81,3 +81,27 @@
     font-size: 13px;
     font-weight: 400;
 }
+.text-recipients {
+    text-align: right;
+}
+@media print {
+    .text-recipients div,
+    .slds-text-align_right div {
+        text-align: left;
+    }
+    .recipients-label.text-blue {
+        display: none;
+    }
+    .border_gradient:before {
+        border-right: 0 solid transparent;
+    }
+    .border_gradient:after {
+        border-left: 0 solid transparent;
+    }
+    .customCardTitleBox .size_1-of-1.slds-medium-size_2-of-12 {
+        width: 16.6666666667%;
+    }
+    .customCardTitleBox .size_1-of-1.slds-medium-size_8-of-12 {
+        width: 66.6666666667%;
+    }
+}

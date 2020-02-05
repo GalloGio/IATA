@@ -3,8 +3,9 @@
     <div class={backgroundClass}>
     
         <!-- Service image area -->
-        <div class="imageContainer slds-m-around_medium background-superLightGray">
-            <img class="slds-p-around_small serviceImageStyles" src={imageUrl}/>
+        <div class="imageContainer slds-m-around_medium background-superLightGray favoriteIconDiv">
+            <slot name="favoriteIcon"></slot>
+            <slot name="serviceImage"></slot>
         </div>
 
         <!-- Service title, description and actions-->

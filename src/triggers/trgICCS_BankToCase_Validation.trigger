@@ -17,22 +17,22 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 
 	if(Trigger.isDelete)
 		return;
-	
-	List<ICCS_BankAccount_To_Case__c> batcs = [SELECT Case__c, ICCS_Bank_Account__c, Split_Type__c, Percentage__c 
-												FROM ICCS_BankAccount_To_Case__c 
+
+	List<ICCS_BankAccount_To_Case__c> batcs = [SELECT Case__c, ICCS_Bank_Account__c, Split_Type__c, Percentage__c
+												FROM ICCS_BankAccount_To_Case__c
 												WHERE Case__c IN :caseids];
 
-	
+
 	map<id, set<id>> CaseIdToBankAccIds = new map<id,set<id>>();
 	set<id> CasesWithTotal = new set<id>();
 	set<id> CasesWithBalance = new set<id>();
 	map<id, decimal> CasesToPercentage = new map<id, decimal>();
-	 
+
 	for(ICCS_BankAccount_To_Case__c batc : batcs){
 		if(CaseIdToBankAccIds.get(batc.Case__c)==null)
 			CaseIdToBankAccIds.put(batc.Case__c, new set<id>());
-		CaseIdToBankAccIds.get(batc.Case__c).add(batc.ICCS_Bank_Account__c);	
-		
+		CaseIdToBankAccIds.get(batc.Case__c).add(batc.ICCS_Bank_Account__c);
+
 		if(batc.Split_type__c == PER){
 			decimal perc = CasesToPercentage.get(batc.Case__c) == null ? 0 : CasesToPercentage.get(batc.Case__c);
 			perc += batc.Percentage__c;
@@ -42,16 +42,16 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 		}else if(batc.Split_type__c == BAL){
 			CasesWithBalance.add(batc.Case__c);
 		}
-	
+
 	}
-	
-	
+
+
 	for(integer i = 0; i< Trigger.new.size(); i++){
 		ICCS_BankAccount_To_Case__c batc = Trigger.new[i];
 		ICCS_BankAccount_To_Case__c obatc = Trigger.isUpdate ? Trigger.old[i] : new ICCS_BankAccount_To_Case__c(Percentage__c = 0);
-		
-		
-		
+
+
+
 		//I check the uniqueness of the case-bankAccount (only on insert because the master detail cannot be changed)
 		if(CaseIdToBankAccIds.get(batc.Case__c)==null)
 			CaseIdToBankAccIds.put(batc.Case__c, new set<id>());
@@ -59,10 +59,10 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 			batc.addError('This Product - Country - Currency - Bank Account combination already exists. ');
 		else
 			CaseIdToBankAccIds.get(batc.Case__c).add(batc.ICCS_Bank_Account__c);
-		
-		
-		
-		
+
+
+
+
 		//I remove the old values of this record from the maps
 		if(trigger.isUpdate && batc.Split_type__c != obatc.Split_type__c){
 			if(obatc.Split_type__c==PER && obatc.Percentage__c != null){
@@ -75,11 +75,11 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 		}else if(trigger.isUpdate && obatc.Percentage__c!=batc.Percentage__c){
 			CasesToPercentage.put(obatc.Case__c,CasesToPercentage.get(obatc.Case__c)-obatc.Percentage__c);
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 		//Check conditions on PERCENTAGE
 		if(batc.Split_type__c == PER){
 			if(batc.Percentage__c == null){
@@ -116,21 +116,21 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 		}else{ // not AMOUNT
 			if(batc.Amount__c!=null)
 				batc.Amount__c.addError('It\'s not possible to specify the amount if the instruction type is not "Amount".');
-		
-		}		
-						
-				
-		//Check conditions on TOTAL	
+
+		}
+
+
+		//Check conditions on TOTAL
 		if(batc.Split_type__c == TOT){
 			batc.Percentage__c = 100;
-			
-			if((Trigger.isInsert  || (Trigger.isUpdate && obatc.Split_type__c!='T')) &&  
-				CaseIdToBankAccIds.get(batc.Case__c).size()>1) 
-			
+
+			if((Trigger.isInsert  || (Trigger.isUpdate && obatc.Split_type__c!='T')) &&
+				CaseIdToBankAccIds.get(batc.Case__c).size()>1)
+
 				batc.Split_type__c.addError('It\'s not possible to add a Total instruction if other instructions exist for this case.');
 		}
-			
-			
+
+
 		//Check conditions on BALANCE
 		if(batc.Split_type__c == BAL){
 			if(CasesWithTotal.contains(batc.Case__c))
@@ -140,8 +140,8 @@ trigger trgICCS_BankToCase_Validation on ICCS_BankAccount_To_Case__c (before ins
 			if(CasesToPercentage.get(batc.Case__c) == 100)
 				batc.Split_type__c.addError('It\'s not possible to add a new balance instruction if the total percentage for this case is already 100%.');
 		}
-	
+
 	}
-	
+
 
 }

@@ -1,7 +1,7 @@
 public class ANG_TrackingHistory {
 
 	//ACAMBAS - WMO-390 - Start
-	
+
 	public static Map<String, List<String>> trackedFieldsMap = new Map<String, List<String>>();
 
 	public static List<String> getStandardTrackedFields(String objectName) {
@@ -40,36 +40,36 @@ public class ANG_TrackingHistory {
 		String masterDetailFieldName = isCustomObject ? trackedObjectApiName : trackedObjectApiName + '__c';
 
 		//ACAMBAS - WMO-390 - Start
-		
+
 		List<String> trackedStandardFields = getStandardTrackedFields(trackedObjectApiName);
 		List<String> fieldsToIgnore = getFieldsToExcludeFromTracking(sObjDesc);
-		
+
 		Map<String, Schema.SObjectField> fieldMap = sObjDesc.fields.getMap();
 
 		List<Schema.SObjectField> filteredFieldMap = new List<Schema.SObjectField>();
 
 		for(Schema.SObjectField sfield : fieldMap.Values()) {
-        	if(!fieldsToIgnore.contains('' + sField) && !trackedStandardFields.contains('' + sField)){
-        		filteredFieldMap.add(sField);
-        	}
+			if(!fieldsToIgnore.contains('' + sField) && !trackedStandardFields.contains('' + sField)){
+				filteredFieldMap.add(sField);
+			}
 		}
 
 		for(Schema.SObjectField sfield : filteredFieldMap) {
-        	Schema.DescribeFieldResult sfieldDescribe = sfield.getDescribe();
-        	if(!sfieldDescribe.isCalculated()){
-        		String fieldLabel = sfieldDescribe.getLabel();
-        		String fieldAPIName = sfieldDescribe.getName();
+			Schema.DescribeFieldResult sfieldDescribe = sfield.getDescribe();
+			if(!sfieldDescribe.isCalculated()){
+				String fieldLabel = sfieldDescribe.getLabel();
+				String fieldAPIName = sfieldDescribe.getName();
 				for(Id sobjId: newMap.keySet()) {
-	                Object newValue = newMap.get(sobjId).get(fieldAPIName);
-	                Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
+					Object newValue = newMap.get(sobjId).get(fieldAPIName);
+					Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
 
-	                if(newValue != oldValue) {
-	                    SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
-	                    recordsToInsert.add(newHistRecord); 
-	                }
-	            }
-	        }          
-        }
+					if(newValue != oldValue) {
+						SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
+						recordsToInsert.add(newHistRecord);
+					}
+				}
+			}
+		}
 
 
 
@@ -83,7 +83,7 @@ public class ANG_TrackingHistory {
 
 
 	//ACAMBAS - WMO-390 - Start
-	
+
 	private static List<String> getFieldsToExcludeFromTracking(Schema.DescribeSObjectResult sObjDesc) {
 		List<String> fieldsToExclude = new List<String> {'LastModifiedDate', 'SystemModstamp'};
 		Schema.FieldSet fieldSet = sObjDesc.FieldSets.getMap().get('FieldsExcludedFromTracking');

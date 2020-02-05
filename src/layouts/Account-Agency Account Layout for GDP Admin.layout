@@ -634,6 +634,14 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ParentId</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+    </miniLayout>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>

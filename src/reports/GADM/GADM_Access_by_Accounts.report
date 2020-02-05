@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Contact__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r$Contact_Roles__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r$Position__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Status__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Email_Address__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Phone__c</field>
+    </columns>
+    <currency>USD</currency>
+    <filter>
+        <criteriaItems>
+            <column>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Service__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>GADM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Account_Roles__r.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Contact_Roles_Name__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>GADM User</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>GADM Access by Accounts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Acc_Roles_Acc_Cont_Role_Service_Access__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

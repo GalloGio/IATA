@@ -1,5 +1,5 @@
 global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batchable<sObject>, Database.Stateful {
-	
+
 	global Set<Id> contactIds {get;set;}
 	global Map<Id,List<Id>> mapContactToCase {get;set;}
 	global Map<Id,EmailTemplate> mapContactToTemplate {get;set;}
@@ -8,7 +8,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	global Id orgEmailAddressId {get;set;}
 	global Blob emailExampleContent {get;set;}
 	global Set<Id> onlyExternalNotification {get;set;}
-	
+
 	global AMS_MajorDefaultCommunicationEmailSender(Set<Id> contactIds, Map<Id,List<Id>> mapContactToCase, Map<Id,EmailTemplate> mapContactToTemplate, Set<Id> onlyExternalNotification) {
 		this.contactIds = contactIds;
 		this.mapContactToCase = mapContactToCase;
@@ -18,7 +18,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		this.onlyExternalNotification = onlyExternalNotification;
 		this.orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
 	}
-	
+
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		return Database.getQueryLocator('SELECT Id, Name, Email, Account.Name, (SELECT Id FROM Users LIMIT 1) FROM Contact WHERE Id IN :contactIds');
 	}
@@ -43,7 +43,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		for(Contact c : scope) {
 			for(Id caseId : mapContactToCase.get(c.Id)) {
 				Case cse = mapCases.get(caseId);
-				EmailTemplate template = mapContactToTemplate.get(c.Id);			
+				EmailTemplate template = mapContactToTemplate.get(c.Id);
 				Boolean notifiyInternalGroup = !onlyExternalNotification.contains(caseId);
 				if(c.Users.isEmpty()) {
 					Messaging.SingleEmailMessage mail = mailToContact(c, cse, template);
@@ -119,7 +119,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 
 		return new EmailMessageWrapper(activity, mail, notifiyInternalGroup);
 	}
-	
+
 	global void finish(Database.BatchableContext BC) {
 		if(!this.results.rows.isEmpty()) {
 		notifyGroup(this.results, this.mapContactToCase, this.emailExampleContent);
@@ -139,13 +139,13 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 				Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
 				Blob csvReport = results.buildReport();
 				csvAttc.setFileName('Airlines notifications report.csv');
-	        	csvAttc.setBody(csvReport);
+				csvAttc.setBody(csvReport);
 
-	        	Messaging.EmailFileAttachment exampleAttc = new Messaging.EmailFileAttachment();
+				Messaging.EmailFileAttachment exampleAttc = new Messaging.EmailFileAttachment();
 				exampleAttc.setFileName('Notification Example.html');
-	        	exampleAttc.setBody(emailExampleContent);
+				exampleAttc.setBody(emailExampleContent);
 
-	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, u.Id, caseId);
+				Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, u.Id, caseId);
 				mail.setTargetObjectId(u.Id);
 				mail.setSaveAsActivity(false);
 				mail.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc, exampleAttc});
@@ -173,7 +173,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 
 	public class EmailMessageWrapper {
 		public Task activity {get;set;}
-		public String reportRow {get;set;} 
+		public String reportRow {get;set;}
 		public Messaging.SingleEmailMessage mail {get;set;}
 		public Boolean notifiyInternalGroup {get;set;}
 
@@ -182,5 +182,5 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 			this.mail = mail;
 			this.notifiyInternalGroup = notifiyInternalGroup;
 		}
-	}	
+	}
 }

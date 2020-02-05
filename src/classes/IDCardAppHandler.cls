@@ -16,5 +16,5 @@ public with sharing class IDCardAppHandler {
 		if(!listIdca.isEmpty()){
 			upsert listIdca;
 		}
-	}	
+	}
 }

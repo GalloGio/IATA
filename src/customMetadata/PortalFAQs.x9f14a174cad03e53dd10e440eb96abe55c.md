@@ -88,7 +88,7 @@
     </values>
     <values>
         <field>FAQsStructure__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>ISO_Country_Codes1__c</field>
@@ -109,6 +109,10 @@
     <values>
         <field>Permission_Set_Name__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>SectorExceptions__c</field>

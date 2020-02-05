@@ -49,75 +49,75 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 		setOwnerAndRoleLabels();
 	}
 
-    private void setOwnerAndRoleLabels() {
-        if (this.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
-            setPageLegalStatusLabels();
+	private void setOwnerAndRoleLabels() {
+		if (this.fw.newForm.ISSP_AMS_Legal_Status__c != null) {
+			setPageLegalStatusLabels();
 			setPageLegalStatusAfterChangeLabels();
-        } else {
-            roleLabelType = 'manager';
-            ownerLabelType = 'owner';
-            ownerLabel = Label.ISSP_AMS_Owner;
-            roleLabel = Label.ISSP_AMS_Manager;
-            roleLabelTypeAfterChange = 'manager';
-            ownerLabelTypeAfterChange = 'owner';
-            ownerLabelAfterChange = Label.ISSP_AMS_Owner;
-            roleLabelAfterChange = Label.ISSP_AMS_Manager;
-        }
-    }
+		} else {
+			roleLabelType = 'manager';
+			ownerLabelType = 'owner';
+			ownerLabel = Label.ISSP_AMS_Owner;
+			roleLabel = Label.ISSP_AMS_Manager;
+			roleLabelTypeAfterChange = 'manager';
+			ownerLabelTypeAfterChange = 'owner';
+			ownerLabelAfterChange = Label.ISSP_AMS_Owner;
+			roleLabelAfterChange = Label.ISSP_AMS_Manager;
+		}
+	}
 
 	private void setPageLegalStatusLabels() {
-        roleLabel = Label.ISSP_AMS_Director;
+		roleLabel = Label.ISSP_AMS_Director;
 		roleLabelType = 'director';
 		String legalstatus = this.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
 
-        if (legalstatus == 'association'
+		if (legalstatus == 'association'
 			|| legalstatus == 'corporation'
 			|| legalstatus == 'limited company'
 			|| legalstatus == 'trust company') {
 
 			ownerLabelType = 'shareholder';
-            ownerLabel = Label.ISSP_AMS_Shareholder;
+			ownerLabel = Label.ISSP_AMS_Shareholder;
 
-        } else if (legalstatus == 'co-operative'
+		} else if (legalstatus == 'co-operative'
 				   || legalstatus == 'joint venture'
 				   || legalstatus == 'limited partnership'
 				   || legalstatus == 'partnership') {
 
 			ownerLabelType = 'partner';
-            ownerLabel = Label.ISSP_AMS_Partner;
+			ownerLabel = Label.ISSP_AMS_Partner;
 
-        } else {
+		} else {
 			roleLabelType = 'manager';
 			ownerLabelType = 'owner';
-            ownerLabel = Label.ISSP_AMS_Owner;
+			ownerLabel = Label.ISSP_AMS_Owner;
 			roleLabel = Label.ISSP_AMS_Manager;
-        }
+		}
 	}
 
 	private void setPageLegalStatusAfterChangeLabels() {
 		String legalStatusAfterChange = this.fw.newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
 
-        roleLabelTypeAfterChange = 'director';
-        roleLabelAfterChange = Label.ISSP_AMS_Director;
-        if (legalStatusAfterChange == 'association'
+		roleLabelTypeAfterChange = 'director';
+		roleLabelAfterChange = Label.ISSP_AMS_Director;
+		if (legalStatusAfterChange == 'association'
 			|| legalStatusAfterChange == 'corporation'
 			|| legalStatusAfterChange == 'limited company'
 			|| legalStatusAfterChange == 'trust company') {
 
-            ownerLabelTypeAfterChange = 'shareholder';
-            ownerLabelAfterChange = Label.ISSP_AMS_Shareholder;
-        } else if (legalStatusAfterChange == 'co-operative'
-		           || legalStatusAfterChange == 'joint venture'
+			ownerLabelTypeAfterChange = 'shareholder';
+			ownerLabelAfterChange = Label.ISSP_AMS_Shareholder;
+		} else if (legalStatusAfterChange == 'co-operative'
+				   || legalStatusAfterChange == 'joint venture'
 				   || legalStatusAfterChange == 'limited partnership'
 				   || legalStatusAfterChange == 'partnership') {
 
-            ownerLabelTypeAfterChange = 'partner';
-            ownerLabelAfterChange = Label.ISSP_AMS_Partner;
-        } else {
-            roleLabelTypeAfterChange = 'manager';
-            ownerLabelTypeAfterChange = 'owner';
-            ownerLabelAfterChange = Label.ISSP_AMS_Owner;
-            roleLabelAfterChange = Label.ISSP_AMS_Manager;
-        }
-    }
+			ownerLabelTypeAfterChange = 'partner';
+			ownerLabelAfterChange = Label.ISSP_AMS_Partner;
+		} else {
+			roleLabelTypeAfterChange = 'manager';
+			ownerLabelTypeAfterChange = 'owner';
+			ownerLabelAfterChange = Label.ISSP_AMS_Owner;
+			roleLabelAfterChange = Label.ISSP_AMS_Manager;
+		}
+	}
 }

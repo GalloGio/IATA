@@ -1,74 +1,74 @@
 @isTest
 private class FeedItemHelperTest {
-	
+
 	@isTest static void test_CheckPostTopics() {
 		// CREATE TEST DATA
-        
-                // Create a new ISO Country
-                IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
-                insert country_qr;
-                        
-                // Create an Airline HQ account
-                Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-                Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
-                                        RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'IATA member');
-                insert acct_hq;
 
-                Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-                Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
-                insert con;
+				// Create a new ISO Country
+				IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
+				insert country_qr;
 
+				// Create an Airline HQ account
+				Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+				Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
+										RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'IATA member');
+				insert acct_hq;
 
-                test.startTest();
-
-                	// Test for errors raised
-
-                	FeedItem fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body with NO hashtags');
-
-                	Boolean isExceptionThrown = false;
-
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
-
-                	system.assertEquals(true, isExceptionThrown);
+				Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+				Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
+				insert con;
 
 
-                	// Test for no errors raised
-                	// #1 , hashtags used
+				test.startTest();
 
-                	fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body WITH #hashtags');
+					// Test for errors raised
 
-                	isExceptionThrown = false;
+					FeedItem fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body with NO hashtags');
 
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
+					Boolean isExceptionThrown = false;
 
-                	system.assertEquals(false, isExceptionThrown);
+					try {
+						insert fi;
+					} catch (Exception e) {
+						isExceptionThrown = true;
+					}
 
-
-                	// #2, NO hashtags but attached to another object than an account
-                        // ######## not working on Contact as the feedtracking is not enabled #######
-                        /*
-                	fi = new FeedItem(ParentId = con.Id, Body = 'body with NO hashtags');
-
-                	isExceptionThrown = false;
-
-                	try {
-                		insert fi;
-                	} catch (Exception e) {
-                		isExceptionThrown = true;
-                	}
-
-                	system.assertEquals(false, isExceptionThrown);*/
+					system.assertEquals(true, isExceptionThrown);
 
 
-                test.stopTest();
+					// Test for no errors raised
+					// #1 , hashtags used
+
+					fi = new FeedItem(ParentId = acct_hq.Id, Body = 'body WITH #hashtags');
+
+					isExceptionThrown = false;
+
+					try {
+						insert fi;
+					} catch (Exception e) {
+						isExceptionThrown = true;
+					}
+
+					system.assertEquals(false, isExceptionThrown);
+
+
+					// #2, NO hashtags but attached to another object than an account
+						// ######## not working on Contact as the feedtracking is not enabled #######
+						/*
+					fi = new FeedItem(ParentId = con.Id, Body = 'body with NO hashtags');
+
+					isExceptionThrown = false;
+
+					try {
+						insert fi;
+					} catch (Exception e) {
+						isExceptionThrown = true;
+					}
+
+					system.assertEquals(false, isExceptionThrown);*/
+
+
+				test.stopTest();
 	}
-	
+
 }

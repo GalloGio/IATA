@@ -1,0 +1,67 @@
+<aura:component controller="AWW_HeadOfficesCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/> 
+    <aura:attribute name="selectedAction" type="String" default="add"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+
+    <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
+    <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
+
+    <aura:method name="showModal" action="{!c.show}" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="confirmation" event="c:AWW_ConfirmationEvent" action="{!c.confirmation}"/>
+
+    <div aura:id="manage-modal" class="slds-hide">
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.hide}" alternativeText="close" variant="bare-inverse" size="large" class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Manage Hierarchy</h2>
+                </header>
+                <div class="slds-modal__content">
+                    <div class="slds-grid slds-wrap">
+                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-2 ' + if(v.selectedAction == 'add', 'activeTab', 'inactiveTab')}" data-option="add" onclick="{!c.changeAction}">Add</div>
+                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-2 ' + if(v.selectedAction == 'remove', 'activeTab', 'inactiveTab')}" data-option="remove" onclick="{!c.changeAction}">Remove</div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-p-around_x-small">
+                        <div class="slds-col slds-size_5-of-6">
+                            <lightning:input placeholder="Search for GE, HE, HO and AO" aura:id="enter-search" name="enter-search" variant="label-hidden"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6">
+                            <lightning:button class="slds-float_right" variant="brand" label="Search" iconName="utility:search" onclick="{!c.search}"/>
+                        </div>
+                    </div>
+                    <aura:renderIf isTrue="{!not(empty(v.data))}">
+                        <div class="slds-col slds-p-around_x-small slds-size_1-of-1">
+                            <div class="slds-table_striped slds-border_top slds-border_left slds-border_right">
+                                <lightning:datatable
+                                    aura:id="search-results"
+                                    keyField="accountId"
+                                    data="{!v.data}"
+                                    columns="{!v.columns}"
+                                    resizeColumnDisabled="true"
+                                    onrowselection="{!c.updateSelectedRows}"
+                                    hideCheckboxColumn="false"
+                                    sortedBy="{!v.sortBy}"
+                                    sortedDirection="{!v.sortDirection}"
+                                    onsort="{!c.handleSort}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" title="Close" onclick="{!c.hide}"/>
+                    <aura:renderIf isTrue="{!v.selectedRowsCount > 0}"> 
+                        <lightning:button variant="brand" label="{!if(v.selectedAction == 'add', 'Add', 'Remove')}" title="{!if(v.selectedAction == 'add', 'Add', 'Remove')}" onclick="{!c.save}"/>   
+                    </aura:renderIf>
+                </footer>
+            </div>
+            <c:AWW_ConfirmationModal aura:id="confirmationModal"/>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open sub-modal"/>        
+    </div>
+</aura:component>

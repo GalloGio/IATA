@@ -1,8 +1,8 @@
 /**
-  * Description: Trigger for before Insert/Update for the ProductRatePlanInformation object 
-  * Author: Alexandre McGraw
-  * Version: 1.0
-  * History: 
+	* Description: Trigger for before Insert/Update for the ProductRatePlanInformation object
+	* Author: Alexandre McGraw
+	* Version: 1.0
+	* History:
  */
 trigger trgIECProductRatePlanInformationBeforeInsertUpdate on Product_Rate_Plan_Information__c (before insert, before update) {
 

@@ -1,0 +1,101 @@
+.cardHeight {
+  height: 410px;
+  display: flex;
+  flex-direction: column;
+}
+
+.textBoxSize {
+  height: 100px;
+}
+
+.removePadding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.buttonSize {
+  width: 100%;
+  height: 40px;
+}
+
+.buttonSize:hover {
+  background-color: #1e32fa;
+}
+
+.subType {
+  position: absolute;
+  bottom: 0;
+  background-color: #fac832;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.learMoreLink {
+  font-weight: 500;
+  color: #3333ff;
+}
+
+.alignButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  flex-grow: 1;
+  padding: 20px 40px 0 40px;
+}
+
+.lightGrayBorder {
+  border-bottom: solid 2px #e2e2e2;
+  border-radius: 1px;
+  width: 82%;
+}
+
+.fade {
+  position: relative;
+  height: 65px;
+  overflow: hidden;
+}
+
+.fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  height: 1.5em;
+  background: linear-gradient(110deg, hsla(0, 0%, 100%, 0), #fff 100%);
+}
+
+.fadeTitle {
+  position: relative;
+  height: 95px;
+  overflow: hidden;
+}
+
+.fadeTitle:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  height: 1.5em;
+  background: linear-gradient(110deg, hsla(0, 0%, 100%, 0), #fff 100%);
+}
+
+.serviceImageStyles {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+}

@@ -5,44 +5,44 @@ private class AMS_ChangeCodesHelperTest {
 	static void setup(){
 
 		String SECTORPAX = 'Travel Agent';
-        String CATEGORYPAX = 'IATA Passenger Sales Agent';
-        String LOCCLASSPAX = 'P';
+				String CATEGORYPAX = 'IATA Passenger Sales Agent';
+				String LOCCLASSPAX = 'P';
 
-        String SECTORCASS = 'Cargo Agent';
-        String CATEGORYCASS = 'IATA Cargo Sales Agent';
-        String LOCCLASSCASS = 'C';
+				String SECTORCASS = 'Cargo Agent';
+				String CATEGORYCASS = 'IATA Cargo Sales Agent';
+				String LOCCLASSCASS = 'C';
 
-        String CHANGELOCATIONTYPE = 'Location type';
-        String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
-        String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
+				String CHANGELOCATIONTYPE = 'Location type';
+				String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
+				String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
 
-        Boolean isPax = true;
+				Boolean isPax = true;
 
-        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
-        insert italy;
-
-
-
-        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
-                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
-                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
-                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
-                         );
-
-        insert HO1;
-
-        Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels 2', IATAcode__c = '1111112', IATA_ISO_Country__c = italy.id,
-                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
-                         Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
-                         Short_Name__c = 'Short name 2 ', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe4.com'
-                         );
-
-        insert HO2;
+				ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+				IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+				insert italy;
 
 
 
-    }
+				Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
+												 Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
+												 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
+												 Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
+												 );
+
+				insert HO1;
+
+				Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels 2', IATAcode__c = '1111112', IATA_ISO_Country__c = italy.id,
+												 Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
+												 Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
+												 Short_Name__c = 'Short name 2 ', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe4.com'
+												 );
+
+				insert HO2;
+
+
+
+		}
 
 	static testMethod void VR_Change_Codes() {
 		Account acc = [SELECT ID, Status__c, Location_Class__c from Account LIMIT 1];
@@ -90,21 +90,21 @@ private class AMS_ChangeCodesHelperTest {
 		System.assertEquals(aacc.Reason_Code__c, suspensionWithdrawalChanges.changeCodes[0].reasonCode);
 	}
 
-    static testMethod void TestChangesCodesCreation() {
+		static testMethod void TestChangesCodesCreation() {
 
 
-        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
+				List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
 
-        if(accountLst.isEmpty())
-            System.assert(true,false);
+				if(accountLst.isEmpty())
+						System.assert(true,false);
 
 		Test.startTest();
 
-        if(accountLst.isEmpty())
-            System.assert(true,false);
+				if(accountLst.isEmpty())
+						System.assert(true,false);
 
-        Account acc1 = accountLst.get(0);
-        Account acc2 = accountLst.get(0);
+				Account acc1 = accountLst.get(0);
+				Account acc2 = accountLst.get(0);
 
 		AMS_OSCAR_JSON.ChangeCode changeCode1 = new AMS_OSCAR_JSON.ChangeCode();
 		AMS_OSCAR_JSON.ChangeCode changeCode2 = new AMS_OSCAR_JSON.ChangeCode();
@@ -134,39 +134,39 @@ private class AMS_ChangeCodesHelperTest {
 
 
 		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
-		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null},
-		                                          new List<Account> {acc1,acc2},
-		                                          false);
+																							new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null},
+																							new List<Account> {acc1,acc2},
+																							false);
 
 
-        Test.stopTest();
+				Test.stopTest();
 
-        /*****************************/
-        /******** Assert Equals ******/
-        /*****************************/
+				/*****************************/
+				/******** Assert Equals ******/
+				/*****************************/
 
-        //System.assertEquals();
+				//System.assertEquals();
 
 
 	}
 
 	@isTest
-    public static void testGenerateFOPStringForChina() {
+		public static void testGenerateFOPStringForChina() {
 
 		Id accountAgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		String changeCode = 'LSP';
 		Boolean isNewgen = true;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, 
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', ANG_Enable_NewGen__c = true,
 			Region__c = 'Asia', BSP_Country_free_text__c = 'CN')  ;
-        insert ctry ;
+				insert ctry ;
 
-        Account chinaHE = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',
-        	Location_Type__c='HE', Name='Test1 Agency OK',Short_Name__c='Test1 Agency', 
-        	Sector__c = 'Travel Agent', Location_Class__c = 'P');
-        insert ChinaHE;
+				Account chinaHE = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',
+					Location_Type__c='HE', Name='Test1 Agency OK',Short_Name__c='Test1 Agency',
+					Sector__c = 'Travel Agent', Location_Class__c = 'P');
+				insert ChinaHE;
 
-        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+				Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
 		insert cashfop;

@@ -1,5 +1,5 @@
 public class ProductShippedNotificationContent_Ctrl{
-	
+
 	public Id orderItemId{get;set;}
 	public String contactName{get;set;}
 	public String trackingNumber{get;set;}
@@ -16,7 +16,7 @@ public class ProductShippedNotificationContent_Ctrl{
 		Map<Id,OrderItem> orderItemById = new OrderItem_Sel().getOrderItemsById(orderItemIds);
 
 		//get orderItems for shippment email template contains
-		List<OrderItem> lstOrderItems = orderItemById.values(); 
+		List<OrderItem> lstOrderItems = orderItemById.values();
 		if(lstOrderItems != null && lstOrderItems.size() > 0){
 			trackingNumber = lstOrderItems[0].Carrier_Tracking_Number__c;
 			trackingURL = lstOrderItems[0].Carrier_Tracking_URL__c;
@@ -26,7 +26,7 @@ public class ProductShippedNotificationContent_Ctrl{
 			if(lstOrderItems[0].Carrier_Name__c != null){
 				showUrl = true;
 			}
-			orderItemToSend = OrderItem_Sel.getOrderItemCarrierAndOrderId(lstOrderItems[0].OrderId,lstOrderItems[0].Carrier_Tracking_Number__c); 
+			orderItemToSend = OrderItem_Sel.getOrderItemCarrierAndOrderId(lstOrderItems[0].OrderId,lstOrderItems[0].Carrier_Tracking_Number__c);
 		}
 
 		return orderItemToSend;

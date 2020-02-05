@@ -3,8 +3,8 @@ public with sharing class ISSP_ANG_RHC {
 	public String accreditationType {get; set;}
 	public String riskStatus {get; set;}
 	public String cashConditions {get; set;}
-	public String financialReviewResult {get; set;}	
-	public String riskHistoryAssessment {get; set;}	
+	public String financialReviewResult {get; set;}
+	public String riskHistoryAssessment {get; set;}
 	public String riskEventStatus {get; set;}
 	public List<RiskEvent> riskEventsList;
 	public String riskStatusFilter {get; set;}
@@ -17,37 +17,37 @@ public with sharing class ISSP_ANG_RHC {
 	public ANG_ProductComparisonHelper helper {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c rhcInfo {get;set;}
-	public Boolean hasRightAccessIceService { 
+	public Boolean hasRightAccessIceService {
 		get {
 			if (hasRightAccessIceService != null) {
 				return hasRightAccessIceService;
 			} else {
 				hasRightAccessIceService = hasRightAccess(ICE_SERVICE);
 				return hasRightAccessIceService;
-			} 
-		} 
+			}
+		}
 		set;
 	}
 	public Boolean isChinaAgent {get; set;}
 	public String remFrequency {get; set;}
 
 	public Boolean isNewPortal {
-        get {
-            if(isNewPortal == null) {
-                isNewPortal = CSP_Utils.isNewPortalActive();
-            }
-            
-            return isNewPortal;
-        }
-        set;
-    }
-    
-    public String portalRedirectToSupport {
-        get {
-            return CSP_Utils.redirectfromPortalHeader('support-reach-us');
-        }
-        set;
-    }
+				get {
+						if(isNewPortal == null) {
+								isNewPortal = CSP_Utils.isNewPortalActive();
+						}
+
+						return isNewPortal;
+				}
+				set;
+		}
+
+		public String portalRedirectToSupport {
+				get {
+						return CSP_Utils.redirectfromPortalHeader('support-reach-us');
+				}
+				set;
+		}
 
 
 	public ISSP_ANG_RHC() {
@@ -62,11 +62,11 @@ public with sharing class ISSP_ANG_RHC {
 	@TestVisible private Boolean hasRightAccess(String service) {
 		if (this.contact != null) {
 			List <Portal_Application_Right__c> appRightList = [
-				SELECT Id 
-				  FROM Portal_Application_Right__c
-			     WHERE Contact__c = :this.contact.Id
-				   AND Right__c = :AMS_Utils.PORTAL_APP_ACCESS_GRANTED
-				   AND Portal_Application__c = :service
+				SELECT Id
+					FROM Portal_Application_Right__c
+					 WHERE Contact__c = :this.contact.Id
+					 AND Right__c = :AMS_Utils.PORTAL_APP_ACCESS_GRANTED
+					 AND Portal_Application__c = :service
 			];
 			return !appRightList.isEmpty();
 		}
@@ -92,9 +92,10 @@ public with sharing class ISSP_ANG_RHC {
 											Account.ANG_RiskHistoryAssessment__c,
 											Account.IATA_ISO_Country__r.ANG_IEP_Model__c,
 											Account.IATA_ISO_Country__r.Name,
-											Account.IATA_ISO_Country__r.ISO_Code__c
-									   FROM Contact
-									  WHERE Id = :contactId];
+											Account.IATA_ISO_Country__r.ISO_Code__c,
+											Account.Category__c
+										 FROM Contact
+										WHERE Id = :contactId];
 
 		this.contact = contactList.isEmpty() ? null : contactList[0];
 
@@ -106,14 +107,14 @@ public with sharing class ISSP_ANG_RHC {
 				accountIdTP = this.contact.Account.id;
 			}
 
-			this.isCashless = (this.contact.Account.ANG_Accreditation_Model__c != null 
+			this.isCashless = (this.contact.Account.ANG_Accreditation_Model__c != null
 				&& this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
 
 			isChinaAgent = this.contact.Account.IATA_ISO_Country__r.ISO_Code__c == 'CN';
 
 			remFrequency = this.contact.Account.Remittance_frequency__c;
 		}
-	}	
+	}
 
 	private void initFormsOfPayment() {
 		this.afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.contact, this.contact.Account, false);
@@ -121,13 +122,13 @@ public with sharing class ISSP_ANG_RHC {
 
 	public void initializeRHCInfo() {
 		List<ANG_RHC_Information__c> rhcInfoList = [
-			SELECT Id, 
-				   ANG_RHC_Amount__c, 
-				   ANG_ConsumedRHC__c, 
-				   ANG_ConsumedRHC_Percent__c, 
-				   ANG_ConsumedRHC_Last_Update__c, 
-				   ANG_Financial_Security__c
-			  FROM ANG_RHC_Information__c
+			SELECT Id,
+					 ANG_RHC_Amount__c,
+					 ANG_ConsumedRHC__c,
+					 ANG_ConsumedRHC_Percent__c,
+					 ANG_ConsumedRHC_Last_Update__c,
+					 ANG_Financial_Security__c
+				FROM ANG_RHC_Information__c
 			 WHERE ANG_AccountId__c = :accountId
 		];
 		this.rhcInfo = rhcInfoList.isEmpty() ? null : rhcInfoList[0];
@@ -153,7 +154,7 @@ public with sharing class ISSP_ANG_RHC {
 
 		if(this.contact.Account.Financial_Review_Result__c != null && this.contact.Account.Financial_Review_Result__c.startsWith('Unsatisfactory'))
 			this.financialReviewResult = System.Label.ISSP_Unsatisfactory;
-		else 
+		else
 			this.financialReviewResult = System.Label.ISSP_Satisfactory;
 
 		this.riskHistoryAssessment = this.Contact.Account.ANG_RiskHistoryAssessment__c;
@@ -178,9 +179,9 @@ public with sharing class ISSP_ANG_RHC {
 			if(event.ANG_CaseId__r.CaseNumber != null && event.ANG_CaseId__c != null) {
 				this.caseId = event.ANG_CaseId__c;
 				this.caseNumber = event.ANG_CaseId__r.CaseNumber;
-				this.caseNumberlink = '<a href="/ISSP_Case?caseId=' + this.caseId + '&mid=M1S2">' + this.caseNumber + '</a>';				
+				this.caseNumberlink = '<a href="/ISSP_Case?caseId=' + this.caseId + '&mid=M1S2">' + this.caseNumber + '</a>';
 			}
-		
+
 			this.status = translateStatus(event.ANG_Event_Status__c, event.ANG_Expired__c);
 		}
 
@@ -195,11 +196,11 @@ public with sharing class ISSP_ANG_RHC {
 		}
 	}
 
-    public PageReference refreshRiskEventsTable() {
-        riskEventsList = null;
-        
-        return null;
-    }
+		public PageReference refreshRiskEventsTable() {
+				riskEventsList = null;
+
+				return null;
+		}
 
 	public List<RiskEvent> getRiskEventList() {
 		riskEventsList = new List<RiskEvent>();
@@ -213,7 +214,7 @@ public with sharing class ISSP_ANG_RHC {
 								'ANG_CaseId__r.CaseNumber,' +
 								'ANG_Expired__c,' +
 								'ANG_CaseId__r.Visible_on_ISS_Portal__c' +
-						  ' From ANG_Agency_Risk_Event__c' +
+							' From ANG_Agency_Risk_Event__c' +
 						 ' Where ANG_HE_AccountId__c = \'' + accountIdTP + '\'';
 
 		this.isAll = false;

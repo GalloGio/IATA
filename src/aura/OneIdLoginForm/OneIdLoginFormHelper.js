@@ -206,6 +206,28 @@
         });
         $A.enqueueAction(action);
     },
+
+    redirectToCustomerPortal : function(component, event) {
+        var action = component.get("c.getCustomerPortalUrl");
+
+        action.setCallback(this, function(a){
+            var rtnValue = a.getReturnValue();
+            if (rtnValue !== null && rtnValue !== undefined) {
+                var redirectURL = rtnValue;
+                var startURL = event.getParam("paramsMap").startURL;
+                var RelayState = event.getParam("paramsMap").RelayState;
+                if(RelayState){
+                    redirectURL = redirectURL + '?RelayState=' + RelayState;
+                    if(startURL){
+                        redirectURL = redirectURL + '&startURL=' + startURL;
+                    }
+                }
+                window.location.href = redirectURL;
+            }
+        });
+        $A.enqueueAction(action);
+
+    },
     
     onchangeClientIpAddressAjax: function(cmp, event, helper) {
         alert("Changed field!");

@@ -2,16 +2,16 @@
 private class ANG_SAP_PPA_Test {
 
 	@testSetup static void createData() {
-		WrapperAttachTest.loadTestCredentials();	
+		WrapperAttachTest.loadTestCredentials();
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'Country',
-															  ANG_Enable_NewGen__c = true,
-															  ISO_Code__c = 'HY');
+																ANG_Enable_NewGen__c = true,
+																ISO_Code__c = 'HY');
 		insert country;
-		
-		Account a = new Account(Name = 'Account', 
-								Sector__c = 'Travel Agent', 
-								Location_Type__c = 'HE', 
+
+		Account a = new Account(Name = 'Account',
+								Sector__c = 'Travel Agent',
+								Location_Type__c = 'HE',
 								Location_Class__c = 'P',
 								RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
 								IATACode__c = '12345678',
@@ -22,7 +22,7 @@ private class ANG_SAP_PPA_Test {
 
 		AMS_Oscar__c oscar1 = new AMS_Oscar__c(Name = 'Oscar', Account__c = a.Id);
 		AMS_Oscar__c oscar2 = new AMS_Oscar__c(Name = 'Oscar', Account__c = a.Id, Billing_Document_Number__c = '132');
-		
+
 		oscars.add(oscar1);
 		oscars.add(oscar2);
 		insert oscars;
@@ -38,7 +38,7 @@ private class ANG_SAP_PPA_Test {
 		cases.add(c3);
 		insert cases;
 	}
-	
+
 	@isTest static void emptyPPANumberTest() {
 		Case fetchedCase = [SELECT Id, OSCAR__c FROM Case WHERE Subject = 'Base' LIMIT 1];
 
@@ -50,7 +50,7 @@ private class ANG_SAP_PPA_Test {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest static void emptyCaseIdTest() {
 		Test.startTest();
 
@@ -136,12 +136,12 @@ private class ANG_SAP_PPA_Test {
 
 		TestDataGenerator.generateApexSetting();
 
-		//Create Orders 
+		//Create Orders
 		List<Account> accounts = TestDataGenerator.generateAccounts(1,true); // 1 Account
 		List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,2,true); // 2 Contacts
 		List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, contacts[0].Id, contacts[1].Id,true); // 1 Order
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order1
-     	orderItems[0].Invoice_Number__c = '123456';
+		 	orderItems[0].Invoice_Number__c = '123456';
 		update orderItems;
 
 		PageReference pageRef = Page.IECInvoice;

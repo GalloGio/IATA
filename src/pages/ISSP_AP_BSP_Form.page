@@ -1,6 +1,4 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
-    <c:iss_ap_css />
-     
     <script>
     function hideTextECCB(myValue){
         var isNewProcess={!IsNewCountryProcess};
@@ -187,20 +185,12 @@
                 <h3 class="panel-title">Airline Participation Joining Process</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress iata-tabs">
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <span class="progress-tab-step">A</span> Participation Country &amp; Type
-            </div>
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <span class="progress-tab-step">B</span> {!strLoB} Country Requirements
-            </div>
-            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <span class="progress-tab-step">C</span> BSP Joining Form
-            </div>
-            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <span class="progress-tab-step">D</span> Submit to IATA
-            </div>
-        </div>
+        <c:ISSP_APProcess_Progress 
+            step="{!stepNumber}"
+            operationType="{!strOperationType}"
+            areaType="{!strAreaType}"
+            changeType="{!strChangeType}"
+            isSIS="{!isSISMember}" />
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -530,20 +520,20 @@
                             <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>            
-                    <apex:pageBlockSectionItem>
-                        <apex:actionRegion>
+                    <apex:pageBlockSectionItem >
+                        <apex:actionRegion >
                             <apex:outputLabel value="If YES, please specify delivery format"
                                 styleclass="{!IF(OR(newForm.Receive_HOT_files__c=='YES - Daily',newForm.Receive_HOT_files__c=='YES - Per Period') ,'ap-required','')}"/>
-                        </apex:actionRegion >
+                        </apex:actionRegion>
                         <apex:inputField value="{!newForm.Hot_files_delivery_format__c}">
                             <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem helpText="Must be 4 chars in length">
-                        <apex:actionRegion>
+                        <apex:actionRegion >
                             <apex:outputLabel value="If iiNET please provide your account number" styleclass="{!IF(newForm.Hot_files_delivery_format__c=='iiNET','ap-required','')}" />
-                        </apex:actionRegion >
+                        </apex:actionRegion>
                         <apex:inputField value="{!newForm.IINET_account_number__c}" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
                     </apex:pageBlockSectionItem>
                     

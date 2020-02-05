@@ -1,9 +1,9 @@
 /**
-  * Description: This class contains the controller for the Visualforce page (Product Viewer) 
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
+	* Description: This class contains the controller for the Visualforce page (Product Viewer)
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 public with sharing class vfIECProductViewer extends IECPageController {
 	// Parameters passed to the page
 	public string sParamProductCode {get; set;}
@@ -35,7 +35,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 	public string sSection3Description {get; set;}
 	public string sSection5Name {get; set;}
 	public string sSection5Description {get; set;}
-	
+
 	// Additional Resources section
 	public string sResourceMainText {get; set;}
 	public string sResource1File {get; set;}
@@ -44,8 +44,8 @@ public with sharing class vfIECProductViewer extends IECPageController {
 	public string sResource2Description {get; set;}
 	public string sResource3File {get; set;}
 	public string sResource3Description {get; set;}
-	
-	
+
+
 	// Boolean variables to dynamically show and hide the sections
 	public boolean bSection1Show {get; set;}
 	public boolean bSection2Show {get; set;}
@@ -53,7 +53,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 	public boolean bSection4Show {get; set;}
 	public boolean bSection5Show {get; set;}
 	public boolean bSection6Show {get; set;}
-	
+
 	// Boolean variables to dynamically show and hide the product features
 	public boolean bFeature1Show {get; set;}
 	public boolean bFeature2Show {get; set;}
@@ -61,26 +61,26 @@ public with sharing class vfIECProductViewer extends IECPageController {
 	public boolean bFeature4Show {get; set;}
 	public boolean bFeature5Show {get; set;}
 	public boolean bFeature6Show {get; set;}
-	
+
 	// Boolean variables to dynamically show and hide the additional resources
 	public boolean bResource1Show {get; set;}
 	public boolean bResource2Show {get; set;}
-	public boolean bResource3Show {get; set;}	
+	public boolean bResource3Show {get; set;}
 	public boolean bProductTriable {get; set;}
-	
+
 	// Boolean to determine whether to show the price on the rateplans or not
 	public boolean bShowPrice {get; set;}
 
 	public vfIECProductViewer() {
-		
+
 	}
-	
+
 	public Boolean isUserLoggedIn {
 		get {
 			return IECUserManager.isUserLoggedIn();
 		}
 	}
-	
+
 	public Boolean bProdAccessCACPro 	{get; set;}
 	public Boolean bProdAccessGAD	 	{get; set;}
 	public Boolean bProdAccessGSS 		{get; set;}
@@ -96,22 +96,22 @@ public with sharing class vfIECProductViewer extends IECPageController {
 				|| bProdAccessEBro;
 		}
 	}
-	
-	
+
+
 	public void pageLoad () {
 		try {
 			// Validate Logged in user profile and ensure profile is complete
 			validUserProfile();
-			
+
 			sParamProductCode = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE);
 			if (isUserLoggedIn) {
-			    bProdAccessCACPro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACPRO) != -1);
+					bProdAccessCACPro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACPRO) != -1);
 				bProdAccessGAD = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GAD) != -1);
 				bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1);
 				bProdAccessMDP = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_MDP) != -1);
 				bProdAccessEBro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_EBROADCAST) != -1);
 			}
-			
+
 			// Validate that there is parameter passed to the page
 			if (String.isEmpty(sParamProductCode)) {
 				addErrorMessage(IECConstants.Error_InvalidProductCode);
@@ -122,7 +122,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 
 				// Get the product mapped to the specified product code
 				List<Product_Category__c> lstProdCat = IECProductManager.getProductsCategoryByProductCategoryCode(sParamProductCode);
-				
+
 				// Validate that there is product found
 				if (lstProdCat.isEmpty()) {
 					addErrorMessage(IECConstants.Error_InvalidProductCode);
@@ -130,12 +130,12 @@ public with sharing class vfIECProductViewer extends IECPageController {
 				else {
 					Product_Category__c pc = lstProdCat[0];
 					setupTriableProduct(sParamProductCode);
-					
+
 					sButtonType = pc.Button_Type__c;
 					bTryButtonShow = pc.Trial_available_for_this_Product__c;
 					sBannerImage = pc.Banner_Image__c;
 					sProductIcon = pc.Product_Icon__c;
-					
+
 					bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
 					sDisplayName = pc.Display_Name__c;
 					sShortDescription = pc.Short_Description__c;
@@ -173,7 +173,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 					bFeature4Show = !(String.isEmpty(sFeature4Description) || String.isEmpty(sFeature4Image));
 					bFeature5Show = !(String.isEmpty(sFeature5Description) || String.isEmpty(sFeature5Image));
 					bFeature6Show = !(String.isEmpty(sFeature6Description) || String.isEmpty(sFeature6Image));
-					
+
 					// Additional Resources
 					sResourceMainText = pc.Resources_Main_Text__c;
 					sResource1File = pc.Resource_1_File__c;
@@ -182,7 +182,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 					sResource2Description = pc.Resource_2_Description__c;
 					sResource3File = pc.Resource_3_File__c;
 					sResource3Description = pc.Resource_3_Description__c;
-	
+
 					// Determines which resources to show
 					bResource1Show = !(String.isEmpty(sResource1File) || String.isEmpty(sResource1Description));
 					bResource2Show = !(String.isEmpty(sResource2File) || String.isEmpty(sResource2Description));
@@ -194,18 +194,18 @@ public with sharing class vfIECProductViewer extends IECPageController {
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	public void setupTriableProduct(String sProductCategoryCode){
 		List<Product_Information__c> listProdInfo = null;
 		Product_Information__c oProductInformation = null;
 		bProductTriable = false;
-		
+
 		if (IECUserManager.isUserLoggedIn()) {
 			// get the user's client type
 			String sClientType = IECUserManager.getClientType();
-			
+
 			listProdInfo = IECProductManager.getProductInformationsByCategoryByClientType(sProductCategoryCode, sClientType);
-			
+
 			// if no products are available for the specific Client Type
 			if (listProdInfo.isEmpty()) {
 				// get the products available for anonymous customers (product Audience 'Default')
@@ -216,7 +216,7 @@ public with sharing class vfIECProductViewer extends IECPageController {
 			// load available Product Information for anonymous users
 			listProdInfo = IECProductManager.getProductInformationsByCategoryForAnonymousUser(sProductCategoryCode);
 		}
-		
+
 		// No Product Information found
 		if (listProdInfo.isEmpty()) {
 			throw new IECApplicationException('Could not find any Product Information for category ' + sProductCategoryCode);

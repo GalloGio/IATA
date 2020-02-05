@@ -1,0 +1,2 @@
+<aura:event type="COMPONENT" description="File_Upload_Lookup_Clear_EVT">
+</aura:event>

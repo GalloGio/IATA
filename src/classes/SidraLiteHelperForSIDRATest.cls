@@ -1,6 +1,6 @@
 @isTest
 private class SidraLiteHelperForSIDRATest {
-	
+
 	@testSetup
 	static void setup(){
 		Account acct = new Account();
@@ -25,14 +25,14 @@ private class SidraLiteHelperForSIDRATest {
 	@isTest
 	static void createCaseFirstNonComplianceTest(){
 
-		Case parentCase = 
-			[SELECT 
-				Id, 
-				AccountId, 
+		Case parentCase =
+			[SELECT
+				Id,
+				AccountId,
 				ContactId,
-				Region__c, 
-				BSPCountry__c 
-			 FROM 
+				Region__c,
+				BSPCountry__c
+			 FROM
 			 	Case
 			];
 
@@ -52,25 +52,25 @@ private class SidraLiteHelperForSIDRATest {
 		System.assertEquals(newCase.SIDRA_Lite_Reason__c, 'Financial Security Non-compliance');
 		System.assertEquals(newCase.Reason_for_Default__c, 'Suspension - FS Non Compliance');
 		System.assertEquals(newCase.SIDRA_Lite_Default_Date__c, System.today());
-		
+
 	}
 
 	@isTest
 	static void checkBusinessRulesTest(){
 
-		Case parentCase = 
-			[SELECT 
-				Id, 
-				AccountId, 
+		Case parentCase =
+			[SELECT
+				Id,
+				AccountId,
 				ContactId,
-				Region__c, 
+				Region__c,
 				BSPCountry__c,
 				Agency_Fees__c,
 				GDI_Premium__c,
 				IATA_Charges__c,
 				Account.Status__c,
 				Short_Payment_Amount__c
-			 FROM 
+			 FROM
 			 	Case
 			];
 
@@ -89,7 +89,7 @@ private class SidraLiteHelperForSIDRATest {
 		catch(Exception e){
 			System.assertEquals(e.getMessage(), 'Conditions are not met to create a Financial security non-compliance case: A value is required for fields: Short Payment Amount, IATA Charges, Agency Fees, IATA Country, Contact Name and Region.');
 		}
-		
+
 		try {
 			parentCase.IATA_Charges__c = 0.0;
 			parentCase.Short_Payment_Amount__c = 4.0;
@@ -109,5 +109,5 @@ private class SidraLiteHelperForSIDRATest {
 		}
 
 	}
-	
+
 }

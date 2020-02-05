@@ -111,6 +111,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>SectorExceptions__c</field>
         <value xsi:type="xsd:string">Accommodation;Recreational</value>
     </values>

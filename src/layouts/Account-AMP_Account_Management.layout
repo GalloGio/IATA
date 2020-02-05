@@ -428,6 +428,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>IATA_ISO_Country__c</fields>
     </miniLayout>

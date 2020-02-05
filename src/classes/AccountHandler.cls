@@ -2,13 +2,13 @@ public class AccountHandler{
 
 	/**
 		CODE BEFORE INSERT
-	
+
 	**/
 	public static void beforeInsert( list<Account> listNews){
 		setIataMembershipStatus(listNews);
 		updateSiteIndex(listNews);
 	}
-	
+
 	/**
 		CODE AFTER INSERT
 	**/
@@ -18,7 +18,7 @@ public class AccountHandler{
 
 	/**
 		CODE BEFORE UPDATE
-	
+
 	**/
 	public static void beforeUpdate( list<Account> listNews){
 		updateSiteIndex(listNews);
@@ -77,21 +77,21 @@ public class AccountHandler{
 					listAccountId.add(oldAccount.parentId);
 				}
 			} else if (newAccount.ParentId != null &&
-                    (  newAccount.Has_a_Financial_Assessment_Contact__c != oldAccount.Has_a_Financial_Assessment_Contact__c
+					(  newAccount.Has_a_Financial_Assessment_Contact__c != oldAccount.Has_a_Financial_Assessment_Contact__c
 					|| newAccount.Has_a_Financial_Assessment_Contact_Sum__c != oldAccount.Has_a_Financial_Assessment_Contact_Sum__c
 					|| newAccount.Has_an_Administrator_User_Portal__c != oldAccount.Has_an_Administrator_User_Portal__c
 					|| newAccount.Has_an_Administrator_User_Portal_Sum__c != oldAccount.Has_an_Administrator_User_Portal_Sum__c ) ) {
 				listAccountId.add(newAccount.parentId);
 			}
-		}       
-        
-        if(ANG_AgencyChangesHelper.changesContainer == null || ANG_ConversionHelper.isMigrationTool || System.isFuture() || System.isBatch()){
+		}
+
+		if(ANG_AgencyChangesHelper.changesContainer == null || ANG_ConversionHelper.isMigrationTool || System.isFuture() || System.isBatch()){
 			updateParentAccountFields(listAccountId);
-        } else		
+		} else
 			updateParentAccountFieldsFuture(listAccountId);
 	}
 
-    @future(callout=false)
+	@future(callout=false)
 	public static void updateParentAccountFieldsFuture(list<Id> listAccountId){
 		updateParentAccountFields(listAccountId);
 	}
@@ -159,14 +159,14 @@ public class AccountHandler{
 		}
 		return false;
 	}
-	
+
 	/*** AMSU-128 Start ***/
 	public static void terminateMSOAppointments(List<Account> listAccount, Map<Id, Account> oldMap) {
 
 
 		Id airlineHQRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		
+
 		if(airlineHQRT == null || agencyRT == null) {
 			return;
 		}
@@ -199,8 +199,8 @@ public class AccountHandler{
 
 	}
 	/*** AMSU-128 End ***/
-	
-	
+
+
 	public static void setIataMembershipStatus(list<Account> listAccount){
 		if(!Test.isRunningTest()){
 			for(Account acc : listAccount){

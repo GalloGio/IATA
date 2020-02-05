@@ -1,0 +1,135 @@
+/**
+ * Created by ukaya01 on 28/08/2019.
+ */
+
+.modalSpinnerContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.headerTitle {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #333333;
+}
+
+.specialLabel {
+  font-family: AktivGrotesk;
+  font-size: 14px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #525252;
+  padding-top: 5%;
+}
+
+.checkbox-button {
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.checkbox-button__input {
+  font-size: 1rem;
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-button__control {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  vertical-align: middle;
+  background-color: inherit;
+  color: lightgray;
+  border: 1px solid lightgray;
+}
+
+.checkbox-button__input:checked + .checkbox-button__control:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 18px;
+  height: 18px;
+  background-color: blue;
+}
+
+.checkbox-button__input:checked + .checkbox-button__control {
+  border-color: lightgray;
+}
+
+.checkbox-button__control {
+  transform: scale(0.85);
+}
+
+.errorMessageClassNone {
+  display: none;
+}
+
+.errorMessageClassDisplay {
+  display: block;
+  color: indianred;
+  font-size: 14px;
+}
+
+.font {
+  font-weight: 500;
+}
+
+.formElementContainer{
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    height : 40px;
+}
+
+.formLabelContainer{
+    /*display: flex;*/
+    flex: 1 0 auto;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.formElementSpacer{
+    padding-bottom:40px;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.snackbar {
+  width: 100%;
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+}
+
+.snackbar .a {
+    color: #fff; /* White text color */
+    text-decoration: underline;
+}
+
+.cancelIcon {
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
