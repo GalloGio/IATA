@@ -798,7 +798,11 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <apex:outputText value="[DOWNLOAD DOCUMENT TO SIGN]" styleclass="strong-label" />
+        <apex:outputPanel rendered="{!ctrl.SponsorshipLetterUrl!=null}">
+            <apex:outputLink value="{!ctrl.SponsorshipLetterUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">
+                {!ctrl.SponsorshipLetterName}
+            </apex:outputLink>
+        </apex:outputPanel>
         <tr>
             <td colspan="4" class="required">
                 <apex:iframe scrolling="false" height="160px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=9&reqRequired=Mandatory&reqName={!URLENCODE('IATA Member Sponsorship letter')}&reqDescription=&reqIdentifier=IATAMemberSponsorshipLetter&onlyOne=true"
