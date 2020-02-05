@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) {
-        helper.initTable(component);
+        helper.fetchIsAccountManager(component);
     },
     showMilestones : function(component, event, helper) {
         var args = event.getParam('arguments');

@@ -16,7 +16,7 @@ private class AMP_KeyAccountPlanExtensionTest {
 		System.runAs(testUser) {
 
 			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
+			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId, AM_Account_Manager__c = testUser.id);
 			insert a;
 
 			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
@@ -84,6 +84,7 @@ private class AMP_KeyAccountPlanExtensionTest {
 			AMP_KeyAccountPlanExtension.deleteMilestone(testMilestone);
 
 			AMP_KeyAccountPlanExtension.deleteActivity(o);
+			AMP_KeyAccountPlanExtension.getIsAccountManager(a.Id);
 
 		}
 	}

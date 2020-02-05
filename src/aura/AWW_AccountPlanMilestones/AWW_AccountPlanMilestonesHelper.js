@@ -10,7 +10,7 @@
             {label: 'Comments', fieldName: 'Description', type: 'text', sortable : true}
         ];
 
-        if(component.get('v.canEdit') == true) {
+        if(component.get('v.canEdit') == true || component.get('v.isAccountManager') == true) {
             var actions = [
                 {label: 'Edit', name: 'edit_milestone', 'iconName': 'utility:edit'},
                 {label: 'Delete', name: 'delete_milestone', 'iconName': 'utility:delete'}
@@ -20,6 +20,22 @@
 
         component.set('v.columns', columns);
     },
+    fetchIsAccountManager : function(component) {
+        var action = component.get('c.getIsAccountManager');
+        action.setParams({
+            accountId : component.get('v.accountId')
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if(component.isValid() && state === "SUCCESS") {
+                component.set('v.isAccountManager', response.getReturnValue());
+            }
+            this.initTable(component);
+        });
+
+        $A.enqueueAction(action);
+    },
+
     fetchData : function(component) {
         var action = component.get('c.getTasks');
         action.setParams({

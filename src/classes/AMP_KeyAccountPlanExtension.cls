@@ -83,6 +83,15 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		return canEdit;
 	}
 
+	@AuraEnabled
+	public static Boolean getIsAccountManager(String accountId) {
+		Account accountIdLogedUser  = [Select id, AM_Account_Manager__c from Account where id =: accountId];
+		if(accountIdLogedUser.AM_Account_Manager__c == Userinfo.getUserid()){
+			return true;
+		}
+		return false;
+	}
+
 	public void updateLists() {
 		DateTime now = System.now();
 		lsObjectivesPrevious = new List<Objective__c>();

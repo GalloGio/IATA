@@ -15,27 +15,25 @@ public with sharing class AMP_KeyContactsController {
 	public AMP_KeyContactsController(ApexPages.StandardController stdController) {
 		this.myAccount = (Account)stdController.getRecord();
 		if(this.myAccount != null && this.myAccount.Id != null) {
-			recordTypeName = getReportTypeDeveloperName(this.myAccount.Id );
-			this.parentAccountId = [SELECT Id, ParentId FROM Account WHERE Id = :myAccount.Id].ParentId;
+			Account acc = [SELECT Id, ParentId, RecordType.DeveloperName FROM Account WHERE Id = :myAccount.Id];
+			this.parentAccountId = acc.ParentId;
+			recordTypeName = acc.RecordType.DeveloperName;
 			lsKeyContactsWrapped = getKeyContactsWrapped(myAccount.Id);
 		}
-	}
-
-	public String getReportTypeDeveloperName(Id accountID) {
-		return [SELECT Id, RecordType.DeveloperName FROM Account WHERE Id = :accountID].RecordType.DeveloperName;
 	}
 
 	public AMP_KeyContactsController() {
 		String accountId =  ApexPages.currentPage().getParameters().get('accountId');
 		isWWAccount = ApexPages.currentPage().getParameters().get('isWWAccount');
-		accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+		Account acc = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:accountId LIMIT 1];
+		accountName = acc.Name;
 		if(isWWAccount != null && Boolean.valueOf(isWWAccount)){
 			lsKeyContactsWrapped = getAwwKeyContactsWrapped(accountId);
 		}
 		else{
 			lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
 		}
-		recordTypeName = getReportTypeDeveloperName(accountId);
+		recordTypeName = acc.RecordType.DeveloperName;
 	}
 
 	public String getRecordId() {

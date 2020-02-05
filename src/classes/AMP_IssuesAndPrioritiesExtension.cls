@@ -20,21 +20,24 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	// variable myAccount by using the getRecord method from the standard
 	// controller.
 	public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
+		if(!Test.isRunningTest())
+			stdController.addFields(new List<String>{'RecordType.DeveloperName'});
+
 		this.myAccount = (Account)stdController.getRecord();
+
 		this.objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 		showAllItems = false;
 		isEditMode = false;
 		isNewLine = false;
-		if(this.myAccount.Id != null) {
-			recordTypeName = getReportTypeDeveloperName(this.myAccount.Id );
-			accountId = this.myAccount.Id;
-			// accountName = this.myAccount.Name;
-		} else {
-			accountId =  ApexPages.currentPage().getParameters().get('accountId');
-			recordTypeName = getReportTypeDeveloperName(accountId );
-			accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+
+		if(this.myAccount == null){
+			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:ApexPages.currentPage().getParameters().get('accountId') LIMIT 1];
 			if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
 		}
+		accountId =  this.myAccount.id;
+		accountName =  this.myAccount.Name;
+		recordTypeName = this.myAccount.RecordType.DeveloperName;
+		
 		lsIssueFields = getIssueFields();
 		canEdit = getCanEdit();
 		lsIssuesAndPriorities = new List<Objective__c>();
@@ -313,10 +316,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 		public String getRecordName() {
 			return [SELECT Id, Name FROM Account WHERE Id = :this.myAccount.Id].Name;
-		}
-		
-		public String getReportTypeDeveloperName(Id accountID) {
-			return [SELECT Id, RecordType.DeveloperName FROM Account WHERE Id = :accountID].RecordType.DeveloperName;
 		}
 
 		public String getRecordId() {

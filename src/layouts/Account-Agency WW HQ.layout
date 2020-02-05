@@ -85,10 +85,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AccountNumber</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>AM_Account_Manager__c</field>
             </layoutItems>
             <layoutItems>
