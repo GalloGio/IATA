@@ -14,6 +14,8 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
     @api language;
     @track _faqObject = {};
 
+    @track redirectObject = {};
+
     @api
     get faqObject() {
         return this._faqObject;
@@ -26,6 +28,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
     connectedCallback() {
         this.category = this._faqObject.category;
         this.language = this._faqObject.language;
+        this.redirectObject.category = this.category;
+
+        const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
 
         getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
@@ -60,6 +66,8 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         let topicName = event.target.attributes.getNamedItem('data-item').value;
         
         this.topic = topicName;
+
+        this.redirectObject.topic = event.target.attributes.getNamedItem('data-item').value;
         
         let topicVals = JSON.parse(JSON.stringify(this.topicTiles));
 
@@ -94,6 +102,8 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+	const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
     }
     
     subTopicSelected(event) {        
@@ -118,9 +128,13 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         __faqObject.topic = '';
         __faqObject.subtopic = subtopicName;
 
+        this.redirectObject.subtopic = subtopicName;
+
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
 
+	const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 }
