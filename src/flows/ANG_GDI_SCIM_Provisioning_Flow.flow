@@ -429,6 +429,12 @@
     </formulas>
     <interviewLabel>ANG IEP SCIM Provisioning Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ANG GDI SCIM Provisioning Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>UserProvisioningFlow</processType>
     <recordLookups>
         <name>Fetch_More_User_Info</name>
@@ -482,8 +488,14 @@
         <queriedFields>Portal_Application__c</queriedFields>
         <queriedFields>Application_Name__c</queriedFields>
     </recordLookups>
-    <startElementReference>Fetch_More_User_Info</startElementReference>
-    <status>Active</status>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Fetch_More_User_Info</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
     <variables>
         <name>Details</name>
         <dataType>String</dataType>

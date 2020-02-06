@@ -14,10 +14,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>QuickAction</name>
     </types>
     <version>45.0</version>
