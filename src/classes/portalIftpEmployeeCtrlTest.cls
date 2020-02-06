@@ -7,7 +7,7 @@ public class portalIftpEmployeeCtrlTest {
 
 		Test.startTest();
 
-		User u2 = [select id, profile.name from user where Email = 'test.cont4@test.com' limit 1];
+		User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
 		List<ContentVersion> docs = [SELECT Id, Title, ContentDocumentId FROM ContentVersion];
 
