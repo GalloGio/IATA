@@ -117,7 +117,7 @@ public class AMS_OscarCaseTriggerHelper {
 		}
 	}
 
-	public static void populateOscarFields(list<Case> triggerNew){
+	public static void populateOscarFields(list<Case> triggerNew, Map<Id,Case> oldMap, boolean isUpdate){
 
 		if(avoidRecursiveUpdateOnOSCAR){
 			return;
@@ -127,6 +127,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 		Set<Id> oscarIds = new Set<Id>();
 		List<Case> oscarCases = new List<Case>();
+		List<AMS_OSCAR_reset_dossier_reception__mdt> resetDossierReceptionDateMDT = [SELECT DeveloperName FROM AMS_OSCAR_reset_dossier_reception__mdt];
 
 		 for(Case c : triggerNew){
 			if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) {
@@ -139,48 +140,65 @@ public class AMS_OscarCaseTriggerHelper {
 
 		List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
 		//WMO-564 copy case reason to oscar
-		Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, Case_Reason__c
-																	 FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
-		for(Case c : oscarCases){
-			if(!oscars.containsKey(c.Oscar__c)) continue;
+		if(!oscarCases.isEmpty()){
 
-			Boolean changed = false;
-			AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
+			Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, Case_Reason__c
+																		FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
-			if(oscar.Name != c.CaseNumber){
-				System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
+			for(Case c : oscarCases){
+				if(!oscars.containsKey(c.Oscar__c)) continue;
 
-				oscar.Name = c.CaseNumber;
+				Boolean changed = false;
+				AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
 
-				if(c.QuantityProduct__c != null && oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
-					oscar.Certificate_Quantity__c = Integer.valueOf(c.QuantityProduct__c);
+				if(oscar.Name != c.CaseNumber){
+					System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
+
+					oscar.Name = c.CaseNumber;
+
+					if(c.QuantityProduct__c != null && oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
+						oscar.Certificate_Quantity__c = Integer.valueOf(c.QuantityProduct__c);
+					}
+
+					changed = true;
+				}
+				//WMO-564
+				if(oscar.Case_Reason__c != c.Reason1__c) {
+					oscar.Case_Reason__c = c.Reason1__c;
+					CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
+					changed = true;
+				}
+				if(oscar.BusinessHours__c != c.BusinessHoursId){
+					oscar.BusinessHours__c = c.BusinessHoursId;
+					changed = true;
 				}
 
-				changed = true;
-			}
-			//WMO-564
-			if(oscar.Case_Reason__c != c.Reason1__c) {
-				oscar.Case_Reason__c = c.Reason1__c;
-				CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
-				changed = true;
-			}
-			if(oscar.BusinessHours__c != c.BusinessHoursId){
-				oscar.BusinessHours__c = c.BusinessHoursId;
-				changed = true;
-			}
+				if(oscar.Shut_Down_TKT_System_GDS_and_BSPlink__c != c.Shut_Down_TKT_System_GDS_and_BSPlink__c){
+					oscar.Shut_Down_TKT_System_GDS_and_BSPlink__c = c.Shut_Down_TKT_System_GDS_and_BSPlink__c;
+					changed = true;
+				}
 
-			if(oscar.Shut_Down_TKT_System_GDS_and_BSPlink__c != c.Shut_Down_TKT_System_GDS_and_BSPlink__c){
-				oscar.Shut_Down_TKT_System_GDS_and_BSPlink__c = c.Shut_Down_TKT_System_GDS_and_BSPlink__c;
-				changed = true;
-			}
+				if(oscar.Open_TKT_System__c != c.Open_TKT_System__c){
+					oscar.Open_TKT_System__c = c.Open_TKT_System__c;
+					changed = true;
+				}
 
-			if(oscar.Open_TKT_System__c != c.Open_TKT_System__c){
-				oscar.Open_TKT_System__c = c.Open_TKT_System__c;
-				changed = true;
-			}
+				boolean statusExists = false;
+				if(isUpdate){
+					for(AMS_OSCAR_reset_dossier_reception__mdt dossierMDT : resetDossierReceptionDateMDT){
+						if(dossierMDT.DeveloperName == oldMap.get(c.Id).Status){
+							statusExists = true;
+						}
+					}
+					if(statusExists && !c.isClosed){
+						oscar.Dossier_Reception_Date__c = Date.today();
+						changed = true;
+					}
+				}
 
-			if(changed) oscarsToUpdate.add(oscar);
+				if(changed) oscarsToUpdate.add(oscar);
+			}
 		}
 
 		if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;

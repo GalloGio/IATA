@@ -107,7 +107,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/** WMO-564 **/
 	if(Trigger.isUpdate) {
 		CaseProcessTypeHelper.processOSCAREffAge(Trigger.new, Trigger.oldMap);
-		CaseProcessTypeHelper.resetOscarDossierReceptionDate(Trigger.new, Trigger.oldMap);
 	}
 
 
@@ -782,7 +781,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseAfterTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseCreationRules(trigger.New);
-						AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
+						AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New, trigger.oldMap, Trigger.isUpdate);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode();
 			}
 		}
@@ -996,7 +995,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseAfterTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
-							AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
+							AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New, trigger.oldMap, Trigger.isUpdate);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode();
 			}
 		}
