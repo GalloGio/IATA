@@ -209,7 +209,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
-	@api 
+	@api
     get showEdit(){
         return this.showEditTrack;
     }
