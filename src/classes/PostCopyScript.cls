@@ -7,6 +7,7 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
+		deleteSeniorManager();
 		updateNamedCredentials();
 		deleteConnectedApps();
 	}
@@ -89,6 +90,18 @@ global class PostCopyScript implements SandboxPostCopy {
 				q.Email = q.Email.replace('@'+updateEmail[1],'='+updateEmail[1] + '@example.com');
 		}
 			update lstQueues;
+	}
+
+	/**
+	 * This method deletes all the Orange Senior Managers and Senior Managers:
+	*/
+	@TestVisible
+	private void deleteSeniorManager(){
+		List<RTS_Orange_Senior_Manager__c>  lstOrangeSeniorManager = [SELECT Id FROM RTS_Orange_Senior_Manager__c];
+		List<RTS_Senior_Manager__c>  lstSeniorManager = [SELECT Id FROM RTS_Senior_Manager__c];
+
+		delete lstOrangeSeniorManager;
+		delete lstSeniorManager;
 	}
 
 	/**
