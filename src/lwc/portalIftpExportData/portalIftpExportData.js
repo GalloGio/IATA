@@ -9,7 +9,7 @@ export default class PortalIftpExportData extends LightningElement {
         let columns = JSON.parse(JSON.stringify(columnsTobeExported));
         let data = JSON.parse(JSON.stringify(dataToExport));
         let rowEnd = '\n';
-        let csvString = '\ufeff';
+        let csvString = '';
 
         
         let rowData = new Set(); // this set elminates the duplicates if have any duplicate keys
@@ -146,12 +146,12 @@ export default class PortalIftpExportData extends LightningElement {
         tableSelect += '</table>';
 
         //let tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-        let tableHTML ='\ufeff'+ tableSelect;
+        let tableHTML = tableSelect;
         
         if(window.navigator.msSaveBlob) { // IE 10+
             let fileName = excelFileName + '-' + todayNoTime + '.xls';
-            let blob = new Blob([tableHTML], {
-                          type: 'application/vnd.ms-excel;charset=utf-8'          
+            let blob = new Blob(['\ufeff', tableHTML], {
+                          type: 'application/vnd.ms-excel'          
                 });
             window.navigator.msSaveBlob(blob, fileName);
         }
@@ -164,7 +164,7 @@ export default class PortalIftpExportData extends LightningElement {
                 document.body.appendChild(downloadElement);
 
                 // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-                downloadElement.href = 'data: application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(tableHTML);
+                downloadElement.href = 'data: application/vnd.ms-excel,' + encodeURIComponent(tableHTML);
                 // CSV File Name
                 downloadElement.download = excelFileName + '-' + todayNoTime + '.xls';
                 
