@@ -1,10 +1,28 @@
 public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements ANG_RemoteInvocationINT{
 
+	@TestVisible
+	private static final String MISSING_MANDATORY_FIELDS = 'Missing mandatory fields';
+	@TestVisible
+	private static final String ACCOUNT_NOT_FOUND = 'Account not found!';
+	@TestVisible
+	private static final String OFFER_ID_NOT_FOUND = 'Offer ID not found';
+	@TestVisible
+	private static final String OFFER_ID_DIFFERENT_IATA_CODE = 'Offer ID is associated to a different IATA Code';
+	@TestVisible
+	private static final String FINANCIAL_SECURITY_NOT_ASSOCIATED_WITH_OPPLINEITEM = 'Financial Security is not associated with the Opportunity Line Item';
+	@TestVisible
+	private static final String NO_ARTEFACT_MATCH = 'The Remote invocation does not have a match for a remote invocation artifact.';
+	@TestVisible
+	private static final String INVALID_REQUEST_TYPE = 'Invalid Request Type';
+	@TestVisible
+	private static final String VERIFY_RELATED_ARTEFACTS = 'Verify related artefacts for details';
+	@TestVisible
+	private static final String OPPORTUNITY_LINE_ITEM_DOES_NOT_EXIST = 'Opportunity Line Item does not exist';
+
+	private Map<String, Opportunity> offerIdByOpportunityMap = new Map<String, Opportunity>();
 	private Map<Id, Remote_Invocation__c> mapRemoteInvocationToUpdate = new Map<Id, Remote_Invocation__c>();
 	private List<Remote_Invocation_Artefact__c> listArtifactsToUpdate = new List<Remote_Invocation_Artefact__c>();
 	private Map<Id, Remote_Invocation_Artefact__c> mapValidArtefacts = new Map<Id, Remote_Invocation_Artefact__c>();
-
-	private Map<String, Opportunity> offerIdByOpportunityMap = new Map<String, Opportunity>();
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
@@ -15,7 +33,7 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 			if(ri.Source__c == RemoteInvocationTriggerHandler.SOURCE_GDI && ri.request_type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO_PDF){
 				setValidRemoteInvocation.add(ri);
 			}else{
-				this.mapRemoteInvocationToUpdate.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
+				this.mapRemoteInvocationToUpdate.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = AMS_Utils.FAILED, Status_detail__c = INVALID_REQUEST_TYPE));
 			}
 		}
 
@@ -43,17 +61,17 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 			]
 		);
 
-		Map<String, String> offerIdByIataCodeMap = new Map<String, String>();
+		Map<String, String> offerIdByIataCodeMap = new Map<String, String>();	
 
 		for(Remote_Invocation__c ri : remoteInvocationArtifactsLst){
 			//Check if there is any artefact related to the remote invocation
 			if(ri.Remote_Invocation_Artefacts__r.isEmpty()){
-				this.mapRemoteInvocationToUpdate.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact. '));
+				this.mapRemoteInvocationToUpdate.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = AMS_Utils.FAILED, Status_detail__c = NO_ARTEFACT_MATCH));
 			}else{
 				for(Remote_Invocation_Artefact__c artifact : ri.Remote_Invocation_Artefacts__r){
 					String validationDetail = runValidations(artifact, null, null);
 					if(String.isNotBlank(validationDetail)){
-						artifact.Request_Result__c = 'Failed';
+						artifact.Request_Result__c = AMS_Utils.FAILED;
 						artifact.Status_Detail__c = validationDetail;
 						this.listArtifactsToUpdate.add(artifact);
 					}
@@ -83,7 +101,7 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 			String validationDetail = runValidations(artifact, this.offerIdByOpportunityMap, mapIATACodeId);
 
 			if(String.isNotBlank(validationDetail)){
-				artifact.Request_Result__c = 'Failed';
+				artifact.Request_Result__c = AMS_Utils.FAILED;
 				artifact.Status_Detail__c = validationDetail;
 				this.listArtifactsToUpdate.add(artifact);
 				this.mapValidArtefacts.remove(artifact.Id);
@@ -92,6 +110,7 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 
 	}
 
+
 	// 1) Check all necessary fields are populated
 	// 2) IATACode received exists
 	// 3) OfferID received Exists
@@ -99,21 +118,21 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 	private String runValidations(Remote_Invocation_Artefact__c artifact, Map<String, Opportunity> mapOpty, Map<String, Id> mapIATACodeId){
 
 		if(String.isBlank(artifact.Internal_ID__c) || String.isBlank(artifact.External_ID__c)){
-			return 'Missing mandatory fields';
+			return MISSING_MANDATORY_FIELDS;
 		}
 
 		if(mapIATACodeId != null && mapOpty != null){
 			if(!mapIATACodeId.containsKey(artifact.Internal_ID__c)){
-				return 'Account not found!';
+				return ACCOUNT_NOT_FOUND;
 			}
 
 			if(!mapOpty.containsKey(artifact.External_ID__c)){
-				return 'Offer ID not found';
+				return OFFER_ID_NOT_FOUND;
 			}
 
 			if(mapOpty.containsKey(artifact.External_ID__c)){
 				if(mapOpty.get(artifact.External_ID__c).AccountId != mapIATACodeId.get(artifact.Internal_ID__c)){
-					return 'Offer ID is associated to a different IATA Code';
+					return OFFER_ID_DIFFERENT_IATA_CODE;
 				}
 			}
 		}
@@ -136,8 +155,8 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 					OpportunityLineItem oli = opp.OpportunityLineItems[0];
 
 					if(opp.StageName == AMS_Utils.OPPORTUNITY_CLOSED_WON && oli.Financial_Security__c == null){
-						artifact.Request_Result__c = 'Failed';
-						artifact.Status_Detail__c = 'Financial Security is not associated with the Opportunity Line Item';
+						artifact.Request_Result__c = AMS_Utils.FAILED;
+						artifact.Status_Detail__c = FINANCIAL_SECURITY_NOT_ASSOCIATED_WITH_OPPLINEITEM;
 						this.listArtifactsToUpdate.add(artifact);
 						this.mapValidArtefacts.remove(artifact.Id);
 					}
@@ -151,8 +170,8 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 					}
 				}
 				else {
-					artifact.Request_Result__c = 'Failed';
-					artifact.Status_Detail__c = 'Opportunity Line Item does not exist';
+					artifact.Request_Result__c = AMS_Utils.FAILED;
+					artifact.Status_Detail__c = OPPORTUNITY_LINE_ITEM_DOES_NOT_EXIST;
 					this.listArtifactsToUpdate.add(artifact);
 					this.mapValidArtefacts.remove(artifact.Id);
 				}
@@ -160,13 +179,13 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 			}
 
 			for(Remote_Invocation_Artefact__c artifact : this.mapValidArtefacts.values()){
-				artifact.Request_Result__c = 'Completed';
+				artifact.Request_Result__c = AMS_Utils.COMPLETED;
 				artifact.Status_Detail__c = '';
 				artifact.Object_ID_Created__c = objectIdResultMap.get(artifact.Id);
 				this.listArtifactsToUpdate.add(artifact);
 
 				if(!this.mapRemoteInvocationToUpdate.containsKey(artifact.Remote_Invocation__c)){
-					this.mapRemoteInvocationToUpdate.put(artifact.Remote_Invocation__c, new Remote_Invocation__c(Id = artifact.Remote_Invocation__c, Status__c = 'Completed'));
+					this.mapRemoteInvocationToUpdate.put(artifact.Remote_Invocation__c, new Remote_Invocation__c(Id = artifact.Remote_Invocation__c, Status__c = AMS_Utils.COMPLETED));
 				}
 			}
 
@@ -174,7 +193,7 @@ public without sharing class ANG_GDIEndorsementPdfRemoteInvocation implements AN
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
 			if(!this.mapRemoteInvocationToUpdate.containsKey(ri.Id)){
-				this.mapRemoteInvocationToUpdate.put(ri.Id, new Remote_Invocation__c(Id = ri.Id, Status__c = 'Failed', Status_detail__c = 'Verify related artefacts for details'));
+				this.mapRemoteInvocationToUpdate.put(ri.Id, new Remote_Invocation__c(Id = ri.Id, Status__c = AMS_Utils.FAILED, Status_detail__c = VERIFY_RELATED_ARTEFACTS));
 			}
 		}
 
