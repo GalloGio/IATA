@@ -162,10 +162,10 @@ export default class PortalMyProfilePage extends LightningElement {
 
             for(let i = 0; i < this.sectionMapAccount.length; i++){
                 this.mapOfValuesAccount.push({ 
-                                    'value': this.sectionMapAccount[i].lstFieldWrapper, 
-                                    'key': this.sectionMapAccount[i].cardTitle, 
-                                    'isEditable' : this.sectionMapAccount[i].isEditable
-                                });
+					'value': this.sectionMapAccount[i].lstFieldWrapper, 
+					'key': this.sectionMapAccount[i].cardTitle, 
+					'isEditable' : this.sectionMapAccount[i].isEditable
+				});
             }
         });
     }
