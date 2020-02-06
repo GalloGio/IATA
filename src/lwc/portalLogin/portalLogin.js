@@ -71,6 +71,7 @@ export default class PortalLogin extends LightningElement {
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     startURL = "";
     relayState = "";
+    rendered = false;
 
     _labels = {
         Login,
@@ -207,12 +208,14 @@ export default class PortalLogin extends LightningElement {
             }
         }
         */
-        if(this.isEmailFieldReadOnly === true){
-        	this.template.querySelector('[data-id="passwordInput"]').focus();
-	    }
-	    else{
-	        this.template.querySelector('[data-id="emailInput"]').focus();
-	    }
+        if(!this.rendered){
+        	if(this.isEmailFieldReadOnly === true){
+        		this.template.querySelector('[data-id="passwordInput"]').focus();
+        	}
+        	else{
+        		this.template.querySelector('[data-id="emailInput"]').focus();
+        	}
+        }
     }
 
     /* ==============================================================================================================*/
