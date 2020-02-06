@@ -215,6 +215,7 @@ export default class PortalLogin extends LightningElement {
         	else{
         		this.template.querySelector('[data-id="emailInput"]').focus();
         	}
+        	this.rendered = true;
         }
     }
 
