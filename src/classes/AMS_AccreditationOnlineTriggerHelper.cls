@@ -255,19 +255,39 @@ public class AMS_AccreditationOnlineTriggerHelper {
 
 	/** AMS Data Quality **/
 	/*
-	 * This method verifies if the Geonames Billing and Shipping lookups were changed, when they are it updates the corresponding text field  
+	 * This method verifies if the Geonames Billing and Shipping lookups were changed, when they are it updates the corresponding text field
 	 */
-	public static void updateAddressAccordingToLookup(List<AMS_Pax_Accreditation_Form__c> aaots, Set<Id> citiesIds, Map<Id,AMS_Pax_Accreditation_Form__c> oldMap){
-        
-        Map<Id, IATA_ISO_City__c> citiesMap =  new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
-    
-        for(AMS_Pax_Accreditation_Form__c a : aaots){
+	public static void updateAddressAccordingToLookup(List<AMS_Pax_Accreditation_Form__c> aaots, Map<Id,AMS_Pax_Accreditation_Form__c> oldMap){
 
-            if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null) a.Branch_Office_City__c  =  citiesMap.get(a.Geoname_Billing_City__c)!=null?citiesMap.get(a.Geoname_Billing_City__c).Name:null;
-      		if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c &&  a.Geoname_Shipping_City__c != null )  a.Shipping_City__c = citiesMap.get(a.Geoname_Shipping_City__c)!=null?citiesMap.get(a.Geoname_Shipping_City__c).Name:null;
-      
-        }
+		Set<Id> citiesIds = new Set<Id>();
+		Map<Id, IATA_ISO_City__c> citiesMap;
+		Set<AMS_Pax_Accreditation_Form__c> changedCitiesForms = new Set<AMS_Pax_Accreditation_Form__c>();
 
-    }  
+		for(AMS_Pax_Accreditation_Form__c a : aaots){
 
+			if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null){
+				changedCitiesForms.add(a);
+				citiesIds.add(a.Geoname_Billing_City__c);
+			}
+
+			if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c && a.Geoname_Shipping_City__c != null){
+			  	changedCitiesForms.add(a);
+				citiesIds.add(a.Geoname_Shipping_City__c);
+			}
+
+		}
+
+		if(citiesIds.size() > 0){
+			citiesMap =  new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
+
+			for(AMS_Pax_Accreditation_Form__c a : changedCitiesForms){
+
+				if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null)
+					a.Branch_Office_City__c = citiesMap.get(a.Geoname_Billing_City__c).Name;
+
+				if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c && a.Geoname_Shipping_City__c != null)
+					a.Shipping_City__c = citiesMap.get(a.Geoname_Shipping_City__c).Name;
+			}
+		}
+	}
 }
