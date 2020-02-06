@@ -114,6 +114,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Account_Concerned__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Type_of_customer__c</field>
             </layoutItems>
             <layoutItems>
