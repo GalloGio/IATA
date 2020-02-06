@@ -15129,6 +15129,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>NDC_Agent__c</fullName>
+        <description>Indicates if the agent is NDC</description>
         <externalId>false</externalId>
         <label>NDC Agent</label>
         <required>false</required>
