@@ -8,9 +8,8 @@ trigger OpportunityHandler on Opportunity (after delete, after insert, after und
 		if (Trigger.isBefore) {
 
 		} else if (Trigger.isAfter) {
-
 			RCRMUtil.HandleRCRMOpportunityAfterInsert(Trigger.newMap);
-
+			ANG_OpportunityHandler.updateOscarIfOfferIdInserted(Trigger.oldMap, Trigger.newMap);
 		}
 
 
@@ -23,7 +22,7 @@ trigger OpportunityHandler on Opportunity (after delete, after insert, after und
 			RCRMUtil.HandleRCRMOpportunityBeforeUpdate(Trigger.newMap, Trigger.oldMap);
 
 		} else if (Trigger.isAfter) {
-
+			ANG_OpportunityHandler.updateOscarIfOfferIdInserted(Trigger.oldMap, Trigger.newMap);
 		}
 
 

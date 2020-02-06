@@ -470,6 +470,10 @@ global class ANG_RME_Alert_Service {
 	//called from the oscar trigger when Endorsement_Requested__c is set to true
 	@future (callout=true)
 	webservice static void requestGDIEndorsementCertificate(String iataCode, String offerId){
+		runGDIEndorsementCertificate(iataCode, offerId);
+	}
+
+	public static void runGDIEndorsementCertificate(String iataCode, String offerId){
 
 		WebserviceResult result = doRequest(iataCode, 'ENDORS_CERT', null, true, offerId); //results are saved on the private varible "result"
 

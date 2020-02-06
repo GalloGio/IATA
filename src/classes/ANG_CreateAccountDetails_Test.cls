@@ -35,6 +35,11 @@ private class ANG_CreateAccountDetails_Test {
 
 	 @isTest static void testCreateAccountDetailsSuccess() {
 
+		// NEWGEN-5208 - The service will now also send the INT_011 request
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+        customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+        insert customsettings;
+
 		Test.startTest();
 
 		RestRequest req = new RestRequest();
