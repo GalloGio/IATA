@@ -198,6 +198,11 @@
                     <label>GDI_ENDORSEMENT</label>
                 </value>
                 <value>
+                    <fullName>GDI_ENDORSEMENT_PDF</fullName>
+                    <default>false</default>
+                    <label>GDI_ENDORSEMENT_PDF</label>
+                </value>
+                <value>
                     <fullName>TIP_IFG_REPORT</fullName>
                     <default>false</default>
                     <label>TIP - IFG Report</label>
@@ -375,6 +380,11 @@ When MS sets “In Progress”, trigger to fire</description>
                 <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>GDI_ENDORSEMENT_PDF</fullName>
+                <default>false</default>
+            </values>
+			
             <values>
                 <fullName>TIP_AUTO_REPORTS</fullName>
                 <default>false</default>

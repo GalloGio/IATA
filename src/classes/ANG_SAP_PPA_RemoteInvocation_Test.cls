@@ -1,5 +1,5 @@
 @isTest 
-public class ANG_SAP_PPA_RemoveInvocation_Test {
+public class ANG_SAP_PPA_RemoteInvocation_Test {
 
 
 	@testSetup

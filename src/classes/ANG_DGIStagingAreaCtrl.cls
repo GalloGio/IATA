@@ -206,22 +206,65 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 			oscar.status__c = AMS_Utils.OSCAR_CLOSED;
 			update oscar;
 
-			stagingFs.Reception_Date__c = System.today();
-			update stagingFs;
-
 			if(hasAdendum)
 				performAcceptancewithAdendum(oscarCase);
 			else
 				createNewFinancialSecurity(oscarCase);
 
+			if(newFsId != null){
+				stagingFs.Financial_Security__c = newFSId;
+			}
+
+			stagingFs.Reception_Date__c = System.today();
+			update stagingFs;
+			
 			opp = new Opportunity(Id=stagingFs.OpportunityId);
 			opp.StageName = AMS_Utils.OPPORTUNITY_CLOSED_WON;
 			update opp;
+
+			movePdfEndorsementAttachment(stagingFs.Id, newFsId);
 
 		}
 		catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, parseException(e)));
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - accept] ' + e.getStackTraceString());
+		}
+	}
+
+	@future(callout=true)
+	private static void movePdfEndorsementAttachment(Id opportunityLineItemId, Id financialSecurityId){
+
+		if(opportunityLineItemId == null || financialSecurityId == null){
+			return;
+		}
+		
+		List<WrapperAttach> wrapAttachmentsLst = WrapperAttach.getListAttachments(opportunityLineItemId);
+
+		Map<String, Id> scopeMapping = new Map<String, Id>();
+		List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper> afWrapLst = new List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper>();
+
+		for(WrapperAttach wa : wrapAttachmentsLst){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_DGIStagingAreaCtrl - movePdfEndorsementAttachment] Processing file ' + wa.fileAmazon.amazonFile.Full_Name_Unique__c + ' to financial security' + financialSecurityId);
+			afWrapLst.add(MoveAmazonFilesActionBatch.moveAmazonFile(wa, financialSecurityId));
+			scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, financialSecurityId);
+		}
+
+		Savepoint sp = Database.setSavepoint();
+
+		try {
+			MoveAmazonFilesActionBatch.commitActions(afWrapLst);
+		}
+		catch(Exception e){
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - movePdfEndorsementAttachment] Exception: ' + e.getMessage());
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - movePdfEndorsementAttachment] Exception Stacktrace: ' + e.getStackTraceString());
+			Database.rollback(sp);
+			MoveAmazonFilesActionBatch.commitTechnicalLogs(
+				new Technical_Logs__c(
+					Operation__c = 'ANG_DGIStagingAreaCtrl - Moving PDF Endorsement',
+					Status__c = (e.getMessage() + '\n' + e.getStackTraceString()).left(254),
+					Log__c = JSON.serialize(scopeMapping)
+				)
+			);
 		}
 	}
 

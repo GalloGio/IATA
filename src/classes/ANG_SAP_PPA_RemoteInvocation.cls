@@ -2,7 +2,7 @@
  * Processes the SAP PPA Remote Invocation
  *
  */
-public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvocationINT {
+public with sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteInvocationINT {
 
 	Map<ID,Remote_Invocation__c> mapRemoteInvocations = new Map<ID,Remote_Invocation__c>();
 	Map<ID, Remote_Invocation_Artefact__c> mapRemoteInvocationArtifacts = new Map<ID, Remote_Invocation_Artefact__c>();
@@ -10,13 +10,13 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 
 	List<Remote_Invocation_Artefact__c> rmtInvocationArtListToUpdate = new List<Remote_Invocation_Artefact__c>();
 
-	public ANG_SAP_PPA_RemoveInvocation() {}
+	public ANG_SAP_PPA_RemoteInvocation() {}
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
-		System.debug('[ANG_SAP_PPA_RemoveInvocation] Start doSanityCheck ' );
+		System.debug('[ANG_SAP_PPA_RemoteInvocation] Start doSanityCheck ' );
 
-		System.debug('[ANG_SAP_PPA_RemoveInvocation] remoteInvocationsIdToProcess: ' + remoteInvocationsIdToProcess );
+		System.debug('[ANG_SAP_PPA_RemoteInvocation] remoteInvocationsIdToProcess: ' + remoteInvocationsIdToProcess );
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
 
@@ -29,16 +29,16 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 		//No SPA PPA Remote Invocations to process
 		if(mapRemoteInvocations.isEmpty()) return;
 
-		System.debug('[ANG_SAP_PPA_RemoveInvocation] Map at start: ' + remoteInvocationsWithoutArtifcts);
+		System.debug('[ANG_SAP_PPA_RemoteInvocation] Map at start: ' + remoteInvocationsWithoutArtifcts);
 
 		for(Remote_Invocation_Artefact__c artifact : [SELECT ID, Remote_Invocation__c, Internal_ID__c, External_Id__c, Payment_type__c
 													  FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :mapRemoteInvocations.keySet()]){
 			
-			System.debug('[ANG_SAP_PPA_RemoveInvocation] current Remote_Invocation_Artefact__c: ' + artifact);
+			System.debug('[ANG_SAP_PPA_RemoteInvocation] current Remote_Invocation_Artefact__c: ' + artifact);
 
 			//remove from the list the parent of the artifact
 			remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__c);
-			system.debug('[ANG_SAP_PPA_RemoveInvocation] Removing from map: ' + artifact.Remote_Invocation__c);
+			system.debug('[ANG_SAP_PPA_RemoteInvocation] Removing from map: ' + artifact.Remote_Invocation__c);
 
 			Remote_Invocation__c ri = mapRemoteInvocations.get(artifact.Remote_Invocation__c);
 
@@ -79,7 +79,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
-		System.debug('[ANG_SAP_PPA_RemoveInvocation] Start doProcess mapRemoteInvocationArtifacts: ' + mapRemoteInvocationArtifacts);
+		System.debug('[ANG_SAP_PPA_RemoteInvocation] Start doProcess mapRemoteInvocationArtifacts: ' + mapRemoteInvocationArtifacts);
  
 		//No SPA PPA Remote Invocations to process
 		if(remoteInvocationsIdToProcess.isEmpty()) return;
@@ -134,7 +134,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 			}
 
 
-			System.debug('[ANG_SAP_PPA_RemoveInvocation] - doProcess - Before Update OscarList: ' + oscarList);
+			System.debug('[ANG_SAP_PPA_RemoteInvocation] - doProcess - Before Update OscarList: ' + oscarList);
 
 			//Update Oscar list
 			if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
