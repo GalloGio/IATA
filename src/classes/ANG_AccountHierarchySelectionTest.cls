@@ -846,4 +846,124 @@ private class ANG_AccountHierarchySelectionTest {
 		system.debug('##ARD FINAL result to assert: ' + osc.HE_per_BSP_Mapping__c);
 		Test.stopTest();
 	}
+
+	@isTest
+    static void handlesNewParentSelectionLocationGE(){
+
+        delete [SELECT Id, Subject FROM Case WHERE SUbject like '%Account China AE1 H1%' LIMIT 1];
+
+        Account acct = [SELECT Id, Location_Class__c FROM Account WHERE Name = 'Account China AE1 H1' LIMIT 1];
+
+        acct.Location_Class__c = 'D';
+        update acct;
+        
+        AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
+            Name = 'BSP-PT',
+            RecordTypeId = AMS_Utils.RECTYPE_BSP,
+            ANG_RHC_Amount_Equals_FS__c = true
+        );
+
+        AMS_Settlement_System__c bspES = new AMS_Settlement_System__c(
+            Name = 'BSP-ES',
+            RecordTypeId = AMS_Utils.RECTYPE_BSP,
+            ANG_RHC_Amount_Equals_FS__c = true
+        );
+
+        AMS_Settlement_System__c bspDK = new AMS_Settlement_System__c(
+            Name = 'BSP-DK',
+            RecordTypeId = AMS_Utils.RECTYPE_BSP,
+            ANG_RHC_Amount_Equals_FS__c = true
+        );
+
+        insert new List<AMS_Settlement_System__c>{bspPT, bspES, bspDK};
+
+        IATA_ISO_Country__c ctryPT = new IATA_ISO_Country__c (Name='PT',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspPT.id);
+        IATA_ISO_Country__c ctryES = new IATA_ISO_Country__c (Name='ES',ISO_Code__c='ES', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspES.id);
+        IATA_ISO_Country__c ctryDK = new IATA_ISO_Country__c (Name='DK',ISO_Code__c='DK', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspDK.id);
+        //IATA_ISO_Country__c ctryFR = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true);
+        insert new List<IATA_ISO_Country__c>{ctryPT, ctryES, ctryDK};//, ctryFR};
+
+        IATA_ISO_State__c sttPT = new IATA_ISO_State__c(Name= 'Portugal', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctryPT.Id);
+        IATA_ISO_State__c sttES = new IATA_ISO_State__c(Name= 'Spain', ISO_Code__c = 'ES', IATA_ISO_Country__c = ctryES.Id);
+        IATA_ISO_State__c sttDK = new IATA_ISO_State__c(Name= 'Denmark', ISO_Code__c = 'DK', IATA_ISO_Country__c = ctryDK.Id);
+        //IATA_ISO_State__c sttFR = new IATA_ISO_State__c(Name= 'France', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctryPT.Id);
+
+        insert new List<IATA_ISO_State__c>{sttPT, sttES, sttDK};//, sttFR};
+
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+
+        Account GE1 = new Account();
+        GE1.Name = 'Main GE1 PT Account';
+        GE1.Sector__c = 'Travel Agent';
+        GE1.IATACode__c = '12345678';
+        GE1.Category__c = 'IATA Passenger Sales Agent';
+        GE1.Location_Class__c = 'P';
+        GE1.Location_Type__c = AMS_Utils.GE;
+        GE1.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+        GE1.IATA_ISO_Country__c = ctryPT.Id;
+        GE1.ANG_IEP_HE_AccntNum__c = '1232132323';
+        GE1.ANG_IEP_Status__c = 'Suspended' ;
+        GE1.ANG_HE_CashCondition__c = true;
+        GE1.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+        GE1.ANG_HE_RiskStatus__c = 'Not Applicable';
+        GE1.RecordTypeId = accountAgencyRT;
+
+
+        Account GE2 = new Account();
+        GE2.Name = 'Main GE2 PT Account';
+        GE2.Sector__c = 'Travel Agent';
+        GE2.IATACode__c = '12345678';
+        GE2.Category__c = 'IATA Passenger Sales Agent';
+        GE2.Location_Class__c = 'P';
+        GE2.Location_Type__c = AMS_Utils.GE;
+        GE2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+        GE2.IATA_ISO_Country__c = ctryPT.Id;
+        GE2.ANG_IEP_HE_AccntNum__c = '1232132323';
+        GE2.ANG_IEP_Status__c = 'Suspended' ;
+        GE2.ANG_HE_CashCondition__c = true;
+        GE2.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+        GE2.ANG_HE_RiskStatus__c = 'Not Applicable';
+        GE2.RecordTypeId = accountAgencyRT;
+
+        insert new list<Account>{GE1, GE2};    
+        
+        AMS_OSCAR__c oscar =
+            [SELECT
+                Id,
+                STEP6__c,
+                Account__c,
+                Process__c,
+                RecordTypeId,
+                New_parent__c,
+                ANG_Type_Of_Change__c,
+                Change_of_location_type_behavior__c,
+                Account__r.ANG_Accreditation_Model__c
+             FROM AMS_OSCAR__c
+             WHERE
+                 ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY
+             LIMIT 1
+            ];
+
+        PageReference pg = Page.ANG_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+        Test.setCurrentPage(pg);
+
+        ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+        System.assert(!con.showOnGoingOscarWarning, 'Must not show the OSCAR warning');
+
+        Map<Id, ANG_AccountHierarchySelectionController.HierarchyItem> hierarchy = con.hierarchy;
+        List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+        con.newParent = GE1;
+        Test.startTest();
+            con.save();
+        Test.stopTest();
+
+        ApexPages.Message[] pageMessages = ApexPages.getMessages();
+
+        system.debug('PAGE ' + pageMessages);
+        System.assert(pageMessages.size() == 0);
+    }
 }
