@@ -72,7 +72,6 @@ private class CaseProcessTypeHelperTest {
 		Case_Process_Type__mdt process = [SELECT Type__c FROM Case_Process_Type__mdt process WHERE Reason__c = 'New HO'];
 
 		System.assertNotEquals(null, cse.KPI_Calculation__c);
-
 		Test.stopTest();
 	}
 
