@@ -159,7 +159,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		}
 
 		/** WMO-424 **/
-		CaseVisibilityEngine.execute(Trigger.new);
+		CaseVisibilityEngine.execute(Trigger.oldMap, Trigger.new);
 
 		// assigns default email address to be used on send email quick action
 		//follows same logic as current classic functionality
