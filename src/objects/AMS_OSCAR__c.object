@@ -13466,6 +13466,7 @@ The values selected by the analyst will determine the reason why the application
                 <default>false</default>
             </values>
         </picklistValues>
+		<picklistValues>
             <picklist>Reason_for_unsuccessful_application__c</picklist>
             <values>
                 <fullName>Agent decided to apply for GoLite</fullName>
