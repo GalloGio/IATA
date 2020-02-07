@@ -1,0 +1,21 @@
+<template>
+    <c-portal-page-container>
+        <c-iata-content-section title="Search results" slot="componentContent">
+            <div slot="body">
+                <p if:false={hasResults}>There aren't results to show.</p>
+            
+                <div if:true={hasResults}>
+                    <lightning-datatable
+                        data={tableData}
+                        columns={tableColumns}
+                        key-field="operation"
+                        hide-checkbox-column="true"
+                    ></lightning-datatable>
+                </div>
+                <!--<div if:true={tableContent} for:each={tableContent} for:item="tableRow" key={tableRow.operation}>
+
+                </div>-->
+            </div>
+        </c-iata-content-section>
+    </c-portal-page-container>
+</template>

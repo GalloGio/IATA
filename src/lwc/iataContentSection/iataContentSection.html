@@ -1,0 +1,11 @@
+<template>
+    <div class="slds-grid slds-wrap iata-content-full-width">
+		<div class="slds-col slds-size_1-of-1 slds-m-top_x-large slds-m-bottom_xx-large">
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_x-large iata-content-card-title" if:true={title}>{title}</div>
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_x-large iata-content-card-subtitle" if:true={subtitle}>{subtitle}</div>
+			<div class="slds-col slds-size_1-of-1 iata-content-card-body">
+                <slot name="body"></slot>
+            </div>
+        </div>
+    </div>
+</template>

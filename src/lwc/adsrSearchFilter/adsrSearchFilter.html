@@ -1,0 +1,64 @@
+<template>
+    <c-portal-page-container>
+        <lightning-layout horizontal-align="spread" slot="componentContent" multiple-rows="true">
+            <lightning-layout-item size="4">
+                <lightning-layout horizontal-align="spread" multiple-rows="true">
+                    <lightning-layout-item size="6" padding="around-small">
+                        <lightning-combobox
+                            name="region"
+                            label="Region"
+                            value={regionValue}
+                            placeholder="Select Progress"
+                            options={regionOptions}
+                            onchange={handleChange} ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="around-small">
+                        <label class="slds-form-element__label">Search by</label>
+                        <lightning-radio-group
+                            options={searchByOptions}
+                            value={activeSearchType}
+                            type="button"
+                            name="searchBy"
+                            onchange={handleChange}></lightning-radio-group>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="around-small">
+                        <c-iata-button
+                            label="Search"
+                            onclick={handleSearch}
+                            variant="contained"
+                            icon="utility:search"
+                            vertical-align="bottom">
+                        </c-iata-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="around-small">
+                        <c-iata-button
+                            label="Reset"
+                            onclick={handleSearch}
+                            variant="contained"
+                            icon="utility:clear"
+                            vertical-align="bottom">
+                        </c-iata-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+                <c-iata-multiselect-popup
+                    multi-select-options={marketOptions}
+                    header="Select Markets"
+                    label="Markets"
+                    select-values-button="Select Markets"
+                    value={marketsValue}
+                    disabled={disabledMarkets}></c-iata-multiselect-popup>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding="around-small">
+                <lightning-input
+                    name="agent"
+                    label="Agent"
+                    value={agentValue}
+                    onchange={handleChange}
+                    disabled={disabledAgent}></lightning-input>
+            </lightning-layout-item>
+            
+        </lightning-layout>
+    </c-portal-page-container>
+</template>

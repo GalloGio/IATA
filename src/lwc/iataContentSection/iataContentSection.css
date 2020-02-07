@@ -1,0 +1,25 @@
+.iata-content-full-width{
+    width: 100%;
+}
+
+.iata-content-card-title {
+    font-size: 22px;
+    line-height: 28px;
+    color: #525252;
+}
+.iata-content-card-subtitle {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #525252;
+    margin-top: 15px;
+}
+.iata-content-card-body {
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 70px 80px 30px;
+}
+
+.servicesCard.cardBody{
+    padding: 20px;
+}
