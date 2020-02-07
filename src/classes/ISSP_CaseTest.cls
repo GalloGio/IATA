@@ -297,9 +297,13 @@ public class ISSP_CaseTest {
 		ApexPages.currentPage().getParameters().put('topic', 'test');
 		ApexPages.currentPage().getParameters().put('subtopic', 'test1');
 		ApexPages.currentPage().getParameters().put('origin', 'Portal');
+		List<DPCCasePriorityHigh__c> DPCCasePriorityHighEmails = [SELECT Email__c 
+									  FROM DPCCasePriorityHigh__c];
 		Test.startTest();
 		system.runAs(thisUser){
 			ISSP_Case cttr = new ISSP_Case();
+			cttr.pageLoad();
+			cttr.newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 			cttr.pageLoad();
 			cttr.DPCCaseScheduleWarning = true;
 			cttr.newCase.Region__c = 'Africa & Middle East';
@@ -325,6 +329,8 @@ public class ISSP_CaseTest {
 			cttr.saveAttach();
 			cttr.isGSAOnly = false;
 			cttr.isGSAUser = true;
+			cttr.save();
+			cttr.newCase.Priority = 'High';
 			cttr.save();
 			cttr.saveAttach();
 		}
@@ -770,4 +776,34 @@ public class ISSP_CaseTest {
 	   Test.stopTest();
 	 }
 
+     public static testMethod void testCloneDPC() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        c.Description = 'test';
+        c.Applicable_to_Which_Version_s__c = 'test';
+        insert c;
+        
+        ISSP_Case obj = new ISSP_Case();
+        ApexPages.currentPage().getParameters().put('cloneDPCId', String.valueOf(c.Id));
+        obj.pageLoad();
+        obj.newCase = c;
+        PageReference pageRef = obj.CloneDPC();
+    }
  }

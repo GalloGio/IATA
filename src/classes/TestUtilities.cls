@@ -1,3 +1,4 @@
+@isTest
 public class TestUtilities {
 
 	private static User[] getUsers(Id profileId, Integer uCount) {
