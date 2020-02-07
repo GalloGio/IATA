@@ -233,8 +233,9 @@
         <div class="row">
         	<apex:form >
 	          	<center style="padding-top:15px;">
-		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
-		          	<apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
+              	 	<apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Joining_App}" style="margin-right: 30px;"/>
+		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
+		          	<apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
 		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
 	          	</center>
 	        </apex:form>

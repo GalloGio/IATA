@@ -2536,6 +2536,11 @@ SIS Charge Code Type.</description>
                     <label>Emergency Response Handbook</label>
                 </value>
                 <value>
+                    <fullName>EPIC</fullName>
+                    <default>false</default>
+                    <label>EPIC</label>
+                </value>
+                <value>
                     <fullName>Essential Documents on International Air Carrier Liability</fullName>
                     <default>false</default>
                     <label>Essential Documents on International Air Carrier Liability</label>
@@ -8192,6 +8197,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -11301,6 +11310,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>DGR Training Books</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14488,6 +14501,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -17469,6 +17486,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>DGR Training Books</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20700,6 +20721,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>DGR Training Books</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
             <values>
