@@ -287,8 +287,6 @@ public without sharing class ISSP_ChangePassword {
 
 			User userInfo = [SELECT id, accountId, ContactId, contact.user_portal_status__c FROM USER WHERE id=: UserInfo.getUserId()];
 			
-			 //For itp admin, no iftp related records are needed
-			 if(userinfo.contact.user_portal_status__c =='Approved Admin') return;
 
 			List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
 
@@ -331,6 +329,9 @@ public without sharing class ISSP_ChangePassword {
 					}
 
 					accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+                    if(userinfo.contact.user_portal_status__c =='Approved Admin'){
+                        accContRoleToInsert.Contact_Role__c += ';ITP Administrator';
+                    }
 
 					accContRoleToInsert.Details__c = '';
 					accContRoleToInsert.Contact__c = userInfo.ContactId;
