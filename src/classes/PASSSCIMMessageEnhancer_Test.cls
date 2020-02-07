@@ -45,12 +45,24 @@ public class PASSSCIMMessageEnhancer_Test {
 
 	@isTest
 	static void UserProvisioningRequestUpdateTrigger(){
-
+		User testUser = new User(alias = 'dsfsdfds',
+								email = 'con.email12312313132PASSTEST@email.com',
+								emailencodingkey = 'UTF-8',
+								firstname = 'TestUser',
+								lastname = 'UserLastName',
+								languagelocalekey = 'en_US',
+								localesidkey = 'en_US',
+								timezonesidkey = 'Asia/Dubai',
+								Username = 'Username123123131313132@email.com',
+								ProfileId = [select Id from Profile where Name='System Administrator' limit 1].Id,
+								License_Cost_Center__c = 'ITO005CH01',
+								IsActive = true);
+		insert testUser;
+		List<PermissionSetAssignment> oldpermissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:testUser.Id];
 		Test.startTest();
-			List<PermissionSetAssignment> oldPermissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() ];
 			UserProvisioningRequest u = new UserProvisioningRequest();
-			u.SalesforceUserId = UserInfo.getUserId();
-			u.ConnectedAppId = [SELECT id FROM ConnectedApplication WHERE name = 'PASS' LIMIT 1].id;
+			u.SalesforceUserId = testUser.Id;
+			u.ConnectedAppId = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
 			u.State = 'New';
 			u.Operation = 'Create';
 			u.ApprovalStatus = 'Required';
@@ -59,8 +71,7 @@ public class PASSSCIMMessageEnhancer_Test {
 			database.update(u);
 			Test.stopTest();
 			//Upon insert of the UserProvisioningRequest, it will run the PASS flow and assign the Permisison Set to the User
-			List<PermissionSetAssignment> permissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() ];
-			System.assertEquals(oldPermissionList.size()+1,permissionList.size());
-
+			List<PermissionSetAssignment> permissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:testUser.Id AND PermissionSet.Name LIKE 'PASS%'];
+			System.assertEquals(1,permissionList.size());
 	}
 }

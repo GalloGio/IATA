@@ -1859,7 +1859,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
 				}
-			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && !isPassAccreditation) {
 				includedPageName = 'ISSP_AMS_CASS_Associate_Form';
 				includedSummaryPage = 'ISSP_AMS_CASS_HO_ReadOnly';
 			} else if (isPassAccreditation) {//If the user is in the ISSP_AMS_Upload page on the PASS process

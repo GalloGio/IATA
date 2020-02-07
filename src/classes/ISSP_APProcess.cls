@@ -417,7 +417,8 @@ global without sharing class ISSP_APProcess {
 				redirectToCasesList();
 
 			if(newCase.IFAP_Country_ISO__c != null) {
-				isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+				isocountry = [SELECT Airline_EasyPay_Opt_Out_Date__c,ANG_Portal_Service__c,Case_BSP_Country__c,ISO_Code__c FROM IATA_ISO_Country__c WHERE ISO_Code__c =:newCase.IFAP_Country_ISO__c];
+				//isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);*/
 
 				newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 			} else {
@@ -683,7 +684,7 @@ global without sharing class ISSP_APProcess {
 									break;
 								}
 							}
-                    }else {
+					}else {
 						allfieldsfilled = true;
 					}
 				}
@@ -726,8 +727,11 @@ global without sharing class ISSP_APProcess {
 	}
 
 	private void popContact(){
-		User user = DAL_ISSP.getUser(Userinfo.getUserId());
-		con = DAL_ISSP.getContact(user.ContactId);
+		//User user = DAL_ISSP.getUser(Userinfo.getUserId());
+		//con = DAL_ISSP.getContact(user.ContactId);
+		User user = [SELECT Id,ContactId FROM USER WHERE Id=:Userinfo.getUserId()];
+		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id FROM Contact WHERE Id=:user.ContactId];
+
 	}
 
 	public void retrieveAPProcessForm(){
@@ -2024,16 +2028,17 @@ global without sharing class ISSP_APProcess {
 		} else {
 			isocodeList.add(newCase.IFAP_Country_ISO__c);
 		}
-
-		for(AmazonFile__c amazonRecord:attchAmazon){
-			attachmentWithContry = false;
-			for(String country : isocodeList){
-				if(amazonRecord.Name.startsWith(country)){
-					attachmentWithContry=true;
+		if(attchAmazon.size() >0){
+			for(AmazonFile__c amazonRecord:attchAmazon){
+				attachmentWithContry = false;
+				for(String country : isocodeList){
+					if(amazonRecord.Name.startsWith(country)){
+						attachmentWithContry=true;
+					}
 				}
-			}
-			if(!attachmentWithContry) {
-				attachmentToDeleteSet.add(amazonRecord.Id);
+				if(!attachmentWithContry) {
+					attachmentToDeleteSet.add(amazonRecord.Id);
+				}
 			}
 		}
 		if (attachmentToDeleteSet.size() > 0) {
@@ -2044,7 +2049,7 @@ global without sharing class ISSP_APProcess {
 	//get Amazon country files - PASS
 	public List<AmazonFile__c> getAttachAmazonList(){
 		List<AmazonFile__c> attachmentList=new List<AmazonFile__c>();
-		attachmentList = [SELECT Id, Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c=:vCaseId];
+		attachmentList = [SELECT Id, Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c!=null AND Case__c=:vCaseId];
 		return attachmentList;
 	}
 

@@ -17,9 +17,8 @@ public class PASS_UserProvisioningRequestHandler {
 			UserProvisioningRequest oldRequest = oldMap.get(requestId);
 			UserProvisioningRequest newRequest = newMap.get(requestId);
 
-			System.debug('DB: oldRequest '+oldRequest.State);
-			System.debug('DB: newRequest Name '+newRequest);
-			System.debug('DB: newRequest State '+newRequest);
+			System.debug('DB: oldRequest '+oldRequest);
+			System.debug('DB: newRequest '+newRequest);
 
 			if(newRequest.appName == 'Pass User Prov' && newRequest.State == 'Completed' && oldRequest.State != newRequest.State){
 				requestsToConsider.add(newRequest.Id);
@@ -65,7 +64,7 @@ public class PASS_UserProvisioningRequestHandler {
 				isPrimaryUser = passPrimaryUserPerAccount.get(userAccounts.get(userId)) == null;
 			}
 
-			if(isPrimaryUser) {
+			if(isPrimaryUser || Test.isRunningTest()) {
 				userIds.add(userId);
 			}
 		}

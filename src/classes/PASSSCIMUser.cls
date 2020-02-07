@@ -210,7 +210,22 @@ global with sharing class PASSSCIMUser extends SCIMUser {
 				 enAccountType.value = 'VERIFIER';
 			}
 			this.entitlements.add(enAccountType);*/
-
+            
+            if (email != null) {
+                SCIMUser.Emails e = new SCIMUser.Emails();
+                e.value = email;
+                e.type = 'home';
+                e.primary = false;
+    
+                SCIMUser.Emails e2 = new SCIMUser.Emails();
+                e2.value = email;
+                e2.type = 'work';
+                e2.primary = true;
+    
+                super.Emails = new List<SCIMUser.Emails>{e,e2};
+            }
+			this.displayName = userIn.name;
+            
 			Entitlements enExtSystem = new Entitlements();
 			enExtSystem.type = 'externalSystems';
 			enExtSystem.value = 'Postal Accounts Settlement System (PASS)';
@@ -225,7 +240,7 @@ global with sharing class PASSSCIMUser extends SCIMUser {
 			this.photos.add(aPhoto);
 			*/
 
-			this.displayName = userIn.name;
+			
 
 			//this.locale = userIn.LanguageLocaleKey;
 
@@ -241,19 +256,7 @@ global with sharing class PASSSCIMUser extends SCIMUser {
 			this.enx = anEx;
 			*/
 
-		  if (email != null) {
-			SCIMUser.Emails e = new SCIMUser.Emails();
-			e.value = email;
-			e.type = 'home';
-			e.primary = false;
-
-			SCIMUser.Emails e2 = new SCIMUser.Emails();
-			e2.value = email;
-			e2.type = 'work';
-			e2.primary = true;
-
-			super.Emails = new List<SCIMUser.Emails>{e,e2};
-		}
+		  
 		}
 	}
 }

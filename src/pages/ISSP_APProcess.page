@@ -99,7 +99,7 @@
                                             </apex:actionRegion>
                                         </div>
                                     </div>
-                                    <apex:outputPanel id="optional-form-groups" rendered="!managePASS" >
+                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import') && strAreaType=='Airline Joining'}">
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
                                             <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
                                             <div class="col-sm-10">
@@ -108,19 +108,18 @@
                                                 </apex:selectList>
                                             </div>
                                         </div>
-                                        <script>$('.country-select').select2({width : 'resolve'});</script>
-
-                                        <apex:outputPanel layout="block" styleclass="form-group" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
-                                            <label class="col-sm-2 control-label">* ICH Participation Type</label>
-                                            <div class="col-sm-10">
-                                                <apex:selectList styleClass="ich-type-select"  value="{!newCase.Classification_SIS__c}" onchange="refreshCASSAirlineList(this.value);" size="1">
-                                                    <apex:selectOptions value="{!listOptionICHParticipation}"/>
-                                                </apex:selectList>
-                                            </div>
-                                        </apex:outputPanel>
-                                        <script>$('.ich-type-select').select2({width : 'resolve'});</script>
+									</apex:outputPanel>
+                                    <script>$('.country-select').select2({width : 'resolve'});</script>
+                                    <apex:outputPanel layout="block" styleclass="form-group" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
+                                        <label class="col-sm-2 control-label">* ICH Participation Type</label>
+                                        <div class="col-sm-10">
+                                            <apex:selectList styleClass="ich-type-select"  value="{!newCase.Classification_SIS__c}" onchange="refreshCASSAirlineList(this.value);" size="1">
+                                                <apex:selectOptions value="{!listOptionICHParticipation}"/>
+                                            </apex:selectList>
+                                        </div>
                                     </apex:outputPanel>
-
+                                    <script>$('.ich-type-select').select2({width : 'resolve'});</script>
+                                    
                                     <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
                                         <div class="form-group">
                                             <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
