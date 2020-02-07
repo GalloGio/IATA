@@ -134,34 +134,43 @@ public class ISSP_ICCS_CycleMgmtControllerTest {
 		System.assertEquals(cycleMgmtController.selectedAdhocCycle, '');
 		System.assertEquals(cycleMgmtController.adhocCycleParticipationTable, null);
 
+		cycleMgmtController.expandAllCycleCurrencyTable();
+		cycleMgmtController.collapseAllCycleCurrencyTable();
+
 		cycleMgmtController.selectedAdhocCycle = adhocCyclesList[0];
 
-		List<ISSP_ICCS_Utils.ParticipationRow> cycleParticipationRows = cycleMgmtController.cycleParticipationRows;
+		List<ISSP_ICCS_Utils.CurrencyRow> AdhocCurrencyRows = cycleMgmtController.AdhocCurrencyRows;
 
-		System.assert(cycleParticipationRows.size() > 0);
+		System.assert(AdhocCurrencyRows.size() > 0);
 
-		Boolean isCycleParticipationTableExpandable = cycleMgmtController.isCycleParticipationTableExpandable;
+		Boolean isCycleParticipationTableExpandable = cycleMgmtController.isCycleCurrencyTableExpandable;
 
-		cycleMgmtController.expandCollapseCycleParticipationTable();
+		cycleMgmtController.expandCollapseCycleCurrencyTable();
 
-		cycleParticipationRows = cycleMgmtController.cycleParticipationRows;
+		AdhocCurrencyRows = cycleMgmtController.AdhocCurrencyRows;
 
 
 		ISSP_ICCS_Utils.ParticipationTable cycleParticipationTable = cycleMgmtController.adhocCycleParticipationTable;
 
-//		System.assert(cycleParticipationTable.participationRows.size() > 0);
+		//		System.assert(cycleParticipationTable.participationRows.size() > 0);
 
 		// select a participation
-//		ISSP_ICCS_Utils.ParticipationRow cycleParticipationRow = cycleParticipationTable.participationRows[0];
-		ISSP_ICCS_Utils.ParticipationRow cycleParticipationRow = cycleParticipationRows[0];
+		ISSP_ICCS_Utils.CurrencyRow adhocCurrencyRow = AdhocCurrencyRows[0];
 
 		// show the selected participation settlement instructions
-		cycleParticipationRow.showSettlementInstructions();
+		adhocCurrencyRow.showCountries();
 
-		System.assert(cycleParticipationRow.settlementInstructionRows.size() > 0);
+		System.assert(adhocCurrencyRow.currencySettlementInstructionRows.size() == 0);
+
+		System.assert(adhocCurrencyRow.currencyParticipationRows.size() > 0);
+
+		//Select a participation
+		ISSP_ICCS_Utils.ParticipationRow participationRow = adhocCurrencyRow.currencyParticipationRows[0];
+
+		System.assert(participationRow.settlementInstructionRows.size() > 0);
 
 		// select a settlement instruction
-		ISSP_ICCS_Utils.SettlementInstructionRow cycleSettlementInstructionRow = cycleParticipationRow.settlementInstructionRows[0];
+		ISSP_ICCS_Utils.SettlementInstructionRow cycleSettlementInstructionRow = participationRow.settlementInstructionRows[0];
 
 		// show and hide the selected settlement instruction instruction lines
 		cycleSettlementInstructionRow.showInstructionLines();
@@ -175,11 +184,11 @@ public class ISSP_ICCS_CycleMgmtControllerTest {
 		pageController.cancel();
 
 		// hide the selected participation settlement instructions
-		cycleParticipationRow.hideSettlementInstructions();
+		adhocCurrencyRow.hideCountries();
 
 		// create a settlement instruction
 		cycleMgmtController.settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_ADHOC;
-		cycleMgmtController.participationIdParameter = cycleParticipationRow.participationId;
+		cycleMgmtController.participationIdParameter = adhocCurrencyRow.currencyParticipationRows[0].participationId;
 		cycleMgmtController.cycleIdParameter = cycleMgmtController.selectedAdhocCycle;
 
 		cycleMgmtController.createSettlementInstruction();
@@ -226,10 +235,10 @@ public class ISSP_ICCS_CycleMgmtControllerTest {
 
 		ISSP_ICCS_Utils.ParticipationTable futureParticipationTable = cycleMgmtController.futureCycleParticipationTable;
 
-//		System.assert(futureParticipationTable.participationRows.size() > 0);
+		//		System.assert(futureParticipationTable.participationRows.size() > 0);
 
 		// select a participation
-//		ISSP_ICCS_Utils.ParticipationRow futureParticipationRow = futureParticipationTable.participationRows[0];
+		//		ISSP_ICCS_Utils.ParticipationRow futureParticipationRow = futureParticipationTable.participationRows[0];
 		ISSP_ICCS_Utils.ParticipationRow futureParticipationRow = futureParticipationRows[0];
 
 		// show the selected participation settlement instructions
@@ -282,6 +291,13 @@ public class ISSP_ICCS_CycleMgmtControllerTest {
 
 		cycleMgmtController.cleanController();
 		cycleMgmtController.resetController(cycleMgmtController.pageController);
+		cycleMgmtController.cloneCurrencySettlementInstruction();
+		cycleMgmtController.massCurrencyEditParticipation();
+		// call go to mass page without any selected Participation Row
+		cycleMgmtController.massAdHocEditParticipation();
+		// call go to mass page without one selected Participation Row
+		participationRow.selected = true;
+		cycleMgmtController.massAdHocEditParticipation();
 
 
 		List<ISSP_ICCS_CoreRest.Cycle> cycles = pageController.coreRest.getCycles(new Set<ISSP_ICCS_CoreRest.CYCLE_STATUS> {ISSP_ICCS_CoreRest.CYCLE_STATUS.Created});

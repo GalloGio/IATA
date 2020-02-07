@@ -40,7 +40,7 @@ public class ISSP_ICCS_ServiceController{
 					if(topAccount.IATACode__c == null && topAccount.Airline_designator__c == null && topAccount.Airline_Prefix__c == null) {
 						participantId = topAccount.Old_Airline_designator__c + (iataCodeEmpty? topAccount.Old_Airline_Prefix__c : topAccount.Old_IATA_Code__c);
 					} else {
-					participantId = topAccount.Airline_designator__c + (iataCodeEmpty? topAccount.Airline_Prefix__c : topAccount.IATACode__c);
+						participantId = topAccount.Airline_designator__c + (iataCodeEmpty? topAccount.Airline_Prefix__c : topAccount.IATACode__c);
 					}
 				}
 				if(isAgency){
@@ -183,6 +183,7 @@ public class ISSP_ICCS_ServiceController{
 	public Boolean displayProfile 		{get{return currentComponent == ISSP_ICCS_Utils.Page.PROFILE;}}
 	public Boolean displayCaseProcesses	{get{return currentComponent == ISSP_ICCS_Utils.Page.CASE_PROCESSES;}}
 	public Boolean displaySiEdit		{get{return currentComponent == ISSP_ICCS_Utils.Page.SI_EDIT;}}
+	public Boolean displayMassEdit		{get{return currentComponent == ISSP_ICCS_Utils.Page.MASS_EDIT;}}
 	public Boolean displayAccessDenied 	{get{return currentComponent == ISSP_ICCS_Utils.Page.ACCESS_DENIED;}}
 
 	public Boolean displayRegistration 	{get{return currentCaseProcessType == ISSP_ICCS_Utils.CaseProcessType.REGISTRATION;}}
@@ -444,6 +445,10 @@ public class ISSP_ICCS_ServiceController{
 		navigateTo(ISSP_ICCS_Utils.Page.SI_EDIT);
 	}
 
+	public void navigateToMassEdit(){
+		navigateTo(ISSP_ICCS_Utils.Page.MASS_EDIT);
+	}
+
 	public void navigateTo(ISSP_ICCS_Utils.Page destinationPage){
 		System.debug('ISSP_ICCS_ServiceController.navigateTo(ISSP_ICCS_Utils.Page destinationPage) : increment ' + ++ISSP_ICCS_ServiceController.increment);
 
@@ -513,7 +518,7 @@ public class ISSP_ICCS_ServiceController{
 		resetMessage();
 		previousComponent = currentComponent;
 		currentComponent = ISSP_ICCS_Utils.Page.CASE_PROCESSES;
-	   	currentCaseProcessType = caseProcessType;
+		currentCaseProcessType = caseProcessType;
 
 		if(componentControllersMap.get(currentComponent) != null){
 			componentControllersMap.get(currentComponent).resetCurrentCleanPrevious(this);

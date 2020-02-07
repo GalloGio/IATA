@@ -53,6 +53,9 @@ public class ISSP_ICCS_Mock{
 			else if(endpoint.endsWith('/settlementInstructions/lineTypes')){
 				res.setBody(getInstructionLineTypes());
 			}
+			else if(endpoint.endsWith('/PreassignedAndNotReceivedCashflows?participant_code=' + participantId)){
+				res.setBody(getPreassignedAndNotReceivedCashflows());
+			}
 			else if(endpoint.endsWith('/reports/types')){
 				res.setBody(getReportTypes());
 			}
@@ -2005,7 +2008,8 @@ public class ISSP_ICCS_Mock{
 			return 	'['+
 				'  {"Id": 1, "Code": "' + ISSP_ICCS_Utils.SI_STANDARD + '", "Description": "Standard"},'+
 				'  {"Id": 2, "Code": "' + ISSP_ICCS_Utils.SI_FUTURE + '", "Description": "Future"},'+
-				'  {"Id": 3, "Code": "' + ISSP_ICCS_Utils.SI_ADHOC + '", "Description": "Adhoc"}'+
+				'  {"Id": 3, "Code": "' + ISSP_ICCS_Utils.SI_ADHOC + '", "Description": "Adhoc"},'+
+				'  {"Id": 4, "Code": "' + ISSP_ICCS_Utils.SI_CURRENCY + '", "Description": "Currency"}'+
 				']';
 	}
 
@@ -3338,4 +3342,38 @@ public class ISSP_ICCS_Mock{
 				' 	 },' +
 		'    "UploadDate": "2017-09-06T15:09:46.263Z"'+
 		'}';
+
+	private static final String PREASSIGNED_CASHFLOW_1 =
+		'{'+
+		'	"Id": 413588,'+
+		'	"Name": "BSP Zambia (USD)",'+
+		'	"Code": "ZM_BSP_Y_USD_I",'+
+		'	"ProcessingCurrency": "USD",'+
+		'	"BankAccountCode": {'+
+		'		"Id": 628091,'+
+		'		"Code": "ZM_BSP_Y_USD-01"'+
+		'	},'+
+		'	"Status": 1,'+
+		'	"ParticipantCode": "4B1AA",'+
+		'	"ParticipationId": 3237543'+
+		'}';
+
+	private static final String NOTRECEIVED_CASHFLOW_1 =
+		'{'+
+		'	"Id": 413589,'+
+		'	"Name": "BSP Zambia (USD)",'+
+		'	"Code": "ZM_BSP_Y_USD_I",'+
+		'	"ProcessingCurrency": "USD",'+
+		'	"BankAccountCode": {'+
+		'		"Id": 628091,'+
+		'		"Code": "ZM_BSP_Y_USD-01"'+
+		'	},'+
+		'	"Status": 3,'+
+		'	"ParticipantCode": "4B1AA",'+
+		'	"ParticipationId": 3237544'+
+		'}';
+
+	public static String getPreassignedAndNotReceivedCashflows(){
+		return '[' + PREASSIGNED_CASHFLOW_1 + ',' + NOTRECEIVED_CASHFLOW_1 + ']';
+	}
 }

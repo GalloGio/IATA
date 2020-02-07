@@ -175,6 +175,23 @@ public class ISSP_ICCS_CoreRest{
 		}
 	}
 
+	/*	GET /cycles/{cid}/PreassignedAndNotReceivedCashflows
+		
+		Returns all the pre-assigned cashflows and not received notification from a cycle
+	*/
+	public List<Cashflow> getPreassignedAndNotReceivedCashflows(String cycleId){
+		System.debug('**** ISSP_ICCS_CoreRest.PreassignedAndNotReceivedCashflows(' + cycleId + ') ****');
+
+		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/PreassignedAndNotReceivedCashflows?participant_code=' + pageController.participantId, null, true);
+
+		try{
+			String result = response.getBody().replaceAll('"BankAccountCode"', '"AccountCode"').replaceAll('"CashflowType"', '"Type"');
+			return (List<Cashflow>) JSON.deserialize(result, List<Cashflow>.class);
+		}
+		catch(Exception e){
+			throw new ICCS_Exception(JSON_EXCEPTION + e.getMessage());
+		}
+	}
 
 	/*	GET /cycles
 
@@ -492,7 +509,7 @@ public class ISSP_ICCS_CoreRest{
 		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementInstructions?participant_code=' + pageController.participantId, null, true);
 
 		try{
-			String result = response.getBody().replaceAll('"Currency"', '"Currency_x"').replaceAll('"Number"', '"Number_x"');
+			String result = response.getBody().replaceAll('"Currency":', '"Currency_x":').replaceAll('"Number"', '"Number_x"');
 			return (List<SettlementInstruction>) JSON.deserialize(result, List<SettlementInstruction>.class);
 		}
 		catch(Exception e){
@@ -532,6 +549,16 @@ public class ISSP_ICCS_CoreRest{
 		sendRequest('POST', serializedInstruction, '/cycles/' + settlementInstruction.cycle.cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementinstructions', null, true);
 	}
 
+	/*	POST /cycles/{cid}/settlementinstructions
+		
+		Creates a list of new Settlement Instructions for a cycle
+	*/
+	public void createMassCycleSettlementInstruction(String cycleId, list<SettlementInstruction> listSettlementInstruction){
+		System.debug('**** ISSP_ICCS_CoreRest.createMassCycleSettlementInstruction() ****' + listSettlementInstruction);
+		
+		String serializedInstruction = JSON.serialize(listSettlementInstruction, true).replaceAll('"currency_x"', '"Currency"').replaceAll('"number_x"', '"Number"');
+		sendRequest('POST', serializedInstruction, '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementInstructions/range', null, true);
+	}
 
 	/**************
 		REPORTS
@@ -624,6 +651,11 @@ public class ISSP_ICCS_CoreRest{
 		public Boolean isApplied {get;set;}
 		public String approvalStatus {get;set;}
 
+		// Specific for Cycle Currency Settlement Instruction (CCSI)
+		public String participant {get;set;}
+		public String CurrencyIso3Code {get;set;}
+		public Integer IntegrationSystemId {get;set;}
+
 		public SettlementInstruction(){
 			participation = new Participation();
 			cycle = new Cycle();
@@ -653,6 +685,13 @@ public class ISSP_ICCS_CoreRest{
 		public String code {get;set;}
 	}
 
+	public static final map<Integer,CASHFLOW_STATUS> MAP_CASHFLOW_STATUS = new map<Integer,CASHFLOW_STATUS>{
+		1 => CASHFLOW_STATUS.PreAssigned,
+		2 => CASHFLOW_STATUS.Assigned,
+		3 => CASHFLOW_STATUS.NotReceived,
+		4 => CASHFLOW_STATUS.Parked
+	};
+
 	public class Cashflow{
 		public Integer id {get;set;}
 		public String name {get;set;}
@@ -661,6 +700,13 @@ public class ISSP_ICCS_CoreRest{
 		public CashflowType type {get;set;}
 		public Country country {get;set;}
 		public BankAccountCode accountCode {get;set;}
+		public Integer status {get;set;}
+		public Integer participationId {get;set;}
+		public String participantCode {get;set;}
+
+		public CASHFLOW_STATUS getCashflowStatus() {
+			return MAP_CASHFLOW_STATUS.get(this.status);
+		}
 	}
 
 	public class CashflowType {
@@ -744,6 +790,18 @@ public class ISSP_ICCS_CoreRest{
 		public Decimal value {get;set;}
 		public Integer order {get;set;}
 		public String modifiedOn {get;set;}
+		public String valueString {
+			get { return String.ValueOf(this.value);}
+			set { 
+				valueString = value;
+				assignValue(valueString);
+			}
+		}
+
+		public void assignValue(String input) {
+			String newValue = input.replaceAll(',','');
+			this.value = Decimal.ValueOf(newValue);
+		}
 
 		public InstructionLine(){
 			accountCode = new BankAccountCode();
@@ -872,5 +930,13 @@ public class ISSP_ICCS_CoreRest{
 		NONE,
 		ASCENDING,
 		DESCENDING
+	}
+
+	public Enum CASHFLOW_STATUS {
+		NONE,
+		PreAssigned,
+		Assigned,
+		NotReceived,
+		Parked
 	}
 }

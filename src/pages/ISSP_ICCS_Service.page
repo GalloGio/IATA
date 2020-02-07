@@ -394,6 +394,7 @@
                     width: 100%;
                     display: inline-block;
                     padding-right: 32px;
+                    padding-left: 32px;
                     padding-top: 16px;
                     padding-bottom: 16px;
                     font-size: 10pt;
@@ -450,9 +451,45 @@
                     background-color: #dadada;
                     border-radius: 0;
                 }
+                .mrgn-l-r .panel-currency-heading table tr:first-child td { 
+                    background-color: #dae8da;
+                    border-radius: 0;
+                }
                 .panel-heading td {
                     color: black;
                     padding: 0px 12px; 
+                }
+                .panel-heading-alt1 {
+                    padding: 0;
+                }
+                .panel-primary>.panel-heading-alt1 {
+                    background: none;
+                    border: 0;
+                    margin-top: 2px;
+                }
+                .panel-primary>.panel-heading-alt1 tr td:first-child {
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: #454545;
+                }
+                .panel-primary>.panel-heading-alt1 td {
+                    font-size: 12px;
+                    letter-spacing: 0.2px;
+                }
+                .panel-heading-alt1 tr:nth-child(odd) {
+                    background: none !important;
+                }
+                .mrgn-l-r .panel-heading-alt1 table tr:first-child td { 
+                    background-color: #fafafa;
+                    border: 1px solid #454545;
+                    border-radius: 0;
+                }
+                .panel-heading-alt1 td {
+                    color: black;
+                    padding: 0px 12px; 
+                }
+                .panel-heading-alt1.head_panel_green {
+                    background-color: transparent;
                 }
                 .panel-primary span td {
                     padding: 12px 26px 12px 26px;
@@ -885,6 +922,11 @@
 				border: 0;
 				padding: 5px 0px 5px 15px !important;
 			}
+
+            .not-active {
+                cursor: not-allowed;
+                color: gray !important;
+            }
 		</style>
 
 		<script>        
@@ -935,6 +977,26 @@
 			}
 			
 			function doNothing(){}
+
+			function formatInput(obj,event) {
+				// When user select text in the document, also abort.
+				var selection = window.getSelection().toString();
+				if ( selection !== '' ) {
+					return;
+				}
+				// When the arrow keys are pressed, abort.
+				if ( event!=null && $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+					return;
+				}
+				var $this = $( obj );
+				var input = $this.val();
+
+				var input = input.replace(/[^\d\.]+/g, "");
+
+				$this.val( function() {
+					return ( input === 0 ) ? "" : input.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				} );
+			}
 		</script>
 
 		<body>
@@ -1016,6 +1078,7 @@
 					<c:ISSP_ICCS_Reports pageCtrl="{! thisCtrl}" rendered="{! displayReports}"/>
 					<c:ISSP_ICCS_Profile pageCtrl="{! thisCtrl}" rendered="{! displayProfile}"/>
 					<c:ISSP_ICCS_SiEdit pageCtrl="{! thisCtrl}" rendered="{! displaySiEdit}"/>
+					<c:ISSP_ICCS_MassEdit pageCtrl="{! thisCtrl}" rendered="{! displayMassEdit}"/>
 					<c:ISSP_ICCS_CaseProcesses pageCtrl="{! thisCtrl}" rendered="{! displayCaseProcesses}"/>
 
 				</apex:outputPanel>

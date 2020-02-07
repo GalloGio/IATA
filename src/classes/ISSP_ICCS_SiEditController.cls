@@ -7,7 +7,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 	// This object will be serialized and sent to the core
 	// - if we are creating an Adhoc or a Future SI, some variables will be set accordingly to the user action
 	// - if we are updating an Standard or a Future SI, some variables will be set according to the related data in the core
-	// - if we are cloning an Adhoc, a Standard or a Future SI, some variables will be set according to the related data in the core
+	// - if we are cloning an Adhoc or a Currency, a Standard or a Future SI, some variables will be set according to the related data in the core
 	public ISSP_ICCS_CoreRest.SettlementInstruction settlementInstruction {get;set;}
 
 	// SelectOption list of bank accounts codes
@@ -21,8 +21,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 	public String siStandard {get{ return ISSP_ICCS_Utils.SI_STANDARD;}}
 	public String siFuture {get{ return ISSP_ICCS_Utils.SI_FUTURE;}}
 	public String siAdhoc {get{ return ISSP_ICCS_Utils.SI_ADHOC;}}
-
-	public Map<String, Integer> instructionTypeMap {get;set;}
+	public String siCurrency {get{ return ISSP_ICCS_Utils.SI_CURRENCY;}}
 
 	// SelectOption list of instruction line types
 	public List<SelectOption> instructionLineTypes {
@@ -32,8 +31,10 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 					instructionLineTypes = new List<SelectOption>();
 					instructionLineTypes.add(new SelectOption('-1', ISSP_ICCS_Utils.NONE));
 					for(ISSP_ICCS_CoreRest.InstructionLineType instructionLineType : pageController.coreRest.getInstructionLineTypes()){
-						System.debug(instructionLineType.id + ' - ' + instructionLineType.code);
-						instructionLineTypes.add(new SelectOption(String.valueOf(instructionLineType.id), instructionLineType.code));
+						// for currency SI the threshold option is not available
+						if( !(this.settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY && instructionLineType.code == 'Threshold') ) {
+							instructionLineTypes.add(new SelectOption(String.valueOf(instructionLineType.id), instructionLineType.code));
+						}
 						if(instructionLineType.code == 'Balance'){
 							balanceInstructionLineTypeId = instructionLineType.id;
 						}
@@ -62,6 +63,29 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		}
 	}
 
+
+	public String selectedCurrency {
+		get{
+			ISSP_ICCS_CycleMgmtController previousComponentController = (ISSP_ICCS_CycleMgmtController) pageController.componentControllersMap.get(pageController.previousComponent);
+			return previousComponentController.currencyCodeParameter;
+		}
+	}
+
+	// find all Participations for the selected currency
+	// only used to be shown in Currency SIs
+	public List<ISSP_ICCS_Utils.ParticipationRow> listCurrencyParticipations {
+		get{
+			ISSP_ICCS_CycleMgmtController previousComponentController = (ISSP_ICCS_CycleMgmtController) pageController.componentControllersMap.get(pageController.previousComponent);
+			list<ISSP_ICCS_Utils.ParticipationRow> listParticipation = new List<ISSP_ICCS_Utils.ParticipationRow>();
+			for (ISSP_ICCS_Utils.ParticipationRow participationRow: previousComponentController.adhocCycleParticipationTable.participationRows) {
+				if (participationRow.participation.cashflow.processingCurrency == selectedCurrency) {
+					listParticipation.add(participationRow);
+				}
+			}
+			return listParticipation;
+		}
+	}
+
 	// This variable is used to determinate the instruction line on which an action occurs
 	public Integer instructionLineOrder {get;set;}
 
@@ -69,6 +93,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 	public Integer participationId {get;set;}
 	public Integer settlementInstructionId {get;set;}
 	public String settlementInstructionType {get;set;}
+	public Boolean isPreassigned {get;set;}
 
 
 	/* CONSTRUCTOR */
@@ -99,6 +124,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			participationId = previousComponentController.participationIdParameter;
 			settlementInstructionId = previousComponentController.settlementInstructionIdParameter;
 			settlementInstructionType = previousComponentController.settlementInstructionTypeParameter;
+			isPreassigned = previousComponentController.isPreassignedParameter==null? false: previousComponentController.isPreassignedParameter;
 		}
 
 		try{
@@ -114,7 +140,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 			bankAccountCodesMap = new Map<Integer, ISSP_ICCS_CoreRest.BankAccountCode>{-1 => fakeBankAccountCode};
 
-			if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
+			if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC || settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY){
 				for(ISSP_ICCS_CoreRest.BankAccountCode bankAccountCode : pageController.coreRest.getCycleBankAccountsCodes(cycleId)){
 					bankAccountCodes.add(new SelectOption(String.valueOf(bankAccountCode.id), bankAccountCode.code));
 					bankAccountCodesMap.put(bankAccountCode.id, bankAccountCode);
@@ -131,18 +157,10 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			// This list is retrieved from the core to have the id of the type of settlement instruction the user is creating (adhoc or future adhoc)
 			List<ISSP_ICCS_CoreRest.InstructionType> instructionTypes = pageController.coreRest.getInstructionTypes();
 
-			System.debug('instructionTypes from the core : ' + instructionTypes);
-
-			// Fill the instruction type map
-			instructionTypeMap = new Map<String, Integer>();
-			for(ISSP_ICCS_CoreRest.InstructionType instructionType : instructionTypes){
-				instructionTypeMap.put(instructionType.code, instructionType.id);
-			}
-
 			// We might not need the instructionTypes if we are only updating a settlement instruction whose instruction type id is already set
 			// So there is no need to quit the method now (maybe later)
 
-			// Case 1 : Creating an Adhoc or a Future SI
+			// Case 1 : Creating an Adhoc or a Future SI or a Currency SI
 			/* Replace -1 by null ? */
 			if(settlementInstructionId == null){
 
@@ -155,7 +173,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 				// Retrieve the participation from the Core
 				ISSP_ICCS_CoreRest.Participation participation;
 
-				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
+				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC && !isPreassigned){
 					for(ISSP_ICCS_CoreRest.Participation cycleParticipation : pageController.coreRest.getCycleParticipations(cycleId)){
 						if(cycleParticipation.id == participationId){
 							participation = cycleParticipation;
@@ -182,7 +200,22 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 						}
 					}
 				}
-				else{
+				// for preassigned and not Received we call a different endpoint, and we get cashflows, not participations
+				else if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC && isPreassigned){
+					for(ISSP_ICCS_CoreRest.Cashflow cycleCashflow : pageController.coreRest.getPreassignedAndNotReceivedCashflows(cycleId)){
+						if(cycleCashflow.participationId == participationId){
+							participation = new ISSP_ICCS_CoreRest.Participation();
+							participation.Id = participationId;
+							participation.cashflow = cycleCashflow;
+							break;
+						}
+					}
+				} else if(settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY){
+					// no participation needed
+					participation = null;
+					settlementInstruction.participant = pageController.participantId;
+					settlementInstruction.CurrencyIso3Code = selectedCurrency;
+				}else{
 					participation = pageController.coreRest.getParticipation(participationId);
 
 					// Update the participation with a detailed version of the cashflow
@@ -223,7 +256,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			// Editing a Standard or a Future SI, or cloning an Adhoc, a Standard or a Future SI
 			else{
 				// Case 2 : Cloning an Adhoc, a Future or a Standard SI
-				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
+				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC || settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY){
 					// Retrieve the settlement instruction from the Core
 					settlementInstruction = pageController.coreRest.getCycleSettlementInstruction(cycleId, settlementInstructionId);
 
@@ -244,14 +277,19 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 						}
 					}
 
-					siProcessTitle = 'Clone as Adhoc Settlement Instruction';
+					if (settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY) {
+						settlementInstruction.participation = null;
+						settlementInstruction.participant = pageController.participantId;
+						settlementInstruction.CurrencyIso3Code = selectedCurrency;
+					}
+
+					siProcessTitle = Label.ICCS_Clone_SI.replace('{0}',settlementInstruction.type.code);
 				}
 				// Case 3 : Editing a Future or a Standard SI
 				else{
 					// Retrieve the settlement instruction from the Core
 					settlementInstruction = pageController.coreRest.getSettlementInstruction(settlementInstructionId);
-					/* LABEL ?? */
-					siProcessTitle = 'Edit ' + settlementInstruction.type.code + ' Settlement Instruction';
+					siProcessTitle = Label.ICCS_Edit_SI.replace('{0}',settlementInstruction.type.code);
 				}
 				settlementInstruction.instructionLines.sort();
 			}
@@ -272,13 +310,12 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		participationId = null;
 		settlementInstructionId = null;
 		settlementInstructionType = null;
+		isPreassigned = false;
 
 		settlementInstruction = null;
 
 		bankAccountCodes = null;
 		bankAccountCodesMap = null;
-
-		instructionTypeMap = null;
 
 		instructionLineTypes = null;
 
@@ -304,8 +341,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 		// It is mandatory to have at least one instruction line
 		if(settlementInstruction.instructionLines.size() == 1){
-			/* LABEL FOR MESSAGE */
-			pageController.setMessage('It is mandatory to have at least one instruction line', false);
+			pageController.setMessage(Label.ICCS_Mandatory_Instruction_Line, false);
 			return;
 		}
 
@@ -353,37 +389,38 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			// Creation of Future or Adhoc Si
 			/* Replace by null ? */
 			if(settlementInstructionId == null){
-				System.debug('settlementInstruction.type.code : ' + settlementInstruction.type.code);
 				// Creating a future SI
-				if(settlementInstruction.type.id == instructionTypeMap.get(ISSP_ICCS_Utils.SI_FUTURE)){
+				if(settlementInstruction.type.Id == getInstructionType(ISSP_ICCS_Utils.SI_FUTURE).id){
 					pageController.coreRest.createSettlementInstruction(settlementInstruction);
-					/* LABEL FOR MESSAGE */
-					pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully created.');
+					pageController.saveAndClose(Label.ICCS_SI_Successfully_Created.replace('{0}',ISSP_ICCS_Utils.SI_FUTURE));
 				}
 				// Creating an Adhoc SI
-				else{
+				else {
+					settlementInstruction.IntegrationSystemId = ISSP_ICCS_Utils.INTEGRATION_ID;
 					pageController.coreRest.createCycleSettlementInstruction(settlementInstruction);
-					/* LABEL FOR MESSAGE */
-					pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully created.');
+					ISSP_ICCS_CycleMgmtController previousComponentController = (ISSP_ICCS_CycleMgmtController) pageController.componentControllersMap.get(pageController.previousComponent);
+					previousComponentController.adhocRequiresDataReset = true;
+					pageController.saveAndClose(Label.ICCS_SI_Successfully_Created.replace('{0}',ISSP_ICCS_Utils.SI_ADHOC));
 				}
 			}
-			// Clone of Adhoc, Future or Standard SI
-			else if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
+			// Clone of Adhoc, Currency, Future or Standard SI
+			else if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC || settlementInstructionType == ISSP_ICCS_Utils.SI_CURRENCY){
 				// Remove the settlement instruction id and the instruction lines ids
+				settlementInstruction.IntegrationSystemId = ISSP_ICCS_Utils.INTEGRATION_ID;
 				settlementInstruction.id = null;
 				for(ISSP_ICCS_CoreRest.InstructionLine instructionLine : settlementInstruction.instructionLines){
 					instructionLine.id = null;
 				}
 
 				pageController.coreRest.createCycleSettlementInstruction(settlementInstruction);
-				/* LABEL FOR MESSAGE */
-				pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully created.');
+				ISSP_ICCS_CycleMgmtController previousComponentController = (ISSP_ICCS_CycleMgmtController) pageController.componentControllersMap.get(pageController.previousComponent);
+				previousComponentController.adhocRequiresDataReset = true;
+				pageController.saveAndClose(Label.ICCS_SI_Successfully_Created.replace('{0}',settlementInstructionType));
 			}
 			// Update of Future or Standard SI
-			else{
+			else if(settlementInstructionType == ISSP_ICCS_Utils.SI_FUTURE || settlementInstructionType == ISSP_ICCS_Utils.SI_STANDARD){
 				pageController.coreRest.updateSettlementInstruction(settlementInstruction);
-				/* LABEL FOR MESSAGE */
-				pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully updated.');
+				pageController.saveAndClose(Label.ICCS_SI_Successfully_Created.replace('{0}',settlementInstructionType));
 			}
 		}
 		catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
