@@ -5,10 +5,34 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>IntegrationLogUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalIftEmployeeRecordsManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalIftpStationsManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalIftpUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>Access all obj:Account Contacts RoleAccount Role RelationshipsAccount RolesAccount Roles&#39;Account Role ServicesAccount Role Services&#39;AccountsAirport DetailsCertificationsContact Role CertificationsContact RolesContactsIntegration LogsRole Addresses</description>
+    <classAccesses>
+        <apexClass>portalIftpEmployeeCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>portalIftpHistoryManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>portalIftpTrainingRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access all obj:Account Contacts RoleAccount Role RelationshipsAccount RolesAccount Roles&apos;Account Role ServicesAccount Role Services&apos;AccountsAirport DetailsCertificationsContact Role CertificationsContact RolesContactsIntegration LogsRole Addresses</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.ACH_Member__c</field>
