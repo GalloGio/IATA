@@ -217,6 +217,8 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void handleAfterUpdate() {
 
+		//INC498146 - Sent ARV email 
+		handleAnnualRevalidationEmailNotification((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
 		updateCaseKPIFields();
 		updateCaseInfo();
 		createHoAdminNotifications();
@@ -4733,8 +4735,21 @@ public class AMS_OSCARTriggerHandler {
 			update casesToUpdate;
 	}
 
-	public static void handleAnnualRevalidation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+	/**
+	 * Handel Email notification when Anual Revalidation process
+	 * Step Administrative non-compliance is Passed
+	 */
+	public static void handleAnnualRevalidationEmailNotification(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+	
+		Map<Id, AMS_Oscar__c> oscarsToProcess = getAdministrativeNonCompliancePassedCases(oscars, oldOscars);
 
+		for(AMS_Oscar__c oscar : oscarsToProcess.values()) sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
+	}
+
+	/**
+	 * Get Oscars when Administrative non-compliance step is Passed
+	 */
+	public static Map<Id, AMS_Oscar__c> getAdministrativeNonCompliancePassedCases(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
 		Set<Id> oscarsIdsToProcess = new Set<Id>();
 
 		for (AMS_OSCAR__c oscar : oscars){
@@ -4742,22 +4757,27 @@ public class AMS_OSCARTriggerHandler {
 			if(oscar.Process__c == AMS_utils.NGANNUALREVAL && oldOscars.get(oscar.Id).Status__c <> oscar.Status__c && oscar.Status__c == 'Closed' && oscar.Step6__c <> AMS_Utils.PASSED && oscar.Step6__c <> AMS_Utils.FAILED) {
 				oscar.addError('The case cannot be closed if the sanity check is not passed or failed.');
 			}
-
 			if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != oscar.STEP43__c){
 				oscarsIdsToProcess.add(oscar.Id);
 			}
 		}
+		if (oscarsIdsToProcess.isEmpty()) return new Map<Id, AMS_Oscar__c>();
 
-		if (oscarsIdsToProcess.isEmpty())
-			return;
+		Map<Id, AMS_Oscar__c> oscarsToProcess = new Map<Id, AMS_Oscar__c>([SELECT Id, Account__c, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
+																	FROM AMS_Oscar__c
+																	WHERE Id IN :oscarsIdsToProcess]);
+		return oscarsToProcess;
+	}
+
+	public static void handleAnnualRevalidation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+
+		Map<Id, AMS_Oscar__c> oscarsToProcess = getAdministrativeNonCompliancePassedCases(oscars, oldOscars);
+		Set<ID> oscarsIdsToProcess = new Set<ID>();
+
+		for(ID oscarID : oscarsToProcess.keySet()) oscarsIdsToProcess.add(oscarID);
 
 		List<Agency_Applied_Change_code__c> listNewCCs = new List<Agency_Applied_Change_code__c>();
 		List<String> splittedReason = new List<String>();
-
-		Map<Id, AMS_Oscar__c> oscarsToProcess = new Map<Id, AMS_Oscar__c>([SELECT Id, Account__c, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
-																			FROM AMS_Oscar__c
-																			WHERE Id IN :oscarsIdsToProcess ]);
-
 
 		for (AMS_Oscar__c osc: oscars){
 			//INC498146
@@ -4765,7 +4785,6 @@ public class AMS_OSCARTriggerHandler {
 				AMS_Oscar__c oscar = oscarsToProcess.get(osc.Id);
 				
 				osc.OSCAR_Deadline__c = Date.today().addDays(30);
-				sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
 
 				AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('ARV');
 				splittedReason = oscar.Account__r.Reason__c.split('-',2);
