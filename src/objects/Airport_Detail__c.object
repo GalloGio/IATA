@@ -142,16 +142,8 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
-    <compactLayouts>
-        <fullName>IFTP_Compact_Layout</fullName>
-        <fields>City__c</fields>
-        <fields>Code__c</fields>
-        <fields>IATA_ISO_Country__c</fields>
-        <fields>Name</fields>
-        <label>IFTP Compact Layout</label>
-    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Transversal Object used to store data of different types of addresses.</description>
+    <description>Represents Airport related data and must be related to an Account where data for the airport as a legal entity is stored.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -161,7 +153,48 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Read</externalSharingModel>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Airport Detail</label>
+    <nameField>
+        <displayFormat>APD-{00000000}</displayFormat>
+        <label>Airport Detail Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Airport Details</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>City__c</searchFilterFields>
+        <searchFilterFields>Code__c</searchFilterFields>
+        <searchFilterFields>Description__c</searchFilterFields>
+        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Account__c</fullName>
+        <description>The Account representing the Airport as a legal entity.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Airport Details</relationshipLabel>
+        <relationshipName>Airport_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
     <fields>
         <fullName>City__c</fullName>
         <externalId>false</externalId>
@@ -225,7 +258,21 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <label>Airport Detail</label>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>City__c</fields>
+        <fields>Code__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+        <fields>Name</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
+    <recordTypes>
+        <fullName>Airport</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <description>Airports&#39; location information.</description>
+        <label>Airport</label>
+    </recordTypes>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -235,37 +282,4 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
-    <nameField>
-        <displayFormat>Address-{00000000}</displayFormat>
-        <label>Address Number</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Airport Details</pluralLabel>
-    <recordTypes>
-        <fullName>Airport</fullName>
-        <active>true</active>
-        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
-        <description>Airports&apos; location information.</description>
-        <label>Airport</label>
-    </recordTypes>
-    <searchLayouts>
-        <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>City__c</searchFilterFields>
-        <searchFilterFields>Code__c</searchFilterFields>
-        <searchFilterFields>Description__c</searchFilterFields>
-        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
-    <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
 </CustomObject>
