@@ -293,6 +293,9 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
         let query = url.substr(1);
         let result = [];
         if(query) {
+            //partner portal codes "%20" to "+" so we need to code it back before sending to PowerBI
+            //otherwise PowerBI would not get it correctly
+            query = query.replace(/\+/g, '%20');
             result = query.split("&");
         }
         return result;
