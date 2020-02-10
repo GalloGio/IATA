@@ -265,7 +265,7 @@
         <fields>RECORDTYPE</fields>
         <fields>IATA_ISO_Country__c</fields>
         <fields>ISO_Code__c</fields>
-        <relatedList>Portal_Service_Assignment__c.ANG_Portal_Service__c</relatedList>
+        <relatedList>Portal_Service_Assignment__c.Portal_Service__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
