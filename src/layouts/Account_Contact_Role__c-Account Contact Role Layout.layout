@@ -91,6 +91,30 @@
                 <behavior>Edit</behavior>
                 <field>UniqueKey__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Details__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Company_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TransferFlag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Title__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Global_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -135,6 +159,18 @@
         <fields>ATC__c</fields>
         <fields>ATC_ID__c</fields>
         <relatedList>Yardstick_Contact_Details__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Certification__c</fields>
+        <fields>Expiration_Date__c</fields>
+        <relatedList>Contact_Role_Certification__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Airport_Details__c</fields>
+        <fields>Primary__c</fields>
+        <relatedList>Role_Address__c.Account_Contact_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
