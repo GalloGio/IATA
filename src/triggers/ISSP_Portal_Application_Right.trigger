@@ -411,15 +411,32 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	}
 
 	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
-		system.debug('WILL START FUTURE METHOD');
+		system.debug('WILL START PASS FUTURE METHOD');
 
 		// Validate: Give permission set only to Accounts with record type == 'Standard Account'
 		//List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name = 'Standard Account' and id in :contactIdPASSAccreditationSet];
 		//contactIdPASSAccreditationSet = (new Map<Id, SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
 
-		if (!ISSP_UserTriggerHandler.preventTrigger)
+		if (!ISSP_UserTriggerHandler.preventTrigger){
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+		}
 		ISSP_UserTriggerHandler.preventTrigger = true;
+
+		//Create User Provisioning Accounts for PASS SSO
+		Id PASSConnectedApp = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
+		List<User> passSsoUsers = [SELECT Id,Username FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
+		List<UserProvAccount> provAccList = new List<UserProvAccount>();
+		for(User passUser : passSsoUsers){
+			UserProvAccount upa = new UserProvAccount (
+							ExternalUserId = passUser.Username,
+							SalesforceUserId = passUser.Id,
+							ConnectedAppId = PASSConnectedApp,
+							LinkState = 'Linked',
+							Status = 'Active'
+						);
+			provAccList.add(upa);
+		}
+		insert provAccList;
 	}
 
 	system.debug('basto1p - Before IFG handle - ISSP_UserTriggerHandler.preventTrigger=' + ISSP_UserTriggerHandler.preventTrigger);
