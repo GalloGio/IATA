@@ -418,7 +418,6 @@ global without sharing class ISSP_APProcess {
 
 			if(newCase.IFAP_Country_ISO__c != null) {
 				isocountry = [SELECT Airline_EasyPay_Opt_Out_Date__c,ANG_Portal_Service__c,Case_BSP_Country__c,ISO_Code__c FROM IATA_ISO_Country__c WHERE ISO_Code__c =:newCase.IFAP_Country_ISO__c];
-				//isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);*/
 
 				newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 			} else {

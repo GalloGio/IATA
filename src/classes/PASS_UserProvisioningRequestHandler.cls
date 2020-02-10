@@ -17,8 +17,8 @@ public class PASS_UserProvisioningRequestHandler {
 			UserProvisioningRequest oldRequest = oldMap.get(requestId);
 			UserProvisioningRequest newRequest = newMap.get(requestId);
 
-			System.debug('DB: oldRequest '+oldRequest);
-			System.debug('DB: newRequest '+newRequest);
+			System.debug(loggingLevel.FINE, '____ [cls PASS_UserProvisioningRequestHandler - onAfterUpdate] oldRequest - ' + oldRequest);
+			System.debug(loggingLevel.FINE, '____ [cls PASS_UserProvisioningRequestHandler - onAfterUpdate] newRequest - ' + newRequest);
 
 			if(newRequest.appName == 'Pass User Prov' && newRequest.State == 'Completed' && oldRequest.State != newRequest.State){
 				requestsToConsider.add(newRequest.Id);
