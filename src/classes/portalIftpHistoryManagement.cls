@@ -22,6 +22,28 @@ public without sharing class portalIftpHistoryManagement {
 		insertIntoIftpHistory(iftpHistoryRecordList);
 	}
 
+
+	public static void  generateMassIFTPHistoryStartWorkingForITP(set<id> accContRlIdList){
+		list<Account_Contact_Role__C> accRoleList = [select id,Account_Role__r.account__r.Name, First_Name__c, Last_Name__c,Company_Code__c from Account_Contact_Role__C where id in :accContRlIdList];
+		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		for(Account_Contact_role__C acr:accRoleList){
+			
+			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
+			acr.Company_Code__c,
+			acr.Account_Role__r.account__r.Name,
+			acr.First_Name__C,
+			acr.Last_Name__c);
+			
+			IftpHistoryRecordsToBeInserted.add(ihrec);
+			
+		}
+
+		if(IftpHistoryRecordsToBeInserted.size() > 0){
+			
+			insert IftpHistoryRecordsToBeInserted;
+		}
+	}
+
 	@AuraEnabled (cacheable=false)
 	public static IFTP_History__c createIftpHistoryRecord(Integer eventType,
 															String employeeCode,
