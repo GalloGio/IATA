@@ -19,11 +19,8 @@ private class MetadataServiceTest
 	@IsTest
 	private static void coverGeneratedCodeCRUDOperations()
 	{	
-    	// Null Web Service mock implementation
         System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
-        // Only required to workaround a current code coverage bug in the platform
         MetadataService metaDataService = new MetadataService();
-        // Invoke operations     
         Test.startTest();    
         MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort();
         Test.stopTest();
@@ -32,11 +29,8 @@ private class MetadataServiceTest
 	@IsTest
     private static void coverGeneratedCodeFileBasedOperations1()
     {    	
-    	// Null Web Service mock implementation
         System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
-        // Only required to workaround a current code coverage bug in the platform
-        MetadataService metaDataService = new MetadataService();
-        // Invoke operations    
+        MetadataService metaDataService = new MetadataService();  
         Test.startTest();     
         MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort();
         metaDataPort.updateMetadata(null);
@@ -46,11 +40,8 @@ private class MetadataServiceTest
     @IsTest
     private static void coverGeneratedCodeFileBasedOperations2()
     {       
-        // Null Web Service mock implementation
         System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
-        // Only required to workaround a current code coverage bug in the platform
         MetadataService metaDataService = new MetadataService();
-        // Invoke operations     
         Test.startTest();    
         MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort();
         metaDataPort.deleteMetadata(null, null);
@@ -60,7 +51,6 @@ private class MetadataServiceTest
 	@IsTest
     private static void coverGeneratedCodeTypes()
     {    	       
-        // Reference types
         Test.startTest();
         new MetadataService();
         new MetadataService.NamedCredential();

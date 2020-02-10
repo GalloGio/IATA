@@ -7,7 +7,6 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
-		deleteSeniorManager();
 		updateNamedCredentials();
 		deleteConnectedApps();
 	}
@@ -79,6 +78,22 @@ global class PostCopyScript implements SandboxPostCopy {
 				delete a;
 			}
 		}
+
+		//delete RTS Senior Manager custom setting record
+		List<RTS_Senior_Manager__c>  lstSeniorManager = new List<RTS_Senior_Manager__c>();
+		lstSeniorManager = RTS_Senior_Manager__c.getAll().values();
+		if(!lstSeniorManager.isEmpty()){
+			System.debug('List of RTS Senior Manager to delete: '+lstSeniorManager);
+			delete lstSeniorManager;
+		}
+
+		//delete RTS Orange Senior Manager custom setting record
+		List<RTS_Orange_Senior_Manager__c>  lstOrangeSeniorManager = new List<RTS_Orange_Senior_Manager__c>();
+		lstOrangeSeniorManager = RTS_Orange_Senior_Manager__c.getAll().values();
+		if(!lstOrangeSeniorManager.isEmpty()){
+			System.debug('List of RTS Orange Senior Manager to delete: '+lstOrangeSeniorManager);
+			delete lstOrangeSeniorManager;
+		}
 	}
 
 	@TestVisible
@@ -93,15 +108,12 @@ global class PostCopyScript implements SandboxPostCopy {
 	}
 
 	/**
-	 * This method deletes all the Orange Senior Managers and Senior Managers:
+	 * This method deletes all Schedule Dashboards":
 	*/
 	@TestVisible
-	private void deleteSeniorManager(){
-		List<RTS_Orange_Senior_Manager__c>  lstOrangeSeniorManager = [SELECT Id FROM RTS_Orange_Senior_Manager__c];
-		List<RTS_Senior_Manager__c>  lstSeniorManager = [SELECT Id FROM RTS_Senior_Manager__c];
-
-		delete lstOrangeSeniorManager;
-		delete lstSeniorManager;
+	private void deleteScheduleDashboards(){
+		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
+		Database.executeBatch(deleteScheduleDashboards,20);
 	}
 
 	/**
@@ -116,7 +128,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	}
 	
 	/**
-	 * This method updates all the NamedCredentials by adding in the end of the endpoint "/test":
+	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
 	*/
 	@TestVisible
 	private void updateNamedCredentials(){
@@ -131,7 +143,9 @@ global class PostCopyScript implements SandboxPostCopy {
 
 			namedCredentialList.add(namedCredential);
 		}
-		createService().updateMetadata(namedCredentialList);
+		if(!namedCredentialList.isEmpty()){
+			createService().updateMetadata(namedCredentialList);
+		}
 	}
 
 	/**
@@ -143,6 +157,8 @@ global class PostCopyScript implements SandboxPostCopy {
 		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
 			fullNameList.add(ca.Name.replace(' ','_'));
 		}
-		createService().deleteMetadata('ConnectedApp', fullNameList);
+		if(!fullNameList.isEmpty()){
+			createService().deleteMetadata('ConnectedApp', fullNameList);
+		}
 	}
 }

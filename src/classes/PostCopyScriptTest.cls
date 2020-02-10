@@ -1,6 +1,21 @@
 @isTest
 public class PostCopyScriptTest {
 
+	private class WebServiceMockImpl implements WebServiceMock 
+	{
+		public void doInvoke(
+			Object stub, Object request, Map<String, Object> response,
+			String endpoint, String soapAction, String requestName,
+			String responseNS, String responseName, String responseType) 
+		{
+		    if(request instanceof MetadataService.updateMetadata_element)
+                response.put('response_x', new MetadataService.updateMetadataResponse_element());
+            else if(request instanceof  MetadataService.deleteMetadata_element)
+                response.put('response_x', new MetadataService.deleteMetadataResponse_element());
+			return;
+		}
+	} 
+
 	@testSetup
 	static void setup() {
 
@@ -73,13 +88,22 @@ public class PostCopyScriptTest {
 				Name = 'Pardot Campaign');
 			insert rec7;
 
+			RTS_Senior_Manager__c rec8 = new RTS_Senior_Manager__c(
+				Name = 'Test RTS_Orange_Senior_Manager',
+				Email__c = 'postcopyscript@iata.org'
+			);
+			insert rec8;
+
+			RTS_Orange_Senior_Manager__c rec9 = new RTS_Orange_Senior_Manager__c(
+				Name = 'Test RTS_Orange_Senior_Manager',
+				Email__c = 'postcopyscript@iata.org'
+			);
+			insert rec9;
+
 			Group g1 = new Group(Name='group name', type='Queue', email = 'postcopyscript@iata.org');
 			insert g1;
-
 		}
-
 	}
-
 
 	@isTest
 	static void testDeleteCustomSettings() {
@@ -107,7 +131,13 @@ public class PostCopyScriptTest {
 		List<Apex_Setting__c> listRecords7 = new List<Apex_Setting__c>();
 		listRecords7 = Apex_Setting__c.getAll().values();
 
-		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size();
+		List<RTS_Senior_Manager__c> listRecords8 = new List<RTS_Senior_Manager__c>();
+		listRecords8 = RTS_Senior_Manager__c.getAll().values();
+
+		List<RTS_Orange_Senior_Manager__c> listRecords9 = new List<RTS_Orange_Senior_Manager__c>();
+		listRecords9 = RTS_Orange_Senior_Manager__c.getAll().values();
+
+		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size() + listRecords8.size() + listRecords9.size();
 
 		if(numRecords!=0) {
 
@@ -156,4 +186,29 @@ public class PostCopyScriptTest {
 		System.assertEquals([SELECT count() FROM Group WHERE Type = 'Queue' and email like '%@example.com'], emailsToUpdate.size());
 	}
 
+	@isTest
+	static void testUpdateNamedCredentials(){
+		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
+		Test.startTest();
+		PostCopyScript script = new PostCopyScript();
+		script.updateNamedCredentials();
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testDeleteConnectedApps(){
+		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
+		Test.startTest();
+		PostCopyScript script = new PostCopyScript();
+		script.deleteConnectedApps();
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testDeleteScheduleDashboards(){
+		Test.startTest();
+		PostCopyScript script = new PostCopyScript();
+		script.deleteScheduleDashboards();
+		Test.stopTest();
+	}
 }
