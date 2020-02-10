@@ -123,6 +123,11 @@ private class ANG_DGIStagingAreaCtrlTest {
 			UnitPrice = 12000, IsActive = true);
 
 		insert customPrice;
+        
+        // NEWGEN-5208 - The service will now also send the INT_011 request
+        List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+        customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+        insert customsettings;
 
 		Opportunity opp = new Opportunity();
 		opp.CloseDate=date.today().addMonths(50);
