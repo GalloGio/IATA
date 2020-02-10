@@ -515,7 +515,11 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>OR( 
+                <stringValue>AND(
+
+[Account].RecordTypeDeveloperName__c!=&quot;IATA_Agency&quot;, 
+
+OR( 
   AND(
     NOT(ISBLANK([Account].Business_City_Name__c)),
     OR(ISNEW(),ISCHANGED([Account].Business_City_Name__c))
@@ -542,7 +546,12 @@
   ),
   AND(
     NOT(ISBLANK([Account].RecordTypeId )),
-    ISCHANGED([Account].RecordTypeId )
+    ISCHANGED([Account].RecordTypeId ),
+	NOT(ISBLANK([Account].IATA_ISO_Country__c)),
+	NOT(ISBLANK([Account].Business_State_Name__c)),
+	NOT(ISBLANK([Account].Business_City_Name__c)),
+	NOT(ISBLANK([Account].Business_Postal_Code__c)),
+	NOT(ISBLANK([Account].Business_Street__c))
   ),
   AND(
     NOT(ISBLANK([Account].Business_Geo_Coordinates__Latitude__s)),
@@ -556,12 +565,17 @@
     NOT(ISBLANK([Account].Business_PO_Box__c)),
     OR(ISNEW(),ISCHANGED([Account].Business_PO_Box__c))
   )
+)
 )</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
-        <expression>OR( 
+        <expression>AND(
+
+{!myVariable_current.RecordTypeDeveloperName__c}!=&quot;IATA_Agency&quot;, 
+
+OR( 
   AND(
     NOT(ISBLANK({!myVariable_current.Business_City_Name__c})),
     OR(ISNEW(),ISCHANGED({!myVariable_current.Business_City_Name__c}))
@@ -588,7 +602,12 @@
   ),
   AND(
     NOT(ISBLANK({!myVariable_current.RecordTypeId} )),
-    ISCHANGED({!myVariable_current.RecordTypeId} )
+    ISCHANGED({!myVariable_current.RecordTypeId} ),
+	NOT(ISBLANK({!myVariable_current.IATA_ISO_Country__c})),
+	NOT(ISBLANK({!myVariable_current.Business_State_Name__c})),
+	NOT(ISBLANK({!myVariable_current.Business_City_Name__c})),
+	NOT(ISBLANK({!myVariable_current.Business_Postal_Code__c})),
+	NOT(ISBLANK({!myVariable_current.Business_Street__c}))
   ),
   AND(
     NOT(ISBLANK({!myVariable_current.Business_Geo_Coordinates__Latitude__s})),
@@ -602,9 +621,10 @@
     NOT(ISBLANK({!myVariable_current.Business_PO_Box__c})),
     OR(ISNEW(),ISCHANGED({!myVariable_current.Business_PO_Box__c}))
   )
+)
 )</expression>
     </formulas>
-    <interviewLabel>AccountAddressCreation-4_InterviewLabel</interviewLabel>
+    <interviewLabel>AccountAddressCreation-6_InterviewLabel</interviewLabel>
     <label>AccountAddressCreation</label>
     <processMetadataValues>
         <name>ObjectType</name>
