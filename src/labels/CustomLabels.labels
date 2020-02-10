@@ -24657,7 +24657,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Validation Portal Admin</shortDescription>
-        <value>Please select who should be the Portal Administrator for your Agency.</value>
+        <value>Please select who should be the Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_View_Branch_details</fullName>
