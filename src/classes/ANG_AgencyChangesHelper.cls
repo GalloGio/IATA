@@ -533,18 +533,15 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c, (SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE ANG_FormOfPayment_ID__c IN ('CA', 'EP','CC')) FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
 
+					Account newParent;
+					if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
+						newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
+					else
+						newParent = hierarchyAccs.get(oscar.New_parent__c);
+
 					// If opt-out is not applicable we'll put the value of the new parent
 					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){
-
-						Account newParent;
-						if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
-							newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
-
-						else
-							newParent = hierarchyAccs.get(oscar.New_parent__c);
-
 						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
-
 					//else we'll get the value input on the oscar AND apply it to all the accounts involved + the new parent's entire hierarchy
 					}else {
 						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
@@ -553,6 +550,21 @@ public with sharing class ANG_AgencyChangesHelper {
 					//If it is a multicountry hierarchy split => updates forms of payments (CC, CA, EP)
 					if(isMulticountry && oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT){
 						ANG_MulticountryHelper.processAgenciesFormsOfPayment(hierarchyAccs.values(), changesContainer);
+					}
+
+					// if it is a ST to MC acquisition
+					if (oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) {
+						// recalculate the FoP aligned with the GE
+						Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(newParent);
+						
+						for (Account acct : changesContainer.accountsMap.values()) {
+							// Update cash form of payments according to the GE cash FoP status
+							if (acct.Id != newParent.Id && geCashMethodFoP != null)
+								updateAccountCashFoP(acct, geCashMethodFoP);
+						}
+						
+						// recalculate risk
+						changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
 					}
 
 				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
@@ -771,19 +783,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			changesContainer.addAccountToCalculateRiskAssessment(accountGE.Id);
 
-			Agency_Authorization__c geCashMethodFoP = null;
-
-			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
-
-			if(formOfPaymentsLst != null && !formOfPaymentsLst.isEmpty()){
-				//Fetch cash form of payment from GE
-				for(Agency_Authorization__c aa : formOfPaymentsLst){
-					if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
-						geCashMethodFoP = aa;
-						break;
-					}
-				}
-			}
+			Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(accountGE);
 
 			for(Account acct : changesContainer.accountsMap.values()){
 
@@ -798,17 +798,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 				//Update cash form of payments according to the GE cash FoP status
-				if(acct.Id != accountGE.Id && geCashMethodFoP != null){
-					formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
-
-					for(Agency_Authorization__c aa : formOfPaymentsLst){
-						if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
-							aa.Status__c = geCashMethodFoP.Status__c;
-							changesContainer.addAgencyAuthorizationToUpdate(aa);
-							break;
-						}
-					}
-				}
+				if (acct.Id != accountGE.Id && geCashMethodFoP != null)
+					updateAccountCashFoP(acct, geCashMethodFoP);
 
 				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
 
@@ -2432,4 +2423,34 @@ public with sharing class ANG_AgencyChangesHelper {
 			return accountsCurrentChangeCode;
 
 		}
+	
+	private static Agency_Authorization__c getAccountCashFoP(Account account) {
+		List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) account.getSObjects('Agency_Authorizations__r');
+		
+		if (formOfPaymentsLst != null) {
+			for (Agency_Authorization__c aa : formOfPaymentsLst) {
+				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA)
+					return aa;
+			}
+		}
+		
+		return null;
+	}
+
+	private static void updateAccountCashFoP(Account acct, Agency_Authorization__c fop) {
+		if (fop == null)
+			return;
+		
+		List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
+		
+		if (formOfPaymentsLst != null) {
+			for (Agency_Authorization__c aa : formOfPaymentsLst) {
+				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA) {
+					aa.Status__c = fop.Status__c;
+					changesContainer.addAgencyAuthorizationToUpdate(aa);
+					return;
+				}
+			}
+		}
+	}
 }
