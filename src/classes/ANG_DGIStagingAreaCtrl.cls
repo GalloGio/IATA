@@ -159,7 +159,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 		fetchStagingFs(null, oscarId);
 
-		if(stagingFs != null){
+		if(stagingFs != null && currentFS != null){
 			this.stagingFs.Financial_Security__c = currentFS.Id;
 		}
 
