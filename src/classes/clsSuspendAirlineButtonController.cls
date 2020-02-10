@@ -27,7 +27,9 @@ public class clsSuspendAirlineButtonController {
 														WHERE Services_Rendered_to_Airline__c IN:consumersId
 														AND Services_Rendered_Status__c = 'Active'
 														AND(  Services_Rendered_Type__c = 'CASS Participation'
-															  OR  Services_Rendered_Type__c  = 'BSP Representation')];
+															  OR  Services_Rendered_Type__c  = 'BSP Representation'
+															  OR  Services_Rendered_Type__c  = 'CASS Export via GSSA'
+															  OR  Services_Rendered_Type__c  = 'BSP Participation')];
 				system.debug('consumersId : ' + consumersId );
 				for(Services_Rendered__c ser :services){
 
