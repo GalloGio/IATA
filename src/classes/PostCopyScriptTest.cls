@@ -1,20 +1,20 @@
 @isTest
 public class PostCopyScriptTest {
 
-	private class WebServiceMockImpl implements WebServiceMock 
+	private class WebServiceMockImpl implements WebServiceMock
 	{
 		public void doInvoke(
 			Object stub, Object request, Map<String, Object> response,
 			String endpoint, String soapAction, String requestName,
-			String responseNS, String responseName, String responseType) 
+			String responseNS, String responseName, String responseType)
 		{
-		    if(request instanceof MetadataService.updateMetadata_element)
-                response.put('response_x', new MetadataService.updateMetadataResponse_element());
-            else if(request instanceof  MetadataService.deleteMetadata_element)
-                response.put('response_x', new MetadataService.deleteMetadataResponse_element());
+			if(request instanceof MetadataService.updateMetadata_element)
+				response.put('response_x', new MetadataService.updateMetadataResponse_element());
+			else if(request instanceof  MetadataService.deleteMetadata_element)
+				response.put('response_x', new MetadataService.deleteMetadataResponse_element());
 			return;
 		}
-	} 
+	}
 
 	@testSetup
 	static void setup() {

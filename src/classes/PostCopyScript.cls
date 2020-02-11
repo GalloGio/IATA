@@ -121,12 +121,12 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private static MetadataService.MetadataPort createService(){
-        MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-        service.SessionHeader = new MetadataService.SessionHeader_element();
-        service.SessionHeader.sessionId = UserInfo.getSessionId();
-        return service;
+		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+		service.SessionHeader = new MetadataService.SessionHeader_element();
+		service.SessionHeader.sessionId = UserInfo.getSessionId();
+		return service;
 	}
-	
+
 	/**
 	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
 	*/
