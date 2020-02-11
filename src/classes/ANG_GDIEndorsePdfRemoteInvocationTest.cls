@@ -106,7 +106,12 @@ public class ANG_GDIEndorsePdfRemoteInvocationTest {
 		insert fs;
 		
 		ID oppRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity');
-
+		
+		// NEWGEN-5208 - The service will now also send the INT_011 request
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
+		
 		Opportunity opp = new Opportunity(
 			AccountId = acc.Id,
 			CloseDate = Date.today(), 
