@@ -113,7 +113,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	@TestVisible
 	private void deleteScheduleDashboards(){
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
-		Database.executeBatch(deleteScheduleDashboards,20);
+		Database.executeBatch(deleteScheduleDashboards,10);
 	}
 
 	/**

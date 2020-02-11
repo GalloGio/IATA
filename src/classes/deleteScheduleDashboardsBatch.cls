@@ -3,7 +3,11 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 	global final string scheduleQuery;
 	global deleteScheduleDashboardsBatch(){
 
-		scheduleQuery = 'SELECT Id FROM CronTrigger WHERE  CronJobDetail.JobType = \'A\' OR CronJobDetail.JobType = \'8\' OR CronJobDetail.JobType = \'3\'';
+		if(Test.isRunningTest()){
+			scheduleQuery = 'SELECT Id FROM CronTrigger WHERE  CronJobDetail.JobType = \'A\' OR CronJobDetail.JobType = \'8\' OR CronJobDetail.JobType = \'3\' LIMIT 10';
+		}else{
+			scheduleQuery = 'SELECT Id FROM CronTrigger WHERE  CronJobDetail.JobType = \'A\' OR CronJobDetail.JobType = \'8\' OR CronJobDetail.JobType = \'3\'';
+		}
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC){
