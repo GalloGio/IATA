@@ -26,13 +26,13 @@ export default class PortalCustomCardContainer extends LightningElement {
     @api specialBody = false;
 
     @track bodyStyle = 'slds-m-horizontal_x-large';
-    @track customCardCss = "customLightShadow background-white fullHeight";
+    @track customCardCss = "customLightShadow background-white fullHeightDiv";
 
     @track headerCss = "slds-p-top_x-large slds-p-bottom_x-small";
 
     connectedCallback() {
         if (this.specialCard){
-            this.customCardCss = "background-white fullHeight";
+            this.customCardCss = "background-white fullHeightDiv";
             this.headerCss = "slds-p-bottom_x-small";
         }
 

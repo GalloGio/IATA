@@ -752,6 +752,7 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeightDiv,
 .fullHeight,
 .fullHeight button,
 .fullHeight button:active,
