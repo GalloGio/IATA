@@ -161,6 +161,7 @@ force.json
 sfdx-project.json
 .forceCode/
 .sfdx/
+.sfdx
 .vscode/
 src/lwc/jsconfig.json
 src/lwc/.eslintrc.json
