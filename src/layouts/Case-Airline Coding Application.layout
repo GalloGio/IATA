@@ -221,6 +221,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Dossier_reception_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>First_Contact_w_Client_in_Business_Hours__c</field>
             </layoutItems>
             <layoutItems>
