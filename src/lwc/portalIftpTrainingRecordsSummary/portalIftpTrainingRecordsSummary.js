@@ -23,9 +23,10 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     @track showSearch = false;
     @track aircraftTypeValue = null;
             certificationTypesWithLevel;
-    @track proficiencyValue = 'Level 2';
+    @track proficiencyValue ;
 
     @track aircraftTypeOptions;
+    @track levelNotSelected = true;
     @track allStations;
     @track selectedRows = null;
     @track queryTerm = null;
@@ -73,6 +74,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         });
         this.aircraftTypeValue = null;
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
+        this.levelNotSelected = false;
     }
         
     handleSearchButtonClick(){
@@ -117,20 +119,9 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     handleResetButtonClick(){
         this.handleResetSelectStationSearch();
         this.aircraftTypeValue = null;
-        this.proficiencyValue = 'Level 2';
-        let myTopicOptions;
-        this.certificationTypesWithLevel.forEach(cert =>{
-            if(cert.Prerequisite_Level__c === 'Level 2'){
-                if(!myTopicOptions){
-                    myTopicOptions = [{ label: cert.Certification__r.Name, value: cert.Certification__c }];
-                } else{
-                    myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-                }
-            }  
-        });
-
-        this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
-
+        this.proficiencyValue =null;
+        this.aircraftTypeOptions = null; 
+        this.levelNotSelected = true;
         this.showSearch = false;
         this.cleanErrors();
     }
@@ -161,20 +152,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
         .then(result => {
             let myResult = JSON.parse(JSON.stringify(result));
-            this.certificationTypesWithLevel = myResult;
-
-            let myTopicOptions;
-            myResult.forEach(cert =>{
-                if(cert.Prerequisite_Level__c === 'Level 2'){
-                    if(!myTopicOptions){
-                        myTopicOptions = [{ label: cert.Certification__r.Name, value: cert.Certification__c }];
-                    } else{
-                        myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-                    }
-                }  
-            });
-
-            this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
+            this.certificationTypesWithLevel = myResult
             
         })
         .catch(error => {
