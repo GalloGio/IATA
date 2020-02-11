@@ -156,8 +156,9 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Airport Detail</label>
     <nameField>
-        <label>Airport Name</label>
-        <type>Text</type>
+        <displayFormat>APD-{0000000000}</displayFormat>
+        <label>Airport Autoname</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Airport Details</pluralLabel>
     <searchLayouts>
@@ -193,6 +194,17 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Airport_Name__c</fullName>
+        <description>The name of the airport is equal to the name of the associated account.</description>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <label>Airport Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>City__c</fullName>
