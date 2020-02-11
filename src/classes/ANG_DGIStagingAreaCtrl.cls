@@ -57,31 +57,21 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		set;
 	}
 
-	private List<Financial_Security__c> fetchFinancialSecurityGDI(Id fsId, Id accountId){
-		List<String> fieldLst = new List<String>{
-			'Id', 'Amount__c', 'Account__c', 'Reception_Case__c', 'Security_Type__c', 'Security_Status__c'
-		};
-
-		String fsQuery = 
-			String.format(
-				'SELECT {0} FROM Financial_Security__c WHERE ',
-				new List<String>{String.join(fieldLst, ', ')}
-			);
-
+	private List<Financial_Security__c> fetchFinancialSecurityGDI(Id fsId, Id accountId) {
+		String fsQuery = 'SELECT Id, Amount__c, Account__c, Reception_Case__c, Security_Type__c, Security_Status__c'
+			+ ' FROM Financial_Security__c WHERE ';
 		String securityTypeGdi = AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI;
-
-		if(fsId != null){
+		
+		if (fsId != null) {
 			fsQuery += ' Id = :fsId ';
-		}
-		else {
+		} else {
 			fsQuery += ' Account__c = :accountId ';
 			fsQuery += ' AND Security_Type__c = :securityTypeGdi';
 			fsQuery += ' AND Security_Status__c IN :FINANCIAL_SECURITY_ACTIVE_STATUS ';
 			fsQuery += ' ORDER BY CreatedDate DESC LIMIT 1';
 		}
-
+		
 		return Database.query(fsQuery);
-				
 	}
 
 	private boolean isValidFS(){

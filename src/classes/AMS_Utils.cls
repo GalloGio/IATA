@@ -364,6 +364,8 @@ public without sharing class AMS_Utils {
 
 	public static final String CC = 'CC';
 	public static final String CA = 'CA';
+	public static final String CL = 'CL';
+	public static final String MC = 'MC';
 	public static final string EP = 'EP';
 	public static final string BOP = 'BOP';
 	public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';

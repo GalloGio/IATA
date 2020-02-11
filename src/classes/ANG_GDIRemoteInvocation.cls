@@ -16,7 +16,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 
 			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO){
 				//let's see if the source and request type are consistent
-				if(ri.Source__c=='GDI'){
+				if (ri.Source__c == RemoteInvocationTriggerHandler.SOURCE_GDI) {
 					setValidRemoteInvocation.add(ri);
 					currencyIsoCodeToFetch.add(ri.CurrencyISOCode);
 				}
@@ -160,7 +160,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 
 				stagingFs.OpportunityId = opp.Id;
 				stagingFs.OSCAR_GDI__c = opp.Related_Oscar__c;
-				stagingFs.Security_Type__c = 'GDI';
+				stagingFs.Security_Type__c = AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI;
 				stagingFs.Security_Status__c = 'Draft';
 				stagingFs.Quantity = 1;
 

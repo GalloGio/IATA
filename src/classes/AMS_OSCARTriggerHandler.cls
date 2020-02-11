@@ -717,8 +717,8 @@ public class AMS_OSCARTriggerHandler {
 
 				}else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
 					updatedOSCAR.Payment_requested__c = Date.today();
-					updatedOSCAR.STEP47__c = 'Passed';
-					updatedOSCAR.STEP9__c = 'In Progress';
+					updatedOSCAR.STEP47__c = AMS_Utils.PASSED;
+					updatedOSCAR.STEP9__c = AMS_Utils.IN_PROGRESS;
 
 				}else if(updatedOSCAR.Endorsement_Requested__c && !oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
 					updatedOSCAR.Endorsement_requested_date__c = Date.today();
@@ -3900,13 +3900,13 @@ public class AMS_OSCARTriggerHandler {
 			}else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 				bGenerateCC = true;
 				changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
-			}else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+			}else if (oldOSCAR.STEP4__c != AMS_Utils.PASSED && updatedOscar.STEP4__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
-			}else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
+			}else if (oldOSCAR.STEP5__c != AMS_Utils.PASSED && updatedOscar.STEP5__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
-			}else if(oldOscar.STEP46__c != 'Passed' && updatedOscar.STEP46__c == 'Passed'){ 
+			}else if(oldOscar.STEP46__c != AMS_Utils.PASSED && updatedOscar.STEP46__c == AMS_Utils.PASSED){ 
 				// for GDI change code creation
 				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
 				
