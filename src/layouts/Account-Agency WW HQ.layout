@@ -95,10 +95,6 @@
                 <behavior>Edit</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>VAT_Number_2__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

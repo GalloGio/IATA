@@ -77,7 +77,6 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			'IATAN Codes' => 0,
 			'CNS Codes' => 0
 		};
-		Set<String>excludeCNSAndTIDSAndIATAN = new Set<String>{'GE', 'HE', 'HO', 'AO', 'AE', 'BR'};
 		Integer countTIDS = 0;
 		for(AggregateResult ar : groupedResults) {
 			String locationType = (String) ar.get('Location_Type__c');
@@ -88,13 +87,13 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			Boolean cnsAgency = (Boolean) ar.get('CNS_Agency__c');
 			Integer totals = (Integer) ar.get('expr0');
 
-			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATAN Passenger Sales Agent (USA Only)' && !excludeCNSAndTIDSAndIATAN.contains(locationType)) {
+			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATAN Passenger Sales Agent (USA Only)') {
 				Integer totalIATAN = mapLocationTypes.get('IATAN Codes');
 				mapLocationTypes.put('IATAN Codes', totalIATAN + totals);
-			}else if(cnsAgency && rtype == 'IATA_Agency' && !excludeCNSAndTIDSAndIATAN.contains(locationType)) {
+			}else if(cnsAgency && rtype == 'IATA_Agency') {
 				Integer totalCNS= mapLocationTypes.get('CNS Codes');
 				mapLocationTypes.put('CNS Codes', totalCNS + totals);
-			}else{
+			}else if(category != 'IATAN Passenger Sales Agent (USA Only)' && !cnsAgency) {
 				Integer currVal = mapLocationTypes.get(locationType);
 				mapLocationTypes.put(locationType,currVal + totals);
 			}

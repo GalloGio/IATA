@@ -61,7 +61,7 @@
             </div>
         </div>
         <aura:set attribute="else">
-            <c:AWW_AccountPlanMilestones aura:id="milestones" accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            <c:AWW_AccountPlanMilestones aura:id="milestones" accountId="{!v.accountId}" canEdit="{!v.canEdit}" haveUserAMPIssuesAndPriorities = "{!v.haveUserAMPIssuesAndPriorities}"/>
         </aura:set>
     </aura:if>
 
