@@ -12649,6 +12649,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13399,6 +13403,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>Solo i firmatari autorizzati possono comunicare a IATA le chiusure degli uffici. Puoi nominare il firmatario autorizzato della tua agenzia in «Gestione società -&gt; sezione Contatti».</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Office --></label>
@@ -16345,6 +16353,14 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Azione</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Nuovo caso</label>

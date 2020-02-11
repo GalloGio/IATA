@@ -252,7 +252,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ID_Card_Application__c</field>
             </layoutItems>
             <layoutItems>
