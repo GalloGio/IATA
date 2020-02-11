@@ -1611,6 +1611,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Cuba</label>
                 </value>
                 <value>
+                    <fullName>Curacao</fullName>
+                    <default>false</default>
+                    <label>Curacao</label>
+                </value>
+                <value>
                     <fullName>Cyprus</fullName>
                     <default>false</default>
                     <label>Cyprus</label>

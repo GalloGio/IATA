@@ -15128,6 +15128,32 @@ J-Joint Vent</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>NDC_Agent__c</fullName>
+        <description>Indicates if the agent is NDC</description>
+        <externalId>false</externalId>
+        <label>NDC Agent</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>NDC_engagement__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag to indicate NDC</description>
@@ -35820,6 +35846,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -43129,6 +43166,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -49377,6 +49425,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Non-IATA member</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -55782,6 +55841,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -61905,6 +61975,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -70593,6 +70674,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -77895,6 +77987,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -85826,6 +85929,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -92849,6 +92963,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -99330,6 +99455,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -107773,6 +107909,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -111285,7 +111432,7 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
     </validationRules>
     <validationRules>
         <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
         <errorConditionFormula>AND( 
 ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
@@ -111294,7 +111441,7 @@ RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>EF_Account_Client_Reactivation</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
 NOT($User.EF_Client_Reactivation__c),
@@ -111306,7 +111453,7 @@ RecordType.Name=&apos;Others&apos;
     </validationRules>
     <validationRules>
         <fullName>EF_Account_Customer_Reactivation</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
 NOT($User.EF_Customer_Reactivation__c),  
@@ -111341,7 +111488,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_MandatoryFields</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
         <errorConditionFormula>AND( 
  CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
@@ -111354,7 +111501,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
         <errorConditionFormula>AND(
 NOT(ISBLANK(EF_SIS_Location_ID__c)),
@@ -111442,10 +111589,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>Only administrators can edit General Public accounts</description>
         <errorConditionFormula>AND
 (
-OR
-(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
-TEXT(Sector__c) = &quot;General Public&quot; ||
-ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
+Is_General_Public_Account__c
 ,
 OR
 (ISCHANGED(Sector__c),
