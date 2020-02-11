@@ -3649,10 +3649,14 @@ public without sharing class ISSP_AMS_Accreditation {
 			} else if (isNoticeOfChange && !isBankAccountChange) {
 				//NEWGEN 683
 				if (getIsAccreditationModelNotNullOrLegacy()) {
-					if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
-						typeOfProcess = AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
-					} else {
-						typeOfProcess = AMS_Utils.NGCHANGES;
+					typeOfProcess = AMS_Utils.NGCHANGES;
+
+					if (newForm.Type_Of_Change__c == 'Yes') {
+						if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+							typeOfProcess = AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
+						} else if (hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+							typeOfProcess = AMS_Utils.NGCONVERSIONMCTOST;
+						}
 					}
 				} else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {
 					typeOfProcess = AMS_Utils.COR;
@@ -6205,7 +6209,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					newForm.ANG_Accreditation_Model_to_Change__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				} else {
-					if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH && cntIFAPContacts == 0) {
+					if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH && cntIFAPContacts == 0 && hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_NoC_No_Contact_Error));
 						errorFound = true;
 					}
@@ -6299,26 +6303,24 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if (!isBankAccountChange) {
-				if (!newform.Confirm_accreditation_type_are_correct__c && !newForm.Notify_Change_Accreditation_Type__c && getIsAccreditationModelNotNullOrLegacy()) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_Accreditation_Type));
-					errorFound = true;
-				}
+			if (!newform.Confirm_accreditation_type_are_correct__c && !newForm.Notify_Change_Accreditation_Type__c && getIsAccreditationModelNotNullOrLegacy()) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_Accreditation_Type));
+				errorFound = true;
+			}
 
-				if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1));
-					errorFound = true;
-				}
+			if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1));
+				errorFound = true;
+			}
 
-				if (!newform.Confirm_Location_Details_are_correct__c && !newForm.Notify_Change_Location__c) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
-					errorFound = true;
-				}
+			if (!newform.Confirm_Location_Details_are_correct__c && !newForm.Notify_Change_Location__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
+				errorFound = true;
+			}
 
-				if (!newform.Confirm_Ownership_Details_are_correct__c && !newForm.Notify_Change_Ownership__c) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
-					errorFound = true;
-				}
+			if (!newform.Confirm_Ownership_Details_are_correct__c && !newForm.Notify_Change_Ownership__c) {
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
+				errorFound = true;
 			}
 
 			if (newForm.Notify_Change_Ownership__c && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
@@ -6477,15 +6479,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
 							if(newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 								if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership));
+									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership : Label.ISSP_AMS_Validation_Percent_Ownership_AE));
 								} else {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2));
-								}
-							} else {
-								if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership_AE));
-								} else {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2_AE));
+									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership2 : Label.ISSP_AMS_Validation_Percent_Ownership2_AE));
 								}
 							}
 							errorFound = true;

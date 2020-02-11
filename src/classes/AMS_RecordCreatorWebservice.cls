@@ -31,6 +31,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
+	public static String CONVERT_TO_ST = 'ANG.CONVERT.MC.TO.ST';
 
 	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
 
@@ -81,7 +82,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 					ownerId = cse.OwnerId;
 				}
 
-				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC)){
+				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST)){
 					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
 				}
 			}
@@ -358,6 +359,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 		if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_MC)) {
 			return AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY;
+		}
+
+		if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_ST)) {
+			return AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD;
 		}
 
 		return null;
