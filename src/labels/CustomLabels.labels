@@ -25144,7 +25144,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
         <value>In order to notify IATA of a change of bank account details please contact us</value>
-    </labels>	
+    </labels>
     <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
         <categories>ISSP,ANG</categories>
@@ -30899,20 +30899,20 @@ this is the tiess topic help</value>
         <value>Action</value>
     </labels>
     <labels>
-        <fullName>ISSP_NDC_Transaction_Question</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
-        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
-    </labels>
-    <labels>
         <fullName>ISSP_NDC_Transaction_Info</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NDC_Transaction_Info</shortDescription>
         <value>On confirming, you will be asked to provide IATA with one letter of recommendation from an IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Question</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
+        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
     </labels>
     <labels>
         <fullName>ISSP_NewCase</fullName>
