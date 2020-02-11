@@ -776,8 +776,8 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4__c</columns>
         <columns>Field4Values__c</columns>
         <columns>Field5__c</columns>
-        <columns>Field5Values__c</columns>
-        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>

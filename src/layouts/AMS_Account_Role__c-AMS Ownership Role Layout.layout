@@ -23,6 +23,10 @@
                 <behavior>Readonly</behavior>
                 <field>Owner_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Valid__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

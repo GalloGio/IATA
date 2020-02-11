@@ -12643,6 +12643,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13393,6 +13397,10 @@ and
     <customLabels>
         <label>Chỉ Người có thẩm quyền ký hợp pháp mới có thể thông báo đóng cửa văn phòng cho IATA. Bạn có thể chỉ định Người có thẩm quyền ký của Đại lý của mình trong mục ‘Quản trị công ty -&gt; Phần Liên hệ&apos;.</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Office --></label>
@@ -16335,6 +16343,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Hành động</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Trường Hợp Mới</label>

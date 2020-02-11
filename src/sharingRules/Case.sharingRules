@@ -265,6 +265,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>IRIS_Integration</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IRIS Integration</label>
+        <sharedTo>
+            <group>IRIS_Integration</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>ISSP_Kale_Visibility</fullName>
         <accessLevel>Read</accessLevel>
         <label>ISSP - Kale Visibility</label>
@@ -357,20 +370,6 @@
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>SIDRA</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>share all sidra cases with integration user</description>
-        <label>SIDRA</label>
-        <sharedTo>
-            <group>SIDRA_All_Cases</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA Lite,SIDRA</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
