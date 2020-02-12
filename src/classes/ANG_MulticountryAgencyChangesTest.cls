@@ -1611,6 +1611,10 @@ private class ANG_MulticountryAgencyChangesTest {
 		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		con.save();
 
+		ApexPages.Message[] pageMessages = ApexPages.getMessages();
+
+		System.assert(pageMessages.size() == 0, 'Must select new Parent type GE.');
+
 		Test.startTest();
 
 		oscar.STEP6__c = AMS_Utils.PASSED;
@@ -1706,6 +1710,10 @@ private class ANG_MulticountryAgencyChangesTest {
 		con.oscar.New_Parent__c = newParentAcct.Id;
 		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		con.save();
+
+		ApexPages.Message[] pageMessages = ApexPages.getMessages();
+
+		System.assert(pageMessages.size() == 0, 'Must select new Parent type GE.'); 
 
 		Test.startTest();
 

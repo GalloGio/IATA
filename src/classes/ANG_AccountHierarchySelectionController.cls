@@ -205,11 +205,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				);
 
 				errorMessages.put(
-					'Standard or Lite to Multicountry hierarchy',
-					'The selected new parent is part of a multicountry hierarchy. Please process a conversion in this scenario.'
-				);
-
-				errorMessages.put(
 					'Multicountry to Standard or Lite hierarchy',
 					'You cannot select a Standard or Lite hierarchy as the New Parent.'
 				);
@@ -561,7 +556,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public Boolean showBSPPanel{
 		get{
-			if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
+			if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && newParent.Location_Type__c == AMS_Utils.GE){
 				for(HEPerBSP hePerBsp : hesPerBSPs.values()){
 					if(hePerBsp.needsUserToChoose()){
 						return true;
@@ -646,7 +641,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		this.isCashOrCashless = (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH || oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
 
-		if(isMulticountry && String.isNotBlank(oscar.HE_per_BSP_Mapping__c)){
+		if(String.isNotBlank(oscar.HE_per_BSP_Mapping__c)){
 			Map<Id, Id> savedHEPerBSP = (Map<Id, Id>) JSON.deserialize(oscar.HE_per_BSP_Mapping__c, Map<Id, Id>.class);
 			for(Id bspId : savedHEPerBsp.keySet()){
 				hesPerBSPs.put(bspId, new HEPerBSP(bspId, savedHEPerBsp.get(bspId)));
@@ -707,14 +702,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
 				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
 
-				//NEWGEN-5007
-				if(this.isCashOrCashless && (newParent.Location_Type__c == AMS_Utils.GE || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c == AMS_Utils.GE))) errorChecks.put('Standard or Lite to Multicountry hierarchy', true);
-
 				if(this.isMulticountry) runValidationChangeHierarchyforMulticountry();
 
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
 
-				if(this.isMulticountry){
+				if(newParent.Location_Type__c == AMS_Utils.GE){
 					//validate and store in OSCAR
 					Map<ID,ID> resultHEPerBSP = new Map<ID,ID>();
 					for(HEPerBSP tt:  hesPerBSPs.values()){
@@ -811,7 +803,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public void handleSelection(){
 
-		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
+		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && newParent.Location_Type__c == AMS_Utils.GE){
 
 			Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
 
@@ -872,7 +864,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				];
 		}
 
-		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
+		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && newParent.Location_Type__c == AMS_Utils.GE){
 
 			newParentHierarchyBSPs = null;
 			newParentHierarchyBSPs.add(newParent.IATA_ISO_Country__r.AMS_Settlement_System__c);
