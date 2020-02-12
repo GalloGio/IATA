@@ -79,6 +79,10 @@ public class ISSP_ICCS_CoreRest{
 
 
 	public HttpResponse sendRequest(String method, String body, String service, Map<String, String> headers, Boolean resetTokenIfExpired){
+		return sendRequest(method, body, service, headers, resetTokenIfExpired, true);
+	}
+
+	public HttpResponse sendRequest(String method, String body, String service, Map<String, String> headers, Boolean resetTokenIfExpired, Boolean addParticipationHeader){
 		System.debug('**** ' + (serviceURL + service) + ' ****');
 		HttpRequest req = new HttpRequest();
 
@@ -94,7 +98,9 @@ public class ISSP_ICCS_CoreRest{
 		}
 		catch(ICCS_Exception e){throw e;}
 
-		req.setHeader('participant_code', pageController.participantId);
+		if (addParticipationHeader) {
+			req.setHeader('participant_code', pageController.participantId);
+		}
 
 		if(headers != null){
 			for(String key : headers.keySet()){
@@ -459,7 +465,7 @@ public class ISSP_ICCS_CoreRest{
 	public List<Participation> getCycleParticipations(String cycleId){
 		System.debug('**** ISSP_ICCS_CoreRest.getCycleParticipations(' + cycleId + ') ****');
 
-		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/participations', null, true);
+		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/participations', null, true, false);
 
 		try{
 			String result = response.getBody().replaceAll('"BankAccountCode"', '"AccountCode"');
