@@ -70,7 +70,7 @@ public class CaseIFAPHandler {
 
 		if(contactIds.size() > 0){
 
-			userList = new List<User>([SELECT id, Contact.Salutation, Contact.FirstName, Contact.LastName, Contact.MailingCity, Contact.MailingState, Contact.Email, Contact.Status__c,
+			userList = new List<User>([SELECT id, Contact.Name, Contact.Salutation, Contact.FirstName, Contact.LastName, Contact.MailingCity, Contact.MailingState, Contact.Email, Contact.Status__c,
 													Contact.Account.Global_ID__c, Contact.ID_Card_Preferred_Language__c, Contact.IATA_ISO_Billing_State__r.Name, Username
 													FROM user WHERE ContactId IN :contactIds]);
 		}
@@ -214,6 +214,7 @@ public class CaseIFAPHandler {
 
 		public String firstName { get; set; }
 		public String lastName { get; set; }
+		public String fullName { get; set; }
 		public String salutation { get; set; }
 		public String city { get; set; }
 		public String state { get; set; }
@@ -226,16 +227,17 @@ public class CaseIFAPHandler {
 		public WrapperForJSON(User user){
 
 			// Mulesoft doesn't accept null value
-			firstName = user.Contact.FirstName;
-			lastName = user.Contact.LastName;
+			firstName = (user.Contact.FirstName != null) ? user.Contact.FirstName : '';
+			lastName = (user.Contact.LastName != null) ? user.Contact.LastName : '';
+			fullName = (user.Contact.Name != null) ? user.Contact.Name : '';
 			salutation = (user.Contact.Salutation != null) ? user.Contact.Salutation : '';
 			city = (user.Contact.MailingCity != null) ? user.Contact.MailingCity : '';
 			state = (user.Contact.IATA_ISO_Billing_State__r.Name != null) ? user.Contact.IATA_ISO_Billing_State__r.Name : '';
-			emailId = user.Contact.Email;
+			emailId = (user.Contact.Email != null) ? user.Contact.Email : '';
 			salesForceClientNumber = (user.Contact.Account.Global_ID__c != null) ? user.Contact.Account.Global_ID__c : '';
-			contactStatus = user.Contact.Status__c;
-			preferredLanguage = user.Contact.ID_Card_Preferred_Language__c.toLowerCase();
-			salesForceUserEmailId = user.Username;
+			contactStatus = (user.Contact.Status__c != null) ? user.Contact.Status__c : '';
+			preferredLanguage = (user.Contact.ID_Card_Preferred_Language__c.toLowerCase() != null) ? user.Contact.ID_Card_Preferred_Language__c.toLowerCase() : '';
+			salesForceUserEmailId = (user.Username != null) ? user.Username : '';
 		}
 	}
 
