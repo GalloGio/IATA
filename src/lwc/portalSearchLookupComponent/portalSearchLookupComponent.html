@@ -44,7 +44,7 @@
 
                     <!-- Result list box start -->
                     <div id="listbox" role="listbox" onclick={handleComboboxClick}>
-                        <ul class={getListboxClass} role="presentation">
+                        <ul class={getListboxClass} role="presentation" data-id="scrollContainer">
 
                             <template for:each={searchResults} for:item="result">
                                 <li key={result.id} role="presentation" class="slds-listbox__item">
