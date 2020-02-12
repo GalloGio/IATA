@@ -1181,9 +1181,9 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-
-				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Generate_risk_event_MC__c){
-					List<Account> acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :(oscar.Generate_risk_event_MC__c ? oscar.New_parent__c : oscar.Account__c) ];
+				Boolean isMulticountrySplit = (oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
+				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || isMulticountrySplit){
+					List<Account> acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :(isMulticountrySplit ? oscar.New_parent__c : oscar.Account__c) ];
 					List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
 
 					if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && !String.isBlank(pax[0].Preferred_RHC_currency__c)){
