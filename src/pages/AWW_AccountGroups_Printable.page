@@ -21,10 +21,10 @@
                     <table class="list"  border="0" cellpadding="0" cellspacing="0">
                         <thead class="rich-table-thead">
                             <tr>
-                                <th scope="col" colspan="8" ><div>Participation to IATA Industry Groups</div></th>
+                                <th scope="col" colspan="9" ><div>Participation to IATA Industry Groups</div></th>
                             </tr>
                             <tr>
-                                <th scope="col" colspan="8" ><div>Account: {!Account.Name}</div></th>
+                                <th scope="col" colspan="9" ><div>Account: {!Account.Name}</div></th>
                             </tr>
                             <tr class="headerRow" >
                                 <th class="headerRow" scope="col" colspan="4" ><div>Group Information</div></th>
@@ -46,6 +46,7 @@
                         <apex:repeat value="{!wrapper.groups}" var="mainGroup">
                             <tr class="dataRow">
                                 <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}">{!mainGroup.groupName}</td>
+                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
                                 <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
                                 <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
                                 <apex:outputPanel layout="none" rendered="{!mainGroup.members.size == 0}">
@@ -91,7 +92,7 @@
                             </apex:repeat>
                         </apex:repeat>   
                         <apex:outputPanel layout="none" rendered="{!wrapper.hasRepresentatives}">
-                            <tr><td colspan="8"><apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>This participant represents the account on that specific group.</td></tr>
+                            <tr><td colspan="9"><apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>This participant represents the account on that specific group.</td></tr>
                         </apex:outputPanel>                     
                     </table>
                 </apex:pageBlock>
