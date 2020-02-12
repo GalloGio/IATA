@@ -15187,6 +15187,32 @@ J-Joint Vent</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>NDC_Agent__c</fullName>
+        <description>Indicates if the agent is NDC</description>
+        <externalId>false</externalId>
+        <label>NDC Agent</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>NDC_engagement__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag to indicate NDC</description>
@@ -35879,6 +35905,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -43188,6 +43225,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -49436,6 +49484,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Non-IATA member</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -55841,6 +55900,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -61964,6 +62034,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -70652,6 +70733,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -77954,6 +78046,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -85885,6 +85988,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -92908,6 +93022,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -99389,6 +99514,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <values>
                 <fullName>Not Applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -107832,6 +107968,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NDC_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -111501,10 +111648,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>Only administrators can edit General Public accounts</description>
         <errorConditionFormula>AND
 (
-OR
-(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
-TEXT(Sector__c) = &quot;General Public&quot; ||
-ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
+Is_General_Public_Account__c
 ,
 OR
 (ISCHANGED(Sector__c),

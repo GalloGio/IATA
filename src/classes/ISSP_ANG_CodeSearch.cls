@@ -79,7 +79,6 @@ public class ISSP_ANG_CodeSearch {
 			this.activeError = true;
 			this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_INVALID;
 		} else {
-
 			if(len == 7 || len == 10) {
 				iataCodeStr += '_';
 			}
@@ -135,9 +134,8 @@ public class ISSP_ANG_CodeSearch {
 					rhcAgencyInfo = rhcInfos[0];
 				}
 
-				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
-
-					if(reqAgency.Location_Type__c == Ams_Utils.AE) {
+				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
+					if(reqAgency.Location_Type__c == Ams_Utils.AE || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
 						if(reqAgency.Location_Type__c == Ams_Utils.BR) {
@@ -160,7 +158,7 @@ public class ISSP_ANG_CodeSearch {
 
 					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 
-					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
+					if((parentAgency.Location_Type__c == Ams_Utils.HE && parentAgency.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) || parentAgency.Location_Type__c == Ams_Utils.GE) {
 						auxReplacement = Label.ISSP_AMS_NoC_Head_Entity;
 						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Entity);
 					} else {
@@ -209,7 +207,6 @@ public class ISSP_ANG_CodeSearch {
 				}
 
 				if (countryFound) {
-
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
 						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
 					}
@@ -241,7 +238,6 @@ public class ISSP_ANG_CodeSearch {
 					Datetime output = agency.Accreditation_date__c;
 					AccreditationDateFormated = output.format('dd-MMM-YYYY');
 				}
-
 			} else {
 				this.activeError = true;
 				this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND.replace('%TYPE%', auxReplacement);
@@ -251,9 +247,7 @@ public class ISSP_ANG_CodeSearch {
 		}
 
 		public PageReference refreshRiskEventsTable() {
-
 				riskEventsList = null;
-
 				return null;
 		}
 
@@ -276,19 +270,22 @@ public class ISSP_ANG_CodeSearch {
 		this.isAll = false;
 
 		if(this.riskStatusFilter == 'Active') {
-			soqlStr += ' And ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
+			soqlStr += 'AND ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
 		} else if(this.riskStatusFilter == 'Expired') {
-			soqlStr += ' And ANG_Expired__c = true';
+			soqlStr += 'AND ANG_Expired__c = true';
 		} else if(this.riskStatusFilter == 'Inactive') {
-			soqlStr += ' And ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
+			soqlStr += 'AND ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
 		} else if(this.riskStatusFilter == 'All') {
 			this.isAll = true;
-			soqlStr += ' And ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
+			soqlStr += 'AND ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
 		}
+
+		riskEventsList = new List<RiskEvent>();
 
 		for(ANG_Agency_Risk_Event__c event : Database.query(soqlStr)) {
 			riskEventsList.add(new RiskEvent(event));
 		}
+
 		return riskEventsList;
 		}
 
