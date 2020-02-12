@@ -9005,6 +9005,14 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>Action</value>
     </labels>
     <labels>
+        <fullName>ICCS_Action_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Action Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Actions_Label</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9069,6 +9077,55 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <protected>false</protected>
         <shortDescription>ICCS Additional Codes Number</shortDescription>
         <value>Number of Additional codes to create</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Button_Help_Text</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Button Help Text</shortDescription>
+        <value>&lt;p&gt;&lt;strong&gt;Multi Countries Adhoc SI:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for a selection of countries and participations saving you the time of repeating the line change. The instruction will be applicable to each country/participation selected individually. You can make the selection of participations by first clicking “Expanding All”.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Adhoc SI by Currency:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for all the countries/participation with a same currency (sales currency) and based on the instruction lines can be cumulative. Participations have been regrouped by Currency to make it easier.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Creation_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_SI_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc SI Created</shortDescription>
+        <value>Your Adhoc Settlement Instruction was successfully created</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_SI_by_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc SI by Currency</shortDescription>
+        <value>Adhoc SI by Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Selection_error</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Selection error</shortDescription>
+        <value>Please select one or more participations first in order to complete a multi countries Adhoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Xreation_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Agreement_Label</fullName>
@@ -9282,12 +9339,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Client testimonial</value>
     </labels>
     <labels>
+        <fullName>ICCS_Clone_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Clone SI</shortDescription>
+        <value>Clone as {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Clone_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Clone SI Link</shortDescription>
         <value>Copy &amp; Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Collapse_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Collapse All</shortDescription>
+        <value>Collapse All</value>
     </labels>
     <labels>
         <fullName>ICCS_Comment_Label</fullName>
@@ -9338,6 +9411,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Create Future AdHoc SI</value>
     </labels>
     <labels>
+        <fullName>ICCS_Create_Mass_Currency_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Mass Currency Header</shortDescription>
+        <value>Please, select a currency to apply the new Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Created_Date_Label</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9360,6 +9441,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Currency Label</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_SI_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency SI created</shortDescription>
+        <value>Your Currency Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_CycleMgmt_AdHoc_Header</fullName>
@@ -9474,6 +9563,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>E&amp;F</value>
     </labels>
     <labels>
+        <fullName>ICCS_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Edit SI</shortDescription>
+        <value>Edit {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Edit_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9562,6 +9659,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>7r48aodfie7aim0aqd153tckrn</value>
     </labels>
     <labels>
+        <fullName>ICCS_Expand_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Expand All</shortDescription>
+        <value>Expand All</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Expected_Deadline</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9648,6 +9753,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Forms</shortDescription>
         <value>FORMS</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Future_SI_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Future SI Created</shortDescription>
+        <value>Your Future Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_Generated_Reports_Table_Title</fullName>
@@ -10043,6 +10156,14 @@ Has read only access over different features of the service.</value>
         <value>Fields marked with (*) are mandatory</value>
     </labels>
     <labels>
+        <fullName>ICCS_Mandatory_Instruction_Line</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Instruction Line</shortDescription>
+        <value>It is mandatory to have at least one instruction line</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Mandatory_Uploads_Message</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10057,6 +10178,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS Marked for Deletion Label</shortDescription>
         <value>Marked for Deletion</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mass_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mass Edit SI</shortDescription>
+        <value>Mass Edit {0} Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Membership_Status</fullName>
@@ -10089,6 +10218,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
         <value>ICCS Communications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Multi_Countries_Adhoc_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Multi Countries Adhoc SI</shortDescription>
+        <value>Multi Countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -10159,6 +10296,14 @@ Has read only access over different features of the service.</value>
 2. New set of Standard Settlement Instructions (download form)
 &lt;br/&gt;&lt;br/&gt;
 If you have any question, please submit them through the comments section after submitting your case.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Currencies_Available</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Currencies Available</shortDescription>
+        <value>No currencies available to create Currency SIs</value>
     </labels>
     <labels>
         <fullName>ICCS_No_Editable_Cycle_Message</fullName>
@@ -10651,6 +10796,22 @@ After verification, if all documents are compliant, you will receive a confirmat
         <value>Role</value>
     </labels>
     <labels>
+        <fullName>ICCS_SI_Successfully_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI Successfully Created</shortDescription>
+        <value>Your {0} Settlement Instruction was successfully created</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_SI_deleted</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI deleted</shortDescription>
+        <value>The Settlement Instruction has been successfully deleted</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Save_Action</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10807,6 +10968,14 @@ Access our ICCS Service information page for more details on the service and how
         <value>ICCS Service Users</value>
     </labels>
     <labels>
+        <fullName>ICCS_Settlement_Instructions_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Settlement Instructions created</shortDescription>
+        <value>Your Settlement Instructions were successfully created</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Show_Child_Codes</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10859,12 +11028,44 @@ The last line of the SI&apos;s must be &quot;Balance&quot;
 The sum of percentage cannot exceed 100%</value>
     </labels>
     <labels>
+        <fullName>ICCS_Si_Create_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for creating a Currency SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Currency_Warning</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency Warning</shortDescription>
+        <value>New Currency Settlement instructions cannot be deleted</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Si_Create_Future</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Future</shortDescription>
         <value>Kindly keep in mind the following rules for creating a future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your Currency SI:
 &lt;br/&gt;
 The last line of the SI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
@@ -10893,6 +11094,14 @@ The sum of percentage cannot exceed 100%</value>
 The last line of the SSI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
 The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Standard_SI_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Standard SI Created</shortDescription>
+        <value>Your Standard Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_Start_Date_Label</fullName>
