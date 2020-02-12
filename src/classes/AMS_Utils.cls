@@ -330,6 +330,7 @@ public without sharing class AMS_Utils {
 	public static final String IATAN_PASSENGER_SALES_AGENT_USA_ONLY = 'IATAN Passenger Sales Agent (USA Only)';
 	public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
+	public static final String SECTOR_TRAVEL_AGENT = 'Travel_Agent';
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
@@ -370,6 +371,7 @@ public without sharing class AMS_Utils {
 	public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
 	public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
 	public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+	public static final String NDC = 'NDC';
 
 	public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
@@ -1125,7 +1127,7 @@ public without sharing class AMS_Utils {
 				,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
 				Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Covered_Ownership__c,
 				(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Agent__c
 				FROM Account
 				WHERE Id IN :oscarAccountIds]);
 
@@ -1135,7 +1137,7 @@ public without sharing class AMS_Utils {
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
 				,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c, IATA_ISO_State__r.Valid_for_Address__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Transactions__c
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -1198,6 +1200,11 @@ public without sharing class AMS_Utils {
 				String transformedGDS = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
 				if(acc.GDS__c != transformedGDS){
 					acc.GDS__c = transformedGDS;
+					accountHasChanges = true;
+				}
+
+				if (acc.NDC_Agent__c != onlineAcc.NDC_Transactions__c) {
+					acc.NDC_Agent__c = onlineAcc.NDC_Transactions__c;
 					accountHasChanges = true;
 				}
 

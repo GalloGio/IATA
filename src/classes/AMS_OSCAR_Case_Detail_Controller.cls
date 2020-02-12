@@ -14,6 +14,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	public Boolean isCargoAgency{get;set;}
 	public Boolean isCertificationOSCAR{get;set;}
 	public Boolean isNewGenProcess{get;set;}
+	public Boolean isNewApplication{get;set;}
 	public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
 	public Boolean isNewMulticountryAE{get{return (oscarObj.Process__c == AMS_Utils.MCAE);}set;}
 	public Boolean isAEAccount{get{return (oscarObj.Location_Type__c == AMS_Utils.AE);}set;}
@@ -174,6 +175,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 				, AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
 				, AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
 				, AMS_Pax_Accreditation_Form__c.Preferred_RHC_currency__c
+				, AMS_Pax_Accreditation_Form__c.NDC_Transactions__c
 			};
 		}
 	}
@@ -302,6 +304,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 		if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
 		if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
 		if(fieldName == 'ANG_Accreditation_Type__c') return isNewGenProcess;
+		if(fieldName == 'NDC_Transactions__c') return isNewApplication;
 
 		if(hidenFieldsNewgenApplications.contains(fieldName))
 			return  !isNewGenProcess;
@@ -682,7 +685,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 			this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
 			this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
 			this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c); 
- 
+			this.isNewApplication = isNewGenProcess && AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c);
 		}else{
 			System.debug('## Could not fetch any Oscar or does not have an accreditation object');
 		}
