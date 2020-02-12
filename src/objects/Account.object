@@ -11198,6 +11198,11 @@ WSPN-Worldspan</inlineHelpText>
                 <operation>equals</operation>
                 <valueField>$Source.IATA_ISO_Billing_State__c</valueField>
             </filterItems>
+            <filterItems>
+                <field>IATA_ISO_City__c.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Pending</value>
+            </filterItems>
             <isOptional>true</isOptional>
         </lookupFilter>
         <referenceTo>IATA_ISO_City__c</referenceTo>
@@ -11220,6 +11225,11 @@ WSPN-Worldspan</inlineHelpText>
                 <field>IATA_ISO_City__c.IATA_ISO_State__c</field>
                 <operation>equals</operation>
                 <valueField>$Source.IATA_ISO_Shipping_State__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>IATA_ISO_City__c.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Pending</value>
             </filterItems>
             <isOptional>true</isOptional>
         </lookupFilter>

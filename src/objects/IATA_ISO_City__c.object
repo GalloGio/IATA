@@ -323,6 +323,7 @@
     <searchLayouts>
         <lookupDialogsAdditionalFields>GeonameHierarchy_label__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Country__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <searchResultsAdditionalFields>IATA_ISO_State__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>GeonameId__c</searchResultsAdditionalFields>

@@ -97,12 +97,15 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 											FROM IATA_ISO_State__c
 											WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
 											ORDER BY Name]) {
-					billingStateList.add(new SelectOption(state.Name, state.Name));
-					if(!String.isBlank(state.Name) && !String.isBlank(ca.fw.newform.State_Province__c)){
-						ca.fw.newform.State_Province__c = state.Name.toUpperCase() == ca.fw.newform.State_Province__c.toUpperCase()?state.Name:ca.fw.newform.State_Province__c;
-					}
+					billingStateList.add(new SelectOption(state.Name, state.Name));					
 				}
 			}
+			for(SelectOption state : billingStateList){
+				if(!String.isBlank(state.getValue()) && !String.isBlank(ca.fw.newform.State_Province__c))
+					ca.fw.newform.State_Province__c = state.getValue().toUpperCase() == ca.fw.newform.State_Province__c.toUpperCase()?state.getValue():ca.fw.newform.State_Province__c;
+			}
+			
+			
 			return billingStateList;
 		}
 		set;
