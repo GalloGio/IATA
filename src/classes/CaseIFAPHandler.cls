@@ -227,17 +227,21 @@ public class CaseIFAPHandler {
 		public WrapperForJSON(User user){
 
 			// Mulesoft doesn't accept null value
-			firstName = (user.Contact.FirstName != null) ? user.Contact.FirstName : '';
-			lastName = (user.Contact.LastName != null) ? user.Contact.LastName : '';
-			fullName = (user.Contact.Name != null) ? user.Contact.Name : '';
-			salutation = (user.Contact.Salutation != null) ? user.Contact.Salutation : '';
-			city = (user.Contact.MailingCity != null) ? user.Contact.MailingCity : '';
-			state = (user.Contact.IATA_ISO_Billing_State__r.Name != null) ? user.Contact.IATA_ISO_Billing_State__r.Name : '';
-			emailId = (user.Contact.Email != null) ? user.Contact.Email : '';
-			salesForceClientNumber = (user.Contact.Account.Global_ID__c != null) ? user.Contact.Account.Global_ID__c : '';
-			contactStatus = (user.Contact.Status__c != null) ? user.Contact.Status__c : '';
-			preferredLanguage = (user.Contact.ID_Card_Preferred_Language__c.toLowerCase() != null) ? user.Contact.ID_Card_Preferred_Language__c.toLowerCase() : '';
-			salesForceUserEmailId = (user.Username != null) ? user.Username : '';
+			firstName = protectNullValues(user.Contact.FirstName);
+			lastName = protectNullValues(user.Contact.LastName);
+			fullName = protectNullValues(user.Contact.Name);
+			salutation = protectNullValues(user.Contact.Salutation);
+			city = protectNullValues(user.Contact.MailingCity);
+			state = protectNullValues(user.Contact.IATA_ISO_Billing_State__r.Name);
+			emailId = protectNullValues(user.Contact.Email);
+			salesForceClientNumber = protectNullValues(user.Contact.Account.Global_ID__c);
+			contactStatus = protectNullValues(user.Contact.Status__c);
+			preferredLanguage = protectNullValues(user.Contact.ID_Card_Preferred_Language__c).toLowerCase();
+			salesForceUserEmailId = protectNullValues(user.Username);
+		}
+
+		private String protectNullValues(String field){
+			return (field != null) ? field : '';
 		}
 	}
 
