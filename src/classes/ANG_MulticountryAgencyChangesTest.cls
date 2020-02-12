@@ -576,6 +576,12 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert rfValuesLst;
 
+		insert new Agency_Authorization__c(
+			Account__c = accountGE.Id,
+			ANG_FormOfPayment_ID__c = 'CA',
+			Status__c = 'Active',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment')
+		);
 	}
 
 	private static AMS_OSCAR__c createNecessaryData(Account acct){
@@ -1671,6 +1677,13 @@ private class ANG_MulticountryAgencyChangesTest {
 		Account acct = acct0.Name == 'Standard HE SG' ? acct0 : acct1;
 		Account newParentAcct = acct0.Name == 'Multicountry GE PT' ? acct0 : acct1;
 
+		insert new Agency_Authorization__c(
+			Account__c = acct.Id,
+			ANG_FormOfPayment_ID__c = 'CA',
+			Status__c = 'Non-Active',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment')
+		);
+
 		AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
@@ -1729,6 +1742,9 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
+		List<Agency_Authorization__c> aas = [SELECT Id, Status__c FROM Agency_Authorization__c WHERE Account__c = :acct.Id];
+		System.assert(!aas.isEmpty());
+		System.assertEquals('Active', aas.get(0).Status__c);
 	}
 
 }
