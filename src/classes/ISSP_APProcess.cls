@@ -1086,7 +1086,7 @@ global without sharing class ISSP_APProcess {
 			if(managePASS){
 				passProcess = ' Countries - ';
 			}
-			newCase.Subject='Airline Participation - '+ strOperationType + passProcess + newCase.Country_concerned_by_the_query__c;
+			newCase.Subject='Airline Participation - '+ strOperationType + passProcess;
 		} else {
 			newCase.Reason1__c = strChangeType;
 			newCase.Subject='Airline Participation - ' + strOperationType + ' - '+ strChangeType;
