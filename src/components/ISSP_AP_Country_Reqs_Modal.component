@@ -17,7 +17,7 @@
         <apex:outputLink value="{!ctrl.DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
     </apex:outputPanel>
 
-    <apex:outputPanel rendered="{!OR(ctrl.isBSP,ctrl.isCASS)}">
+    <apex:outputPanel rendered="{!OR(ctrl.isBSP,ctrl.isCASS,ctrl.isPASS)}">
         <div class="alert alert-info" role="alert">Please make sure you are compliant with the list of local requirements below before proceeding.</div>
 
         <table class="table table-striped">

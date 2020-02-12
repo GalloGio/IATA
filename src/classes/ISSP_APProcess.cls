@@ -968,6 +968,7 @@ global without sharing class ISSP_APProcess {
 			vHQAccountId = con.Account.Top_Parent__c;
 		}
 
+		getLoB(strOperationType);
 		if (isICH) {
 			newCase.IFAP_Country_ISO__c='WW';
 			newCase.Type= 'ICH Membership';
