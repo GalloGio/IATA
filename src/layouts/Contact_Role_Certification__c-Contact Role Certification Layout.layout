@@ -107,6 +107,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Airport_Details__c</fields>
+        <fields>Proficiency_level__c</fields>
+        <fields>Proficiency_Granted_By__c</fields>
         <relatedList>Role_Address__c.Contact_Role_Certification__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
