@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_RHC {
+public without sharing class ISSP_ANG_RHC {
 
 	public String accreditationType {get; set;}
 	public String riskStatus {get; set;}
@@ -122,15 +122,16 @@ public with sharing class ISSP_ANG_RHC {
 
 	public void initializeRHCInfo() {
 		List<ANG_RHC_Information__c> rhcInfoList = [
-			SELECT Id,
-					 ANG_RHC_Amount__c,
-					 ANG_ConsumedRHC__c,
-					 ANG_ConsumedRHC_Percent__c,
-					 ANG_ConsumedRHC_Last_Update__c,
-					 ANG_Financial_Security__c
-				FROM ANG_RHC_Information__c
-			 WHERE ANG_AccountId__c = :accountId
+			SELECT 	Id, 
+					ANG_RHC_Amount__c, 
+					ANG_ConsumedRHC__c, 
+					ANG_ConsumedRHC_Percent__c, 
+					ANG_ConsumedRHC_Last_Update__c, 
+					ANG_Financial_Security__c
+			FROM ANG_RHC_Information__c
+			WHERE ANG_AccountId__c = :accountIdTP
 		];
+		
 		this.rhcInfo = rhcInfoList.isEmpty() ? null : rhcInfoList[0];
 	}
 
