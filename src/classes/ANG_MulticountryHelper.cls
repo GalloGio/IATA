@@ -176,7 +176,7 @@ public class ANG_MulticountryHelper {
 				return vw;
 			}
 
-			if(accountIds != NULL && accountIds.size() > 1){
+			if(accountIds != null && accountIds.size() > 1){
 				vw.valid = false;
 				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error;
 				return vw;
@@ -546,7 +546,7 @@ public class ANG_MulticountryHelper {
 		while(i < listSize){
 			AMS_Agencies_relationhip__c relation = targetHierarchyLst.get(i);
 
-			if(thw.hierarchyId == NULL){
+			if(thw.hierarchyId == null){
 				thw.hierarchyId = relation.Hierarchy__c;
 			}
 
@@ -587,8 +587,8 @@ public class ANG_MulticountryHelper {
 			processAcquiredAgency(agency, newParentId, currentBspId, currentRelation, thw, toReturn);
 		}
 
-		if(agency.Location_Risk_Events__r != NULL){
-			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r, newParentId);
+		if(agency.Location_Risk_Events__r != null){
+			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r);
 		}
 
 	}
@@ -619,7 +619,7 @@ public class ANG_MulticountryHelper {
 
 			toReturn.addAccountToCreateRHC(splitAgency);
 
-			if(currentRelation != NULL){
+			if(currentRelation != null){
 				toReturn.addRelationToDelete(currentRelation);
 			}
 
@@ -628,7 +628,7 @@ public class ANG_MulticountryHelper {
 
 		updateAgencyRelationships(splitAgency, oscarAccountId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
 
-		if(currentRelation != NULL){
+		if(currentRelation != null){
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			currentRelation.Parent_Account__c = splitAgency.ParentId;
 			toReturn.addRelation(currentRelation);
@@ -637,7 +637,7 @@ public class ANG_MulticountryHelper {
 	}
 
 	/**
-	 * Processes a given acquired agency by another multicountry hierarchy:
+	 * Processes a given acquired agency by a multicountry hierarchy:
 	 * 	- If the agency location is GE we need to create a new relationship record pointing to the target GE
 	 *  and we need to clean and delete a couple of fields/related records (RHC e.g.)
 	 *  - Inactivate risk events associated with the current account
@@ -653,10 +653,15 @@ public class ANG_MulticountryHelper {
 	public static void processAcquiredAgency(Account acquiredAgency, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn){
 
 		Account headEntityIdInBSP = thw.hierarchyBspMap.get(currentBspId);
-
-		if(acquiredAgency.Location_Type__c == AMS_Utils.GE){
+		
+		Boolean handleTopLocation = 
+			acquiredAgency.Location_Type__c == AMS_Utils.GE || 
+			//In case a standard hierarchy is acquired by a multicountry one we need to handle the Cash HE as the top location
+			(acquiredAgency.Location_Type__c == AMS_Utils.HE && acquiredAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH);
+		
+		if(handleTopLocation){
 			AMS_Agencies_relationhip__c newRel = new AMS_Agencies_relationhip__c();
-			newRel.Parent_Account__c = headEntityIdInBSP != NULL ? headEntityIdInBSP.Id : newParentId;
+			newRel.Parent_Account__c = headEntityIdInBSP != null ? headEntityIdInBSP.Id : newParentId;
 			newRel.Child_Account__c = acquiredAgency.Id;
 			newRel.Is_Newgen_Relation__c = true;
 			newRel.Hierarchy__c = thw.hierarchyId;
@@ -670,28 +675,31 @@ public class ANG_MulticountryHelper {
 			acquiredAgency.Financial_Assessment_Points__c = null;
 			acquiredAgency.Identify_as_Multicountry_Key_Hierarchy__c = false;
 
-			if(acquiredAgency.RHC_Informations__r != NULL){
+			if(acquiredAgency.RHC_Informations__r != null){
 				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
 			}
 
-			if(acquiredAgency.Main_Accounts__r != NULL){
+			if(acquiredAgency.Main_Accounts__r != null){
 				toReturn.addHierarchyToDelete(acquiredAgency.Main_Accounts__r[0]);
 			}
-
 		}
 
 		acquiredAgency.ANG_FA_Opt_out__c = thw.targetGE.ANG_FA_Opt_out__c;
 
-		if(headEntityIdInBSP != NULL){
+		if(headEntityIdInBSP != null){
 			acquiredAgency.Remittance_frequency__c = headEntityIdInBSP.Remittance_frequency__c;
 		}
 
 		updateAgencyRelationships(acquiredAgency, newParentId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
 
-		if(currentRelation != NULL){
+		if(currentRelation != null){
 			currentRelation.Parent_Account__c = acquiredAgency.ParentId;
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			toReturn.addRelation(currentRelation);
+		}
+		
+		if(acquiredAgency.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+			acquiredAgency.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		}
 
 	}
@@ -710,7 +718,7 @@ public class ANG_MulticountryHelper {
 	 */
 	private static void updateAgencyRelationships(Account acct, Id newParentId, Id currentBspId, Account headEntityIdInBSP, Map<Id, Account> targetHierarchyBspMap){
 
-		if(headEntityIdInBSP != NULL){
+		if(headEntityIdInBSP != null){
 			acct.Location_Type__c = AMS_Utils.AE;
 			acct.ParentId = headEntityIdInBSP.Id;
 			acct.Top_Parent__c = newParentId;
@@ -736,7 +744,7 @@ public class ANG_MulticountryHelper {
 		for(Account acct : accountLst){
 			List<Agency_Authorization__c> agencyAuthorizationLst = acct.Agency_Authorizations__r;
 
-			if(agencyAuthorizationLst != NULL){
+			if(agencyAuthorizationLst != null){
 				for(Agency_Authorization__c aa : agencyAuthorizationLst){
 					if(AMS_Utils.assignFormOfPaymentStatus(aa, acct.Is_PCI_compliant__c)){
 						toReturn.addAgencyAuthorizationToUpdate(aa);
