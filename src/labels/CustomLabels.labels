@@ -3280,13 +3280,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP Account Domain Created</shortDescription>
         <value>Account Domain created</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_AddOrRemove_Recipients</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
         <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
-	</labels>
+    </labels>
     <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
@@ -6922,7 +6922,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Other_Countries</shortDescription>
-        <value>All Other Countries</value>
+        <value>All Other Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_All_Others</fullName>
@@ -7430,7 +7430,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Select_Country</shortDescription>
-        <value>Select Country</value>
+        <value>Select Country / Territory</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Subject</fullName>
@@ -7507,7 +7507,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
-        <value>Watch List Countries</value>
+        <value>Watch List Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Watch_List_Country</fullName>
@@ -20404,7 +20404,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
-        <value>Country</value>
+        <value>Country / Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
@@ -23703,7 +23703,15 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
-        <value>* Please indicate the GDS(s) with which you have signed a contract</value>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Short</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Indicate_GDSs_Short</shortDescription>
+        <value>Please indicate the GDS(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
@@ -24369,7 +24377,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
-        <value>Available Countries</value>
+        <value>Available Countries /Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
@@ -24397,14 +24405,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Countries</shortDescription>
-        <value>Countries</value>
+        <value>Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CountrySelection</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_CountrySelection</shortDescription>
-        <value>Country Selection</value>
+        <value>Country / Territory Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Country_SelectAll</fullName>
@@ -24676,7 +24684,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_SelectedCountries</shortDescription>
-        <value>Selected Countries</value>
+        <value>Selected Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Selection_Criteria</fullName>
@@ -25128,6 +25136,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
+        <value>In order to notify IATA of a change of bank account details please contact us</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
@@ -26064,6 +26080,30 @@ Separate legal entities cannot share the same Legal Name.</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
+        <value>New Change of bank details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Req</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
+        <value>New Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Joining_App</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
+        <value>New Joining Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
@@ -30857,6 +30897,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP My Contact Action</shortDescription>
         <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Info</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDC_Transaction_Info</shortDescription>
+        <value>On confirming, you will be asked to provide IATA with one letter of recommendation from an IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Question</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
+        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
     </labels>
     <labels>
         <fullName>ISSP_NewCase</fullName>
@@ -41395,18 +41451,18 @@ title,Title,Name</value>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
     </labels>
     <labels>
-        <fullName>Tab_Name</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Tab_Name</shortDescription>
-        <value>Tab Name</value>
-    </labels>
-    <labels>
         <fullName>Tab_Close</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Tab_Close</shortDescription>
         <value>Click To Close Tab</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>
