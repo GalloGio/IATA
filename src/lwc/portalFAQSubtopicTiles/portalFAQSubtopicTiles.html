@@ -1,5 +1,5 @@
 <template>
-    <div class="customBorderlessCardGray">
+    <div class="customBorderlessCardGray plsFocusOnThis">
         <template if:true={loading}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
@@ -15,7 +15,7 @@
                         <div class={subtopic.class} data-name={subtopic.value} data-label={subtopic.label} key={subtopic.value} onclick={subTopicSelected}>{subtopic.label}</div>
                     </template>
                 </div>
-            </template>            
+            </template>
         </template>  
     </div>   
 </template>

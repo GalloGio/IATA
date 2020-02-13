@@ -1162,6 +1162,22 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Emails</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>280</height>
+                <page>EmailMessagesView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Attachments</label>
         <layoutColumns>
@@ -1268,9 +1284,6 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
-    <relatedLists>
-        <relatedList>RelatedEmailMessageList</relatedList>
-    </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>

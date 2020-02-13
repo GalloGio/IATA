@@ -44,4 +44,5 @@
     </fields>
     <label>Product Country Config</label>
     <pluralLabel>Product Country Config</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

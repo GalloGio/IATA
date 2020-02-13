@@ -268,7 +268,7 @@ public class ANG_AccountTriggerHandler {
 					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
 					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
-					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c,
+					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, ANG_Accreditation_Model__c,
 					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
 					from Account where Id in :accountIds]);
 	}
@@ -462,7 +462,7 @@ public class ANG_AccountTriggerHandler {
 		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
 
 		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
@@ -851,6 +851,9 @@ public class ANG_AccountTriggerHandler {
 					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
 				}
 
+				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
+				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) aa.Status__c = 'Non-Active';
+ 
 				else aa.Status__c = 'Active';
 
 			}

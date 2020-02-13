@@ -81,7 +81,6 @@ import Id from '@salesforce/user/Id';
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
@@ -795,37 +794,31 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let recordId = serviceAux.Id;
 
         // update Last Visit Date on record
-        updateLastModifiedService({ serviceId: recordId })
+        if (requestable === "true") {
+            updateLastModifiedService({ serviceId: recordId })
+        }
 
         let myUrl = appFullUrlData;
 
         //verifies if the event target contains all data for correct redirection
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
-            if (openWindowData === "true") {
+            if (openWindowData) {
                 if (appFullUrlData !== 'undefined') {
                     myUrl = appFullUrlData;
                 }
                 //is this link a requestable Service?
                 if (requestable === "true") {
-                    //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //stop the spinner
-                            this.toggleSpinner();
-                            //open new tab with the redirection
-                            window.open(result);
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+                    //stop the spinner
+                    this.toggleSpinner();
+                    //open new tab with the redirection
+                    window.open(myUrl);
                 } else {
                     myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
             } else {
-                window.location.href = myUrl;
+                window.open(myUrl,"_self");
             }
         }
     }
