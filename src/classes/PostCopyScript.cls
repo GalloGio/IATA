@@ -7,9 +7,9 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
-
+		updateNamedCredentials();
+		deleteConnectedApps();
 	}
-
 
 	/**
 	 * This method deletes the following custom settings records:
@@ -78,6 +78,22 @@ global class PostCopyScript implements SandboxPostCopy {
 				delete a;
 			}
 		}
+
+		//delete RTS Senior Manager custom setting record
+		List<RTS_Senior_Manager__c>  lstSeniorManager = new List<RTS_Senior_Manager__c>();
+		lstSeniorManager = RTS_Senior_Manager__c.getAll().values();
+		if(!lstSeniorManager.isEmpty()){
+			System.debug('List of RTS Senior Manager to delete: '+lstSeniorManager);
+			delete lstSeniorManager;
+		}
+
+		//delete RTS Orange Senior Manager custom setting record
+		List<RTS_Orange_Senior_Manager__c>  lstOrangeSeniorManager = new List<RTS_Orange_Senior_Manager__c>();
+		lstOrangeSeniorManager = RTS_Orange_Senior_Manager__c.getAll().values();
+		if(!lstOrangeSeniorManager.isEmpty()){
+			System.debug('List of RTS Orange Senior Manager to delete: '+lstOrangeSeniorManager);
+			delete lstOrangeSeniorManager;
+		}
 	}
 
 	@TestVisible
@@ -91,4 +107,58 @@ global class PostCopyScript implements SandboxPostCopy {
 			update lstQueues;
 	}
 
+	/**
+	 * This method deletes all Schedule Dashboards":
+	*/
+	@TestVisible
+	private void deleteScheduleDashboards(){
+		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
+		Database.executeBatch(deleteScheduleDashboards,10);
+	}
+
+	/**
+	 * This create a service to connect with MetadataAPI service:
+	*/
+	@TestVisible
+	private static MetadataService.MetadataPort createService(){
+		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+		service.SessionHeader = new MetadataService.SessionHeader_element();
+		service.SessionHeader.sessionId = UserInfo.getSessionId();
+		return service;
+	}
+
+	/**
+	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
+	*/
+	@TestVisible
+	private void updateNamedCredentials(){
+		List<MetadataService.NamedCredential> namedCredentialList = new List<MetadataService.NamedCredential>();
+		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
+			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
+			namedCredential.fullName = nc.DeveloperName;
+			namedCredential.label = nc.MasterLabel;
+			namedCredential.endpoint = nc.endpoint + '/test';
+			namedCredential.principalType = nc.PrincipalType;
+			namedCredential.protocol = 'NoAuthentication';
+
+			namedCredentialList.add(namedCredential);
+		}
+		if(!namedCredentialList.isEmpty()){
+			createService().updateMetadata(namedCredentialList);
+		}
+	}
+
+	/**
+	 * This method delete all ConnectedApps from the ORG:
+	*/
+	@TestVisible
+	private void deleteConnectedApps(){
+		List<String> fullNameList = new List<String>();
+		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
+			fullNameList.add(ca.Name.replace(' ','_'));
+		}
+		if(!fullNameList.isEmpty()){
+			createService().deleteMetadata('ConnectedApp', fullNameList);
+		}
+	}
 }
