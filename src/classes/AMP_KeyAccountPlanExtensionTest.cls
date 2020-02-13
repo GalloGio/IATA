@@ -84,8 +84,6 @@ private class AMP_KeyAccountPlanExtensionTest {
 			AMP_KeyAccountPlanExtension.deleteMilestone(testMilestone);
 
 			AMP_KeyAccountPlanExtension.deleteActivity(o);
-			AMP_KeyAccountPlanExtension.getIsAccountManager(a.Id);
-
 		}
 	}
 
