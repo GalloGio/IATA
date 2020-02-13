@@ -38,7 +38,8 @@ private class ANG_AccountTriggerHandlerTest {
 				ISO_Code__c = 'PT',
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
-				ANG_IEP_Model__c = 'Model A'
+				ANG_IEP_Model__c = 'Model A',
+				Multicountry_Enabled__c = true
 			);
 		countries.add(isoTest);
 
@@ -86,6 +87,24 @@ private class ANG_AccountTriggerHandlerTest {
 				RecordTypeId = accRT
 			);
 		accs.add(a);
+
+		Account a5 = new Account(
+				Name ='Test5',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.GE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345678',
+				IATA_ISO_Country__c = countries[0].Id,
+				BillingCountry='Iso Country Name Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
+		accs.add(a5);
 
 		Account a2 = new Account(
 				Name ='Test2',
@@ -791,6 +810,24 @@ private class ANG_AccountTriggerHandlerTest {
 		);
 
 		system.assert(agencyUpdLst.size() == 0, 'Should NOT have created agency updates records');
+
+	}
+
+	@isTest static void testValidationRuleToEnsureHierarchy() {
+
+		Account accountHE = [Select Id, ParentId From Account Where name = 'Test'];
+		Account accountHE2 = [Select Id From Account Where name = 'Test2'];
+		Test.startTest();
+
+		try {
+			accountHE.ParentId = accountHE2.Id;
+			update accountHE;
+		}
+		catch(Exception e){
+			system.assert(e.getMessage().contains('The selected location type is not allowed for this account.'), 'Please make sure that the location type is allowed.');
+		}
+
+		Test.stopTest();
 
 	}
 

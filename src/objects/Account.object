@@ -111801,6 +111801,20 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorMessage>Please select the reason for creation.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Validate_Hierarchy_Location_Type</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
+),
+IATA_ISO_Country__r.ANG_Enable_NewGen__c = true,
+AND(TEXT(Location_Type__c) = &apos;AE&apos;,TEXT(Parent.Location_Type__c) = &apos;AE&apos;),
+AND(TEXT(Location_Type__c) = &apos;HE&apos;,OR(TEXT(Parent.Location_Type__c) = &apos;HE&apos;, TEXT(Parent.Location_Type__c) = &apos;AE&apos;)),
+AND(TEXT(Location_Type__c) = &apos;GE&apos;,ParentId!=null)
+)</errorConditionFormula>
+        <errorMessage>The selected location type is not allowed for this account.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Virtual_Branch_Iso_Country</fullName>
         <active>true</active>
         <description>For a Virtual Branch Iso Country is mandatory</description>
