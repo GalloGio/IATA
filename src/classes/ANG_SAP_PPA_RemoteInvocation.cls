@@ -2,7 +2,7 @@
  * Processes the SAP PPA Remote Invocation
  *
  */
-public with sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteInvocationINT {
+public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteInvocationINT {
 
 	Map<ID,Remote_Invocation__c> mapRemoteInvocations = new Map<ID,Remote_Invocation__c>();
 	Map<ID, Remote_Invocation_Artefact__c> mapRemoteInvocationArtifacts = new Map<ID, Remote_Invocation_Artefact__c>();
