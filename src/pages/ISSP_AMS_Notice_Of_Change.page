@@ -842,7 +842,8 @@
 
 							<apex:outputPanel id="addFinancialAssessmentContactItem" 
 									style="display : {!IF(AND(newForm.Notify_Change_Accreditation_Type__c == true, 
-															  newForm.ANG_Accreditation_Model_to_Change__c == 'Cash'),
+                                                            newForm.ANG_Accreditation_Model_to_Change__c == 'Cash',
+                                                            NOT(newForm.ANG_Accreditation_type__c == ACCREDITATION_MODEL_MC)),
 												    '', 'none')}">
 								<apex:outputPanel id="comandButtonAddAssContact">
 									<script>
