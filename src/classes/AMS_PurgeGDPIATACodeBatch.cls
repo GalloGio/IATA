@@ -70,7 +70,7 @@ global class AMS_PurgeGDPIATACodeBatch implements Database.Batchable<sObject>,  
 		if(!errorMap.isEmpty()){
 			AsyncApexJob a = [SELECT id, ApexClassId,
 									JobItemsProcessed, TotalJobItems,
-									NumberOfErrors, CreatedBy.Email
+									NumberOfErrors, CreatedById
 									FROM AsyncApexJob
 									WHERE id = :BC.getJobId()];
 			String body = 'Your batch job '
@@ -101,7 +101,7 @@ global class AMS_PurgeGDPIATACodeBatch implements Database.Batchable<sObject>,  
 
 			// Sets the paramaters of the email
 			email.setSubject( subject );
-			email.setTargetObjectId(a.CreatedBy);
+			email.setTargetObjectId(a.CreatedById);
 			email.setSaveAsActivity(false);
 			email.setPlainTextBody( body );
 			email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
