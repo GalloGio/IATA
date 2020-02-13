@@ -1299,6 +1299,7 @@ public without sharing class portalIftpTrainingRecords {
 						if (recInDatabase.Proficiency_level__c.equalsIgnoreCase('No')){
 							isPresent = true;
 							recInDatabase.Proficiency_level__c = 'Yes';
+							recInDatabase.Proficiency_Granted_By__c = rolAddrToInsertList[index].Proficiency_Granted_By__c;
 							rolAddrToUpdateList.add(recInDatabase);
 						}
 					}

@@ -719,6 +719,15 @@ lightning-datatable .slds-th__action {
     width: 200px;
 }
 
+@media screen and (max-width: 640px) {
+  .containedButton-size,
+  .containedButtonAlt {
+    height: auto;
+    min-height: 56px;
+    width: 100%;
+  }
+}
+
 .filterButton,
 .filterButton button,
 .filterButton button:active {
@@ -743,6 +752,7 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeightDiv,
 .fullHeight,
 .fullHeight button,
 .fullHeight button:active,
@@ -1309,6 +1319,10 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
+/***** HP Recent Casses Table ******/
+.hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
+    border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
 
 /*       New Documents Button Overrides*/
 .newattlist .slds-cell-fixed,.newattlist .slds-has-button-menu{
