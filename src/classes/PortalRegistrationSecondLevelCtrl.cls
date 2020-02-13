@@ -292,33 +292,21 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
 				insert accRoleSrv;
 
-				Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-				accContRoleToInsert.Service_Rendered__c = 'IFTP';
-				accContRoleToInsert.Status__c = 'Active';
-				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Administrator;ITP Training Coordinator';
-				accContRoleToInsert.Details__c = '';
-				accContRoleToInsert.Contact__c = con.Id;
-				accContRoleToInsert.company_code__c='TC';//temporary employee code
-				insert accContRoleToInsert;
-
+			
 			}else{
-				Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
-
-				Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-				accContRoleToInsert.Service_Rendered__c = 'IFTP';
-				accContRoleToInsert.Status__c = 'Active';
-				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-				accContRoleToInsert.Details__c = '';
-				accContRoleToInsert.company_code__c='TC';//temporary employee code
-				accContRoleToInsert.Contact__c = con.Id;
-				insert accContRoleToInsert;
-
-
+				accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 			}
+
+			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+			accContRoleToInsert.Service_Rendered__c = 'IFTP';
+			accContRoleToInsert.Status__c = 'Active';
+			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+			accContRoleToInsert.Account_Role__c = accRole.Id;
+			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+			accContRoleToInsert.Details__c = '';
+			accContRoleToInsert.company_code__c='TC';//temporary employee code
+			accContRoleToInsert.Contact__c = con.Id;
+			insert accContRoleToInsert;
 
 			List<Portal_Application_Right__c> par = [SELECT id FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
 
