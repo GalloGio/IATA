@@ -11021,27 +11021,17 @@ After verification, if all documents are compliant, you will receive a confirmat
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Service Description</shortDescription>
-        <value>Simplifying the business of international treasury
-&lt;br/&gt;
-&lt;br/&gt;
-The IATA Currency Clearance Service (ICCS) is an industry-developed cash management tool that assists your treasury to effectively centralize your international cash management operations.
-&lt;br/&gt;
-&lt;br/&gt;
-Thanks to ICCS, you can implement tailored solutions that allow you to outsource the reporting, receipt , conversion and repatriation of your international sales proceeds flowing from:
-&lt;br/&gt;
-- BSP’s (Billing and Settlement Plans)
-&lt;br/&gt;
-- CASSes (Cargo Account Settlement Systems)
-&lt;br/&gt;
-- GSA’s (General Sales Agents)
-&lt;br/&gt;
-- Credit Card Settlements
-&lt;br/&gt;
-- Direct Sales
-&lt;br/&gt;
-- Other
-&lt;br/&gt;&lt;br/&gt;
-Access our ICCS Service information page for more details on the service and how to become a Member.</value>
+        <value>IATA Currency Clearance Service (ICCS) is the global cash management service that enables airline Treasurers to centrally control and repatriate their world-wide sales funds. It is currently used by over 330 airlines of varying sizes and had a throughput in 2017 of $34.5 billion.
+
+You can directly access ICCS from the IATA Customer Portal through this service.
+
+Additional benefits of using ICCS:
+• Centralized control of global funds repatriation
+• Advanced access to receivables information allowing for more effective cash planning
+• Reduced time spent on international banking activities resulting in manpower savings
+• Accelerated repatriation of foreign sales funds resulting in improved working capital management and reduced foreign exchange risk
+• Decreased currency conversion costs gained from optimal foreign exchange rates
+• Reduced banking fees and transfer charges</value>
     </labels>
     <labels>
         <fullName>ICCS_Service_Management</fullName>
@@ -20772,7 +20762,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
-        <value>This service enables you to easily access information on active and terminated MSO Codes under your airline, request new MSO Codes and terminate/correct existing MSO Codes.</value>
+        <value>As an airline, you often operate sales locations (online, aiport, etc.) for which you require a Member Sales Office code (MSO). Through the MSO Management service you can conveniently manage your current MSO codes, instantly activate new locations or deactivate old ones.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
@@ -25635,7 +25625,9 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</shortDescription>
-        <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
+        <value>An easy to use search option, the IATA Code Search gets you all the required information of a travel agency&apos;s standing directly on screen. Simply insert the IATA code of the agency and hit search. No need to create cases anymore!
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</fullName>
@@ -26093,7 +26085,11 @@ Separate legal entities cannot share the same Legal Name.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>RHC Information description</shortDescription>
-        <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
+        <value>To promote safer selling, IATA introduces a Remittance Holding Capacity (RHC) for all agents with access to a Cash facility in the Billing Settlement Plan (BSP). The RHC sets a maximum threshold for agents’ outstanding Cash sales pending remittance via the BSP.
+
+You can monitor directly your agency&apos;s RHC through this service to ensure the ability to continue issuing tickets in the BSP.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_RHC_Risk_Event_Status</fullName>
