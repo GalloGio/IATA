@@ -1,4 +1,5 @@
 <template>
+	<c-portal-community360-util record-id={recordId} ></c-portal-community360-util>
     <c-portal-page-container>
         <span slot="componentContent">
 			<div class="breadcrumbsHeight no-print slds-p-top_xsmall slds-p-bottom_medium">
@@ -19,10 +20,10 @@
             </div>
             <div class="slds-grid slds-wrap slds-gutters_medium" id="contentPdf">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
-                    <c-portal-case-details-header></c-portal-case-details-header>
+                    <c-portal-case-details-header onsendexpired={handleExpired}></c-portal-case-details-header>
                 </div>
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
-                    <c-portal-case-details-details></c-portal-case-details-details>
+                    <c-portal-case-details-details isexpired={isExpired} ></c-portal-case-details-details>
                 </div>
             </div>
         </span>

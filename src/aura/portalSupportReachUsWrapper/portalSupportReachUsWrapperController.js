@@ -7,16 +7,19 @@
 
     //Begins chat for Online Default option
     startChatDefault: function (component, event, helper) {
+		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineDefaultIdLanguage") + "; path=/";
         liveagent.startChat(component.get("v.liveAgentOnlineDefault"));
     },
 
     //Begins chat for selected country language
     startChatWithLanguage: function (component, event, helper) {
+		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineWithCountryLanguage") + "; path=/";
         liveagent.startChat(component.get("v.liveAgentOnlineWithCountry"));
     },
 
     //Begins chat for portal language
     startChatNoLanguage: function (component, event, helper) {
+		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineNoCountryLanguage") + "; path=/";
         liveagent.startChat(component.get("v.liveAgentOnlineNoCountry"));
     },
 

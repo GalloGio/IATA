@@ -1884,6 +1884,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1962,10 +1966,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Vous et IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Acheter en ligne</label>
@@ -3485,16 +3485,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Vous et IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Points principaux sélectionnés pour vous</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Vous pourrez y découvrir une grande variété de services, publications, produits et ressources de l&apos;IATA sur l’industrie aéronautique. Spécialement adapté à vos intérêts et à votre historique d&apos;activité.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3663,6 +3655,10 @@
     <customLabels>
         <label><!-- Click here --></label>
         <name>Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
@@ -12686,6 +12682,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13438,6 +13438,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -13924,6 +13928,18 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label>Formulaire d&apos;adhésion de la compagnie aérienne</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
@@ -16372,6 +16388,14 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Action</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Nouvelle requête</label>
@@ -20168,8 +20192,16 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;S’il n’a pas été possible de trouver une compagnie correspondant à votre combinaison de code d’agent général de ventes (GSA) et pays, veuillez vous assurer que vous avez saisi l’information correcte ou consultez notre &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;troubleshooting guide&lt;/a&gt;&quot;</label>
@@ -21787,6 +21819,14 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>TSI_USA_Only</name>
     </customLabels>
     <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Tâches</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -22901,6 +22941,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label>Services disponibles</label>

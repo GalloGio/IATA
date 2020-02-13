@@ -124,6 +124,21 @@ public with sharing class AttachmentListCtrl {
 
 	}
 
+	@AuraEnabled(cacheable=false)
+	public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortalLightning(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
+		return getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA, withBody); 
+	}
+
+	@AuraEnabled(cacheable=true)
+	public static List<ReturnWrapper> getAllAttachmentsPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
+		list<WrapperAttach> wrapperAttachList= getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA, withBody);
+		list<ReturnWrapper> returnList=new list<ReturnWrapper>();
+		for(wrapperAttach wa:wrapperAttachList){
+			returnList.add(new ReturnWrapper(wa));
+		}
+		return returnList;
+	}
+
 	@AuraEnabled(cacheable=true)
 	public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
 	//public static List<WrapperAttach> getAllAttachments(String parentId, Boolean isPortal) {
@@ -211,7 +226,7 @@ public with sharing class AttachmentListCtrl {
 
 
 	@AuraEnabled
-	public static List<WrapperAttach> getContentDetails(list<id> attachList){
+	public static List<ReturnWrapper> getContentDetails(list<id> attachList){
 	//generates link to be externally acessible
 		set<id> attachSet= new set<id>(attachList);
 
@@ -220,9 +235,14 @@ public with sharing class AttachmentListCtrl {
 		for(ContentDocument cd :WrapperAttach.getContentDocInfo(attachSet)){
 			lastVersionIdSet.add(cd.LatestPublishedVersionId);
 		}
-
+		
+		list<wrapperAttach> wrapperList= WrapperAttach.getContentInfo(lastVersionIdSet);
+		list<ReturnWrapper> returnList=new list<ReturnWrapper>();
+		for(wrapperAttach wra:wrapperList){
+			returnList.add(new ReturnWrapper(wra));
+		}
 		//gets file details
-		return WrapperAttach.getContentInfo(lastVersionIdSet);
+		return returnList;
 	}
 
 	@AuraEnabled
@@ -479,9 +499,32 @@ public with sharing class AttachmentListCtrl {
 		@AuraEnabled
 		String extraDetails {get; set;}
 
+		
+		@AuraEnabled 
+		string name{get; set;}
+		@AuraEnabled 
+		Decimal size{get; set;}
+		@AuraEnabled 
+		Datetime createdDate{get; set;}
+		@AuraEnabled 
+		string sfdcContext{get; set;}
+		@AuraEnabled 
+		string viewURL{get; set;}
+		@AuraEnabled 
+		string id{get; set;}
+		
 		public ReturnWrapper(){
 			this.severity = 'ERROR';
 			this.extraDetails = '';
+		}
+
+		public ReturnWrapper(WrapperAttach wa){
+			this.name= wa.name;
+			this.size= wa.size;
+			this.createdDate= wa.createdDate;
+			this.sfdcContext= wa.sfdcContext;
+			this.viewURL= wa.viewURL;
+			this.id= wa.id;
 		}
 	}
 

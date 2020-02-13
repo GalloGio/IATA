@@ -1045,66 +1045,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>201901</fullName>
-                    <default>false</default>
-                    <label>201901</label>
-                </value>
-                <value>
-                    <fullName>201902</fullName>
-                    <default>false</default>
-                    <label>201902</label>
-                </value>
-                <value>
-                    <fullName>201903</fullName>
-                    <default>false</default>
-                    <label>201903</label>
-                </value>
-                <value>
-                    <fullName>201904</fullName>
-                    <default>false</default>
-                    <label>201904</label>
-                </value>
-                <value>
-                    <fullName>201905</fullName>
-                    <default>false</default>
-                    <label>201905</label>
-                </value>
-                <value>
-                    <fullName>201906</fullName>
-                    <default>false</default>
-                    <label>201906</label>
-                </value>
-                <value>
-                    <fullName>201907</fullName>
-                    <default>false</default>
-                    <label>201907</label>
-                </value>
-                <value>
-                    <fullName>201908</fullName>
-                    <default>false</default>
-                    <label>201908</label>
-                </value>
-                <value>
-                    <fullName>201909</fullName>
-                    <default>false</default>
-                    <label>201909</label>
-                </value>
-                <value>
-                    <fullName>201910</fullName>
-                    <default>false</default>
-                    <label>201910</label>
-                </value>
-                <value>
-                    <fullName>201911</fullName>
-                    <default>false</default>
-                    <label>201911</label>
-                </value>
-                <value>
-                    <fullName>201912</fullName>
-                    <default>false</default>
-                    <label>201912</label>
-                </value>
-                <value>
                     <fullName>202001</fullName>
                     <default>false</default>
                     <label>202001</label>
@@ -1888,6 +1828,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <default>false</default>
                     <label>Aviareps</label>
                 </value>
+                <value>
+                    <fullName>AirlinePros</fullName>
+                    <default>false</default>
+                    <label>AirlinePros</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2209,6 +2154,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>30.00</label>
                 </value>
+                <value>
+                    <fullName>4200.00</fullName>
+                    <default>false</default>
+                    <label>4200.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2297,6 +2247,8 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASFEE_DGRR2</controllingFieldValue>
+                <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
+                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
                 <controllingFieldValue>PDP / PTA Assignment Fee - 701924</controllingFieldValue>
                 <controllingFieldValue>CASFEE_JOINS - 801032</controllingFieldValue>
                 <controllingFieldValue>CASFEE_RJOIN</controllingFieldValue>
@@ -2330,7 +2282,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
                 <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
                 <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
-                <valueName>4100.00</valueName>
+                <valueName>4200.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOIN</controllingFieldValue>
@@ -2348,11 +2300,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>AGTCOD_MSO</controllingFieldValue>
                 <controllingFieldValue>TEST_CASS</controllingFieldValue>
                 <valueName>100.00</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
-                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
-                <valueName>1400.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MITA annual fee - 701909</controllingFieldValue>
