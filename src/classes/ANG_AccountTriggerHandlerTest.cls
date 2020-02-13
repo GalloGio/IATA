@@ -824,7 +824,7 @@ private class ANG_AccountTriggerHandlerTest {
 			update accountHE;
 		}
 		catch(Exception e){
-			system.assert(e.getMessage().contains('The selected location type is not allowed for this account.'), 'Please ensure a good hierarchy quality.');
+			system.assert(e.getMessage().contains('The selected location type is not allowed for this account.'), 'Please make sure that the location type is allowed.');
 		}
 
 		Test.stopTest();
