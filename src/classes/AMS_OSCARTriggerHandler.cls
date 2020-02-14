@@ -4934,13 +4934,8 @@ public class AMS_OSCARTriggerHandler {
 		if(iataCodes.isEmpty())
 			return;
 
-		boolean useCallout = !System.isFuture();
-		for (String key : iataCodes.keySet()) {
-			if (useCallout)
+		for (String key : iataCodes.keySet())
 			ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
-			else
-				ANG_RME_Alert_Service.runGDIEndorsementCertificate(key, iataCodes.get(key));
-	}
 	}
 
 	private static Boolean isAgencyInStatus(String targetStatus, Id accountId){
