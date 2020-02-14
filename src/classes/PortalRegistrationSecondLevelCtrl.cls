@@ -272,16 +272,16 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 									WHERE Name = 'Airline Supplier - ITP' limit 1];
 
 			Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
-									WHERE Name = 'IFTP - ITP' limit 1];
+									WHERE Name like 'IFTP%ITP' limit 1];
 
 			PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
 
 			Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
 
 
+			Account_Role__c accRole = new Account_Role__c();
 			if(bAccExist == false){
 
-				Account_Role__c accRole = new Account_Role__c();
 				accRole.Account__c = acc.Id;
 				accRole.Account_Roles__c = accRoles.id;
 				accRole.RecordTypeId = RECTYPE_ITP_AccRole;
@@ -332,7 +332,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		}
 	}
 
-	@future
+	
 	public static void updatePortalUseProfile(String conId, String sProfile){
 		User u=[select id,contact.user_portal_status__c from user where ContactId =:conId];
 		if(u.contact.user_portal_status__c =='Approved Admin'){
