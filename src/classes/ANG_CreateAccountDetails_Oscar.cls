@@ -47,7 +47,7 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'),
 								Offer_exchange_rate_date__c = Date.valueOf(offerDateStr));
 
-			insert opp;
+			System.enqueueJob(new ANG_CreateSObjectQueueable(opp));
 
 			//return message, Id of Record Created (oscar)
 			ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT077_SuccessPayload(oscar[0].Id)), 200);
