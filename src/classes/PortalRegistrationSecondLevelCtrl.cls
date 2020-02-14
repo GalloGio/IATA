@@ -278,7 +278,6 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 			Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
 
-			Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
 
 			if(bAccExist == false){
 
@@ -298,13 +297,11 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accContRoleToInsert.Status__c = 'Active';
 				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
 				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
+				accContRoleToInsert.Contact_Role__c = 'ITP Administrator;ITP Training Coordinator';
 				accContRoleToInsert.Details__c = '';
 				accContRoleToInsert.Contact__c = con.Id;
-				accContRoleToInsert.company_code__c='TC';//temporary employee code = con.Id;
+				accContRoleToInsert.company_code__c='TC';//temporary employee code
 				insert accContRoleToInsert;
-
-				accContRoleToInserted.Id = accContRoleToInsert.Id;
 
 			}else{
 				Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
@@ -316,11 +313,10 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accContRoleToInsert.Account_Role__c = accRole.Id;
 				accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
 				accContRoleToInsert.Details__c = '';
-				accContRoleToInsert.company_code__c='TC';//temporary employee code = con.Id;
+				accContRoleToInsert.company_code__c='TC';//temporary employee code
 				accContRoleToInsert.Contact__c = con.Id;
 				insert accContRoleToInsert;
 
-				accContRoleToInserted.Id = accContRoleToInsert.Id;
 
 			}
 

@@ -138,6 +138,7 @@
         <fields>Operation_Currency__c</fields>
         <fields>Period_Code__c</fields>
         <fields>Remittance_Day__c</fields>
+        <fields>Settlement_Day__c</fields>
         <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
         <sortField>Remittance_Day__c</sortField>
         <sortOrder>Asc</sortOrder>
