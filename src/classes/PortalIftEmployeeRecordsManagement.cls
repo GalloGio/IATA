@@ -10,13 +10,15 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 	@AuraEnabled(cacheable=false)
 	public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
 		//cacheable=false MANDATORY
+		
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
 													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
 													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
 												FROM Account_Contact_Role__c
-												WHERE  Contact__r.accountid = :accountId];
+												WHERE  Contact__r.accountid = :accountId
+												AND RecordTypeId = :PortalIftpUtils.ACC_CONT_ROLE_RT_ITP];
 		return emps;
 	}
 
@@ -28,6 +30,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 		System.debug('searchCriteriaValues' + searchCriteriaValues);
 
 		PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
+	
 		Id accountId = ui.accountId;
 
 		String sQuery = 'SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c, ';
@@ -48,6 +51,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 		sQueryConditions.add('Status__c <> \'Inactive\'');
 		sQueryConditions.add('Contact__r.accountid = :accountId');
+		sQueryConditions.add('RecordTypeId = \''+PortalIftpUtils.ACC_CONT_ROLE_RT_ITP+'\'');
 
 		if(searchCriteriaValues.firstName != null && String.isnotblank(searchCriteriaValues.firstName)){
 			String firstName = searchCriteriaValues.firstName + '%';
@@ -207,11 +211,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 						accContRoleToInsert.Contact__r = contactToInsert;
 					}
 
-					IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-										accContRoleToInsert.Company_Code__c,
-										contactToInsert.FirstName,
-										contactToInsert.LastName);
-					portalIftpHistoryManagement.insertIntoIftpHistory(ihrec);
 
 					rw.result_message = 'Employee added successfully.';
 					rw.succeeded = true;

@@ -1,7 +1,10 @@
 public without sharing class ANG_DGIStagingAreaCtrl {
 
-	@TestVisible private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
-	
+	@TestVisible 
+	private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
+	@TestVisible 
+	private static final String UNABLE_TO_LINK_FINANCIAL_SECURITY = 'Unable to link the financial security with the opportunity line item';
+
 	private static final List<String> FINANCIAL_SECURITY_ACTIVE_STATUS = new List<String>{
 		AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, 
 		AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY, 
@@ -57,31 +60,21 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		set;
 	}
 
-	private List<Financial_Security__c> fetchFinancialSecurityGDI(Id fsId, Id accountId){
-		List<String> fieldLst = new List<String>{
-			'Id', 'Amount__c', 'Account__c', 'Reception_Case__c', 'Security_Type__c', 'Security_Status__c'
-		};
-
-		String fsQuery = 
-			String.format(
-				'SELECT {0} FROM Financial_Security__c WHERE ',
-				new List<String>{String.join(fieldLst, ', ')}
-			);
-
+	private List<Financial_Security__c> fetchFinancialSecurityGDI(Id fsId, Id accountId) {
+		String fsQuery = 'SELECT Id, Amount__c, Account__c, Reception_Case__c, Security_Type__c, Security_Status__c'
+			+ ' FROM Financial_Security__c WHERE ';
 		String securityTypeGdi = AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI;
-
-		if(fsId != null){
+		
+		if (fsId != null) {
 			fsQuery += ' Id = :fsId ';
-		}
-		else {
+		} else {
 			fsQuery += ' Account__c = :accountId ';
 			fsQuery += ' AND Security_Type__c = :securityTypeGdi';
 			fsQuery += ' AND Security_Status__c IN :FINANCIAL_SECURITY_ACTIVE_STATUS ';
 			fsQuery += ' ORDER BY CreatedDate DESC LIMIT 1';
 		}
-
+		
 		return Database.query(fsQuery);
-				
 	}
 
 	private boolean isValidFS(){
@@ -196,9 +189,29 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 	public void accept(){
 
+		Savepoint sp = Database.setSavepoint();
+
 		addCertificate = true;
 		try{
 			Case oscarCase = [Select id, ParentId from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
+
+			stagingFs.Reception_Date__c = System.today();
+			
+			if(hasAdendum)
+				performAcceptancewithAdendum(oscarCase);
+			else
+				createNewFinancialSecurity(oscarCase);
+
+			if(newFsId == null){
+				throw new AMS_ApplicationException(UNABLE_TO_LINK_FINANCIAL_SECURITY);
+			}
+			
+			stagingFs.Financial_Security__c = newFSId;
+			update stagingFs;
+			
+			opp = new Opportunity(Id=stagingFs.OpportunityId);
+			opp.StageName = AMS_Utils.OPPORTUNITY_CLOSED_WON;
+			update opp;
 
 			//set the status of the "Confirm Financial Security Information" in the GDI OSCAR as "Passed"
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
@@ -206,28 +219,12 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 			oscar.status__c = AMS_Utils.OSCAR_CLOSED;
 			update oscar;
 
-			if(hasAdendum)
-				performAcceptancewithAdendum(oscarCase);
-			else
-				createNewFinancialSecurity(oscarCase);
-
-			if(newFsId != null){
-				stagingFs.Financial_Security__c = newFSId;
-			}
-
-			stagingFs.Reception_Date__c = System.today();
-			update stagingFs;
-			
-			opp = new Opportunity(Id=stagingFs.OpportunityId);
-			opp.StageName = AMS_Utils.OPPORTUNITY_CLOSED_WON;
-			update opp;
-
 			movePdfEndorsementAttachment(stagingFs.Id, newFsId);
-
 		}
 		catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, parseException(e)));
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - accept] ' + e.getStackTraceString());
+			Database.rollback(sp);
 		}
 	}
 
@@ -269,24 +266,28 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 	}
 
 	public void reject(){
+
+		Savepoint sp = Database.setSavepoint();
+
 		addCertificate = true;
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
+
 		try{
-			oscar.step50__c = AMS_Utils.FAILED;
-			oscar.status__c = AMS_Utils.OSCAR_CLOSED;
-			oscarObj.step50__c = AMS_Utils.FAILED;
-
-			update oscar;
-
 			opp = new Opportunity(Id=stagingFs.OpportunityId);
 			opp.StageName = AMS_Utils.OPPORTUNITY_CLOSED_LOST;
 			update opp;
+
+			oscar.step50__c = AMS_Utils.FAILED;
+			oscar.status__c = AMS_Utils.OSCAR_CLOSED;
+			oscarObj.step50__c = AMS_Utils.FAILED;
+			update oscar;
 		}
 		catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, parseException(e)));
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - reject] ' + e.getStackTraceString());
-			oscar.step50__c = 'Not Started';
-			oscarObj.step50__c = 'Not Started';
+			Database.rollback(sp);
+			oscar.step50__c = AMS_Utils.NOT_STARTED;
+			oscarObj.step50__c = AMS_Utils.NOT_STARTED;
 		}
 
 	}

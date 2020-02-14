@@ -717,8 +717,8 @@ public class AMS_OSCARTriggerHandler {
 
 				}else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
 					updatedOSCAR.Payment_requested__c = Date.today();
-					updatedOSCAR.STEP47__c = 'Passed';
-					updatedOSCAR.STEP9__c = 'In Progress';
+					updatedOSCAR.STEP47__c = AMS_Utils.PASSED;
+					updatedOSCAR.STEP9__c = AMS_Utils.IN_PROGRESS;
 
 				}else if(updatedOSCAR.Endorsement_Requested__c && !oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
 					updatedOSCAR.Endorsement_requested_date__c = Date.today();
@@ -2927,7 +2927,8 @@ public class AMS_OSCARTriggerHandler {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name,
+				NDC_Transactions__c
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 	}
@@ -3276,8 +3277,13 @@ public class AMS_OSCARTriggerHandler {
 				/*** AMSU-161 End ***/
 
 				//INC482850 - GDS Mandatory field - New Accreditation & Newgen Changes & Corrections
-				if((isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && String.isEmpty(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)){
-					oscar.addError('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check');
+				if (isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION)
+				{
+					allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+					if (! isValidGDSConfiguration(oscar, allOnlineAccr))
+						oscar.addError('You cannot set NDC to "Yes" and GDS at the same time');
+					else if (! isValidGDS(oscar, allOnlineAccr))
+						oscar.addError('The GDS or NDC should be populated. Please fill the GDS or NDC on the OSCAR central panel before passing the sanity check');
 				}
 
 				//ACAMBAS - NEWGEN-4784 - Start
@@ -3302,6 +3308,19 @@ public class AMS_OSCARTriggerHandler {
 			}
 		}
 	}
+
+	private static boolean isValidGDSConfiguration(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return ! (String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+				  && accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes');
+	}
+
+	private static boolean isValidGDS(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+			|| accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes';
+	}
+
 	/*** AMSU-121 Start ***/
 	private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
 		AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
@@ -3900,13 +3919,13 @@ public class AMS_OSCARTriggerHandler {
 			}else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 				bGenerateCC = true;
 				changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
-			}else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+			}else if (oldOSCAR.STEP4__c != AMS_Utils.PASSED && updatedOscar.STEP4__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
-			}else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
+			}else if (oldOSCAR.STEP5__c != AMS_Utils.PASSED && updatedOscar.STEP5__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
-			}else if(oldOscar.STEP46__c != 'Passed' && updatedOscar.STEP46__c == 'Passed'){ 
+			}else if(oldOscar.STEP46__c != AMS_Utils.PASSED && updatedOscar.STEP46__c == AMS_Utils.PASSED){ 
 				// for GDI change code creation
 				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
 				
