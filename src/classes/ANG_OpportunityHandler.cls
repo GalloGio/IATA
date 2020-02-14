@@ -1,14 +1,12 @@
 public class ANG_OpportunityHandler {
 	
 	public static void updateOscarIfOfferIdInserted(Map<Id, Opportunity> oldMap, Map<Id, Opportunity> newMap) {
-		List<Id> opportunitiesToProcess = getGdiOpportunitiesAfterSettingOfferId(oldMap, newMap);
-		
-		for (Id opId : opportunitiesToProcess)
-			updateOscarEndorsementRequest(opId);
+		Set<Id> opportunitiesToProcess = getGdiOpportunitiesAfterSettingOfferId(oldMap, newMap);
+		updateOscarEndorsementRequest(opportunitiesToProcess);
 	}
 	
-	private static List<Id> getGdiOpportunitiesAfterSettingOfferId(Map<Id, Opportunity> oldMap, Map<Id, Opportunity> newMap) {
-		List<Id> opportunitiesToProcess = new List<Id>();
+	private static Set<Id> getGdiOpportunitiesAfterSettingOfferId(Map<Id, Opportunity> oldMap, Map<Id, Opportunity> newMap) {
+		Set<Id> opportunitiesToProcess = new Set<Id>();
 		
 		for (Opportunity op : newMap.values()) {
 			String newValue = op.GDI_Offer_Id__c;
@@ -20,11 +18,14 @@ public class ANG_OpportunityHandler {
 			if (op.RecordTypeId == null || op.RecordTypeId != AMS_Utils.RECTYPE_GDI_FS)
 				continue;
 			
-			if (String.isNotBlank(newValue) && newValue != oldValue)
+			if (String.isNotBlank(newValue) && newValue != oldValue) // GDI offer id changed value
 				opportunitiesToProcess.add(op.Id);
 		}
 
-		List<Id> oscars = new List<Id>();
+		Set<Id> oscars = new Set<Id>();
+		if (opportunitiesToProcess.isEmpty())
+			return oscars;
+
 		for (Opportunity opp : [SELECT Id, Account.Status__c, Related_Oscar__c, Related_Oscar__r.Process__c, Related_Oscar__r.Endorsement_Requested__c
 								FROM Opportunity
 								WHERE Id IN :opportunitiesToProcess])
@@ -41,9 +42,13 @@ public class ANG_OpportunityHandler {
 		return oscars;
 	}
 	
-	@future(callout=true)
-	private static void updateOscarEndorsementRequest(Id oscarId) {
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId, Endorsement_Requested__c = true);
-		update oscar;
+	private static void updateOscarEndorsementRequest(Set<Id> oscarIds) {
+		if (oscarIds.isEmpty())
+			return;
+
+		List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+		for (Id oId : oscarIds)
+			oscarsToUpdate.add(new AMS_OSCAR__c(Id = oId, Endorsement_Requested__c = true));
+		update oscarsToUpdate;
 	}
 }
