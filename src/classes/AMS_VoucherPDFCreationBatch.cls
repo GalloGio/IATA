@@ -49,17 +49,6 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		List<AMS_Voucher__c> toUpdate = new List<AMS_Voucher__c>();
 
-/*
-		for(AMS_Voucher__c v : scope){
-
-			v.Pdf_Attachment_File__c = filename;
-			toUpdate.add(v);
-		}
-
-		if(!toUpdate.isEmpty())
-			update toUpdate;
-*/
-
 		System.debug('Vouchers to Update pdf name:' + toUpdate);
 
 		System.debug('CPU time is ' + Limits.getCpuTime() + '(5)');
@@ -123,57 +112,6 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	}
 
-	/*
-	private String savePDF(List<AMS_Voucher__c> scope, Integer runExe) {
-
-		Datetime nowDate = Datetime.now();
-		String formattedDate = nowDate.format('yyyyMMdd');
-
-		String filename = 'Vouchers_'+ region.Name + '_' + runExe + '_' + formattedDate + '.pdf';
-
-		PageReference pdf = Page.AMS_VoucherPDFGeneratorPage;
-
-
-		List<String> idsVouchers = buildIdsString(scope);
-
-		System.debug('AMS_VoucherPDFCreationBatch__ Ids to print are:'+idsVouchers);
-
-		pdf.getParameters().put('sizeList',JSON.serialize(idsVouchers.size()));
-
-		Integer i = 0;
-
-		For(String ids: idsVouchers){
-
-			pdf.getParameters().put('list'+i,JSON.serialize(ids));
-			i++;
-		}
-
-		Attachment attach = new Attachment();
-
-		Blob body;
-
-		if(Test.isRunningTest()){
-			body = Blob.valueOf('Test');
-		}else
-			body = pdf.getContent();
-
-		attach.Body = body;
-
-		attach.Name = filename;
-
-		attach.IsPrivate = false;
-
-		attach.ParentId = region.Id;
-
-		attachments.add(attach);
-
-		return filename;
-
-	}
-	*/
-
-
-
 	public static void sendSingleMail(String myCustomString, AMS_Voucher_Region__c region){
 
 		// grab the email template
@@ -190,16 +128,16 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		plainBody = plainBody.replace('##REPORT##', myCustomString);
 		plainBody = plainBody.replace('##PDFLINK##', buildCustomPDFLink(region));
 
-			//build the email message
+		//build the email message
 		Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
 
 		email.setTargetObjectId(UserInfo.getUserId());
+		email.setSaveAsActivity(false);
 		email.setReplyTo('testuserdonotreply@iatas.test');
 		email.setSenderDisplayName('IATA PDF Generation Process');
 
 		email.setSubject(subject);
 		email.setHtmlBody(htmlBody);
-		//email.setPlainTextBody(plainBody);
 		if(!Test.isRunningTest())
 			Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
 	}
