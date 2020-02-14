@@ -1683,17 +1683,16 @@ global class ANG_OscarProcessHelper {
 			casesToInsert.add(cse);
 		}
 
-		if (!casesToInsert.isEmpty())
-		 		insert casesToInsert;
+		if (!casesToInsert.isEmpty()) insert casesToInsert;
 
-		 	Set<Id> casesIds = new Set<Id>();
+		Set<Id> casesIds = new Set<Id>();
 		for (Case cse : casesToInsert){
 			casesIds.add(cse.Id);
 		}
 
-		 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
-		 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
-		 	}
+		for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+			accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+		}
 
 		//AMS_OSCAR__c:
 		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>();
@@ -1717,9 +1716,7 @@ global class ANG_OscarProcessHelper {
 
 		OrgWideEmailAddress[] owea;
 
-		if(!accsToSendEmail.isEmpty()){
-			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
-		}
+		if(!accsToSendEmail.isEmpty()) owea = [select Id, Address, DisplayName from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		List<Case> casesToUpdate = new List<Case>();
 
@@ -1743,6 +1740,7 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP || origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
 			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
+		Map<ID,Messaging.SingleEmailMessage> mailsToSend = new Map<ID,Messaging.SingleEmailMessage>();
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id)){
@@ -1769,10 +1767,31 @@ global class ANG_OscarProcessHelper {
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
 
-				 	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);
+				mailsToSend.putAll(AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments, false));
 			}
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
+		if(!mailsToSend.isEmpty()) {
+			if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend.values());
+			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
+
+			for(Id oscarCommCaseId : mailsToSend.keySet()){
+				EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
+				Messaging.SingleEmailMessage mail = mailsToSend.get(oscarCommCaseId);
+				emailMsg.FromAddress = owea[0].Address;
+				emailMsg.FromName = owea[0].DisplayName;
+				emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+				emailMsg.Subject = mail.getSubject();
+				emailMsg.HtmlBody = mail.getHtmlBody();
+				emailMsg.ParentId = oscarCommCaseId; //Attach with the case
+				emailMsg.MessageDate = system.now();
+				emailMsg.Status = '0';
+				mailsToTrackInCase.add(emailMsg);
+			}
+			insert mailsToTrackInCase;
 		}
 
 		if(notificationTemplate <> null)
