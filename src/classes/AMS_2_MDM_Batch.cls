@@ -1,7 +1,12 @@
 global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful{
 
-   global final String query;
+	private static final Map<String, String> accreditationModelMap = new Map<String, String> {
+		AMS_Utils.ACCREDITATIONMODEL_CASHLESS => AMS_Utils.CL,
+		AMS_Utils.ACCREDITATIONMODEL_CASH => AMS_Utils.CA,
+		AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY => AMS_Utils.MC
+	};
 
+	global final String query;
 
 	String[] r = new String[6];
 
@@ -123,12 +128,6 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 					}
 
 					Set<String> aModelToExcludeSet = new set<String>();
-
-					Map<String, String> accreditationModelMap = new Map<String, String> {
-						AMS_Utils.ACCREDITATIONMODEL_CASHLESS => AMS_Utils.CL,
-						AMS_Utils.ACCREDITATIONMODEL_CASH => AMS_Utils.CA,
-						AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY => AMS_Utils.MC
-					};
 
 					if(ccbs.Accreditation_Model_To_Exclude__c != null)
 						aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
