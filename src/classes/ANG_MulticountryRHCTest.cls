@@ -330,7 +330,7 @@ private class ANG_MulticountryRHCTest {
 			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
-		System.assertEquals((rhcInfo.ANG_RHC_Amount_Provisional__c + rhcInfo.ANG_Exceeding_Financial_Security__c), rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(400004000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
 
 		//After the stop test the future method that updates the Min FS on the RHC record is executed
 		//and therefore the RHC Amount Forecasted will change again
