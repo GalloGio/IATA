@@ -167,6 +167,8 @@ public class ISSP_ICCS_CycleMgmtControllerTest {
 		//Select a participation
 		ISSP_ICCS_Utils.ParticipationRow participationRow = adhocCurrencyRow.currencyParticipationRows[0];
 
+		System.assertEquals(false,participationRow.isNotReceived);
+		System.assertEquals(false,participationRow.isPreassigned);
 		System.assert(participationRow.settlementInstructionRows.size() > 0);
 
 		// select a settlement instruction
