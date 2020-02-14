@@ -164,11 +164,6 @@ global without sharing class ANG_CreateCaseDetails {
 
 			oscar = oscarLst.get(0);
 
-			if(oscar == null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
-				return false;
-			}
-
 			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
 			if(oscar.Payment_Type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA){
