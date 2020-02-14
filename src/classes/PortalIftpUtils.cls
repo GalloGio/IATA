@@ -1644,13 +1644,10 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=false)
 	public static String getRedirectURL(){
-
-		String baseUrl = Site.getBaseSecureUrl();
-		String pathPrefix = Site.getPathPrefix().replace('/s', '');
+   
 		List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Absorb' LIMIT 1];
 		system.assert(!ami.isEmpty(), 'Connected app Absorb does not exist.');
-
-		return baseUrl + pathPrefix + ami[0].StartUrl;
+		return  ami[0].StartUrl;
 
 	}
 	private static String clearString(String s){
