@@ -5,6 +5,8 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 	@testSetup
 	static void setup() {
 
+		Test.startTest();
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		insert ctry;
 
@@ -51,6 +53,9 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 			Internal_ID__c = oscarCase.id, External_ID__c='', Valid_From__c=system.Today(), AMOUNT__C = 1000);
 
 		insert artifact;
+
+		Test.stopTest();
+
 	}
 
 

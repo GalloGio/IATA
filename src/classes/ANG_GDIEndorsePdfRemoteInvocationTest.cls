@@ -4,6 +4,8 @@ public class ANG_GDIEndorsePdfRemoteInvocationTest {
 	@testSetup
 	private static void setup() {
 		
+		Test.startTest();
+
 		Financial_Institution__c fi = new Financial_Institution__c(
 			Name = 'GDI - Euler Hermes', 
 			Region__c = 'Europe', 
@@ -149,6 +151,8 @@ public class ANG_GDIEndorsePdfRemoteInvocationTest {
 		stagingFs.pricebookentryid = pbe.id;
 		stagingFs.FS_Currency__c = opp.currencyIsoCode;
 		insert stagingFs;
+
+		Test.stopTest();
 
 	}
 	
