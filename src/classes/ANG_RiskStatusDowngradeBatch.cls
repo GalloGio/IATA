@@ -9,6 +9,7 @@ public class ANG_RiskStatusDowngradeBatch implements Database.Batchable<SObject>
 
 	public List<Account> start(Database.BatchableContext BC)
 	{
+		//although using Test.isRunningTest() here is a bad practice, we are using it to avoid jobs' limits while running test classes
 		return Test.isRunningTest() ? new List<Account>{ANG_MulticountryHelper.getAccountsInfo(accounts).values().get(0)} : ANG_MulticountryHelper.getAccountsInfo(accounts).values();
 	}
 
