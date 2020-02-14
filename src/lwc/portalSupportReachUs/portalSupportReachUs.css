@@ -104,6 +104,7 @@
     padding: 0px;
     margin: 0 auto;
     box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+    max-width: 100%;
 }
 
 .dot-lightgreen {
@@ -182,4 +183,18 @@
     margin-right: auto;
     min-width: 270px;
     max-width: 580px;
+}
+@media screen and (max-width: 640px) {
+    .recentCasesMargin {
+        width: auto;
+        margin-left: none;
+        margin-right: none;
+        min-width: none;
+        max-width: none;
+        padding: 0 1rem;
+    }
+    .slds-p-horizontal_xx-large, .slds-p-horizontal--xx-large {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }

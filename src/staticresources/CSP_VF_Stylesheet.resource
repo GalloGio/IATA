@@ -263,3 +263,64 @@ body .secondaryPalette.bPageBlock{
     box-shadow: 5px 5px 20px #e2e2e2;
     background-color: white;
   }
+/********   CSP_Stylesheet   ********/
+  .slds-scope .searchInputPlaceHolder input {
+    font-size: 22px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: #333333;
+    caret-color: #1e32fa;
+}
+
+.slds-scope .borderlessInput input {
+    border: none;
+    outline: none;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+.slds-scope .background-white {
+    background-color: #ffffff;
+}
+.slds-scope .customCardWhite {
+    box-shadow: 5px 5px 20px #e2e2e2;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+    background-color: #ffffff;
+}
+
+.slds-scope .fullWidth, .slds-scope .fullWidth button, .slds-scope .fullWidth button:active, .slds-scope .fullWidth button:visited, .slds-scope .fullWidth button:focus, .slds-scope .fullWidth button:hover {
+    width: 100%;
+}
+.slds-scope .newLinkButton button {
+    color: #3333ff;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+.slds-scope .baseButton button, .slds-scope .baseButton button:hover, .slds-scope .baseButton button:active, .slds-scope .baseButton button:visited, .slds-scope .baseButton button:focus {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    border-radius: 1px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    word-break: break-word;
+}
+.slds-scope .buttonMinHeightMedium button {
+    min-height: 40px;
+}
+.slds-scope .slds-button {
+    word-break: break-word;
+}
+html.ext-strict {
+    font-size: 100% !important;
+}
+.slds-scope .slds-input {
+    border: 1px solid transparent;
+}
