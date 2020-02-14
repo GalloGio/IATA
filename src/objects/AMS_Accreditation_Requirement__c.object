@@ -340,6 +340,11 @@
                     <label>MISC_DOCS</label>
                 </value>
                 <value>
+                    <fullName>NDC</fullName>
+                    <default>false</default>
+                    <label>NDC</label>
+                </value>
+                <value>
                     <fullName>NOC_SIGNED_CONTRACT</fullName>
                     <default>false</default>
                     <label>NOC_SIGNED_CONTRACT</label>
@@ -875,6 +880,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>NDC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NON_DG_DECL</fullName>
                 <default>false</default>
             </values>
@@ -1246,6 +1255,10 @@
             </values>
             <values>
                 <fullName>MISC_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1990,6 +2003,10 @@
             </values>
             <values>
                 <fullName>MISC_DOCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
             <values>

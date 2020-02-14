@@ -166,7 +166,7 @@ ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),
 or(
 ISPICKVAL(Reason1__c,&quot;General Information&quot;),
 ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),
-ISPICKVAL(Reason1__c,&quot;Closure / Cancellation &quot;),
+ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),
 ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
 ISPICKVAL(Reason1__c,&quot;Payment related query&quot;),
 ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
@@ -8149,7 +8149,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>chaziran@iata.org.prod</assignedTo>
+            <assignedTo>kalasha@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>

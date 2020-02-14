@@ -312,7 +312,7 @@
         <externalId>false</externalId>
         <label>Logged User</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -353,16 +353,6 @@
         <columns>Event_Type_Description__c</columns>
         <columns>Event_Type__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>ITP_Name__c</field>
-            <operation>equals</operation>
-            <value>Automation ITP</value>
-        </filters>
-        <filters>
-            <field>Event_Type__c</field>
-            <operation>equals</operation>
-            <value>5</value>
-        </filters>
         <label>All</label>
     </listViews>
     <listViews>

@@ -333,6 +333,19 @@
         <unique>false</unique>
     </fields>
     <label>ISSP IP Locator</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Country_Code__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Start_Integer__c</columns>
+        <columns>End_Integer__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>IP-{00000000}</displayFormat>
         <label>ISSP IP Database Name</label>
