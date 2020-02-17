@@ -19,20 +19,26 @@
 
         rows.push(['Core Relationship with IATA (active accounts only)','']);
         let newElementForCoreRelationshipwithIATA = component.get('v.data1');
-        let newData = component.get('v.data6')[0];
-        newElementForCoreRelationshipwithIATA.push({label: newData.label, value: newData.value});
+        if(newElementForCoreRelationshipwithIATA[newElementForCoreRelationshipwithIATA.length - 1].label != 'NDC engagement'){
+            let newData = component.get('v.data6')[0];
+            newElementForCoreRelationshipwithIATA.push({label: newData.label, value: newData.value});
+        }
         helper.buildTable(rows,component.get('v.columns1'),newElementForCoreRelationshipwithIATA);        
 
         rows.push(['Relationship with External Entities PAX','']);
         let dataForPax = component.get('v.data4');
-        dataForPax.push({label: "OTHER", value: component.get('v.record').External_Entities_PAX_OTHER__c});
+        if(dataForPax[dataForPax.length - 1].label != 'OTHER'){
+            dataForPax.push({label: "OTHER", value: component.get('v.record').External_Entities_PAX_OTHER__c});
+        }
         helper.buildTable(rows,component.get('v.columns4'),dataForPax); 
 
         rows.push(['Relationship with External Entities CARGO','']);
         let columnsUpdatedForCargo = component.get('v.columns4');
         columnsUpdatedForCargo[0].label = 'CARGO ENTITIES';
         let dataForCargo = component.get('v.data5');
-        dataForCargo.push({label: "OTHER", value: component.get('v.record').External_Entities_CARGO_OTHER__c});
+        if(dataForCargo[dataForCargo.length - 1].label != 'OTHER'){
+            dataForCargo.push({label: "OTHER", value: component.get('v.record').External_Entities_CARGO_OTHER__c});
+        }
         helper.buildTable(rows,columnsUpdatedForCargo,dataForCargo); 
 
         rows.push(['Active Locations per Country','']);
