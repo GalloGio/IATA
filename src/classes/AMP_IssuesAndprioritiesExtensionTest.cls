@@ -71,6 +71,7 @@ private class AMP_IssuesAndprioritiesExtensionTest
 			issuesAndPrioritiesExtension.sortByIssueWithIATA();
 			issuesAndPrioritiesExtension.sortByStatus();
 			issuesAndPrioritiesExtension.sortByLevelOfImportance();
+			issuesAndPrioritiesExtension.sortByDivision();
 
 			issuesAndPrioritiesExtension.newLine();
 			issuesAndPrioritiesExtension.EditLine();

@@ -23,16 +23,17 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		if(!Test.isRunningTest())
 			stdController.addFields(new List<String>{'RecordType.DeveloperName'});
 
-		this.myAccount = (Account)stdController.getRecord();
+		Account acc = (Account)stdController.getRecord();
 
 		this.objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 		showAllItems = false;
 		isEditMode = false;
 		isNewLine = false;
-
-		if(this.myAccount == null){
+		if(acc.Id == null){
 			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:ApexPages.currentPage().getParameters().get('accountId') LIMIT 1];
 			if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
+		}else{
+			this.myAccount = acc;
 		}
 		accountId =  this.myAccount.id;
 		accountName =  this.myAccount.Name;
