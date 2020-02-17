@@ -98,7 +98,7 @@ private class ISSP_Financial_Institutions_Test {
 		Portal_Applications__c portalApp = new Portal_Applications__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
 																	  ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
 																	  ANG_Accredited_Agents_Only__c = false,
-                                                                      ANG_Restrict_by_Agency_Category__c = 'Domestic Agent;IATA Passenger Sales Agent',
+																	  ANG_Restrict_by_Agency_Category__c = 'Domestic Agent;IATA Passenger Sales Agent',
 																	  Agency__c = true); 
 		insert portalApp;
 
