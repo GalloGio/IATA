@@ -24,6 +24,8 @@ public without sharing class ISSP_Financial_Institutions {
 	private String conId {get; set;}
 	private String agencyCountry {get; set;}
 	private String agencyRegion {get; set;}
+    private String agencyCategory {get; set;}
+    private Boolean agencyIsGdi {get; set;}
 	public Boolean countryIsGDIEnabled {get; private set;}
 	public Boolean countryIsMulticountryEnabled {get; private set;}
 	public Boolean gdiAppRightGranted {
@@ -147,7 +149,9 @@ public without sharing class ISSP_Financial_Institutions {
 				countryIsMulticountryEnabled = existingGDIPortalAppRight.Contact__r.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 				agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
 				agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
-				countryIsGDIEnabled = (existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && gdiPortalAppAgentCategory.CONTAINS(existingGDIPortalAppRight.Contact__r.Account.Category__c));
+                agencyCategory = existingGDIPortalAppRight.Contact__r.Account.Category__c;
+                agencyIsGdi = existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c;
+				countryIsGDIEnabled = (agencyIsGdi && gdiPortalAppAgentCategory.CONTAINS(agencyCategory));
 
 				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
 					gdiAppRightDenied = true;
