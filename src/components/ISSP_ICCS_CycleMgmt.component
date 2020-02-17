@@ -72,11 +72,11 @@
 							</div>
 							<!--  Currency Rows -->
 							<apex:outputPanel rendered="{! selectedAdhocCycle != ''}">
-								<div class="expand" style="padding-top: 0px;">
+								<apex:outputPanel layout="block" styleclass="expand" style="padding-top: 0px;" rendered="{!AdhocCurrencyRows.size > 0}">
 									<apex:commandLink style="color: #0075bb; white-space:nowrap;" action="{! expandAllCycleCurrencyTable}" value="{! $Label.ICCS_Expand_All}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
 									<div class="v-line"></div>
 									<apex:commandLink style="color: #0075bb; white-space:nowrap;" action="{! collapseAllCycleCurrencyTable}" value="{! $Label.ICCS_Collapse_All}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
-								</div>
+								</apex:outputPanel>
 								<apex:outputPanel id="cycleSiTable">
 									<apex:repeat value="{! AdHocCurrencyRows}" var="currencyRow">
 										<!-- currency lines -->
@@ -106,72 +106,72 @@
 													</table>
 												</div>
 											</div>
+											<!-- Currency Settlement instructions -->
+											<apex:outputPanel rendered="{! currencyRow.numberCurrencySiRows > 0 && currencyRow.displayCountries}">
+												<apex:repeat value="{! currencyRow.currencySettlementInstructionRows}" var="settlementInstructionRow">
+													<div class="oddTable">
+														<table style="width : 100%;">
+															<tr>
+																<td style="width : 50%; text-align : left;">
+																	<apex:outputText value="{! $Label.ICCS_Type_Label}" style="font-weight:bold;"/>
+																	&nbsp;
+																	<apex:outputText value="{!settlementInstructionRow.settlementInstruction.type.code}"/>
+																	&nbsp;&nbsp;&nbsp;
+																	<apex:outputText value="{! $Label.ICCS_Label_Status}" style="font-weight:bold;"/>
+																	&nbsp;
+																	<apex:outputText value="{! settlementInstructionRow.settlementInstruction.approvalStatus}"/>
+																	&nbsp;&nbsp;&nbsp;
+																	<apex:outputText value="{! $Label.ICCS_Applied_Label}" style="font-weight:bold;"/>
+																	&nbsp;
+																	<apex:outputText value="{! IF(settlementInstructionRow.settlementInstruction.isApplied, 'Yes', 'No')}"/>
+																</td>
+																<td style="width : 50%; text-align : right; font-size : 10pt;">
+																	<apex:commandLink style="white-space:nowrap;" action="{! cloneCurrencySettlementInstruction}" value="{! $Label.ICCS_Clone_SI_Link}" rendered="{! isSuperUser}" rerender="pageMainPanel" status="processActStatusId">
+																		<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
+																		<apex:param name="settlementInstructionType" value="Currency" assignTo="{! settlementInstructionTypeParameter}"/>
+																		<apex:param name="participationId" value="{! null }" assignTo="{! participationIdParameter}"/>
+																		<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
+																		<apex:param name="currencyCode" value="{! currencyRow.currencyIsoCode }" assignTo="{! currencyCodeParameter}"/>
+																	</apex:commandLink>
+
+																	<div class="v-line"></div>
+
+																	<apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.showInstructionLines}" value="{! $Label.ICCS_Show_Instruction_Lines_Link}" rendered="{! !settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
+																	<apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.hideInstructionLines}" value="{! $Label.ICCS_Hide_Instruction_Lines_Link}" rendered="{! settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<div style="margin: 0px 24px;">
+														<apex:pageBlockTable value="{!settlementInstructionRow.settlementInstruction.instructionLines}" var="line" rendered="{! settlementInstructionRow.displayInstructionLines}">
+															<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
+																<apex:outputText value="{!line.accountCode.code}"/>
+															</apex:column>
+															<apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
+																<apex:outputText value="{!line.accountCode.bankAccount.currency_x}"/>
+															</apex:column>
+															<apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
+																<apex:outputText value="{!line.accountCode.bankAccount.number_x}"/>
+															</apex:column>
+															<apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
+																<apex:outputText value="{!line.type.code}"/>
+															</apex:column>
+															<apex:column headerValue="{! $Label.ICCS_Value_Label}">
+																<apex:outputText value="{0, number, ##0.00}%" rendered="{! line.type.code = 'Percentage'}">
+																	<apex:param value="{! line.value}"/>
+																</apex:outputText>
+																<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! line.type.code = 'Threshold'}">
+																	<apex:param value="{! line.value}"/>
+																</apex:outputText>
+															</apex:column>
+															<apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+																<apex:outputText value="{!line.order}"/>
+															</apex:column>
+														</apex:pageBlockTable>
+													</div>
+												</apex:repeat>
+											</apex:outputPanel>
 										</apex:OutputPanel>
-										<!-- Currency Settlement instructions -->
-										<apex:outputPanel rendered="{! currencyRow.numberCurrencySiRows > 0 && currencyRow.displayCountries}">
-											<apex:repeat value="{! currencyRow.currencySettlementInstructionRows}" var="settlementInstructionRow">
-												<div class="oddTable" style="margin: 0px 24px;">
-													<table style="width : 100%;">
-														<tr>
-															<td style="width : 50%; text-align : left;">
-																<apex:outputText value="{! $Label.ICCS_Type_Label}" style="font-weight:bold;"/>
-																&nbsp;
-																<apex:outputText value="{!settlementInstructionRow.settlementInstruction.type.code}"/>
-																&nbsp;&nbsp;&nbsp;
-																<apex:outputText value="{! $Label.ICCS_Label_Status}" style="font-weight:bold;"/>
-																&nbsp;
-																<apex:outputText value="{! settlementInstructionRow.settlementInstruction.approvalStatus}"/>
-																&nbsp;&nbsp;&nbsp;
-																<apex:outputText value="{! $Label.ICCS_Applied_Label}" style="font-weight:bold;"/>
-																&nbsp;
-																<apex:outputText value="{! IF(settlementInstructionRow.settlementInstruction.isApplied, 'Yes', 'No')}"/>
-															</td>
-															<td style="width : 50%; text-align : right; font-size : 10pt;">
-																<apex:commandLink style="white-space:nowrap;" action="{! cloneCurrencySettlementInstruction}" value="{! $Label.ICCS_Clone_SI_Link}" rendered="{! isSuperUser}" rerender="pageMainPanel" status="processActStatusId">
-																	<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
-																	<apex:param name="settlementInstructionType" value="Currency" assignTo="{! settlementInstructionTypeParameter}"/>
-																	<apex:param name="participationId" value="{! null }" assignTo="{! participationIdParameter}"/>
-																	<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
-																	<apex:param name="currencyCode" value="{! currencyRow.currencyIsoCode }" assignTo="{! currencyCodeParameter}"/>
-																</apex:commandLink>
-
-																<div class="v-line"></div>
-
-																<apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.showInstructionLines}" value="{! $Label.ICCS_Show_Instruction_Lines_Link}" rendered="{! !settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
-																<apex:commandLink style="white-space:nowrap;" action="{! settlementInstructionRow.hideInstructionLines}" value="{! $Label.ICCS_Hide_Instruction_Lines_Link}" rendered="{! settlementInstructionRow.displayInstructionLines}" rerender="cycleManagementForm" status="processActStatusId"/>
-															</td>
-														</tr>
-													</table>
-												</div>
-												<div style="margin: 0px 24px;">
-													<apex:pageBlockTable value="{!settlementInstructionRow.settlementInstruction.instructionLines}" var="line" rendered="{! settlementInstructionRow.displayInstructionLines}">
-														<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
-															<apex:outputText value="{!line.accountCode.code}"/>
-														</apex:column>
-														<apex:column headerValue="{! $Label.ICCS_Account_Currency_Label}">
-															<apex:outputText value="{!line.accountCode.bankAccount.currency_x}"/>
-														</apex:column>
-														<apex:column headerValue="{! $Label.ICCS_Account_Number_Label}">
-															<apex:outputText value="{!line.accountCode.bankAccount.number_x}"/>
-														</apex:column>
-														<apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
-															<apex:outputText value="{!line.type.code}"/>
-														</apex:column>
-														<apex:column headerValue="{! $Label.ICCS_Value_Label}">
-															<apex:outputText value="{0, number, ##0.00}%" rendered="{! line.type.code = 'Percentage'}">
-																<apex:param value="{! line.value}"/>
-															</apex:outputText>
-															<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! line.type.code = 'Threshold'}">
-																<apex:param value="{! line.value}"/>
-															</apex:outputText>
-														</apex:column>
-														<apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
-															<apex:outputText value="{!line.order}"/>
-														</apex:column>
-													</apex:pageBlockTable>
-												</div>
-											</apex:repeat>
-										</apex:outputPanel>
 										<!-- participation lines -->
 										<apex:outputPanel id="cycleSiTable" rendered="{!currencyRow.displayCountries}">
 											<apex:repeat value="{! currencyRow.currencyParticipationRows}" var="participationRow">

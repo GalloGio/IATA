@@ -11045,7 +11045,9 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Currency Warning</shortDescription>
-        <value>New Currency Settlement instructions cannot be deleted</value>
+        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction. 
+
+Any change of instruction for a specific country line under a currency instruction will not be possible.</value>
     </labels>
     <labels>
         <fullName>ICCS_Si_Create_Future</fullName>

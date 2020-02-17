@@ -41,6 +41,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 			for (String currencyName: listCurrencies) {
 				availableCurrenciesList.add(new SelectOption(currencyName,currencyName));
 			}
+			if (listCurrencies.size()==1) currencyFilter = listCurrencies[0];
 			return availableCurrenciesList;
 		}
 	}

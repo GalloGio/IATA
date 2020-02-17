@@ -40,12 +40,12 @@
 									<div class="labelText">
 										<apex:outputText value="{!$Label.ICCS_Currency_Label}: "/>
 									</div>
-									<apex:outputText value="{! availableCurrenciesList}" rendered="{! availableCurrenciesList.size == 1}"/>
-									<apex:selectList value="{! currencyFilter}" multiselect="false" size="1" rendered="{! availableCurrenciesList.size > 1}">
+									<apex:outputText value="{! currencyFilter}" rendered="{! availableCurrenciesList.size == 2}"/>
+									<apex:selectList value="{! currencyFilter}" multiselect="false" size="1" rendered="{! availableCurrenciesList.size > 2}">
 										<apex:selectOptions value="{! availableCurrenciesList}"/>
 										<apex:actionSupport event="onchange" rerender="mass_form" status="processActStatusId"/>
 									</apex:selectList>
-									<apex:outputPanel rendered="{! availableCurrenciesList.size == 0}">
+									<apex:outputPanel rendered="{! availableCurrenciesList.size == 1}">
 										<div class="msg-pstn">
 											<apex:outputText value="{!$Label.ICCS_No_Currencies_Available}" escape="false"/>
 										</div>
@@ -57,6 +57,24 @@
 							<!-- Only valid for AdHoc, or for Currency SIs when a currency was selected -->
 							<apex:outputPanel id="instructionSection" layout="block" styleclass="bottom-box" style="text-align: justify;text-justify: inter-word;"
 								rendered="{!OR(settlementInstructionType == siAdhoc, AND(settlementInstructionType == siCurrency, currencyFilter!=null))}">
+
+								<br/>
+
+								<!-- warning message for Currency SI creation -->
+								<apex:outputPanel layout="block" styleclass="row" rendered="{! settlementInstructionType == siCurrency}">
+									<div class="col-lg-12">
+										<div class="alert alert-info" role="alert">
+											<div class="row vertical-align">
+												<div class="col-xs-1 text-center">
+													<span class="glyphicon glyphicon-info-sign" style="font-size: 32px;"></span>
+												</div>
+												<div class="col-xs-11">
+													<apex:outputText value="{! $Label.ICCS_Si_Create_Currency_Warning}" escape="false"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</apex:outputPanel>
 
 								<br/>
 
@@ -76,11 +94,6 @@
 									<apex:outputText value="{! $Label.ICCS_Si_Create_Adhoc}" escape="false" rendered="{! settlementInstructionType == siAdhoc}"/>
 									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency}" escape="false" rendered="{! settlementInstructionType == siCurrency}"/>
 								</div>
-
-								<!-- warning message for Currency SI creation -->
-								<apex:outputPanel layout="block" styleclass="slert alert-danger" style="margin: 0px 36px; border-radius: 0px;" rendered="{! settlementInstructionType == siCurrency}">
-									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency_Warning}" escape="false"/>
-								</apex:outputPanel>
 
 								<apex:pageBlockTable value="{! listInstruction}" var="instructionLine" id="instructionLineTable">
 									<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
@@ -147,7 +160,7 @@
 				<center>
 					<apex:pageBlock id="processFormPageblockId">
 						<div class="btn-2">
-							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId"/>
+							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId" immediate="true"/>
 							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Submit_Action}" action="{! submit}" rerender="pageMainPanel" status="processActStatusId"/>
 						</div>
 					</apex:pageBlock>

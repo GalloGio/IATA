@@ -538,6 +538,7 @@ public without sharing class ISSP_ICCS_Utils{
 					if (currencyRow==null) {
 						currencyRow = new CurrencyRow(this, processingCurrency);
 						currencyRowsMap.put(processingCurrency, currencyRow);
+						currencySet.add(processingCurrency);
 					}
 					currencyRow.currencyParticipationRows.add(participationRow);
 				}
@@ -680,6 +681,14 @@ public without sharing class ISSP_ICCS_Utils{
 				selectableCategorySet.add(selectableItems[0]);
 				selectableCountrySet.add(selectableItems[1]);
 				selectableCurrencySet.add(selectableItems[2]);
+			}
+
+			for(CurrencyRow currencyRow : currencyRows){
+				List<set<String>> selectableItems = currencyRow.applyFilters();
+
+				selectableCategorySet.addAll(selectableItems[0]);
+				selectableCountrySet.addAll(selectableItems[1]);
+				selectableCurrencySet.addAll(selectableItems[2]);
 			}
 
 			// Remove the potential null value from the sets
@@ -832,6 +841,19 @@ public without sharing class ISSP_ICCS_Utils{
 				if (!row.isFilteredOut) count++;
 			}
 			return count;
+		}
+
+		public List<Set<String>> applyFilters(){
+			set<String> selectableCategorySet = new set<String>();
+			set<String> selectableCountrySet = new set<String>();
+			set<String> selectableCurrencySet = new set<String>();
+			for(ParticipationRow participationRow : currencyParticipationRows){
+				List<String> selectableItems = participationRow.applyFilters();
+				selectableCategorySet.add(selectableItems[0]);
+				selectableCountrySet.add(selectableItems[1]);
+				selectableCurrencySet.add(selectableItems[2]);
+			}
+			return new List<Set<String>>{selectableCategorySet, selectableCountrySet, selectableCurrencySet};
 		}
 
 		public Integer compareTo(Object compareTo) {

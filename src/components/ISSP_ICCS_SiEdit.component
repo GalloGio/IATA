@@ -31,6 +31,24 @@
 
 								<br/>
 
+								<!-- warning message for Currency SI creation -->
+								<apex:outputPanel layout="block" styleclass="row" rendered="{! settlementInstructionType == siCurrency}">
+									<div class="col-lg-12">
+										<div class="alert alert-info" role="alert">
+											<div class="row vertical-align">
+												<div class="col-xs-1 text-center">
+													<span class="glyphicon glyphicon-info-sign" style="font-size: 32px;"></span>
+												</div>
+												<div class="col-xs-11">
+													<apex:outputText value="{! $Label.ICCS_Si_Create_Currency_Warning}" escape="false"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</apex:outputPanel>
+
+								<br/>
+
 								<div class="panel-heading head_panel_green">
 									<apex:outputPanel rendered="{!settlementInstruction.type.code != siCurrency}">
 										<div class="panel-title-3">
@@ -62,11 +80,6 @@
 									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency}" escape="false" rendered="{! settlementInstruction.type.code == siCurrency && settlementInstructionId == null}"/>
 									<apex:outputText value="{! $Label.ICCS_Si_Edit_Currency}" escape="false" rendered="{! settlementInstruction.type.code == siCurrency && settlementInstructionId != null}"/>
 								</div>
-
-								<!-- warning message for Currency SI creation -->
-								<apex:outputPanel layout="block" styleclass="slert alert-danger" style="margin: 0px 36px; border-radius: 0px;" rendered="{! settlementInstructionType == siCurrency}">
-									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency_Warning}" escape="false"/>
-								</apex:outputPanel>
 
 								<apex:pageBlockTable value="{! settlementInstruction.instructionLines}" var="instructionLine" id="instructionLineTable">
 									<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
@@ -133,7 +146,7 @@
 				<center>
 					<apex:pageBlock id="processFormPageblockId">
 						<div class="btn-2">
-							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId"/>
+							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Cancel_Action}" action="{! pageController.cancel}" rerender="pageMainPanel" status="processActStatusId" immediate="true"/>
 							<apex:commandButton styleclass="apbutton" value="{! $Label.ICCS_Submit_Action}" action="{! submit}" rerender="pageMainPanel" status="processActStatusId"/>
 						</div>
 					</apex:pageBlock>
