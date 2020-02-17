@@ -4493,6 +4493,70 @@ Location_Type__c = 'BR');
 		Test.stopTest();
 	}
 
+	@isTest static void multiCountryConversionToStandard() {
+		User mcUser = fetchUser('multicountry@test11.com');
+
+		Account mcAccount = fetchSingleAccount('MultiCountry');
+		mcAccount.IATACode__c = '98989898';
+		mcAccount.Status__c = 'Approved';
+
+		update mcAccount;
+
+		Case c = new Case(ContactId = mcUser.ContactId,
+			AccountId = mcUser.Contact.Account.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			Status = 'Draft',
+			Origin = 'Portal',
+			Subject = 'Major Change',
+			CurrencyIsoCode = 'USD',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Major Change',
+			Type_of_customer__c = 'IATA Travel Agent',
+			Visible_on_ISS_Portal__c = true);
+
+		Test.startTest();
+		System.runAs(mcUser) { //STEP E
+			insert c;
+
+			AMS_Pax_Accreditation_Form__c form = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = c.Id,
+				HO_Account__c = mcAccount.Id,
+				Notify_Change_Accreditation_Type__c = true,
+				ANG_Accreditation_Model_to_Change__c = 'Cash',
+				Confirm_Legal_Details_are_correct__c = true,
+				Confirm_Location_Details_are_correct__c = true,
+				Confirm_Ownership_details_are_correct__c = true,
+				Is_this_Head_Office_becoming_a_Branch__c = 'No',
+				Is_this_Branch_becoming_a_Head_Office__c = 'No',
+				Will_such_change_affect_locations__c = 'Yes',
+				Will_such_change_affect_the_managers__c = 'No',
+				Have_any_having_authorization_to_act__c = 'No',
+				Will_the_change_of_ownership_cause__c = 'No',
+				Effective_Date_Of_Change__c = Date.today(),
+				New_Head_Office_IATA_Code__c = '123',
+				Accept_terms_and_conditions__c = true,
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Type_Of_Change__c = 'Yes');
+			
+			insert form;
+
+			PageReference pageRef = Page.ISSP_AMS_Accreditation;
+			pageRef.getParameters().put('caseId', c.Id);
+			pageRef.getParameters().put('step', '5');
+			pageRef.getParameters().put('isNoticeOfChange', 'true');
+			Test.setCurrentPage(pageRef);
+
+			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+			ctrl.newCase = c;
+			ctrl.goToFinalStep();
+		}
+		Test.stopTest();
+
+		AMS_OSCAR__c oscar = [SELECT Id, RecordTypeId FROM AMS_OSCAR__c LIMIT 1];
+
+		System.assertEquals(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Convert_MC_To_ST'), oscar.RecordTypeId, 'Oscar RT should be Conervert MC to ST');
+	}
+	
 	@isTest static void nocMCConversion() {
 		User cashUser = fetchUser('parenttravel@test11.com');
 
