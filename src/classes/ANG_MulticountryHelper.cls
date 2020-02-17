@@ -588,7 +588,7 @@ public class ANG_MulticountryHelper {
 		}
 
 		if(agency.Location_Risk_Events__r != null){
-			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r);
+			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r, newParentId);
 		}
 
 	}

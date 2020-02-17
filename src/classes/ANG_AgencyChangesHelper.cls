@@ -21,7 +21,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public List<Account> accountsToCreateRhcInformationLst;
 		public List<ANG_Agency_Risk_Event__c> inactivateRiskEventLst;
-		public Account newParentAcct;
+		public Id newParentId;
 		public List<AMS_Agencies_relationhip__c> relationsToDeleteLst;
 		public List<ANG_RHC_Information__c> deactivateRhcInformationLst;
 		public List<Agency_Authorization__c> agencyAuthorizationToUpdateLst;
@@ -46,7 +46,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsToRecalculateFsAmounts = new Set<Id>();
 			accountsToCreateRhcInformationLst = new List<Account>();
 			inactivateRiskEventLst = new List<ANG_Agency_Risk_Event__c>();
-			newParentAcct = new Account();
+			newParentId = null;
 			relationsToDeleteLst = new List<AMS_Agencies_relationhip__c>();
 			deactivateRhcInformationLst = new List<ANG_RHC_Information__c>();
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
@@ -86,8 +86,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			deactivateRhcInformationLst.add(rhcInfo);
 		}
 
-		public void addRiskEventsToInactivate(List<ANG_Agency_Risk_Event__c> riskEventLst){
+		public void addRiskEventsToInactivate(List<ANG_Agency_Risk_Event__c> riskEventLst, Id newParentId){
 			inactivateRiskEventLst.addAll(riskEventLst);
+			this.newParentId = newParentId;
 		}
 
 		public void addAccountToCreateRHC(Account account){
@@ -220,7 +221,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			if(inactivateRiskEventLst != null && !inactivateRiskEventLst.isEmpty()){
-				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst, newParentAcct.Id));
+				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst, newParentId));
 			}	
 			
 			return hasUpserted;
@@ -637,8 +638,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			//The account related with the oscar becomes the GE
 			Account accountGE = changesContainer.accountsMap.get(oscar.Account__c);
 
-			changesContainer.newParentAcct = accountGE;
-
 			topEntityPerBspMap.put(accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c, accountGE.Id);
 
 			AMS_Pax_Accreditation_Form__c stagingArea = getAccreditation(oscar.AMS_Online_Accreditation__c);
@@ -693,7 +692,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
-						changesContainer.addRiskEventsToInactivate(riskEventsLst);
+						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
 
 					List<ANG_Risk_Alert__c> riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
@@ -767,8 +766,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account accountGE = changesContainer.accountsMap.get(oscar.Account__c);
 
-			changesContainer.newParentAcct = accountGE;
-
 			changesContainer.addAccountToCalculateRiskAssessment(accountGE.Id);
 
 			Agency_Authorization__c geCashMethodFoP = null;
@@ -792,7 +789,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
-						changesContainer.addRiskEventsToInactivate(riskEventsLst);
+						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
 
 				}
