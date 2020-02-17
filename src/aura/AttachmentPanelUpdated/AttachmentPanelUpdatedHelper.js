@@ -697,13 +697,12 @@
     },
 
     helperGetAttachList: function (component) {
-
         var parentId = component.get("v.recordId");
         var isPortal = component.get("v.isPortal");
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
 
         //get this page properties
-        var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortal");
+        var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortalLightning");
         getLstAttachmentsAction.setParams({
             "parentId": parentId,
             "isPortal": isPortal,
@@ -934,7 +933,7 @@
                             toastEvent.setParams({
                                 mode: 'dismissable',
                                 title: resp.isSuccess ? 'Success' : 'Warning',
-                                message: resp.errorMsg == '' ? 'File Uploaded with Success!' : resp.errorMsg,
+                                message: resp.errorMsg == '' ? 'File(s) Uploaded with Success!' : resp.errorMsg,
                                 type: resp.isSuccess ? 'success' : 'error'
 
                             });
@@ -969,10 +968,16 @@
                 }
             }
         }
+
         fileCounter.value = files.length;
-        $.each(files, function (i, file) {
-            uploadFile(file, component);
-        });
+        
+        if(fileCounter.value > 0){
+            $.each(files, function (i, file) {
+                uploadFile(file, component);
+            });
+        } else{
+            component.set("v.showLoadingSpinner", false);
+        }
 
     }
 
