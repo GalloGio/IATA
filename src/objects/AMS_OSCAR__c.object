@@ -7579,7 +7579,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     <fields>
         <fullName>STEP51__c</fullName>
         <externalId>false</externalId>
-        <description>Use in the Process to convert a GoGlobal hierarchy into many GoStandard hierarchies</description>
+        <description>Use in the Process to convert a GoGlobal hierarchy into many GoStandard hierarchies. Confirm full hierarchy conversion to GoStandard</description>
         <label>STEP51</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
