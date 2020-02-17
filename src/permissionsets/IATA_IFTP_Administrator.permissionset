@@ -5,10 +5,34 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>IntegrationLogUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalIftEmployeeRecordsManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalIftpStationsManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalIftpUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>Access all obj:Account Contacts RoleAccount Role RelationshipsAccount RolesAccount Roles&#39;Account Role ServicesAccount Role Services&#39;AccountsAirport DetailsCertificationsContact Role CertificationsContact RolesContactsIntegration LogsRole Addresses</description>
+    <classAccesses>
+        <apexClass>portalIftpEmployeeCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>portalIftpHistoryManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>portalIftpTrainingRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access all obj:Account Contacts RoleAccount Role RelationshipsAccount RolesAccount Roles&apos;Account Role ServicesAccount Role Services&apos;AccountsAirport DetailsCertificationsContact Role CertificationsContact RolesContactsIntegration LogsRole Addresses</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.ACH_Member__c</field>
@@ -4290,22 +4314,22 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Integration_Log__c.Context__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Integration_Log__c.External_Transaction_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Integration_Log__c.RecordId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Integration_Log__c.Status_Detail__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4523,13 +4547,13 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Integration_Log__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -4582,6 +4606,18 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Contact.Standard_Contact</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Integration_Log__c.Callback</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Integration_Log__c.Fire_and_Forget</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Integration_Log__c.Track_Response</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

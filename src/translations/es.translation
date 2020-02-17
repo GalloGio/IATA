@@ -12671,6 +12671,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13421,6 +13425,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Solo los Signatarios Autorizados legales pueden notificar a la IATA sobre los cierres de oficinas. Puede nombrar al Signatario Autorizado de su Agencia en la página: «Company Administration -&gt; Contacts section» (Administración de empresa -&gt; Sección de contactos).</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Office --></label>
@@ -16369,6 +16377,14 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Acción</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Nuevo Caso</label>
