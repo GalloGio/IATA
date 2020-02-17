@@ -1615,11 +1615,7 @@ public without sharing class PortalIftpUtils {
 			throw new AuraHandledException('This action is not applicable to this role address because it has no Contact Role Certification.');
 		}
 
-		try{
-
-			roleAddress.Proficiency_level__c = 'No';
-			update roleAddress;
-
+		try{	
 			IFTP_History__c iftpH = new IFTP_History__c();
 			iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
 			iftpH.ITP_Name__c = itpAcc.name;
@@ -1634,6 +1630,7 @@ public without sharing class PortalIftpUtils {
 			iftpH.Logged_User__c = 'IATA INTERNAL USER' ;
 
 			insert iftpH;
+			delete roleAddress;
 
 		}catch(Exception ex){
 			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - removeProficiency] Exception - ' + ex );
