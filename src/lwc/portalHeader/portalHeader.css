@@ -194,9 +194,9 @@
   cursor: pointer;
 }
 .headerButtonSearchContainer {
-  padding-right: 6px;
+  padding-right: 22px;
   padding-left: 6px;
-  padding-top: 6px;
+  padding-top: 4px;
 }
 
 .headerButtonNotificationsCloseIcon,
