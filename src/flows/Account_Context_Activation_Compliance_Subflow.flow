@@ -9,9 +9,9 @@
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <inputParameters>
-            <name>emailAddresses</name>
+            <name>emailSubject</name>
             <value>
-                <elementReference>UserFlowLauncher.Email</elementReference>
+                <elementReference>EmailSubject</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -21,9 +21,21 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailSubject</name>
+            <name>emailAddresses</name>
             <value>
-                <elementReference>EmailSubject</elementReference>
+                <elementReference>UserFlowLauncher.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <elementReference>FlowSetting.Email_From__c</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -436,6 +448,14 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>FlowSetting</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Account_Context_Activation_Settings__mdt</objectType>
     </variables>
     <variables>
         <name>FlowSuccessfullyEnded</name>

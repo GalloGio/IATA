@@ -564,6 +564,15 @@ OR(
   AND(
     NOT(ISBLANK([Account].Business_PO_Box__c)),
     OR(ISNEW(),ISCHANGED([Account].Business_PO_Box__c))
+  ),
+  AND(
+    NOT(ISBLANK(TEXT([Account].Hierarchy_Level__c))),
+    OR(ISNEW(),ISCHANGED([Account].Hierarchy_Level__c)),
+	NOT(ISBLANK([Account].IATA_ISO_Country__c)),
+	NOT(ISBLANK([Account].Business_State_Name__c)),
+	NOT(ISBLANK([Account].Business_City_Name__c)),
+	NOT(ISBLANK([Account].Business_Postal_Code__c)),
+	NOT(ISBLANK([Account].Business_Street__c))
   )
 )
 )</stringValue>
@@ -620,11 +629,20 @@ OR(
   AND(
     NOT(ISBLANK({!myVariable_current.Business_PO_Box__c})),
     OR(ISNEW(),ISCHANGED({!myVariable_current.Business_PO_Box__c}))
+  ),
+  AND(
+    NOT(ISBLANK(TEXT({!myVariable_current.Hierarchy_Level__c}))),
+    OR(ISNEW(),ISCHANGED({!myVariable_current.Hierarchy_Level__c})),
+	NOT(ISBLANK({!myVariable_current.IATA_ISO_Country__c})),
+	NOT(ISBLANK({!myVariable_current.Business_State_Name__c})),
+	NOT(ISBLANK({!myVariable_current.Business_City_Name__c})),
+	NOT(ISBLANK({!myVariable_current.Business_Postal_Code__c})),
+	NOT(ISBLANK({!myVariable_current.Business_Street__c}))
   )
 )
 )</expression>
     </formulas>
-    <interviewLabel>AccountAddressCreation-6_InterviewLabel</interviewLabel>
+    <interviewLabel>AccountAddressCreation-7_InterviewLabel</interviewLabel>
     <label>AccountAddressCreation</label>
     <processMetadataValues>
         <name>ObjectType</name>

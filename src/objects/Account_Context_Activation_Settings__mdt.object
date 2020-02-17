@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Contains settings that will be used in all Account Context Activation Flows.</description>
+    <fields>
+        <fullName>Email_From__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Email from</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Account Context Activation Setting</label>
+    <pluralLabel>Account Context Activation Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
