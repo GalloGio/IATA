@@ -80,6 +80,7 @@ global without sharing class ISSP_APProcess {
 	public Contact con {get;set;}
 	public AP_Process_Form__c newForm {get;set;}
 	public AP_Country_Requierment__c countryRequirement {get;set;}
+	public List<AP_Country_Requierment__c> countryReqments {get;set;}
 	public IATA_ISO_Country__c isocountry{get;set;}
 	public ICCS_Product_Country__c ICCSProductCountry{get;set;}
 	public boolean isNewCase {get;set;}
@@ -457,7 +458,9 @@ global without sharing class ISSP_APProcess {
 
 			getLoB(strOperationType); //Get the line of business - BSP or CASS
 
-			apcountryisocode = newCase.IFAP_Country_ISO__c;
+			if(!isPassAirline || (isPassAirline && newCase.Country_concerned_by_the_query__c!='Multiple') ){
+				apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
+			}
 			SYSTEM.DEBUG('INIT - LOB: ' + strLoB);
 			SYSTEM.DEBUG('INIT - Country ISO Code: ' + apcountryisocode);
 
@@ -540,7 +543,7 @@ global without sharing class ISSP_APProcess {
 					BankMandateUrl = apcdef.Download_URL__c;
 				}
 
-				if (isBSP || isCASS) {
+				if (isBSP || isCASS || isPASS) {
 					// check if all mandatory files were uploaded
 					List<String> listMandatoryFiles = new list<String>();
 					if (strAreaType=='Airline Joining' && apcountryisocode=='AR') {
@@ -848,21 +851,53 @@ global without sharing class ISSP_APProcess {
 
 	public void retrieveCountryRequirements(String vCountry, String strLoB) {
 		//special case for ICH, the requirements are hardcoded
-		List <AP_Country_Requierment__c> countryReqments = [
-			SELECT Id, Name, Local_Representation_Mandatory__c, Local_accountant_mandatory__c, Local_VAT_Mandatory__c,
-			Foreign_VAT_accepted__c, Special_VAT_status_allowed__c, Local_Representation_for_Fiscal_requirem__c,
-			Currency_of_the_Settlement__c, Dual_currencies__c, bank_account_in_of_the_settlement__c,
-			Mandatory_to_give_commission_to_agencies__c, Comments__c, Government_requirements__c, Type_of_address_accepted__c,
-			VAT_no_always_inserted_into_ISS_systems__c, bank_account_in_of_the_settlement_com__c, Currency_of_the_Settlement_com__c,
-			Dual_currencies_com__c, Foreign_VAT_accepted_com__c, Local_accountant_mandatory_com__c, Local_Representation_for_Fiscal_req_com__c,
-			Local_Representation_Mandatory_com__c, Local_VAT_Mandatory_com__c, Mandatory_to_give_commission_to_agen_com__c, Special_VAT_status_allowed_com__c,
-			Type_of_address_accepted_com__c, VAT_no_always_ins_into_ISS_systems_com__c, Government_requirements_com__c,Country__r.ISO_Code__c,
-			Country__r.Case_BSP_Country__c,Bank_Account_Change_Comment__c,
-			ICH_Requirements__c, ISPA_Requirements__c, ISUA_Requirements__c
-			FROM AP_Country_Requierment__c
-			WHERE Line_of_business__c = :strLoB AND Country__r.ISO_Code__c = :vCountry
-			LIMIT 1
-		];
+		
+
+		if(selectedPASSCountries.size()>1 || (isPassAirline && newCase.Country_concerned__c != null)){
+			List<String> countryConcerned = new List<String>();
+			if(selectedPASSCountries.size()>1){
+				for(SelectOption option : selectedPASSCountries) {
+						countryConcerned.add(option.getValue());
+				}
+			}
+			else{
+				countryConcerned = newCase.Country_Concerned__c.split(';');
+			}
+			
+
+			System.debug('DB paises esoclhidso countryConcerned '+countryConcerned);
+			countryReqments = [
+				SELECT Id, Name, Local_Representation_Mandatory__c, Local_accountant_mandatory__c, Local_VAT_Mandatory__c,
+				Foreign_VAT_accepted__c, Special_VAT_status_allowed__c, Local_Representation_for_Fiscal_requirem__c,
+				Currency_of_the_Settlement__c, Dual_currencies__c, bank_account_in_of_the_settlement__c,
+				Mandatory_to_give_commission_to_agencies__c, Comments__c, Government_requirements__c, Type_of_address_accepted__c,
+				VAT_no_always_inserted_into_ISS_systems__c, bank_account_in_of_the_settlement_com__c, Currency_of_the_Settlement_com__c,
+				Dual_currencies_com__c, Foreign_VAT_accepted_com__c, Local_accountant_mandatory_com__c, Local_Representation_for_Fiscal_req_com__c,
+				Local_Representation_Mandatory_com__c, Local_VAT_Mandatory_com__c, Mandatory_to_give_commission_to_agen_com__c, Special_VAT_status_allowed_com__c,
+				Type_of_address_accepted_com__c, VAT_no_always_ins_into_ISS_systems_com__c, Government_requirements_com__c,Country__r.ISO_Code__c,
+				Country__r.Case_BSP_Country__c,Bank_Account_Change_Comment__c,
+				ICH_Requirements__c, ISPA_Requirements__c, ISUA_Requirements__c
+				FROM AP_Country_Requierment__c
+				WHERE Line_of_business__c = :strLoB AND Country__r.ISO_Code__c IN :countryConcerned
+			];
+		}
+		else{
+			countryReqments = [
+				SELECT Id, Name, Local_Representation_Mandatory__c, Local_accountant_mandatory__c, Local_VAT_Mandatory__c,
+				Foreign_VAT_accepted__c, Special_VAT_status_allowed__c, Local_Representation_for_Fiscal_requirem__c,
+				Currency_of_the_Settlement__c, Dual_currencies__c, bank_account_in_of_the_settlement__c,
+				Mandatory_to_give_commission_to_agencies__c, Comments__c, Government_requirements__c, Type_of_address_accepted__c,
+				VAT_no_always_inserted_into_ISS_systems__c, bank_account_in_of_the_settlement_com__c, Currency_of_the_Settlement_com__c,
+				Dual_currencies_com__c, Foreign_VAT_accepted_com__c, Local_accountant_mandatory_com__c, Local_Representation_for_Fiscal_req_com__c,
+				Local_Representation_Mandatory_com__c, Local_VAT_Mandatory_com__c, Mandatory_to_give_commission_to_agen_com__c, Special_VAT_status_allowed_com__c,
+				Type_of_address_accepted_com__c, VAT_no_always_ins_into_ISS_systems_com__c, Government_requirements_com__c,Country__r.ISO_Code__c,
+				Country__r.Case_BSP_Country__c,Bank_Account_Change_Comment__c,
+				ICH_Requirements__c, ISPA_Requirements__c, ISUA_Requirements__c
+				FROM AP_Country_Requierment__c
+				WHERE Line_of_business__c = :strLoB AND Country__r.ISO_Code__c = :vCountry
+				LIMIT 1
+			];
+		}
 
 		if (countryReqments.size()>0)
 		{
@@ -973,7 +1008,10 @@ global without sharing class ISSP_APProcess {
 			newCase.IFAP_Country_ISO__c='WW';
 			newCase.Type= 'ICH Membership';
 		}
-		apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
+
+		if(!isPassAirline || isPassAirline && selectedPASSCountries.size() == 1 ){
+			apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
+		}
 
 		description = newCase.Description;
 		SYSTEM.DEBUG('HQ Account Id: ' + vHQAccountId);
@@ -1075,14 +1113,15 @@ global without sharing class ISSP_APProcess {
 		//create case with RT IDFS Airline Participation Process
 		newCase.recordTypeId = RECORD_TYPE_ID;
 		newCase.Origin = 'Portal';
-		newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
-
+		if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline){
+			newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
+		}
 		newCase.CaseArea__c = strAreaType;
 		managePASS=checkExistingPassServiceRenderedInAccount(con.AccountId);
 
 		if(strAreaType=='Airline Joining') {
 			newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
-			String passProcess = ' Joining Process - ';
+			String passProcess = ' Joining Process ';
 			if(managePASS){
 				passProcess = ' Countries - ';
 			}
@@ -1289,7 +1328,7 @@ global without sharing class ISSP_APProcess {
 
 			passParam='&airline=PASS';
 			if(isStep3 && !managePASS){
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=1'+passParam);
+				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
 			}else if(managePASS && isStep1){
 				passParam=passParam+'&managePASS=true';
 				return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
@@ -1493,7 +1532,7 @@ global without sharing class ISSP_APProcess {
 	**/
 	private list<String> getMandatoryFileList() {
 		List<String> listMandatoryFiles = new list<String>();
-		if (isBSP || isCASS) {
+		if (isBSP || isCASS || isPASS) {
 			if (getShowJoinICCS()) {
 				//check ICCS_Join
 				listMandatoryFiles.add('ICCS_Join');
@@ -2047,7 +2086,7 @@ global without sharing class ISSP_APProcess {
 	//get Amazon country files - PASS
 	public List<AmazonFile__c> getAttachAmazonList(){
 		List<AmazonFile__c> attachmentList=new List<AmazonFile__c>();
-		attachmentList = [SELECT Id, Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c!=null AND Case__c=:vCaseId];
+		attachmentList = [SELECT Id, Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c!=null AND Case__c=:newCase.Id];
 		return attachmentList;
 	}
 

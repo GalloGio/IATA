@@ -133,130 +133,134 @@ global with sharing class PASSSCIMUser extends SCIMUser {
 			isPrimaryUser = nbOfPrimaryInAccount == 0;
 		}*/
 
-		AMS_Accreditation_Contact__c amsContact = [SELECT Id,PASS_admin__c, PASS_user__c FROM AMS_Accreditation_Contact__c WHERE Contact__c =:userIn.contactId];
+		Contact ctt;
+		List<AMS_Accreditation_Contact__c> amsContactList = [SELECT Id,PASS_admin__c, PASS_user__c FROM AMS_Accreditation_Contact__c WHERE Contact__c =:userIn.contactId];
 
+		if(amsContactList.isEmpty()){
+			ctt = [SELECT Id,Title,Email FROM Contact WHERE Id =:userIn.contactId];
+		}
 		if(userIn != null){
-			//this.id = userIn.id;
+			if(!amsContactList.isEmpty()){
+				System.debug('AMS_Accreditation_Contact__c exists, automated process');
+				PhoneNumbers mobile = new PhoneNumbers();
+				mobile.value =  userIn.Contact.MobilePhone;
+				mobile.type = 'mobile';
 
-			//this.nickName = userIn.CommunityNickname;
+				PhoneNumbers work = new PhoneNumbers();
+				work.value =  userIn.Contact.Phone;
+				work.type = 'work';
 
-			//this.name.honorificPrefix = userIn.contact.Salutation;
+				PhoneNumbers fax = new PhoneNumbers();
+				fax.value =  userIn.Contact.Fax;
+				fax.type = 'fax';
 
-			PhoneNumbers mobile = new PhoneNumbers();
-			mobile.value =  userIn.Contact.MobilePhone;
-			mobile.type = 'mobile';
+				phoneNumbers = new List<PhoneNumbers>{mobile, work, fax};
 
-			PhoneNumbers work = new PhoneNumbers();
-			work.value =  userIn.Contact.Phone;
-			work.type = 'work';
+				this.title = userIn.Contact.title;
 
-			PhoneNumbers fax = new PhoneNumbers();
-			fax.value =  userIn.Contact.Fax;
-			fax.type = 'fax';
+				this.preferredLanguage = userIn.LanguageLocaleKey;
 
-			phoneNumbers = new List<PhoneNumbers>{mobile, work, fax};
+				if(this.entitlements == null) {
+					this.entitlements = new List<Entitlements>();
+				}
 
-			this.title = userIn.Contact.title;
+				Entitlements enCode = new Entitlements();  // IATA CODE
+				Entitlements enRequestedRole = new Entitlements(); // PASS ADMIN OR USER
+				Entitlements enName = new Entitlements();
 
-			this.preferredLanguage = userIn.LanguageLocaleKey;
-			//this.active = true;
-			//this.timezone = userIn.TimeZoneSidKey;
+				enCode.type = 'iataCode';
+				enCode.value = userIn.contact.Account.IATACode__c;
+				this.entitlements.add(enCode);
 
-			if(this.entitlements == null) {
-				this.entitlements = new List<Entitlements>();
-			}
+				enRequestedRole.type = 'Requested Role';
+				if(amsContactList[0].PASS_admin__c){
+					enRequestedRole.value = 'PASS Admin';
+				}
+				else{
+					enRequestedRole.value = 'PASS User';
+				}
+				
+				
+				this.entitlements.add(enRequestedRole);
 
-			Entitlements enCode = new Entitlements();  // IATA CODE
-			//Entitlements enIcaoCode = new Entitlements();
-			Entitlements enRequestedRole = new Entitlements(); // PASS ADMIN OR USER
-			Entitlements enName = new Entitlements();
-			//Entitlements enAccountType = new Entitlements();
-			//Entitlements enCountryCode = new Entitlements();
+				enName.type = 'NAME';
+				enName.value = userIn.contact.account.name;
+				this.entitlements.add(enName);
 
-			enCode.type = 'iataCode';
-			enCode.value = userIn.contact.AccountId;
-			this.entitlements.add(enCode);
-
-			enRequestedRole.type = 'Requested Role';
-			if(amsContact.PASS_admin__c){
-				enRequestedRole.value = 'PASS Admin';
+				if (email != null) {
+					SCIMUser.Emails e = new SCIMUser.Emails();
+					e.value = email;
+					e.type = 'home';
+					e.primary = false;
+		
+					SCIMUser.Emails e2 = new SCIMUser.Emails();
+					e2.value = email;
+					e2.type = 'work';
+					e2.primary = true;
+		
+					super.Emails = new List<SCIMUser.Emails>{e,e2};
+				}
+				this.displayName = userIn.name;
+				
+				Entitlements enExtSystem = new Entitlements();
+				enExtSystem.type = 'externalSystems';
+				enExtSystem.value = 'Postal Accounts Settlement System (PASS)';
+				this.entitlements.add(enExtSystem);
 			}
 			else{
-				enRequestedRole.value = 'PASS User';
+				System.debug('Manual Creation');
+
+				this.title = userIn.Contact.title;
+
+				this.preferredLanguage = userIn.LanguageLocaleKey;
+
+				this.entitlements = new List<Entitlements>();
+
+				Entitlements enCode = new Entitlements();  // IATA CODE
+				Entitlements enRequestedRole = new Entitlements(); // PASS ADMIN OR USER
+				Entitlements enName = new Entitlements();
+
+				enCode.type = 'iataCode';
+				enCode.value = userIn.contact.Account.IATACode__c;
+				this.entitlements.add(enCode);
+
+				enRequestedRole.type = 'Requested Role';
+				if(ctt.Title == 'PASS Admin'){
+					enRequestedRole.value = 'PASS Admin';
+				}
+				else{
+					enRequestedRole.value = 'PASS User';
+				}
+				
+				this.entitlements.add(enRequestedRole);
+
+				enName.type = 'NAME';
+				enName.value = userIn.contact.account.name;
+				this.entitlements.add(enName);
+
+				if (ctt.email != null) {
+					SCIMUser.Emails e = new SCIMUser.Emails();
+					e.value = email;
+					e.type = 'home';
+					e.primary = false;
+		
+					SCIMUser.Emails e2 = new SCIMUser.Emails();
+					e2.value = email;
+					e2.type = 'work';
+					e2.primary = true;
+		
+					super.Emails = new List<SCIMUser.Emails>{e,e2};
+				}
+				this.displayName = userIn.name;
+				
+				Entitlements enExtSystem = new Entitlements();
+				enExtSystem.type = 'externalSystems';
+				enExtSystem.value = 'Postal Accounts Settlement System (PASS)';
+				this.entitlements.add(enExtSystem);
 			}
-			//enRequestedRole.value = isPrimaryUser || userIn.contact.account.RecordType.DeveloperName == 'Verifiers' ? 'PRIMARY_USER' : 'SECONDARY_USER';
-			this.entitlements.add(enRequestedRole);
-
-			enName.type = 'NAME';
-			enName.value = userIn.contact.account.name;
-			this.entitlements.add(enName);
-
-			/*enAccountType.type = 'ACCOUNT_TYPE';
-
-			if(userIn.contact.account.RecordType.DeveloperName == 'IATA_Airline' || userIn.contact.account.RecordType.DeveloperName == 'Operator') {
-				 enAccountType.value = 'AIRCRAFT_OPERATOR';
-
-				 enIcaoCode.type = 'ICAO_CODE';
-				 enIcaoCode.value = userIn.contact.account.X8585_Code__c;
-				 this.entitlements.add(enIcaoCode);
-
-			} else if(userIn.contact.account.RecordType.DeveloperName == 'ICAO_Member_State') {
-				enAccountType.value = 'ICAO_MEMBER_STATE';
-
-				enCountryCode.type = 'COUNTRY_CODE';
-				enCountryCode.value = userIn.contact.account.Country_ISO_Code__c;
-				this.entitlements.add(enCountryCode);
-			} else if(userIn.contact.account.RecordType.DeveloperName == 'Verifiers') {
-				 enAccountType.value = 'VERIFIER';
-			}
-			this.entitlements.add(enAccountType);*/
-            
-            if (email != null) {
-                SCIMUser.Emails e = new SCIMUser.Emails();
-                e.value = email;
-                e.type = 'home';
-                e.primary = false;
-    
-                SCIMUser.Emails e2 = new SCIMUser.Emails();
-                e2.value = email;
-                e2.type = 'work';
-                e2.primary = true;
-    
-                super.Emails = new List<SCIMUser.Emails>{e,e2};
-            }
-			this.displayName = userIn.name;
-            
-			Entitlements enExtSystem = new Entitlements();
-			enExtSystem.type = 'externalSystems';
-			enExtSystem.value = 'Postal Accounts Settlement System (PASS)';
-			this.entitlements.add(enExtSystem);
-
-
-			/*
-			Photos aPhoto = new Photos();
-			aPhoto.type = 'photo';
-			aPhoto.value = userIn.SmallPhotoUrl;
-			this.photos = new List<Photos>();
-			this.photos.add(aPhoto);
-			*/
 
 			
 
-			//this.locale = userIn.LanguageLocaleKey;
-
-			/*this.addresses = new List<Addresses>();
-			Addresses address = new Addresses();
-			address.country = '';
-			address.region = '';
-			this.addresses.add(address);
-			*/
-
-			/*enterpriseExtension anEx = new enterpriseExtension();
-			anEx.organization = userIn.contact.account.name;
-			this.enx = anEx;
-			*/
-
-		  
 		}
 	}
 }

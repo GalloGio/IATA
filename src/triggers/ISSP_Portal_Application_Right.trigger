@@ -419,24 +419,10 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 		if (!ISSP_UserTriggerHandler.preventTrigger){
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+			PASS_UserProvisioningRequestHandler.createPassUserProvAccounts(contactIdPASSAccreditationSet);
 		}
 		ISSP_UserTriggerHandler.preventTrigger = true;
-
-		//Create User Provisioning Accounts for PASS SSO
-		Id PASSConnectedApp = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
-		List<User> passSsoUsers = [SELECT Id,Username FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
-		List<UserProvAccount> provAccList = new List<UserProvAccount>();
-		for(User passUser : passSsoUsers){
-			UserProvAccount upa = new UserProvAccount (
-							ExternalUserId = passUser.Username,
-							SalesforceUserId = passUser.Id,
-							ConnectedAppId = PASSConnectedApp,
-							LinkState = 'Linked',
-							Status = 'Active'
-						);
-			provAccList.add(upa);
-		}
-		insert provAccList;
 	}
 
 	system.debug('basto1p - Before IFG handle - ISSP_UserTriggerHandler.preventTrigger=' + ISSP_UserTriggerHandler.preventTrigger);

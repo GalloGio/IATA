@@ -74,8 +74,28 @@ public class PASS_UserProvisioningRequestHandler {
 		}
 	}
 
+
+	@future
+	public static void createPassUserProvAccounts(Set<Id> contactIdPASSAccreditationSet){
+		//Create User Provisioning Accounts for PASS SSO
+		Id PASSConnectedApp = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
+		List<User> passSsoUsers = [SELECT Id,Username FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
+		List<UserProvAccount> provAccList = new List<UserProvAccount>();
+		for(User passUser : passSsoUsers){
+			UserProvAccount upa = new UserProvAccount (
+							ExternalUserId = passUser.Id,
+							SalesforceUserId = passUser.Id,
+							ConnectedAppId = PASSConnectedApp,
+							LinkState = 'Linked',
+							Status = 'Active'
+						);
+			provAccList.add(upa);
+		}
+		insert provAccList;
+	}
+
 	@future 
-    @TestVisible
+	@TestVisible
 	private static void addPassPrimaryPermissionSet(List<Id> userIds){
 		List<PermissionSetAssignment> passPrimaryUserAssignment = new List<PermissionSetAssignment>();
 
