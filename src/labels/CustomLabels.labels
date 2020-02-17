@@ -396,13 +396,6 @@
         <shortDescription>AMS_OSCAR_Action20</shortDescription>
         <value>Open related Financial Security</value>
     </labels>
-	<labels>
-        <fullName>AMS_OSCAR_Action21</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_Action21</shortDescription>
-        <value>Confirm the conversion</value>
-    </labels>
     <labels>
         <fullName>AMS_OSCAR_Action3</fullName>
         <language>en_US</language>
