@@ -73,44 +73,17 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 	 			Boolean inactive90 = false;
 	 			if (test.isRunningtest()){
 	 				inactive90 = true;
-			}
+				}
+
 	 			if (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days)){
 	 				inactive90 = true;
 	 			}
-
-	 			/*
-	 			else if (thisUser.LastLoginDate < minus75days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus75days)){
-	 				inactive75 = true;
-	 			}
-	 			*/
 
 	 			// no login for over 90 days, inactivate user
 	 			if (inactive90){
 		 			thisUser.IsActive = false;
 		 			thisUser.Portal_User_Frozen_Checkbox__c = true;
-
-						/*
-						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setTargetObjectId(thisUser.Id);
-				mail.setTemplateId(template90Id);
-				mail.setWhatId(thisUser.Id);
-				mail.saveAsActivity = false;
-				mail.setOrgWideEmailAddressId(replyToId);
-				mailsToSend.add(mail);
-				*/
 	 			}
-	 			// no login for over 75 days, warn user
-	 				 				/*
-	 			else if (inactive75){
-						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setTargetObjectId(thisUser.Id);
-				mail.setTemplateId(template75Id);
-				mail.setWhatId(thisUser.Id);
-				mail.saveAsActivity = false;
-				mail.setOrgWideEmailAddressId(replyToId);
-				mailsToSend.add(mail);
-	 			}
-			*/
 	 		}
 	 		Database.saveResult[] userResult;
 	 		userResult = Database.update(userList, false);
@@ -125,39 +98,8 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 	 			}
 	 		}
 	 		transformationHelper.sendSFDevsAlertMessage('BATCH RESULT ' ,  message,  new list<string>{'nunesr@iata.org','beatrizr@iata.org'});
-
-	 		/*
-	 		Messaging.sendEmailResult[] sendEmailResults = new List<Messaging.Sendemailresult>();
-	 		if (mailsToSend.size() > 0){
-						sendEmailResults = Messaging.sendEmail(mailstoSend, false);
-				}
-				*/
 	 	}
 
 	 	global void finish(Database.BatchableContext BC) {
-	 		/*
-	 		system.debug('ON FINISH');
-	 		system.debug('ON FINISH: ' + inactivateUserIds);
-	 		Set <Id> inactivateContactIds = new Set <Id>();
-	 		List <User> finishUserList = [SELECT ContactId FROM User WHERE Id IN :inactivateUserIds];
-	 		if (!finishUserList.isEmpty()){
-	 			for (User thisUser : finishUserList){
-	 				inactivateContactIds.add(thisUser.ContactId);
-	 			}
-	 			List <Contact> contactList = [SELECT Id, Portal_User_Frozen__c FROM Contact WHERE Id IN :inactivateContactIds];
-		 		for (Contact thisContact : contactList){
-		 			thisContact.Portal_User_Frozen__c = true;
-		 		}
-		 		Database.saveResult[] contactResult;
-		 		contactResult = Database.update(contactList, false);
-		 		String message = 'FINAL\n';
-		 		for (Database.saveResult thisResult : contactResult){
-		 			if (!thisResult.isSuccess()){
-		 				message += 'ERROR: ' + thisResult + '\n';
-		 			}
-		 		}
-		 		transformationHelper.sendSFDevsAlertMessage('BATCH RESULT CONTACT' ,  message,  new list<string>{'tiago.ferreira@kerensen.com'});
-	 		}
-	 		*/
 	 	}
 }

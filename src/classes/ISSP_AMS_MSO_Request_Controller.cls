@@ -40,7 +40,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 		mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
 		billingStatesList = new list<SelectOption>();
 
-		currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+		currentUser = [SELECT Id, ContactId, Contact.isEmailBounced, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
 		currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name, Account.ParentId, Account.IATA_Member__c FROM Contact WHERE Id = :currentUser.ContactId];
 
 		applyLanguage = UserInfo.getLanguage();
@@ -452,36 +452,38 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
 
 	public void sendConfirmationEmail(Id caseId, Id contactId, Boolean success) {
-		String emailTemplateName = success ? 'IDFS_Case confirmation - MSO self-service' : 'IDFS_Case confirmation - phone, e-mail HTML (English)';
+		if(!currentUser.Contact.IsEmailBounced && String.isNotBlank(currentUser.Contact.Email) && !currentUser.Contact.Email.endsWithIgnoreCase('.inactive')) {
+			String emailTemplateName = success ? 'IDFS_Case confirmation - MSO self-service' : 'IDFS_Case confirmation - phone, e-mail HTML (English)';
 
-		SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
-		SYSTEM.DEBUG('caseId: ' + caseId);
-		SYSTEM.DEBUG('contactId: ' + contactId);
-		SYSTEM.DEBUG('success: ' + success);
+			SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+			SYSTEM.DEBUG('caseId: ' + caseId);
+			SYSTEM.DEBUG('contactId: ' + contactId);
+			SYSTEM.DEBUG('success: ' + success);
 
-		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-		List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
+			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+			List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
 
-		if (ets.isEmpty()) return;
+			if (ets.isEmpty()) return;
 
-		EmailTemplate et = ets[0];
+			EmailTemplate et = ets[0];
 
-		OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+			OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setTemplateID(et.Id);
-		if ( owea.size() > 0 ) {
-			mail.setOrgWideEmailAddressId(owea[0].Id);
-		}
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTemplateID(et.Id);
+			if ( owea.size() > 0 ) {
+				mail.setOrgWideEmailAddressId(owea[0].Id);
+			}
 
-		mail.setTargetObjectId(contactId);
-		mail.setWhatId(caseId);
-		mail.setSaveAsActivity(true);
+			mail.setTargetObjectId(contactId);
+			mail.setWhatId(caseId);
+			mail.setSaveAsActivity(true);
 
-		emails.add(mail);
-		if (!Test.IsRunningTest()) {
-			//SYSTEM.DEBUG('Sending confirmation email');
-			Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+			emails.add(mail);
+			if (!Test.IsRunningTest()) {
+				//SYSTEM.DEBUG('Sending confirmation email');
+				Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+			}
 		}
 	}
 
