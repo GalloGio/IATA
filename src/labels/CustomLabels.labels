@@ -516,6 +516,14 @@
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
     </labels>
+	<labels>
+        <fullName>AMS_OSCAR_CONFIRM_CONVERSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CONFIRM_CONVERSION</shortDescription>
+        <value>Confirm Conversion</value>
+    </labels>
     <labels>
         <fullName>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</fullName>
         <categories>LeftSidePanel, Headers</categories>
@@ -995,6 +1003,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP50</shortDescription>
         <value>Confirm Financial Security Information</value>
+    </labels>
+	<labels>
+        <fullName>AMS_OSCAR_STEP51</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP51</shortDescription>
+        <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
