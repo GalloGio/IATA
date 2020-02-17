@@ -23,6 +23,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 	@testSetup static void setup(){
 
+		Test.startTest();
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe')  ;
 		insert ctry ;
 
@@ -113,11 +115,11 @@ private class ANG_DGIStagingAreaCtrlTest {
 			UnitPrice = 12000, IsActive = true);
 
 		insert customPrice;
-        
-        // NEWGEN-5208 - The service will now also send the INT_011 request
-        List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
-        customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
-        insert customsettings;
+
+		// NEWGEN-5208 - The service will now also send the INT_011 request
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
 
 		Opportunity opp = new Opportunity();
 		opp.CloseDate=date.today().addMonths(50);
@@ -132,6 +134,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		Financial_Institution__c FI = new Financial_Institution__c(Name = 'GDI - Euler Hermes', INSTITUTION_TYPE__C='Bank');
 		insert FI;
+
+		Test.stopTest();
 
 	}
 
