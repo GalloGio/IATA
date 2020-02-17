@@ -543,7 +543,7 @@
                     $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
                 }
 
-                if ('{!hqAccount.Sector__c}' == 'Travel Agent') {
+                if ('{!hqAccount.Sector__c}' == 'Travel Agent' && !{!isBankAccountChange}) {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
 
@@ -959,7 +959,7 @@
                                 </div>
                             </div>
 
-                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocThirdQuestion" style="display: none;">
+                            <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
                                 <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
                                     <div class="form-group">
                                         <label for="typeOfChange" class="col-lg-3 control-label">
