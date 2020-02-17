@@ -27,6 +27,7 @@
                     <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall"
                         style="transition: height 0.3s ease;" data-item={article.label}>
                         <!-- ARTICLE -->
+						<c-portal-community360-util record-id={article.id}></c-portal-community360-util>
                         <div class="slds-m-bottom_medium">
                             <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
                         </div>

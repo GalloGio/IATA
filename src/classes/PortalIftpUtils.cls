@@ -1,4 +1,10 @@
 public without sharing class PortalIftpUtils {
+	
+	//Recordtypes used in IFTP Context
+	//account contact role object - ITP Recordtype
+	Public Static Final String ACC_CONT_ROLE_RT_ITP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+	
+	Public Static Final String ACC_ROLE_RT_IFTP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 	@AuraEnabled
 	public static boolean isCommunity(){
@@ -18,7 +24,8 @@ public without sharing class PortalIftpUtils {
 													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
 													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
 												FROM Account_Contact_Role__c
-												WHERE  Contact__r.accountid = :accountId];
+												WHERE  Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP]; 
 		return emps;
 	}
 
@@ -43,18 +50,17 @@ public without sharing class PortalIftpUtils {
 			e.setMessage('You have been logged out. Please login again. ');
 			throw e;
 		}
-		Id accRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-
 		Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
 													Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
 												FROM Account_Role_Service__c
 												WHERE Account_Role__r.Account__c = :userAcc.contact.accountid
-												AND Account_Role__r.RecordTypeId  = :accRoleRecTypeId
+												AND Account_Role__r.RecordTypeId  = :ACC_ROLE_RT_IFTP
 												LIMIT 1];
 
 		List<Account_Contact_Role__c> lContactRole = [SELECT Id, Contact_Role__c, Contact_Roles__c, Contact_Roles__r.Name
 													FROM Account_Contact_Role__c
-													WHERE Contact__c = :userAcc.contactId];
+													WHERE Contact__c = :userAcc.contactId
+													AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		List<Role_Address__c> lRoleAddr = [SELECT Id, Address__c,
 												Address__r.City__c,
@@ -62,7 +68,8 @@ public without sharing class PortalIftpUtils {
 												Address__r.Description__c,
 												Primary__c
 											FROM Role_Address__c
-											WHERE Account_Contact_Role__r.Contact__c = :userAcc.contactId];
+											WHERE Account_Contact_Role__r.Contact__c = :userAcc.contactId
+											AND Account_Contact_Role__r.RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		Portal_Application_Right__c par = [SELECT Right__c, Portal_Application__r.Name
 											FROM Portal_Application_Right__c
@@ -192,7 +199,6 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=true)
 	public static List<Account_Contact_Role__c> getITPEmployees(Id accountId){
-
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -200,14 +206,14 @@ public without sharing class PortalIftpUtils {
 													TransferFlag__c,UniqueKey__c
 												FROM Account_Contact_Role__c
 												WHERE Status__c <> 'Inactive'
-												AND Contact__r.accountid = :accountId];
+												AND Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		return emps;
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<Account_Contact_Role__c> getITPEmployeesWithStationsInfo(Id accountId){
-
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -221,7 +227,8 @@ public without sharing class PortalIftpUtils {
 													FROM Role_Addresses__r)
 												FROM Account_Contact_Role__c
 												WHERE Status__c <> 'Inactive'
-												AND Contact__r.accountid = :accountId];
+												AND Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		return emps;
 	}
@@ -235,7 +242,6 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=true)
 	public static Airport_Detail__c getITPStationEmployees(Id accountId, Id addressId){
-
 		Airport_Detail__c station = [SELECT Id, City__c, Code__c, Description__c ,
 											(SELECT Account_Contact_Role__r.Account__c,
 													Account_Contact_Role__r.Company_Code__c,
@@ -244,7 +250,8 @@ public without sharing class PortalIftpUtils {
 													Account_Contact_Role__r.Last_Name__c
 											FROM Role_Addresses__r
 											WHERE Account_Contact_Role__r.Contact__r.accountid = :accountId
-											AND Account_Contact_Role__r.Status__c <> 'Inactive')
+											AND Account_Contact_Role__r.Status__c <> 'Inactive'
+											AND Account_Contact_Role__r.RecordTypeId = :ACC_CONT_ROLE_RT_ITP)
 									 FROM Airport_Detail__c
 									 WHERE Id = :addressId];
 		return station;
@@ -382,11 +389,10 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=true)
 	public static List<Account> getAllITP(){
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-
+		
 		List<Account_Role__c> accRoleCompanies = [SELECT Account__c
 													FROM Account_Role__c
-													WHERE RecordTypeId = :RECTYPE_ITP_AccRole
+													WHERE RecordTypeId = :ACC_ROLE_RT_IFTP
 													AND Account_Roles__r.Category__c = 'ITP'
 													AND Account_Roles__r.Sector__c = 'Airline Supplier'];
 
@@ -657,8 +663,7 @@ public without sharing class PortalIftpUtils {
 
 		try{
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-
+		
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
 			List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
@@ -849,7 +854,7 @@ public without sharing class PortalIftpUtils {
 						accContRole.Company_Code__c = companyCode;
 						accContRole.Service_Rendered__c = 'IFTP';
 						accContRole.Status__c = 'Active';
-						accContRole.RecordTypeId = RECTYPE_ITP;
+						accContRole.RecordTypeId = ACC_CONT_ROLE_RT_ITP;
 						accContRole.Account_Role__c = ui.accountRole;
 						accContRole.Contact_Role__c = 'ITP Trainee';
 						accContRole.Details__c = details;
@@ -872,12 +877,7 @@ public without sharing class PortalIftpUtils {
 						} else{
 							contactsToInsert.add(cont);
 							accContRoleToInsert.add(accContRole);
-							isInsert = true;
-							ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																		accContRole.Company_Code__c,
-																		cont.FirstName,
-																		cont.LastName);
-							IftpHistoryStartWorkingItp.add(ihrec);
+							isInsert = true;						
 						}
 
 						ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -1615,11 +1615,7 @@ public without sharing class PortalIftpUtils {
 			throw new AuraHandledException('This action is not applicable to this role address because it has no Contact Role Certification.');
 		}
 
-		try{
-
-			roleAddress.Proficiency_level__c = 'No';
-			update roleAddress;
-
+		try{	
 			IFTP_History__c iftpH = new IFTP_History__c();
 			iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
 			iftpH.ITP_Name__c = itpAcc.name;
@@ -1634,6 +1630,7 @@ public without sharing class PortalIftpUtils {
 			iftpH.Logged_User__c = 'IATA INTERNAL USER' ;
 
 			insert iftpH;
+			delete roleAddress;
 
 		}catch(Exception ex){
 			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - removeProficiency] Exception - ' + ex );
