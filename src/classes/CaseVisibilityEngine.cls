@@ -50,18 +50,8 @@ public without sharing class CaseVisibilityEngine {
 	 * @return If the record visibility needs to be recalculated
 	 */
 	public static Boolean needsRecalulation(Case oldRecord, Case record, Set<Id> recycleBinIds) {
-		if (oldRecord != null) {
-			System.debug('CaseVisibilityEngine - needsREcalculation - oldRecord RecordType: ' + oldRecord.RecordTypeId);
-			System.debug('CaseVisibilityEngine - needsREcalculation - oldRecord Visible on Portal: ' + oldRecord.Visible_on_ISS_Portal__c);
-		}
-		System.debug('CaseVisibilityEngine - needsREcalculation - record RecordType: ' + record.RecordTypeId);
-		System.debug('CaseVisibilityEngine - needsREcalculation - record Visible on Portal: ' + record.Visible_on_ISS_Portal__c);
-		
-		return oldRecord == null
-			|| !recycleBinIds.contains(record.OwnerId)
-			&& (
-			// ( !record.Visible_on_ISS_Portal__c && !oldRecord.Visible_on_ISS_Portal__c ) ||
-			(record.RecordTypeId != oldRecord.RecordTypeId) || affectedCriteriaFields(record, oldRecord));
+		return oldRecord == null || !recycleBinIds.contains(record.OwnerId)
+			&& ((record.RecordTypeId != oldRecord.RecordTypeId) || affectedCriteriaFields(record, oldRecord));
 	}
 	
 	/**
@@ -93,7 +83,6 @@ public without sharing class CaseVisibilityEngine {
 			
 			for (VisibilityRuleExpression expression : criteria.expressionList) {
 				result &= expression.evaluateRecord(record);
-				System.debug('CaseVisibilityEngine - processVisibilityRules - current result: ' + result);
 			}
 			
 			// if the record matches one rule (criteria) we can break the loop and set the visibility to true
@@ -116,18 +105,12 @@ public without sharing class CaseVisibilityEngine {
 		
 		if (oldRecord != null) {
 			for (String field : ruleSet.getRulesByRecordType(record.RecordTypeId).ruleFields) {
-				System.debug('CaseVisibilityEngine - needsREcalculation - oldRecord ' + field + ': '
-					+ oldRecord.get(field));
-				System.debug('CaseVisibilityEngine - needsREcalculation - record ' + field + ': ' + record.get(field));
 				result |= record.get(field) != oldRecord.get(field);
-				System.debug('CaseVisibilityEngine - needsREcalculation - result: ' + result);
 			}
 		} else {
 			result = true;
 		}
-		
-		System.debug('CaseVisibilityEngine - needsREcalculation - return: ' + result);
-		
+				
 		return result;
 	}
 	
