@@ -3145,7 +3145,7 @@ global without sharing class ISSP_APProcess {
 		try {
 			update serviceRenderedList;
 			fetchPassCountries(newCase);
-			PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, true, false, false);
+			PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, false, true, false);
 			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO,'The following countries were successfully inactivated: ' + isoCountriesInactiveList);
 			ApexPages.addMessage(myMsg);
 		} catch(DmlException ex) {
