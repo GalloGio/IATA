@@ -2347,7 +2347,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessGEValue}  , &apos;New HE multicoun
 IF({!Type_of_OSCAR_process_man} = {!NewProcessGDIValue}  , &apos;GDI setup&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessMulticountryAEValue}  , &apos;New AE multicountry&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessConversionStToMCValue}  , &apos;Accreditation Type&apos;,
-&apos;&apos;))))))))))))))</expression>
+IF({!Type_of_OSCAR_process_man} = {!NewProcessConversionMCToSTValue}, &apos;Accreditation Type&apos;,
+&apos;&apos;)))))))))))))))</expression>
     </formulas>
     <formulas>
         <name>ContactIdToUse</name>
