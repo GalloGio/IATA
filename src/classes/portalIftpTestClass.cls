@@ -19,7 +19,7 @@ public class portalIftpTestClass {
 		insert countryList;
 
 		// get Airport record type Id for Accounts needed for Airport Detail records
-		Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Airport').getRecordTypeId();
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Airport');
 		// create Account for Airport Detail records
 		Map<String, Account> accountMap = new Map<String,Account> {
 			'LisbonX' => new Account(Name = 'LisbonX', RecordTypeId = recordTypeId),
