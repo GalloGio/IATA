@@ -43199,25 +43199,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Hierarchy_Level__c</picklist>
-            <values>
-                <fullName>Branch</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Single Location</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -48536,28 +48517,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Verification_Status__c</picklist>
-            <values>
-                <fullName>Unverified</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Verified</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Zuora__Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
