@@ -1370,7 +1370,7 @@ public with sharing class AMS_OSCAR_Automation {
 				oscar.Payment_requested__c = Date.today();
 				oscar.Invoice_deadline__c = Date.today() + 7;
 
-				oscar.STEP48__c = 'In Progress';
+				oscar.STEP9__c = 'In Progress';
 
 				res = true;
 			}
