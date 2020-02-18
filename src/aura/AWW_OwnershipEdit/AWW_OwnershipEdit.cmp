@@ -140,7 +140,7 @@
                     <aura:if isTrue="{!and(!empty(v.searchName), v.operation == 'Add')}">                   
                         <aura:if isTrue="{!v.selectedRowsCount == 0}">
                             <aura:set attribute="else">
-                                <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
+                                <aura:renderIf isTrue="{!and(v.selectedAction == 'add',!v.isGreaterThanOneHundred)}">
                                     <lightning:button aura:id="greaterThanOneHundred" variant="brand" label="Add" title="Add" onclick="{!c.save}"/>
                                 </aura:renderIf>
                                 <aura:renderIf isTrue="{!v.selectedAction != 'add'}">

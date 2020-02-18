@@ -66,7 +66,7 @@
         }
     },
     save : function(component,event,helper) {
-        if(component.get('v.record.percentage') <= 100){
+        if(!component.get("v.isGreaterThanOneHundred")){
             helper.askConfirmation(component);
             $A.util.removeClass(component.find("greaterThanOneHundred"), "slds-hide");
             $A.util.removeClass(component.find("greaterThanOneHundredTwo"), "slds-hide");
@@ -108,13 +108,14 @@
         }
     },
     updateCounter : function(component,event,helper) {
-        
         var results = component.find('search-results');
         if(component.get('v.selectedAction') != 'add'){
             results = component.find('search-results-remove');
         }
         if(results) {
-            component.set('v.selectedRowsCount',results.getSelectedRows().length);
+            if(results.getSelectedRows()){
+                component.set('v.selectedRowsCount',results.getSelectedRows().length);
+            }
         }
         var action = component.get('c.handleGreaterThanOneHundred');
         $A.enqueueAction(action);
