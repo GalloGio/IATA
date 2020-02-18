@@ -392,7 +392,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				}
 
 				 // PASS
-				if(acc.Location_Class__c){
+				if(acc.Location_Class__c == 'L'){
 					this.accountsite = acc.Site;
 					this.IMPCCode = acc.IMPC_Code__c;
 				}
