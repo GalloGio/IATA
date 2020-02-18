@@ -76,7 +76,7 @@
                                 <apex:pageBlock mode="edit" >
                                     <apex:pageBlockButtons location="bottom" style="padding-left:100px" >
                                         <apex:outputPanel id="cmdButtonsBlock">
-                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" onclick="if(!confirm('Are you sure you want to withdraw the selected countries?')){return false};" action="{!withdrawCountries}" rendered="{!changePass}" value="{!$Label.CSP_Continue}" status="WaitingStatus"  reRender="strmessages,countryListPassToWithdraw"/>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" onclick="if(!confirm({!$Label.ISSP_AP_PASS_Withdraw})){return false};" action="{!withdrawCountries}" rendered="{!changePass}" value="{!$Label.CSP_Continue}" status="WaitingStatus"  reRender="strmessages,countryListPassToWithdraw"/>
                                                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="{!$Label.CSP_Continue}" />&nbsp;
                                                 <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
                                             </apex:outputPanel>
