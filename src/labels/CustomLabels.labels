@@ -26470,6 +26470,13 @@ Separate legal entities cannot share the same Legal Name.</value>
         <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
 	</labels>
 	<labels>
+        <fullName>ISSP_AP_PASS_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
+        <value>Are you sure you want to withdraw the selected countries?</value>
+    </labels>
+	<labels>
         <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
