@@ -11,7 +11,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 
 		 	ISSP_PortalUserFreeze_Batch cls = new ISSP_PortalUserFreeze_Batch();
 
-		return System.schedule('Freeze portal users', cron, cls);
+		return System.schedule(Test.isRunningTest() ? 'Freeze portal users Test' + Datetime.now().getTime() : 'Freeze portal users', cron, cls);
 		}
 
 		global void execute(SchedulableContext sc){
