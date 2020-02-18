@@ -1545,8 +1545,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 				Portal_Application_Right__c par = new Portal_Application_Right__c(
 					Portal_Application__c = portalApplicationId,
 					Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
-					Is_Favorite__c = isFavorite,
-					Right__c = 'Access Granted'
+					Is_Favorite__c = isFavorite
 				);
 				insert par;
 				return true;
@@ -1566,8 +1565,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			Portal_Application_Right__c par = new Portal_Application_Right__c(
 				Portal_Application__c = portalApplicationId,
 				Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
-				Last_Visit_Date__c = Datetime.now(),
-				Right__c = 'Access Granted'
+				Last_Visit_Date__c = Datetime.now()
 			);
 			insert par;
 			return true;

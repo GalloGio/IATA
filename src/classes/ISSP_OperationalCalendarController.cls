@@ -853,7 +853,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		for(Schema.FieldSetMember f : fieldset.getFields()) {
 			String stype = String.ValueOf(f.getType()).toLowerCase();
 			stype = f.getFieldPath()=='Country__c'? 'string': stype;
-			String headerLabel = f.getLabel();
+			String headerLabel = f.getFieldPath()=='frequency_code__c'? 'Remittance Frequency': f.getLabel();
 			table.headers.add(new HeaderDef(headerLabel,stype,true));
 		}
 		//data
