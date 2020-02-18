@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Custom cases tab for IFAP portal</description>
     <label>Cases</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom28: Cell phone</motif>
     <page>CustomCaseListPage</page>
 </CustomTab>

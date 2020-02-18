@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>My Cases</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom25: Alarm clock</motif>
     <scontrol>My_Cases</scontrol>
 </CustomTab>

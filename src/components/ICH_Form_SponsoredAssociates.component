@@ -589,7 +589,7 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
 
-        <apex:inputField value="{!ctrl.newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"
+        <apex:inputField value="{!ctrl.newForm.IINET_account_number__c}" styleclass="required" html-pattern="[a-zA-Z0-9]{4}" html-placeholder="Example: AA11"
             style="width: auto" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='Yes' && !readOnly}" />
         <apex:outputText value="{!ctrl.newForm.IINET_account_number__c}" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='Yes' && readOnly}"
             styleclass="bold" />
@@ -798,7 +798,11 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <apex:outputText value="[DOWNLOAD DOCUMENT TO SIGN]" styleclass="strong-label" />
+        <apex:outputPanel rendered="{!ctrl.SponsorshipLetterUrl!=null}">
+            <apex:outputLink value="{!ctrl.SponsorshipLetterUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">
+                {!ctrl.SponsorshipLetterName}
+            </apex:outputLink>
+        </apex:outputPanel>
         <tr>
             <td colspan="4" class="required">
                 <apex:iframe scrolling="false" height="160px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=9&reqRequired=Mandatory&reqName={!URLENCODE('IATA Member Sponsorship letter')}&reqDescription=&reqIdentifier=IATAMemberSponsorshipLetter&onlyOne=true"

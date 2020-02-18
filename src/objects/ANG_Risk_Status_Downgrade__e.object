@@ -17,4 +17,5 @@
     </fields>
     <label>Risk Status Downgrade</label>
     <pluralLabel>Risk Status Downgrades</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
