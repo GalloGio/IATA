@@ -67,7 +67,7 @@
                                                 </div>
                                             </td>
                                             <td><c:AMP_LongText text="{!member.accountName}"/></td>
-                                            <td  class="no-truncate"><lightning:formattedText value="{!localGroup.ownerName}"/></td>
+                                            <td ><c:AMP_LongText text="{!localGroup.ownerName}"/></td>
                                             <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
                                             <td class="no-truncate"><lightning:formattedText value="{!member.role}"/></td>
                                             <td class="no-truncate"><lightning:formattedText value="{!member.salutation}"/></td>
