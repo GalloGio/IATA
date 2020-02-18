@@ -262,10 +262,11 @@
     <formulas>
         <name>ReconsiderationTime</name>
         <dataType>Number</dataType>
-        <expression>IF(ISNULL({!case_record.ClosedDate}),
+        <expression>IF(
+    ISNULL({!oscar.Reconsideration_date__c}),
 	TODAY(),
-	DATEVALUE({!case_record.ClosedDate})
-) - {!oscar.Reconsideration_date__c}</expression>
+    {!oscar.Reconsideration_date__c}
+)  - {!oscar.Disapproval_date__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
