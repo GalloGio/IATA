@@ -20,7 +20,7 @@ Thank you for submitting your dispute to us online. Dispute number {!relatedTo.C
  
 Contact Name: {!relatedTo.Contact.Name} <br/><br/>
 Name of Agency: {!relatedTo.Account.Name} <br/><br/>
-IATA Code: {!relatedTo.Account_Concerned__r.IATACode__c} <br/><br/>
+IATA Code: {!relatedTo.IATAcode__c} <br/><br/>
 Agent Email: {!relatedTo.Contact.Email} <br/><br/>
 Phone: {!relatedTo.Account.Phone} <br/><br/><br/>
 Airline Code: {!relatedTo.Airline_Code__c} <br/><br/>
