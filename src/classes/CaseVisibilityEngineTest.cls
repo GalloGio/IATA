@@ -218,4 +218,20 @@ private class CaseVisibilityEngineTest {
 		Test.stopTest();
 	}
 	
+	@isTest
+	static void testCasesIFG() {
+		Account acc = [SELECT Id,
+						   (SELECT Id FROM Contacts)
+					   FROM Account];
+		
+		Test.startTest();
+		Case cse = new Case(AccountId = acc.Id, ContactId = acc.Contacts[0].Id, RecordTypeId = RecordTypeSingleton.getInstance()
+			.getRecordTypeId('Case', 'Cases_IFG'), Subject = 'Test', Type = 'Request', Status = 'Open', Origin = 'Email', CaseArea__c = 'Remittance & Settlement',
+				IATAcode__c = '12345678', BSP_CASS__c = 'BSP');
+		insert cse;
+		
+		cse = [SELECT Visible_on_ISS_Portal__c FROM Case WHERE Id = :cse.Id];
+		System.assertEquals(true, cse.Visible_on_ISS_Portal__c);
+		Test.stopTest();
+	}
 }

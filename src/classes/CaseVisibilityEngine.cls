@@ -80,6 +80,8 @@ public without sharing class CaseVisibilityEngine {
 			return;
 		}
 		
+		record.Visible_on_ISS_Portal__c = false;
+
 		for (VisibilityRuleCriteria criteria : rule.criteriaList) {
 			Boolean result = true;
 			
@@ -94,7 +96,7 @@ public without sharing class CaseVisibilityEngine {
 				System.debug('CaseVisibilityEngine - processVisibilityRules - current result: ' + result);
 			}
 			
-			// if the record matches one rule we can break the loop and set the visibility to true
+			// if the record matches one rule (criteria) we can break the loop and set the visibility to true
 			if (result) {
 				record.Visible_on_ISS_Portal__c = true;
 				break;
