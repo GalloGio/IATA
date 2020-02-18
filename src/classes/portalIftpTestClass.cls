@@ -18,11 +18,21 @@ public class portalIftpTestClass {
 		countryList.add(ctr4);
 		insert countryList;
 
+		// get Airport record type Id for Accounts needed for Airport Detail records
+		Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Airport').getRecordTypeId();
+		// create Account for Airport Detail records
+		Map<String, Account> accountMap = new Map<String,Account> {
+			'LisbonX' => new Account(Name = 'LisbonX', RecordTypeId = recordTypeId),
+			'GenevaX' => new Account(Name = 'GenevaX', RecordTypeId = recordTypeId),
+			'ParisX' => new Account(Name = 'ParisX', RecordTypeId = recordTypeId)
+		};
+		insert accountMap.values();
+
 		//Create Address
 		List<Airport_Detail__c> addressList = new List<Airport_Detail__c>();
-		Airport_Detail__c add1 = new Airport_Detail__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id);
-		Airport_Detail__c add2 = new Airport_Detail__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id);
-		Airport_Detail__c add3 = new Airport_Detail__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id);
+		Airport_Detail__c add1 = new Airport_Detail__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id, Account__c = accountMap.get('LisbonX').Id);
+		Airport_Detail__c add2 = new Airport_Detail__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id, Account__c = accountMap.get('GenevaX').Id);
+		Airport_Detail__c add3 = new Airport_Detail__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id, Account__c = accountMap.get('ParisX').Id);
 		addressList.add(add1);
 		addressList.add(add2);
 		addressList.add(add3);
