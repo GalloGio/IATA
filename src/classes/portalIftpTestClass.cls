@@ -1,9 +1,6 @@
 @isTest
 public class portalIftpTestClass {
 
-
-//    @testSetup
-//    static void setup() {
 	public static void test_config(){
 
 		//Create Country
@@ -110,10 +107,8 @@ public class portalIftpTestClass {
 		List<Contact_Roles__c> contactRolesList = new List<Contact_Roles__c>();
 		Contact_Roles__c contactRolesITPAdmin = new Contact_Roles__c(Name = 'ITP Administrator', Service__c = portalApp.Id);
 		Contact_Roles__c contactRolesITPCoord = new Contact_Roles__c(Name = 'ITP Training Coordinator', Service__c = portalApp.Id);
-		Contact_Roles__c contactRolesITPMaster = new Contact_Roles__c(Name = 'ITP Master', Service__c = portalApp.Id);
 		contactRolesList.add(contactRolesITPAdmin);
 		contactRolesList.add(contactRolesITPCoord);
-		contactRolesList.add(contactRolesITPMaster);
 		insert contactRolesList;
 
 		//Create Contacts - ITP / Airline
@@ -235,13 +230,11 @@ public class portalIftpTestClass {
 		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 		List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>();
-		Account_Contact_Role__c accountContactRoleITPMaster = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPMaster.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont1.Id, Contact_Role__c = 'ITP Master',Company_Code__c='TC');
-		Account_Contact_Role__c accountContactRoleITPAdmin = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPAdmin.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont2.Id, Contact_Role__c = 'ITP Administrator',Company_Code__c='TC');
+		Account_Contact_Role__c accountContactRoleITPAdmin = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPAdmin.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont2.Id, Contact_Role__c = 'ITP Training Coordinator',Company_Code__c='TC');
 		Account_Contact_Role__c accountContactRoleITPCoord = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPCoord.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont3.Id, Contact_Role__c = 'ITP Training Coordinator', Company_Code__c='TC');
 		Account_Contact_Role__c accountContactRoleITPStudent = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont5.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc');
 		Account_Contact_Role__c accountContactRoleITPStudent2 = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont50.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc2');
 		Account_Contact_Role__c accountContactRoleITPStudent3 = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont5S3.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc3');
-		accountContactRoleList.add(accountContactRoleITPMaster);
 		accountContactRoleList.add(accountContactRoleITPAdmin);
 		accountContactRoleList.add(accountContactRoleITPCoord);
 		accountContactRoleList.add(accountContactRoleITPStudent);
