@@ -141,7 +141,7 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Represents Airport related data and must be related to an Account where data for the airport as a legal entity is stored.</description>
     <enableActivities>false</enableActivities>
@@ -156,8 +156,8 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Airport Detail</label>
     <nameField>
-        <displayFormat>APD-{00000000}</displayFormat>
-        <label>Airport Detail Name</label>
+        <displayFormat>APD-{0000000000}</displayFormat>
+        <label>Airport Autoname</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Airport Details</pluralLabel>
@@ -194,6 +194,17 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Airport_Name__c</fullName>
+        <description>The name of the airport is equal to the name of the associated account.</description>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <label>Airport Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>City__c</fullName>
@@ -259,17 +270,17 @@
         <type>Lookup</type>
     </fields>
     <compactLayouts>
-        <fullName>IFTP_Compact_Layout</fullName>
+        <fullName>Airport_Detail_Compact_Layout</fullName>
         <fields>City__c</fields>
         <fields>Code__c</fields>
         <fields>IATA_ISO_Country__c</fields>
         <fields>Name</fields>
-        <label>IFTP Compact Layout</label>
+        <label>Airport Detail Compact Layout</label>
     </compactLayouts>
     <recordTypes>
         <fullName>Airport</fullName>
         <active>true</active>
-        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
         <description>Airports&#39; location information.</description>
         <label>Airport</label>
     </recordTypes>
