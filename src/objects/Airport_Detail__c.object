@@ -142,6 +142,22 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Airport_Detail_Compact_Layout</fullName>
+        <fields>City__c</fields>
+        <fields>Code__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+        <fields>Name</fields>
+        <label>Airport Detail Compact Layout</label>
+    </compactLayouts>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>City__c</fields>
+        <fields>Code__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+        <fields>Name</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Represents Airport related data and must be related to an Account where data for the airport as a legal entity is stored.</description>
     <enableActivities>false</enableActivities>
@@ -154,33 +170,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Airport Detail</label>
-    <nameField>
-        <displayFormat>APD-{0000000000}</displayFormat>
-        <label>Airport Autoname</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Airport Details</pluralLabel>
-    <searchLayouts>
-        <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>City__c</searchFilterFields>
-        <searchFilterFields>Code__c</searchFilterFields>
-        <searchFilterFields>Description__c</searchFilterFields>
-        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
-    <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account__c</fullName>
         <description>The Account representing the Airport as a legal entity.</description>
@@ -269,21 +258,7 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <compactLayouts>
-        <fullName>Airport_Detail_Compact_Layout</fullName>
-        <fields>City__c</fields>
-        <fields>Code__c</fields>
-        <fields>IATA_ISO_Country__c</fields>
-        <fields>Name</fields>
-        <label>Airport Detail Compact Layout</label>
-    </compactLayouts>
-    <recordTypes>
-        <fullName>Airport</fullName>
-        <active>true</active>
-        <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
-        <description>Airports&#39; location information.</description>
-        <label>Airport</label>
-    </recordTypes>
+    <label>Airport Detail</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -293,4 +268,37 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <nameField>
+        <displayFormat>APD-{0000000000}</displayFormat>
+        <label>Airport Autoname</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Airport Details</pluralLabel>
+    <recordTypes>
+        <fullName>Airport</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
+        <description>Airports&apos; location information.</description>
+        <label>Airport</label>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>City__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>City__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>City__c</searchFilterFields>
+        <searchFilterFields>Code__c</searchFilterFields>
+        <searchFilterFields>Description__c</searchFilterFields>
+        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>
