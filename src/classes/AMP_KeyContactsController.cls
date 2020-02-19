@@ -7,6 +7,7 @@ public with sharing class AMP_KeyContactsController {
 
 	public List<ContactWrapper> lsKeyContactsWrapped {get;set;}
 	public String isWWAccount {get;set;}
+	public String recordTypeName {get; set;}
 
 	// The extension constructor initializes the private member
 	// variable myAccount by using the getRecord method from the standard
@@ -14,7 +15,9 @@ public with sharing class AMP_KeyContactsController {
 	public AMP_KeyContactsController(ApexPages.StandardController stdController) {
 		this.myAccount = (Account)stdController.getRecord();
 		if(this.myAccount != null && this.myAccount.Id != null) {
-			this.parentAccountId = [SELECT Id, ParentId FROM Account WHERE Id = :myAccount.Id].ParentId;
+			Account acc = [SELECT Id, ParentId, RecordType.DeveloperName FROM Account WHERE Id = :myAccount.Id];
+			this.parentAccountId = acc.ParentId;
+			recordTypeName = acc.RecordType.DeveloperName;
 			lsKeyContactsWrapped = getKeyContactsWrapped(myAccount.Id);
 		}
 	}
@@ -22,13 +25,15 @@ public with sharing class AMP_KeyContactsController {
 	public AMP_KeyContactsController() {
 		String accountId =  ApexPages.currentPage().getParameters().get('accountId');
 		isWWAccount = ApexPages.currentPage().getParameters().get('isWWAccount');
-		accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+		Account acc = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:accountId LIMIT 1];
+		accountName = acc.Name;
 		if(isWWAccount != null && Boolean.valueOf(isWWAccount)){
 			lsKeyContactsWrapped = getAwwKeyContactsWrapped(accountId);
 		}
 		else{
 			lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
 		}
+		recordTypeName = acc.RecordType.DeveloperName;
 	}
 
 	public String getRecordId() {

@@ -1,15 +1,15 @@
 ({
     initTable : function(component) {
         component.set('v.gridColumns',[
-            {label: 'IATA Group Name', cssClass: 'th_7'},
-            {label: 'Account Name', cssClass: 'th_9'},
-            {label: 'IATA Group Owner', cssClass: 'th_12'},
-            {label: 'Mission of IATA Group', cssClass: 'th_30'},
-            {label: 'Role Within Group', cssClass: 'th_11'},
-            {label: 'Salut.', cssClass: 'th_5'},
-            {label: 'First Name', cssClass: 'th_8'},
-            {label: 'Last Name', cssClass: 'th_8'},
-            {label: 'Title', cssClass: 'th_9'}
+            {label: 'IATA Group Name', cssClass: 'th_7 no-truncate'},
+            {label: 'Account Name', cssClass: 'th_9 no-truncate'},
+            {label: 'IATA Group Owner', cssClass: 'th_12 no-truncate'},
+            {label: 'Mission of IATA Group', cssClass: 'th_30 no-truncate'},
+            {label: 'Role Within Group', cssClass: 'th_11 no-truncate'},
+            {label: 'Salut.', cssClass: 'th_5 no-truncate'},
+            {label: 'First Name', cssClass: 'th_8 no-truncate'},
+            {label: 'Last Name', cssClass: 'th_8 no-truncate'},
+            {label: 'Title', cssClass: 'th_9 no-truncate'}
         ]);
     },
     fetchData : function(component) {
@@ -23,7 +23,6 @@
             var state = response.getState();
             if(component.isValid() && state === "SUCCESS") {
                 var result = response.getReturnValue();
-                console.log(result);
                 component.set('v.gridData', result.groups);
                 component.set('v.originalData', result.groups);
                 component.set('v.gridExpandedRows', result.expandedRows);

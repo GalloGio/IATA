@@ -44,8 +44,6 @@ public with sharing class AWW_AccountGroupsCtrl {
 		query += whereClause;
 		query += ' ORDER BY Local_Governance__r.AM_Under__r.Name, Local_Governance__r.Name, Participant_Type__c';
 
-		System.debug('query: ' +  query);
-
 		return Database.query(query);
 	}
 
@@ -63,7 +61,6 @@ public with sharing class AWW_AccountGroupsCtrl {
 
 		String whereClause = 'AND Local_Governance__r.Name IN (\'' + String.join(groupNames, '\',\'')+ '\')';
 		List<Participant__c> participants = getParticipants(whereClause, relatedAccounts);
-		System.debug('participants: ' + participants);
 		for(Participant__c p : participants) {
 			TopGroup mainGroup = currentMainGroups.get(p.Local_Governance__r.Name);
 			if(mainGroup == null) {
@@ -167,7 +164,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 			this.rowId = rowId;
 			this.rowId_collapse = 'collapse_' + rowId;
 			this.rowId_expand = 'expand_' + rowId;
-			this.groupName = 'Under ' + groupName;
+			this.groupName = groupName;
 			this.printableGoupName = groupName;
 			this.ownerName = ownerName;
 			this.childrens = new List<LocalGroup>();

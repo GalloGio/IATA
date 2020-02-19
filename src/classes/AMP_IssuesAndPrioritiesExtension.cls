@@ -10,6 +10,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	public String sortOrder {get;set;}
 	private final Id objectiveRecordTypeId ;
 	public Objective__c newIssue {get; set;}
+	public String recordTypeName {get; set;}
 
 	private List<String> lsIssueFields;
 
@@ -19,24 +20,29 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	// variable myAccount by using the getRecord method from the standard
 	// controller.
 	public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
-		this.myAccount = (Account)stdController.getRecord();
+		if(!Test.isRunningTest())
+			stdController.addFields(new List<String>{'RecordType.DeveloperName'});
+
+		Account acc = (Account)stdController.getRecord();
+
 		this.objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 		showAllItems = false;
 		isEditMode = false;
 		isNewLine = false;
-		if(this.myAccount.Id != null) {
-			accountId = this.myAccount.Id;
-			// accountName = this.myAccount.Name;
-		} else {
-			accountId =  ApexPages.currentPage().getParameters().get('accountId');
-			accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+		if(acc.Id == null){
+			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:ApexPages.currentPage().getParameters().get('accountId') LIMIT 1];
 			if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
+		}else{
+			this.myAccount = acc;
 		}
+		accountId =  this.myAccount.id;
+		accountName =  this.myAccount.Name;
+		recordTypeName = this.myAccount.RecordType.DeveloperName;
+		
 		lsIssueFields = getIssueFields();
 		canEdit = getCanEdit();
 		lsIssuesAndPriorities = new List<Objective__c>();
 		lsIssuesAndPriorities = getIssuesAndPriorities();
-		System.debug(this.objectiveRecordTypeId);
 	}
 
 	public String getJSONIssuesAndPriorities() {
@@ -146,7 +152,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 	public PageReference filterIssuesAndPriorities() {
 		lsIssuesAndPriorities = getIssuesAndPriorities();
-		System.debug(lsIssuesAndPriorities);
 		return null;
 	}
 
@@ -197,7 +202,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		' AND RecordTypeId = \'' + objectiveRecordTypeId+ '\'';
 		// if(!showAllItems) queryString += ' AND Status__c =  \'Active\'';
 		if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
-		System.debug(queryString);
 		List<SObject> lsSObjects = Database.query(queryString);
 		for(SObject s : lsSObjects) {
 			lsIssuesAndPriorities.add((Objective__c) s);
@@ -212,7 +216,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 			issue.RecordTypeId = objectiveRecordTypeId;
 		}
-		System.debug(issue);
 		upsert issue;
 		return issue;
 	}
@@ -277,7 +280,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 					delete newLine;
 					lsIssuesAndPriorities = getIssuesAndPriorities();
 					} catch (DMLException e) {
-						System.debug(e);
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 					}
 				}
