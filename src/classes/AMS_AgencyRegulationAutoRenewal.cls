@@ -400,7 +400,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			}
 
 			//put the contacts in recipents list
-			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend and IsEmailBounced = false];
+			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
 			System.debug('IATA recipents list: ' + recipents);
 		}
 

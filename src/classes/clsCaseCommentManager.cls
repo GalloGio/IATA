@@ -10,7 +10,7 @@ public class clsCaseCommentManager {
 		}
 		Map<Id, CaseComment> caseCommentsMap = new Map<Id, CaseComment>([Select Id, parentId, Parent.Subject, Parent.CaseNumber, /*Parent.Product_Manager__c,*/
 				Parent.RecordType.Name, Parent.Product_Manager_ACR__r.Email, CreatedBy.Profile.Name, IsPublished, Parent.ACCA_Owner__r.Email,
-				parent.ContactId, parent.Contact.Email, parent.Owner.email, parent.owner.Name, CommentBody from CaseComment where Id IN :caseCommentIds AND parentId != null]);
+				parent.ContactId, parent.Contact.Email, parent.Contact.IsEmailBounced, parent.Owner.email, parent.owner.Name, CommentBody from CaseComment where Id IN :caseCommentIds AND parentId != null]);
 
 		String emailTemplateName = 'Self-Service New Comment Notification';
 
@@ -27,7 +27,7 @@ public class clsCaseCommentManager {
 
 				CaseComment cm = caseCommentsMap.get(caseComment.Id);
 
-				if (cm.parent.contact.email != null) {
+				if (cm.parent.contact.email != null && !cm.parent.contact.email.endsWithIgnoreCase('.inactive') && !cm.parent.Contact.IsEmailBounced) {
 
 					// Create a new single email message object
 					// that will send out a single email to the addresses in the To, CC & BCC list.
@@ -48,10 +48,10 @@ public class clsCaseCommentManager {
 					if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)') ||
 							(cm.Parent.RecordType.Name == 'Application Change Request (DPC System)') ||
 							(cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems) - ACCA')) {
-						if (cm.Parent.Owner.Email != null)
+						if (cm.Parent.Owner.Email != null && !cm.parent.Owner.Email.endsWithIgnoreCase('.inactive'))
 							ccaddress.add(cm.Parent.Owner.Email);
 
-						if (cm.Parent.Product_Manager_ACR__r.Email != null)
+						if (cm.Parent.Product_Manager_ACR__r.Email != null && !cm.Parent.Product_Manager_ACR__r.Email.endsWithIgnoreCase('.inactive'))
 							ccaddress.add(cm.Parent.Product_Manager_ACR__r.Email);
 
 					}
