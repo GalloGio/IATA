@@ -539,7 +539,8 @@ global class AMS_OSCAR_Webservice {
 
 				AMS_OSCAR__c currentOscar = oscar[0];
 
-				if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+				if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || currentOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST 
+				|| (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
 					return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
 				currentOscar.Risk_event_creation_date__c = System.today();
@@ -585,13 +586,20 @@ global class AMS_OSCAR_Webservice {
 						currentOscar.Risk_event_creation_date__c == System.Today() &&
 						currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
 
-				if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC || isNewGEAccreditation || isConversionToMulticountry){
+				Boolean isConversionToStandard =
+						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD &&
+						currentOscar.Is_NewGen__c &&
+						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+						currentOscar.Risk_event_creation_date__c == System.Today() &&
+						currentOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST;
+
+				if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC || isNewGEAccreditation || isConversionToMulticountry || isConversionToStandard){
 					AMS_OscarTriggerHandler.applyRHCForecast = true;
 				}
 
 				update currentOscar;
 
-				if(isNGChangeOfHierarchyWithNewRHC){
+				if(isNGChangeOfHierarchyWithNewRHC){ 
 
 					ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
 
@@ -605,7 +613,7 @@ global class AMS_OSCAR_Webservice {
 
 				if(rskEventLst.isEmpty()){
 
-					if(isNGNewAccreditation || isNewGEAccreditation || isConversionToMulticountry){
+					if(isNGNewAccreditation || isNewGEAccreditation || isConversionToMulticountry || isConversionToStandard){
 
 						ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
 
