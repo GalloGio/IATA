@@ -412,10 +412,10 @@ public without sharing class portalIftpHistoryManagement {
 
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
+				if(String.isNotBlank(sEmpType)){
 				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
 					continue;
 				}
-			}
 
 			if(mapResults.containsKey(ikey)){
 				Integer aux = ((Integer)mapResults.get(ikey));
@@ -423,6 +423,8 @@ public without sharing class portalIftpHistoryManagement {
 				mapResults.put(ikey,aux);
 			}else{
 				mapResults.put(ikey,1);
+			}
+		}
 			}
 		}
 
