@@ -413,7 +413,7 @@ public without sharing class portalIftpHistoryManagement {
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
 				if(String.isNotBlank(sEmpType)){
-				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
+					if(sEmpType.contains('ITP Training Coordinator') && ikey == '0' && !hasCert.contains(rec)){
 					continue;
 				}
 
