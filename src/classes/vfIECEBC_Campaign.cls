@@ -93,6 +93,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
                     objFields.add(fieldResult.getName());
 				}
             }
+			fields.addAll(objFields);
 			fields.addAll(new List<String>{
 				'Billing_Account__c',
 				'EBC_Design__r.Is_Tested__c',
