@@ -183,7 +183,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 			CreateAccountRole(user);
 
 			Portal_Application_Right__c appRight = [
-				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c, Terms_Acceptance_Version__c, Portal_Application__r.Terms_and_Conditions_Version__c
+				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
 				From Portal_Application_Right__c
 				Where ContactId__c = :String.valueOf(user.ContactId).left(15)
 				And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
@@ -196,7 +196,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 				return pageref;
 			}
 			// if terms and conditions are not accepted is redirected to Terms page
-			if (!appRight.Terms_Acceptance__c || appRight.Terms_Acceptance_Version__c < appRight.Portal_Application__r.Terms_and_Conditions_Version__c) {
+			if (!appRight.Terms_Acceptance__c) {
 				Pagereference pageref = Page.ISSP_TIP_TermsAndConditions;
 				pageref.setRedirect(true);
 				return pageref;
@@ -1070,7 +1070,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 	public PageReference acceptTerms() {
 
 		Portal_Application_Right__c appRight = [
-			Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c, Terms_Acceptance_Version__c, Portal_Application__r.Terms_and_Conditions_Version__c
+			Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c,Right__c
 			From Portal_Application_Right__c
 			Where ContactId__c = :String.valueOf(user.ContactId).left(15)
 			And Portal_Application__r.Name = :TIP_Utils.PORTAL_SERVICE_NAME_TIP
@@ -1083,7 +1083,6 @@ public without sharing class ISSP_TIP_Home_Controller {
 
 		appRight.Terms_Acceptance__c = acceptedTaC;
 		appRight.Terms_Acceptance_Date__c = DateTime.now();
-		appRight.Terms_Acceptance_Version__c = appRight.Portal_Application__r.Terms_and_Conditions_Version__c
 		update appRight;
 
 		PageReference pageref = Page.ISSP_TIP_Home;
