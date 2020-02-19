@@ -8944,13 +8944,6 @@
 				"Required": [],
 				"Actions": [
 				{
-					"FunctionName": "ANG_checkAccountHierarchy",
-					"ActionLabel": "AMS_OSCAR_Action6",
-					"args": [
-					"oscarid"
-					]
-				},
-				{
 					"FunctionName": "SIDRALiteAction",
 					"ActionLabel": "AMS_OSCAR_Action7",
 					"args": [
