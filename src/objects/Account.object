@@ -111807,11 +111807,12 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
 OR(
 RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
 ),
-IATA_ISO_Country__r.ANG_Enable_NewGen__c = true,
+ANG_IsNewGenAgency__c = true,
+OR(
 AND(TEXT(Location_Type__c) = &apos;AE&apos;,TEXT(Parent.Location_Type__c) = &apos;AE&apos;),
 AND(TEXT(Location_Type__c) = &apos;HE&apos;,OR(TEXT(Parent.Location_Type__c) = &apos;HE&apos;, TEXT(Parent.Location_Type__c) = &apos;AE&apos;)),
 AND(TEXT(Location_Type__c) = &apos;GE&apos;,ParentId!=null)
-)</errorConditionFormula>
+))</errorConditionFormula>
         <errorMessage>The selected location type is not allowed for this account.</errorMessage>
     </validationRules>
     <validationRules>
