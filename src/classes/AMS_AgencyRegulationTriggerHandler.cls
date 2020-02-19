@@ -32,7 +32,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
 		for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-			if(!accountStatusToDiscard.contains(agencyRegulationsAccStatus.get(agReg.Id))){
+			if(!accountStatusToDiscard.contains(agencyRegulationsAccStatus.get(agReg.Id)) && agencyRegulationsAccStatus.get(agReg.Id) != null){
 
 				accountIds.add(agReg.Account__c);
 
