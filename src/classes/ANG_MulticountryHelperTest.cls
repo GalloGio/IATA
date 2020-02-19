@@ -99,9 +99,9 @@ private class ANG_MulticountryHelperTest {
 	{
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-		Account accountHEUK = makeAccount('S Account HE UK', (Id) null, AMS_Utils.HE, countryUK.Id,
-			'12341234', ANG_Risk_Helper.RISK_STATUS_B);
-		insert accountHEUK;
+			Account accountHEUK = makeAccount('S Account HE UK', (Id) null, AMS_Utils.HE, countryUK.Id,
+				'12341234', ANG_Risk_Helper.RISK_STATUS_B);
+			insert accountHEUK;
 
 		Account accountAEUK = makeAccount('S Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12341235', ANG_Risk_Helper.RISK_STATUS_B);
@@ -686,14 +686,15 @@ private class ANG_MulticountryHelperTest {
 	@isTest
 	public static void testGetChildHEAccounts()
 	{
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id, Name, Location_type__c FROM Account
 			 													WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
-
+		        
 		Test.startTest();
-		Map<Id, Account> accounts = ANG_MulticountryHelper.getChildHEAccounts(accountIds.keySet());
+		Map<Id, Account> accounts = ANG_MulticountryHelper.getAccountsInfo(accountIds.keySet());
+
 		Test.stopTest();
 
-		System.assertEquals(1, accounts.size()); // the 1 HE child for PT GE
+		System.assertEquals(3, accounts.size()); // the 1 HE child for PT GE and the HE Standard
 
 		List<String> names = new List<String>();
 		for (Account a : accounts.values())
@@ -721,19 +722,9 @@ private class ANG_MulticountryHelperTest {
 		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
 										FROM AsyncApexJob
 										WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
+        
 		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
 
-		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
-		System.assertEquals(1, cases.size()); // 1 for each GE
-
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
-											 WHERE Name IN ('MC Account GE PT')]);
-
-		for (Case c : cases)
-		{
-			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
-				'The cases were not associated with the right accounts');
-		}
 	}
 
 	@isTest
@@ -743,19 +734,16 @@ private class ANG_MulticountryHelperTest {
 									WHERE Name IN ('MC Account GE PT')
 									ORDER BY Name ASC];
 
-		Account accountGE = accounts.get(0);
-		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
-		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
-		update accountGE;
-
 		Test.startTest();
 		ANG_RiskStatusDowngradeBatch batch = new ANG_RiskStatusDowngradeBatch(new Set<Id> { accounts.get(0).Id });
 		Id batchId = Database.executeBatch(batch);
 		Test.stopTest();
 
-		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
-		System.assertEquals(2, cases.size()); // 1 for each GE and 1 for each child HE accounts
 
+		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
+		System.assertEquals(1, cases.size()); 
+		
+		// 1 for each GE and 1 for each child HE accounts. In this case because of max number of batch executes, 
 		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
 											 WHERE Name IN ('MC Account GE PT', 'MC Account HE UK')]);
 
