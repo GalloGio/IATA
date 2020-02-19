@@ -185,7 +185,20 @@ private class ANG_CreateAccountDetails_Test {
 
 		ANG_CreateAccountDetails.doPost();
 
-
+		// Empty date
+		req.requestBody = Blob.valueOf('{"offerId":"dsadsad", "offerExchangeRateDate": ""}');
+		res = new RestResponse();
+		
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
+		
+		RestContext.request = req;
+		RestContext.response = res;
+		
+		ANG_CreateAccountDetails.doPost();
+		
 		//Invalid body
 		req = new RestRequest();
 

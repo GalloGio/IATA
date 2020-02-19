@@ -35,6 +35,12 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 			return;
 		}
 
+		Id otherOppId = oppWithSameOfferId(offerId);
+		if (otherOppId != null) {
+			ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', 'Duplicate value on record: ' + otherOppId)), 500);
+			return;
+		}
+		
 		//Take a database snapshot to rollback in case of exception or something not being created succesfully
 		System.Savepoint sp = Database.setSavePoint();
 
@@ -63,5 +69,10 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 		public INT077_SuccessPayload(string sId){
 			this.recordId = sId;
 		}
+	}
+	
+	private static Id oppWithSameOfferId(String offerId) {
+		List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE GDI_Offer_Id__c = :offerId];
+		return opps.isEmpty() ? null : opps.get(0).Id;
 	}
 }
