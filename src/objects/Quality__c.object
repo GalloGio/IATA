@@ -14423,6 +14423,29 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>EXEs_Pending_Input_GPO_AGM</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>SOP_Type__c</columns>
+        <columns>Sub_Process__c</columns>
+        <columns>Sub_Process_Other__c</columns>
+        <columns>Region__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Input - GPO,Accepted - Active</value>
+        </filters>
+        <filters>
+            <field>SOP_Type__c</field>
+            <operation>equals</operation>
+            <value>Agency Management (AM),Agency Risk Management (ARM)</value>
+        </filters>
+        <label>EXEs AGM/ARM - GPO</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>My_Closed_Expired_Exceptions</fullName>
         <columns>NAME</columns>
         <columns>Status__c</columns>

@@ -26,7 +26,7 @@
                     </div>
 
                     <!-- ASSESSMENT CONTRACT -->
-                    <div class="slds-col slds-order_3 slds-small-order_4 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
+                    <div if:true={showIFAPBtn} class="slds-col slds-order_3 slds-small-order_4 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
                         <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
                             label={label.ISSP_Assign_IFAP} variant="neutral" onclick={navigateToIFAP}></lightning-button>
                     </div>
