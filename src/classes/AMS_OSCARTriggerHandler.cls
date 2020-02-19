@@ -944,7 +944,7 @@ public class AMS_OSCARTriggerHandler {
 		allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscarLst) : allOnlineAccr;
 
 		for(AMS_OSCAR__c oscar: oscarLst){
-			if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && oscar.ANG_Type_Of_Change__c != AMS_Utils.ANG_ACCREDITATION_TYPE){
+			if((oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST) && oscar.ANG_Type_Of_Change__c != AMS_Utils.ANG_ACCREDITATION_TYPE){
 				oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 			}
 			if(Trigger.isUpdate && oscar.process__c == AMS_Utils.NEWHESTANDARD && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
