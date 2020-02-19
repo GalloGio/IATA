@@ -3,6 +3,9 @@ public with sharing class ANG_RiskForecastPropertiesController {
 	@TestVisible
 	private static final String CONVERSION_TO_MULTICOUNTRY_OPT = 'ConversionToMulticountry';
 
+	@TestVisible
+	private static final String CONVERSION_MC_TO_ST_OPT = 'ConversionMCToST';
+
 	public Case myCase{get;set;}
 	public String riskOpt{get; set;}
 	public String newRiskStatus{get;set;}
@@ -23,7 +26,13 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 
 	public ANG_RiskForecastPropertiesController(ApexPages.StandardController stdController) {
-		this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.Identify_as_Multicountry_Key_Hierarchy__c, Account.ParentId, Account.Top_Parent__c, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c, OSCAR__r.Change_of_Entity_Location_within_EU__c  FROM Case where Id =:stdController.getId()];
+		this.myCase = [SELECT Id, SIDRA_Lite_Reason__c, Account.Name, Account.Identify_as_Multicountry_Key_Hierarchy__c, Account.ParentId,
+						   Account.Top_Parent__c, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c,
+						   Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c,
+						   OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c, OSCAR__r.ANG_FA_Opt_out__c, OSCAR__r.ANG_Change_Entity_Location__c,
+						   OSCAR__r.Change_of_Entity_Location_within_EU__c, OSCAR__r.Parent_OSCAR__c
+					   FROM Case
+					   WHERE Id = :stdController.getId()];
 	}
 
 	public List<SelectOption> getriskOption(){
@@ -77,10 +86,13 @@ public with sharing class ANG_RiskForecastPropertiesController {
 			riskOpt = '1';
 		}
 
-		if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && (myCase.OSCAR__r.Process__c == AMS_Utils.NEWGESTANDARD || (myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && !myCase.OSCAR__r.ANG_Change_Entity_Location__c && !myCase.OSCAR__r.Change_of_Entity_Location_within_EU__c))){
+		if (myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM
+			&& (myCase.OSCAR__r.Process__c == AMS_Utils.NEWGESTANDARD
+				|| (myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && !myCase.OSCAR__r.ANG_Change_Entity_Location__c
+					&& !myCase.OSCAR__r.Change_of_Entity_Location_within_EU__c)
+				|| (isConversionMCToST() && !isParentOscar()))) {
 
 			options.add(new SelectOption('1','Auth. Cash Payment'));
-
 			riskOpt = '1';
 		}
 
@@ -117,6 +129,11 @@ public with sharing class ANG_RiskForecastPropertiesController {
 			riskOpt = CONVERSION_TO_MULTICOUNTRY_OPT;
 		}
 
+		if (isConversionMCToST() && isParentOscar()) {
+			options.add(new SelectOption(CONVERSION_MC_TO_ST_OPT, 'Conversion GoGlobal to GoStandard'));
+			riskOpt = CONVERSION_MC_TO_ST_OPT;
+		}
+
 		return options;
 	}
 
@@ -147,7 +164,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 			riskEvents = [SELECT Id, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_Limit_Cash_Conditions__c FROM ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
 
-			if(riskOpt != 'OptInOut' && riskOpt != CONVERSION_TO_MULTICOUNTRY_OPT){
+			if (riskOpt != 'OptInOut' && riskOpt != CONVERSION_TO_MULTICOUNTRY_OPT && riskOpt != CONVERSION_MC_TO_ST_OPT) {
 				riskEvents.add(
 					new ANG_Agency_Risk_Event__c(
 						ANG_Risk_Type__c=riskEventTypeMap.get(riskOpt).id,
@@ -171,5 +188,13 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
 	public void closePopup() {
 		displayPopup = false;
+	}
+
+	private boolean isConversionMCToST() {
+		return myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGCONVERSIONMCTOST;
+	}
+	
+	private boolean isParentOscar() {
+		return myCase.OSCAR__r.Parent_OSCAR__c == null;
 	}
 }
