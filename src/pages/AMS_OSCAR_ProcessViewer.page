@@ -192,11 +192,26 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     }
                 }
 
-                if ({!oscar.Process__c == 'ANG.CONVERT.ST.TO.MC'} && arrayContains(fieldValueToServer, "Passed")
+                if ({!oscar.Process__c == NGCONVERSIONTOMULTICOUNTRY} && arrayContains(fieldValueToServer, "Passed")
                     && arrayContains(fieldsApiName, "STEP45__c"))
                 {
                     if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
                         return 'false';
+                }
+
+                if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD} && arrayContains(fieldValueToServer, "Passed")
+                    && arrayContains(fieldsApiName, "STEP51__c"))
+                {
+                    const message = '{!cannotProceedConversionToStandardMessage}';
+
+                    if(message){
+                        alert(message);
+                        return 'false';
+                    }
+
+                    if (! confirm("{!CONFIRM_MC_CONVERSION_MSG}")){
+                        return 'false';
+                    }
                 }
 
                 sforce.connection.header = null;
