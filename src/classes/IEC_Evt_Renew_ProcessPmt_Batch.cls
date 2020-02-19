@@ -348,7 +348,8 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 
 				//*** send notification to creator
 				IEC_Event_Release__c event = [select Name, CreatedBy.Email, CreatedBy.FirstName from IEC_Event_Release__c where Id = :idEventRelease limit 1];
-				Utility.sendEmail(new List<String> {event.CreatedBy.Email}
+				if(event.CreatedBy.Email != null && !event.CreatedBy.Email.endsWithIgnoreCase('.inactive')){
+					Utility.sendEmail(new List<String> {event.CreatedBy.Email}
 												, 'Process for event release "' + event.Name + '" is complete'
 												, 'Dear ' + event.CreatedBy.FirstName + '<br/><br/>'
 													+ 'The process launched for event release "' + event.Name + '" was complete.  For more detail, click on this link '
@@ -356,6 +357,7 @@ global class IEC_Evt_Renew_ProcessPmt_Batch implements Database.Batchable<sObjec
 													+ 'Best regards,<br/>'
 													+ 'eCommerce Support Team<br/>'
 												, true, null);
+				}
 
 
 	}
