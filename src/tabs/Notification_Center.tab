@@ -3,6 +3,5 @@
     <description>Created by Lightning App Builder</description>
     <flexiPage>Notification_Center</flexiPage>
     <label>Notification Center</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom28: Cell phone</motif>
 </CustomTab>

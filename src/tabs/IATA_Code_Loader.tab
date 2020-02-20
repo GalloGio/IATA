@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>IATA Code Loader</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom68: Globe</motif>
     <page>AMS_IATACodeRanges_Loader</page>
 </CustomTab>

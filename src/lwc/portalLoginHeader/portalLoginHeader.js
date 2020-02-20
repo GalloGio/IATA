@@ -4,6 +4,7 @@
 
 import { LightningElement, track, api } from 'lwc';
 import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommunityAvailableLanguages';
+import { navigateToPage } from'c/navigationUtils';
 import changeUserLanguage from '@salesforce/apex/CSP_Utils.changeUserLanguage';
 import { getParamsFromPage } from'c/navigationUtils';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
@@ -63,5 +64,7 @@ export default class PortalLoginHeader extends LightningElement {
 
     }
 
-
+    handleNavigateToLogin(){
+        navigateToPage(CSP_PortalPath);
+    }
 }

@@ -207,10 +207,8 @@ public class ANG_AccountTriggerHandler {
 		if (! downGradeBtoC.isEmpty())
 		{
 			// NEWGEN-4460 - also update the child multicountry HE accounts
-			Set<Id> multicountryGEAccounts = getGEAccountIds(downGradeBtoC);
-			launchPlatformEventForMulticoutryDowngrade(multicountryGEAccounts);
-
-			createVMFROscars(downGradeBtoC, rhcContacts);
+			Set<Id> accountsToProcess = getAccountIDs(downGradeBtoC);
+			launchPlatformEventForMulticoutryDowngrade(accountsToProcess);
 		}
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
@@ -268,7 +266,7 @@ public class ANG_AccountTriggerHandler {
 					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
 					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
-					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c,
+					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, ANG_Accreditation_Model__c,
 					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
 					from Account where Id in :accountIds]);
 	}
@@ -462,7 +460,7 @@ public class ANG_AccountTriggerHandler {
 		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
 
 		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
@@ -631,19 +629,19 @@ public class ANG_AccountTriggerHandler {
 		}
 	}
 
-	private Set<Id> getGEAccountIds(List<Account> accounts)
+	private Set<Id> getAccountIDs(List<Account> accounts)
 	{
-		Set<Id> geAccountIds = new Set<Id>();
+		Set<Id> accountIds = new Set<Id>();
 
-		// get the GE accounts
+		// get the GE and HE accounts
 		for (Account a : accounts)
 		{
-			if (AMS_Utils.GE.equals(a.Location_Type__c))
-				geAccountIds.add(a.Id);
+			if ( AMS_Utils.GE.equals(a.Location_Type__c) || (AMS_Utils.HE.equals(a.Location_Type__c) && !ANG_MulticountryHelper.isMulticountryAccount(a)))
+				accountIds.add(a.Id);
 		}
 
 		// look for the child HE accounts
-		return geAccountIds;
+		return accountIds;
 	}
 
 	private List<Account> getMulticountryAccounts(List<Account> accounts)
@@ -667,7 +665,9 @@ public class ANG_AccountTriggerHandler {
 		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
 			Accounts__c = JSON.serialize(geAccounts)
 		);
+	
 		EventBus.publish(evt);
+	
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
@@ -744,7 +744,7 @@ public class ANG_AccountTriggerHandler {
 		 	agOpMap.keySet());
 
 		Map<Id, String> freqMap = new Map<Id, String>();
-
+	
 		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
 		for (AMS_Settlement_System__c op : ops)
 		{
@@ -851,6 +851,9 @@ public class ANG_AccountTriggerHandler {
 					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
 				}
 
+				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
+				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) aa.Status__c = 'Non-Active';
+ 
 				else aa.Status__c = 'Active';
 
 			}

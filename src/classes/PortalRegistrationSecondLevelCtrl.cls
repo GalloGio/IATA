@@ -278,7 +278,6 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 			Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
 
-			Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
 
 			if(bAccExist == false){
 
@@ -298,12 +297,11 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accContRoleToInsert.Status__c = 'Active';
 				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
 				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
+				accContRoleToInsert.Contact_Role__c = 'ITP Administrator;ITP Training Coordinator';
 				accContRoleToInsert.Details__c = '';
 				accContRoleToInsert.Contact__c = con.Id;
+				accContRoleToInsert.company_code__c='TC';//temporary employee code
 				insert accContRoleToInsert;
-
-				accContRoleToInserted.Id = accContRoleToInsert.Id;
 
 			}else{
 				Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
@@ -315,10 +313,10 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accContRoleToInsert.Account_Role__c = accRole.Id;
 				accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
 				accContRoleToInsert.Details__c = '';
+				accContRoleToInsert.company_code__c='TC';//temporary employee code
 				accContRoleToInsert.Contact__c = con.Id;
 				insert accContRoleToInsert;
 
-				accContRoleToInserted.Id = accContRoleToInsert.Id;
 
 			}
 
@@ -341,42 +339,24 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				insert portalApplicationRight;
 			}
 
-			accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
-
-			String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
-			accContRoleToInserted.Company_Code__c = newEmployeeCode;
-
-			update accContRoleToInserted;
-
-			User cont = [SELECT id, contact.FirstName, contact.LastName, contact.account.name FROM User WHERE ContactId = :con.Id LIMIT 1];
-
-			List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																accContRoleToInserted.Company_Code__c,
-																cont.contact.account.name,
-																cont.contact.FirstName,
-																cont.contact.LastName);
-			IftpHistoryRecordsToBeInserted.add(ihrec);
-
-			if(IftpHistoryRecordsToBeInserted.size() > 0){
-				portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-			}
-
-			updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
-			assignPermissionSet(psAbsorb.Id, cont.id);
+			updatePortalUseProfile(con.id,'ISS Portal (Partner)');
+			assignPermissionSet(psAbsorb.Id, con.id);
 		}
 	}
 
 	@future
-	public static void updatePortalUseProfile(String userId, String sProfile){
-		Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = :sProfile];
-		update new User(Id = userId, ProfileId = isspAgentUser.Id);
+	public static void updatePortalUseProfile(String conId, String sProfile){
+		User u=[select id,contact.user_portal_status__c from user where ContactId =:conId];
+		if(u.contact.user_portal_status__c =='Approved Admin'){
+			Profile prflId=[Select id from profile where name ='ISS Portal Delegated Admin User'];
+			OneId_RegistrationProcessController.updateUserProfile(u.id,prflId.id);
+		}
 	}
 
 	@future
-	private static void assignPermissionSet(Id absorbId, Id userId){
-		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
-
+	private static void assignPermissionSet(Id absorbId, Id conId){
+		User u=[select id from user where ContactId =:conId];
+		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = u.id);
 		insert psa;
 	}
 

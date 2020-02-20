@@ -514,7 +514,7 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
     
-        <apex:inputField value="{!ctrl.newForm.IINET_account_number__c}" styleclass="required" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"
+        <apex:inputField value="{!ctrl.newForm.IINET_account_number__c}" styleclass="required" html-pattern="[a-zA-Z0-9]{4}" html-placeholder="Example: AA11"
             style="width: auto" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='Yes' && !readOnly}" />
         <apex:outputText value="{!ctrl.newForm.IINET_account_number__c}" rendered="{!ctrl.newForm.Do_you_have_an_iiNET_account__c=='Yes' && readOnly}"
             styleclass="bold" />
