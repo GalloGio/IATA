@@ -201,9 +201,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	}
 
 	@isTest static void test_Attachment_notification() {
-	
+			
+		Account  airlineAccount  = [SELECT Id FROM Account WHERE Name = 'Airline' LIMIT 1];
+				
 		Case ccase = [SELECT Id, AccountId, Account_Concerned__c FROM Case WHERE RecordTypeId =: RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA') LIMIT 1];
-		ccase.AccountId = ccase.Account_Concerned__c;
+		ccase.AccountId = airlineAccount.Id;
 		ccase.Remittance_Period__c = '20180604W';
 		update ccase;
 
