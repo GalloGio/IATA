@@ -7,6 +7,7 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
+		deleteScheduleDashboards();
 		updateNamedCredentials();
 		deleteConnectedApps();
 	}
@@ -112,6 +113,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteScheduleDashboards(){
+		System.debug('#1 deleteScheduleDashboards');
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
 		Database.executeBatch(deleteScheduleDashboards,10);
 	}
@@ -132,6 +134,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void updateNamedCredentials(){
+		System.debug('#1 updateNamedCredentials');
 		List<MetadataService.NamedCredential> namedCredentialList = new List<MetadataService.NamedCredential>();
 		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
 			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
@@ -143,7 +146,9 @@ global class PostCopyScript implements SandboxPostCopy {
 
 			namedCredentialList.add(namedCredential);
 		}
+		System.debug('#2 updateNamedCredentials');
 		if(!namedCredentialList.isEmpty()){
+			System.debug('#3 updateNamedCredentials');
 			createService().updateMetadata(namedCredentialList);
 		}
 	}
@@ -153,11 +158,14 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteConnectedApps(){
+		System.debug('#1 deleteConnectedApps');
 		List<String> fullNameList = new List<String>();
 		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
 			fullNameList.add(ca.Name.replace(' ','_'));
 		}
+		System.debug('#2 deleteConnectedApps');
 		if(!fullNameList.isEmpty()){
+			System.debug('#3 deleteConnectedApps');
 			createService().deleteMetadata('ConnectedApp', fullNameList);
 		}
 	}

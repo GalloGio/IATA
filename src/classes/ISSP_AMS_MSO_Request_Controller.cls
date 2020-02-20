@@ -171,7 +171,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
 		billingCityList = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c, GeonameAlternateNames__c
 													  FROM Iata_Iso_City__c
-													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected]);
+													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected AND Status__c <> 'Pending']);
 	}
 	public Pagereference cancel() {
 		string retURL = ApexPages.currentPage().getParameters().get('retURL');
