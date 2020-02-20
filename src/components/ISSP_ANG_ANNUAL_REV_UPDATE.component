@@ -89,8 +89,8 @@
         var listOfCurrentStateCitiesBilling = [];
         var listOfCurrentStateCitiesShipping = [];
         var predictions = {};
-        var countryHasStatesBilling;
-        var countryHasStatesShipping;
+        var countryHasStatesBilling = false;
+        var countryHasStatesShipping = false;
     </script>
 
     <div styleClass="workArea" id="work">
@@ -411,7 +411,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel id="suggestionsShipping">                                                                
-                    <apex:outputLabel value="{!$Label.AMS_DQ_Select_From_List}" rendered="{!AND(chss, !displayShipping)}" style="font-size: small;"/>
+                    <apex:outputLabel value="{!$Label.AMS_DQ_Select_From_List}" rendered="{!AND(chss, !displayShipping, !ca.isReadonly)}" style="font-size: small;"/>
                 </apex:outputPanel>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newAddressShipping" layout="block" style="width: 120%">
@@ -422,7 +422,7 @@
                     </apex:selectList>
                     <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: left; margin-left: 15px;"/>
                     
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: left;" onchange="copyStateListSelection(); copyShippingState(); clearShippingCityId(); changeShippingCityList();">
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: left;" onchange="copyStateListSelection(); copyShippingState(); clearShippingCityId(); changeShippingCityList();" rendered="{!AND(!displayShipping, !ca.isReadonly)}">
                         <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
 
@@ -480,32 +480,34 @@
                                     changeShippingCityList();
                                 }
                             }
-                            populateShippingAsterisks();
 
-                            let dropdownValue = $('[id$="ShippingCountryList"]').val();
-                            stateMap[dropdownValue] != undefined ? countryHasStatesShipping = true : countryHasStatesShipping = false;                            
-                            setCountryHasStatesShipping(countryHasStatesShipping);
+                            if (!$('[id$="disableCheckBoxBranch"]')[0].checked){
+                                populateShippingAsterisks();
+                                let dropdownValue = $('[id$="ShippingCountryList"]').val();
+                                stateMap[dropdownValue] != undefined ? countryHasStatesShipping = true : countryHasStatesShipping = false;                            
+                                setCountryHasStatesShipping(countryHasStatesShipping);
+                            }
+
                         }
-
                         renderCityListeners();
 
                     </script>
                 </apex:outputPanel>
                 
-                <apex:actionFunction name="changeBillingCityList" action="{!currentBillingStateCities}" reRender="jspanelBilling"/>
-                <apex:actionFunction name="changeShippingCityList" action="{!currentShippingStateCities}" reRender="jspanelShipping"/>
+                <apex:actionFunction name="changeBillingCityList" status="WaitingStatus" action="{!currentBillingStateCities}" reRender="jspanelBilling"/>
+                <apex:actionFunction name="changeShippingCityList" status="WaitingStatus" action="{!currentShippingStateCities}" reRender="jspanelShipping"/>
                 
-                <apex:actionFunction name="setCountryHasStatesBilling" reRender="suggestionsBilling">
+                <apex:actionFunction name="setCountryHasStatesBilling" status="WaitingStatus" reRender="suggestionsBilling">
                     <apex:param name="chsb" assignTo="{!chsb}" value=""></apex:param>
                 </apex:actionFunction>
 
-                <apex:actionFunction name="setCountryHasStatesShipping" reRender="suggestionsShipping">
+                <apex:actionFunction name="setCountryHasStatesShipping" status="WaitingStatus" reRender="suggestionsShipping">
                     <apex:param name="chss" assignTo="{!chss}" value=""></apex:param>
                 </apex:actionFunction>
                 
-                <apex:actionFunction name="changeStateOptions" action="{!currentShippingCountryStates}" reRender="ShippingStateList" oncomplete="changeShippingCityList();"/>
+                <apex:actionFunction name="changeStateOptions" status="WaitingStatus" action="{!currentShippingCountryStates}" reRender="ShippingStateList" oncomplete="changeShippingCityList();"/>
                 
-                <apex:actionFunction name="resetShippingAction" action="{!resetCheckbox}" reRender="disableCheckBoxBranch, newAddressShipping" oncomplete="resetShippingAddress();"/>
+                <apex:actionFunction name="resetShippingAction" status="WaitingStatus" action="{!resetCheckbox}" reRender="disableCheckBoxBranch, newAddressShipping" oncomplete="resetShippingAddress();"/>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail" layout="block" style="width: 120%">
                     <DSE:DS_DataQuality id="BranchEmail"
@@ -1192,7 +1194,15 @@
                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
             	$('[id$="shippingStateInput"]').attr('style', 'display: none;');
             	$(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');            
-            } else {
+                countryHasStatesShipping = false;
+                setCountryHasStatesShipping(countryHasStatesShipping);            
+            } else if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined){
+                countryHasStatesShipping = true;
+                setCountryHasStatesShipping(countryHasStatesShipping);
+                changeStateOptions();
+                changeShippingCityList();
+                
+            }else{
                 $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
             }
 
@@ -1273,9 +1283,8 @@
         }
 
         function defineTypeOfStateInput() {
-            var dropdownValue = $('[id$="ShippingCountryList"]').val();
-
-            if (stateMap[dropdownValue] != undefined) {
+            var dropdownValue = $('[id$="ShippingCountryList"]').val();            
+            if (stateMap[dropdownValue] != undefined && !$('[id$="disableCheckBoxBranch"]')[0].checked && '{!ca.isReadonly}' === 'false') {
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                 $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px; float: left;');
                 
@@ -1289,13 +1298,14 @@
                     $('.shipping_state__c').change();
                 }
             }
+            if(!$('[id$="disableCheckBoxBranch"]')[0].checked){
+                var shippingStateList = $('[id$="ShippingStateList"]').val();
+                $('#shipping_state__c > input').val(shippingStateList == null || shippingStateList == '' ? "{!ca.account.ShippingState}" : shippingStateList);
+                $('#shipping_state__c > input').change();          
+                stateMap[dropdownValue] != undefined ? countryHasStatesShipping = true : countryHasStatesShipping = false;                            
+                setCountryHasStatesShipping(countryHasStatesShipping);
+            }
 
-            var shippingStateList = $('[id$="ShippingStateList"]').val();
-            $('#shipping_state__c > input').val(shippingStateList == null || shippingStateList == '' ? "{!ca.account.ShippingState}" : shippingStateList);
-            $('#shipping_state__c > input').change();          
-            
-            stateMap[dropdownValue] != undefined ? countryHasStatesShipping = true : countryHasStatesShipping = false;                            
-            setCountryHasStatesShipping(countryHasStatesShipping);
         }
 
         function clearState() {
@@ -1394,9 +1404,8 @@
                 }
 
                 if (!$('[id$="disableCheckBoxBranch"]')[0].checked) {
-                    $('[id$="shipping_state__c"]').parent().attr('class', 'row');
-
-                    if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                    $('[id$="shipping_state__c"]').parent().attr('class', 'row');                    
+                    if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined && '{!ca.isReadonly}' === 'false') {
                         $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                         $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent().first());
                         $('.shipping_state__c').attr('style', 'display: none;');
@@ -1702,9 +1711,9 @@
                         b.innerHTML = "<strong>" + listOfCurrentStateCities[i]["Name"].substr(0, val.length) + "</strong>";
                         b.innerHTML += listOfCurrentStateCities[i]["Name"].substr(val.length);
                         /*insert a input field that will hold the current array item's value:*/
-                        b.innerHTML += "<input id='name' type='hidden' value='" + listOfCurrentStateCities[i]["Name"] + "'>";
-                        b.innerHTML += "<input id='sfId' type='hidden' value='" + listOfCurrentStateCities[i]["Id"] + "'>";
-                        b.innerHTML += "<input id='geonameName' type='hidden' value='" + listOfCurrentStateCities[i]["GeonameName__c"] + "'>";
+                        b.innerHTML += '<input type="hidden" value="' + listOfCurrentStateCities[i]["Name"] + '">';
+                        b.innerHTML += '<input type="hidden" value="' + listOfCurrentStateCities[i]["Id"] + '">';
+                        b.innerHTML += '<input type="hidden" value="' + listOfCurrentStateCities[i]["GeonameName__c"] + '">';
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.addEventListener("click", function(e) {
                             /*insert the value for the autocomplete text field:*/
