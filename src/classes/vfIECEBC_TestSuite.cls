@@ -253,6 +253,7 @@ public class vfIECEBC_TestSuite {
 			pr = campaignExtCon.next();
 			pr = campaignExtCon.pageLoad();
 			pr = campaignExtCon.saveAndContinue();
+			//INC529509: Code Coverage Increase
 			campaignExtCon.numberOfRecipients = 2;
 			Integer numRecep = campaignExtCon.numberOfRecipients;
 			
