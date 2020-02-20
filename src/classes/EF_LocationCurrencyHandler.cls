@@ -393,7 +393,7 @@ public class EF_LocationCurrencyHandler {
 		emailBody = emailBody + '</table>';
 
 		// send an email to Contract approver if there were changes to Contracts' Location Currencies
-		if(u.EF_Contract_Approver_Email__c != null)
+		if(u.EF_Contract_Approver_Email__c != null && !u.EF_Contract_Approver_Email__c.endsWithIgnoreCase('.inactive'))
 			Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Creation of Location Currency ', emailBody, true, null);
 
 
@@ -413,7 +413,7 @@ public class EF_LocationCurrencyHandler {
 		emailBody = emailBody + '</table>';
 
 		// send an email to Contract approver if there were changes to Contracts' Location Currencies
-		if(u.EF_Contract_Approver_Email__c != null)
+		if(u.EF_Contract_Approver_Email__c != null && !u.EF_Contract_Approver_Email__c.endsWithIgnoreCase('.inactive'))
 			Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Deletion of Location Currency ', emailBody, true, null);
 
 
@@ -434,7 +434,7 @@ public class EF_LocationCurrencyHandler {
 		}
 
 		emailBody = emailBody + '</table>';
-		if(u.EF_Contract_Approver_Email__c != null)
+		if(u.EF_Contract_Approver_Email__c != null && !u.EF_Contract_Approver_Email__c.endsWithIgnoreCase('.inactive'))
 			Utility.sendEmail(new List<String>{u.EF_Contract_Approver_Email__c}, 'E&F CRM: Changes to Location Currency ', emailBody, true, null);
 
 	}

@@ -203,7 +203,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	}
 
 	public static void sendInternalTemplates(List<Case> cases) {
-		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification')];
+		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification') AND isActive = true AND Contact.IsEmailBounced = false];
 		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Internal_Major_default_notification'];
 		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
