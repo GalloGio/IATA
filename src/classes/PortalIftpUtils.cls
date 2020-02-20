@@ -763,7 +763,7 @@ public without sharing class PortalIftpUtils {
 
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
-				if(csvRecordData != null && csvRecordData.size() > 0 && csvRecordData.size() == numberOfExpectedFieldsOnImportEmployeesCSVFile){
+				if(csvRecordData != null && csvRecordData.size() == numberOfExpectedFieldsOnImportEmployeesCSVFile){
 					// Save errors
 					allMessages = new List<String>();
 
