@@ -6516,7 +6516,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Airline_Coding_YMQ</assignedTo>
+            <assignedTo>L3_Airline_and_Location_Codes</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7 OR (8 AND 9 AND 10) OR (8 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
