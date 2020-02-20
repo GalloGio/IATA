@@ -711,7 +711,7 @@ public without sharing class PortalIftpUtils {
 			Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
-				if(csvRecordData.size() > numberOfExpectedFieldsOnImportEmployeesCSVFile){
+				if(csvRecordData.size() != numberOfExpectedFieldsOnImportEmployeesCSVFile){
 					ImportResultsWrapper irw = new ImportResultsWrapper(
 						clearString(csvRecordData[0]),
 						clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
@@ -721,7 +721,7 @@ public without sharing class PortalIftpUtils {
 					irw.lastName = clearString(csvRecordData[2]);
 					results.add(irw);
 					continue;
-				}
+				} else{
 				if(String.isNotBlank(clearString(csvRecordData[0])) && mapEmployeeInfoByEmployeeCode.containsKey(clearString(csvRecordData[0]))){
 						ImportResultsWrapper irw = new ImportResultsWrapper(
 							clearString(csvRecordData[0]),
@@ -750,6 +750,7 @@ public without sharing class PortalIftpUtils {
 					}
 				}
 			}
+			}
 
 			List<Contact> contactsToInsert = new List<Contact>();
 			List<Contact> contactsToUpdate = new List<Contact>();
@@ -762,7 +763,7 @@ public without sharing class PortalIftpUtils {
 
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
-				if(csvRecordData != null && csvRecordData.size() > 0){
+				if(csvRecordData != null && csvRecordData.size() > 0 && csvRecordData.size() == numberOfExpectedFieldsOnImportEmployeesCSVFile){
 					// Save errors
 					allMessages = new List<String>();
 
