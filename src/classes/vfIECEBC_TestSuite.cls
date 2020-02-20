@@ -247,6 +247,15 @@ public class vfIECEBC_TestSuite {
 			System.assertNotEquals(null, campaignExtCon.con.getId());
 			System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
 			System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
+
+			//pr = campaignExtCon.saveAsTemplate(); //need template and get id to be filtered on the call
+			pr = campaignExtCon.previous();
+			pr = campaignExtCon.next();
+			pr = campaignExtCon.pageLoad();
+			pr = campaignExtCon.saveAndContinue();
+			campaignExtCon.numberOfRecipients = 2;
+			Integer numRecep = campaignExtCon.numberOfRecipients;
+			
 		}
 	}
 	public static void testCampaignCreateAndExit() {
