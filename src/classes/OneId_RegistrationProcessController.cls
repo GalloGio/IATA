@@ -1229,13 +1229,13 @@ public without sharing class OneId_RegistrationProcessController {
 			insert accRoleSrv;
 
 			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
 			accContRoleToInsert.Service_Rendered__c = 'IFTP';
 			accContRoleToInsert.Status__c = 'Active';
 			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
 			accContRoleToInsert.Account_Role__c = accRole.Id;
 			accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
 			accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
+			accContRoleToInsert.company_code__c='TC';//temporary employee code 
 			accContRoleToInsert.Details__c = '';
 			accContRoleToInsert.Contact__c = con.Id;
 			insert accContRoleToInsert;
@@ -1251,6 +1251,7 @@ public without sharing class OneId_RegistrationProcessController {
 			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
 			accContRoleToInsert.Account_Role__c = accRole.Id;
 			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+			accContRoleToInsert.company_code__c='TC';//temporary employee code 
 			accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
 			accContRoleToInsert.Details__c = '';
 			accContRoleToInsert.Contact__c = con.Id;
@@ -1268,30 +1269,10 @@ public without sharing class OneId_RegistrationProcessController {
 			);
 			insert portalApplicationRight;
 
-		accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
-
-		String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
-		accContRoleToInserted.Company_Code__c = newEmployeeCode;
-
-		update accContRoleToInserted;
-
-		Contact cont = [SELECT id, FirstName, LastName, Account.Name FROM Contact WHERE Id = :con.Id LIMIT 1];
-
-		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-		IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-															accContRoleToInserted.Company_Code__c,
-															cont.account.name,
-															cont.FirstName,
-															cont.LastName);
-		IftpHistoryRecordsToBeInserted.add(ihrec);
-
-		if(IftpHistoryRecordsToBeInserted.size() > 0){
-			portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-		}
-
 		if(!Test.isRunningTest()){
-			updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
-			assignPermissionSet(psAbsorb.Id, cont.id);
+			User u=[select id from user where contactId=:con.id];
+			updatePortalUseProfile(u.id,'ISS Portal (Partner)');
+			assignPermissionSet(psAbsorb.Id, u.id);
 		}
 	}
 

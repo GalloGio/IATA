@@ -7,7 +7,9 @@
 
     <div class="contentContainer IEFixWidth" style={backgroundStyle}>
 
-        <img src={logoIcon} class="imgBg">
+        <a onclick={handleNavigateToLogin}>
+        	<img src={logoIcon} class="imgBg">
+        </a>
 
         <div class="headerTitle IEFixWidth">
             <lightning-formatted-rich-text value={labels.CSP_Welcome_Title} class=""></lightning-formatted-rich-text>

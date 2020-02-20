@@ -23,5 +23,15 @@
         <unique>false</unique>
     </fields>
     <label>DPC2DPC Cases Emails</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>description__c</columns>
+        <columns>Email__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

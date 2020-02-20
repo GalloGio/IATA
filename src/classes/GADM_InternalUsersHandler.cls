@@ -19,7 +19,7 @@ public without sharing class GADM_InternalUsersHandler {
 					}
 
 				}
-				List<User> users = [SELECT Id, Email FROM User WHERE Id = :groupMembersIds];
+				List<User> users = [SELECT Id, Email FROM User WHERE Id = :groupMembersIds AND isActive = true AND Contact.IsEmailBounced = false];
 				usersFromPublicGroup.addAll(users);
 
 			}
