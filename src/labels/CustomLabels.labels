@@ -15272,6 +15272,13 @@ Regards,
 IFG Customer Services</value>
     </labels>
     <labels>
+        <fullName>IFTP_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFTP Service Description</shortDescription>
+        <value>The IATA Fueling Training Portal (IFTP) streamlines training activity for into-plane fueling (ITP) personnel by facilitating multiple airline recognition of standardized training for fueling each aircraft type.</value>
+    </labels>
+    <labels>
         <fullName>ISSP</fullName>
         <categories>S-control</categories>
         <language>en_US</language>
