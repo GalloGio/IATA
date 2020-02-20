@@ -37,15 +37,15 @@ import CSP_L3_Note_F7_LMS                   from '@salesforce/label/c.CSP_L3_Not
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	/* Images */
 	youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-	alertIcon = CSP_PortalPath + 'alertIcon.png';
-	homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
-	crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
-	stepValid = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.svg';
-	step1Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.svg';
-	step2Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_active.svg';
-	step2Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.svg';
-	step3Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_active.svg';
-	step3Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.svg';
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
+    crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
+    stepValid = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
+    step1Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
+    step2Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_active.png';
+    step2Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.png';
+    step3Active = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_active.png';
+    step3Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
 	@api trigger;
 	@api isTriggeredByRequest = false;
@@ -58,7 +58,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	@track message;
 	@track button1Label;
 	@track isResLoading = false;
-	@api serviceid;
+	// @api serviceid;
 	/*
 		1 : Profile Details
 		2 : Account Selection
@@ -133,6 +133,20 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this._labels = value;
 	}
 
+	// @track isIE = this.checkIE;
+	// get checkIE(){
+
+	// 	let ua= navigator.userAgent;
+	// 	let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+	// 	let ret;
+	// 	if(/trident/i.test(M[1])){
+	// 		ret = true;
+	// 	}else{
+	// 		ret = false;
+	// 	}
+	// 	return ret;
+	// }
+
 	scrollToTop(){
 		let scrollobjective = this.template.querySelector('[data-name="top"]');
 		scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
@@ -142,12 +156,18 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		// hide page scrollbar to prevent having 2 scrollbars
         document.body.style.overflow = 'hidden';
 		
-		let pageParams = getParamsFromPage();
+		var pageParams = getParamsFromPage();
 
+		// console.log('PortalRegistrationThirdLevelLMS - connectedCallback - pageParams',pageParams);
 		// Retrieve Contact information
+		console.log('PortalRegistrationThirdLevelLMS - connectedCallback - Init');
+
 		getContactInfo()
 			.then(result => {
+				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - result: ',result);
 				this.contactInfo = JSON.parse(JSON.stringify(result));
+				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - Init 2');
+				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - this.contactInfo: ',this.contactInfo);
 				this.contactFound = this.contactInfo != null;
 
 				if(!this.contactFound){
@@ -155,7 +175,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				// set up cached data
-				let countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
+				var countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
 				if(countryName.toLowerCase() === 'no country'){
 					this.selectedCountryId = '';
 				}
@@ -270,6 +290,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.registerData = false;
 
 					this.title=CSP_L3_ProfileUpdate_LMS;
+					// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
 
 					if(pageParams.lmsflow === 'flow3'){
 						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
@@ -359,6 +380,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			console.log('Error1: ', error);
 			console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
+		// .finally(() => {
+			
+			
+		// });
 	}
 
 	startLoading(){
@@ -405,6 +430,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
+console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
 		}
 
 		// Training Information
@@ -413,6 +439,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			flow = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
+console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);			
 		}
 		
 	}
@@ -446,9 +473,14 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	}
 
 	fromAddressInformationToEmailInformation(){
+		console.log('fromAddressInformationToEmailInformation Next! ');
 		// retrieve profile details
+		// let contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
 		let addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
+		// this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.address = JSON.parse(JSON.stringify(addressInformation));
+		console.log('fromAddressInformationToEmailInformation this.contactInfo: ', this.contactInfo);
+		console.log('fromAddressInformationToEmailInformation this.address: ', this.address);
 		// go to next step
 		this.currentStep = 3;
 	}
@@ -463,6 +495,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.flow = flow;
+console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this.contactInfo);
 		this.currentStep = 4;
 	}
 
@@ -473,6 +506,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	fromTrainingInformationToConfirmation(){
 		var contactInfo = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getContactInfo();
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.contactInfo);		
 		this.currentStep = 5;
 	}
 
@@ -505,6 +539,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	}
 
 	get isTrainingValidationStep(){
+console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);			
 		return this.currentStep === 4;
 	}
 	
@@ -534,6 +569,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	saveAndClose(){
 		// To do save contact info
+
+
 		this.openMessageModal = false;
 		if(this.landingPage == 'same'){
 			this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));
@@ -560,11 +597,13 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 		if(/trident/i.test(M[1])){
 			tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+			// alert("IE"+'IE '+(tem[1] || ''));
 			return 'IE '+(tem[1] || '');
 		}
 		if(M[1]=== 'Chrome'){
 			tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
 			if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+			// alert('chrome');
 		}
 		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
 		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);

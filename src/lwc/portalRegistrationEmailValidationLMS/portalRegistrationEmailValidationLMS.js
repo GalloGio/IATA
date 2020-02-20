@@ -93,7 +93,10 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track workEmailInput ='';
 
 	get blockConfirmation(){
+console.log('this.reverseEmailVisibility: ',this.reverseEmailVisibility);
+console.log('this.isReverseEmail: ',this.isReverseEmail);
 		let res = true;
+		console.log('res: ',res);
 
 		if(this.reverseEmailVisibility){
 			if(this.isReverseEmail !== undefined && this.isReverseEmail !== ''){
@@ -108,6 +111,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 				res = false;
 			}
 		}
+		console.log('res: ',res);
 
 		return res;
 
@@ -128,6 +132,8 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	get workEmailVisibility(){
+		console.log('this.isPersonalEmail: ', this.isPersonalEmail);
+		console.log('this.localContactInfo.Account.Is_General_Public_Account__c: ', this.localContactInfo.Account.Is_General_Public_Account__c);
 		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			return true;
 		}
@@ -185,6 +191,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
+console.log('this.localContactInfo: ', this.localContactInfo);
 
 		let pageParams = getParamsFromPage();// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lms !== undefined){
@@ -231,6 +238,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	changeIsPersonalEmail(event) {
 		this.isPersonalEmail = event.target.value;
+		console.log('changeIsPersonalEmail this.isPersonalEmail: ', this.isPersonalEmail);
 		this.inputModified = true;
 	}
 
@@ -268,184 +276,214 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	next(){
-		if(this.flow === 'flow1'){
-			if(this.isReverseEmail === 'yes'){
-				this.flow = 'flow0';
-				this.localContactInfo.Email = this.personalEmailInput;
-				this.localContactInfo.Additional_Email__c = this.workEmailInput;
-			}
+console.log('next this.localContactInfo: ', this.localContactInfo);
+
+		if(this.validated === true){
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
 
-			if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true){
-				this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
-				this.flow = 'flow2';
+			if(this.flow === 'flow1'){
+				if(this.isReverseEmail === 'yes'){
+					this.flow = 'flow0';
+					this.localContactInfo.Email = this.personalEmailInput;
+					this.localContactInfo.Additional_Email__c = this.workEmailInput;
+				}
 				this.dispatchEvent(new CustomEvent('next'));
 			}else{
 
-				let auxEmail = '';
+				if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true){
+					this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
+					this.flow = 'flow2';
+					this.dispatchEvent(new CustomEvent('next'));
+				}else{
 
-				const RegistrationUtilsJs = new RegistrationUtils();
+					let auxEmail = '';
 
-				if(this.isPersonalEmail === 'no' && this.personalEmailInput !== ''){
-					this.localContactInfo.Additional_Email__c = this.personalEmailInput;
-					auxEmail = this.personalEmailInput;
-				}
-
-				if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== ''){
-					this.localContactInfo.Additional_Email__c = this.workEmailInput;
-					auxEmail = this.workEmailInput;
-				}
-
-				if(auxEmail !== '' && this.validated === false){
+					const RegistrationUtilsJs = new RegistrationUtils();
 
 					if(this.isPersonalEmail === 'no' && this.personalEmailInput !== ''){
-						this.flow = 'flow5';
+						this.localContactInfo.Additional_Email__c = this.personalEmailInput;
+						auxEmail = this.personalEmailInput;
 					}
 
 					if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== ''){
-						this.flow = 'flow3';
+						this.localContactInfo.Additional_Email__c = this.workEmailInput;
+						auxEmail = this.workEmailInput;
 					}
+					console.log('next this.localContactInfo 1: ', this.localContactInfo);
+					if(auxEmail !== '' && this.validated === false){
+
+						if(this.isPersonalEmail === 'no' && this.personalEmailInput !== ''){
+							this.flow = 'flow5';
+						}
+
+						if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== ''){
+							this.flow = 'flow3';
+						}
 
 
-					this.startLoading();
-					RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
-						if(result == false){
-							this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-							this.isLoading = false;
-						}else{
-							let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
-							RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
-								if(result2 === 'true'){
-									this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-									this.stopLoading();
-								}else{
-									//todo:check if the email address is associated to a contact and/or a user
-									//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
-									//but the "E-Mail" field is pre-populated and, by default, not editable.
-									//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
-									//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
-									//button is displayed on the form.
-									// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
+						this.startLoading();
+						RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
+							if(result == false){
+								this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+								this.isLoading = false;
+							}else{
+								let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
+								RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
+									if(result2 === 'true'){
+									//todo:disposable email alert!
+										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+										this.stopLoading();
+									}else{
+										//todo:check if the email address is associated to a contact and/or a user
+										//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
+										//but the "E-Mail" field is pre-populated and, by default, not editable.
+										//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
+										//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
+										//button is displayed on the form.
+										// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
 
-									getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
+										getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
 
-										var userInfo = JSON.parse(JSON.stringify(result3));
-										this.userInfo = userInfo;
+											var userInfo = JSON.parse(JSON.stringify(result3));
+											this.userInfo = userInfo;
 
-										if(userInfo.hasExistingContact == true){
-											if(userInfo.hasExistingUser == true){
+											if(userInfo.hasExistingContact == true){
+												if(userInfo.hasExistingUser == true){
 
-												if(this.flow === 'flow3'){
-													this.flow = 'flow4';
-												}
-												if(this.flow === 'flow5'){
-													this.flow = 'flow6';
-												}
-
-												//validate the 60% on the name comparison
-												validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
-													.then(result4 => {
-														if(result4 === 'not_matching'){
-															this.isFullNameMatching = false;
-															if(this.flow === 'flow4'){
-																this.existingUsernameNotMatchingF4Visibility = true;
-															}else if(this.flow === 'flow6'){
-																this.existingUsernameNotMatchingF6Visibility = true;
-															}
-														}else if(result4 === 'existing_user'){
-															this.isFullNameMatching = true;
-															this.existingUsernameVisibility = true;
-															this.localContactInfo.existingContactId = userInfo.contactId;
-															this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
-															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-															this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
-															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-															this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
-															this.localContactInfo.existingContactName = userInfo.existingContactName;
-															this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
-															this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
-														}
-													})
-													.catch((error) => {
-														this.stopLoading();
-														console.log('Error: ', JSON.parse(JSON.stringify(error)));
-													});
-
-												this.stopLoading();
-											}
-										}else{
-											//Don't validate the personal email for this flow
-											if(this.flow === 'flow3'){
-												//reverse email
-												this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
-												this.localContactInfo.Email = this.workEmailInput;
-												this.stopLoading();
-												this.dispatchEvent(new CustomEvent('next'));
-											}else if(userInfo.hasExistingContactPersonalEmail == true){
-												if(userInfo.hasExistingUserPersonalEmail == true){
-
-													if(this.flow === 'flow5'){
-														this.flow = 'flow7';
+													if(this.flow === 'flow3'){
+														this.flow = 'flow4';
+														console.log('next this.localContactInfo flow4 1: ', this.localContactInfo);
+														//reverse email
+														this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
+														this.localContactInfo.Email = this.workEmailInput;
+														// console.log('next this.localContactInfo flow4 1: ', this.localContactInfo);
+														
 													}
+													if(this.flow === 'flow5'){
+														this.flow = 'flow6';
+													}
+
+													console.log('next validateFullName! ');
+													console.log('next userInfo.existingContactId: ', userInfo.existingContactId);
+													console.log('next this.localContactInfo.existingContactId: ', this.localContactInfo.existingContactId);
+													console.log('next this.localContactInfo.FirstName: ', this.localContactInfo.FirstName);
+													console.log('next this.localContactInfo.LastName: ', this.localContactInfo.LastName);
+
 
 													//validate the 60% on the name comparison
 													validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
-													.then(result4 => {
-													
-														if(result4 === 'not_matching'){
-															this.isFullNameMatching = false;
-															this.existingUsernameNotMatchingF6Visibility = true;
-															
-														}else if(result4 === 'existing_user'){
-															this.isFullNameMatching = true;
-															this.existingPersonalUsernameVisibility = true;
-															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-															this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
-															this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
-															this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
-															this.localContactInfo.existingContactId = userInfo.existingContactId;
-															this.localContactInfo.existingContactName = userInfo.existingContactName;
-															this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
-															this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+														.then(result4 => {
+															console.log('validateFullName result4: ', result4);
+															if(result4 === 'not_matching'){
+																this.isFullNameMatching = false;
+																if(this.flow === 'flow4'){
+																	this.existingUsernameNotMatchingF4Visibility = true;
+																}else if(this.flow === 'flow6'){
+																	this.existingUsernameNotMatchingF6Visibility = true;
+																}
+																console.log('next this.existingUsernameVisibility: ', this.existingUsernameVisibility);
+																console.log('next this.existingUsernameNotMatchingF4Visibility: ', this.existingUsernameNotMatchingF4Visibility);
+																console.log('next this.existingUsernameNotMatchingF6Visibility: ', this.existingUsernameNotMatchingF6Visibility);
+															}else if(result4 === 'existing_user'){
+																this.isFullNameMatching = true;
+																this.existingUsernameVisibility = true;
+																this.localContactInfo.existingContactId = userInfo.contactId;
+																this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+																this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+																this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+																this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+																this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+																this.localContactInfo.existingContactName = userInfo.existingContactName;
+																this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+																console.log('validateFullName result4 - this.localContactInfo: ', this.localContactInfo);
+															}
+														})
+														.catch((error) => {
+															this.stopLoading();
+															console.log('Error: ', JSON.parse(JSON.stringify(error)));
+														});
 
-															this.messageFlow7 = CSP_L3_ExistingContact_LMS;
-															this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
-															this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
-															this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
-														}
-													})
-													.catch((error) => {
-														this.stopLoading();
-														console.log('Error: ', JSON.parse(JSON.stringify(error)));
-													});
 													this.stopLoading();
+													
 												}
-												//Send Verification email
-												this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-												this.stopLoading();
 											}else{
+												//Don't validate the personal email for this flow
+												if(this.flow === 'flow3'){
+													//reverse email
+													this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
+													this.localContactInfo.Email = this.workEmailInput;
+													this.stopLoading();
+													this.dispatchEvent(new CustomEvent('next'));
+												}else if(userInfo.hasExistingContactPersonalEmail == true){
+													if(userInfo.hasExistingUserPersonalEmail == true){
 
-												this.stopLoading();
-												this.dispatchEvent(new CustomEvent('next'));
+														if(this.flow === 'flow5'){
+															this.flow = 'flow7';
+														}
+
+														//validate the 60% on the name comparison
+														validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
+														.then(result4 => {
+														
+															if(result4 === 'not_matching'){
+																this.isFullNameMatching = false;
+																this.existingUsernameNotMatchingF6Visibility = true;
+																
+															}else if(result4 === 'existing_user'){
+																this.isFullNameMatching = true;
+																this.existingPersonalUsernameVisibility = true;
+																this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+																this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+																this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+																this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+																this.localContactInfo.existingContactId = userInfo.existingContactId;
+																this.localContactInfo.existingContactName = userInfo.existingContactName;
+																this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+
+																this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+			console.log('this.messageFlow7: ', this.messageFlow7);		
+			console.log('userInfo.existingContactEmail: ', userInfo.existingContactEmail);													
+			console.log('userInfo.Email: ', this.localContactInfo.Email);													
+																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+																this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+			console.log('this.messageFlow7: ', this.messageFlow7);		
+			}
+														})
+														.catch((error) => {
+															this.stopLoading();
+															console.log('Error: ', JSON.parse(JSON.stringify(error)));
+														});
+														this.stopLoading();
+													}
+													//Send Verification email
+													this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+													this.stopLoading();
+												}else{
+
+													this.stopLoading();
+													this.dispatchEvent(new CustomEvent('next'));
+												}
 											}
-										}
-										this.validated = true;
-									})
-									.catch(error => {
-										console.log('Error: ', error);
-										this.isLoading = false;
-									});
-								}
-							});
-						}
-					});
-				}else{
-					this.dispatchEvent(new CustomEvent('next'));
+											this.validated = true;
+										})
+										.catch(error => {
+											console.log('Error: ', error);
+											this.isLoading = false;
+										});
+									}
+								});
+							}
+						});
+					}else{
+						this.dispatchEvent(new CustomEvent('next'));
+					}
 				}
 			}
 		}
-
 
 	}
 

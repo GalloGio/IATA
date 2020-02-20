@@ -143,22 +143,6 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <assignments>
-        <name>myVariable_waitStartTimeAssignment</name>
-        <label>myVariable_waitStartTimeAssignment</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>isChangedDecision2_myRule_1_Right_c</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>isChangedDecision12_myRule_11_Right_c</name>
         <label>isChangedDecision12_myRule_11_Right_c</label>
@@ -1699,7 +1683,7 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
 ))
 )</expression>
     </formulas>
-    <interviewLabel>Notify_on_Portal_Service_Access-5_InterviewLabel</interviewLabel>
+    <interviewLabel>Notify_on_Portal_Service_Access-6_InterviewLabel</interviewLabel>
     <label>Notify on Portal Service Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1734,6 +1718,9 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
             </value>
         </processMetadataValues>
         <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -1744,6 +1731,9 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
             <value>
                 <stringValue>[Portal_Application_Right__c]</stringValue>
             </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
         </processMetadataValues>
         <name>myRule_14_A2</name>
         <label>test</label>
@@ -1794,7 +1784,7 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
         </inputAssignments>
         <object>Portal_Application_Right__c</object>
     </recordUpdates>
-    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <startElementReference>isChangedDecision2_myRule_1_Right_c</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>
@@ -1811,15 +1801,5 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Application_Right__c</objectType>
-    </variables>
-    <variables>
-        <name>myVariable_waitStartTimeVariable</name>
-        <dataType>DateTime</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>$Flow.CurrentDateTime</elementReference>
-        </value>
     </variables>
 </Flow>
