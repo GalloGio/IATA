@@ -73,18 +73,19 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 	public vfIECEBC_Campaign(ApexPages.StandardController stdController) {
 		this.con = stdController;
 
-		if (!Test.isRunningTest()) {
-			List<String> fields = new List<String>();
-			fields.addAll(Schema.sObjectType.EBC_Campaign__c.fields.getMap().keySet());
-			fields.addAll(new List<String>{
-				'EBC_Design__r.Is_Tested__c',
-				'EBC_Master_Filter__r.Audience__c',
-				'EBC_Master_Filter__r.Name',
-				'EBC_Master_Filter__r.Number_of_Recipients__c'
-			});
-			stdController.addFields(fields);
+		List<String> fields = new List<String>();
+		for(String key : Schema.sObjectType.EBC_Campaign__c.fields.getMap().keySet()){
+			if (!(key.contains('connection'))){
+				fields.add(key);
+			}
 		}
-
+		fields.addAll(new List<String>{
+			'EBC_Design__r.Is_Tested__c',
+			'EBC_Master_Filter__r.Audience__c',
+			'EBC_Master_Filter__r.Name',
+			'EBC_Master_Filter__r.Number_of_Recipients__c'
+		});
+		if (!Test.isRunningTest()) stdController.addFields(fields);
 		this.campaign = (EBC_Campaign__c)stdController.getRecord();
 
 		if (!String.isBlank(this.campaign.Id) && this.campaign.Billing_Account__c != billingAccount.Id) {
