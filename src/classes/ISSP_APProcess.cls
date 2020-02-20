@@ -551,7 +551,7 @@ global without sharing class ISSP_APProcess {
 						listMandatoryFiles.add('Additional_Information_AR2');
 						listMandatoryFiles.add('Additional_Information_AR3');
 					}
-					if (apcountryisocode=='BR') {
+					if (apcountryisocode=='BR' && !isPASS) {
 						listMandatoryFiles.add('Additional_Information_BR1');
 						listMandatoryFiles.add('Additional_Information_BR2');
 					}
@@ -1533,7 +1533,7 @@ global without sharing class ISSP_APProcess {
 	**/
 	private list<String> getMandatoryFileList() {
 		List<String> listMandatoryFiles = new list<String>();
-		if (isBSP || isCASS || isPASS) {
+		if (isBSP || isCASS) {
 			if (getShowJoinICCS()) {
 				//check ICCS_Join
 				listMandatoryFiles.add('ICCS_Join');

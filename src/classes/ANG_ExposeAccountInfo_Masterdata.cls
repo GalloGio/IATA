@@ -391,10 +391,11 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 					this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
 				}
 
-				 // PASS
+				// PASS
 				if(acc.Location_Class__c == 'L'){
 					this.accountsite = acc.Site;
 					this.IMPCCode = acc.IMPC_Code__c;
+					this.externalSystems.add(AMS_Utils.passParticipation);
 				}
 
 			}
