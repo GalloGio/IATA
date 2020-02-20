@@ -1655,7 +1655,7 @@ public without sharing class ISSP_Case {
 			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 			list<User> listUsers = [SELECT Id, ContactId
 				FROM User
-				WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
+				WHERE ContactId != null AND Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
 
 			List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
 			for(User user : listUsers) {
