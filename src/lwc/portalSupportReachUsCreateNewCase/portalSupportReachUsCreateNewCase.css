@@ -211,3 +211,13 @@
     position: relative;
     height: 100%;
 }
+@media screen and (max-width: 640px) {
+    .slds-p-horizontal_xx-large, .slds-p-horizontal--xx-large {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .slds-m-around_x-large, .slds-m-around--x-large {
+        margin: 1rem;
+    }
+}

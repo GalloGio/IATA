@@ -1770,6 +1770,8 @@ private class ISSP_APProcess_Test
 			ctrl.getICHGenericTermsAndConditionsName();
 			ctrl.getAssociateAggregatorMemberApplicationUrl();
 			ctrl.getAssociateAggregatorMemberApplicationName();
+			ctrl.getSponsorshipLetterUrl();
+			ctrl.getSponsorshipLetterName();
 			ctrl.getICHCurrencyClearanceOptions();
 			ctrl.getIsSISMember();
 			ctrl.getIsValidDueDiligence();

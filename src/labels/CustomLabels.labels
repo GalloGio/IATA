@@ -15992,7 +15992,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
-        <value>Your company has already create a case to request the code.
+        <value>Your company has already create a case to request the code. 
 Click here to view the case number:</value>
     </labels>
     <labels>
@@ -16522,7 +16522,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</shortDescription>
-        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate.
+        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate. 
 A provisional assignment shall be valid for a non-renewable period of six (6) months, and is for internal use only.</value>
     </labels>
     <labels>
@@ -17627,7 +17627,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <shortDescription>ISSP AMS Accept TOS</shortDescription>
         <value>Please accept the Terms and Conditions before submitting your Agency Accreditation application to IATA.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_Accept_TOS_PASS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24037,7 +24037,15 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
-        <value>* Please indicate the GDS(s) with which you have signed a contract</value>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Short</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Indicate_GDSs_Short</shortDescription>
+        <value>Please indicate the GDS(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
@@ -24597,7 +24605,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <shortDescription>ISSP AMS Validation Financial Contact</shortDescription>
         <value>Please select who should be the Financial Administrator for your Agency.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_Validation_PASS_Admin</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25525,6 +25533,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
+        <value>In order to notify IATA of a change of bank account details please contact us</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
@@ -27278,7 +27294,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application.
+        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
@@ -31300,6 +31316,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP My Contact Action</shortDescription>
         <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Info</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDC_Transaction_Info</shortDescription>
+        <value>On confirming, you will be asked to provide IATA with one letter of recommendation from an IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Question</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
+        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
     </labels>
     <labels>
         <fullName>ISSP_NewCase</fullName>
@@ -36391,12 +36423,12 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1RT</shortDescription>
-        <value>CasesMENA
-CasesAmericas
-ExternalCasesIDFSglobal
-Cases_China_North_Asia
-CasesEurope
-ComplaintIDFS
+        <value>CasesMENA 
+CasesAmericas 
+ExternalCasesIDFSglobal 
+Cases_China_North_Asia 
+CasesEurope 
+ComplaintIDFS 
 InternalCasesEuropeSCE</value>
     </labels>
     <labels>
@@ -36404,14 +36436,14 @@ InternalCasesEuropeSCE</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1Reason</shortDescription>
-        <value>CHC – Change of Shareholding
-CHO / CHS – Change of Ownership / Legal Status
-CHN - Change of Name
-New HO
-Financial RVW intermediaries
-New HE lite
-New HE standard
-Accreditation Type
+        <value>CHC – Change of Shareholding 
+CHO / CHS – Change of Ownership / Legal Status 
+CHN - Change of Name 
+New HO 
+Financial RVW intermediaries 
+New HE lite 
+New HE standard 
+Accreditation Type 
 New EAA - Application process for European Accredited Agent</value>
     </labels>
     <labels>
@@ -36419,16 +36451,16 @@ New EAA - Application process for European Accredited Agent</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI2</shortDescription>
-        <value>New BR / IP
-CHL - Change of Location
-New SA / CHV – New Code
-Direct Debit Setup/Update
-VMFR Setup/Update
-CLO - Closure
-New AE
-FoP Management
-New HE lite
-Accreditation Type
+        <value>New BR / IP 
+CHL - Change of Location 
+New SA / CHV – New Code 
+Direct Debit Setup/Update 
+VMFR Setup/Update 
+CLO - Closure 
+New AE 
+FoP Management 
+New HE lite 
+Accreditation Type 
 CHG – Data Maintenance</value>
     </labels>
     <labels>
@@ -41047,26 +41079,26 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProcessEffAge</shortDescription>
-        <value>New HO
-CHG – Data Maintenance
-CLO - Closure
-CHL - Change of Location
-New BR Abroad
-Termination
-CHO / CHS – Change of Ownership / Legal Status
-CHN - Change of Name
-New BR / IP
-CHC – Change of Shareholding
-New SA / CHV – New Code
-GSA / MSO / Handling Agent
-Direct Debit Setup/Update
-VMFR Setup/Update
-Reinstatement
-AIMS Data Entry
-CAD – Data Maintenance
-Review
-Review withdrawal
-Minor Database Changes
+        <value>New HO 
+CHG – Data Maintenance 
+CLO - Closure 
+CHL - Change of Location 
+New BR Abroad 
+Termination 
+CHO / CHS – Change of Ownership / Legal Status 
+CHN - Change of Name 
+New BR / IP 
+CHC – Change of Shareholding 
+New SA / CHV – New Code 
+GSA / MSO / Handling Agent 
+Direct Debit Setup/Update 
+VMFR Setup/Update 
+Reinstatement 
+AIMS Data Entry 
+CAD – Data Maintenance 
+Review 
+Review withdrawal 
+Minor Database Changes 
 Financial RVW intermediaries</value>
     </labels>
     <labels>
@@ -43098,11 +43130,11 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
-        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account.
-        As a Portal Administrator you can either update your
+        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. 
+        As a Portal Administrator you can either update your 
         {0}
-        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the
-        {1}
+        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
+        {1} 
         page and ask them to open your EasyPay account.
         &lt;br/&gt;
         &lt;br/&gt;
