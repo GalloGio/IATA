@@ -715,7 +715,7 @@ public without sharing class PortalIftpUtils {
 					ImportResultsWrapper irw = new ImportResultsWrapper(
 						clearString(csvRecordData[0]),
 						clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
-						'Error in source data. Please check input CSV record for this employee. ',
+						'Error in source data. Please check data format and delimiters. ',
 						'Failed');
 					irw.firstName = clearString(csvRecordData[1]);
 					irw.lastName = clearString(csvRecordData[2]);
