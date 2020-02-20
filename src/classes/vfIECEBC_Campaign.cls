@@ -73,36 +73,33 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 	public vfIECEBC_Campaign(ApexPages.StandardController stdController) {
 		this.con = stdController;
 
-		if (!Test.isRunningTest()) {
-			List<String> fields = new List<String>();
-			// Object Name whose fields we have to retrieve
-            String objectName = 'EBC_Campaign__c';
-            List < String > objFields = new List < String > ();
-            
-            Map < String, Schema.SObjectType > schemaGlobalDescription = Schema.getGlobalDescribe();
-            
-            Schema.sObjectType objType = schemaGlobalDescription.get(objectName);
-            
-            Schema.DescribeSObjectResult objDescribeSObjectResult = objType.getDescribe();
-            Map < String, Schema.SObjectField > mapFieldList = objDescribeSObjectResult.fields.getMap();
-            
-            for (Schema.SObjectField field: mapFieldList.values()) {
-                Schema.DescribeFieldResult fieldResult = field.getDescribe();
-                // IsUpdateable() check if the logged-in user has “Edit” permission for the field and the objec
-                if (fieldResult.IsUpdateable()){
-                    objFields.add(fieldResult.getName());
-				}
-            }
-			fields.addAll(objFields);
-			fields.addAll(new List<String>{
-				'Billing_Account__c',
-				'EBC_Design__r.Is_Tested__c',
-				'EBC_Master_Filter__r.Audience__c',
-				'EBC_Master_Filter__r.Name',
-				'EBC_Master_Filter__r.Number_of_Recipients__c'
-			});
-			stdController.addFields(fields);
+		List<String> fields = new List<String>();
+		// Object Name whose fields we have to retrieve
+		String objectName = 'EBC_Campaign__c';
+		List < String > objFields = new List < String > ();
+		Map < String, Schema.SObjectType > schemaGlobalDescription = Schema.getGlobalDescribe();
+		Schema.sObjectType objType = schemaGlobalDescription.get(objectName);
+		Schema.DescribeSObjectResult objDescribeSObjectResult = objType.getDescribe();
+		Map < String, Schema.SObjectField > mapFieldList = objDescribeSObjectResult.fields.getMap();
+		
+		for (Schema.SObjectField field: mapFieldList.values()) {
+			Schema.DescribeFieldResult fieldResult = field.getDescribe();
+			// IsUpdateable() check if the logged-in user has “Edit” permission for the field and the objec
+			if (fieldResult.IsUpdateable()){
+				objFields.add(fieldResult.getName());
+			}
 		}
+
+		fields.addAll(objFields);
+		fields.addAll(new List<String>{
+			'Billing_Account__c',
+			'EBC_Design__r.Is_Tested__c',
+			'EBC_Master_Filter__r.Audience__c',
+			'EBC_Master_Filter__r.Name',
+			'EBC_Master_Filter__r.Number_of_Recipients__c'
+		});
+		
+		if (!Test.isRunningTest()) stdController.addFields(fields);
 
 		this.campaign = (EBC_Campaign__c)stdController.getRecord();
 
