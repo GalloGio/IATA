@@ -6,6 +6,8 @@ public without sharing class PortalIftpUtils {
 	
 	Public Static Final String ACC_ROLE_RT_IFTP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
+	Private Static Final Integer numberOfExpectedFieldsOnImportEmployeesCSVFile = 7;
+
 	@AuraEnabled
 	public static boolean isCommunity(){
 		Id siteId = Site.getSiteId(); // take a look at the apex class Site, you may find more useful method concerning site/community
@@ -709,6 +711,17 @@ public without sharing class PortalIftpUtils {
 			Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
+				if(csvRecordData.size() > numberOfExpectedFieldsOnImportEmployeesCSVFile){
+					ImportResultsWrapper irw = new ImportResultsWrapper(
+						clearString(csvRecordData[0]),
+						clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
+						'Error in source data. Please check input CSV record for this employee. ',
+						'Failed');
+					irw.firstName = clearString(csvRecordData[1]);
+					irw.lastName = clearString(csvRecordData[2]);
+					results.add(irw);
+					continue;
+				}
 				if(String.isNotBlank(clearString(csvRecordData[0])) && mapEmployeeInfoByEmployeeCode.containsKey(clearString(csvRecordData[0]))){
 						ImportResultsWrapper irw = new ImportResultsWrapper(
 							clearString(csvRecordData[0]),
