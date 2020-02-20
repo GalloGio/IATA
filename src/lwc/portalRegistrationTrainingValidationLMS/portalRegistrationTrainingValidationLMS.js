@@ -58,6 +58,8 @@ import CSP_L3_ExistTrainUserMatch_LMS from '@salesforce/label/c.CSP_L3_ExistTrai
 import CSP_L3_ContactSupport_LMS from '@salesforce/label/c.CSP_L3_ContactSupport_LMS';
 import CSP_L3_NumericError_LMS from '@salesforce/label/c.CSP_L3_NumericError_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
+import CSP_L3_ExistTrainUserId_LMS from '@salesforce/label/c.CSP_L3_ExistTrainUserId_LMS';
+
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -86,6 +88,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 	@track existingUsernameVisibility = false;
 	@track notMatchingVisibility = false;
 	@track matchingVisibility = false;
+	@track alreadyMatchingUseridVisibility = false;
 	@track validated = false;
 	
 	/* Picklist options */
@@ -170,7 +173,8 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 		CSP_L3_ExistTrainUserMatch_LMS,
 		CSP_L3_ContactSupport_LMS,
 		CSP_L3_NumericError_LMS,
-		CSP_L2_RegistrationFailed_LMS
+		CSP_L2_RegistrationFailed_LMS,
+		CSP_L3_ExistTrainUserId_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -249,6 +253,7 @@ console.log('TrainingValidation connectedCallback this.localContactInfo: ', this
 			this.validated = false;
 			this.existingUsernameVisibility = false;
 			this.notMatchingVisibility = false;
+			this.alreadyMatchingUseridVisibility = false;
 			this.matchingVisibility = false;
 			
 			window.clearTimeout(this.delayTimeout);
@@ -273,6 +278,7 @@ console.log('TrainingValidation connectedCallback this.localContactInfo: ', this
 			this.validated = false;
 			this.existingUsernameVisibility = false;
 			this.notMatchingVisibility = false;
+			this.alreadyMatchingUseridVisibility = false;
 			this.matchingVisibility = false;
 			
 			userDiv.classList.add('slds-has-error');
@@ -325,6 +331,7 @@ console.log('entrei next');
 		this.validated = false;
 		this.existingUsernameVisibility = false;
 		this.notMatchingVisibility = false;
+		this.alreadyMatchingUseridVisibility = false;
 		this.matchingVisibility = false;
 
 		if(this.localContactInfo.UserId !== '' && this.localContactInfo.Username !== ''){
@@ -337,6 +344,11 @@ console.log('entrei next');
 					this.validated = true;
 					this.localContactInfo.existingTrainingId = '';
 
+				}else if(result === 'already_existing_userid'){
+
+					this.alreadyMatchingUseridVisibility = true;
+					this.localContactInfo.existingTrainingId = '';
+				
 				}else if(result === 'not_matching'){
 
 					this.notMatchingVisibility = true;

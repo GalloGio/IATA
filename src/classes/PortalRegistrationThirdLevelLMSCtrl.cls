@@ -59,6 +59,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace('@@##', '+');
 		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
+		registrationParameters.Phone = registrationParameters.Phone.replace('@@##', '+');
+		registrationParameters.OtherPhone = registrationParameters.OtherPhone.replace('@@##', '+');
+		
 		result.userInfo = JSON.serialize(registrationParameters);
 
 
@@ -73,16 +76,40 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		try{
 
+			// String sUsername = extraValues[0];
+			// String sUserId = extraValues[1];
+			// String sCourse = extraValues[2];
+			// String sStreet = extraValues[3];
+			// String sZipCode = extraValues[4];
+			// String sCountryId = extraValues[5];
+			// String sStateId = (extraValues[6] != null && extraValues[6] != '') ? extraValues[6] : extraValues[7];
+			// String sStateName = extraValues[7];
+			// String sCityId = extraValues[8];
+			// String sCity = extraValues[9];
+			// Boolean isPoBox = Boolean.valueOf(extraValues[10]);
+			// String serviceid = extraValues[11];
+			// String sStreet2 = extraValues[12];
+			// String existingTrainingId = extraValues[13];
 			RegistrationParamsWrapper regParam = new RegistrationParamsWrapper(extraValues);
-
+System.debug('regParam: ' + regParam);
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+
+
+			// List<Address__c> listAddr = [SELECT City_Reference__c, City_Name__c, Country_Reference__c, Country__c,
+			// 								Id,PO_Box_Address__c,Postal_Code__c,State_Reference__c,State_Name__c,Street__c, Street2__c
+			// 							FROM Address__c
+			// 							WHERE Id = :con.Shipping_Address__c LIMIT 1];
+			// Address__c addr = new Address__c();
+
+			
 
 			//Update Contact
 			update con;
 
 			//Create Account Role if not existing
+			//TO DO FM: Change query to use Functional Role
 			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
 											FROM Account_Role__c 
 											WHERE Account__c = :con.AccountId 
@@ -105,8 +132,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			if(regParam.existingTrainingId != ''){
 				contIds.add(regParam.existingTrainingId);
 			}
-
+System.debug('contIds: ' + contIds);
 			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+			//TO DO FM: Change query to use Functional Role
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 													FROM Account_Contact_Role__c
 													WHERE Contact__c in :contIds
@@ -116,6 +144,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
+System.debug('acrNew: ' + acrNew);
+System.debug('acrOld: ' + acrOld);
+
 			for(Account_Contact_Role__c acrItem : listACR){
 				if(acrItem.Contact__c == con.Id){
 					acrNew = acrItem;
@@ -123,6 +154,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					acrOld = acrItem;
 				}
 			}
+System.debug('acrNew: ' + acrNew);
+System.debug('acrOld: ' + acrOld);
 			if(acrOld != null && acrOld.Id != null){
 				acr = acrOld;
 				acr.Account_Role__c = ar.Id;
@@ -143,6 +176,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				insert acr;
 			}
+System.debug('acr: ' + acrNew);
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
 				Contact toDeleteContact = new Contact(Id = regParam.existingTrainingId);
 				delete toDeleteContact;
@@ -237,7 +271,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
 
 			assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
-		
+			
+			
+
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
 
@@ -262,6 +298,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		try{
 			UserInformationWrapper contactInfo = getDataToMail(params);
+
+			System.debug('completeRegistration - contactInfo: ' + contactInfo);
 
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
@@ -338,6 +376,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+					// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 					conToInactivate.Additional_Email__c = '';
 				}
 
@@ -348,7 +387,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 								FROM Contact WHERE Id = :contactInfo.existingContactId];
 				con.Email = contactInfo.Email;
 				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
@@ -380,6 +418,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -468,7 +507,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					// TODO - fix below.. find where method id now...
+					// PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -513,6 +553,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role to set it up to the new Contact
+					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -565,6 +606,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 					conToInactivate.Email = conToInactivate.Email + '.inactive';
 					if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+						// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 						conToInactivate.Additional_Email__c = '';
 					}
 
@@ -573,7 +615,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					// TODO - fix below.. find where method id now...
+					// PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -827,38 +870,47 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 		
 		List<Training_Contact_Role_Details__c> existingYadLst = new List<Training_Contact_Role_Details__c>(
-			[SELECT Id, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname, Account_Contact_Role__r.contact__r.lastname 
+			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname, 
+					Account_Contact_Role__r.contact__r.lastname 
 				FROM Training_Contact_Role_Details__c
-				WHERE UserId__c = :userId 
-				AND Username__c = :username 
+				WHERE UserId__c = :userId
 				LIMIT 1]);
-
+		
 		if(!existingYadLst.isEmpty() && existingYadLst.size() > 0){
+
+
+
+
 			Training_Contact_Role_Details__c existingTCRD = existingYadLst[0];
-			String existingFullName = existingTCRD.Account_Contact_Role__r.contact__r.firstname + existingTCRD.Account_Contact_Role__r.contact__r.lastname;
-			String existingFullNameReverse = existingTCRD.Account_Contact_Role__r.contact__r.lastname + existingTCRD.Account_Contact_Role__r.contact__r.firstname;
-			existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
-			existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
-			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences 
-			Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+			if(existingTCRD.Username__c.equalsIgnoreCase(username) ){
 
-			if(compareResult < 0 && compareResultReverse < 0){
-				sRes = 'not_matching';	
-			}else{
+				String existingFullName = existingTCRD.Account_Contact_Role__r.contact__r.firstname + existingTCRD.Account_Contact_Role__r.contact__r.lastname;
+				String existingFullNameReverse = existingTCRD.Account_Contact_Role__r.contact__r.lastname + existingTCRD.Account_Contact_Role__r.contact__r.firstname;
+				existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
+				existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
-				//check if have active user
-				List<User> existingUserLst = new List<User>(
-					[SELECT Id FROM User WHERE ContactId = :existingTCRD.Account_Contact_Role__r.contact__c LIMIT 1]);
+				//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences 
+				Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
+				Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
 
-				if(!existingUserLst.isEmpty()){
-					sRes = 'existing_user';
+				if(compareResult < 0 && compareResultReverse < 0){
+					sRes = 'not_matching';	
 				}else{
-					sRes = existingTCRD.Account_Contact_Role__r.contact__c;	
-				}
-			}
 
+					//check if have active user
+					List<User> existingUserLst = new List<User>(
+						[SELECT Id FROM User WHERE ContactId = :existingTCRD.Account_Contact_Role__r.contact__c LIMIT 1]);
+
+					if(!existingUserLst.isEmpty()){
+						sRes = 'existing_user';
+					}else{
+						sRes = existingTCRD.Account_Contact_Role__r.contact__c;	
+					}
+				}
+			}else{
+				sRes = 'already_existing_userid';
+			}
 		}else{
 			sRes = 'not_existing';
 		}

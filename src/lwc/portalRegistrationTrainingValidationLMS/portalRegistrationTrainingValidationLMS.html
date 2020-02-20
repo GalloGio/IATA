@@ -10,8 +10,11 @@
 
 
 			<lightning-layout-item size="12">
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
 				<div class="sectionDescription">{labels.CSP_L3_TrainValidationDescri_LMS}
 				</div>
+
+				<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
@@ -22,7 +25,9 @@
 			</lightning-layout-item>
 
 			<lightning-layout-item size="12">
+				<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
 				<div class="sectionTitle">{labels.CSP_L3_Training_Information_LMS}</div>
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
 				<div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
 			</lightning-layout-item>
 
@@ -113,6 +118,27 @@
 					<lightning-layout-item size="6">
 						<lightning-button class="slds-float_right containedButton customBtn"
 							data-id="navigateToSupport1" label={labels.CSP_L3_ContactSupport_LMS} variant="brand"
+							onclick={navigateToSupport}>
+						</lightning-button>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="12">
+					</lightning-layout-item>
+				</template>
+				<template if:true={alreadyMatchingUseridVisibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									{labels.CSP_L3_ExistTrainUserId_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+					<lightning-layout-item size="6">
+						<lightning-button class="slds-float_right containedButton customBtn"
+							data-id="navigateToSupport2" label={labels.CSP_L3_ContactSupport_LMS} variant="brand"
 							onclick={navigateToSupport}>
 						</lightning-button>
 					</lightning-layout-item>
