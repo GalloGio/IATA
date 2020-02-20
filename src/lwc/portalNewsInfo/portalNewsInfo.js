@@ -12,6 +12,8 @@ export default class PortalNewsInfo extends LightningElement {
     @track maxSize;
     @track showPagination;
     @track sliderIcons;
+	@track isForRefreshTimer = false;
+    @track refreshTimer;
     page = 1;
     globaList = [];
     banners = [];
@@ -48,6 +50,11 @@ export default class PortalNewsInfo extends LightningElement {
             this.error = results.error;
             this.loading = false;
         }
+		
+		// eslint-disable-next-line @lwc/lwc/no-async-operation
+            this.refreshTimer = window.setInterval(() => {
+                this.handleNext();
+            }, 10000);
     }
 
     sliderIconsRenderer() {
@@ -61,6 +68,16 @@ export default class PortalNewsInfo extends LightningElement {
             this.sliderIcons.push({ className });
         }
     }
+	
+	handlePreviousPage() {
+        this.isForRefreshTimer = true;
+        this.handlePrevious();
+    }
+
+    handleNextPage() {
+        this.isForRefreshTimer = true;
+        this.handleNext();
+    }
     
     handlePrevious() {
         if (this.page > 1) {
@@ -69,6 +86,11 @@ export default class PortalNewsInfo extends LightningElement {
         } else {
             this.page = this.maxSize;
             this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
+        }
+		
+		if (this.isForRefreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.isForRefreshTimer = false;
         }
 
         this.sliderIconsRenderer();
@@ -81,6 +103,11 @@ export default class PortalNewsInfo extends LightningElement {
         } else {
             this.page = 1;
             this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
+        }
+		
+		 if (this.isForRefreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.isForRefreshTimer = false;
         }
 
         this.sliderIconsRenderer();

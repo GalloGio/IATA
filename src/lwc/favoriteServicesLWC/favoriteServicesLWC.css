@@ -49,6 +49,10 @@
     right: 0;
 }
 
+.tileNewServiceText.slds-m-top_none {
+    margin-top: initial;
+}
+
 .tileNewServiceIcon{
     margin-top: 50px;
     width: 48px;
@@ -60,6 +64,19 @@
     align-items: center;
     justify-content: center;
     font-size: 24px;
+}
+
+.tileNewServiceIconMobile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(30, 50, 250, 0.1);
+    color: #3333ff;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 32px;
 }
 
 .noPointerEvents{

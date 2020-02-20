@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="customWhiteBackground topLightGrayBorder no-print">
+            <div class="customWhiteBackground topLightGrayBorder no-print" if:false={trackedIsExpired}>
                 <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
                     <div class="slds-col slds-size_11-of-12">
 						<lightning-spinner alternative-text="Loading" size="small" if:true={loadingCom}></lightning-spinner>

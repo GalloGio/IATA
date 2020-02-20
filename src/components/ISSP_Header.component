@@ -49,6 +49,9 @@
         <script src="{!URLFOR($Resource.datePicker_langs, 'datepicker-in.js')}" />
         
         <style>
+            html {
+                font-size: 100% !important;
+            }
             /* Mobile side menu select language styles */
             .sideBar .langSelect,
             .sideBar .langSelect input[role="textbox"],

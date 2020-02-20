@@ -2157,14 +2157,9 @@ Completed: Process is complete</inlineHelpText>
         <columns>Applicable_Fee__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Type_of_application__c</field>
+            <field>NAME</field>
             <operation>equals</operation>
-            <value>Replacement</value>
-        </filters>
-        <filters>
-            <field>Application_Status__c</field>
-            <operation>equals</operation>
-            <value>Paid</value>
+            <value>IDCA-364593</value>
         </filters>
         <label>For specific IDCA</label>
         <language>en_US</language>

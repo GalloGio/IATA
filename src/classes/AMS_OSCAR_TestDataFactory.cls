@@ -323,14 +323,15 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
 									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'HO', Reason_for_creation__c = 'none',
-									Is_your_firm_handling_Dangerous_Goods__c='Yes');
+									Is_your_firm_handling_Dangerous_Goods__c='Yes', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
 		insert cargoHO;
 
 		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
 									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
-									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id);
-		insert cargoBR;
+									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id,
+									Status__c = AMS_Utils.ACC_S9_APPROVED);
+        insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
