@@ -292,6 +292,16 @@ public with sharing class CustomerSyncUtilsTest {
 			System.assertEquals(1, CustomerSyncUtils.mapToSend.size());
 
 			CustomerSyncUtils.mapToSend = null;
+			accountRelationships.get(0).Child_Account__c = addressRoleBusinessContext2.Address_Role__r.Address__r.Account__c;
+			update accountRelationships;
+			System.assertEquals(1, CustomerSyncUtils.mapToSend.size());
+
+			CustomerSyncUtils.mapToSend = null;
+			accountRelationships.get(0).Child_Account__c = addressRoleBusinessContext.Address_Role__r.Address__r.Account__c;
+			update accountRelationships;
+			System.assertEquals(1, CustomerSyncUtils.mapToSend.size());
+
+			CustomerSyncUtils.mapToSend = null;
 			delete accountRelationships;
 			System.assertEquals(1, CustomerSyncUtils.mapToSend.size());
 
