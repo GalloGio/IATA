@@ -35,14 +35,14 @@ private class AcliSyncBatchTest {
 
   
   
-    static void loadData() {
-        // create the custom setting values
-        list<UtilityCS__c> utilities = new list<UtilityCS__c>{
-                                                            new UtilityCS__c(name ='AcliFileName',value__c = 'NewAcliSyncFile'),
-                                                            new UtilityCS__c(name = 'AcliConfirmationEmailRecipients',value__c = 'buzdugac@iata.org')
-                                                            };
-        insert utilities;
-    }
+	static void loadData() {
+		// create the custom setting values
+		list<UtilityCS__c> utilities = new list<UtilityCS__c>{
+															new UtilityCS__c(name ='AcliFileName',value__c = 'NewAcliSyncFile'),
+															new UtilityCS__c(name = 'AcliConfirmationEmailRecipients',value__c = 'buzdugac@iata.org')
+															};
+		insert utilities;
+	}
 
 
 	static testMethod void testAcliNewScheduler_Error() {
@@ -80,35 +80,35 @@ private class AcliSyncBatchTest {
 		// CRON expression: Because this is a test, job executes immediately after Test.stopTest().
 		String CRON_EXP = '0 0 0 15 3 ? 2022';
 
-        test.startTest();
-            // Schedule the test job
-            String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
-        test.stopTest();
-    }
-    static testMethod void testAcliLaunchBatchScheduler_Ok() {
-        
-        loadData();
-        String c = 'NAME1,NAME2,NUM_CODE_NULL,ICAO_DES,DES_NULL,DES_SEC_FLAG,ADDRESS1,ADDRESS2,CITY,PROV_ST_NAME,COUNTRY,POSTAL,RES_TTYPE,RES_HEAD_NAME,RES_TITLE,CO_TTYPE,EMERG_TTYPE,EMERG_HEAD_NAME,EMERG_TITLE,SITA_FLAG,ARINC_FLAG,IATA_FLAG,ATA_FLAG,MITA_FLAG,CAT_PKEY,NUM_SEC_FLAG,AIRLINE_PRF_NULL,AIRLINE_SEC_FLAG,KUNNR,ACTIVE,AOC_date,MITA_MEMBER,REQUEST_ID,REQ_STATUS,REQ_STATUS_DESCR,RECEIVED,FORMTYPE'
-        + '\n' + 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X00000000                                         00000000   Aer Lingus Limited                                                              DIE';
+		test.startTest();
+			// Schedule the test job
+			String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
+		test.stopTest();
+	}
+	static testMethod void testAcliLaunchBatchScheduler_Ok() {
+		
+		loadData();
+		String c = 'NAME1,NAME2,NUM_CODE_NULL,ICAO_DES,DES_NULL,DES_SEC_FLAG,ADDRESS1,ADDRESS2,CITY,PROV_ST_NAME,COUNTRY,POSTAL,RES_TTYPE,RES_HEAD_NAME,RES_TITLE,CO_TTYPE,EMERG_TTYPE,EMERG_HEAD_NAME,EMERG_TITLE,SITA_FLAG,ARINC_FLAG,IATA_FLAG,ATA_FLAG,MITA_FLAG,CAT_PKEY,NUM_SEC_FLAG,AIRLINE_PRF_NULL,AIRLINE_SEC_FLAG,KUNNR,ACTIVE,AOC_date,MITA_MEMBER,REQUEST_ID,REQ_STATUS,REQ_STATUS_DESCR,RECEIVED,FORMTYPE'
+		+ '\n' + 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X00000000                                         00000000   Aer Lingus Limited                                                              DIE';
 		Document doc = new Document();
 		doc.Name = AcliNewScheduler.ACLI_DOC_NAME;
 		doc.Body = Blob.ValueOf(c);
-        doc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
-        insert doc;
+		doc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
+		insert doc;
 
-        String CRON_EXP = '0 0 0 15 3 ? 2022';
+		String CRON_EXP = '0 0 0 15 3 ? 2022';
 
-        Test.startTest();
-            // Schedule the test job
-        String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
-        Test.stopTest();  
+		Test.startTest();
+			// Schedule the test job
+		String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
+		Test.stopTest();  
 
-        List<Document> docResult = new List<Document>();
-        docResult = [SELECT Id, Name FROM Document WHERE Name =: AcliNewScheduler.ACLI_DOC_NAME];
+		List<Document> docResult = new List<Document>();
+		docResult = [SELECT Id, Name FROM Document WHERE Name =: AcliNewScheduler.ACLI_DOC_NAME];
 
-        System.assert(docResult.isEmpty());
+		System.assert(docResult.isEmpty());
 
-    }
+	}
 
 	static testMethod void testBatch() {
 		loadData();
@@ -122,19 +122,19 @@ private class AcliSyncBatchTest {
 		IATA_ISO_Country__c country_a = new IATA_ISO_Country__c(Name = 'Argentina', ISO_Code__c = 'AR', Acli_Country__c = 'Argentina');
 		insert country_a;
 
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account EI = new Account(Name = 'Aer Lingus INTENTIONAL TYPO', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000141', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
-        			IATA_ISO_Country__c = country_i.Id);
-        insert EI;
-        
-        Account EI1 = new Account(Name = 'Aer Lingus Limited', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000146', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
-        			IATA_ISO_Country__c = country_i.Id);
-        insert EI1;
+		Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Account EI = new Account(Name = 'Aer Lingus INTENTIONAL TYPO', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000141', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
+					IATA_ISO_Country__c = country_i.Id);
+		insert EI;
+		
+		Account EI1 = new Account(Name = 'Aer Lingus Limited', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000146', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
+					IATA_ISO_Country__c = country_i.Id);
+		insert EI1;
 
-        Id AirlineBranch_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
-        Account BR = new Account(Name = 'Aer Lingus Branch', Airline_designator__c = 'EI', RecordTypeId = AirlineBranch_RT_Id,
-        			IATA_ISO_Country__c = country_i.Id, ParentId = EI.id);
-        insert BR;
+		Id AirlineBranch_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+		Account BR = new Account(Name = 'Aer Lingus Branch', Airline_designator__c = 'EI', RecordTypeId = AirlineBranch_RT_Id,
+					IATA_ISO_Country__c = country_i.Id, ParentId = EI.id);
+		insert BR;
 
 		Account SU = new Account(Name = 'Aeroflot INTENTIONAL TYPO', Name_on_AOC__c = 'Aeroflot INTENTIONAL TYPO', Airline_designator__c = 'SU', ACLI_SAP_Id__c = '0010000368', Membership_status__c = 'IATA member', RecordTypeId = AirlineHQ_RT_Id,
 					IATA_ISO_Country__c = country_r.Id);
@@ -197,15 +197,15 @@ private class AcliSyncBatchTest {
 			Database.executeBatch(batch);
 		test.stopTest();
 
-        EI = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI.Id];
-        // check that all the info was updated
-        System.AssertEquals('Aer Lingus INTENTIONAL TYPO', EI.Name);
-        System.AssertEquals(null, EI.billingCity);
-        
-        EI1 = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI1.Id];
-        // check that all the info was updated
-        System.AssertEquals('Aer Lingus Limited', EI1.Name);
-        System.AssertEquals(null, EI.billingCity);
+		EI = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI.Id];
+		// check that all the info was updated
+		System.AssertEquals('Aer Lingus INTENTIONAL TYPO', EI.Name);
+		System.AssertEquals(null, EI.billingCity);
+		
+		EI1 = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI1.Id];
+		// check that all the info was updated
+		System.AssertEquals('Aer Lingus Limited', EI1.Name);
+		System.AssertEquals(null, EI.billingCity);
 
 		SU = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :SU.Id];
 		// check that nothing changed in the account
@@ -243,11 +243,11 @@ private class AcliSyncBatchTest {
 		System.AssertEquals('BUENOS AIRES', AR.billingCity);
 		System.AssertEquals(country_a.Id, AR.IATA_ISO_Country__c);
 
-        // check that a new SAP Account record was created for the new account
-        SAP_Account__c sapAR = [SELECT Id, SAP_ID__c, Airline_Coding__c FROM SAP_Account__c WHERE Account__c = :AR.Id];
-        system.assertNotEquals(null, sapAR);
-        system.assertEquals(true, sapAR.Airline_Coding__c);
-        system.assertEquals('0010000088', sapAR.SAP_ID__c);
-    }
+		// check that a new SAP Account record was created for the new account
+		SAP_Account__c sapAR = [SELECT Id, SAP_ID__c, Airline_Coding__c FROM SAP_Account__c WHERE Account__c = :AR.Id];
+		system.assertNotEquals(null, sapAR);
+		system.assertEquals(true, sapAR.Airline_Coding__c);
+		system.assertEquals('0010000088', sapAR.SAP_ID__c);
+	}
 
 }
