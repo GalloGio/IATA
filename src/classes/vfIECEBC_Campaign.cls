@@ -7,24 +7,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 
 	public Integer numberOfRecipients {
 		get{
-			if (numberOfRecipients == null) {
-				HttpRequest req = new HttpRequest();
-				//req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
-				req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_RecipientCount?id=' + campaign.EBC_Master_Filter__c);
-				req.setMethod('GET');
-				//req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-
-				Http http = new Http();
-				HTTPResponse res = http.send(req);
-
-				Integer cnt = Integer.valueOf(res.getBody().trim());
-
-				EBC_Campaign__c tmpCamp = new EBC_Campaign__c();
-				tmpCamp.Id = campaign.Id;
-				campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = cnt;
-				update tmpCamp;
-
-				numberOfRecipients = Integer.valueOf(campaign.Number_of_Recipients__c);
+			if (numberOfRecipients == null) {HttpRequest req = new HttpRequest();/*req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);*/req.setEndpoint(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_RecipientCount?id=' + campaign.EBC_Master_Filter__c);req.setMethod('GET');/*req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());*/Http http = new Http();HTTPResponse res = http.send(req);Integer cnt = Integer.valueOf(res.getBody().trim());EBC_Campaign__c tmpCamp = new EBC_Campaign__c();tmpCamp.Id = campaign.Id;campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = cnt;update tmpCamp;numberOfRecipients = Integer.valueOf(campaign.Number_of_Recipients__c);
 			}
 			return numberOfRecipients;
 		}
@@ -60,7 +43,9 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 		PageReference pr = stepToPageReference.get(stepNumber);
 
 		if (withParams) {
-			if (!String.isBlank(this.con.getId())) pr.getParameters().put('id', this.con.getId());
+			if (!String.isBlank(this.con.getId())){
+				pr.getParameters().put('id', this.con.getId());
+			}
 		}
 
 		pr.setRedirect(true);
@@ -142,9 +127,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 	}
 
 	public PageReference pageLoad() {
-
 		PageReference pr = null;
-
 		// Check if the current step is allowed and if not, redirect to the last allowed step
 		if (campaign.Maximum_Allowed_Step__c == 4 && currentStepNumber == 5 && !campaign.EBC_Design__r.Is_Tested__c ) {
 			pr = getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
@@ -166,6 +149,4 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
 
 		return pr;
 	}
-
-
 }
