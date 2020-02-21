@@ -883,6 +883,7 @@ global with sharing class IDCardUtil {
 			idCard.Sent_to_AIMS_on__c = null;
 			idCard.Received_From_AIMS__c = null;
 			idCard.Cancellation_Date__c = null;
+			idCard.GDP_Products_Account_View__c = null;
 
 			if (IdCardAIMSrt == null)
 				IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
