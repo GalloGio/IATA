@@ -23,18 +23,6 @@ public without sharing class OneId_Troubleshooting_Controller {
 				System.debug('found? : ' + contacts.size());
 				System.debug('contacts : ' + contacts);
 				if(!contacts.isEmpty()){
-/*					Case cse2 = new Case(
-						Subject = contacts[0].Account.Name + ' : ' + cse.Subject,
-						ContactId = contacts[0].Id,
-						Status = 'New',
-						Description = cse.Description
-					);
-					cse2.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId();
-					cse2.setOptions(dmlOpts);
-					cse2.Origin = 'Troubleshooting';
-					System.debug('new case : ' + cse2);
-					insert cse2;
-					return true;*/
 					cse.ContactId = contacts[0].Id;
 					cse.Subject = contacts[0].Account.Name + ' : ' + cse.Subject;
 					cse.Case_Creator_Email__c = '';
@@ -48,7 +36,7 @@ public without sharing class OneId_Troubleshooting_Controller {
 			insert cse;
 
 			if(isGuestUser()){
-				Case cse2 = [SELECT Id, ContactId, Contact.Email, Case_Creator_Email__c, CaseNumber, Subject, Case_Thread_Id__c from Case WHERE Id =: cse.Id];
+				Case cse2 = [SELECT Id, ContactId, Contact.Email, Case_Creator_Email__c, CaseNumber, Subject, Case_Thread_Id__c from Case WHERE Id =: cse.Id AND Contact.isEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')];
 
 				OrgWideEmailAddress address = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 

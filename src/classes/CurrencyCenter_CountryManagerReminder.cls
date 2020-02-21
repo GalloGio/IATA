@@ -7,7 +7,7 @@ global with sharing class CurrencyCenter_CountryManagerReminder implements Datab
 		String query = 'SELECT Id, Country_Name__r.Country_Manager__c '
 			+ ' FROM Country_Profile__c'
 			+ ' WHERE Listed_In__c IN (\'Blocked Funds\',\'Watch List\')'
-			+ ' AND Country_Name__r.Country_Manager__c != null';
+			+ ' AND Country_Name__r.Country_Manager__c != null AND Country_Name__r.Country_Manager__r.IsActive = true';
 		return Database.getQueryLocator(query);
 	}
 
