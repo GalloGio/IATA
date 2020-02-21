@@ -705,10 +705,11 @@ public without sharing class PortalIftpUtils {
 				}
 			}
 
-			List<String> allMessages;
 
 
-			Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
+
+			Set<String> employeeInFileSet = new Set<String>();
+			Set<String> duplicatedEmployeeCodeSet = new Set<String>();
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
 				if(csvRecordData.size() != numberOfExpectedFieldsOnImportEmployeesCSVFile){
@@ -722,34 +723,14 @@ public without sharing class PortalIftpUtils {
 					results.add(irw);
 					continue;
 				} else{
-				if(String.isNotBlank(clearString(csvRecordData[0])) && mapEmployeeInfoByEmployeeCode.containsKey(clearString(csvRecordData[0]))){
-						ImportResultsWrapper irw = new ImportResultsWrapper(
-							clearString(csvRecordData[0]),
-							clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
-							'Employee Code duplicated in import CSV file. ',
-							'Failed');
-						irw.firstName = clearString(csvRecordData[1]);
-						irw.lastName = clearString(csvRecordData[2]);
-						results.add(irw);
-
-						List<String> duplicatedRecord = mapEmployeeInfoByEmployeeCode.get(clearString(csvRecordData[0]));
-
-						ImportResultsWrapper irw2 = new ImportResultsWrapper(
-							clearString(duplicatedRecord[0]),
-							clearString(duplicatedRecord[1]) + ' ' + clearString(duplicatedRecord[2]),
-							'Employee Code duplicated in import CSV file. ',
-							'Failed');
-						irw2.firstName = clearString(duplicatedRecord[1]);
-						irw2.lastName = clearString(duplicatedRecord[2]);
-						results.add(irw2);
-						mapEmployeeInfoByEmployeeCode.remove(clearString(csvRecordData[0]));
-
-				} else {
 					if(String.isNotBlank(clearString(csvRecordData[0]))){
-						mapEmployeeInfoByEmployeeCode.put(clearString(csvRecordData[0]), csvRecordData);
+						if( employeeInFileSet.contains(clearString(csvRecordData[0]))){
+							duplicatedEmployeeCodeSet.add(clearString(csvRecordData[0]));
+						} else{
+							employeeInFileSet.add(clearString(csvRecordData[0]));
+						}
 					}
 				}
-			}
 			}
 
 			List<Contact> contactsToInsert = new List<Contact>();
@@ -763,9 +744,16 @@ public without sharing class PortalIftpUtils {
 
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
+
+
+
 				if(csvRecordData != null && csvRecordData.size() == numberOfExpectedFieldsOnImportEmployeesCSVFile){
+
+					String aux = 'Failed: ';
+					List<String> allMessages = new List<String>();
+					boolean hasErrors=false;
 					// Save errors
-					allMessages = new List<String>();
+
 
 					//Employee Code,First Name,Last Name,Coordinator,Business Email
 					String companyCode = clearString(csvRecordData[0]);
@@ -790,70 +778,79 @@ public without sharing class PortalIftpUtils {
 						allMessages.add('Last Name is missing; ');
 					}
 
-					// stations: Removes double quotes from string
-					String stationsCodesString = clearString(csvRecordData[6]);
+					if(duplicatedEmployeeCodeSet.contains(companyCode)){
+						hasErrors=true;
+						aux = aux + 'Employee Code duplicated in import CSV file.';
+					} else{
 
-					if(String.isBlank(stationsCodesString)){
-						allMessages.add('No station associated; ');
-					} else {
-						if(allMessages.size() == 0){
-							// stations: Splits string into separated station codes
-							List<String> auxstationsCodes = new List<String>();
-							Set<String> stationsCodes = new Set<String>();
-							auxstationsCodes = stationsCodesString.split(';');
-							if(auxstationsCodes.size() > 0){
-								// stations: trim codes and remove duplicates
-								for(String code: auxstationsCodes){
-									stationsCodes.add(code.trim().toUpperCase());
-								}
-								// Check if ITP has station
-								Boolean addrInITPAddrs = false;
-								Boolean toBeMapped = true;
-								for(String code: stationsCodes){
-									addrInITPAddrs = false;
-									toBeMapped = true;
-									if(mUserAddr.containsKey(code)){
-										addrInITPAddrs = true;
+						// stations: Removes double quotes from string
+						String stationsCodesString = clearString(csvRecordData[6]);
+
+						if(String.isBlank(stationsCodesString)){
+							allMessages.add('No station associated; ');
+						} else {
+							if(allMessages.size() == 0){
+								// stations: Splits string into separated station codes
+								List<String> auxstationsCodes = new List<String>();
+								Set<String> stationsCodes = new Set<String>();
+								auxstationsCodes = stationsCodesString.split(';');
+								if(auxstationsCodes.size() > 0){
+									// stations: trim codes and remove duplicates
+									for(String code: auxstationsCodes){
+										stationsCodes.add(code.trim().toUpperCase());
 									}
-									if(!addrInITPAddrs){
-										Boolean exists = false;
-										if(mAllAddr.containsKey(code)){
-											exists = true;
+									// Check if ITP has station
+									Boolean addrInITPAddrs = false;
+									Boolean toBeMapped = true;
+									for(String code: stationsCodes){
+										addrInITPAddrs = false;
+										toBeMapped = true;
+										if(mUserAddr.containsKey(code)){
+											addrInITPAddrs = true;
 										}
+										if(!addrInITPAddrs){
+											Boolean exists = false;
+											if(mAllAddr.containsKey(code)){
+												exists = true;
+											}
 
-										if(exists){
-											allMessages.add(code + ' not a station of this ITP; ');
-										} else {
-											allMessages.add(code + ' is not a valid station code; ');
+											if(exists){
+												allMessages.add(code + ' not a station of this ITP; ');
+											} else {
+												allMessages.add(code + ' is not a valid station code; ');
 
+											}
+											toBeMapped = false;
 										}
-										toBeMapped = false;
 									}
-								}
-								if(toBeMapped){
-									mapEmployeeStationCodes.put(companyCode, stationsCodes);
+									if(toBeMapped){
+										mapEmployeeStationCodes.put(companyCode, stationsCodes);
+									}
 								}
 							}
 						}
+
 					}
 
-					if(allMessages.size() > 0){
-						String aux = 'Failed: ';
+					if(!hasErrors && allMessages.size() > 0){
+						hasErrors=true;
 						for(String s: allMessages){
 							aux = aux + s;
 						}
+					}
+					if(hasErrors){
+
 						ImportResultsWrapper irw = new ImportResultsWrapper(
 							companyCode,
 							firstName + ' ' + lastName,
 							aux,
 							'Failed');
+
 						irw.firstName = firstName;
 						irw.lastName = lastName;
-
 						results.add(irw);
-					}
+					}else{
 
-					if(allMessages.isEmpty() && mapEmployeeInfoByEmployeeCode.containsKey(companyCode)){
 						Contact cont = new Contact();
 						Account_Contact_Role__c accContRole = new Account_Contact_Role__c();
 
