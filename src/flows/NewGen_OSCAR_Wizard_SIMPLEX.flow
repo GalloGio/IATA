@@ -2082,7 +2082,7 @@
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
             <name>CopyOwnersFromAccount</name>
-            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5) OR 6</conditionLogic>
+            <conditionLogic>1 OR 2 OR (3 AND 4 AND 5) OR 6 OR 7</conditionLogic>
             <conditions>
                 <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2123,6 +2123,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>NewProcessConversionMCToSTValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessConversionStToMCValue</elementReference>
                 </rightValue>
             </conditions>
             <connector>
