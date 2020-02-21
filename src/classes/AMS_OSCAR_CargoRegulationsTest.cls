@@ -2,6 +2,25 @@
 
 	@testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', Region__c='Europe');
+		insert ctry1;
+		
+		Id dgrRrId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByDeveloperName().get('DGR_Minimum_Requirements').getRecordTypeId();
+		AMS_Country_Specific_Attribute__c countrySpec1 = new AMS_Country_Specific_Attribute__c(
+			RecordTypeId = dgrRrId,
+			IATA_ISO_Country__c = ctry1.Id,
+			Minimum_DGR_HO__c = 1,
+			Minimum_DGR_BR__c = 0
+		);
+		Id uldRrId = Schema.SObjectType.AMS_Country_Specific_Attribute__c.getRecordTypeInfosByDeveloperName().get('ULD_Minimum_Requirements').getRecordTypeId();
+		AMS_Country_Specific_Attribute__c countrySpec2 = new AMS_Country_Specific_Attribute__c(
+			RecordTypeId = uldRrId,
+			IATA_ISO_Country__c = ctry1.Id,
+			Location_Class__c = 'D',
+			Minimum_DGR_HO__c = 1,
+			Minimum_DGR_BR__c = 0
+		);
+		insert new list<AMS_Country_Specific_Attribute__c>{countrySpec1, countrySpec2};
 	}
 
 	private static void loadCredentials() {
@@ -26,8 +45,7 @@
 
 	@isTest static void testCargoAgencyRegulationsHOClassC() {
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', Region__c='Europe');
-		insert ctry1;
+		IATA_ISO_Country__c ctry1 = [SELECT Id, Name, ISO_Code__c, Region__c FROM IATA_ISO_Country__c WHERE Name = 'Portugal' LIMIT 1];
 
 		Account acc = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test Cargo HO' LIMIT 1];
 
@@ -52,7 +70,7 @@
 			AMS_Accreditation_Contact__c dgaStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Plitt'];
 
 			//update dga staff to dgr in order to comply with regulation
-			dgaStaff.Type_Of_Certificate__c = 'DGR';
+			dgaStaff.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
 			update dgaStaff;
 
 			Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
@@ -97,7 +115,7 @@
 
 		AMS_Accreditation_Contact__c dgrStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
 
-	   	//update dgr staff to dga in order to fail with regulation
+		//update dgr staff to dga in order to fail with regulation
 		dgrStaff.Type_Of_Certificate__c = 'DGA';
 		update dgrStaff;
 
@@ -116,8 +134,7 @@
 
 	@isTest static void testCargoAgencyRegulationsBRClassC_DGR() {
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', Region__c='Europe');
-		insert ctry1;
+		IATA_ISO_Country__c ctry1 = [SELECT Id, Name, ISO_Code__c, Region__c FROM IATA_ISO_Country__c WHERE Name = 'Portugal' LIMIT 1];
 
 		Account acc = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test Cargo HO' LIMIT 1];
 
@@ -139,7 +156,7 @@
 		AMS_Accreditation_Contact__c dgrStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
 
 		//update dgr staff to dga in order to fail with regulation
-		dgrStaff.Type_Of_Certificate__c = 'DGR';
+		dgrStaff.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
 		update dgrStaff;
 
 		Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
@@ -198,7 +215,7 @@
 
 			 AMS_Accreditation_Contact__c dgrStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
 
-	   		//update dga staff to dgr in order to fail with regulation
+			//update dga staff to dgr in order to fail with regulation
 			dgrStaff.Type_Of_Certificate__c = 'DGA';
 			update dgrStaff;
 
@@ -228,8 +245,10 @@
 	//test DGR for R specific country
 	@isTest static void testCargoAgencyRegulationsHOClassR() {
 
-	/*
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP6__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+		Case case1 = [Select Id, OSCAR__c, OwnerId from Case where OSCAR__c = :oscar.Id];
+
+
 		List<AMS_Agency_Regulation__c> aregs;
 
 		IATA_ISO_Country__c argentina = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'AR'];
@@ -246,7 +265,7 @@
 
 		AMS_Accreditation_Contact__c dgrStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
 
-	   	//update dgr staff to dga in order to fail with regulation
+		//update dgr staff to dga in order to fail with regulation
 		dgrStaff.Type_Of_Certificate__c = 'DGA';
 		update dgrStaff;
 
@@ -262,14 +281,21 @@
 
 			AMS_Accreditation_Contact__c dgaStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
 
-	   		//update dga staff to dgr in order to fail with regulation
-			dgaStaff.Type_Of_Certificate__c = 'DGR';
+			//update dga staff to dgr in order to fail with regulation
+			dgaStaff.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
 			update dgaStaff;
+			
+			// add an attachment before the update
+			insert new Attachment(
+				ParentId = case1.Id,
+				Name = 'test',
+				Body = Blob.valueOf('test')
+			);
 
 			update oscar;
 
 			aregs = [SELECT Id, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-			system.assertEquals(4, aregs.size());
+			system.assertEquals(3, aregs.size());
 
 			//force DGR renewal oscar creation
 			aregs[0].Notification_sent__c = true;
@@ -295,20 +321,21 @@
 		}
 
 		Test.stopTest();
-*/
-		//account should have a certification oscar
-		//List<AMS_OSCAR__c> certOscars = [SELECT Id FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.CERTIFICATION AND Account__c = :aregs[0].Account__c];
 
-		//system.assertEquals(1, certOscars.size());
+		//account should have a certification oscar
+		List<AMS_OSCAR__c> certOscars = [SELECT Id FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.CERTIFICATION AND Account__c = :aregs[0].Account__c];
+
+		system.assertEquals(1, certOscars.size());
 	}
 
 	@isTest
 	public static void testRefreshCertificates() {
 		Account testAccount = new Account(name='testAccount');
 		insert testAccount;
-		AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = 'DGR', Account__c = testAccount.Id, Last_name__c='test');
-		insert ar;
-		//        Id batchId = Database.executeBatch(new AMS_Refresh_AMS_AgencyRegulations(500));
+		AMS_Agency_Regulation__c ar1 = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = AMS_Utils.CERT_DGR, Account__c = testAccount.Id, Last_name__c='test');
+		AMS_Agency_Regulation__c ar2 = new AMS_Agency_Regulation__c(Expiry_Date__c=System.now().addMonths(4).Date(), Type_Of_Certificate__c = AMS_Utils.CERT_ULD, Account__c = testAccount.Id, Last_name__c='test');
+		insert new list<AMS_Agency_Regulation__c>{ar1,ar2};
+
 		Test.startTest();
 		AMS_Refresh_AMS_AgencyRegulations.stop();
 		AMS_Refresh_AMS_AgencyRegulations.start('0 1 * * * ?',500);
@@ -317,19 +344,52 @@
 
 	}
 
-	@isTest
-	public static void testRefreshCertificates2() {
-		Account testAccount = new Account(name='testAccount');
-		insert testAccount;
-		AMS_Agency_Regulation__c ar = new AMS_Agency_Regulation__c(Expiry_Date__c=System.today(), Type_Of_Certificate__c = 'DGR', Account__c = testAccount.Id, Last_name__c='test');
-		insert ar;
-		//        Id batchId = Database.executeBatch(new AMS_Refresh_AMS_AgencyRegulations(500));
+	@isTest static void testCargoAgencyRegulationsBRClassC_ULD() {
+
+		IATA_ISO_Country__c ctry1 = [SELECT Id, Name, ISO_Code__c, Region__c FROM IATA_ISO_Country__c WHERE Name = 'Portugal' LIMIT 1];
+
+		Account acc = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test Cargo HO' LIMIT 1];
+
+		acc.IATA_ISO_Country__c = ctry1.Id;
+		acc.Location_Class__c = 'D';
+
+		update acc;
+
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP6__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+
+		//force BR
+		AMS_Pax_Accreditation_Form__c stagingBR = [SELECT Id, Location_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE Account_Name__c='Test Cargo HO'];
+
+		stagingBR.Location_Type__c = 'BR';
+		stagingBR.ISO_Country__c = ctry1.Id;
+
+		update stagingBR;
+
+		AMS_Accreditation_Contact__c uldStaff = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Bunny'];
+
+		//update uld staff to dga in order to fail with regulation
+		uldStaff.Type_Of_Certificate__c = AMS_Utils.CERT_ULD;
+		update uldStaff;
+
+		Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
+		loadCredentials();
+		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+		insert AmzFile;
+
+		AMS_Agency_Regulation__c areg = new AMS_Agency_Regulation__c(
+			Account__c = oscar.Account__c,
+			Type_Of_Certificate__c = AMS_Utils.CERT_ULD,
+			Notification_sent__c = false,
+			Expiry_Date__c=System.now().addMonths(4).Date(),
+			Last_Name__c = 'test');
+
+		insert areg;
+
 		Test.startTest();
-		AMS_Refresh_AMS_AgencyRegulations.start('0 1 * * * ?',500);
-		AMS_Refresh_AMS_AgencyRegulations.stop();
-
+		//force ULD renewal oscar creation
+		areg.Notification_sent__c = true;
+		update areg;
 		Test.stopTest();
-
 	}
 
 }
