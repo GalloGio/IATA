@@ -122,7 +122,7 @@ public class ServiceRenderedCaseLogic {
 						}
 					}
 					if(objectMapServiceRendered.size()>0){
-						PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, true, false, false);
+						PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', true, false, false, false);
 					}
 				}
 			}
