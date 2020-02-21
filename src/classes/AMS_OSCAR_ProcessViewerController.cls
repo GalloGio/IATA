@@ -64,6 +64,12 @@ public class AMS_OSCAR_ProcessViewerController {
 	public String CONFIRM_MC_CONVERSION_MSG {
 		get { return 'By clicking OK you confirm that you want to proceed with changing the accreditation type of the entire hierarchy to GoStandard.'; }
 	}
+
+	public boolean isParentOscar {
+		get {
+			return this.oscar.Parent_OSCAR__c == null;
+		}
+	}
 	
 	public String cannotProceedConversionToStandardMessage {
 		get {

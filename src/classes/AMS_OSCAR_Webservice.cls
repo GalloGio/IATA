@@ -671,4 +671,16 @@ global class AMS_OSCAR_Webservice {
 			return 'New Accredited Agent';
 	}
 
+
+	webservice static String executeMcToStSplitBatch(String oscarId) {
+		try {
+			Id accountGE = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = :oscarId].Account__c;
+			ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+			Database.executeBatch(myBatchObject, 1);
+		} catch (Exception ex) {
+			return AMS_Utils.errorMessageBeautifyer(ex);
+		}
+		
+		return '';
+	}
 }
