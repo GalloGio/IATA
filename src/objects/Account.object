@@ -10219,6 +10219,20 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Domestic_Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup to the highest ranking headquarter Account within the same country as this Account according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Domestic Headquarter Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Domestic Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Domestic_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Domestic_Ultimate_Account_Global_ID__c</fullName>
         <description>The Account Global ID of the highest ranking company within a country for a hierarchy. There can only be one Domestic Ultimate per Country.</description>
         <externalId>false</externalId>
@@ -11265,6 +11279,20 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Global_Ultimate_Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup to the highest ranking headquarter Account globally according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Global Ultimate Headquarter Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Global Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Global_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -11471,6 +11499,20 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Account that is the Headquarters of this Account according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Headquarter_Account__c</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Higher_Level_Customer__c</fullName>
