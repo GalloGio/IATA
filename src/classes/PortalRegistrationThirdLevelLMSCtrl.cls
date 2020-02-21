@@ -59,8 +59,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace('@@##', '+');
 		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
-		registrationParameters.Phone = registrationParameters.Phone.replace('@@##', '+');
-		registrationParameters.OtherPhone = registrationParameters.OtherPhone.replace('@@##', '+');
+		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace('@@##', '+') : '';
+		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace('@@##', '+') : '';
 		
 		result.userInfo = JSON.serialize(registrationParameters);
 

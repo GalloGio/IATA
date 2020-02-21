@@ -1612,10 +1612,16 @@ public with sharing class PortalServicesCtrl {
 			}
 		}
 			
-		Training_Contact_Role_Details__c tcrd = [SELECT City_Name__c, Country_Reference__c, Id, Name, PO_Box_Address__c, Street__c, Preferred_Course__c
+			List<Training_Contact_Role_Details__c> tcrdLst = [SELECT City_Name__c, Country_Reference__c, Id, Name, PO_Box_Address__c, Street__c, Preferred_Course__c
 												FROM Training_Contact_Role_Details__c
 												WHERE Account_Contact_Role__r.Contact__r.Id =: userAux.ContactId
 												LIMIT 1];
+
+			Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
+			if(!tcrdLst.isEmpty()){
+				tcrd = tcrdLst[0];
+			}
+
 		for(String apiName: l3MandatoryFieldsTCRD){
 			if(tcrd.get(apiName) == null){
 				if(apiName == 'Street__c' || apiName == 'PO_Box_Address__c'){
@@ -1657,7 +1663,7 @@ public with sharing class PortalServicesCtrl {
 			//https://preprod-customer-portal-iata.cs109.force.com/csportal/idp/login?app=0sp0Q0000008OTD&RelayState=
 			if(ami != null && !ami.isEmpty()){
 				resURL = baseUrl + pathPrefix + ami[0].StartUrl;
-				if(tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
+					if(tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
 					resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
 				}
 			}
