@@ -323,16 +323,18 @@ public class IDCardLoginControllerTest {
 		priceTables.Expedite__c = 25;       
 		priceTables.ISO_Country__c = aCountry.Id;
 		insert priceTables;
-
-		String typeAccount = theAccount.Type;
-		String typePrice = priceTables.Type_Class_of_Agent__c;
-		System.assert(typeAccount != typePrice);
-	  
+		
 		Test.startTest();   
+	
+		try{
+			idCardLoginController.verifyAlternative();
+		}catch(Exception e){
 			
-		idCardLoginController.verifyAlternative();
-					  
+			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: Price Table not found for the following Country:'  + aCountry.Name + ' ISO search from ' + aCountry.Id));
+		}
+
 		Test.stopTest();
+	
 	}
   
 	@isTest
