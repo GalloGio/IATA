@@ -666,6 +666,7 @@ public without sharing class OneId_RegistrationProcessController {
 				}
 				if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
 					portalServiceNewPASSAgency(con.Id);
+					permissionNewAgency(returnedString);
 				}
 			}
 
