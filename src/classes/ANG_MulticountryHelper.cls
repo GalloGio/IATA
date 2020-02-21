@@ -778,7 +778,6 @@ public class ANG_MulticountryHelper {
 
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
-		fieldsOfObject.put('ANG_Accreditation_type__c',acct.ANG_Accreditation_Model__c);
 		fieldsOfObject.put('Abbreviated_Address__c',acct.Abbreviated_address__c);
 		fieldsOfObject.put('Abbreviated_name__c',acct.Abbreviated_name__c);
 		fieldsOfObject.put('Accept_terms_and_conditions__c',true);
@@ -813,7 +812,8 @@ public class ANG_MulticountryHelper {
 		fieldsOfObject.put('Trade_Name__c',acct.TradeName__c);
 		fieldsOfObject.put('VAT_Number_2__c',acct.VAT_Number_2__c);
 		fieldsOfObject.put('Website__c',acct.Website);
-		fieldsOfObject.put('ISSP_Branch_AccountId__c',acct.Id);
+		fieldsOfObject.put('ISSP_Branch_AccountId__c', acct.Location_Type__c != AMS_Utils.GE ? String.valueOf(acct.Id) : '');
+		fieldsOfObject.put('HO_Account__c', acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null);
 
 		return fieldsOfObject;
 	}
@@ -843,7 +843,7 @@ public class ANG_MulticountryHelper {
 	 * @param	accountIds			List of parent accounts
 	 * @return	Map<Id, Account>	List of child HE accounts
 	 */
-	public static Map<Id, Account> getChildHEAccounts(Set<Id> accountIds)
+	public static Map<Id, Account> getAccountsInfo(Set<Id> accountIds)
 	{
 		if (accountIds.isEmpty())
 			return new Map<Id, Account>();
@@ -855,16 +855,27 @@ public class ANG_MulticountryHelper {
 					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
 					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c,
-					ANG_RiskStatus__c, ANG_Accreditation_Model__c
+					ANG_RiskStatus__c, ANG_Accreditation_Model__c,Parent.Location_Type__c 
 				FROM Account
-				WHERE ParentId IN :accountIds
-					AND Location_Type__c = :AMS_Utils.HE
-					AND Status__c NOT IN (
-						'', NULL,
-						:AMS_Utils.ACC_S4_LISTED,
-						:AMS_Utils.ACC_S0_TERMINATED,
-						:AMS_Utils.ACC_S1_NOTACCREDITED,
-						:AMS_Utils.ACC_S3_NOTINOPERATION
+				WHERE 
+					(
+						(
+							Parent.Location_Type__c = :AMS_Utils.GE 
+							AND ParentId IN :accountIds
+							AND Location_Type__c = :AMS_Utils.HE
+							AND Status__c NOT IN (
+								'', NULL,
+								:AMS_Utils.ACC_S4_LISTED,
+								:AMS_Utils.ACC_S0_TERMINATED,
+								:AMS_Utils.ACC_S1_NOTACCREDITED,
+								:AMS_Utils.ACC_S3_NOTINOPERATION
+								)
+						) OR
+						(
+
+								Id IN:accountIds and Parent.Location_Type__c <> :AMS_Utils.GE // ignore multicountry HEs since they are taken care on the branch above
+							
+						)
 					)
 				 ]);
 	}

@@ -158,7 +158,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
-        <formula>TEXT( Case.Status)</formula>
+        <literalValue>Open</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Subject</field>

@@ -1,14 +1,14 @@
 @isTest
 public class SurveyBatchTest {
 
-  public static final ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
-  public static final ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-  public static final ID europeRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
-  public static final ID chinaRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
-  public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
-  public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
-  public static final ID processRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
-  public static final ID aCAId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application'); 
+	public static final ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+	public static final ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+	public static final ID europeRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+	public static final ID chinaRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
+	public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
+	public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+	public static final ID processRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+	public static final ID aCAId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
 
   @testSetup
@@ -650,7 +650,7 @@ public class SurveyBatchTest {
 	test.stopTest();
 
 }
-  static testMethod void testForCountries2() {
+	static testMethod void testForCountries2() {
 
 	  TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 	  TransformationHelper.CalculateBusinessHoursAges = true;

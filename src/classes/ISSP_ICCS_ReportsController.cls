@@ -10,7 +10,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 			REPORTS_PER_PAGE = 1;
 		}
 	}
-	
+
 
 	/* Report Types */
 
@@ -21,17 +21,17 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 				pageController.resetMessage();
 
 				reportTypesList = new List<ReportTypeWrapper>();
-				
+
 				try{
 					// Retrieve the list of available report types from the core
 					List<Portal_Service_Account_Preference__c> accountReportPreferences = [select Id, Name, Subscribed__c from Portal_Service_Account_Preference__c where Account__c =: pageController.topAccount.Id and Portal_Service__c =: ISSP_ICCS_Utils.getIccsPortalApplication().Id and Category__c = 'Report'];
-					
+
 					// Retrieve the set of report types the Top Account subscribed to
 					Map<String, Portal_Service_Account_Preference__c> accountReportPreferencesMap = new Map<String, Portal_Service_Account_Preference__c>();
 					for(Portal_Service_Account_Preference__c accountReportPreference : accountReportPreferences){
 						accountReportPreferencesMap.put(accountReportPreference.Name, accountReportPreference);
 					}
-					
+
 					// Map the core report types with the account's preferences
 					for(ISSP_ICCS_CoreRest.ReportType reportType : pageController.coreRest.getReportTypes()){
 						reportTypesList.add(new ReportTypeWrapper(this, reportType, accountReportPreferencesMap.get(reportType.code)));
@@ -45,7 +45,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 		}
 		set;
 	}
-	
+
 	public List<ReportTypeWrapper> types {
 		get{
 			if(isReportTypeListExpanded){
@@ -55,21 +55,21 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 				List<ReportTypeWrapper> typesList = new List<ReportTypeWrapper>();
 
 				Integer i = 0;
-				
+
 				for(ReportTypeWrapper reportType : reportTypesList){
 					typesList.add(reportType);
 					i++;
-					
+
 					if(i == ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS){
 						break;
 					}
 				}
-				
+
 				return typesList;
 			}
 		}
 	}
-	
+
 	public Boolean isReportTypeListExpanded {get;set;}
 
 	public Boolean isReportTypeListExpandable {
@@ -88,7 +88,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 		get{
 			System.debug('***** get Cycles SelectOptions - selected cycle : ' + selectedCycleId);
 			List<SelectOption> cycles = new List<SelectOption>{new SelectOption('', 'All Cycles')};
-			
+
 			try{
 				for(ISSP_ICCS_CoreRest.Cycle cycle : pageController.coreRest.getCycles(null)){
 					cycles.add(new SelectOption(cycle.cycleId, cycle.cycleId));
@@ -97,7 +97,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 			catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 				pageController.setMessage(e.getMessage(), false);
 			}
-			
+
 			return cycles;
 		}
 	}
@@ -109,7 +109,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 	public List<SelectOption> reportTypes {
 		get{
 			List<SelectOption> reportTypes = new List<SelectOption>{new SelectOption('', 'All Report Types')};
-				
+
 			try{
 				for(ReportTypeWrapper wrappedReportType : reportTypesList){
 					if(wrappedReportType.isSelected){
@@ -133,16 +133,16 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 		get{
 			if(reportsList == null){
 				pageController.resetMessage();
-				
+
 				reportsList = new List<ReportWrapper>();
 
 				try{
 					// Prepare the reportType parameter
 					String reportTypeFilter = '';
-					
+
 					// Reset pageNumbers list
 					pageNumbers = new List<Integer>();
-					
+
 					// If no report type is selected, retrieve all the report types the account subscribed to
 					if(selectedReportType == '' || selectedReportType == null){
 						List<String> subscribedReportTypes = new List<String>();
@@ -157,25 +157,25 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 					else{
 						reportTypeFilter = selectedReportType;
 					}
-					
+
 					// Retrieve the list of reports from the Core
 					if(reportTypeFilter != ''){
 						ISSP_ICCS_CoreRest.Reports reports = pageController.coreRest.getReports(selectedPage, REPORTS_PER_PAGE, selectedCycleId, selectedFromDate, selectedToDate, reportTypeFilter);
-			
+
 						for(ISSP_ICCS_CoreRest.Report report : reports.reports){
 							reportsList.add(new ReportWrapper(this, report));
 						}
-							
+
 						// Pagination setup
 						Integer pages = 0;
-						
+
 						if(Math.mod(reports.pagingInfo.records, REPORTS_PER_PAGE) > 0){
 							pages = reports.pagingInfo.records / REPORTS_PER_PAGE + 1;
 						}
 						else{
 							pages = reports.pagingInfo.records / REPORTS_PER_PAGE;
 						}
-						
+
 						if(pages < 9){
 							for(Integer i = 1; i <= pages; i++){
 								pageNumbers.add(i);
@@ -183,7 +183,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 						}
 						else{
 							pageNumbers.add(1);
-			
+
 							Boolean lastItemIsZero = false;
 							for(Integer i = 2; i < pages; i++){
 								if(i == selectedPage - 1 || i == selectedPage || i == selectedPage + 1){
@@ -203,11 +203,11 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 					pageController.setMessage(e.getMessage(), false);
 				}
 			}
-			return reportsList;			
+			return reportsList;
 		}
 		set;
 	}
-	
+
 	public Boolean isReportListEmpty { get{ return reportsList == null || reportsList.size() == 0; }}
 
 	// Number of reports pages
@@ -215,7 +215,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 
 	// List of page numbers
 	public List<Integer> pageNumbers {get;set;}
-	
+
 	// Number of the page currently displayed
 	public Integer selectedPage {get;set;}
 
@@ -250,9 +250,9 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 		selectedCycleId = selectedCycleId == null ? '' : selectedCycleId;
 		selectedReportType = selectedReportType == null ? '' : selectedReportType;
 		selectedPage = 1;
-		
+
 		isReportTypeListExpanded = isReportTypeListExpanded == null ? false : isReportTypeListExpanded;
-		
+
 		return true;
 	}
 
@@ -272,7 +272,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 	public void deleteReportsList(){
 		reportsList = null;
 	}
-	
+
 	// Called in a second transaction when an additional refresh is necessary because of the "Callout with uncommited work" problem
 	public void completeRefresh(){
 		for(ReportTypeWrapper wrappedReportType : reportTypesList){
@@ -287,38 +287,38 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 /*	public void testNotification(){
 			ISSP_WS_CreateNotification.languageMessage inputMessage = new ISSP_WS_CreateNotification.LanguageMessage();
 			inputMessage.languageCode = 'en_US';
-			
+
 			ISSP_WS_CreateNotification.inputData inputData = new ISSP_WS_CreateNotification.inputData();
-	
-	    	inputData.requestingSystem = 'ICCS Core';
-	    	inputData.serviceName = ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME;
-	    	inputData.templateName = 'R1ParticipantReportA'; 
-	    	inputData.replaceStr = '%PARTICIPANT_CODE%!LX724';
-	    	inputData.languageMessageList = new List<ISSP_WS_CreateNotification.languageMessage>{inputMessage};
-	    	
-	    	ISSP_WS_CreateNotification.createNotification(inputData);
-    }*/
+
+			inputData.requestingSystem = 'ICCS Core';
+			inputData.serviceName = ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME;
+			inputData.templateName = 'R1ParticipantReportA';
+			inputData.replaceStr = '%PARTICIPANT_CODE%!LX724';
+			inputData.languageMessageList = new List<ISSP_WS_CreateNotification.languageMessage>{inputMessage};
+
+			ISSP_WS_CreateNotification.createNotification(inputData);
+	}*/
 
 
 	/* INNER CLASSES */
-	
+
 
 	public class ReportTypeWrapper{
 		public ISSP_ICCS_ReportsController ctrl {get;set;}
 		public ISSP_ICCS_CoreRest.ReportType reportType {get;set;}
 		public Portal_Service_Account_Preference__c preference {get;set;}
-		
+
 		public Boolean subscriptionModified {get;set;}
 
 		public Boolean isSelected { get{return preference != null && preference.Subscribed__c;} set;}
-		
+
 		public ReportTypeWrapper(ISSP_ICCS_ReportsController ctrl, ISSP_ICCS_CoreRest.ReportType reportType, Portal_Service_Account_Preference__c preference){
 			this.ctrl = ctrl;
 			this.reportType = reportType;
 			this.preference = preference;
 			subscriptionModified = false;
 		}
-		
+
 		public void updateReportsSelection(){
 			if(preference == null){
 				preference = new Portal_Service_Account_Preference__c(
@@ -331,7 +331,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 			}
 			else{
 				preference.Subscribed__c = ! preference.Subscribed__c;
-			}			
+			}
 			subscriptionModified = true;
 
 			// If report type has been unselected and is equal to the controller's selected report type, selection has to be reset
@@ -346,9 +346,9 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 	public class ReportWrapper{
 		public ISSP_ICCS_ReportsController ctrl {get;set;}
 		public ISSP_ICCS_CoreRest.Report report {get;set;}
-		
+
 		public String selectedMimetype {get;set;}
-		
+
 		public ReportWrapper(ISSP_ICCS_ReportsController ctrl, ISSP_ICCS_CoreRest.Report report){
 			this.ctrl = ctrl;
 			this.report = report;
@@ -359,7 +359,7 @@ public class ISSP_ICCS_ReportsController extends ISSP_ICCS_ComponentController{
 			ctrl.pageController.resetMessage();
 
 			PageReference pageRef = null;
-	
+
 			try{
 				pageRef = new PageReference(ctrl.pageController.coreRest.getReport(report.id, selectedMimetype));
 			}

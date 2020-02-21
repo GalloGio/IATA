@@ -1,5 +1,5 @@
 <template>
-    <c-portal-custom-card-container if:true={showHighlights} special-card={specialCase} special-body>
+    <c-portal-custom-card-container if:true={showComponent} special-card={specialCase} special-body>
 
         <span if:false={specialCase} slot="cardTitle">
             <span if:false={hideTitle} class="text-small">
@@ -11,50 +11,71 @@
             <div if:true={loading} class="spinnerContainer">
                 <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
             </div>
-            <div if:false={loading} class="slds-is-relative" style="overflow: hidden;">
-                <div class={swipe} style={cardMove}>
-                    <template for:each={highlightListToIterate} for:item="highlight">
-                        <div key={highlight.Type} ontouchstart={touchStart} ontouchmove={touchMove}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
-                            <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
-                        </div>
-                    </template>
-                </div>
+            <div if:false={loading}>
+                <div class="slds-show_medium">
+                    <div class="slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-show_medium">
+                        <template for:each={highlightListToIterate} for:item="highlight">
+                            <div key={highlight.Type}
+                                class="slds-col slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
+                                <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
+                            </div>
 
-                <div class="slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative"
-                    style="z-index: 1; opacity: 1; margin-top: -410px;">
-                    <template for:each={highlightListToIterate} for:item="highlight">
-                        <div key={highlight.Type}
-                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-is-relative">
-                            <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
-                        </div>
-                    </template>
-                </div>
-
-
-                <div class="slds-p-vertical_medium" style="z-index: 3;">
-                    <lightning-layout vertical-align="center" horizontal-align="center">
-                        <lightning-layout-item padding="horizontal-small">
-                            <a onclick={handlePreviousPage}>
-                                <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft"
-                                    size="xx-small">
-                                </lightning-icon>
-                            </a>
-                        </lightning-layout-item>
-                        <template for:each={sliderIcons} for:item="sliderIcon">
-                            <lightning-layout-item class="slds-p-horizontal_xx-small" key={sliderIcon.id}>
-                                <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}>
-                                </lightning-icon>
-                            </lightning-layout-item>
                         </template>
-                        <lightning-layout-item padding="horizontal-small">
-                            <a onclick={handleNextPage}>
-                                <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright"
-                                    size="xx-small">
-                                </lightning-icon>
-                            </a>
-                        </lightning-layout-item>
-                    </lightning-layout>
+                    </div>
+
+                    <div class="slds-p-vertical_medium slds-show_medium">
+                        <lightning-layout vertical-align="center" horizontal-align="center">
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handlePrevious}>
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft"
+                                        size="xx-small">
+                                    </lightning-icon>
+                                </a>
+                            </lightning-layout-item>
+                            <template for:each={sliderIcons} for:item="sliderIcon">
+                                <lightning-layout-item class="slds-p-horizontal_xx-small" key={sliderIcon.id}>
+                                    <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}>
+                                    </lightning-icon>
+                                </lightning-layout-item>
+                            </template>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a onclick={handleNext}>
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright"
+                                        size="xx-small">
+                                    </lightning-icon>
+                                </a>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+                <div class="slds-hide_medium">
+                    <div style="overflow: auto;">
+                        <div style={sliderPosition} class="slds-grid slds-gutters_direct-small slds-grid_vertical-stretch slds-is-relative">
+                            <template for:each={highlightListToIterateMobile} for:item="highlight">
+                                <div key={highlight.Type} class={classCardNumber}>
+                                    <c-portal-highlight-card type="type" highlight={highlight}></c-portal-highlight-card>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-p-vertical_medium">
+                        <lightning-layout vertical-align="center" horizontal-align="center">
+                            <lightning-layout-item padding="horizontal-small">
+                                <a>
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft"
+                                        size="xx-small">
+                                    </lightning-icon>
+                                </a>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-small">
+                                <a>
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright"
+                                        size="xx-small">
+                                    </lightning-icon>
+                                </a>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
                 </div>
             </div>
         </span>

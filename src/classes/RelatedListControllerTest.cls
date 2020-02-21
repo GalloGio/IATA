@@ -6,7 +6,7 @@ private class RelatedListControllerTest {
 	private static void setupTestData(){
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-        insert ctry ;
+		insert ctry ;
 
 		acc = new Account();
 		acc.Name = 'HE Account';
@@ -32,35 +32,35 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
 			//ApexPages.StandardController sc = new ApexPages.standardController(acc);
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'asc';
-        	rlController.parentId = acc.Id;
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.csvFields = '[Name]';
-        	rlController.sortByField = 'Name';
-        	rlController.filterCriteria = 'Id <> NULL ';
-        	rlController.updateRecords();
+			rlController.sortOrder = 'asc';
+			rlController.parentId = acc.Id;
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.csvFields = '[Name]';
+			rlController.sortByField = 'Name';
+			rlController.filterCriteria = 'Id <> NULL ';
+			rlController.updateRecords();
 
-        	rlController.getShowNewButton();
-        	rlController.getshowUpdateButton();
+			rlController.getShowNewButton();
+			rlController.getshowUpdateButton();
 
-        	//rlController.sortByField();
-        	//
-        	//
-        	//rlController.cancelChanges();
-        	//rlController.updateRecords();
-        	//rlController.changeInlineEditMode();
+			//rlController.sortByField();
+			//
+			//
+			//rlController.cancelChanges();
+			//rlController.updateRecords();
+			//rlController.changeInlineEditMode();
 
-        	//rlController.setUpdatableFields();
-        	//rlController.deleteRecord();
-        	//rlController.deleteRecord();
+			//rlController.setUpdatableFields();
+			//rlController.deleteRecord();
+			//rlController.deleteRecord();
 			//System.assert(controller.saveAction, 'Error saving');
 			//System.assert(!controller.hasEditableFields, 'Found editable fields');
 			//System.assert(controller.getExistOscarInspections(), 'No inspections found');
@@ -74,21 +74,21 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
 			//ApexPages.StandardController sc = new ApexPages.standardController(acc);
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'desc';
-        	rlController.parentId = acc.Id;
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.listFields = new List<String>{'Name'};
-        	rlController.orderByFieldNameOnLoad = 'Name';
-        	rlController.isAllOrNone = true;
-        	rlController.updateRecords();
+			rlController.sortOrder = 'desc';
+			rlController.parentId = acc.Id;
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.listFields = new List<String>{'Name'};
+			rlController.orderByFieldNameOnLoad = 'Name';
+			rlController.isAllOrNone = true;
+			rlController.updateRecords();
 
 		Test.stopTest();
 	}
@@ -100,18 +100,18 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'asc';
-        	rlController.parentId = acc.Id;
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.sortByField = 'Name';
-        	rlController.getRecords();
-        
+			rlController.sortOrder = 'asc';
+			rlController.parentId = acc.Id;
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.sortByField = 'Name';
+			rlController.getRecords();
+
 		Test.stopTest();
 	}
 
@@ -122,18 +122,18 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'ascii';
-        	rlController.parentId = acc.Id;
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.sortByField = 'Name';
-        	rlController.getRecords();
-        
+			rlController.sortOrder = 'ascii';
+			rlController.parentId = acc.Id;
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.sortByField = 'Name';
+			rlController.getRecords();
+
 		Test.stopTest();
 	}
 
@@ -144,16 +144,16 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'asc';
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.getRecords();
-        
+			rlController.sortOrder = 'asc';
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.getRecords();
+
 		Test.stopTest();
 	}
 
@@ -164,42 +164,42 @@ private class RelatedListControllerTest {
 		PageReference pg = Page.ANG_RiskEventHistory;
 		pg.getParameters().put('id', acc.Id);
 		Test.setCurrentPage(pg);
-		
+
 		Test.startTest();
 
-        	RelatedListController rlController = new RelatedListController();
+			RelatedListController rlController = new RelatedListController();
 
-        	rlController.sortOrder = 'asc';
-        	rlController.parentId = acc.Id;
-        	rlController.parentFieldApiName = 'Id';
-        	rlController.objectApiName = 'Account';
-        	rlController.csvFields = '[Name]';
-        	rlController.sortByField = 'Name';
-        	rlController.filterCriteria = 'Id <> NULL ';
+			rlController.sortOrder = 'asc';
+			rlController.parentId = acc.Id;
+			rlController.parentFieldApiName = 'Id';
+			rlController.objectApiName = 'Account';
+			rlController.csvFields = '[Name]';
+			rlController.sortByField = 'Name';
+			rlController.filterCriteria = 'Id <> NULL ';
 
-        	rlController.getRecords();
-        	rlController.deleteRecord();
+			rlController.getRecords();
+			rlController.deleteRecord();
 
 			rlController.defaultEditMode = true;
 
-        	rlController.changeInlineEditMode();
+			rlController.changeInlineEditMode();
 
-        	rlController.defaultEditMode = false;
-        	rlController.inlineEditMode = false;
+			rlController.defaultEditMode = false;
+			rlController.inlineEditMode = false;
 
-        	rlController.changeInlineEditMode();
+			rlController.changeInlineEditMode();
 
-        	rlController.defaultEditMode = false;
-        	rlController.inlineEditMode = true;
+			rlController.defaultEditMode = false;
+			rlController.inlineEditMode = true;
 
-        	rlController.changeInlineEditMode();
+			rlController.changeInlineEditMode();
 
-        	rlController.cancelChanges();
-        	rlController.sortByField();
+			rlController.cancelChanges();
+			rlController.sortByField();
 
-        	system.debug(rlController.topRecord);
-        	
+			system.debug(rlController.topRecord);
+
 		Test.stopTest();
 	}
-	
+
 }

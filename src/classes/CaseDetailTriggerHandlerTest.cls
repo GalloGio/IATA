@@ -1,8 +1,8 @@
 @isTest
 public class CaseDetailTriggerHandlerTest {
 
-	private static final String CALL_MONITORING = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Call_Monitoring'); 
-    private static final String CASE_MONITORING = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Case_Monitoring'); 
+	private static final String CALL_MONITORING = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Call_Monitoring');
+	private static final String CASE_MONITORING = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Case_Monitoring');
 
 	@isTest
 	static void calculateScoreTest() {

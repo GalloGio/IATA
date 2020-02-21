@@ -38,13 +38,17 @@ export default class Lookup extends LightningElement {
     // EXPOSED FUNCTIONS
 
     @api
-    setSearchResults(results) {
+    setSearchResults(results, scrollBottom) {
         this.searchResults = results.map(result => {
             if (typeof result.icon === 'undefined') {
                 result.icon = 'standard:default';
             }
             return result;
-        });
+		});
+		if(scrollBottom){
+			let scrollobjective = this.template.querySelector('[data-id="scrollContainer"]');
+			scrollobjective.scrollIntoView({ behavior: 'smooth', block:'end' });
+		}
     }
 
     @api
@@ -179,7 +183,7 @@ export default class Lookup extends LightningElement {
         this.searchResults = [];
 
         // Notify parent component that selection has changed **Email Only**
-        if (this.itemName === 'emaillookup') {
+        if (this.itemName === 'emaillookup' || this.itemName === 'servicesearch') {
             this.dispatchEvent(new CustomEvent('selectionchange'));
             this.selection = savepoint;
         }

@@ -536,8 +536,8 @@ public class AMS_OSCARTriggerHandler {
 														AMS_Online_Accreditation__r.Location_Class__c, Country_ISO_Code__c
 												 FROM AMS_Oscar__c
 												 WHERE Id IN :oscarsToValidate AND
-													   AMS_Online_Accreditation__r.Remittance_frequency__c = NULL AND
-													   AMS_Online_Accreditation__r.Location_Class__c IN :locationsToCheck];
+														 AMS_Online_Accreditation__r.Remittance_frequency__c = NULL AND
+														 AMS_Online_Accreditation__r.Location_Class__c IN :locationsToCheck];
 
 			for(AMS_Oscar__c oscarsRF : oscarsWithAccr) {
 				Set<String> countryAttributes = mapClassAttributes.get(oscarsRF.Country_ISO_Code__c);
@@ -2895,7 +2895,8 @@ public class AMS_OSCARTriggerHandler {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name,
+				NDC_Transactions__c
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 	}
@@ -2973,8 +2974,9 @@ public class AMS_OSCARTriggerHandler {
 		else if(agencyType == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && step == AMS_Utils.APPROVAL && !wasApproved) templateId = 'Conversion_GoStandard_to_GoGlobal_DIS';
 		else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Model_A_Creation';
 		else if(agencyType == AMS_Utils.IEPMODELAACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Model_A_SanityCheck_Passed';
-		else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId    = 'ANG_IEP_Model_B_Creation_EDENRED';
-		else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (MSTS)') templateId    = 'ANG_IEP_Model_B_Creation_MSTS'; //TODO: fix link on template
+		else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (EDENRED)') templateId = 'ANG_IEP_Model_B_Creation_EDENRED';
+		else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (MSTS)') templateId = 'ANG_IEP_Model_B_Creation_MSTS'; //TODO: fix link on template
+		else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == 'Creation_IATA EasyPay (2C2P)') templateId = 'ANG_IEP_Model_B_Creation_2C2P'; //TODO: fix link on template
 		//else if(agencyType == AMS_Utils.IEPMODELBACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'ANG_IEP_Model_B_SanityCheck_Passed'; //TODO: create template?
 		else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == 'Creation') templateId    = 'IEP_Setup_Creation';
 		else if(agencyType == AMS_Utils.IEPBANKACCOUNTSETUP && step == AMS_Utils.SANITYCHECK) templateId    = 'IEP_Setup_SanityCheck_Passed';
@@ -3243,8 +3245,13 @@ public class AMS_OSCARTriggerHandler {
 				/*** AMSU-161 End ***/
 
 				//INC482850 - GDS Mandatory field - New Accreditation & Newgen Changes & Corrections
-				if((isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && String.isEmpty(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)){
-					oscar.addError('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check');
+				if (isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION)
+				{
+					allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+					if (! isValidGDSConfiguration(oscar, allOnlineAccr))
+						oscar.addError('You cannot set NDC to "Yes" and GDS at the same time');
+					else if (! isValidGDS(oscar, allOnlineAccr))
+						oscar.addError('The GDS or NDC should be populated. Please fill the GDS or NDC on the OSCAR central panel before passing the sanity check');
 				}
 
 				//ACAMBAS - NEWGEN-4784 - Start
@@ -3269,6 +3276,19 @@ public class AMS_OSCARTriggerHandler {
 			}
 		}
 	}
+
+	private static boolean isValidGDSConfiguration(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return ! (String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+				  && accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes');
+	}
+
+	private static boolean isValidGDS(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+			|| accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes';
+	}
+
 	/*** AMSU-121 Start ***/
 	private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
 		AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
@@ -3421,7 +3441,7 @@ public class AMS_OSCARTriggerHandler {
 			'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c',
 			'Suspend_Agency__c'                         => 'NOC_Requested__c'
 			};
-		   //Map to update Date related checkbox values
+			 //Map to update Date related checkbox values
 		for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
 		{
 			if (oldOSCAR.get(oscarDateFieldKey) == false && updatedOscar.get(oscarDateFieldKey) == true)
@@ -3966,7 +3986,7 @@ public class AMS_OSCARTriggerHandler {
 							Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 							Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 							Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Scope_of_Change__c,
-							Link_agent_name__c, Link_agent_name__r.Name  /*AMSU-151 */ , ISSP_AMS_Total_Current_Ownership__c
+							Link_agent_name__c, Link_agent_name__r.Name  /*AMSU-151 */ , ISSP_AMS_Total_Current_Ownership__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name  //AMSU-151
 							FROM AMS_Pax_Accreditation_Form__c
 							WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -4035,8 +4055,8 @@ public class AMS_OSCARTriggerHandler {
 
 						//AMSU-151 & AMSU-153 (AMSU-1) - Begin
 						Account accountCheckVAT = [SELECT Id, Is_Branch_Abroad__c, VAT_Number__c, VAT_Number_2__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Location_Class__c
-												   FROM Account
-												   WHERE Id = :updatedOscar.Account__c];
+													 FROM Account
+													 WHERE Id = :updatedOscar.Account__c];
 
 						UtilityCS__c ucsVATnumberSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_VAT_COUNTRIES',value__c = 'BR;IN;MY;TH') : UtilityCS__c.getInstance('AMS_COR_VAT_COUNTRIES');
 						UtilityCS__c ucsAccNameSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_ACC_NAME_COUNTRIES',value__c = 'CN;TW') : UtilityCS__c.getInstance('AMS_COR_ACC_NAME_COUNTRIES'); //AMSU-153
@@ -4865,7 +4885,7 @@ public class AMS_OSCARTriggerHandler {
 
 		for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
 			if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
-			   oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
+				 oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
 			} else {
 				iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
 			}
@@ -4880,7 +4900,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	// to be removed
-  public void fakeMethod(){
+	public void fakeMethod(){
 	Integer i = 0;
 	i=0;
 	i=0;
@@ -5226,7 +5246,7 @@ public class AMS_OSCARTriggerHandler {
 	i=0;
 	i=0;
 	i=0;
-  }
+	}
 
 
 }

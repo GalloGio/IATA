@@ -5,10 +5,10 @@
 @IsTest
 public class PortalForgotPasswordControllerTest {
 
-    @isTest
-    public static void unitTest(){
-        PortalForgotPasswordController.configInfo result = PortalForgotPasswordController.getInitialConfig();
-        PortalPasswordHandler.resultWrapper passResult   = PortalForgotPasswordController.handleResetPassword('test');
-    }
+	@isTest
+	public static void unitTest(){
+		PortalForgotPasswordController.configInfo result = PortalForgotPasswordController.getInitialConfig();
+		PortalPasswordHandler.resultWrapper passResult   = PortalForgotPasswordController.handleResetPassword('test');
+	}
 
 }

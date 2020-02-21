@@ -20,7 +20,7 @@ private class AMP_IssuesAndprioritiesExtensionTest
 
 		System.runAs(testUser) {
 
-			Account a = new Account(name='testAccount', 
+			Account a = new Account(name='testAccount',
 									RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
 									);
 			insert a;

@@ -209,6 +209,10 @@
                 <behavior>Edit</behavior>
                 <field>Process_Start_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -246,6 +250,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Financial_Assessment_time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ClosedDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

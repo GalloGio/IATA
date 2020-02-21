@@ -174,7 +174,11 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
+        <fields>IATACode__c</fields>
+        <fields>Email__c</fields>
+        <fields>Phone</fields>
     </miniLayout>
     <relatedLists>
         <fields>FULL_NAME</fields>
@@ -186,7 +190,7 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
-        <fields>Primary_Contact__c</fields>
+        <fields>CONTACT.CREATED_DATE</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>

@@ -100,6 +100,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ISS_Portal_New_Case_RT');//TF - SP9-C5
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
+	ID IsraelDispute  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
 	/*Record type*/
 
 	/*Variables*/
@@ -358,9 +359,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 					// I check the condition of workflow "ICCS: BA Creation Set Status In progress When Doc Received"
 					} else if (c.RecordTypeId == RT_ICCS_BA_Id && !String.isBlank(String.valueOf(c.Documentation_Complete__c))
-						   && c.CaseArea__c == 'ICCS – Create Bank Account' && c.ICCS_Bank_Account__c != null
-						   // the same condition should not be true for the old case
-						   && !(oc.RecordTypeId == RT_ICCS_BA_Id && !String.isBlank(String.valueOf(oc.Documentation_Complete__c))
+							 && c.CaseArea__c == 'ICCS – Create Bank Account' && c.ICCS_Bank_Account__c != null
+							 // the same condition should not be true for the old case
+							 && !(oc.RecordTypeId == RT_ICCS_BA_Id && !String.isBlank(String.valueOf(oc.Documentation_Complete__c))
 								&& oc.CaseArea__c == 'ICCS – Create Bank Account' && oc.ICCS_Bank_Account__c != null)) {
 						c.Status = 'In progress';
 					}
@@ -394,9 +395,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 			if (!ICCSBankAccountManagementCases.isEmpty() || !ICCSProductManagementCases.isEmpty()){
 				productAssignmentActiveList = [SELECT Id, Account__c, ICCS_Bank_Account__c, ICCS_Product_Currency__c
-											   FROM Product_Assignment__c
-											   WHERE Status__c = 'Active'
-											   AND (ICCS_Bank_Account__c IN :lstBankAccountIds OR Account__c IN :lstAccountIds)];
+												 FROM Product_Assignment__c
+												 WHERE Status__c = 'Active'
+												 AND (ICCS_Bank_Account__c IN :lstBankAccountIds OR Account__c IN :lstAccountIds)];
 			}
 
 			if (!ICCSBankAccountManagementCases.isEmpty()) {
@@ -533,9 +534,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
 				// WMO-517
 				List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c, Owner.Name
-											   FROM Case
-											   WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS)
-											   OR RecordTypeId = :AirlineCodingRTId)
+												 FROM Case
+												 WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS)
+												 OR RecordTypeId = :AirlineCodingRTId)
 												AND IsClosed = false AND AccountId IN :setRelatedAcctIds]);
 
 				for (Case c : cases) {
@@ -630,7 +631,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 				Set<ID> recordTypeSet = new Set<ID>{SIDRAcaseRecordTypeID,ProcessISSPcaseRecordTypeID,EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,
 													AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,InternalcaseRecordTypeID,InvCollectioncaseRecordTypeID,
-													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID};
+													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID, IsraelDispute};
 				for (Case aCase : trigger.New) {
 					System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
 					// check if correct record type
@@ -700,7 +701,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesPerWebIATACode.keyset()];
 				}
 				// Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
-				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID};
+				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID, IsraelDispute};
 				for (Account acc : lstMatchedAccounts) {
 					for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
 						if (c.AccountId != acc.Id) {
@@ -1761,8 +1762,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Date OneYearAgo = Date.today().addYears(-1);
 
 				List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c
-									   FROM Case
-									   WHERE RecordTypeId = : SIDRAcaseRecordTypeID
+										 FROM Case
+										 WHERE RecordTypeId = : SIDRAcaseRecordTypeID
 										AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT OR IRR_Withdrawal_Reason__c = :MINORPOLICY OR Action_needed_Small_Amount__c = true)
 										AND CreatedDate >= : OneYearAgo AND AccountId <> null AND AccountId IN: accountIds];
 
@@ -1770,13 +1771,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				map<Id, Datetime> mapReiDatesPerAccountiId = new map<Id, Datetime>();
 				if (!casesUpd.isEmpty()) {
 					AggregateResult[] REIDates = [SELECT MAX(Update_AIMS_REI_DEFWITH__c)reinstatement_date, AccountId
-												  FROM Case
-												  WHERE REI_ApprovalRejectin__c = 'Approved'
-														  AND DEF_Withdrawal_Approval_Rejection__c <> 'Approved'
-														  AND Update_AIMS_REI_DEFWITH__c <> null
-														  AND CreatedDate >= : OneYearAgo
-														  AND AccountId IN: accountIds
-														  GROUP BY AccountId ];
+													FROM Case
+													WHERE REI_ApprovalRejectin__c = 'Approved'
+															AND DEF_Withdrawal_Approval_Rejection__c <> 'Approved'
+															AND Update_AIMS_REI_DEFWITH__c <> null
+															AND CreatedDate >= : OneYearAgo
+															AND AccountId IN: accountIds
+															GROUP BY AccountId ];
 					if (!REIDates.isEmpty()) {
 						for (AggregateResult ar : REIDates) {
 							mapReiDatesPerAccountiId.put((Id)ar.get('AccountId'), (Datetime)ar.get('reinstatement_date'));
@@ -2016,7 +2017,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					[SELECT c.Id, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName,
 						c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c,
 						c.Solicitation_Flag__c, c.Revenue_Confirmation__c,
-					  (SELECT Id, Card_Status__c, Valid_To_Date__c
+						(SELECT Id, Card_Status__c, Valid_To_Date__c
 						From ID_Cards__r
 						where  Card_Status__c = : IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc)
 					FROM Contact c
@@ -2027,15 +2028,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if(!relatedIDCardAppList.isEmpty()){
 				//get IDCard and Application
 				 for(ID_Card_Application__c app : [SELECT id, VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c,
-					  Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c,
-					  Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c,
-					  Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId,
-					  Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c,
-					  IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c,
-					  IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c,
-					  First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId,
-					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c,
-					  (SELECT Id FROM ID_Cards__r LIMIT 1)
+						Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c,
+						Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c,
+						Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId,
+						Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c,
+						IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c,
+						IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c,
+						First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId,
+						ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c,
+						(SELECT Id FROM ID_Cards__r LIMIT 1)
 					FROM ID_Card_Application__c
 					WHERE ID IN :relatedIDCardAppList]){
 
@@ -2053,7 +2054,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 								 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c, BillingCountry
 								 FROM Account
 								 WHERE Id IN :accounttIDList OR
-								  (RecordType.Name = : 'Agency'
+									(RecordType.Name = : 'Agency'
 									AND IATACode__c IN :iataCodes
 									AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated'))])
 				{
@@ -2129,11 +2130,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//Create idCard From Application
 							idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-                            if (idCard != null){
-                                upsert idCard;
-                                application.ID_Card__c = idCard.Id;
-                                update application;
-                            } 
+							if (idCard != null){
+								upsert idCard;
+								application.ID_Card__c = idCard.Id;
+								update application;
+							}
 
 						}else{
 							theContact = contactMap.get(aCase.ContactId);
@@ -2220,9 +2221,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				if(oscarIdcases.keySet().isEmpty()) return;
 
 				for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
-										   Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-										   Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
-										   from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
+											 Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
+											 Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
+											 from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
 					oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
 

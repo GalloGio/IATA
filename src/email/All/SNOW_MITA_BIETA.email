@@ -1,0 +1,23 @@
+Dear Support Team, 
+
+The following Case # [{!Case.CaseNumber}]: [{!Case.Subject}] has been created.
+
+Case Description: {!Case.Description}
+
+Name: {!Contact.Name}
+Email: {!Contact.Email}
+Phone: {!Contact.Phone}
+
+Sincerely/SFDC System
+
+
+Business Service = “Airline Participation” 
+Business product/Process = “Salesforce other”
+
+
+
+
+
+
+Thread Id: {!Case.Thread_Id}
+{!Case.Thread_Id} {!Case.Topic__c} {!Case.Subtopic__c}

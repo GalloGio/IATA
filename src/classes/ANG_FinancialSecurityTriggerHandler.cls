@@ -362,7 +362,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 * @param  rhcKey:      RHC unique key identifier (Account Id + RHC RecordTypeId)
 	 * @param  minFsAmount: Minimum financial security amount to set
 	 */
-  private void setMinFinancialSecurityAmountOnRHC(Id AccountID, String rhcKey, Decimal minFsAmount){
+	private void setMinFinancialSecurityAmountOnRHC(Id AccountID, String rhcKey, Decimal minFsAmount){
 
 		ANG_RHC_Information__c rhcInfo = map2Insert.get(rhcKey);
 

@@ -7,8 +7,8 @@
     <subject>Welcome to GADM</subject>
     <textOnly>Dear {!IF(Contact.LastName= &quot;&quot;, &quot;User&quot;, Contact.FirstName + &apos; &apos;+ Contact.LastName )}, 
 
-*account* has requested you sign up for the GADM service.
-Click on  *link*, and follow these  instructions to request access to the GADM service.
+*account* will be approving access to you for the GADM service.
+Please stand by for further communications.
 
 GADM Team
 gadm@iata.org</textOnly>

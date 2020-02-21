@@ -754,12 +754,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //this.showSpinner = false;
                 if (this.isAdmin) {
                     this.showPopUp = false; // for admins no success box
+                    this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {
                     this.showSpinner = false;
                 }
-
-                this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
-
             }).catch(error => {
                 console.error(error);
             });

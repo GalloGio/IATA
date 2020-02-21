@@ -113,6 +113,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
+        <fields>Is_PO_Box_City__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>UPDATEDBY_USER.ALIAS</fields>
+        <fields>GeonameId__c</fields>
         <relatedList>IATA_ISO_City__c.IATA_ISO_State__c</relatedList>
     </relatedLists>
     <relatedLists>

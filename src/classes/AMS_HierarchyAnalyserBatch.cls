@@ -1,5 +1,5 @@
 global class AMS_HierarchyAnalyserBatch implements Database.Batchable<sObject>, Database.Stateful {
-	
+
 	String query;
 
 	public final Set<Id> parentsIds;
@@ -7,7 +7,7 @@ global class AMS_HierarchyAnalyserBatch implements Database.Batchable<sObject>, 
 
 	public Map<Id, Id> childHierarchies;
 	public Set<Id> hierarchiesToDelete;
-	
+
 	global AMS_HierarchyAnalyserBatch(Map<Id, Id> accountHierarchies) {
 		this.parentsIds = accountHierarchies.keySet();
 		this.accountHierarchies = accountHierarchies;
@@ -19,14 +19,14 @@ global class AMS_HierarchyAnalyserBatch implements Database.Batchable<sObject>, 
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_HierarchyAnalyserBatch - constructor] parentsIds - ' + parentsIds);
 	}
-	
+
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Agencies_relationhip__c> scope) {
+	 	global void execute(Database.BatchableContext BC, List<AMS_Agencies_relationhip__c> scope) {
 
-   		List<AMS_Agencies_relationhip__c> relsToUpdate = new List<AMS_Agencies_relationhip__c>();
+	 		List<AMS_Agencies_relationhip__c> relsToUpdate = new List<AMS_Agencies_relationhip__c>();
 
 		for(AMS_Agencies_relationhip__c rel : scope){
 
@@ -43,7 +43,7 @@ global class AMS_HierarchyAnalyserBatch implements Database.Batchable<sObject>, 
 
 		if(!relsToUpdate.isEmpty()) update relsToUpdate;
 	}
-	
+
 	global void finish(Database.BatchableContext BC) {
 		if(!childHierarchies.isEmpty()) Database.executeBatch(new AMS_HierarchyAnalyserBatch(childHierarchies));
 
@@ -61,5 +61,5 @@ global class AMS_HierarchyAnalyserBatch implements Database.Batchable<sObject>, 
 			System.debug(loggingLevel.ERROR, '____ [cls AMS_HierarchyAnalyserBatch - finish] hierarchiesToDelete - ' + hierarchiesToDelete);
 		}
 	}
-	
+
 }

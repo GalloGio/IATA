@@ -1,23 +1,23 @@
 /*
-    Class Name: ISSP_AMC_DeclarationSubmittedBy_Test
-    Related Classes: ISSP_AMC_DeclarationSubmittedBy
+	Class Name: ISSP_AMC_DeclarationSubmittedBy_Test
+	Related Classes: ISSP_AMC_DeclarationSubmittedBy
 
-    Copyright @Right IT Services
+	Copyright @Right IT Services
 
-    Purpose: Test class for ISSP_AMC_DeclarationSubmittedBy
+	Purpose: Test class for ISSP_AMC_DeclarationSubmittedBy
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
 */
 @isTest
 public class ISSP_AMC_DeclarationSubmittedBy_Test {
 
 	/*
-        Purpose: Runs ISSP_AMC_DeclarationSubmittedBy as a portal user and gets its participation.
-        Parameters: 
-        Returns:
-        Throws [Exceptions]: 
-    */
+		Purpose: Runs ISSP_AMC_DeclarationSubmittedBy as a portal user and gets its participation.
+		Parameters:
+		Returns:
+		Throws [Exceptions]:
+	*/
 	public static testMethod void testDeclarationBaggageTagCodes(){
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
@@ -30,7 +30,7 @@ public class ISSP_AMC_DeclarationSubmittedBy_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					ISSP_AMC_DeclarationSubmittedBy controller = new ISSP_AMC_DeclarationSubmittedBy();
 					Participation_Online_Application__c testParticipation = controller.controllerParticipation;

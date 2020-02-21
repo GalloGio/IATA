@@ -1,6 +1,6 @@
-@isTest 
+@isTest
 private class clsMassCaseCreationNonComplianceBatchTst {
-	
+
 
 	static testMethod void testClsMassCaseCreationNonComplianceBatch(){
 		/*
@@ -16,35 +16,35 @@ private class clsMassCaseCreationNonComplianceBatchTst {
 		insert countries;
 
 		Account account = new Account(IATACode__c = '1234567');
-        account.Name = 'Test account';
-        account.BillingCountry = 'United States';
-        account.Type = 'IATA Cargo Agent';
-        account.IATA_ISO_Country__c = country.ID;
-        insert account;
+		account.Name = 'Test account';
+		account.BillingCountry = 'United States';
+		account.Type = 'IATA Cargo Agent';
+		account.IATA_ISO_Country__c = country.ID;
+		insert account;
 
-        Contact aContact = new Contact();
-        aContact.AccountId = account.ID;
-        aContact.FirstName = 'Test';
-        acontact.LastName = 'Contact 1';
-        aContact.Email = 'testemail@blablaemail.com';
-        aContact.Phone = '5151515151';
-        insert aContact;
+		Contact aContact = new Contact();
+		aContact.AccountId = account.ID;
+		aContact.FirstName = 'Test';
+		acontact.LastName = 'Contact 1';
+		aContact.Email = 'testemail@blablaemail.com';
+		aContact.Phone = '5151515151';
+		insert aContact;
 
-        List<Case> listToBatch = new List<Case>();
-        Id SIDRARecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		List<Case> listToBatch = new List<Case>();
+		Id SIDRARecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
 		for(Integer i=1; i<=9; i++){
-			Case c = new Case(AccountID = account.ID, Account = account, ContactID = aContact.ID, Contact = aContact, RecordTypeid = SIDRARecordTypeId, 
+			Case c = new Case(AccountID = account.ID, Account = account, ContactID = aContact.ID, Contact = aContact, RecordTypeid = SIDRARecordTypeId,
 							BSP_CASS__c = 'BSP', Status = 'Open', Subject = 'subject' + i);
 			listToBatch.add(c);
 		}
 
 		Account account2 = new Account(IATACode__c = '1234567');
-        account2.Name = 'Test account';
-        account2.BillingCountry = 'Portugal';
-        account2.Type = 'IATA test';
-        account2.IATA_ISO_Country__c = country2.ID;
-        insert account2;
+		account2.Name = 'Test account';
+		account2.BillingCountry = 'Portugal';
+		account2.Type = 'IATA test';
+		account2.IATA_ISO_Country__c = country2.ID;
+		insert account2;
 
 		Case c2 = new Case(accountID = account2.ID , Account = account2, Contact = aContact, ContactID = aContact.ID, SCF_Reason_IFAP__c = 'reason10');
 		listToBatch.add(c2);
@@ -64,10 +64,10 @@ private class clsMassCaseCreationNonComplianceBatchTst {
 		Test.stopTest();
 
 		List<Case> caseListAfterBatch = [SELECT ID FROM Case];
-         
+
 		System.assertEquals(20, caseListAfterBatch.size());
 
-		
+
 		Id recordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		Case case1 = [SELECT ID, New_IFAP_Deadline_date__c, BSPCountry__c, Region__c,Subject,CaseArea__c FROM Case Where Subject = 'subject1' AND RecordTypeId =:recordType];

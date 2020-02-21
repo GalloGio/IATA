@@ -141,8 +141,9 @@
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
                                                 <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                    <lightning-combobox class="" placeholder=" "
+                                                    <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                                         name="" label=""
+                                                                        dropdown-alignment="auto"
                                                                         variant="label-hidden"
                                                                         value={registrationForm.country} options={countryOptions}
                                                                         onchange={handleCountryChange}>
@@ -188,9 +189,10 @@
                                                 </lightning-layout-item>
                                                 <lightning-layout-item size="12">
                                                     <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                        <lightning-combobox class="" placeholder=" "
+                                                        <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                                             name="sectorCbx" label="" required
                                                                             variant="label-hidden"
+                                                                            dropdown-alignment="auto"
                                                                             value={registrationForm.sector}
                                                                             options={sector.options}
                                                                             onchange={handleSectorChange}
@@ -218,9 +220,10 @@
                                                 </lightning-layout-item>
                                                 <lightning-layout-item size="12">
                                                     <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                        <lightning-combobox class="" placeholder=" "
+                                                        <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                                             name="extraCbx" label="" required
                                                                             variant="label-hidden"
+                                                                            dropdown-alignment="auto"
                                                                             value={registrationForm.extraChoice}
                                                                             options={extraQuestion.options}
                                                                             onchange={handleExtraChoiceChange}
@@ -248,9 +251,10 @@
                                                 </lightning-layout-item>
                                                 <lightning-layout-item size="12">
                                                     <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                        <lightning-combobox class="" placeholder=" "
+                                                        <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                                             name="categoryCbx" label="" required
                                                                             variant="label-hidden"
+                                                                            dropdown-alignment="auto"
                                                                             value={registrationForm.category}
                                                                             options={category.options}
                                                                             onchange={handleCategoryChange}
@@ -277,8 +281,9 @@
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
                                                 <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                    <lightning-combobox class="" placeholder=" "
+                                                    <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                                         name="" label="" required
+                                                                        dropdown-alignment="auto"
                                                                         variant="label-hidden"
                                                                         value={registrationForm.language}
                                                                         options={languageOptions}

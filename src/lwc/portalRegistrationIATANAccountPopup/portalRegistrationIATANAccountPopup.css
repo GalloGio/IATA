@@ -1,0 +1,21 @@
+.warningIcon{
+  margin-right: 10px;
+}
+
+.headerTitle {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #333333;
+}
+
+.font {
+  font-weight: 500;
+}
+
+.slds-button{
+    height: 56px !important;
+}

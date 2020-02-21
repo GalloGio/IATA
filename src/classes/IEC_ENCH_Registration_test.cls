@@ -1,4 +1,4 @@
-@isTest 
+@isTest
 private class IEC_ENCH_Registration_test {
 
 	public static testMethod void testPOBoxValidation() {
@@ -6,7 +6,7 @@ private class IEC_ENCH_Registration_test {
 		IECUtil.isPostOfficeBox('PO Box 1234');
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testIEC_ShippingController() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -30,7 +30,7 @@ private class IEC_ENCH_Registration_test {
 		ISO_Country_State_Helper.getCountriesOptionsMap();
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testIEC_UpdateAddressController_1() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -47,7 +47,7 @@ private class IEC_ENCH_Registration_test {
 		ctrl.dtoShipToAddress.postalCode = '1111-828';
 		ctrl.showShipToZip = true;
 		ctrl.showShipToVAT = true;
-		Test.setCurrentPageReference(new PageReference('Page.IEC_UpdateAddress')); 
+		Test.setCurrentPageReference(new PageReference('Page.IEC_UpdateAddress'));
 		system.currentPageReference().getParameters().put('shipToStreet', 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
 		ctrl.lstShipToState = new List<SelectOption>();
 		ctrl.saveShipToAddress();
@@ -55,7 +55,7 @@ private class IEC_ENCH_Registration_test {
 		ctrl.saveShipToAddress();
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testIEC_UpdateAddressController_2() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -74,27 +74,27 @@ private class IEC_ENCH_Registration_test {
 		ctrl.dtoBillToAddress.postalCode = '1111-828';
 		ctrl.showBillToZip = true;
 		ctrl.showBillToVAT = true;
-		Test.setCurrentPageReference(new PageReference('Page.IEC_UpdateAddress')); 
+		Test.setCurrentPageReference(new PageReference('Page.IEC_UpdateAddress'));
 		system.currentPageReference().getParameters().put('billToStreet', 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
 		ctrl.lstBillToState = new List<SelectOption>();
 		ctrl.saveBillToAddress();
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testIEC_CustomerInformation() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
 		IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 		ctrl.vfOrder = new Order_DTO();
-		ctrl.vfOrder.billToAddress = new Address_DTO(); 
-		ctrl.vfOrder.billToAddress.countryCode = 'pt';		
+		ctrl.vfOrder.billToAddress = new Address_DTO();
+		ctrl.vfOrder.billToAddress.countryCode = 'pt';
 		List<SelectOption> opts = ctrl.availableCountries;
 		Map<String, Boolean> mps = ctrl.zipCodeApplicableMap;
 		Boolean uzc = ctrl.unlockZipCode;
 		ctrl.isStreetAddressToLong('abc',1);
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Registration1() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -111,7 +111,7 @@ private class IEC_ENCH_Registration_test {
 		List<SelectOption> opts = ctrl.shpCountry;
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Registration2() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -122,11 +122,11 @@ private class IEC_ENCH_Registration_test {
 		List<SelectOption> opts = ctrl.shpCountry;
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Registration3() {
 		List<IATA_ISO_Country__c> countries = TestDataGenerator.generateISOCountryState();
 		Test.startTest();
-		Test.setCurrentPageReference(new PageReference('Page.ISSP_CreateAccount')); 
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_CreateAccount'));
 		system.currentPageReference().getParameters().put('sRefererCommunity', 'iec');
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.searchCountryAirline = countries[0].Id;
@@ -145,7 +145,7 @@ private class IEC_ENCH_Registration_test {
 		ctrl.searchAccount();
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Registration_ISO_State() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
@@ -157,7 +157,7 @@ private class IEC_ENCH_Registration_test {
 		String isoS = ISSP_Registration.isoStates;
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Registration4() {
 		Test.startTest();
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -172,7 +172,7 @@ private class IEC_ENCH_Registration_test {
 		String a6 = ctrl.urlpicture;
 		Test.stopTest();
 	}
-	
+
 	public static testMethod void testUtilitySplitAddress() {
 		Test.startTest();
 		Utility.splitAddress('4TH FLOOR WEST WING ADMIN BLDG SOUTHERN SUPPORT ZONE', 35);
@@ -182,5 +182,5 @@ private class IEC_ENCH_Registration_test {
 		Utility.splitAddress('', 35);
 		Test.stopTest();
 	}
-	
+
 }

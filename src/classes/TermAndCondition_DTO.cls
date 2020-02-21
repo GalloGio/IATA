@@ -1,4 +1,4 @@
-public with sharing class TermAndCondition_DTO 
+public with sharing class TermAndCondition_DTO
 {
 	public String tncId{get;set;}
 	public String tncName{get;set;}
@@ -15,5 +15,5 @@ public with sharing class TermAndCondition_DTO
 		startDate = pTnC.Term_Condition__r.Effective_Start_Date__c;
 		attachmentURL = 'viewTNC';
 		accepted = false;
-	}	
+	}
 }

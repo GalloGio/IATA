@@ -1,26 +1,26 @@
 /**
- * This class is an helper to create a backup data record for Accounts, Owners and Hierarchies involved on OSCAR 
+ * This class is an helper to create a backup data record for Accounts, Owners and Hierarchies involved on OSCAR
  * Agency Change.
  * Also this class contains the methods to rollback the data of Accounts, Owners and Hierarchies involved;
- * When a billable change code is generated during the OSCAR process if the rollback is made an internal case will 
+ * When a billable change code is generated during the OSCAR process if the rollback is made an internal case will
  * be created.
  */
 
 public without sharing class AMS_OscarChangesHelper {
 
 	/**
-	 * Method that processes the OSCARs to create backup data records, 
+	 * Method that processes the OSCARs to create backup data records,
 	 * for each record it will create backup records for Accounts on the Hierarchy,
 	 * Roles and Hierarchy relations
 	 * @param oscarIds This is a set of OSCARs Ids
 	 * @return Nothing
 	 */
-	@future 
+	@future
 	public static void createSavepoint(Set<Id> oscarIds) {
 		List<AMS_OSCAR__c> oscars = [SELECT Id, Account__c FROM AMS_OSCAR__c WHERE Id IN :oscarIds AND Account__c <> null];
 		Map<Id,Id> mapAccountToOscar = new Map<Id,Id>();
 		Map<Id,Id> mapAllAccountsHierToOscar = new Map<Id,Id>();
-		
+
 		for(AMS_OSCAR__c oscar : oscars) {
 			mapAccountToOscar.put(oscar.Account__c, oscar.Id);
 		}
@@ -41,7 +41,7 @@ public without sharing class AMS_OscarChangesHelper {
 			for(AMS_Agencies_relationhip__c relation : fullHierarchy) {
 				mapAllAccountsHierToOscar.put(relation.Child_Account__c, oscarId);
 				mapAllAccountsHierToOscar.put(relation.Parent_Account__c, oscarId);
-			}	
+			}
 		}
 
 		for(Id accountId : mapFiltredHierarchies.keySet()) {
@@ -59,16 +59,16 @@ public without sharing class AMS_OscarChangesHelper {
 		}
 
 		System.debug('mapAccountToOscar: ' + mapAccountToOscar);
-		
+
 		createAccountsSavepoint(mapAccountToOscar);
 		createHierarchiesSavepoint(mapFiltredHierarchies, mapAccountToOscar);
 		if(mapAllAccountsHierToOscar.isEmpty()) {
 			createRolesSavepoint(mapAccountToOscar);
 		} else {
 			createRolesSavepoint(mapAllAccountsHierToOscar);
-		}	
-		
-	}	
+		}
+
+	}
 
 	/**
 	 * Method that exctracts the a subhierarchy from a complete hierarchy
@@ -78,7 +78,7 @@ public without sharing class AMS_OscarChangesHelper {
 	 */
 	private static List<AMS_Agencies_relationhip__c> extractRelations(Id accountId, List<AMS_Agencies_relationhip__c> relations) {
 		Set<AMS_Agencies_relationhip__c> result = new Set<AMS_Agencies_relationhip__c>();
-		Set<Id> accIds = new Set<Id>(); 
+		Set<Id> accIds = new Set<Id>();
 		for(AMS_Agencies_relationhip__c rel : relations) {
 			if(rel.Child_Account__c == accountId) {
 				result.add(rel);
@@ -106,7 +106,7 @@ public without sharing class AMS_OscarChangesHelper {
 		String queryStr = 'SELECT BillingAddress, ShippingAddress';
 		//EM - BillingAddress and ShippingAddress accessible just from API30 - sfdc bug
 		if (test.isRunningTest())	queryStr = 'SELECT';
-		
+
 		List<Schema.FieldSetMember> fields = SObjectType.Account.FieldSets.AMS_Oscar_Savepoint_fields.getFields();
 		for(Schema.FieldSetMember f : fields) {
 			queryStr += ', ' + f.getFieldPath();
@@ -119,17 +119,17 @@ public without sharing class AMS_OscarChangesHelper {
 
 		System.debug('accounts: ' + accounts);
 
-		List<Technical_Logs__c> accountBackupsToInsert = new List<Technical_Logs__c>();		
+		List<Technical_Logs__c> accountBackupsToInsert = new List<Technical_Logs__c>();
 		for(Account acc : accounts) {
-			Map<String,Object> fieldsToSerialize = new Map<String,Object>(); 
+			Map<String,Object> fieldsToSerialize = new Map<String,Object>();
 			for(Schema.FieldSetMember f : fields) {
 				String fieldAPI = f.getFieldPath();
 				fieldsToSerialize.put(fieldAPI, acc.get(fieldAPI));
 			}
 			Id oscarId = mapAccountToOscar.get(acc.Id);
 			Technical_Logs__c backupData = new Technical_Logs__c(
-				Log__c= JSON.serialize(fieldsToSerialize), 
-				Status__c= 'Account', 
+				Log__c= JSON.serialize(fieldsToSerialize),
+				Status__c= 'Account',
 				Record__c= oscarId,
 				Operation__c= 'Rollback');
 			accountBackupsToInsert.add(backupData);
@@ -146,12 +146,12 @@ public without sharing class AMS_OscarChangesHelper {
 	 * Method that creates the backup records for the relations of the hierarchy or subhierarchy selected
 	 * @param mapFiltredHierarchies This is map of each account sub-hierarchy, the key is an account id and the values are a list of relations
 	 * @param mapAccountToOscar This is a map where the key is the account to do a backup and the value is the OSCAR id related with
-	 * @return Nothing	
+	 * @return Nothing
 	 */
 	public static void createHierarchiesSavepoint(Map<Id, List<AMS_Agencies_relationhip__c>> mapFiltredHierarchies, Map<Id,Id> mapAccountToOscar) {
-		List<Technical_Logs__c> hierarchyBackupsToInsert = new List<Technical_Logs__c>();		
+		List<Technical_Logs__c> hierarchyBackupsToInsert = new List<Technical_Logs__c>();
 		for(Id accountId : mapAccountToOscar.keySet()) {
-			List<AMS_Agencies_relationhip__c> relations = mapFiltredHierarchies.get(accountId);			
+			List<AMS_Agencies_relationhip__c> relations = mapFiltredHierarchies.get(accountId);
 			if(relations != null && !relations.isEmpty()) {
 				List<HierarchyWrapper> hierachyW = new List<HierarchyWrapper>();
 				for(AMS_Agencies_relationhip__c relation : relations) {
@@ -160,8 +160,8 @@ public without sharing class AMS_OscarChangesHelper {
 				}
 				Id oscarId = mapAccountToOscar.get(accountId);
 				Technical_Logs__c backupData = new Technical_Logs__c(
-					Log__c= JSON.serialize(hierachyW), 
-					Status__c= 'Hierarchy', 
+					Log__c= JSON.serialize(hierachyW),
+					Status__c= 'Hierarchy',
 					Record__c= oscarId,
 					Operation__c= 'Rollback');
 				hierarchyBackupsToInsert.add(backupData);
@@ -176,7 +176,7 @@ public without sharing class AMS_OscarChangesHelper {
 	/**
 	 * Method that creates the backup records for roles of each account involved on the OSCAR (including child accounts)
 	 * @param mapAccountToOscar This is a map where the key is the account to do a backup and the value is the OSCAR id related with
-	 * @return Nothing	
+	 * @return Nothing
 	 */
 	public static void createRolesSavepoint(Map<Id,Id> mapAccountToOscar) {
 		List<String> fieldsStr = new List<String>();
@@ -190,18 +190,18 @@ public without sharing class AMS_OscarChangesHelper {
 		String queryStr = 'SELECT ' + String.join(fieldsStr, ', ') + ' FROM AMS_Account_Role__c WHERE Account__c IN :accountIds';
 		List<AMS_Account_Role__c> roles = Database.query(queryStr);
 
-		List<Technical_Logs__c> roleBackupsToInsert = new List<Technical_Logs__c>();	
+		List<Technical_Logs__c> roleBackupsToInsert = new List<Technical_Logs__c>();
 		for(AMS_Account_Role__c role : roles) {
 			Id oscarId = mapAccountToOscar.get(role.Account__c);
-			Map<String,Object> fieldsToSerialize = new Map<String,Object>(); 
+			Map<String,Object> fieldsToSerialize = new Map<String,Object>();
 			for(Schema.FieldSetMember f : fields) {
 				String fieldAPI = f.getFieldPath();
 				fieldsToSerialize.put(fieldAPI, role.get(fieldAPI));
 			}
 
 			Technical_Logs__c backupData = new Technical_Logs__c(
-				Log__c= JSON.serialize(fieldsToSerialize), 
-				Status__c= 'Role', 
+				Log__c= JSON.serialize(fieldsToSerialize),
+				Status__c= 'Role',
 				Record__c= oscarId,
 				Operation__c= 'Rollback');
 			roleBackupsToInsert.add(backupData);
@@ -214,8 +214,8 @@ public without sharing class AMS_OscarChangesHelper {
 
 	public static void rollbackOscarChanges(Set<Id> oscarIds) {
 		List<Technical_Logs__c> rbData = [SELECT Id, Log__c, Status__c, Record__c, Operation__c
-										  FROM Technical_Logs__c	
-										  WHERE Record__c IN :oscarIds AND Operation__c = 'Rollback']; 
+											FROM Technical_Logs__c
+											WHERE Record__c IN :oscarIds AND Operation__c = 'Rollback'];
 
 		system.debug('oscarIds: ' + oscarIds);
 		system.debug('rbData: ' + rbData);
@@ -263,17 +263,17 @@ public without sharing class AMS_OscarChangesHelper {
 		List<Case> casesToInsert = new List<Case>();
 
 		Database.DMLOptions dmo = new Database.DMLOptions();
-		dmo.assignmentRuleHeader.useDefaultRule= true;	
+		dmo.assignmentRuleHeader.useDefaultRule= true;
 
 		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
-		
+
 		for(AMS_ChangeCodes__c changeCode : [SELECT Name, Change_Code__c FROM AMS_ChangeCodes__c WHERE Billable__c = true]) {
 			if(changeCode.Name == changeCode.Change_Code__c || changeCode.Name.startsWith('AMS')) billableChangeCodes.add(changeCode.Change_Code__c);
 		}
 
-		List<Agency_Applied_Change_code__c> appChangeCodes = [SELECT Id, Change_Code__c, OSCAR__c 
-															  FROM Agency_Applied_Change_code__c
-															  WHERE Change_Code__c IN :billableChangeCodes AND OSCAR__c IN :oscarIds];
+		List<Agency_Applied_Change_code__c> appChangeCodes = [SELECT Id, Change_Code__c, OSCAR__c
+																FROM Agency_Applied_Change_code__c
+																WHERE Change_Code__c IN :billableChangeCodes AND OSCAR__c IN :oscarIds];
 
 		if(!appChangeCodes.isEmpty()) {
 			Set<Id> oscarsToProcess = new Set<Id>();
@@ -281,14 +281,14 @@ public without sharing class AMS_OscarChangesHelper {
 				oscarsToProcess.add(apcc.OSCAR__c);
 			}
 
-			List<AMS_OSCAR__c> oscars = [SELECT Id, 
-											(SELECT Id, Subject, AccountId, Region__c, BSPCountry__c, Type_of_customer__c, ContactId FROM Cases__r) 
-										 FROM AMS_OSCAR__c 
+			List<AMS_OSCAR__c> oscars = [SELECT Id,
+											(SELECT Id, Subject, AccountId, Region__c, BSPCountry__c, Type_of_customer__c, ContactId FROM Cases__r)
+										 FROM AMS_OSCAR__c
 										 WHERE Id IN :oscarsToProcess];
 
 			for(AMS_OSCAR__c oscar : oscars) {
 				Case pc = oscar.Cases__r[0];
-				Case cse = new Case(ParentId= pc.Id, AccountId= pc.AccountId, Region__c= pc.Region__c, BSPCountry__c= pc.BSPCountry__c, 
+				Case cse = new Case(ParentId= pc.Id, AccountId= pc.AccountId, Region__c= pc.Region__c, BSPCountry__c= pc.BSPCountry__c,
 					RecordTypeId= recordTypeId, Origin= 'Internal Case', CaseArea__c= 'Invoicing', Reason1__c= 'Credit Note request',
 					Type_of_customer__c= pc.Type_of_customer__c, ContactId= pc.ContactId, Subject= pc.Subject, Description= Label.AMS_RollbackCase_Description);
 				cse.setOptions(dmo);
@@ -317,9 +317,9 @@ public without sharing class AMS_OscarChangesHelper {
 		Set<Id> newHierarchies = new Set<Id>();
 		for(HierarchyWrapper hierarchy : hiearchiesW) {
 			accountIds.add(hierarchy.parentId);
-			accountIds.add(hierarchy.childId);	
-			hierarchyIdsToCheck.add(hierarchy.hierachyId);	
-			oldHierarchies.add(hierarchy.hierachyId);	
+			accountIds.add(hierarchy.childId);
+			hierarchyIdsToCheck.add(hierarchy.hierachyId);
+			oldHierarchies.add(hierarchy.hierachyId);
 		}
 
 		List<AMS_Agencies_relationhip__c> relationsToDelete = [SELECT Id, Hierarchy__c FROM AMS_Agencies_relationhip__c WHERE Child_Account__c IN :accountIds];
@@ -331,9 +331,9 @@ public without sharing class AMS_OscarChangesHelper {
 			delete relationsToDelete;
 		}
 
-		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, (SELECT Id FROM AMS_Agencies_relationships__r) 
-													   FROM AMS_Agencies_Hierarchy__c
-													   WHERE Id IN :hierarchyIdsToCheck];
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, (SELECT Id FROM AMS_Agencies_relationships__r)
+														 FROM AMS_Agencies_Hierarchy__c
+														 WHERE Id IN :hierarchyIdsToCheck];
 
 		Map<Id,AMS_Agencies_Hierarchy__c> mapHierarchies = new Map<Id,AMS_Agencies_Hierarchy__c>();
 		for(AMS_Agencies_Hierarchy__c hierarchy : hierarchies) {
@@ -384,12 +384,12 @@ public without sharing class AMS_OscarChangesHelper {
 			accountIds.add(role.Account__c);
 		}
 
-		Map<Id,AMS_Account_Role__c> newRolesMap = new Map<Id,AMS_Account_Role__c>([SELECT Id, Account__c FROM AMS_Account_Role__c WHERE Account__c IN :accountIds]);		
+		Map<Id,AMS_Account_Role__c> newRolesMap = new Map<Id,AMS_Account_Role__c>([SELECT Id, Account__c FROM AMS_Account_Role__c WHERE Account__c IN :accountIds]);
 		List<AMS_Account_Role__c> rolesToUpsert = new List<AMS_Account_Role__c>();
 		for(AMS_Account_Role__c role : roles) {
 			AMS_Account_Role__c newRole = newRolesMap.get(role.Id);
 			if(newRole == null) {
-				role.Id = null;				
+				role.Id = null;
 			} else {
 				newRolesMap.remove(role.Id);
 			}
@@ -402,7 +402,7 @@ public without sharing class AMS_OscarChangesHelper {
 
 		if(!rolesToUpsert.isEmpty()) {
 			upsert rolesToUpsert;
-		}		
+		}
 	}
 
 	/**

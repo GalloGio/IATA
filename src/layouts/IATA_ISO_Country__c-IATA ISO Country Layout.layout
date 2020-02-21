@@ -513,6 +513,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
+        <fields>ISO_CODE_STANDARD__c</fields>
         <fields>GeonameAsciiName__c</fields>
         <fields>GeonameName__c</fields>
         <fields>Valid_for_Address__c</fields>

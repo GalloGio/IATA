@@ -1,10 +1,10 @@
 public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 
-	private static final Set<String> HIERARCHY_CHANGES = new Set<String> {'Location type', 'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent', 
+	private static final Set<String> HIERARCHY_CHANGES = new Set<String> {'Location type', 'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent',
 																			'Ownership to IATA Agent'};
-	private static final Set<String> BRANCH_CHANGES = new Set<String> {'Name', 'Legal status', 'Location type', 'Minor Shareholding', 'Major Shareholding', 
+	private static final Set<String> BRANCH_CHANGES = new Set<String> {'Name', 'Legal status', 'Location type', 'Minor Shareholding', 'Major Shareholding',
 																			'Ownership to non-IATA Agent', 'Ownership to IATA Agent', 'VMFR'};
-	private static final Set<String> OWNERS_CHANGES = new Set<String> {'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent', 
+	private static final Set<String> OWNERS_CHANGES = new Set<String> {'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent',
 																			'Ownership to IATA Agent'};
 
 	private List<AMS_OSCAR__c> oscars {get;set;}
@@ -37,7 +37,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 					oscarsToSaveOwners.add(oscar.Id);
 				}
 			}
-		}		
+		}
 	}
 
 	public void execute(QueueableContext context) {
@@ -55,7 +55,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 		if(!svps.isEmpty()) {
 			delete svps;
 		}
-	} 
+	}
 
 	public void createSavepoint() {
 		system.debug('Savepoint: ' + oscars);
@@ -68,14 +68,14 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 		system.debug('Backup Data: ' + recordsToInsert);
 
 		insert recordsToInsert;
-	}	
+	}
 
 	private void searchHierarchies() {
 		mapHierarchies = AMS_HierarchyHelper.getAccountsHierarchies(oscarAccountsIds);
 		for(Id accountId : mapHierarchies.keySet()) {
 			Id oscarId = mapAccountIdToOscarId.get(accountId);
 			List<AMS_Agencies_relationhip__c> relations = mapHierarchies.get(accountId);
-			
+
 			if(relations == null) {
 				continue;
 			}
@@ -117,7 +117,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 			if(!oscarsToSaveHierarchy.contains(oscarId)) {
 				continue;
 			}
-			List<AMS_Agencies_relationhip__c> relations =  mapHierarchies.get(accountId); 
+			List<AMS_Agencies_relationhip__c> relations =  mapHierarchies.get(accountId);
 			for(AMS_Agencies_relationhip__c relation : relations) {
 				result.add(generateSavepointRecord(relation, fields, 'Relation', oscarId));
 			}
@@ -130,7 +130,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 		List<Technical_Logs__c> result = new List<Technical_Logs__c>();
 		Set<Id> accountIds = mapAccountIdToOscarId.keySet();
 		Id ownerRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		
+
 		List<String> fieldsStr = new List<String>();
 
 		List<Schema.FieldSetMember> fields = SObjectType.AMS_Account_Role__c.FieldSets.AMS_Oscar_Savepoint_fields.getFields();
@@ -160,7 +160,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 		}
 
 		Set<Id> contactOwIds = getAllValues(mapOscarToContactO);
-		Set<Id> accountOwIds = getAllValues(mapOscarToAccountO); 
+		Set<Id> accountOwIds = getAllValues(mapOscarToAccountO);
 
 		if(!contactOwIds.isEmpty()) {
 			fieldsStr = new List<String>();
@@ -191,7 +191,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 				result.add(generateSavepointRecord(acc, fields, 'Account Owner', mapIdToOscar.get(acc.id)));
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -216,7 +216,7 @@ public without sharing class AMS_OSCAR_Savepoint implements Queueable {
 	}
 
 	private Technical_Logs__c generateSavepointRecord(SObject record, List<Schema.FieldSetMember> fields, String entity, Id oscarId) {
-		Map<String,Object> fieldsToSerialize = new Map<String,Object>(); 
+		Map<String,Object> fieldsToSerialize = new Map<String,Object>();
 		for(Schema.FieldSetMember f : fields) {
 			String fieldAPI = f.getFieldPath();
 			fieldsToSerialize.put(fieldAPI, record.get(fieldAPI));

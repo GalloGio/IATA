@@ -2,11 +2,11 @@
 * @author Jana Konickova
 * @date 2017-04-21
 * @description controller ANG_ConversionToolController.cls of the page ANG_ConversionTool.page and of the page ANG_ConversionToolDetail.page
-* 
+*
 */
 
 public with sharing class ANG_ConversionToolController {
-    
+
 	public String selectedCountryName { get; set; }
 	public Boolean displayTable { get; set; }
 	public Account iataCountryName { get; set; }
@@ -21,35 +21,35 @@ public with sharing class ANG_ConversionToolController {
 	public Integer getBatchStatus{get;set;}
 
 
-    public Set<String> notes{
-            get{
-                            
-                            notes = new Set<String>();
-                            notes.add('Use the Country Selection to select the desired country.');
-                            notes.add('All the valid Hierarchies will migrated once the "Run Migration" button is pushed.');
-                            notes.add('To navigate to the detail related with Invalid Hierarchies push the Detail link in front of each invalid type of hierarchies.');
-                            notes.add('The Migration Tool will do the following:');
-                            notes.add('    1) Change the Location Type from HO/AO->HE and BR/SA->AE');
+	public Set<String> notes{
+			get{
+
+							notes = new Set<String>();
+							notes.add('Use the Country Selection to select the desired country.');
+							notes.add('All the valid Hierarchies will migrated once the "Run Migration" button is pushed.');
+							notes.add('To navigate to the detail related with Invalid Hierarchies push the Detail link in front of each invalid type of hierarchies.');
+							notes.add('The Migration Tool will do the following:');
+							notes.add('    1) Change the Location Type from HO/AO->HE and BR/SA->AE');
  							notes.add('    2) Change the Level of Hierarchies from 3 levels to 2 levels if applicable.');
  							notes.add('    3) Change the Parent ID in case of BR-SA relation to HO->SA / HE->AE.');
  							notes.add('    4) Set the Hierarchy as "Migrated".');
 
 
-                    return notes;
-            }
-            set;
+					return notes;
+			}
+			set;
 	}
 
-    public List<String> noteList{
-        get{
-                return new List<String>(notes);
-        }
-        set;
+	public List<String> noteList{
+		get{
+				return new List<String>(notes);
+		}
+		set;
 	}
 
 	public Integer errorDetailCode;
-	
-	
+
+
 	public Integer getErrorDetailCode(){
 		system.debug('----------------------getErrorDetailCode '+errorDetailCode);
 		return errorDetailCode;
@@ -59,25 +59,25 @@ public with sharing class ANG_ConversionToolController {
 		this.errorDetailCode = errorDetailCode;
 		system.debug('----------------------setErrorDetailCode '+errorDetailCode);
 	}
-	
 
-    public ANG_ConversionToolController(){
-        if (displayTable==null){
-            displayTable=false;
-        }
-        if(iataCountryName == null) iataCountryName = new Account();
-        if (selectedCountryName != null){
-        	system.debug('----------------------selectedCountryName = '+selectedCountryName );
-        }
 
-        batchStatusBool = false;
-        getBatchStatus = 0;
+	public ANG_ConversionToolController(){
+		if (displayTable==null){
+			displayTable=false;
+		}
+		if(iataCountryName == null) iataCountryName = new Account();
+		if (selectedCountryName != null){
+			system.debug('----------------------selectedCountryName = '+selectedCountryName );
+		}
 
-    }
-    
+		batchStatusBool = false;
+		getBatchStatus = 0;
 
-    public pageReference runAnalysis(){
-		
+	}
+
+
+	public pageReference runAnalysis(){
+
 		String selectedCountryId = iataCountryName.IATA_ISO_Country__c;
 		IATA_ISO_Country__c iataCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{selectedCountryId})[0];
 		selectedCountryName = iataCountry.Name;
@@ -98,11 +98,11 @@ public with sharing class ANG_ConversionToolController {
 			OverviewRiskEventTable = createOverviewRiskEventTable(finalStruct);
 			displayTable=true;
 		}
-		
-		return null;
-	} 
 
-	
+		return null;
+	}
+
+
 	public pageReference showDetailPage(){
 		PageReference pageRef;
 		pageRef = Page.ANG_ConversionToolDetail;
@@ -111,7 +111,7 @@ public with sharing class ANG_ConversionToolController {
 		//System.debug('------------ParamValue errCode: '+ errCode);
 		System.debug('------------ParamValue errorDetailCode: '+ this.errorDetailCode);
 		return pageRef;
-	}   
+	}
 
 	public pageReference backToMainPage(){
 		PageReference pageRef;
@@ -119,11 +119,11 @@ public with sharing class ANG_ConversionToolController {
 		pageRef.setRedirect(false);
 		wrStructure = null;
 		return pageRef;
-	}  
+	}
 
 
 	public pageReference runMigration(){
-		
+
 		migrationBacthId = ANG_ConversionHelper.runMigration(selectedCountryName);
 
 		batchStatusBool = true;
@@ -131,11 +131,11 @@ public with sharing class ANG_ConversionToolController {
 		//pollerBool = false;
 
 		return null;
-		
+
 	}
 
 	public pageReference runFullAnalysesWithReport(){
-		
+
 		migrationBacthId = ANG_ConversionHelper.runFullAnalysesWithReport(selectedCountryName);
 
 		batchStatusBool = true;
@@ -143,7 +143,7 @@ public with sharing class ANG_ConversionToolController {
 		//pollerBool = false;
 
 		return null;
-		
+
 	}
 
 
@@ -180,10 +180,10 @@ public with sharing class ANG_ConversionToolController {
 		Integer listSize;
 		List<ANG_ConversionToolController.OverviewTableRow> table = new List<ANG_ConversionToolController.OverviewTableRow>();
 
-        System.debug('---------------------------------');
-        System.debug('Total Hierarchies:'+finalStruct.totalHierarchies);
-        System.debug('Total Valid Hierarchies:'+finalStruct.totalValidHierarchies);
-        System.debug('Total Invalid Hierarchies:'+finalStruct.totalInvalidHierarchies);
+		System.debug('---------------------------------');
+		System.debug('Total Hierarchies:'+finalStruct.totalHierarchies);
+		System.debug('Total Valid Hierarchies:'+finalStruct.totalValidHierarchies);
+		System.debug('Total Invalid Hierarchies:'+finalStruct.totalInvalidHierarchies);
 
 		ANG_ConversionToolController.OverviewTableRow tblRow = new ANG_ConversionToolController.OverviewTableRow();
 		tblRow.messageText = 'Total Hierarchies';
@@ -219,7 +219,7 @@ public with sharing class ANG_ConversionToolController {
 				System.debug('IATA Code:' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId);
 			}
 
-			listSize = finalStruct.inValidHierarchies.get(errorValue).size();  
+			listSize = finalStruct.inValidHierarchies.get(errorValue).size();
 			tblRow = new ANG_ConversionToolController.OverviewTableRow();
 			tblRow.messageText = ANG_ConversionHelper.errorMessages.get(errorValue);
 			tblRow.count = listSize;
@@ -247,11 +247,11 @@ public with sharing class ANG_ConversionToolController {
 	}
 
 	public void getBatchStatus(){
-		
-        if(migrationBacthId == null){
-            pollerBool = true;
-        }
-        
+
+		if(migrationBacthId == null){
+			pollerBool = true;
+		}
+
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :migrationBacthId];
 
 		if(batchJob.status == 'Ended' || batchJob.status == 'Completed')
@@ -282,17 +282,17 @@ public with sharing class ANG_ConversionToolController {
 
 
 	public String getDetailMessage(){
-		
+
 		String messageText = ANG_ConversionHelper.errorMessages.get(errorDetailCode);
 		return(messageText);
 	}
 
 	public String getLongDetailMessage(){
-		
+
 		String messageText = ANG_ConversionHelper.errorMessagesLongDescription.get(errorDetailCode);
 		return(messageText);
 	}
-	
+
 	public class wrapperHierarchyStructure {
 		public ANG_ConversionHelper.HierarchyStructure struct {get; set;}
 		public Boolean selected {get; set;}
@@ -303,8 +303,8 @@ public with sharing class ANG_ConversionToolController {
 		}
 	}
 
-     
-	
+
+
 	public List<ANG_ConversionToolController.wrapperHierarchyStructure> getDetailTable(){
 		if(wrStructure == null) {
 			wrStructure = new List<ANG_ConversionToolController.wrapperHierarchyStructure>();
@@ -316,7 +316,7 @@ public with sharing class ANG_ConversionToolController {
 	}
 
 
-	
-	
+
+
 
 }

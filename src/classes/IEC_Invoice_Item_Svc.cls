@@ -23,7 +23,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		Set<Id> setAccoutId = new Set<Id>();
 		Set<Id> setContactId = new Set<Id>();
 		Set<String> setProductNumber = new Set<String>();
-		List<Invoice_Item__c> lstInvoiceItemRequireOrder = new List<Invoice_Item__c>(); 
+		List<Invoice_Item__c> lstInvoiceItemRequireOrder = new List<Invoice_Item__c>();
 		Boolean bRequireOrder = false;
 		Map<Id, Map<String, Map<Id, clsItemInfo>>> mapInvZId_mapSubZId_mapZProdId_Data = new Map<Id, Map<String, Map<Id, clsItemInfo>>>();
 		clsItemInfo ItemInfo;
@@ -34,10 +34,10 @@ global without sharing class IEC_Invoice_Item_Svc {
 		Map<String, Zuora__Payment__c> mapInvoice_Pmt = new Map<String, Zuora__Payment__c>();
 		Map<String, String> mapZInvNum_Status = new Map<String, String>();
 		String strMsg;
-		
+
 		//*** retrieve full information on the invoice items
 		List<Invoice_Item__c> lstInvoiceItem = new IEC_Invoice_Item_Sel().getInvoiceItemsById(setInvoiceItemId);
-		
+
 		//*** retrieve associated subscription information
 		Map<String, String> mapSubZId_ZInvNum  = new Map<String, String>();
 		Map<String, String> mapSubName_ZInvNum  = new Map<String, String>();
@@ -55,7 +55,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
 		//INC306838
 		Map<String, Zuora__Subscription__c> mapSubZName_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubName_ZInvNum.keySet());
-		
+
 		//*** quit on error of missing subscription
 		if (mapSubZName_Subscription.isEmpty() || mapSubZName_Subscription.size() != mapSubName_ZInvNum.size())
 		{
@@ -64,7 +64,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 				{
 					//*** log error for invoice
 					mapZInvNum_Status.put(mapSubZId_ZInvNum.get(SubZId), mapZInvNum_Status.get(mapSubZId_ZInvNum.get(SubZId)) + ', Error - Missing subscription "' + SubZId + '"');
-					
+
 					//*** remove all invoice items
 					for (Integer i = lstInvoiceItem.size() - 1; i >= 0; i--)
 						if (lstInvoiceItem[i].Invoice__r.Name == mapSubZId_ZInvNum.get(SubZId))
@@ -73,67 +73,67 @@ global without sharing class IEC_Invoice_Item_Svc {
 			if (lstInvoiceItem.size() == 0)
 				return mapZInvNum_Status;
 		}
-		
+
 		//*** get invoices already processed to skip processing again
 		for (OrderItem oi : [select Zuora_InvoiceId__c from OrderItem where Zuora_InvoiceId__c in :mapObjectId_IsUsed.keySet()])
 			mapObjectId_IsUsed.put(oi.Zuora_InvoiceId__c, true);
-		
+
 		//*** determine what charge is setup fee charge and corresponding rate plan
 		List<String> lstExcludeCharge = new List<String>{Utility.getTextSetting('Zuora tax Charge id'), Utility.getTextSetting('Zuora shipping Charge id')};
 		for (Zuora__SubscriptionProductCharge__c spc : [select Zuora__Zuora_Id__c, Zuora__Model__c, Zuora__Quantity__c, Zuora__Price__c
-		                                                     , Product_Rate_Plan_Charge__r.Product_Number__c, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c
-		                                                     , Zuora__Subscription__r.Zuora__External_Id__c, Zuora__Product__c
-		                                                from Zuora__SubscriptionProductCharge__c
-		                                                where Zuora__Subscription__r.Zuora__External_Id__c in :mapSubZId_Subscription.keySet()
-		                                                  and Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludeCharge
-		                                                  and Product_Rate_Plan_Charge__r.zqu__Model__c not in ('Discount-Fixed Amount', 'Discount-Percentage')])
+																												 , Product_Rate_Plan_Charge__r.Product_Number__c, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c
+																												 , Zuora__Subscription__r.Zuora__External_Id__c, Zuora__Product__c
+																										from Zuora__SubscriptionProductCharge__c
+																										where Zuora__Subscription__r.Zuora__External_Id__c in :mapSubZId_Subscription.keySet()
+																											and Product_Rate_Plan_Charge__r.zqu__ZuoraId__c not in :lstExcludeCharge
+																											and Product_Rate_Plan_Charge__r.zqu__Model__c not in ('Discount-Fixed Amount', 'Discount-Percentage')])
 		{
 			if (spc.Zuora__Model__c == IECConstants.ChargeModel_Zuora_FlatFeePricing)
 			{
 				mapSubProdChargeZId_IsSetupFee.put(spc.Zuora__Zuora_Id__c, true);
 				//*** for case of no match on subscription product charge - subscription + ZProduct Id + quantity + price
 				mapSubProdChargeZId_IsSetupFee.put(spc.Zuora__Subscription__r.Zuora__External_Id__c + ',' + spc.Zuora__Product__c
-				                                 + ',' + spc.Zuora__Quantity__c + ',' + spc.Zuora__Price__c, true);
+																				 + ',' + spc.Zuora__Quantity__c + ',' + spc.Zuora__Price__c, true);
 			}
 			if (spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c != null)
 			{
 				mapSubProdChargeZId_ProdRatePlanZId.put(spc.Zuora__Zuora_Id__c, spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c);
 				//*** for case of no match on subscription product charge - subscription + material number
 				mapSubProdChargeZId_ProdRatePlanZId.put(spc.Zuora__Subscription__r.Zuora__External_Id__c + ',' + spc.Product_Rate_Plan_Charge__r.Product_Number__c
-				                                      , spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c);
+																							, spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c);
 			}
 		}
-		
+
 		//*** get eligible invoice items to create orders
 		for (Invoice_Item__c invItem : lstInvoiceItem)
 		{
 			//INC306838
 			//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
 			oSub = mapSubZName_Subscription.get(invItem.Subscription_Number__c);
-			
+
 			// We only require an order if the OrderID is not specified on the subscription i.e. subscription created from Zuora
 			// OR if the version number is greater than 1 which means there is an amendment on it
 			//		which could be either (Renewal [Auto/Manual], Upgrade)
 			// AND also make sure that the order is not created from a previous job based on invoice Id
 			bRequireOrder = (String.isBlank(oSub.OrderId__c) || oSub.Zuora__Version__c > 1) && !mapObjectId_IsUsed.get(invItem.Invoice__r.Zuora__External_Id__c);
-			
+
 			if (bRequireOrder)
 			{
 				//*** exclude shipping & tax since they are not attached to any product and charge of 0 dollar
 				if ('Shipping'.equalsIgnoreCase(invItem.New_Product__r.Name) || 'Tax'.equalsIgnoreCase(invItem.New_Product__r.Name) || invItem.Charge_Amount__c == 0)
 					continue;
-				
+
 				//*** create working item for invoice if necessary
 				if (!mapInvZId_mapSubZId_mapZProdId_Data.containsKey(invItem.Invoice__c))
 				{
 					mapInvZId_mapSubZId_mapZProdId_Data.put(invItem.Invoice__c, new Map<String, Map<Id, clsItemInfo>>());
 					mapInvoice_Pmt.put(invItem.Invoice__r.Name, null);
 				}
-				
+
 				//*** create working item for subscription under an invoice if necessary
 				if (!mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).containsKey(invItem.Subscription_Zuora_ID__c))
 					mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).put(invItem.Subscription_Zuora_ID__c, new Map<Id, clsItemInfo>());
-				
+
 				//*** create working item for product under a subscription if necessary
 				if (!mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).containsKey(invItem.New_Product__c))
 				{
@@ -148,7 +148,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 				}
 				else
 					ItemInfo = mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).get(invItem.New_Product__c);
-				
+
 				if (invItem.Charge_Amount__c > 0)
 				{
 					//*** not discount -> prepare to create order and order item
@@ -181,7 +181,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		//*** quit if no need to create order
 		if (lstInvoiceItemRequireOrder.size() == 0)
 			return mapZInvNum_Status;
-		
+
 		//*** get hierarchy product information based on rate plan
 		mapProdRatePlanZId_Product = Product_Sel.getProductsByProductRatePlan(new Set<String>(mapSubProdChargeZId_ProdRatePlanZId.values()));
 
@@ -196,34 +196,34 @@ global without sharing class IEC_Invoice_Item_Svc {
 			setProductId.add(p.Id);
 		Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
 		Map<Id, PricebookEntry> mapProdId_PBE = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, setProductId);
-		
+
 		//*** set price book entries to items
 		for (Invoice_Item__c invItem : lstInvoiceItemRequireOrder)
 		{
 			ItemInfo = mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).get(invItem.New_Product__c);
-			
+
 			//*** get price book entry from hierarchy product based on subscription product charge
 			String strSearchKey = invItem.Subscription_Product_Charge_Zuora_ID__c;
 			if (ItemInfo.idPriceBookEntry == null &&
-			    mapSubProdChargeZId_ProdRatePlanZId.containsKey(strSearchKey) &&
-			    mapProdRatePlanZId_Product.containsKey(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)) &&
-			    mapProdId_PBE.containsKey(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id))
+					mapSubProdChargeZId_ProdRatePlanZId.containsKey(strSearchKey) &&
+					mapProdRatePlanZId_Product.containsKey(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)) &&
+					mapProdId_PBE.containsKey(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id))
 				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id).Id;
-			
+
 			//*** get price book entry from hierarchy product based on subscription and material
 			strSearchKey = invItem.Subscription_Zuora_ID__c + ',' + invItem.New_Product__r.SAP_Material_Number__c;
 			if (ItemInfo.idPriceBookEntry == null &&
-			    mapSubProdChargeZId_ProdRatePlanZId.containsKey(strSearchKey) &&
-			    mapProdRatePlanZId_Product.containsKey(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)) &&
-			    mapProdId_PBE.containsKey(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id))
+					mapSubProdChargeZId_ProdRatePlanZId.containsKey(strSearchKey) &&
+					mapProdRatePlanZId_Product.containsKey(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)) &&
+					mapProdId_PBE.containsKey(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id))
 				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdRatePlanZId_Product.get(mapSubProdChargeZId_ProdRatePlanZId.get(strSearchKey)).Id).Id;
-			
+
 			//*** get price book entry from material number -> regular product
 			if (ItemInfo.idPriceBookEntry == null &&
-			    mapProdNum_Product.containsKey(invItem.New_Product__r.SAP_Material_Number__c) &&
-			    mapProdId_PBE.containsKey(mapProdNum_Product.get(invItem.New_Product__r.SAP_Material_Number__c).Id))
+					mapProdNum_Product.containsKey(invItem.New_Product__r.SAP_Material_Number__c) &&
+					mapProdId_PBE.containsKey(mapProdNum_Product.get(invItem.New_Product__r.SAP_Material_Number__c).Id))
 				ItemInfo.idPriceBookEntry = mapProdId_PBE.get(mapProdNum_Product.get(invItem.New_Product__r.SAP_Material_Number__c).Id).Id;
-			
+
 			if (ItemInfo.idPriceBookEntry != null)
 				ItemInfo.chargeShipping = mapProdNum_Product.get(invItem.New_Product__r.SAP_Material_Number__c).Charge_Shipping__c;
 		}
@@ -245,7 +245,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 						else
 						{
 							mapZInvNum_Status.put(ItemInfo.ZInvoiceNumber, mapZInvNum_Status.get(ItemInfo.ZInvoiceNumber) + ', Error - Invoice Item "' + ItemInfo.ZInvoiceItemNumber
-							                                             + '", ZProduct "' + ItemInfo.ZProductInfo + ')" does not have product entry or standard price book entry');
+																													 + '", ZProduct "' + ItemInfo.ZProductInfo + ')" does not have product entry or standard price book entry');
 							decDiscount = 1;   //*** indicate to raise error
 							break;
 						}
@@ -268,8 +268,8 @@ global without sharing class IEC_Invoice_Item_Svc {
 
 		//*** get related ZPayments
 		for (Zuora__Payment__c ZPmt : [select Zuora__InvoiceNumber__c , Zuora__ReferenceId__c, Zuora__External_Id__c, Zuora__EffectiveDate__c, Zuora__PaymentMethod__c
-		                               from Zuora__Payment__c
-		                               where Zuora__InvoiceNumber__c in :mapInvoice_Pmt.keySet()])
+																	 from Zuora__Payment__c
+																	 where Zuora__InvoiceNumber__c in :mapInvoice_Pmt.keySet()])
 			mapInvoice_Pmt.put(ZPmt.Zuora__InvoiceNumber__c, ZPmt);
 
 		//*** get accounts and contacts information
@@ -290,12 +290,12 @@ global without sharing class IEC_Invoice_Item_Svc {
 			{
 				setZInvNumProcessed.add(invItem.Invoice__r.Name);
 				mapObjectId_IsUsed.put(invItem.Invoice__c + invItem.Subscription_Zuora_ID__c, true);
-				
+
 				//*** get the payment method for order
 				//INC306838
 				//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
 				oSub = mapSubZName_Subscription.get(invItem.Subscription_Number__c);
-				
+
 				Zuora__CustomerAccount__c oBillingAccount = mapContactID_BillingAccount.get(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
 				String sPaymentMethod = null;
 				Zuora__Payment__c ZPmt = mapInvoice_Pmt.get(invItem.Invoice__r.Name);
@@ -313,7 +313,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 					if(sPaymentMethod == null && oBillingAccount != null && oBillingAccount.Zuora__DefaultPaymentMethod__c != null)
 						sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__DefaultPaymentMethod__c.replace(' ', ''));
 				}
-				
+
 				//*** create order
 				Account oAccount = mapAccount.get(invItem.Invoice__r.Zuora__Account__c);
 				Contact oContact = mapContact.get(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
@@ -326,25 +326,25 @@ global without sharing class IEC_Invoice_Item_Svc {
 				oOrder.IEC_Payment_Date__c = (oOrder.Is_Paid__c) ? ((ZPmt != null && ZPmt.Zuora__EffectiveDate__c != null) ? ZPmt.Zuora__EffectiveDate__c.date() : invItem.Invoice__r.Zuora__InvoiceDate__c) : null;
 				oOrder.Payment_Transaction_Number__c = (ZPmt != null) ? ZPmt.Zuora__ReferenceId__c : null;
 				oOrder.Zuora_Transaction_Id__c = (ZPmt != null) ? ZPmt.Zuora__External_Id__c : null;
-				
+
 				//*** create order items
 				for (String ZProdId : mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).keySet())
 				{
 					ItemInfo = mapInvZId_mapSubZId_mapZProdId_Data.get(invItem.Invoice__c).get(invItem.Subscription_Zuora_ID__c).get(ZProdId);
 					OrderItem oOrderItem = new OrderItem (
-					    PriceBookEntryId = ItemInfo.idPriceBookEntry
-					    , Quantity = (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decUnitQuantity : ItemInfo.decSetupQuantity)
-					    , UnitPrice = (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decUnitPrice : ItemInfo.decSetupPrice)
-					    , Discount__c = (ItemInfo.decDiscount != 0 ? Math.abs(ItemInfo.decDiscount) : null)
-					    , Setup_Fee__c = (ItemInfo.decSetupPrice != 0 ? (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decSetupPrice : null) : null)
-					    , Charge_Shipping__c = ItemInfo.chargeShipping
-					    , Zuora_InvoiceId__c = ItemInfo.ZInvoiceId
-					    , Zuora_InvoiceNumber__c = ItemInfo.ZInvoiceNumber
-					    , Zuora_SubscriptionId__c = ItemInfo.ZSubscriptionId
-					    , Zuora_Subscription_Number__c = ItemInfo.ZSubscriptionNumber
-					    , IEC_Contract_Start_Date__c = ItemInfo.dtStart
-					    , IEC_Contract_End_Date__c = ItemInfo.dtEnd
-					    //, IEC_Is_Paid__c = oOrder.Is_Paid__c
+							PriceBookEntryId = ItemInfo.idPriceBookEntry
+							, Quantity = (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decUnitQuantity : ItemInfo.decSetupQuantity)
+							, UnitPrice = (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decUnitPrice : ItemInfo.decSetupPrice)
+							, Discount__c = (ItemInfo.decDiscount != 0 ? Math.abs(ItemInfo.decDiscount) : null)
+							, Setup_Fee__c = (ItemInfo.decSetupPrice != 0 ? (ItemInfo.decUnitQuantity != 0 ? ItemInfo.decSetupPrice : null) : null)
+							, Charge_Shipping__c = ItemInfo.chargeShipping
+							, Zuora_InvoiceId__c = ItemInfo.ZInvoiceId
+							, Zuora_InvoiceNumber__c = ItemInfo.ZInvoiceNumber
+							, Zuora_SubscriptionId__c = ItemInfo.ZSubscriptionId
+							, Zuora_Subscription_Number__c = ItemInfo.ZSubscriptionNumber
+							, IEC_Contract_Start_Date__c = ItemInfo.dtStart
+							, IEC_Contract_End_Date__c = ItemInfo.dtEnd
+							//, IEC_Is_Paid__c = oOrder.Is_Paid__c
 					);
 					lstOrderItem.add(oOrderItem);
 					lstOrderIndex.add(lstOrder.size() - 1);   //*** to assign to order later
@@ -360,7 +360,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 			try
 			{
 				insert lstOrder;
-				
+
 				//*** set order items to orders
 				for (Integer i2 = 0; i2 < lstOrderItem.size(); i2++)
 				{
@@ -368,7 +368,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 					mapOrderId_ZInvNum.put(lstOrderItem[i2].OrderId, lstOrderItem[i2].Zuora_InvoiceNumber__c);
 				}
 				insert lstOrderItem;
-				
+
 				//*** change status
 				for (Integer i2 = lstOrderStatus.size() - 1; i2 >= 0; i2--)
 					if (lstOrderStatus[i2].Status == null || lstOrderStatus[i2].Status == 'New')
@@ -379,14 +379,14 @@ global without sharing class IEC_Invoice_Item_Svc {
 						setOrderIdOK.add(lstOrder[i2].Id);
 					}
 				update lstOrderStatus;
-				
+
 				//*** update processing status
 				Map<Id, Order> mapOrderId_Order = new Map<Id, Order>([select Id, OrderNumber from Order where Id in :mapOrderId_ZInvNum.keySet()]);
 				for (Id OrderId : mapOrderId_ZInvNum.keySet())
 					mapZInvNum_Status.put(mapOrderId_ZInvNum.get(OrderId), mapZInvNum_Status.get(mapOrderId_ZInvNum.get(OrderId))
-					                                                     + ', ' + (setOrderIdOK.contains(OrderId) ? '' : 'Error - ')
-					                                                     + 'Order ' + mapOrderId_Order.get(OrderId).OrderNumber + ' (' + String.valueOf(OrderId).left(15) + ')'
-					                                                     + (setOrderIdOK.contains(OrderId) ? ' sent' : ' created with missing payment method'));
+																															 + ', ' + (setOrderIdOK.contains(OrderId) ? '' : 'Error - ')
+																															 + 'Order ' + mapOrderId_Order.get(OrderId).OrderNumber + ' (' + String.valueOf(OrderId).left(15) + ')'
+																															 + (setOrderIdOK.contains(OrderId) ? ' sent' : ' created with missing payment method'));
 			}
 			catch (Exception ex)
 			{
@@ -395,12 +395,12 @@ global without sharing class IEC_Invoice_Item_Svc {
 				Database.rollback(sp);
 			}
 		}
-		
+
 		//*** log errors if applicable
 		for (String s : mapZInvNum_Status.keySet())
 			if (mapZInvNum_Status.get(s) != '')
 				mapZInvNum_Status.put(s, mapZInvNum_Status.get(s).substring(2));
 		return mapZInvNum_Status;
 	}
-	
+
 }

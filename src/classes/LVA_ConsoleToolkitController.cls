@@ -2,10 +2,10 @@
 Class Name: LVA_ConsoleToolkitController
 Related Classes/Pages: LiveAgentConsoleToolkit.
 
-Copyright © IATA
+Copyright ï¿½ IATA
 
 Purpose: This class aims to handle live agent console in terms of handling agent custom events like
-         onChatRequest, onAgentStatusChanged, stc...
+		 onChatRequest, onAgentStatusChanged, stc...
 
 VERSION  AUTHOR                                    DATE              DETAIL/CHANGE REFERENCE
 1.0 -    paulo.bastos@rightitservices.com          23/10/2017        Initial development
@@ -67,40 +67,40 @@ public class LVA_ConsoleToolkitController {
 
 
 	/*******************************************************************************************************
-    * @description Class constructor: initializes listSupervisorProfileIds according with list of profiles
-    *              names liested separated by coma in parameter LVA_CFG_SUPERV_PROFILES from LVA_Configs__mdt
-    *
-    *
-    * @return {Void} Updates this class static variable listSupervisorProfileIds
-    *
-    * @example
-    * this.LVA_ConsoleToolkitController();
-    *
-    * @history
-    * -----------------------------------------------------------------------------------------------
-    * Date         Created by                        Description
-    * 2017-10-23   paulo.bastos@rightitservices.com  Creation
-    ********************************************************************************************************/
+	* @description Class constructor: initializes listSupervisorProfileIds according with list of profiles
+	*              names liested separated by coma in parameter LVA_CFG_SUPERV_PROFILES from LVA_Configs__mdt
+	*
+	*
+	* @return {Void} Updates this class static variable listSupervisorProfileIds
+	*
+	* @example
+	* this.LVA_ConsoleToolkitController();
+	*
+	* @history
+	* -----------------------------------------------------------------------------------------------
+	* Date         Created by                        Description
+	* 2017-10-23   paulo.bastos@rightitservices.com  Creation
+	********************************************************************************************************/
 	public LVA_ConsoleToolkitController(){
 
 		initConfigs();
 	}
 
 	/*******************************************************************************************************
-    * @description initializes listSupervisorProfileIds according with list of profiles
-    *              names liested separated by coma in parameter LVA_CFG_SUPERV_PROFILES from LVA_Configs__mdt
-    *
-    *
-    * @return {Void} Updates this class static variable listSupervisorProfileIds
-    *
-    * @example
-    * this.LVA_ConsoleToolkitController();
-    *
-    * @history
-    * -----------------------------------------------------------------------------------------------
-    * Date         Created by                        Description
-    * 2017-10-23   paulo.bastos@rightitservices.com  Creation
-    ********************************************************************************************************/
+	* @description initializes listSupervisorProfileIds according with list of profiles
+	*              names liested separated by coma in parameter LVA_CFG_SUPERV_PROFILES from LVA_Configs__mdt
+	*
+	*
+	* @return {Void} Updates this class static variable listSupervisorProfileIds
+	*
+	* @example
+	* this.LVA_ConsoleToolkitController();
+	*
+	* @history
+	* -----------------------------------------------------------------------------------------------
+	* Date         Created by                        Description
+	* 2017-10-23   paulo.bastos@rightitservices.com  Creation
+	********************************************************************************************************/
 	public static void initConfigs(){
 		Set<String> listOfSuervisorProfilesNames =
 				new Set<String>(vfISSP_FAQ2Case.getLivAgConfig(LVA_CFG_SUPERV_PROFILES).split(','));

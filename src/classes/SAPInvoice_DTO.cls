@@ -1,4 +1,4 @@
-public class SAPInvoice_DTO 
+public class SAPInvoice_DTO
 {
 	public Date clearanceDate{get;set;}
 	public String invoiceNumber{get;set;}

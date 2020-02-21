@@ -475,8 +475,8 @@
             {!newForm.Postal_code__c}
         </p>
         <p>
-            <span class="bold">Attn:</span> {!newForm.Contact_First_name__c} {!newForm.Contact_Last_name__c}<br/>
-            <span class="bold">E-mail:</span> {!newForm.Contact_email__c}
+            <span class="bold">Attn:</span> {!AttentionUser.First_name__c} {!AttentionUser.Last_name__c}<br/>
+            <span class="bold">E-mail:</span> {!AttentionUser.Email__c}
         </p>
     </div>
     <div class="align-left margin-6 no-page-break">

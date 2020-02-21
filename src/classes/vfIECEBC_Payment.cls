@@ -1,29 +1,29 @@
-/*  
-  * Controller for the IECEBC misc payment pages , Renew page 
-  * Initial Author: Sonny Leman
-  * 
-  * Description:
-  *  - 
-  *  - 
-  *  - 
-  *   
-  * History: 
-  *  - 20160915-sl: initial dev version
-  */
+/*
+	* Controller for the IECEBC misc payment pages , Renew page
+	* Initial Author: Sonny Leman
+	*
+	* Description:
+	*  -
+	*  -
+	*  -
+	*
+	* History:
+	*  - 20160915-sl: initial dev version
+	*/
 
 
 public without sharing class vfIECEBC_Payment extends vfIECEBC_Controller
 {
-	// ======================================================================== 
+	// ========================================================================
 	// incoming Url parameter and will be passed to the IECEBC_Payment.component
 	public String paymentToken {get;set;}
-	
+
 	// used only for IECEBC_CampaignPayment
 	public Id ebcCampaignId {get;set;} // EBCEBC_Campaign__c.Id
 	public EBC_Campaign__c ebcCampaign {get;set;}
-	
-	
-	// ======================================================================== 
+
+
+	// ========================================================================
 	// these 2 getters might be deleted later, moved to component
 	public Contact paymentBillingContact{
 		get{
@@ -35,11 +35,11 @@ public without sharing class vfIECEBC_Payment extends vfIECEBC_Controller
 		}
 		set;
 	}
-	
+
 	public Zuora__CustomerAccount__c paymentBillingAccount {
 		get {
-           /*
-			if (paymentBillingAccount == null) 
+					 /*
+			if (paymentBillingAccount == null)
 			{
 				paymentBillingAccount = new Zuora__CustomerAccount__C (Name = billingAccount.Name
 															, Zuora__BillToAddress1__c = billingAccount.Zuora__BillToAddress1__c
@@ -60,27 +60,27 @@ public without sharing class vfIECEBC_Payment extends vfIECEBC_Controller
 	{
 		initialization();
 	}
-	
-	// ======================================================================== 
+
+	// ========================================================================
 	// constructor for other pages
 	public vfIECEBC_Payment()
 	{
 		initialization();
-		
+
 	} // vfIECEBC_Payment constructor
-	
-		
+
+
 	// ========================================================================
 	private void initialization()
 	{
 		//shoppingCartController = VfIECShoppingCart();
 		PageReference thisPage = ApexPages.currentPage();
 		paymentToken = thisPage.getParameters().get( EBC_PAYMENT_PARAM_PAYMENT_TOKEN);
-		
+
 		// this might only apply to call from CampaignConfirm
 		String campId = thisPage.getparameters().get('id');
 		//ebcCampaignId = campId;
-		
+
 	} // end of initialization
-	
+
 } // end of vfIECEBC_Payment class

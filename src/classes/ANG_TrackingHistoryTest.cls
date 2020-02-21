@@ -4,7 +4,7 @@ private class ANG_TrackingHistoryTest {
 	@testSetup static void setup(){
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-        insert ctry ;
+		insert ctry ;
 
 		Account acc = new Account();
 		acc.Name = 'HE Account';
@@ -24,7 +24,7 @@ private class ANG_TrackingHistoryTest {
 		Insert standardAccountHist;
 
 	}
-	
+
 	@isTest static void testAccountChange() {
 
 		Account acc = [SELECT Id FROM Account];
@@ -89,18 +89,18 @@ private class ANG_TrackingHistoryTest {
 																		new CaseHistory(CaseId=c2.Id, Field='RecordType')};
 		insert standardCaseHistList;
 
-		
+
 		PageReference pageRef = Page.CaseTrackingHistory;
-        pageRef.getParameters().put('id', c2.Id);
-        Test.setCurrentPage(pageRef);
+		pageRef.getParameters().put('id', c2.Id);
+		Test.setCurrentPage(pageRef);
 
-        ApexPages.StandardController sc = new ApexPages.standardController(c2);
+		ApexPages.StandardController sc = new ApexPages.standardController(c2);
 
-        ANG_GenericHistoryViewerController histController = new ANG_GenericHistoryViewerController(sc);
-        //histController.trackedObjId = c2.Id;
-        histController.trackerObjApiName = 'ANG_Case_Tracking_History__c';
-        histController.trackedObjApiName = 'Case';
-        histController.getHistoryRecords();
+		ANG_GenericHistoryViewerController histController = new ANG_GenericHistoryViewerController(sc);
+		//histController.trackedObjId = c2.Id;
+		histController.trackerObjApiName = 'ANG_Case_Tracking_History__c';
+		histController.trackedObjApiName = 'Case';
+		histController.getHistoryRecords();
 	}
 
 
@@ -112,22 +112,22 @@ private class ANG_TrackingHistoryTest {
 		acc.Abbreviated_address__c = 'Leiria';
 
 		update acc;
-        
-        PageReference pageRef = Page.ANG_AccountTrackingHistory;
-        pageRef.getParameters().put('id', acc.Id);
 
-        Test.setCurrentPage(pageRef);
+		PageReference pageRef = Page.ANG_AccountTrackingHistory;
+		pageRef.getParameters().put('id', acc.Id);
 
-        ApexPages.StandardController sc = new ApexPages.standardController(acc);
+		Test.setCurrentPage(pageRef);
 
-        ANG_GenericHistoryViewerController histController = new ANG_GenericHistoryViewerController(sc);
+		ApexPages.StandardController sc = new ApexPages.standardController(acc);
 
-        histController.trackerObjApiName = 'ANG_Account_Tracking_History__c';
+		ANG_GenericHistoryViewerController histController = new ANG_GenericHistoryViewerController(sc);
 
-        histController.trackedObjApiName = 'Account';
+		histController.trackerObjApiName = 'ANG_Account_Tracking_History__c';
 
-        histController.getHistoryRecords();
+		histController.trackedObjApiName = 'Account';
+
+		histController.getHistoryRecords();
 
 	}
-	
+
 }

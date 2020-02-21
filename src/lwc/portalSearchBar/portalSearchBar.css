@@ -28,12 +28,11 @@
 }
 
 .resultsContentDiv {
-    background-color:white;
     position:absolute;
-    width:calc(100% + 20px);
+    width:100%;
     z-index:4001;
     top:33px;
-    margin: 0px -10px 0px -10px;
+    margin: 0;
     padding: 40px 10px 0px 10px;
 }
 
@@ -52,12 +51,7 @@
 .slds-backdrop{
     z-index: 4000;
 }
-
-.rotateIcon {
-    transform: rotate(45deg);
-  }
   
-  .marginTop {
-    margin-top: 3px;
-  }
-  
+.marginTop {
+margin-top: 3px;
+}

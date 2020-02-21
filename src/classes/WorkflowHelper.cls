@@ -174,7 +174,7 @@ public without sharing class WorkflowHelper {
 	public static void restoreAccountType(Account newAccount){
 
 		if(newAccount.RecordTypeId == airLineRT &&
-		  !(newAccount.Sector__c == 'Airline' &&
+			!(newAccount.Sector__c == 'Airline' &&
 			newAccount.Membership_status__c <> 'IATA member' &&
 			newAccount.ACLI_Status__c == 'Active Company'
 			)
@@ -196,16 +196,13 @@ public without sharing class WorkflowHelper {
 				return;
 			}
 
-			if(newAccount.IATACode__c == null){
-				if(newAccount.Airline_Prefix__c == null){
-					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Country_ISO_Code__c;
-				}
-				else {
-					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Airline_Prefix__c + ' ' + newAccount.Country_ISO_Code__c;
-				}
-			}else{
-				newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.IATACode__c + ' ' + newAccount.Country_ISO_Code__c;
-			}
+			String accountSite = '';
+
+ 			accountSite = newAccount.Airline_designator__c == null ? '' : newAccount.Airline_designator__c;
+ 			accountSite += newAccount.IATACode__c == null ? (newAccount.Airline_Prefix__c == null ? '' : (accountSite == '' ? newAccount.Airline_Prefix__c : ' ' + newAccount.Airline_Prefix__c)) : (accountSite == '' ? newAccount.IATACode__c : ' ' + newAccount.IATACode__c);
+ 			accountSite += newAccount.Country_ISO_Code__c == null ? '' : (accountSite == '' ? newAccount.Country_ISO_Code__c : ' ' + newAccount.Country_ISO_Code__c);
+
+			newAccount.Site = accountSite;
 		}
 	}
 

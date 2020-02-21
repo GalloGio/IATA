@@ -1,9 +1,9 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: CreditCardPaymentErrorNotification_Ctrl.cls
+		 File: CreditCardPaymentErrorNotification_Ctrl.cls
 	Subject: Controller for Component used in Email Template to notify Customer that
-             Credit Card Payment was processed with error.
+						 Credit Card Payment was processed with error.
 	History: 2017-05-12, asantos, Initial Release.
 
 */
@@ -52,9 +52,9 @@ public class CreditCardPaymentErrorNotification_Ctrl {
 					reasonMessage = order.Payment_Gateway_Response__c;
 
 					orderItemList = new List<OrderItem>();
-					
+
 					orderItemMap = new OrderItem_Sel().getOrderItems(new Set<Id> { orderId });
-					
+
 					if (orderItemMap != null) {
 						if (orderItemMap.containsKey(orderId)) {
 							orderItemList.addAll(orderItemMap.get(orderId));

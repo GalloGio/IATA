@@ -12,8 +12,7 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.buttons.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.bootstrap.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jszip.min.js')}"></script>
-<apex:includeScript value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.0.1.5.min.js')}"/>
-<!-- <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script> -->
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/vfs_fonts.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.html5.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
@@ -105,6 +104,44 @@
     console.log(defaultCountry);
     console.log(defaultFrequency);
     $(document).ready(function() {
+		pdfMake.fonts = {
+           'Roboto' : {
+              normal: 'Roboto-Regular.ttf',
+              bold: 'Roboto-Medium.ttf',
+              italics: 'Roboto-Italic.ttf',
+              bolditalics: 'Roboto-Italic.ttf'
+           },
+        
+           'mPlus1' : {
+              normal: 'MPLUS1p-Regular.ttf',
+              bold: 'MPLUS1p-Regular.ttf',
+              italics: 'MPLUS1p-Regular.ttf',
+              bolditalics: 'MPLUS1p-Regular.ttf'
+           },
+            
+           'NotoSansKR' : {
+              normal: 'NotoSansKR-Regular.otf',
+              bold: 'NotoSansKR-Regular.otf',
+              italics: 'NotoSansKR-Regular.otf',
+              bolditalics: 'NotoSansKR-Regular.otf'
+           },
+            
+           'Tajawal' : {
+              normal: 'Tajawal-Regular.ttf',
+              bold: 'Tajawal-Regular.ttf',
+              italics: 'Tajawal-Regular.ttf',
+              bolditalics: 'Tajawal-Regular.ttf'
+           },
+            
+           'Mitr' : {
+              normal: 'Mitr-Regular.ttf',
+              bold: 'Mitr-Regular.ttf',
+              italics: 'Mitr-Regular.ttf',
+              bolditalics: 'Mitr-Regular.ttf'
+           }
+        
+        }
+	
         initFilters();
         refreshDetails(false);
         
@@ -302,17 +339,54 @@
             }
         },
         orientation: "portrait",
+		
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
                 image: getLogo(nvl($("#typeFilter").val()))
             });
-            doc['header']=(function(page, pages) {
+            
+            var language = "{!UserLanguage}";
+            var headerFontSize = 9.5;
+            var contentEvenSize = 10;
+            var contentOddSize = 10;
+            var font = 'mPlus1';
+            
+            switch(language) {
+              case 'ko':
+                font = 'NotoSansKR';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'ar':
+                font = 'Tajawal';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'th':
+                font = 'Mitr';
+                headerFontSize = 8.5;
+            	contentEvenSize = 9;
+                contentOddSize = 9;
+                break;
+                    
+            }
+            
+            doc.defaultStyle.font = font;
+            doc.styles.tableHeader.fontSize = headerFontSize;
+            doc.styles.tableBodyEven.fontSize = contentEvenSize;
+            doc.styles.tableBodyOdd.fontSize = contentOddSize;
+
+            doc['header']=(function(page, pages) {                  
                 if (page>1) return {
                     columns: [
                         {
-                            margin: [ 80, 5],
+                            margin: [ 35, 5],
                             alignment: 'left',
                             image: getLogo(nvl($("#typeFilter").val())),
                             width: 40
@@ -320,7 +394,7 @@
                         {
                             margin: [ 0, 10],
                             alignment: 'center',
-                            fontSize: 16,
+                            fontSize: 12,
                             text: getExportFileNamePDF()
                         }
                     ]
@@ -459,6 +533,7 @@
         } else if (operationType.includes('ICCS')) {
             $("#timezone-disclaimer").addClass("hidden");
             $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#subtypeFilter").val("");
             $("#cycleFilter").parent().parent().removeClass("hidden");
             $("#countryFilter").parent().parent().removeClass("hidden");
             $("#frequencyFilter").parent().parent().addClass("hidden");
@@ -473,6 +548,7 @@
         } else {
             $("#timezone-disclaimer").addClass("hidden");
             $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#subtypeFilter").val("");
             $("#cycleFilter").parent().parent().addClass("hidden");
             $("#countryFilter").parent().parent().addClass("hidden");
             $("#frequencyFilter").parent().parent().addClass("hidden");
@@ -588,8 +664,15 @@
             }, 
             {escape: false}
         );
+        callShowDisclaimer();
     }
-    
+
+    function callShowDisclaimer() {
+        var countryId = $("#countryFilter").val();
+        var typeFilter = $("#subtypeFilter").val();
+        showDisclaimer(countryId, typeFilter);
+    }
+
     function initTable(cols, data) {
         var table = $('.table-pagination').DataTable({
             "language": {
@@ -702,7 +785,7 @@
     }
 
     function getExportFileNameCSV() {
-        return getExportFileNamePDF() + '_' + new Date().toDateString().replace(/ /g , "-");
+        return getExportFileNamePDF().replace(/[+]/g , "_") + '_' + new Date().toDateString().replace(/ /g , "-").trim();
     }
     function getExportFileNamePDF() {
         var filename = "{!$Label.ISSP_OperationalCalendar}";
@@ -711,8 +794,16 @@
             filename += "All Countries";
         } else {
             filename += $("#countryFilter option:selected").text();
-        } 
-        filename += "-" + $("#typeFilter option:selected").text();
+        }
+        var operationType = $("#typeFilter option:selected");
+        if (operationType.val()=='BSP/CASS') {
+            filename += "-" + $("#subtypeFilter option:selected").text();
+        } else if (operationType.val()=='SIS') {
+            filename += "-" + $("#subtypeFilter option:selected").text();
+        } else {
+            filename += "-" + $("#typeFilter option:selected").text();
+        }
+        
         filename += " " + $("#billingPeriodFilter option:selected").text().replace("Billing Period", "");
         return filename;
     }
@@ -1157,7 +1248,8 @@
                 </div>
                 <div class="col-sm-1"></div>
             </apex:outputPanel>
-            <div id="timezone-disclaimer">
+            <script>if ($("#typeFilter").val().includes('SIS')) $("#timezone-disclaimer").removeClass("hidden");</script>
+            <div id="timezone-disclaimer" class="hidden">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <div class="alert alert-info">{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}</div>

@@ -1,114 +1,114 @@
 public with sharing class OneId_AddressDoctor {
 
-    private static final String login = Label.ICAddressDoctor_login;
-    private static final String password = Label.ICAddressDoctor_password;
-    private static final String url = Label.ICAddressDoctor_url;
-    private static final String ns = Label.ICAddressDoctor_ns;
-    private static final String adns = Label.ICAddressDoctor_adns;
+	private static final String login = Label.ICAddressDoctor_login;
+	private static final String password = Label.ICAddressDoctor_password;
+	private static final String url = Label.ICAddressDoctor_url;
+	private static final String ns = Label.ICAddressDoctor_ns;
+	private static final String adns = Label.ICAddressDoctor_adns;
 
 	private class AddressResponse {
 		private String processStatus;
 		private List<AddressInfo> addresses;
 	}
 
-    public class AddressInfo {
-        @AuraEnabled public String addressComplete {get;set;}
-        @AuraEnabled public String street {get;set;}
-        @AuraEnabled public String houseNumber {get;set;}
-        @AuraEnabled public String locality {get;set;}
-        @AuraEnabled public String postalCode {get;set;}
-        @AuraEnabled public String countryCode {get;set;}
-        @AuraEnabled public String province {get;set;}
-        @AuraEnabled public String deliveryAddressLines {get;set;}
-        @AuraEnabled public String countrySpecificLocalityLine {get;set;}
-    }
+	public class AddressInfo {
+		@AuraEnabled public String addressComplete {get;set;}
+		@AuraEnabled public String street {get;set;}
+		@AuraEnabled public String houseNumber {get;set;}
+		@AuraEnabled public String locality {get;set;}
+		@AuraEnabled public String postalCode {get;set;}
+		@AuraEnabled public String countryCode {get;set;}
+		@AuraEnabled public String province {get;set;}
+		@AuraEnabled public String deliveryAddressLines {get;set;}
+		@AuraEnabled public String countrySpecificLocalityLine {get;set;}
+	}
 
 
 
-    @AuraEnabled
-    public static List<AddressInfo> quickSearch(String userInput, String countryCode) {
+	@AuraEnabled
+	public static List<AddressInfo> quickSearch(String userInput, String countryCode) {
 
-        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + userInput + '/' + countryCode);
+		System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + userInput + '/' + countryCode);
 
-        Map<String, String> addressInformation = new Map<String, String>();
-        addressInformation.put('Country', countryCode);
-        addressInformation.put('Street', userInput);
+		Map<String, String> addressInformation = new Map<String, String>();
+		addressInformation.put('Country', countryCode);
+		addressInformation.put('Street', userInput);
 
-        AddressResponse r = getAddressInformation(addressInformation, 'FASTCOMPLETION');
+		AddressResponse r = getAddressInformation(addressInformation, 'FASTCOMPLETION');
 
-        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
-        return r.addresses;
-    }
+		System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
+		return r.addresses;
+	}
 
-    public static List<AddressInfo> validate(AddressInfo info) {
+	public static List<AddressInfo> validate(AddressInfo info) {
 
-        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + info);
+		System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + info);
 
-    	Map<String, String> addressInformation = new Map<String, String>();
-    	if(String.isNotEmpty(info.street)) addressInformation.put('Street', info.street);
-    	if(String.isNotEmpty(info.locality)) addressInformation.put('Locality', info.locality);
-    	if(String.isNotEmpty(info.postalCode)) addressInformation.put('PostalCode', info.postalCode);
-        if(String.isNotEmpty(info.province)) addressInformation.put('Province', info.province);
-        if(String.isNotEmpty(info.countryCode)) addressInformation.put('Country', info.countryCode);
+		Map<String, String> addressInformation = new Map<String, String>();
+		if(String.isNotEmpty(info.street)) addressInformation.put('Street', info.street);
+		if(String.isNotEmpty(info.locality)) addressInformation.put('Locality', info.locality);
+		if(String.isNotEmpty(info.postalCode)) addressInformation.put('PostalCode', info.postalCode);
+		if(String.isNotEmpty(info.province)) addressInformation.put('Province', info.province);
+		if(String.isNotEmpty(info.countryCode)) addressInformation.put('Country', info.countryCode);
 
-        AddressResponse r = getAddressInformation(addressInformation, 'INTERACTIVE');
+		AddressResponse r = getAddressInformation(addressInformation, 'INTERACTIVE');
 
-        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
+		System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
 
-        Set<String> validResponses = new Set<String>{'V4','V3','V2','C4'};
-        if(validResponses.contains(r.processStatus) || r.addresses.size() > 1) return r.addresses;
-        else return new List<AddressInfo>();
-    }
+		Set<String> validResponses = new Set<String>{'V4','V3','V2','C4'};
+		if(validResponses.contains(r.processStatus) || r.addresses.size() > 1) return r.addresses;
+		else return new List<AddressInfo>();
+	}
 
-    public static AddressResponse getAddressInformation(Map<String, String> addressInformation, String mode) {
+	public static AddressResponse getAddressInformation(Map<String, String> addressInformation, String mode) {
 
-        // Get address validation response from Informatica Address Doctor
-        String body = buildSoapRequest(addressInformation, mode);
-        String xmlResponse = callout('POST', body, new map<String, String>{'Content-Type'=>'text/xml'});
+		// Get address validation response from Informatica Address Doctor
+		String body = buildSoapRequest(addressInformation, mode);
+		String xmlResponse = callout('POST', body, new map<String, String>{'Content-Type'=>'text/xml'});
 
-        System.debug(loggingLevel.FINE, '____ [cls OneId_AddressDoctor - getAddressInformation] body - ' + body);
-        System.debug(loggingLevel.FINE, '____ [cls OneId_AddressDoctor - getAddressInformation] xmlResponse - ' + xmlResponse);
+		System.debug(loggingLevel.FINE, '____ [cls OneId_AddressDoctor - getAddressInformation] body - ' + body);
+		System.debug(loggingLevel.FINE, '____ [cls OneId_AddressDoctor - getAddressInformation] xmlResponse - ' + xmlResponse);
 
-        // Parse response to get suggestions from the service
-        Dom.Document doc = new Dom.Document();
-        doc.load(xmlResponse);
+		// Parse response to get suggestions from the service
+		Dom.Document doc = new Dom.Document();
+		doc.load(xmlResponse);
 
-        Dom.XmlNode result = doc.getRootElement().getChildElement('Body', ns).getChildElements()[0].getChildElements()[0].getChildElement('Results', adns).getChildElement('Result', adns);
-        Dom.XmlNode resultDataSet = result.getChildElement('ResultDataSet', adns);
-        
-        AddressResponse response = new AddressResponse();
-        response.processStatus = result.getChildElement('ProcessStatus', adns).getText();
+		Dom.XmlNode result = doc.getRootElement().getChildElement('Body', ns).getChildElements()[0].getChildElements()[0].getChildElement('Results', adns).getChildElement('Result', adns);
+		Dom.XmlNode resultDataSet = result.getChildElement('ResultDataSet', adns);
 
-        List<AddressInfo> adds = new List<AddressInfo>();
-        for (Dom.XmlNode resultData : resultDataSet.getChildren()) {
-            AddressInfo address =  new AddressInfo();
-            Dom.XmlNode addressNode = resultData.getChildElement('Address', adns);
+		AddressResponse response = new AddressResponse();
+		response.processStatus = result.getChildElement('ProcessStatus', adns).getText();
 
-            Dom.XmlNode ad = addressNode.getChildElement('HouseNumber', adns);
-            if(ad != null) address.houseNumber = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('Street', adns);
-            if(ad != null) address.street = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('Locality', adns);
-            if(ad != null) address.locality = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('PostalCode', adns);
-            if(ad != null) address.postalCode = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('Province', adns);
-            if(ad != null) address.province = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('DeliveryAddressLines', adns);
-            if(ad != null) address.deliveryAddressLines = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('CountrySpecificLocalityLine', adns);
-            if(ad != null) address.countrySpecificLocalityLine = ad.getChildElement('string', adns).getText();
-            ad = addressNode.getChildElement('AddressComplete', adns);
-            if(ad != null) address.addressComplete = ad.getText();
+		List<AddressInfo> adds = new List<AddressInfo>();
+		for (Dom.XmlNode resultData : resultDataSet.getChildren()) {
+			AddressInfo address =  new AddressInfo();
+			Dom.XmlNode addressNode = resultData.getChildElement('Address', adns);
 
-            if(String.isEmpty(address.deliveryAddressLines) && String.isEmpty(address.street)) continue;
+			Dom.XmlNode ad = addressNode.getChildElement('HouseNumber', adns);
+			if(ad != null) address.houseNumber = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('Street', adns);
+			if(ad != null) address.street = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('Locality', adns);
+			if(ad != null) address.locality = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('PostalCode', adns);
+			if(ad != null) address.postalCode = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('Province', adns);
+			if(ad != null) address.province = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('DeliveryAddressLines', adns);
+			if(ad != null) address.deliveryAddressLines = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('CountrySpecificLocalityLine', adns);
+			if(ad != null) address.countrySpecificLocalityLine = ad.getChildElement('string', adns).getText();
+			ad = addressNode.getChildElement('AddressComplete', adns);
+			if(ad != null) address.addressComplete = ad.getText();
 
-            adds.add(address);
-        }
-        response.addresses = adds;
+			if(String.isEmpty(address.deliveryAddressLines) && String.isEmpty(address.street)) continue;
 
-        return response;
-    }
+			adds.add(address);
+		}
+		response.addresses = adds;
+
+		return response;
+	}
 
 	private static String buildSoapRequest(Map<String, String> addressInformation, String mode) {
 
@@ -148,20 +148,20 @@ public with sharing class OneId_AddressDoctor {
 		return soapEnv;
 	}
 
-    private static string callout(String method, String body, map<String, String> requestHeaders) {
+	private static string callout(String method, String body, map<String, String> requestHeaders) {
 
-        Http h = new Http();
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(url);
-        req.setMethod(method);
-        if(requestHeaders != null) {
-            for (String key : requestHeaders.keySet()){
-                req.setHeader(key, requestHeaders.get(key));
-            }
-        }
-        req.setBody(body);
+		Http h = new Http();
+		HttpRequest req = new HttpRequest();
+		req.setEndpoint(url);
+		req.setMethod(method);
+		if(requestHeaders != null) {
+			for (String key : requestHeaders.keySet()){
+				req.setHeader(key, requestHeaders.get(key));
+			}
+		}
+		req.setBody(body);
 
-        HttpResponse res = h.send(req);
-        return res.getBody();
-    }
+		HttpResponse res = h.send(req);
+		return res.getBody();
+	}
 }

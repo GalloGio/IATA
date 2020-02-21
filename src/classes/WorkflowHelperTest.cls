@@ -1,918 +1,918 @@
 @isTest
 private class WorkflowHelperTest {
 
-    @testSetup static void setup(){
-        
-    }
+	@testSetup static void setup(){
 
-    @isTest static void  AccountUpdateIndustryTest(){
+	}
 
-        Test.startTest();
+	@isTest static void  AccountUpdateIndustryTest(){
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Test.startTest();
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        Map<String,Object> fieldsOfObject;
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		Map<String,Object> fieldsOfObject;
 
-        Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgencyNoType');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
+		Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-        
-        insert new List<Account>{acct,acct2};
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgencyNoType');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
-        Test.stopTest();
+		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        acct = [Select Id, Industry, Type from Account where name = 'NewGenAgency'];
+		insert new List<Account>{acct,acct2};
 
-        System.assertEquals('Travel Agent',acct.Industry);
+		Test.stopTest();
 
-        acct = [Select Id, Industry, Type from Account where name = 'NewGenAgencyNoType'];
+		acct = [Select Id, Industry, Type from Account where name = 'NewGenAgency'];
 
-        System.assertEquals(null,acct.Industry);
-    }
+		System.assertEquals('Travel Agent',acct.Industry);
 
-    @isTest static void  updateAirlineMembershipTestPositive(){
-        Test.startTest();
+		acct = [Select Id, Industry, Type from Account where name = 'NewGenAgencyNoType'];
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		System.assertEquals(null,acct.Industry);
+	}
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+	@isTest static void  updateAirlineMembershipTestPositive(){
+		Test.startTest();
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Map<String,Object> fieldsOfObject;
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('IATA_Member__c',true);
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		Map<String,Object> fieldsOfObject;
 
-        insert acct;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('IATA_Member__c',true);
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgencyAE');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('ParentId',acct.Id);
+		Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        Account acctAE = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		insert acct;
 
-        insert acctAE;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgencyAE');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('ParentId',acct.Id);
 
-        Test.stopTest();
-    
-        acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
+		Account acctAE = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        System.assertEquals(true,acctAE.IATA_Member__c);
+		insert acctAE;
 
-        acct.IATA_Member__c = false;
-        update acct;
+		Test.stopTest();
 
-        update acctAE;
+		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
-        acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
+		System.assertEquals(true,acctAE.IATA_Member__c);
 
-        System.assertEquals(false,acctAE.IATA_Member__c);
+		acct.IATA_Member__c = false;
+		update acct;
 
-    }
+		update acctAE;
 
-    @isTest static void  updateAirlineMembershipTest(){
-        Test.startTest();
+		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		System.assertEquals(false,acctAE.IATA_Member__c);
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+	}
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	@isTest static void  updateAirlineMembershipTest(){
+		Test.startTest();
 
-        Map<String,Object> fieldsOfObject;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('IATA_Member__c',true);
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        insert acct;
+		Map<String,Object> fieldsOfObject;
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgencyAE');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('ParentId',acct.Id);
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('IATA_Member__c',true);
 
-        Account acctAE = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        insert acctAE;
+		insert acct;
 
-        Test.stopTest();
-    
-        acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgencyAE');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('ParentId',acct.Id);
 
-        System.assertEquals(true,acctAE.IATA_Member__c);
+		Account acctAE = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        acct.IATA_Member__c = false;
-        update acct;
+		insert acctAE;
 
-        update acctAE;
+		Test.stopTest();
 
-        acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
+		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
-        System.assertEquals(false,acctAE.IATA_Member__c);
+		System.assertEquals(true,acctAE.IATA_Member__c);
 
-    }
+		acct.IATA_Member__c = false;
+		update acct;
 
-    @isTest static void  updateLastModifiedDateByIntegrationsTest(){
-        Test.startTest();
+		update acctAE;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		System.assertEquals(false,acctAE.IATA_Member__c);
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	}
 
-        Map<String,Object> fieldsOfObject;
+	@isTest static void  updateLastModifiedDateByIntegrationsTest(){
+		Test.startTest();
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        insert acct;
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency2');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
+		Map<String,Object> fieldsOfObject;
 
-        Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-        
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
 
-        // Create a unique UserName
-          String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+		Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-        User u = new User(
-            Alias = 'standt',
-            Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8',
-            FirstName = 'System',
-            LastName='Integrations',
-            LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US',
-            ProfileId = p.Id,
-            TimeZoneSidKey='America/Los_Angeles',
-            UserName=uniqueUserName,
-            License_Cost_Center__c ='IDS005CH01'
-            );
+		insert acct;
 
-        System.runAs(u) {
-            insert acct2;
-        }
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency2');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
+		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        Test.stopTest();
-    
-        acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
-        acct2 = [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency2'];
 
-        System.assertEquals(null,acct.Last_Modified_by_Source__c);
+		// Create a unique UserName
+		  String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
 
-        Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
-        Date date2 = date.newinstance(acct2.Last_Modified_by_Source__c.year(), acct2.Last_Modified_by_Source__c.month(), acct2.Last_Modified_by_Source__c.day());
+		// This code runs as the system user
+		Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+		User u = new User(
+			Alias = 'standt',
+			Email='standarduser@testorg.com',
+			EmailEncodingKey='UTF-8',
+			FirstName = 'System',
+			LastName='Integrations',
+			LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US',
+			ProfileId = p.Id,
+			TimeZoneSidKey='America/Los_Angeles',
+			UserName=uniqueUserName,
+			License_Cost_Center__c ='IDS005CH01'
+			);
 
-        System.assertEquals(date1,date2);
+		System.runAs(u) {
+			insert acct2;
+		}
 
-        System.runAs(u) {
-            update acct;
-        }
 
-        acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
-        
-        date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
-        date2 = date.newinstance(acct.Last_Modified_by_Source__c.year(), acct.Last_Modified_by_Source__c.month(), acct.Last_Modified_by_Source__c.day());
+		Test.stopTest();
 
-        System.assertEquals(date1,date2);
+		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
+		acct2 = [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency2'];
 
-    }
+		System.assertEquals(null,acct.Last_Modified_by_Source__c);
 
-    @isTest static void  updateWebstarAccountCategoryTest(){
+		Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
+		Date date2 = date.newinstance(acct2.Last_Modified_by_Source__c.year(), acct2.Last_Modified_by_Source__c.month(), acct2.Last_Modified_by_Source__c.day());
 
-        Test.startTest();
+		System.assertEquals(date1,date2);
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		System.runAs(u) {
+			update acct;
+		}
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
+		date2 = date.newinstance(acct.Last_Modified_by_Source__c.year(), acct.Last_Modified_by_Source__c.month(), acct.Last_Modified_by_Source__c.day());
 
-        Map<String,Object> fieldsOfObject;
+		System.assertEquals(date1,date2);
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Source_System__c','webstar');
+	}
 
-        Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
+	@isTest static void  updateWebstarAccountCategoryTest(){
 
-        insert acct;
+		Test.startTest();
 
-        Test.stopTest();
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        acct =  [Select Id, sector__c, Category__c from Account where name = 'NewGenAgency'];
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        System.assertEquals('Travel Agent',acct.sector__c);
-        System.assertEquals('IATAN Passenger Agent',acct.Category__c);
-        
-    }
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-    @isTest static void  updateAIMSAccountRecordtypeTest(){
+		Map<String,Object> fieldsOfObject;
 
-        Test.startTest();
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Source_System__c','webstar');
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Account acct = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		insert acct;
 
-        Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Test.stopTest();
 
-        Map<String,Object> fieldsOfObject;
+		acct =  [Select Id, sector__c, Category__c from Account where name = 'NewGenAgency'];
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Is_AIMS_Account__c',true);
-        fieldsOfObject.put('Source_System__c','webstar');
+		System.assertEquals('Travel Agent',acct.sector__c);
+		System.assertEquals('IATAN Passenger Agent',acct.Category__c);
 
-        Account acct = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
+	}
 
-        insert acct;
+	@isTest static void  updateAIMSAccountRecordtypeTest(){
 
-        Test.stopTest();
+		Test.startTest();
 
-        acct =  [Select Id, recordTypeId from Account where name = 'NewGenAgency'];
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        System.assertEquals(accountRT,acct.recordTypeId);
-        
-    }    
+		Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-    @isTest static void  resetAccountIdCardDiscountTest(){
+		Map<String,Object> fieldsOfObject;
 
-        Test.startTest();
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Is_AIMS_Account__c',true);
+		fieldsOfObject.put('Source_System__c','webstar');
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Account acct = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		insert acct;
 
-        Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Test.stopTest();
 
-        Map<String,Object> fieldsOfObject;
+		acct =  [Select Id, recordTypeId from Account where name = 'NewGenAgency'];
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('ID_Card_Key_Account_Discount__c',50);
-        fieldsOfObject.put('IDCard_Key_Account__c',true);
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account acct = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
+		System.assertEquals(accountRT,acct.recordTypeId);
 
-        insert acct;
+	}
 
-        Test.stopTest();
+	@isTest static void  resetAccountIdCardDiscountTest(){
 
-        acct.IDCard_Key_Account__c = false;
-        update acct;
+		Test.startTest();
 
-        acct =  [Select Id, ID_Card_Key_Account_Discount__c from Account where name = 'NewGenAgency'];
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        System.assertEquals(0,acct.ID_Card_Key_Account_Discount__c);
-        
-    }    
-    
-    @isTest static void resetAccountTypeTest(){
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        Test.startTest();
+		Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Map<String,Object> fieldsOfObject;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('ID_Card_Key_Account_Discount__c',50);
+		fieldsOfObject.put('IDCard_Key_Account__c',true);
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		Account acct = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
 
-        Map<String,Object> fieldsOfObject;
+		insert acct;
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Sector__c','Airline');
-        fieldsOfObject.put('ACLI_Status__c','Active Company');
-        fieldsOfObject.put('Account_Type__c','Not Applicable');
+		Test.stopTest();
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		acct.IDCard_Key_Account__c = false;
+		update acct;
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency2');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Sector__c','Airline');
-        fieldsOfObject.put('ACLI_Status__c','Active Company');
-        fieldsOfObject.put('Account_Type__c','Not Applicable');
-        fieldsOfObject.put('Membership_status__c','IATA member');
+		acct =  [Select Id, ID_Card_Key_Account_Discount__c from Account where name = 'NewGenAgency'];
 
-        Account acct2 = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		System.assertEquals(0,acct.ID_Card_Key_Account_Discount__c);
 
-        insert new List<Account>{acct,acct2};
+	}
 
-        Test.stopTest();
+	@isTest static void resetAccountTypeTest(){
 
-        acct =  [Select Id, Account_Type__c from Account where name = 'NewGenAgency'];
+		Test.startTest();
 
-        System.assertEquals(null,acct.Account_Type__c);
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        acct2 =  [Select Id, Account_Type__c from Account where name = 'NewGenAgency2'];
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        System.assertEquals('Not Applicable',acct2.Account_Type__c);
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-    }
+		Map<String,Object> fieldsOfObject;
 
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Sector__c','Airline');
+		fieldsOfObject.put('ACLI_Status__c','Active Company');
+		fieldsOfObject.put('Account_Type__c','Not Applicable');
 
-    @isTest static void restoreAccountTypeTest(){
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        Test.startTest();
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency2');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Sector__c','Airline');
+		fieldsOfObject.put('ACLI_Status__c','Active Company');
+		fieldsOfObject.put('Account_Type__c','Not Applicable');
+		fieldsOfObject.put('Membership_status__c','IATA member');
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Account acct2 = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		insert new List<Account>{acct,acct2};
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		Test.stopTest();
 
-        Map<String,Object> fieldsOfObject;
+		acct =  [Select Id, Account_Type__c from Account where name = 'NewGenAgency'];
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Sector__c','Airline');
-        fieldsOfObject.put('ACLI_Status__c','Active Company');
-        fieldsOfObject.put('Membership_status__c','IATA member');
+		System.assertEquals(null,acct.Account_Type__c);
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		acct2 =  [Select Id, Account_Type__c from Account where name = 'NewGenAgency2'];
 
-        insert new List<Account>{acct};
+		System.assertEquals('Not Applicable',acct2.Account_Type__c);
 
-        Test.stopTest();
+	}
 
-        acct =  [Select Id,Sector__c,Membership_status__c,ACLI_Status__c,Account_Type__c from Account where name = 'NewGenAgency'];
 
-        system.debug('dudu account is:'+acct);
+	@isTest static void restoreAccountTypeTest(){
 
-        System.assertEquals('Not Applicable',acct.Account_Type__c);
+		Test.startTest();
 
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-    }
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-    @isTest static void setAccountSiteTest(){
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        Test.startTest();
+		Map<String,Object> fieldsOfObject;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Sector__c','Airline');
+		fieldsOfObject.put('ACLI_Status__c','Active Company');
+		fieldsOfObject.put('Membership_status__c','IATA member');
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		insert new List<Account>{acct};
 
-        Map<String,Object> fieldsOfObject;
+		Test.stopTest();
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Created by customer');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Industry','Travel Agent');
-        fieldsOfObject.put('Site','Site');
-        fieldsOfObject.put('Sector__c','Travel Agent');
-        
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		acct =  [Select Id,Sector__c,Membership_status__c,ACLI_Status__c,Account_Type__c from Account where name = 'NewGenAgency'];
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency2');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency2');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Created by customer');
-        fieldsOfObject.put('Airline_designator__c','1234');
-        fieldsOfObject.put('IATACode__c','1234567');
-        fieldsOfObject.put('Industry','Travel Agent');
-        fieldsOfObject.put('Site','Site');
-        fieldsOfObject.put('Sector__c','Airline');
+		system.debug('dudu account is:'+acct);
 
-        Account acct2 = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
-            
-        insert new List<Account>{acct,acct2};
+		System.assertEquals('Not Applicable',acct.Account_Type__c);
 
-        Test.stopTest();
 
-        acct =   [Select Id,Industry,Site,Airline_designator__c,IATACode__c, IATA_ISO_Country__r.ISO_Code__c from Account where name = 'NewGenAgency'];
-        acct2 =  [Select Id,Industry,Site,Airline_designator__c,IATACode__c, IATA_ISO_Country__r.ISO_Code__c from Account where name = 'NewGenAgency2'];
+	}
 
-        System.assertEquals('Site',acct.site);
-        System.assertEquals('1234 1234567 PT',acct2.site);
+	@isTest static void setAccountSiteTest(){
 
-    }
+		Test.startTest();
 
-    @isTest static void setDataQualityHistoryTest(){
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Test.startTest();
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		Map<String,Object> fieldsOfObject;
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Created by customer');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Industry','Travel Agent');
+		fieldsOfObject.put('Site','Site');
+		fieldsOfObject.put('Sector__c','Travel Agent');
 
-        Map<String,Object> fieldsOfObject;
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Created by customer');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Industry','Travel Agent');
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency2');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency2');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Created by customer');
+		fieldsOfObject.put('Airline_designator__c','1234');
+		fieldsOfObject.put('IATACode__c','1234567');
+		fieldsOfObject.put('Industry','Travel Agent');
+		fieldsOfObject.put('Site','Site');
+		fieldsOfObject.put('Sector__c','Airline');
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		Account acct2 = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
 
-        insert new List<Account>{acct};
+		insert new List<Account>{acct,acct2};
 
-        Test.stopTest();
+		Test.stopTest();
 
-        acct =   [Select Id,Data_quality_history__c from Account where name = 'NewGenAgency'];
+		acct =   [Select Id,Industry,Site,Airline_designator__c,IATACode__c, IATA_ISO_Country__r.ISO_Code__c from Account where name = 'NewGenAgency'];
+		acct2 =  [Select Id,Industry,Site,Airline_designator__c,IATACode__c, IATA_ISO_Country__r.ISO_Code__c from Account where name = 'NewGenAgency2'];
 
-        System.assertEquals(null, acct.Data_quality_history__c);
+		System.assertEquals('Site',acct.site);
+		System.assertEquals('1234 1234567 PT',acct2.site);
 
-        acct.Comment_data_quality_feedback__c = 'XPTO';
-        update acct;
+	}
 
-        acct =   [Select Id,Data_quality_history__c from Account where name = 'NewGenAgency'];
+	@isTest static void setDataQualityHistoryTest(){
 
-        String formattedDate = System.now().format('YYYY-MM-dd');
+		Test.startTest();
 
-        System.assertEquals(formattedDate+': XPTO', acct.Data_quality_history__c);
-    }
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-    @isTest static void  updateAirlineTradeNameParentTest(){
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        Test.startTest();
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		Map<String,Object> fieldsOfObject;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Created by customer');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Industry','Travel Agent');
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        Map<String,Object> fieldsOfObject;
+		insert new List<Account>{acct};
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('IATA_Member__c',true);
-        fieldsOfObject.put('TradeName__c','tradenameParent');
+		Test.stopTest();
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		acct =   [Select Id,Data_quality_history__c from Account where name = 'NewGenAgency'];
 
-        insert acct;
+		System.assertEquals(null, acct.Data_quality_history__c);
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgencyAE');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','AE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Account is missing');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Type','IATA Passenger Sales Agent');
-        fieldsOfObject.put('ParentId',acct.Id);
-        fieldsOfObject.put('TradeName__c','AE Trade Name');
+		acct.Comment_data_quality_feedback__c = 'XPTO';
+		update acct;
 
-        Account acctAE = ANG_EntityCreator.createAccount(AMS_Utils.RECTYPE_AIRLINE_BR, ctry.Id, fieldsOfObject);
+		acct =   [Select Id,Data_quality_history__c from Account where name = 'NewGenAgency'];
 
-        insert acctAE;
+		String formattedDate = System.now().format('YYYY-MM-dd');
 
-        Test.stopTest();
-    
-        acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
+		System.assertEquals(formattedDate+': XPTO', acct.Data_quality_history__c);
+	}
 
-        System.assertEquals('tradenameParent',acctAE.TradeName__c);
-        System.assertEquals('tradenameParent',acctAE.name);
+	@isTest static void  updateAirlineTradeNameParentTest(){
 
-        acct.TradeName__c = 'NewTradeNameParent';        
-        acctAE.TradeName__c = 'XPTO';
+		Test.startTest();
 
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
-        
-        User u = [Select id from User where ProfileId = :p.Id LIMIT 1];
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        System.runAs(u) {
-            
-            update new List<Account>{acct,acctAE};
-        }
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
+		Map<String,Object> fieldsOfObject;
 
-        System.assertEquals('NewTradeNameParent',acctAE.name);
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgencyHE');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('IATA_Member__c',true);
+		fieldsOfObject.put('TradeName__c','tradenameParent');
 
-    }
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
+		insert acct;
 
-    @isTest static void setAccountDDSUpdateDateTest(){
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgencyAE');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','AE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Type','IATA Passenger Sales Agent');
+		fieldsOfObject.put('ParentId',acct.Id);
+		fieldsOfObject.put('TradeName__c','AE Trade Name');
 
-        Test.startTest();
+		Account acctAE = ANG_EntityCreator.createAccount(AMS_Utils.RECTYPE_AIRLINE_BR, ctry.Id, fieldsOfObject);
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		insert acctAE;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		Test.stopTest();
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
 
-        Map<String,Object> fieldsOfObject;
+		System.assertEquals('tradenameParent',acctAE.TradeName__c);
+		System.assertEquals('tradenameParent',acctAE.name);
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Created by customer');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Industry','Travel Agent');
-        fieldsOfObject.put('DDS_Status__c','No Reply');
+		acct.TradeName__c = 'NewTradeNameParent';
+		acctAE.TradeName__c = 'XPTO';
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        insert new List<Account>{acct};
+		Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
 
-        Test.stopTest();
+		User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
 
-        acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
+		System.runAs(u) {
 
-        System.assertEquals(null,acct.DDS_Last_Update_Date__c);
+			update new List<Account>{acct,acctAE};
+		}
 
-        acct.DDS_Status__c = 'multinational';
-        update acct;
+		acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
 
-        acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
-        
-        Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
-        Date date2 = date.newinstance(acct.DDS_Last_Update_Date__c.year(), acct.DDS_Last_Update_Date__c.month(), acct.DDS_Last_Update_Date__c.day());
+		System.assertEquals('NewTradeNameParent',acctAE.name);
 
-        System.assertEquals(date1,date2);
+	}
 
-    }
 
-    @isTest static void setACLIAccountNameTest(){
+	@isTest static void setAccountDDSUpdateDateTest(){
 
-        // Create a unique UserName
-        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-        
-        // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-        
-        User u = new User(
-            Alias = 'standt',
-            Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8',
-            FirstName = 'System',
-            LastName='Integrations',
-            LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US',
-            ProfileId = p.Id,
-            TimeZoneSidKey='America/Los_Angeles',
-            UserName=uniqueUserName,
-            License_Cost_Center__c ='IDS005CH01'
-            );
-        
-        insert u;
+		Test.startTest();
 
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
-        insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
-        
-        Test.startTest();
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        System.runAs(u) {
-            
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+		Map<String,Object> fieldsOfObject;
 
-        Map<String,Object> fieldsOfObject;
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Created by customer');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Industry','Travel Agent');
+		fieldsOfObject.put('DDS_Status__c','No Reply');
 
-        fieldsOfObject = new Map<String,Object>();
-        fieldsOfObject.put('Name','NewGenAgency');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
-        fieldsOfObject.put('Location_Class__c','P');
-        fieldsOfObject.put('Location_Type__c','HE');
-        fieldsOfObject.put('Remittance_frequency__c','M');
-        fieldsOfObject.put('Reason_for_creation__c','Created by customer');
-        fieldsOfObject.put('Company_Type__c','A');
-        fieldsOfObject.put('Name_on_AOC__c','NEWNAME');
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
+		insert new List<Account>{acct};
 
-        insert new List<Account>{acct};
+		Test.stopTest();
 
-        Test.stopTest();
+		acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
 
-        acct =   [Select Id,Name from Account];
+		System.assertEquals(null,acct.DDS_Last_Update_Date__c);
 
-        System.assertEquals('NEWNAME', acct.Name);
+		acct.DDS_Status__c = 'multinational';
+		update acct;
 
-        acct.Name_on_AOC__c = null;
-        acct.Legal_name__c  = 'OLDNAME';
+		acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
 
+		Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
+		Date date2 = date.newinstance(acct.DDS_Last_Update_Date__c.year(), acct.DDS_Last_Update_Date__c.month(), acct.DDS_Last_Update_Date__c.day());
 
-        update acct;
-            
-        acct =   [Select Id,Name from Account];
+		System.assertEquals(date1,date2);
 
-        System.assertEquals('OLDNAME', acct.Name);
-        
-        }
+	}
 
+	@isTest static void setACLIAccountNameTest(){
 
-    }
+		// Create a unique UserName
+		String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
 
-    @isTest static void updateRecordSharingCriteriaTest() {
+		// This code runs as the system user
+		Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+		User u = new User(
+			Alias = 'standt',
+			Email='standarduser@testorg.com',
+			EmailEncodingKey='UTF-8',
+			FirstName = 'System',
+			LastName='Integrations',
+			LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US',
+			ProfileId = p.Id,
+			TimeZoneSidKey='America/Los_Angeles',
+			UserName=uniqueUserName,
+			License_Cost_Center__c ='IDS005CH01'
+			);
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+		insert u;
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
+		insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
 
-        Account account = new Account();
-        account.Name = 'Update Record Sharing Criteria Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		Test.startTest();
 
-        List<Contact> conListToInsert = new List<Contact>();
+		System.runAs(u) {
 
-        Contact c1 = new Contact();
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.Record_Sharing_Criteria__c = 'IFG Active Users';
-        conListToInsert.add(c1);
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Contact c2 = new Contact();
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.Record_Sharing_Criteria__c = 'None';
-        conListToInsert.add(c2);
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'PORTUGAL', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
-        List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
+		Map<String,Object> fieldsOfObject;
 
-        System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
-        System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
-    }
+		fieldsOfObject = new Map<String,Object>();
+		fieldsOfObject.put('Name','NewGenAgency');
+		fieldsOfObject.put('Short_Name__c','NewGenAgency');
+		fieldsOfObject.put('Location_Class__c','P');
+		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Remittance_frequency__c','M');
+		fieldsOfObject.put('Reason_for_creation__c','Created by customer');
+		fieldsOfObject.put('Company_Type__c','A');
+		fieldsOfObject.put('Name_on_AOC__c','NEWNAME');
 
-    @isTest static void keyContactOptOutTest() {
+		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+		insert new List<Account>{acct};
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+		Test.stopTest();
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		acct =   [Select Id,Name from Account];
 
-        Account account = new Account();
-        account.Name = 'Key Contact Opt Out Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		System.assertEquals('NEWNAME', acct.Name);
 
-        List<Contact> conListToInsert = new List<Contact>();
+		acct.Name_on_AOC__c = null;
+		acct.Legal_name__c  = 'OLDNAME';
 
-        Contact c1 = new Contact();
-        c1.FirstName = 'My';
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.CEO_CFO__c = 'CEO';
-        c1.HasOptedOutOfEmail = false;
-        c1.Marketing_Communications_Opt_in__c = true;
-        c1.Title = 'Manager';
-        c1.Membership_Function__c = 'Finance';
-        conListToInsert.add(c1);
 
-        Contact c2 = new Contact();
-        c2.FirstName = 'My';
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.HasOptedOutOfEmail = false;
-        c2.Marketing_Communications_Opt_in__c = true;
-        conListToInsert.add(c2);
+		update acct;
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		acct =   [Select Id,Name from Account];
 
-        List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
+		System.assertEquals('OLDNAME', acct.Name);
 
-        System.assert(conList.get(0).HasOptedOutOfEmail);
-        System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
-        System.assert(!conList.get(1).HasOptedOutOfEmail);
-        System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
-    }
+		}
 
-    @isTest static void updateIDCardContactCheckboxTest() {
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+	}
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+	@isTest static void updateRecordSharingCriteriaTest() {
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
 
-        Account account = new Account();
-        account.Name = 'Update ID Card Contact Checkbox Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
 
-        List<Contact> conListToInsert = new List<Contact>();
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-        Contact c1 = new Contact();
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.ID_Card_Holder__c = false;
-        conListToInsert.add(c1);
+		Account account = new Account();
+		account.Name = 'Update Record Sharing Criteria Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
 
-        Contact c2 = new Contact();
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.VER_Number__c = 1234567890;
-        c2.ID_Card_Holder__c = false;
-        conListToInsert.add(c2);
+		List<Contact> conListToInsert = new List<Contact>();
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		Contact c1 = new Contact();
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.Record_Sharing_Criteria__c = 'IFG Active Users';
+		conListToInsert.add(c1);
 
-        List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
+		Contact c2 = new Contact();
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.Record_Sharing_Criteria__c = 'None';
+		conListToInsert.add(c2);
 
-        System.assert(!conList.get(0).ID_Card_Holder__c);
-        System.assert(conList.get(1).ID_Card_Holder__c);
-    }
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
+
+		List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
+
+		System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
+		System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
+	}
+
+	@isTest static void keyContactOptOutTest() {
+
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+		Account account = new Account();
+		account.Name = 'Key Contact Opt Out Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Contact> conListToInsert = new List<Contact>();
+
+		Contact c1 = new Contact();
+		c1.FirstName = 'My';
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.CEO_CFO__c = 'CEO';
+		c1.HasOptedOutOfEmail = false;
+		c1.Marketing_Communications_Opt_in__c = true;
+		c1.Title = 'Manager';
+		c1.Membership_Function__c = 'Finance';
+		conListToInsert.add(c1);
+
+		Contact c2 = new Contact();
+		c2.FirstName = 'My';
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.HasOptedOutOfEmail = false;
+		c2.Marketing_Communications_Opt_in__c = true;
+		conListToInsert.add(c2);
+
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
+
+		List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
+
+		System.assert(conList.get(0).HasOptedOutOfEmail);
+		System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
+		System.assert(!conList.get(1).HasOptedOutOfEmail);
+		System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
+	}
+
+	@isTest static void updateIDCardContactCheckboxTest() {
+
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update ID Card Contact Checkbox Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Contact> conListToInsert = new List<Contact>();
+
+		Contact c1 = new Contact();
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.ID_Card_Holder__c = false;
+		conListToInsert.add(c1);
+
+		Contact c2 = new Contact();
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.VER_Number__c = 1234567890;
+		c2.ID_Card_Holder__c = false;
+		conListToInsert.add(c2);
+
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
+
+		List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
+
+		System.assert(!conList.get(0).ID_Card_Holder__c);
+		System.assert(conList.get(1).ID_Card_Holder__c);
+	}
 }

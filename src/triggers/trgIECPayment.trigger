@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: trgIECPayment.cls
+		 File: trgIECPayment.cls
 	Subject: Trigger on Zuora Payments.
 	History: 2017-05-11, asantos, Initial Release.
 

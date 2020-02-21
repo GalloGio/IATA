@@ -7,14 +7,14 @@
  * Created By:  Niv.Goldenberg 19-11-2014
  * Modified By: Niv.Goldenberg 20-11-2014
  */
-trigger ISSP_Notification_Account_AfterUpdate on Account (after update) 
+trigger ISSP_Notification_Account_AfterUpdate on Account (after update)
 {
 
-    if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'ISSP_Notification_Account_AfterUpdate')) { return; }
-    
-    if(!ISSP_AccountTriggerHandler.preventTrigger)
-    {
-    	ISSP_AccountTriggerHandler.preventTrigger = true;
-        ISSP_AccountTriggerHandler.onAfterUpdate(trigger.oldMap, trigger.newMap);
-    }
+	if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'ISSP_Notification_Account_AfterUpdate')) { return; }
+
+	if(!ISSP_AccountTriggerHandler.preventTrigger)
+	{
+		ISSP_AccountTriggerHandler.preventTrigger = true;
+		ISSP_AccountTriggerHandler.onAfterUpdate(trigger.oldMap, trigger.newMap);
+	}
 }

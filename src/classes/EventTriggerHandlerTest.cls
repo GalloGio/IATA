@@ -13,10 +13,10 @@ private class EventTriggerHandlerTest {
 		//ACAMBAS - WMO-568: Begin
 		//insert contacts to subscrive to country profile
 		//Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
-		
+
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
-		
+
 		List<Contact> contacts = new List<Contact>();
 		contacts.add(ISSP_ObjectFactory.createNewContact());
 		contacts[0].AccountId = acc.Id;
@@ -24,7 +24,7 @@ private class EventTriggerHandlerTest {
 
 		users.add(ISSP_ObjectFactory.createPortalUser(contacts[0]));
 		contacts[0].OwnerId = users[0].Id;
-        update contacts;
+		update contacts;
 
 		Network community = [SELECT id, name, status FROM Network WHERE Name = 'IATA Portal' LIMIT 1];
 		//ACAMBAS - WMO-568: End
@@ -32,7 +32,7 @@ private class EventTriggerHandlerTest {
 		//insert country profile
 		Country_Profile__c cp = new Country_Profile__c(Name='Test Country');
 		insert cp;
-		
+
 		List<EntitySubscription> esList = new List<EntitySubscription>();
 		esList.add(new EntitySubscription(ParentId = cp.Id, SubscriberId = users[0].Id, NetworkId = community.Id));
 		insert esList ;

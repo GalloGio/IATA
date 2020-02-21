@@ -1,6 +1,6 @@
 @isTest
 private class IEC_HomeControllerTest {
-	
+
 	@isTest (SeeAllData = true)
 	static void test_home() {
 
