@@ -51,9 +51,10 @@ public without sharing class CaseVisibilityEngine {
 	 */
 	public static Boolean needsRecalulation(Case oldRecord, Case record, Set<Id> recycleBinIds) {
 		return oldRecord == null || !recycleBinIds.contains(record.OwnerId)
-			&& ((record.RecordTypeId != oldRecord.RecordTypeId) || affectedCriteriaFields(record, oldRecord));
+			&& ((record.RecordTypeId != oldRecord.RecordTypeId)
+				|| (ruleSet.isValidRecordType(record.RecordTypeId) && affectedCriteriaFields(record, oldRecord)));
 	}
-	
+
 	/**
 	 *  Method that compares each rule with the record values, to be set to true all criterias in a rule must be true
 	 *  (it applies AND logic eg.: field1 operator value1 AND field2 operator value2 AND etc..)
@@ -65,13 +66,13 @@ public without sharing class CaseVisibilityEngine {
 			return;
 		}
 		
+		record.Visible_on_ISS_Portal__c = false;
+
 		VisibilityRule rule = ruleSet.getRulesByRecordType(record.RecordTypeId);
 		if (rule == null) {
 			return;
 		}
 		
-		record.Visible_on_ISS_Portal__c = false;
-
 		for (VisibilityRuleCriteria criteria : rule.criteriaList) {
 			Boolean result = true;
 			
@@ -234,6 +235,10 @@ public without sharing class CaseVisibilityEngine {
 		 */
 		public VisibilityRule getRulesByRecordType(String recordTypeId) {
 			return this.rules.get(recordTypeId);
+		}
+
+		public Boolean isValidRecordType(String recordTypeId) {
+			return this.rules.containsKey(recordTypeId);
 		}
 		
 	}
