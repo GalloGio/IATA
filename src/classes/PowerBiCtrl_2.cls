@@ -1,5 +1,5 @@
 
-public without sharing class PowerBiCtrl {
+public without sharing class PowerBiCtrl_2 {
 
 
 	public class OAuthResult {
@@ -287,7 +287,7 @@ public without sharing class PowerBiCtrl {
 		identityData.datasets = new List<String>{datasetId};
 
 		RequestData requestData = new RequestData();
-		//requestData.identities = new List<IdentityData> {identityData};
+		requestData.identities = new List<IdentityData> {identityData};
 		requestData.accessLevel = 'View';
 
 		String sBody = JSON.serialize(requestData);
