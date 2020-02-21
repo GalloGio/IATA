@@ -135,7 +135,8 @@ private class ISSP_LoginTest {
 		insert ISO_Country;
 
 		ISSP_Login ctrl = new ISSP_Login();
-
+		ctrl.findLocationCaller();
+		
 		ISO_Country.Sanctioned_Country__c = true;
 		update ISO_Country;
 
