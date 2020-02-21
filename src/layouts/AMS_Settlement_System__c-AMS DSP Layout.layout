@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_RHC_Amount_Equals_FS__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -134,6 +138,7 @@
         <fields>Operation_Currency__c</fields>
         <fields>Period_Code__c</fields>
         <fields>Remittance_Day__c</fields>
+        <fields>Settlement_Day__c</fields>
         <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
         <sortField>Remittance_Day__c</sortField>
         <sortOrder>Asc</sortOrder>
