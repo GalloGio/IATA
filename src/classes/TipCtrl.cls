@@ -1,7 +1,7 @@
 
 public without sharing class TipCtrl {
 
-	/*public static String POWERBI_ACCESS_TOKEN = 'PowerBIaccessToken';
+	public static String POWERBI_ACCESS_TOKEN = 'PowerBIaccessToken';
 	public static String POWERBI_EXPIERS_ON = 'PowerBIexpiersOn';
 	public static String POWERBI_REFRESH_TOKEN = 'PowerBIrefreshToken';
 
@@ -209,7 +209,7 @@ public without sharing class TipCtrl {
 			sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);
 
 		}
-	}*/
+	}
 
 
 

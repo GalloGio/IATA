@@ -1,7 +1,7 @@
 @IsTest
 public class TipCtrlTest {
 
-	/*@TestSetup
+	@TestSetup
 	private static void setup() {
 
 		PowerBI_Cred__c cred = new PowerBI_Cred__c();
@@ -270,7 +270,7 @@ public class TipCtrlTest {
 
 	}*/
 
-	/*@IsTest
+	@IsTest
 	private static void getAccessTokenTest() {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
@@ -474,7 +474,7 @@ public class TipCtrlTest {
 
 	}*/
 
-	/*@IsTest
+	@IsTest
 	private static void getReportsDetailsTest() {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
@@ -658,6 +658,6 @@ public class TipCtrlTest {
 
 		System.assertEquals(true, testException.getMessage().contains('No HTTP resource was found that matches the request URI.'));
 
-	}*/
+	}
 
 }

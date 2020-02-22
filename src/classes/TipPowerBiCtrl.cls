@@ -22,7 +22,7 @@ global with sharing class TipPowerBiCtrl {
 	global static String  refreshEmbedToken(String reportId, String groupId, String datasetId) {
 		String toReturn = '';
 
-		/*PowerBI_Config__c conf = PowerBiCtrl_2.getPowerBICredentials('TipReports');
+		PowerBI_Config__c conf = PowerBiCtrl_2.getPowerBICredentials('TipReports');
 
 		PowerBiCtrl_2.OAuthResult result = TipCtrl.getAccessToken(conf);
 		String accessToken = result.access_token;
@@ -33,7 +33,7 @@ global with sharing class TipPowerBiCtrl {
 			toReturn = resultEmbed.token+'expiration='+resultEmbed.expiration;
 
 			return toReturn;
-		}*/
+		}
 
 		return toReturn;
 	}
