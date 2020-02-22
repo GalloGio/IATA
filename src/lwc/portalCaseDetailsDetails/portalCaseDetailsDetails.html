@@ -39,7 +39,7 @@
       </div>
       <!--Comment Accordion other component moved here on MTSL-811-->
       <div class="topLightGrayBorder">
-        <c-portal-case-details-messaging expired={trackedIsExpired}></c-portal-case-details-messaging>
+        <c-portal-case-details-messaging expired={trackedIsExpired} is-collection={isICollectionCase}></c-portal-case-details-messaging>
       </div>
     </template>
   </div>
@@ -110,6 +110,11 @@
                   <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
                 </span>
               </div>
+            </div>
+            <div if:true={hasPaidInvoice}
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+              <span class="grey">{labels.CSP_Case_hasInvoicePaid}</span><br />
+              <span class="text-bold">{caseDetails.Has_the_agent_paid_invoice__c}</span>
             </div>
 
             <!-- ROW 5 -->
