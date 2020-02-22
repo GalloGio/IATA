@@ -1,5 +1,5 @@
 @IsTest
-public class PowerBiCtrl_2Test {
+public class PowerBiCtrlTest {
 
 	@TestSetup
 	private static void setup() {
@@ -170,7 +170,7 @@ public class PowerBiCtrl_2Test {
 
 		Test.startTest();
 		System.runAs(testUser) {
-			config = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboard');
+			config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
 		}
 		Test.stopTest();
 
@@ -185,15 +185,15 @@ public class PowerBiCtrl_2Test {
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
 
-		PowerBiCtrl_2.OAuthResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl_2.getNewAccessToken(config);
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+			result = PowerBiCtrl.getNewAccessToken(config);
 
 		}
 
@@ -223,7 +223,7 @@ public class PowerBiCtrl_2Test {
 		Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-		PowerBiCtrl_2.OAuthResult result = PowerBiCtrl_2.refreshToken(null, conf);
+		PowerBiCtrl.OAuthResult result = PowerBiCtrl.refreshToken(null, conf);
 
 		Test.stopTest();
 
@@ -239,15 +239,15 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBiCtrl_2.DatasetDetailResult result = null;
+		PowerBiCtrl.DatasetDetailResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl_2.getDataset('access_token', 'datasetId', config);
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+			result = PowerBiCtrl.getDataset('access_token', 'datasetId', config);
 		}
 
 		Test.stopTest();
@@ -265,15 +265,15 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBiCtrl_2.ReportDetailResult result = null;
+		PowerBiCtrl.ReportDetailResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl_2.getReportsDetails('access_token', 'reportId',config);
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+			result = PowerBiCtrl.getReportsDetails('access_token', 'reportId',config);
 		}
 
 		Test.stopTest();
@@ -291,15 +291,15 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl_2.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+			result = PowerBiCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -316,12 +316,12 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBiCtrl_2.ReportDetails result = null;
+		PowerBiCtrl.ReportDetails result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
-			result = PowerBiCtrl_2.getReportConfigDetails('Treasury_Dashboard');
+			result = PowerBiCtrl.getReportConfigDetails('Treasury_Dashboard');
 		}
 
 		Test.stopTest();
@@ -336,16 +336,16 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBI_Config__c conf = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboardReport');
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl_2.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			result= PowerBiCtrl_2.getServicePrincipalAccessToken(conf);
+			result= PowerBiCtrl.getServicePrincipalAccessToken(conf);
 
 		}
 
@@ -362,9 +362,9 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBI_Config__c conf = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboardReport');
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl_2.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -372,7 +372,7 @@ public class PowerBiCtrl_2Test {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-			result = PowerBiCtrl_2.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
+			result = PowerBiCtrl.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
 		}
 
 		Test.stopTest();
@@ -387,9 +387,9 @@ public class PowerBiCtrl_2Test {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
-		PowerBI_Config__c conf = PowerBiCtrl_2.getPowerBICredentials('TreasuryDashboardReport');
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl_2.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -397,7 +397,7 @@ public class PowerBiCtrl_2Test {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBIServicePrincipalEmbedTokenErrorMock());
 
-			result = PowerBiCtrl_2.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
+			result = PowerBiCtrl.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
 		}
 
 		Test.stopTest();

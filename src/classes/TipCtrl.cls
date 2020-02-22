@@ -7,18 +7,18 @@ public without sharing class TipCtrl {
 
 	@AuraEnabled
 	public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
-		return PowerBiCtrl_2.getPowerBICredentials(configurationName);
+		return PowerBiCtrl.getPowerBICredentials(configurationName);
 	}
 
 	@AuraEnabled
-	public static PowerBiCtrl_2.OAuthResult getAccessToken(PowerBI_Config__c conf) {
+	public static PowerBiCtrl.OAuthResult getAccessToken(PowerBI_Config__c conf) {
 
 		if(conf == null) {
 			return null;
 		}
 
 		Cache.OrgPartition orgPartition = null;
-		PowerBiCtrl_2.OAuthResult result = new PowerBiCtrl_2.OAuthResult();
+		PowerBiCtrl.OAuthResult result = new PowerBiCtrl.OAuthResult();
 
 		//Tests run on sandbox without org cache(SIT) would fail
 		if(Test.isRunningTest()){
@@ -26,7 +26,7 @@ public without sharing class TipCtrl {
 			try{
 				orgPartition = Cache.Org.getPartition('local.PowerBI');
 			}catch(Cache.Org.OrgCacheException e) {
-				return PowerBiCtrl_2.getNewAccessToken(conf);
+				return PowerBiCtrl.getNewAccessToken(conf);
 			}
 
 		} else {
@@ -55,11 +55,11 @@ public without sharing class TipCtrl {
 						if (orgPartition.contains(POWERBI_REFRESH_TOKEN+applicationSufix)) {
 							//refresh token here
 							String refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN+applicationSufix);
-							result = PowerBiCtrl_2.refreshToken(refreshToken, conf);
+							result = PowerBiCtrl.refreshToken(refreshToken, conf);
 							saveAccessTokenInOrgCache(orgPartition, result, conf);
 						} else {
 							//get new token
-							result = PowerBiCtrl_2.getNewAccessToken(conf);
+							result = PowerBiCtrl.getNewAccessToken(conf);
 							saveAccessTokenInOrgCache(orgPartition, result, conf);
 						}
 
@@ -72,7 +72,7 @@ public without sharing class TipCtrl {
 
 						} else {
 							//refresh token not found - get new token
-							result = PowerBiCtrl_2.getNewAccessToken(conf);
+							result = PowerBiCtrl.getNewAccessToken(conf);
 							saveAccessTokenInOrgCache(orgPartition, result, conf);
 						}
 
@@ -80,13 +80,13 @@ public without sharing class TipCtrl {
 
 				} else {
 					//expiresOn not found - get new token
-					result = PowerBiCtrl_2.getNewAccessToken(conf);
+					result = PowerBiCtrl.getNewAccessToken(conf);
 					saveAccessTokenInOrgCache(orgPartition, result, conf);
 				}
 
 			} else {
 				//access token not found - get new token
-				result = PowerBiCtrl_2.getNewAccessToken(conf);
+				result = PowerBiCtrl.getNewAccessToken(conf);
 				saveAccessTokenInOrgCache(orgPartition, result, conf);
 			}
 		}
@@ -94,7 +94,7 @@ public without sharing class TipCtrl {
 		return result;
 	}
 
-	private static void saveAccessTokenInOrgCache(Cache.OrgPartition orgPartition, PowerBiCtrl_2.OAuthResult result, PowerBI_Config__c conf) {
+	private static void saveAccessTokenInOrgCache(Cache.OrgPartition orgPartition, PowerBiCtrl.OAuthResult result, PowerBI_Config__c conf) {
 		if(result.error != null) {
 			TransformationHelper.sendEmailSupport('FATAL: PowerBI Master Account Access token: ' + conf.Name + ' ' + result.error, 'PowerBI Master Account Access token: ' + conf.Name + ' ' +result.error);
 			throw new transformationException('PowerBI Master Account Access token: ' + result.error);
@@ -109,19 +109,19 @@ public without sharing class TipCtrl {
 	}
 
 	@AuraEnabled
-	public static PowerBiCtrl_2.ReportDetailResult getReportsDetails(String accessToken, String reportId, PowerBI_Config__c conf) {
-		return PowerBiCtrl_2.getReportsDetails(accessToken, reportId, conf);
+	public static PowerBiCtrl.ReportDetailResult getReportsDetails(String accessToken, String reportId, PowerBI_Config__c conf) {
+		return PowerBiCtrl.getReportsDetails(accessToken, reportId, conf);
 	}
 
 
 	@AuraEnabled
-	public static PowerBiCtrl_2.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
+	public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
 
 		if(conf == null) {
 			return null;
 		}
 
-		PowerBiCtrl_2.EmbedTokenResult result = new PowerBiCtrl_2.EmbedTokenResult();
+		PowerBiCtrl.EmbedTokenResult result = new PowerBiCtrl.EmbedTokenResult();
 		Cache.SessionPartition sessionPartition = null;
 
 		String reportIdReplaced = reportId.replaceAll('-', '');
@@ -136,7 +136,7 @@ public without sharing class TipCtrl {
 
 			}catch(Cache.Session.SessionCacheException e) {
 
-				return PowerBiCtrl_2.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
+				return PowerBiCtrl.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
 
 			}
 
@@ -148,7 +148,7 @@ public without sharing class TipCtrl {
 
 
 		if(sessionPartition != null) {
-
+			System.debug('cacheKey:: ' + cacheKey);
 			if(sessionPartition.contains(cacheKey)) {
 
 				result.token = (String)sessionPartition.get(cacheKey);
@@ -160,10 +160,10 @@ public without sharing class TipCtrl {
 					if(String.isNotBlank(cacheExpireson)) {
 
 						Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
-
+						System.debug('expiresonDatetime:: ' + expiresonDatetime);
 						if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
 							//token expires in less than 10 minutes - get new
-							result = PowerBiCtrl_2.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+							result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
 							saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
 
 						} else {
@@ -176,13 +176,13 @@ public without sharing class TipCtrl {
 
 				} else {
 					//no expires on in cache
-					result = PowerBiCtrl_2.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+					result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
 					saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
 				}
 
 			} else {
 				// no embed token in cache
-				result = PowerBiCtrl_2.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+				result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
 				saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
 			}
 
@@ -199,7 +199,7 @@ public without sharing class TipCtrl {
 		return expiresonDatetime;
 	}
 
-	private static void saveEmbedTokenInSessionCache(Cache.SessionPartition sessionPartition, PowerBiCtrl_2.EmbedTokenResult result, PowerBI_Config__c conf, String cacheKey) {
+	private static void saveEmbedTokenInSessionCache(Cache.SessionPartition sessionPartition, PowerBiCtrl.EmbedTokenResult result, PowerBI_Config__c conf, String cacheKey) {
 		if(result.error != null) {
 			TransformationHelper.sendEmailSupport('FATAL: PowerBI Master Account Embed token: ' + conf.Name + ' ' + result.error, 'PowerBI Master Account Embed token: ' + conf.Name + ' ' +result.error);
 			throw new transformationException('PowerBI Master Account Embed token: ' + result.error);
