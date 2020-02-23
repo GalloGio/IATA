@@ -79,11 +79,11 @@ public class PASS_UserProvisioningRequestHandler {
 	public static void createPassUserProvAccounts(Set<Id> contactIdPASSAccreditationSet){
 		//Create User Provisioning Accounts for PASS SSO
 		Id PASSConnectedApp = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
-		List<User> passSsoUsers = [SELECT Id,Username FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
+		List<User> passSsoUsers = [SELECT Id,Username,Federation_ID__c FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
 		List<UserProvAccount> provAccList = new List<UserProvAccount>();
 		for(User passUser : passSsoUsers){
 			UserProvAccount upa = new UserProvAccount (
-							ExternalUserId = passUser.Id,
+							ExternalUserId = passUser.Federation_ID__c,
 							SalesforceUserId = passUser.Id,
 							ConnectedAppId = PASSConnectedApp,
 							LinkState = 'Linked',
@@ -109,5 +109,15 @@ public class PASS_UserProvisioningRequestHandler {
 		}
 
 		insert passPrimaryUserAssignment;
+	}
+
+	public static boolean trgPASSAirlinePE = true;
+	public static boolean sendPASS_Airline_PE(List<Case> listCases){
+
+		List<Services_Rendered__c> SRList = [SELECT Id FROM Services_Rendered__c WHERE Source_Case__c IN:listCases];
+		if(SRList.size() >0){
+			trgPASSAirlinePE = false;
+		}
+		return trgPASSAirlinePE;
 	}
 }

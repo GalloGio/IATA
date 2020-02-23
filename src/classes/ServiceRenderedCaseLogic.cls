@@ -105,28 +105,33 @@ public class ServiceRenderedCaseLogic {
 				newSRList.addAll(servicesRenderendFromChangingCases(changingCases));
 		}
 
-		if (newSRList.size() > 0) {
-				TransformationHelper.setComingFromCase();
-				upsert(newSRList);
-			//logic to publish the platform events
-				if(passCaseIdList.size()>0){
-					Map<Id,sObject> objectMapAPProcessForm=new Map<Id,sObject>();
-					Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
+			if (newSRList.size() > 0) {
+					TransformationHelper.setComingFromCase();
+					upsert(newSRList);
+				//logic to publish the platform events
+					if(passCaseIdList.size()>0){
+						Map<Id,sObject> objectMapAPProcessForm=new Map<Id,sObject>();
+						Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
 
-					for(AP_Process_Form__c formRecord: [SELECT Id,RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN: passCaseIdList]){
-						objectMapAPProcessForm.put(formRecord.Id, formRecord);
-					}
-					for(Services_Rendered__c serviceRendered : newSRList){
-						if(passCaseIdList.contains(serviceRendered.Source_Case__c)){
-							objectMapServiceRendered.put(serviceRendered.Id, serviceRendered);
+						for(AP_Process_Form__c formRecord: [SELECT Id,RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN: passCaseIdList]){
+							objectMapAPProcessForm.put(formRecord.Id, formRecord);
 						}
-					}
-					if(objectMapServiceRendered.size()>0){
-						PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', true, false, false, false);
+						for(Services_Rendered__c serviceRendered : newSRList){
+							if(passCaseIdList.contains(serviceRendered.Source_Case__c)){
+								objectMapServiceRendered.put(serviceRendered.Id, serviceRendered);
+							}
+						}
+						if(objectMapServiceRendered.size()>0){
+						if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+							System.enqueueJob(new PlatformEvents_Helper(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', true, false, false, false));
+						}else{
+							PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', true, false, false, false);
+						}
+
+						}
 					}
 				}
 			}
-		}
 
 
 	public static void massInsertDuplicateCheck(list<Case> Cases, map<String,Case_Reason_Service__c> ServicesPerReason){
