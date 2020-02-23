@@ -547,7 +547,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgICCS_ASP_CaseClosed Trigger*/
 
-		
 		// START PASS
 		if(Trigger.isUpdate && PASS_UserProvisioningRequestHandler.sendPASS_Airline_PE(Trigger.New)) {
 			List<Case> passCaseList = new List<Case>();
@@ -558,12 +557,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 					passCaseList.add(cs);
 				}
 			}
-			System.debug('DB passCaseList '+passCaseList.size());
 			if(passCaseList.size() > 0){
 				Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
 	
 				List<AP_Process_Form__c> apFormList = [SELECT Id,Case__c, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:passCaseList];
-				System.debug('DB apFormList '+apFormList.size());
 				for(Case c : passCaseList) {
 						for(AP_Process_Form__c form : apFormList) {
 							if(form.Case__c == c.Id){
@@ -571,25 +568,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 							}
 						}
 					}
-				//[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND Reason1__c LIKE 'PASS Participation%']
-					/*for(Case c : Trigger.new) {
-						Case oldCase = Trigger.oldMap.get(c.Id);
-						if(c.Status == 'Closed' && oldCase.Status != 'Closed'){
-							for(AP_Process_Form__c form : apFormList) {
-								if(form.Case__c == c.Id){
-									casePassCountryMap.put(form.Id,form);
-								}
-							}
-						}
-					}*/
-				System.debug('DB casePassCountryMap '+casePassCountryMap.size());
 	
 				if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
 					if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-						System.debug('Entra neste');
 						System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete));
 					} else {
-						System.debug('Entra neste 22324');
 						PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete);
 					}
 				}
