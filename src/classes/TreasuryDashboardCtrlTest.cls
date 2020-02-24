@@ -225,6 +225,55 @@ public class TreasuryDashboardCtrlTest {
 
 	}
 
+
+	@IsTest
+	private static void getUserInformation_2FaPermissionSetNegativeTest() {
+
+		User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+		TreasuryDashboardCtrl.UserInformation info = null;
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+
+			info = TreasuryDashboardCtrl.getUserInformation();
+		}
+
+		Test.stopTest();
+
+		System.assertEquals(false, info.hasTwoFactor, 'User should NOT have Two Factor authorization!');
+
+	}
+
+	@IsTest
+	private static void getUserInformation_2FaPermissionSetPositiveTest() {
+
+		User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+		TreasuryDashboardCtrl.UserInformation info = null;
+
+		PermissionSet permission = new PermissionSet(Label='Bypass TD 2FA', Name='Bypass_TD_2FA');
+		insert permission;
+
+		PermissionSetAssignment permissionAssignment = new PermissionSetAssignment();
+		permissionAssignment.AssigneeId=testUser.Id;
+		permissionAssignment.PermissionSetId=permission.id;
+		insert permissionAssignment;
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+
+			info = TreasuryDashboardCtrl.getUserInformation();
+		}
+
+		Test.stopTest();
+
+		System.assertEquals(true, info.hasTwoFactor, 'User should have Two Factor authorization becasue he has permission set for this!');
+
+	}
+
 	@IsTest
 	private static void premiumAccessRequestTest() {
 

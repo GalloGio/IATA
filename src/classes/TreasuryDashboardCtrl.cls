@@ -72,6 +72,16 @@ public without sharing class TreasuryDashboardCtrl {
 
 			}
 
+			/* Check for Bypass_TD_2FA permission set
+			This permission set is used for automation testing user to bypass the 2FA check on Treasury Dashboard page.
+			 */
+			List<PermissionSetAssignment> permissionsList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :users[0].Id AND PermissionSet.Name = 'Bypass_TD_2FA'];
+			if(! permissionsList.isEmpty()) {
+
+				userInfoToReturn.hasTwoFactor = true;
+
+			}
+
 			//get is standard user
 			List <Portal_Application_Right__c> accessList = [
 					SELECT Id, Portal_Application__r.TD_Access_Level__c,
