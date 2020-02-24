@@ -60,7 +60,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     set isexpired(value) {
         this.trackedIsExpired = value;
 	}
-	@track israelCase;
 	
 	@track caseobres;
 
@@ -106,8 +105,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         || this.caseDetails.RecordType__c === 'Complaint (IDFS ISS)'
                         || this.caseDetails.RecordType__c === 'Process';
 
-					this.israelCase = this.caseDetails.RecordType__c === 'Disputes (Israel only)';
-
                     this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";
 
                     optionBuilder({ caseObj: results })
@@ -122,7 +119,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                     console.log('error: ', error);
                     this.loading = false;
                 });
-            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description", "Airline__c", "Airline_E_mail__c", "Document_number__c", "Amount_disputed__c"];
+            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description"];
             //load the rest of the field labels
 
             getFieldLabels({ sObjectType: 'case', sObjectFields: labelsToRetrieve }).then(result => {

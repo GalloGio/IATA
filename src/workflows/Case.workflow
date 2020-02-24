@@ -8565,7 +8565,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Email_notification_dispute_Airline</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
