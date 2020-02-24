@@ -96,7 +96,6 @@
             } else {
                 let errors = response.getError();
                 let message = 'Unknown error'; 
-                console.log(errors);
                 if (errors[0]) {
                     if (errors[0].fieldErrors) {
                         if (errors[0].fieldErrors.Name) {
