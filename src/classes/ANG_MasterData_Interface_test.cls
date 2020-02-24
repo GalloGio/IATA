@@ -80,7 +80,7 @@ private class ANG_MasterData_Interface_test {
 				Account accChild = new Account(
 						ParentId = acc.id,
 						name='acc3',
-						Location_Type__c=AMS_Utils.HE,
+						Location_Type__c=AMS_Utils.AE,
 						Location_Class__c= AMS_Utils.LC_PASSENGER,
 						Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
 						ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
