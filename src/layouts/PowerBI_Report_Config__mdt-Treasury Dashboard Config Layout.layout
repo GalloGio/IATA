@@ -30,10 +30,6 @@
                 <behavior>Edit</behavior>
                 <field>Report_Id_Prod__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
