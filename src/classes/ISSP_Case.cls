@@ -718,7 +718,7 @@ public without sharing class ISSP_Case {
 				//Before this option was made by a query to the User object.
 				//For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
 				
-				List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = DPC2DPCCasesEmails__c.getall().values();
+				DPC2DPCCasesEmails = DPC2DPCCasesEmails__c.getall().values();
 
 				JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
 				newCase.ACCA_Owner__c = Userinfo.getUserId();
@@ -1564,7 +1564,7 @@ public without sharing class ISSP_Case {
 		Set<String> setEmailPriority = new Set<String>();
 
 		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
-
+		
 		if(DPC2DPCCasesEmails != null){
 			if(emailCurrentAcc != ''){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
