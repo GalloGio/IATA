@@ -14,6 +14,9 @@ export default class portalPopupContainer extends LightningElement {
 		if(value === 'threeQuarters'){
 			this.widthClass = 'customPopupInteriorThreeQuartersScreenCentered';
 		}
+		if(value === '90'){
+			this.widthClass = 'customPopupInteriorNinetyScreenCentered';
+		}
 
 	}
 

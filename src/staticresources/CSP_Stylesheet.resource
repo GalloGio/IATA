@@ -503,6 +503,15 @@ lightning-datatable .slds-th__action {
   border: solid 1px #e2e2e2;
 }
 
+.customPopupInteriorNinetyScreenCentered {
+    background-color: #f7f8fa;
+    width: 90%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+}
+
 @media only screen and (max-width: 1000px) {
   .customPopupInteriorHalfScreenCentered, 
   .customPopupInteriorThreeQuartersScreenCentered {
