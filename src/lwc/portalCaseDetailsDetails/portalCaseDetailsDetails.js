@@ -214,7 +214,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         if (this.optionBuilder) {
             return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation &&
                 caseDetailsLocal.Reason1__c.startsWith('New') && caseDetailsLocal.Reason1__c !== 'New HE standard' &&
-                caseDetailsLocal.Reason1__c !== 'New HE lite' && caseDetailsLocal.Reason1__c !== 'New AE';
+				caseDetailsLocal.Reason1__c !== 'New HE lite' && caseDetailsLocal.Reason1__c !== 'New AE' &&
+				caseDetailsLocal.Reason1__c !== 'New HE Multicountry' && caseDetailsLocal.Reason1__c !== 'New AE Multicountry';
         }
         return null;
     }
@@ -250,7 +251,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     get getPDF4() {
         if (this.caseDetails) {
-            return this.caseDetails.Reason1__c === 'New HE standard' || this.caseDetails.Reason1__c === 'New HE lite';
+            return this.caseDetails.Reason1__c.startsWith('New HE');
         }
         return null;
     }
@@ -265,7 +266,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     get getPDF5() {
         if (this.caseDetails) {
-            return this.caseDetails.Reason1__c === 'New AE';
+            return this.caseDetails.Reason1__c.startsWith('New AE');
         }
         return null;
     }
