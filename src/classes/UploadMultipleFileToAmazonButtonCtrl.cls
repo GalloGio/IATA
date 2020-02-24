@@ -34,7 +34,7 @@ global class UploadMultipleFileToAmazonButtonCtrl {
 	global static String notifyOscarOwner(Id caseId, String fileIdentifier) {
 		try {
 			Case cse = [SELECT Id, OwnerId, Reason1__c, CaseArea__c, CaseNumber, Subject FROM Case WHERE Id = :caseId];
-			User usr = [SELECT Id, Name FROM User WHERE Id = :cse.OwnerId];
+			User usr = [SELECT Id, Name FROM User WHERE Id = :cse.OwnerId AND isActive = true AND Contact.IsEmailBounced = false];
 			EmailTemplate template = [Select DeveloperName, Id, HtmlValue, Body, Subject From EmailTemplate where DeveloperName = :Label.AMS_AttchNotifyOwner];
 			Id orgAddressId = [select Id from OrgWideEmailAddress where Address = :Label.noreplyEmail][0].Id;
 

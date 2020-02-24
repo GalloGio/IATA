@@ -61,7 +61,7 @@ public without sharing class RegistrationComunicationsController {
 		// ################################## LIMIT 5000 a day
 
 		try{
-			Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Name, Email FROM Contact Where Id IN :contactIds]);
+			Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Name, Email FROM Contact WHERE Id IN :contactIds AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')]);
 
 			//MAX 150 adresses
 			Map<Id,String> addresses = new Map<Id,String>();
@@ -93,7 +93,6 @@ public without sharing class RegistrationComunicationsController {
 			}
 
 			String url = getPortalProfileUrl();
-			Id currentuserId;
 			String plainBody = null;
 			List<Messaging.SingleEmailMessage> messages = new List<Messaging.SingleEmailMessage>();
 
@@ -111,7 +110,7 @@ public without sharing class RegistrationComunicationsController {
 				}else{
 					message.setSenderDisplayName('IATA Noreply');
 				}
-				message.setTargetObjectId(currentuserId);
+				message.setTargetObjectId(null);
 				message.setToAddresses(new List<String>{contact.Email});
 
 				plainBody = message.getPlainTextBody();
@@ -186,6 +185,7 @@ public without sharing class RegistrationComunicationsController {
 
 		for(User user :users){
 			if(!templatesByLanguage.containsKey(user.LanguageLocaleKey)){
+				//used to render the notification message and subject in the user's language
 				message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, user.Id, null);
 				templatesByLanguage.put(user.LanguageLocaleKey, message);
 			}

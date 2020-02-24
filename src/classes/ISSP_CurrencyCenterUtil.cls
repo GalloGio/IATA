@@ -104,7 +104,7 @@ public without sharing class ISSP_CurrencyCenterUtil {
 		}
 
 		List<Contact> accountsContacts = [SELECT Id, Name, AccountId FROM Contact
-				WHERE Status__c = 'Active' AND AccountId in:airlineSurveyMap.keySet()];
+				WHERE Status__c = 'Active' AND isEmailBounced = false AND (NOT Email LIKE '%.inactive') AND AccountId in:airlineSurveyMap.keySet()];
 		System.debug('jmc - ISSP_CurrencyCenterUtil.sendEmailsBatch accountsContacts ' + accountsContacts);
 
 		List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c
