@@ -13522,7 +13522,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Untuk memberi tahu IATA mengenai perubahan data rekening bank, silakan hubungi kami.</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
