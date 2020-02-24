@@ -1564,7 +1564,6 @@ public without sharing class ISSP_Case {
 		Set<String> setEmailPriority = new Set<String>();
 
 		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
-		
 		if(DPC2DPCCasesEmails != null){
 			if(emailCurrentAcc != ''){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
