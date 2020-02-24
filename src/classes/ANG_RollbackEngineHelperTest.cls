@@ -813,7 +813,7 @@ private class ANG_RollbackEngineHelperTest {
 			IATA_ISO_Country__c = ctry.id,
 			RecordTypeId = accountAgencyRT,
 			IATACode__c='1234001',
-			Location_Type__c='HE',
+			Location_Type__c=AMS_Utils.AE,
 			Name='Test1 Agency OK NEW BIG BOSS',
 			Short_Name__c='Test1 Agency',
 			Sector__c = 'Travel Agent',
@@ -1038,13 +1038,6 @@ private class ANG_RollbackEngineHelperTest {
 			oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 			update oscar;
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
-
-
 		Account a2 = new Account(
 			Is_PCI_compliant__c = 'Yes',
 			ANG_HE_RiskStatus__c = 'B',
@@ -1076,21 +1069,15 @@ private class ANG_RollbackEngineHelperTest {
 		insert hierarchy;
 
 		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a2.Id, Child_Account__c = a1.Id, Hierarchy__c = hierarchy.Id);
+		
+		newContact1.Financial_Assessment_Contact__c = false;
+		update newContact1;
 
+		a1.Location_Type__c = AMS_Utils.AE;
 		a1.ParentId = a2.Id;
 		a1.Top_Parent__c = a2.Id;
 
 		update a1;
-
-		For(Technical_Logs__c tlog : [Select Id,Log__c,Status__c,Record__c,Operation__c from Technical_Logs__c])
-			System.System.debug(tlog);
-		/*
-		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
-		reh.executeAdhoc();
-
-		System.assertEquals(true,[Select Id from AMS_Agencies_relationhip__c].size() == 0);
-		System.assertEquals(true,[Select Id from AMS_Agencies_Hierarchy__c].size() == 0);
-		*/
 
 	}
 
@@ -1164,6 +1151,7 @@ private class ANG_RollbackEngineHelperTest {
 			);
 		update rtsAlert;
 
+		heAccount.Location_Type__c='AE';
 		heAccount.ParentId = a1.Id;
 		heAccount.Top_Parent__c = a1.Id;
 		update heAccount;
