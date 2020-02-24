@@ -726,7 +726,8 @@ global without sharing class ISSP_APProcess {
 		List <Case> newCases = [
 			SELECT OwnerId, Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
 			Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c, Region__c,
-			Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, Classification_SIS__c
+			Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, Classification_SIS__c,
+			Contact.IsEmailBounced, Contact.Email
 			FROM Case
 			WHERE Id=:vCaseId
 		];
@@ -813,7 +814,7 @@ global without sharing class ISSP_APProcess {
 	public boolean isSameAPCase() {
 			List<Case> dupeCases = [
 				SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-				  Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
+				  Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c, Contact.IsEmailBounced, Contact.Email
 					FROM Case WHERE RecordType.DeveloperName = 'IDFS_Airline_Participation_Process' AND Id = :vCaseId
 			];
 			if(dupeCases.size()>0) {
@@ -1846,69 +1847,72 @@ global without sharing class ISSP_APProcess {
 
 	@TestVisible
 	private void sendConfirmationEmail(Case newCase) {
-		String emailTemplateName;
-		String fromaddress;
 
-		if (isBSP || isCASS) {
-			if(newCase.BSPCountry__c!=null && newCase.BSPCountry__c.contains('Spain')) {
-				emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
-				fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
-			} else if(newCase.BSPCountry__c == 'France') {
-				emailTemplateName = 'EUR_Case Confirmation - online HTML (French)';
-				fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
-			} else if(newCase.Region__c == 'Europe') {
-				emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
-				fromaddress = 'IATA Europe (noreply@iata.org)';
-			} else if(newCase.BSPCountry__c == 'Canada') {
-				emailTemplateName = 'A1 - CS Auto-response confirmation (EN/FR)';
-				fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-			} else if(newCase.BSPCountry__c == 'Brazil') {
-				emailTemplateName = 'A1 - CS Auto-response confirmation (EN/PT)';
-				fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-			} else if(newCase.Region__c == 'Americas') {
-				emailTemplateName = 'A1 - CS Auto-response confirmation (EN/SP)';
-				fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-			} else if(newCase.Region__c != null && newCase.Region__c.contains('China')) {
-				emailTemplateName = 'N.ASIA_Case confirmation - online HTML (English)- China';
-				fromaddress = 'IATA China - Customer Services (noreply@iata.org)';
-			} else if(newCase.Region__c != null && newCase.Region__c.contains('Africa')) {
-				fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
-				emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
-			} else {
-				emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
-				fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
+		if(!newCase.Contact.IsEmailBounced && String.isNotBlank(newCase.Contact.Email) && !newCase.Contact.Email.endsWithIgnoreCase('.inactive')) {
+			String emailTemplateName;
+			String fromaddress;
+
+			if (isBSP || isCASS) {
+				if(newCase.BSPCountry__c!=null && newCase.BSPCountry__c.contains('Spain')) {
+					emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
+					fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
+				} else if(newCase.BSPCountry__c == 'France') {
+					emailTemplateName = 'EUR_Case Confirmation - online HTML (French)';
+					fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
+				} else if(newCase.Region__c == 'Europe') {
+					emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
+					fromaddress = 'IATA Europe (noreply@iata.org)';
+				} else if(newCase.BSPCountry__c == 'Canada') {
+					emailTemplateName = 'A1 - CS Auto-response confirmation (EN/FR)';
+					fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+				} else if(newCase.BSPCountry__c == 'Brazil') {
+					emailTemplateName = 'A1 - CS Auto-response confirmation (EN/PT)';
+					fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+				} else if(newCase.Region__c == 'Americas') {
+					emailTemplateName = 'A1 - CS Auto-response confirmation (EN/SP)';
+					fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+				} else if(newCase.Region__c != null && newCase.Region__c.contains('China')) {
+					emailTemplateName = 'N.ASIA_Case confirmation - online HTML (English)- China';
+					fromaddress = 'IATA China - Customer Services (noreply@iata.org)';
+				} else if(newCase.Region__c != null && newCase.Region__c.contains('Africa')) {
+					fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
+					emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
+				} else {
+					emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
+					fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
+				}
 			}
-		}
-		if (isICH) {
-			emailTemplateName = 'ICH Case Confirmation - online HTML';
-		}
+			if (isICH) {
+				emailTemplateName = 'ICH Case Confirmation - online HTML';
+			}
 
-		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-		List<EmailTemplate> ets = [Select Name, Id From EmailTemplate where Name = :emailTemplateName];
-		if(ets.isEmpty()) {
-			System.debug('____sendConfirmationEmail Email template not found (' + emailTemplateName + ')');
-			return;
-		}
-		EmailTemplate et = ets[0];
+			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+			List<EmailTemplate> ets = [Select Name, Id From EmailTemplate where Name = :emailTemplateName];
+			if(ets.isEmpty()) {
+				System.debug('____sendConfirmationEmail Email template not found (' + emailTemplateName + ')');
+				return;
+			}
+			EmailTemplate et = ets[0];
 
-		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+			OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
 
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setTemplateID(et.Id);
-		if ( owea.size() > 0 ) {
-			mail.setOrgWideEmailAddressId(owea[0].Id);
-		}
-		//mail.setSenderDisplayName(fromaddress);
-		mail.setTargetObjectId(newCase.ContactId);
-		mail.setWhatId(newCase.Id);
-		mail.setSaveAsActivity(true);
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTemplateID(et.Id);
+			if ( owea.size() > 0 ) {
+				mail.setOrgWideEmailAddressId(owea[0].Id);
+			}
+			//mail.setSenderDisplayName(fromaddress);
+			mail.setTargetObjectId(newCase.ContactId);
+			mail.setWhatId(newCase.Id);
+			mail.setSaveAsActivity(true);
 
-		emails.add(mail);
+			emails.add(mail);
 
-		try {
-			Messaging.sendEmail(emails);
-		} catch (Exception e) {
-			System.debug('____sendConfirmationEmail Error (' + emails + '):  ' + e.getMessage());
+			try {
+				Messaging.sendEmail(emails);
+			} catch (Exception e) {
+				System.debug('____sendConfirmationEmail Error (' + emails + '):  ' + e.getMessage());
+			}
 		}
 	}
 
