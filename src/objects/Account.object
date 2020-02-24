@@ -120740,6 +120740,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Membership_status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
