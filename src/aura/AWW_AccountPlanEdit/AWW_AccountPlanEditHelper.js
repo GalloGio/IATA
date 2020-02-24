@@ -80,7 +80,6 @@
             } else {
                 let errors = response.getError();
                 let message = 'Unknown error'; 
-                console.log(errors);
                 if (errors[0]) {
                     if (errors[0].fieldErrors) {
                         if (errors[0].fieldErrors.Name) {
@@ -98,7 +97,6 @@
                         }
                     }
                 }
-                console.log('message::: ',message);
                 component.set('v.errorMessage', message);
             }
             this.handleSpinner(component, 'hide');
