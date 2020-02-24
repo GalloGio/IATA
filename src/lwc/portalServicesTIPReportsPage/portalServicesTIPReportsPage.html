@@ -1,0 +1,59 @@
+<template>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <div class="customCardWhite slds-m-vertical_small">
+                <div class="slds-m-around_medium">
+                    <div if:true={loading} class="spinnerContainer">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                    <div if:false={loading}>
+                        <div if:true={haveAccessToTIPReports}>
+                            <div if:true={viewResults} class="casesListWrapper">
+                                <lightning-datatable 
+                                    key-field="id" 
+                                    data={tipReportsList} 
+                                    columns={tipReportsTableColumns} 
+                                    hide-checkbox-column 
+                                    onrowaction={handleRowAction} >
+                                </lightning-datatable>
+                            </div>
+                            <div if:false={viewResults}>
+                                There are no reports available.
+                            </div>
+                        </div>
+                        <div if:false={haveAccessToTIPReports}>
+                            You do not have access to TIP Reports service. 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+
+
+    <!-- REPORT POPUP -->
+    <div if:true={showReportPopup} >
+        <c-portal-popup-container size="90">
+            <span slot="modalHeader">
+                <span>{selectedReport.name}</span>
+            </span>
+
+            <span slot="modalBody">
+                <c-portal-tip-reports group-id={selectedReport.groupId} report-id={selectedReport.reportId}></c-portal-tip-reports>
+            </span>
+
+            <span slot="modalFooter">
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                        <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label="Close" 
+                                variant="neutral" onclick={handleReportPopupCloseButton}></lightning-button>
+                    </div>
+                </div>
+            </span>
+        </c-portal-popup-container>
+    </div>
+
+    
+    
+</template>
