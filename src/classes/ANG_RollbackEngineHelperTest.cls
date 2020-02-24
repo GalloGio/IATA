@@ -1151,7 +1151,7 @@ private class ANG_RollbackEngineHelperTest {
 			);
 		update rtsAlert;
 
-		heAccount.Location_Type__c='AE';
+		heAccount.Location_Type__c=AMS_Utils.AE;
 		heAccount.ParentId = a1.Id;
 		heAccount.Top_Parent__c = a1.Id;
 		update heAccount;
