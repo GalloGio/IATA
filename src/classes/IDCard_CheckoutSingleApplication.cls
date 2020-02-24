@@ -82,7 +82,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 				email.setTargetObjectId(c.Contact__r.Id);
 			}
 
-			if(!String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IDCard_Email__c.endsWithIgnoreCase('.inactive'))
+			if(String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IDCard_Email__c.endsWithIgnoreCase('.inactive'))
 				toRecipients.add(c.Contact__r.IDCard_Email__c);
 		}
 
