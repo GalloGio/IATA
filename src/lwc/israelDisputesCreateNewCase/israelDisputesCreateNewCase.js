@@ -21,7 +21,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     label = {
-		csp_searchIataCodeLocationNamePlaceHolder,
+        csp_searchIataCodeLocationNamePlaceHolder,
         csp_CreateNewCaseMainInputEmailsTopLabel,
         csp_errorCreatingCase,
         IDCard_FillAllFields,
@@ -29,8 +29,8 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     calendarIcon = CSP_PortalPath + 'CSPortal/Images/Icons/calendar.svg'; 
 
-	childComponent;
-	childComponent2;
+    childComponent;
+    childComponent2;
     
     //stores emails to be sent to case creation
     caseEmails = [];
@@ -67,23 +67,23 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
     @track isEmergencyCase = false;
 
     //variable to control error class sent to child component
-	@track requiredClass;
-	@track requiredClass2;
+    @track requiredClass;
+    @track requiredClass2;
 
     //variable used to set the lookup input for the lookup component
-	@track singleresult;
-	@track singleresult2;
+    @track singleresult;
+    @track singleresult2;
 
-	@track relatedAccounts;
-	@track airlineAccounts
+    @track relatedAccounts;
+    @track airlineAccounts
 
     @track relatedContacts;
 
     @track caseID;
     //Same as doInit() on aura
     connectedCallback() {
-		this.getAirlineAccounts();
-		this.getRelatedAccounts();
+        this.getAirlineAccounts();
+        this.getRelatedAccounts();
         this.getRelatedContacts();
         this.getIsBeforeFifteenth();
     }
@@ -118,9 +118,9 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
     //shows results upon clicking the search.
     showIataResults() {
         this.template.querySelector('[data-id="iatalookup"]').setSearchResults(this.airlineAccounts);
-	}
-	
-	showRelatedResults() {
+    }
+    
+    showRelatedResults() {
         this.template.querySelector('[data-id="relatedLookup"]').setSearchResults(this.relatedAccounts);
     }
 
@@ -200,9 +200,9 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
                 // eslint-disable-next-line no-console
                 console.log('Lookup Error: ' + error);
             });
-	}
-	
-	//gets related accounts and sets them in global var
+    }
+    
+    //gets related accounts and sets them in global var
     getAirlineAccounts() {
         //activate spinner
         this.loading = true;
@@ -319,9 +319,9 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
             this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection()[0];
             this.errors = [];
             this.requiredClass = '';
-		}
-		
-		if (this.template.querySelector('[data-id="relatedLookup"]').getSelection().length === 0) {
+        }
+        
+        if (this.template.querySelector('[data-id="relatedLookup"]').getSelection().length === 0) {
             this.requiredClass2 = ' slds-has-error';
             error = true;
         } else {
@@ -367,14 +367,14 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
             this.showErrorToast();
         }
         else {
-			//create the Case record
-			let amDisp = (this.requestType === 'Deduction') ? Math.abs(this.amountDisputed) : (Math.abs(this.amountDisputed) * -1);
-			let cse = { 'sobjectType': 'Case' };
+            //create the Case record
+            let amDisp = (this.requestType === 'Deduction') ? Math.abs(this.amountDisputed) : (Math.abs(this.amountDisputed) * -1);
+            let cse = { 'sobjectType': 'Case' };
             cse.IATAcode__c = this.childComponent2.extraFields.iataCode;
             cse.Reason1__c = this.requestType;
             cse.Airline_E_mail__c = this.email;
-			cse.Airline__c = this.childComponent.title;
-			cse.Airline_Code__c = this.childComponent.extraFields.airlineCode;
+            cse.Airline__c = this.childComponent.title;
+            cse.Airline_Code__c = this.childComponent.extraFields.airlineCode;
             cse.Description = this.reasonDeduction;
             cse.Document_number__c = this.docNumber;
             cse.Reporting_date__c = this.issueDate;

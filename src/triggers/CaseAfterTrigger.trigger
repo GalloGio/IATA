@@ -48,30 +48,30 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
 		trgCaseCheckOwnerChangeForOrchestrator = GlobalCaseTrigger__c.getValues('ISSP_AMC_CaseTriggerHelper').ON_OFF__c;
 	}
-		/**********************************************************************************************************************************/
+	/**********************************************************************************************************************************/
 
-		/*Record type*/
-		ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+	/*Record type*/
+	ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 	Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
 	Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
 	Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management') ;
-		Id RT_ICC_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases') ;
-		ID RecId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
-		Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+	Id RT_ICC_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases') ;
+	ID RecId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+	Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
 	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
 	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Funds_Management');
 	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
 	ID SISHelpDeskRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
-    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-    Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
-    Id CNSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+	Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+	Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+	Id CNSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
 	ID IsraelDispute  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
 /*Record type*/	
-    
-    /*Variables*/
-    Boolean caseRecType = false;
+	
+	/*Variables*/
+	Boolean caseRecType = false;
 	Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
 		Boolean isIFAPCase = false;
 	Integer futureLimit = Limits.getFutureCalls();
