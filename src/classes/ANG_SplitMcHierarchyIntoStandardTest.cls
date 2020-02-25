@@ -1,0 +1,257 @@
+@isTest
+public class ANG_SplitMcHierarchyIntoStandardTest {
+
+	@testSetup
+	public static void setup()
+	{
+		// flags
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		// entities
+		Test.startTest();
+
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
+		
+		/*
+		 * MC Account 3 GE PT
+		 *	|_ MC Account 5 AE PT
+		 *  |_ MC Account 1 HE GB
+	 	 *  |   |_ MC Account 4 AE GB
+		 *  |_ MC Account 2 HE FR
+		 */
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 3 GE PT', (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 5 AE PT', ac1.Id, AMS_Utils.AE, pt, '10000001');
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, AMS_Utils.HE, gb, '10000002');
+		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 4 AE GB', ac3.Id, AMS_Utils.AE, gb, '10000003');
+		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 HE FR', ac1.Id, AMS_Utils.HE, fr, '10000004');
+		
+		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac1, ac2, ac3, ac4, ac5 });
+
+		Contact cont = ANG_TestDataHelper.insertContact(ac1.Id);
+		AMS_OSCAR__c oscar = ANG_TestDataHelper.insertOscarAndRelatedEntities(ac1, cont.Id, AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX);
+
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void testBatch_heWithAeAccount()
+	{
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE GB'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		verifyChanges('MC Account 1 HE GB', AMS_Utils.HE);
+	}
+
+	@isTest
+	public static void testBatch_heWithoutAeAccount()
+	{
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 2 HE FR'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		verifyChanges('MC Account 2 HE FR', AMS_Utils.HE);
+	}
+
+	@isTest
+	public static void testBatch_geAccount()
+	{
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		verifyChanges('MC Account 3 GE PT', AMS_Utils.GE);
+	}
+
+	@isTest
+	public static void testBatch_aeOnHeAccount()
+	{
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 4 AE GB'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		verifyChanges('MC Account 4 AE GB', AMS_Utils.AE);
+	}
+
+	@isTest
+	public static void testBatch_aeOnGeAccount()
+	{
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 5 AE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		verifyChanges('MC Account 5 AE PT', AMS_Utils.AE);
+	}
+
+	@isTest
+	public static void testBatch_aeOnGeAccount_Inactive()
+	{
+		Account accountAE = [SELECT Id FROM Account WHERE Name = 'MC Account 5 AE PT'];
+		accountAE.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+		update accountAE;
+
+		Test.startTest();
+		
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountAE.Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		// testing that it stays the same except on the relationships
+		// account information
+		List<Account> accts = [SELECT Id, ParentId, Top_Parent__c, ANG_Accreditation_Model__c, Location_Type__c
+							  FROM Account
+							  WHERE Name = 'MC Account 5 AE PT'];
+		System.assertEquals(1, accts.size());
+		Account acct = accts.get(0);
+
+		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, acct.ANG_Accreditation_Model__c);
+		System.assertEquals(null, acct.ParentId);
+		System.assertEquals(null, acct.Top_Parent__c);
+		System.assertEquals(AMS_Utils.AE, acct.Location_Type__c);
+
+		// relationship info
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Parent_Account__c, Hierarchy__c
+												  FROM AMS_Agencies_relationhip__c
+												  WHERE Child_Account__c = :acct.Id];
+		
+		System.assertEquals(0, rels.size()); // all relations removed
+
+		// oscar
+		List<AMS_OSCAR__c> oscars = [SELECT Id, Process__c, RecordTypeId, Step51__c, Parent_OSCAR__c, AMS_Online_Accreditation__c
+									 FROM AMS_OSCAR__c
+									 WHERE Account__c = :acct.Id];
+		System.assertEquals(0, oscars.size()); // no oscar is created to inactive accounts
+	}
+
+	private static void verifyChanges(String accountName, String locationType) {
+		boolean isGe = locationType == AMS_Utils.GE;
+		boolean isHe = isGe || locationType == AMS_Utils.HE;
+
+		// general error on the batch
+		List<Technical_Logs__c> logs = [SELECT Id, Status__c FROM Technical_Logs__c];
+		System.assertEquals(0, logs.size(), 'An error occurred on the Batch: ' + (!logs.isEmpty() ? logs.get(0).Status__c : ''));
+		
+		// account information
+		List<Account> accts = [SELECT Id, ParentId, Top_Parent__c, ANG_Accreditation_Model__c, Location_Type__c
+							  FROM Account
+							  WHERE Name = :accountName];
+		System.assertEquals(1, accts.size());
+		Account acct = accts.get(0);
+
+		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, acct.ANG_Accreditation_Model__c);
+		if (isHe) {
+			System.assertEquals(null, acct.ParentId);
+			System.assertEquals(null, acct.Top_Parent__c);
+			System.assertEquals(AMS_Utils.HE, acct.Location_Type__c);
+		} else {
+			System.assertNotEquals(null, acct.ParentId);
+			System.assertNotEquals(null, acct.Top_Parent__c);
+			System.assertEquals(acct.ParentId, acct.Top_Parent__c);
+			System.assertEquals(AMS_Utils.AE, acct.Location_Type__c);
+		}
+
+		// relationship info
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Parent_Account__c, Hierarchy__c
+												  FROM AMS_Agencies_relationhip__c
+												  WHERE Child_Account__c = :acct.Id];
+		
+		if (isHe) {
+			System.assertEquals(0, rels.size());
+			
+			List<AMS_Agencies_Hierarchy__c> hs = [SELECT Id, Main_account__c
+												  FROM AMS_Agencies_Hierarchy__c
+												  WHERE Main_account__c = :acct.Id];
+
+			System.assertEquals(1, hs.size());
+			System.assertEquals(acct.Id, hs.get(0).Main_account__c);
+
+			if (!isGe) { // because we can only process 1 account, this validation will not work for GE
+				rels = [SELECT Id FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = :hs.get(0).Id];
+				List<Account> childAcct = [SELECT Id FROM account WHERE ParentId = :acct.Id];
+				
+				System.assertEquals(childAcct.size(), rels.size());
+			}
+		} else {
+			System.assertEquals(1, rels.size());
+			System.assertEquals(acct.ParentId, rels.get(0).Parent_Account__c);
+			
+			List<AMS_Agencies_Hierarchy__c> hs = [SELECT Id
+												  FROM AMS_Agencies_Hierarchy__c
+												  WHERE Id = :rels.get(0).Hierarchy__c];
+
+			System.assertEquals(1, hs.size());
+		}
+
+		// oscar
+		List<AMS_OSCAR__c> oscars = [SELECT Id, Process__c, RecordTypeId, Step51__c, Parent_OSCAR__c, AMS_Online_Accreditation__c
+									 FROM AMS_OSCAR__c
+									 WHERE Account__c = :acct.Id];
+		
+		if (isHe) {
+			System.assertEquals(1, oscars.size());
+			System.assertEquals(AMS_Utils.NGCONVERSIONMCTOST, oscars.get(0).Process__c);
+			System.assertEquals(AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, oscars.get(0).RecordTypeId);
+			if (!isGe) {
+				System.assertNotEquals(null, oscars.get(0).Parent_OSCAR__c);
+				System.assertEquals(AMS_Utils.NOT_APPLICABLE, oscars.get(0).Step51__c);
+			} else {
+				System.assertEquals(null, oscars.get(0).Parent_OSCAR__c);
+			}
+		} else {
+			System.assertEquals(0, oscars.size());
+		}
+
+		// oscar relations
+		if (isHe) {
+			List<AMS_Process_Detail__c> pds = [SELECT Id
+											   FROM AMS_Process_Detail__c
+											   WHERE Oscar__c = :oscars.get(0).Id];
+			List<Account> childAe = [SELECT Id
+									 FROM account
+									 WHERE ParentId = :acct.Id
+										 AND Location_Type__c = :AMS_Utils.AE];
+
+			System.assertEquals(childAe.size(), pds.size());
+		}
+
+		// pax
+		if (isHe) {
+			List<AMS_Pax_Accreditation_Form__c> paxs = [SELECT Id, Location_Type__c, ANG_Accreditation_type__c
+														FROM AMS_Pax_Accreditation_Form__c
+														WHERE Id = :oscars.get(0).AMS_Online_Accreditation__c];
+			System.assertEquals(1, paxs.size());
+			System.assertEquals(AMS_Utils.HE, paxs.get(0).Location_Type__c);
+			System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, paxs.get(0).ANG_Accreditation_type__c);
+		}
+	}
+}

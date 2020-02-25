@@ -3688,12 +3688,12 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
     <fields>
         <fullName>Parent_OSCAR__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Parent OSCAR process for this OSCAR</description>
+        <description>Stores the OSCAR reference to a parent OSCAR. Introduced for the multicountry to standard full conversion process where every child OSCAR created on the different BSPs need to have a link to the original OSCAR created on the main BSP (GE)</description>
         <externalId>false</externalId>
         <label>Parent OSCAR</label>
         <referenceTo>AMS_OSCAR__c</referenceTo>
         <relationshipLabel>OSCARs</relationshipLabel>
-        <relationshipName>Parent_OSCARs</relationshipName>
+        <relationshipName>Child_OSCARs</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>

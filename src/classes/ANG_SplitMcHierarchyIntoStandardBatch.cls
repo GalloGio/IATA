@@ -9,6 +9,11 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	private Id accountGE;
 	private Boolean processSingleBsp;
 	
+	/**
+	 * Used when testing to limit the "start" method query. If the batch is executed in testing, it can only return 1 result.
+	 */
+	public static Id forceAccountForTesting = null;
+	
 	public ANG_SplitMcHierarchyIntoStandardBatch(Id accountGE, Boolean processSingleBsp) {
 		this.accountGE = accountGE;
 		this.processSingleBsp = processSingleBsp;
@@ -31,16 +36,21 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			+ ' FROM Account ' // 
 			+ ' WHERE (Id = :accountGE ' // 
 			+ '        OR Top_Parent__c = :accountGE) ' // 
-			+ '     AND Location_Type__c IN :locations ');
+			+ '     AND Location_Type__c IN :locations ' // 
+			+ (Test.isRunningTest() && forceAccountForTesting != null ? ' AND Id = :forceAccountForTesting ' : ''));
 	}
 	
 	global void execute(Database.BatchableContext BC, List<SObject> scope) {
 		System.SavePoint sp = Database.setSavepoint();
 
+		List<Account> accts = (List<Account>) scope;
+
 		try {
-			List<Account> accts = updateAccountInformation((List<Account>) scope);
+			updateAccountInformation(accts);
 			updateAccountHierarchy(accts);
-			createConversionToSTProcess(accts);
+			Case c = getOscarCase(accountGE);
+			updateStagingArea(accts, c);
+			createConversionMcToStProcess(accts, c);
 		} catch (Exception e) {
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - execute] Exception: ' + e.getMessage());
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - execute] Exception Stacktrace: ' + e.getStackTraceString());
@@ -50,75 +60,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		
-	}
-	
-	private List<Account> updateAccountInformation(List<Account> accts) {
-		// change the location type, parents and accreditation model
-		List<Account> heAccounts = new List<Account>();
-		
-		for (Account acct : accts) {
-			if (acct.Location_Type__c == AMS_Utils.GE) {
-				acct.Location_Type__c = AMS_Utils.HE;
-			} else if (acct.Location_Type__c == AMS_Utils.HE) {
-				acct.ParentId = null;
-				acct.Top_Parent__c = null;
-				heAccounts.add(acct);
-			} else { // AE
-				acct.Top_Parent__c = acct.ParentId;
-			}
-			
-			acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
-		}
-		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountInformation] Updated accounts: ' + accts);
-		update accts;
-
-		return heAccounts;
-	}
-
-	private void updateAccountHierarchy(List<Account> accts) {
-		List<AMS_Agencies_relationhip__c> arsToDelete = new List<AMS_Agencies_relationhip__c>();
-		Map<Id, AMS_Agencies_Hierarchy__c> arsToCreate = new Map<Id, AMS_Agencies_Hierarchy__c>();
-
-		for (Account acct : accts) {
-			// remove the relationships with the parent GE
-			arsToDelete.addAll(acct.AMS_Agencies_relationships__r);
-			
-			// create a new hierarchy
-			AMS_Agencies_Hierarchy__c ah = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy', Main_account__c = acct.Id);
-			arsToCreate.put(acct.Id, ah);
-			
-			// update child account's hierarchy to the new one
-			// made after the "AMS_Agencies_Hierarchy__c" insert
-		}
-
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Deleted agency relationships: ' + arsToDelete);
-		if (!arsToDelete.isEmpty())
-			delete arsToDelete;
-		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Created agency hierarchies: ' + arsToCreate);
-		if (!arsToCreate.isEmpty()) {
-			insert arsToCreate.values();
-			
-			// update child account's hierarchy to the new one
-			List<AMS_Agencies_relationhip__c> allArs = [SELECT Id, Parent_Account__c
-													 FROM AMS_Agencies_relationhip__c
-													 WHERE Parent_Account__c IN :arsToCreate.keySet()];
-			for (AMS_Agencies_relationhip__c ar : allArs)
-				ar.Hierarchy__c = arsToCreate.get(ar.Parent_Account__c).Id;
-			
-			System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Updated agency relationships: ' + allArs);
-			update allArs;
-		}
-	}
-
-	private void createConversionToSTProcess(List<Account> accts) {
-		Case c = getOscarCase(accountGE);
-		Map<Id, AMS_OSCAR__c> oscars = createOscar(accts, getOscarFromCase(c));
-		Map<Id, Case> cases = createOscarCase(accts, c, oscars);
-		Map<Id, AMS_Pax_Accreditation_Form__c> paxs = createStagingArea(accts, cases);
-		finalOscarUpdate(accts, oscars, cases, paxs);
+		// NOTHING
 	}
 
 	private Case getOscarCase(Id acct) {
@@ -130,6 +72,128 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 							ORDER BY CaseNumber DESC];
 		return cases.get(0);
 	}
+	
+	/**
+	 * Updates the location type, parents and accreditation model based on the account location type (for active accounts).
+	 */
+	private void updateAccountInformation(List<Account> accts) {
+		for (Account acct : accts) {
+			if (!isActiveAccount(acct)) {
+				acct.ParentId = null;
+				acct.Top_Parent__c = null;
+			} else {
+				acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+
+				if (acct.Location_Type__c == AMS_Utils.GE) {
+					acct.Location_Type__c = AMS_Utils.HE;
+				} else if (acct.Location_Type__c == AMS_Utils.HE) {
+					acct.ParentId = null;
+					acct.Top_Parent__c = null;
+				} else { // AE
+					acct.Top_Parent__c = acct.ParentId;
+				}
+			}
+		}
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountInformation] Updated accounts: ' + accts);
+		ANG_ConversionHelper.isMigrationTool = true; // flag set to true to bypass the logic on ANG_AgencyEventsGenerator.run
+		update accts;
+		ANG_ConversionHelper.isMigrationTool = false;
+	}
+
+	/**
+	 * Removed the relationship between HE and parent GE and between all inactive accounts (any location type).
+	 */
+	private void updateAccountHierarchy(List<Account> accts) {
+		List<AMS_Agencies_relationhip__c> arsToDelete = new List<AMS_Agencies_relationhip__c>();
+		Map<Id, AMS_Agencies_Hierarchy__c> arsToCreate = new Map<Id, AMS_Agencies_Hierarchy__c>();
+
+		for (Account acct : accts) {
+			if (! isActiveAccount(acct) || (acct.Location_Type__c == AMS_Utils.HE && acct.Id != accountGE)) {
+				// remove the relationships with the parent GE or any relation on inactive accounts
+				arsToDelete.addAll(acct.AMS_Agencies_relationships__r);
+				
+				// create a new hierarchy on HE accounts
+				if (isActiveAccount(acct)) {
+					AMS_Agencies_Hierarchy__c ah = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy', Main_account__c = acct.Id);
+					arsToCreate.put(acct.Id, ah);
+				}
+				
+				// update child account's hierarchy to the new one
+				// made after the "AMS_Agencies_Hierarchy__c" insert
+			}
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Deleted agency relationships: ' + arsToDelete);
+		if (!arsToDelete.isEmpty())
+			delete arsToDelete;
+		
+		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Created agency hierarchies: ' + arsToCreate);
+		if (!arsToCreate.isEmpty()) {
+			insert arsToCreate.values();
+			
+			// update child account's hierarchy to the new one
+			List<AMS_Agencies_relationhip__c> allArs = [SELECT Id, Parent_Account__c
+														FROM AMS_Agencies_relationhip__c
+														WHERE Parent_Account__c IN :arsToCreate.keySet()];
+			for (AMS_Agencies_relationhip__c ar : allArs)
+				ar.Hierarchy__c = arsToCreate.get(ar.Parent_Account__c).Id;
+			
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateAccountHierarchy] Updated agency relationships: ' + allArs);
+			update allArs;
+		}
+	}
+	
+	/**
+	 * Update the information on the stating area of the GE account.
+	 */
+	private void updateStagingArea(List<Account> accts, Case c) {
+		for (Account acct : accts) {
+			if (acct.Id != accountGE)
+				continue;
+			
+			AMS_Pax_Accreditation_Form__c pax = getStagingAreaFromCase(c);
+			pax.Location_Type__c = AMS_Utils.HE;
+		
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateStagingArea] Updated pax: ' + pax);
+			update pax;
+		}
+	}
+
+	private AMS_Pax_Accreditation_Form__c getStagingAreaFromCase(Case c) {
+		return [SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :c.Id].get(0);
+	}
+
+	/**
+	 * Creates a single oscar for each HE account (hierarchy)
+	 */
+	private void createConversionMcToStProcess(List<Account> accts, Case c) {
+		// get the HE accounts (active)
+		List<Account> allHe = new List<Account>();
+		Account geAccount = null;
+		
+		for (Account acct : accts) {
+			if (acct.Id == accountGE)
+				geAccount = acct;
+			else if (isActiveAccount(acct) && acct.Location_Type__c == AMS_Utils.HE)
+				allHe.add(acct);
+		}
+
+		AMS_OSCAR__c geOscar = getOscarFromCase(c);
+
+		List<Account> allGeAndHe = new List<Account>(allHe);
+		if (geAccount != null)
+			allGeAndHe.add(geAccount);
+
+		// create / update the entities
+		Map<Id, AMS_OSCAR__c> oscars = createOscar(allHe, geOscar);
+		oscars.put(accountGE, geOscar);
+
+		addAeAccountInformationToOscar(allGeAndHe, oscars);
+		Map<Id, Case> cases = createOscarCase(allHe, c, oscars);
+		Map<Id, AMS_Pax_Accreditation_Form__c> paxs = createStagingArea(allHe, cases);
+		finalOscarUpdate(allHe, oscars, cases, paxs);
+	}
 
 	private AMS_OSCAR__c getOscarFromCase(Case c) {
 		List<AMS_OSCAR__c> oscars = [SELECT Id
@@ -139,6 +203,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		return oscars.get(0);
 	}
 
+	/**
+	 * Create the new oscars for the accounts (related to the parent GE oscar).
+	 */
 	private Map<Id, AMS_OSCAR__c> createOscar(List<Account> accts, AMS_OSCAR__c parentOscar) {
 		Map<String, Object> fieldsToSetOnOscar = new Map<String, Object>();
 		fieldsToSetOnOscar.put('Process__c', AMS_Utils.NGCONVERSIONMCTOST);
@@ -154,12 +221,45 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			oscarsToInsert.put(acct.Id, oscar);
 		}
 		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createOscar] Created oscars: ' + oscarsToInsert);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createOscar] Created oscars: ' + oscarsToInsert);
 		if (!oscarsToInsert.isEmpty())
 			insert oscarsToInsert.values();
 		return oscarsToInsert;
 	}
 
+	/**
+	 * Creates a Process Details related to the oscar with the relationship between the oscar and the AE accounts
+	 * 	in the hierarchy.
+	 */
+	private void addAeAccountInformationToOscar(List<Account> accts, Map<Id, AMS_OSCAR__c> oscars) {
+		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
+		
+		for (Account acct : getChildAeAccounts(accts)) {
+			AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+			pd.Oscar__c = oscars.get(acct.ParentId).Id;
+			pd.Account__c = acct.Id;
+			pd.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+			pd.ANG_Location_Type_Conversion__c = acct.Location_Type__c;
+			processDetailLst.add(pd);
+		}
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - addAeAccountInformationToOscar] Created process detail: ' + processDetailLst);
+		if (!processDetailLst.isEmpty())
+			insert processDetailLst;
+	}
+
+	private List<Account> getChildAeAccounts(List<Account> accts) {
+		return [SELECT Id, ParentId, Location_Type__c
+				FROM Account
+				WHERE ParentId = :accts
+					AND Location_Type__c = :AMS_Utils.AE
+					AND Status__c NOT IN ( '', null, :AMS_Utils.ACC_S4_LISTED, :AMS_Utils.ACC_S0_TERMINATED,
+										   :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION )];
+	} 
+
+	/**
+	 * Create the related Case to the newly created oscars.
+	 */
 	private Map<Id, Case> createOscarCase(List<Account> accts, Case c, Map<Id, AMS_OSCAR__c> oscars) {
 		Map<Id, Case> casesToInsert = new Map<Id, Case>();
 
@@ -183,32 +283,38 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			casesToInsert.put(acct.Id, newCase);
 		}
 		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createOscarCase] Created cases: ' + casesToInsert);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createOscarCase] Created cases: ' + casesToInsert);
 		if (!casesToInsert.isEmpty())
 			insert casesToInsert.values();
 		return casesToInsert;
 	}
 
+	/**
+	 * Creates the staging areas (PAX) to the newly created oscars.
+	 */
 	private Map<Id, AMS_Pax_Accreditation_Form__c> createStagingArea(List<Account> accts, Map<Id, Case> cases) {
 		Map<Id, AMS_Pax_Accreditation_Form__c> paxToInsert = new Map<Id, AMS_Pax_Accreditation_Form__c>();
 
 		for (Account acct : accts) {
 			Map<String, Object> fieldsToSetOnPax = ANG_MulticountryHelper.buildStagingAreaFieldsObject(acct);
 			
-			AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance()
-				.getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity'), acct.Name, cases.get(acct.Id).Id,
-					fieldsToSetOnPax);
+			AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX,
+				acct.Name, cases.get(acct.Id).Id, fieldsToSetOnPax);
 			
 			stagingArea.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+			stagingArea.Remittance_frequency__c = acct.Remittance_frequency__c;
 			paxToInsert.put(acct.Id, stagingArea);
 		}
 		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createStagingArea] Created pax: ' + paxToInsert);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createStagingArea] Created pax: ' + paxToInsert);
 		if (!paxToInsert.isEmpty())
 			insert paxToInsert.values();
 		return paxToInsert;
 	}
 	
+	/**
+	 * Final update to the oscars with the Case and PAX information.
+	 */
 	private void finalOscarUpdate(List<Account> accts, Map<Id, AMS_OSCAR__c> oscars, Map<Id, Case> cases, Map<Id, AMS_Pax_Accreditation_Form__c> paxs) {
 		List<AMS_OSCAR__c> oscarToUpdate = new List<AMS_OSCAR__c>();
 		
@@ -222,8 +328,14 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			oscarToUpdate.add(oscar);
 		}
 		
-		System.debug(LoggingLevel.INFO, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - finalOscarUpdate] Updated oscars: ' + oscarToUpdate);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - finalOscarUpdate] Updated oscars: ' + oscarToUpdate);
 		if (!oscarToUpdate.isEmpty())
 			update oscarToUpdate;
+	}
+
+	private boolean isActiveAccount(Account acct) {
+		return String.isNotBlank(acct.Status__c) && acct.Status__c != AMS_Utils.ACC_S4_LISTED
+			&& acct.Status__c != AMS_Utils.ACC_S0_TERMINATED && acct.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED
+			&& acct.Status__c != AMS_Utils.ACC_S3_NOTINOPERATION;
 	}
 }
