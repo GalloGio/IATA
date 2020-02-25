@@ -76,13 +76,12 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 	public List<ISSP_ICCS_Utils.ParticipationRow> listCurrencyParticipations {
 		get{
 			ISSP_ICCS_CycleMgmtController previousComponentController = (ISSP_ICCS_CycleMgmtController) pageController.componentControllersMap.get(pageController.previousComponent);
-			list<ISSP_ICCS_Utils.ParticipationRow> listParticipation = new List<ISSP_ICCS_Utils.ParticipationRow>();
-			for (ISSP_ICCS_Utils.ParticipationRow participationRow: previousComponentController.adhocCycleParticipationTable.participationRows) {
-				if (participationRow.participation.cashflow.processingCurrency == selectedCurrency) {
-					listParticipation.add(participationRow);
+			for (ISSP_ICCS_Utils.CurrencyRow currencyRow: previousComponentController.adhocCycleParticipationTable.currencyRows) {
+				if (currencyRow.currencyIsoCode == selectedCurrency) {
+					return currencyRow.currencyParticipationRows;
 				}
 			}
-			return listParticipation;
+			return new List<ISSP_ICCS_Utils.ParticipationRow>();
 		}
 	}
 

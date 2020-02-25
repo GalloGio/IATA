@@ -9403,6 +9403,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Create AdHoc SI</value>
     </labels>
     <labels>
+        <fullName>ICCS_Create_Currency_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Currency SI Link</shortDescription>
+        <value>Create Currency SI</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Create_Future_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11112,6 +11120,22 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS Start Date Label</shortDescription>
         <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received</shortDescription>
+        <value>Status: Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassinged</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned</shortDescription>
+        <value>Status: Notification Not Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Subject_Label</fullName>

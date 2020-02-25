@@ -451,8 +451,12 @@
 					background-color: #dadada;
 					border-radius: 0;
 				}
+				.mrgn-l-r .panel-currency-heading table tr:first-child {
+					border: 1px solid #0075bb;
+				}
 				.mrgn-l-r .panel-currency-heading table tr:first-child td {
-					background-color: #dae8da;
+					background-color: white;
+					color: #0075bb;
 					border-radius: 0;
 				}
 				.panel-heading td {

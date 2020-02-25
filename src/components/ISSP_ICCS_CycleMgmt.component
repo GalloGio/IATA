@@ -90,7 +90,7 @@
 															</td>
 															<td style="width : auto; text-align : right; font-size : 10pt;">
 																<apex:outputPanel rendered="{! isSuperUser}">
-																	<apex:commandLink style="white-space:nowrap;" action="{! createSettlementInstruction}" value="Create Currency SI" rerender="pageMainPanel" status="processActStatusId">
+																	<apex:commandLink style="white-space:nowrap;" action="{! createSettlementInstruction}" value="{!$Label.ICCS_Create_Currency_SI_Link}" rerender="pageMainPanel" status="processActStatusId">
 																		<apex:param name="settlementInstructionType" value="Currency" assignTo="{! settlementInstructionTypeParameter}"/>
 																		<apex:param name="participationId" value="{! null }" assignTo="{! participationIdParameter}"/>
 																		<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
@@ -177,7 +177,7 @@
 											<apex:repeat value="{! currencyRow.currencyParticipationRows}" var="participationRow">
 												<apex:outputPanel rendered="{! !participationRow.isFilteredOut }">
 													<div class="panel-primary" style="min-height:20px;">
-														<div class="{!IF(participationRow.isPreassigned || participationRow.isNotReceived,'panel-heading1','panel-heading')} head_panel_green">
+														<div class="panel-heading head_panel_green">
 															<div class="panel-title">
 																<table style="width : 100%;">
 																	<tr>
@@ -193,7 +193,8 @@
 																		</td>
 																		<td style="width : 25%; text-align : left;">
 																			<apex:outputText value="{! $Label.ICCS_NoA}" rendered="{! participationRow.participation.noa == 'true'}"/>
-																			<apex:outputText value="Status: {!participationRow.participation.cashflow.CashflowStatus}" rendered="{! participationRow.isNotReceived || participationRow.isPreassigned}"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Preassigned}" rendered="{! participationRow.isPreassigned}"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Not_Received}" rendered="{! participationRow.isNotReceived}"/>
 																		</td>
 																		<td style="width : 25%; text-align : right; font-size : 10pt;">
 																			<apex:outputPanel rendered="{! participationRow.participation.noa != 'true' && isSuperUser}">

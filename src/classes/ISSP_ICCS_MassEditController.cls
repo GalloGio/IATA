@@ -18,12 +18,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 		set {
 			currencyFilter = value;
 			// select participations for this currency only
-			this.listParticipation = new List<ISSP_ICCS_Utils.ParticipationRow>();
-			for (ISSP_ICCS_Utils.ParticipationRow participationRow: this.listAllParticipation) {
-				if (participationRow.participation.cashflow.processingCurrency == currencyFilter) {
-					this.listParticipation.add(participationRow);
-				}
-			}
+			this.listParticipation = this.mapCurrencyParticipations.get(currencyFilter);
 		}
 	}
 
@@ -31,12 +26,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 	public List<SelectOption> availableCurrenciesList {
 		get{
 			List<SelectOption> availableCurrenciesList = new List<SelectOption>{new SelectOption('', 'Select a Currency')};
-
-			set<String> setCurrencies = new set<String>();
-			for (ISSP_ICCS_Utils.ParticipationRow participationRow: this.listAllParticipation) {
-				setCurrencies.add(participationRow.participation.cashflow.processingCurrency);
-			}
-			list<String> listCurrencies = new list<String>(setCurrencies);
+			list<String> listCurrencies = new list<String>(this.mapCurrencyParticipations.keyset());
 			listCurrencies.sort();
 			for (String currencyName: listCurrencies) {
 				availableCurrenciesList.add(new SelectOption(currencyName,currencyName));
@@ -91,7 +81,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 
 	public String cycleId {get;set;}
 	public String participant {get;set;}
-	public list<ISSP_ICCS_Utils.ParticipationRow> listAllParticipation {get;set;}
+	public map<String,list<ISSP_ICCS_Utils.ParticipationRow>> mapCurrencyParticipations {get;set;}
 	public list<ISSP_ICCS_Utils.ParticipationRow> listParticipation {get;set;}
 	public list<ISSP_ICCS_CoreRest.InstructionLine> listInstruction {get;set;}
 	public String settlementInstructionType {get;set;}
@@ -113,7 +103,10 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 			this.settlementInstructionType = previousComponentController.settlementInstructionTypeParameter;
 			this.cycleId = previousComponentController.selectedAdhocCycle;
 			this.participant = pageController.participantId;
-			this.listAllParticipation = previousComponentController.adhocCycleParticipationTable.participationRows;
+			this.mapCurrencyParticipations = new map<String,list<ISSP_ICCS_Utils.ParticipationRow>>();
+			for (ISSP_ICCS_Utils.CurrencyRow currencyRow: previousComponentController.adhocCycleParticipationTable.currencyRows) {
+				this.mapCurrencyParticipations.put(currencyRow.currencyIsoCode, currencyRow.currencyParticipationRows);
+			}
 			this.listParticipation = previousComponentController.selectedAdHocParticipationRow;
 		}
 		
@@ -148,7 +141,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 	public override void cleanController(){
 		this.cycleId = null;
 		this.participant = null;
-		this.listAllParticipation = null;
+		this.mapCurrencyParticipations = null;
 		this.listParticipation = null;
 		this.listInstruction = null;
 		this.settlementInstructionType = null;

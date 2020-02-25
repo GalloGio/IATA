@@ -805,8 +805,12 @@ public class ISSP_ICCS_CoreRest{
 		}
 
 		public void assignValue(String input) {
-			String newValue = input.replaceAll(',','');
-			this.value = Decimal.ValueOf(newValue);
+			try {
+				String newValue = input.replaceAll(',','');
+				this.value = Decimal.ValueOf(newValue);
+			} catch (Exception e) {
+				this.value = 0;
+			}
 		}
 
 		public InstructionLine(){
