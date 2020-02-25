@@ -5577,6 +5577,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
@@ -5727,6 +5729,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
@@ -5885,6 +5889,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
