@@ -147,7 +147,7 @@ public without sharing class TipCtrl {
 
 
 		if(sessionPartition != null) {
-			System.debug('cacheKey:: ' + cacheKey);
+
 			if(sessionPartition.contains(cacheKey)) {
 
 				result.token = (String)sessionPartition.get(cacheKey);
