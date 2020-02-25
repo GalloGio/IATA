@@ -9,8 +9,8 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	public static final String REPORT_TYPE_AMAZON = 'Amazon File';
 	public static final String REPORT_TYPE_POWERBI = 'Power BI';
 
-	public static final String REPORT_TYPE_AMAZON_LABEL = Label.CSP_Breadcrumb_Service_TIPReports_AmazonType;
-	public static final String REPORT_TYPE_POWERBI_LABEL = Label.CSP_Breadcrumb_Service_TIPReports_PBIType;
+	public static final String REPORT_TYPE_AMAZON_LABEL = Label.CSP_Service_TIPReports_AmazonType;
+	public static final String REPORT_TYPE_POWERBI_LABEL = Label.CSP_Service_TIPReports_PBIType;
 
 	public static final String PORTAL_ACCESS_GRANTED = 'Access Granted';
 	public static final String SEPARATOR = '/';

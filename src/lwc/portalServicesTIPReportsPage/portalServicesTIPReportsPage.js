@@ -4,11 +4,11 @@ import { LightningElement, track } from 'lwc';
 import ISSP_AMS_ACCR_Alert1 from '@salesforce/label/c.ISSP_AMS_ACCR_Alert1';
 import CSP_Service_TIPReports_NoAccess from '@salesforce/label/c.CSP_Service_TIPReports_NoAccess';
 import CSP_Service_TIPReports_NoReports from '@salesforce/label/c.CSP_Service_TIPReports_NoReports';
-import CSP_Breadcrumb_Service_TIPReports_TextFileType from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports_TextFileType';
-import CSP_Breadcrumb_Service_TIPReports_TextPostedDate from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports_TextPostedDate';
-import CSP_Breadcrumb_Service_TIPReports_TextFileName from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports_TextFileName';
-import CSP_Breadcrumb_Service_TIPReports_TextAction from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports_TextAction';
-import CSP_Breadcrumb_Service_TIPReports_TextOpen from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports_TextOpen';
+import CSP_Service_TIPReports_TextFileType from '@salesforce/label/c.CSP_Service_TIPReports_TextFileType';
+import CSP_Service_TIPReports_TextPostedDate from '@salesforce/label/c.CSP_Service_TIPReports_TextPostedDate';
+import CSP_Service_TIPReports_TextFileName from '@salesforce/label/c.CSP_Service_TIPReports_TextFileName';
+import CSP_Service_TIPReports_TextAction from '@salesforce/label/c.CSP_Service_TIPReports_TextAction';
+import CSP_Service_TIPReports_TextOpen from '@salesforce/label/c.CSP_Service_TIPReports_TextOpen';
 
 //import controller methods
 import getTIPReportPageWrapper from '@salesforce/apex/PortalServiceTIPReportsCtrl.getTIPReportPageWrapper';
@@ -21,11 +21,11 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 		ISSP_AMS_ACCR_Alert1,
 		CSP_Service_TIPReports_NoAccess,
 		CSP_Service_TIPReports_NoReports,
-		CSP_Breadcrumb_Service_TIPReports_TextFileType,
-		CSP_Breadcrumb_Service_TIPReports_TextPostedDate,
-		CSP_Breadcrumb_Service_TIPReports_TextFileName,
-		CSP_Breadcrumb_Service_TIPReports_TextAction,
-		CSP_Breadcrumb_Service_TIPReports_TextOpen
+		CSP_Service_TIPReports_TextFileType,
+		CSP_Service_TIPReports_TextPostedDate,
+		CSP_Service_TIPReports_TextFileName,
+		CSP_Service_TIPReports_TextAction,
+		CSP_Service_TIPReports_TextOpen
     };
 
 	@track loading = true;
@@ -41,10 +41,10 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 	connectedCallback() {
 
 		this.tipReportsTableColumns = [
-			{label: this.label.CSP_Breadcrumb_Service_TIPReports_TextFileType , fieldName: 'reportType', type: 'text'},
-			{label: this.label.CSP_Breadcrumb_Service_TIPReports_TextPostedDate , fieldName: 'lastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: ''}},
-			{label: this.label.CSP_Breadcrumb_Service_TIPReports_TextFileName, fieldName: 'masterLabel', type: 'text', cellAttributes: {class: ''}},
-			{label: this.label.CSP_Breadcrumb_Service_TIPReports_TextAction, type: 'button', typeAttributes: { label: this.label.CSP_Breadcrumb_Service_TIPReports_TextOpen, name: 'openReportOrFile', variant: 'base' }}
+			{label: this.label.CSP_Service_TIPReports_TextFileType , fieldName: 'reportType', type: 'text'},
+			{label: this.label.CSP_Service_TIPReports_TextPostedDate , fieldName: 'lastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: ''}},
+			{label: this.label.CSP_Service_TIPReports_TextFileName, fieldName: 'masterLabel', type: 'text', cellAttributes: {class: ''}},
+			{label: this.label.CSP_Service_TIPReports_TextAction, type: 'button', typeAttributes: { label: this.label.CSP_Service_TIPReports_TextOpen, name: 'openReportOrFile', variant: 'base' }}
 		];
 
 		getTIPReportPageWrapper({})
