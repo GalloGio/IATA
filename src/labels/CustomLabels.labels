@@ -6923,6 +6923,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
+        <categories>Percentage, AWWAgency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Control Total Percentage Owners And Subsidiaries</shortDescription>
+        <value>The total Percentage Held must not exceed 100%. Please change the Percentage and save again.</value>
+    </labels>
+    <labels>
         <fullName>Copyright</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -15277,6 +15285,13 @@ This service is free of charge.</value>
 You have just received an email confirming your request.
 Regards,
 IFG Customer Services</value>
+    </labels>
+    <labels>
+        <fullName>IFTP_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFTP Service Description</shortDescription>
+        <value>The IATA Fueling Training Portal (IFTP) streamlines training activity for into-plane fueling (ITP) personnel by facilitating multiple airline recognition of standardized training for fueling each aircraft type.</value>
     </labels>
     <labels>
         <fullName>ISSP</fullName>

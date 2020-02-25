@@ -10231,6 +10231,20 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Domestic_Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup to the highest ranking headquarter Account within the same country as this Account according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Domestic Headquarter Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Domestic Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Domestic_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Domestic_Ultimate_Account_Global_ID__c</fullName>
         <description>The Account Global ID of the highest ranking company within a country for a hierarchy. There can only be one Domestic Ultimate per Country.</description>
         <externalId>false</externalId>
@@ -11277,6 +11291,20 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Global_Ultimate_Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup to the highest ranking headquarter Account globally according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Global Ultimate Headquarter Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Global Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Global_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -11519,6 +11547,20 @@ WSPN-Worldspan</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Headquarter_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Account that is the Headquarters of this Account according to Dun &amp; Bradstreet.</description>
+        <externalId>false</externalId>
+        <label>Headquarter_Account__c</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Legal Child Accounts</relationshipLabel>
+        <relationshipName>Legal_Child_Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Higher_Level_Customer__c</fullName>
@@ -120836,6 +120878,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Membership_status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
@@ -121134,18 +121177,30 @@ $User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Blocks_Users_Editing_Fields_AgencyWWHQ</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Blocks users editing ISO Country, VAT Number, Billing address standard field fields if they don’t have the permission set AMP_Agency_Management and record Type Agency WW HQ</description>
         <errorConditionFormula>AND(
 				$Permission.AMP_Agency_Management = False, 
-				 OR(
-				     ISCHANGED( BillingAddress ),
+OR(
+ISCHANGED(BillingStreet),
+ISCHANGED(BillingCity),
+ISCHANGED(BillingState),
+ISCHANGED(BillingPostalCode),
+ISCHANGED(BillingCountry),
 						 		ISCHANGED( IATA_ISO_Country__c ),
-				 				ISCHANGED( VAT_Number__c )
+				 				ISCHANGED( VAT_Number__c ),
+						 		ISCHANGED( Legal_name__c ),  
+						 		ISCHANGED( TradeName__c ),
+						 		ISCHANGED( Sector__c ),
+						 		ISCHANGED( Category__c ),
+						 		ISCHANGED( Account_Type__c ),
+						 		ISCHANGED( Agency_Business_Model__c ),
+						 		ISCHANGED( Website ),
+						 		ISCHANGED( AM_Ownership_Type__c )
 					),
 				 RecordType.DeveloperName = &apos;Agency_WW_HQ&apos;
 )</errorConditionFormula>
-        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address. Please contact your administrator.</errorMessage>
+        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>
