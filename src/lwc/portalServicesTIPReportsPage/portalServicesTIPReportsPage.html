@@ -2,7 +2,7 @@
 
     <c-portal-page-container>
         <span slot="componentContent">
-            <div class="customCardWhite slds-m-vertical_small">
+            <div class="customCardWhite slds-m-vertical_xx-large">
                 <div class="slds-m-around_medium">
                     <div if:true={loading} class="spinnerContainer">
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -19,11 +19,11 @@
                                 </lightning-datatable>
                             </div>
                             <div if:false={viewResults}>
-                                There are no reports available.
+                                {label.CSP_Service_TIPReports_NoReports}
                             </div>
                         </div>
                         <div if:false={haveAccessToTIPReports}>
-                            You do not have access to TIP Reports service. 
+                            {label.CSP_Service_TIPReports_NoAccess}
                         </div>
                     </div>
                 </div>
@@ -34,23 +34,17 @@
 
     <!-- REPORT POPUP -->
     <div if:true={showReportPopup} >
-        <c-portal-popup-container size="90">
+        <c-portal-popup-container size="90" view-footer={viewPopupFooter} modal-type="narrowTop">
+
             <span slot="modalHeader">
-                <span>{selectedReport.name}</span>
+                <span>{selectedReport.masterLabel}</span>
+                <lightning-icon icon-name="utility:close" size="small" onclick={handleReportPopupCloseButton} class="cursorPointer slds-float_right"></lightning-icon>
             </span>
 
             <span slot="modalBody">
                 <c-portal-tip-reports group-id={selectedReport.groupId} report-id={selectedReport.reportId}></c-portal-tip-reports>
             </span>
 
-            <span slot="modalFooter">
-                <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
-                        <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label="Close" 
-                                variant="neutral" onclick={handleReportPopupCloseButton}></lightning-button>
-                    </div>
-                </div>
-            </span>
         </c-portal-popup-container>
     </div>
 

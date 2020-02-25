@@ -6030,12 +6030,76 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Service Access</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_TIPReports_Subtitle</fullName>
+        <fullName>CSP_Service_TIPReports_AmazonType</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Service_TIPReports_Subtitle</shortDescription>
-        <value>Here is the subtitle (CSP_Service_TIPReports_Subtitle)</value>
+        <shortDescription>CSP_Service_TIPReports_AmazonType</shortDescription>
+        <value>Amazon File</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoAccess</shortDescription>
+        <value>You do not have access to TIP Reports service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoReports</shortDescription>
+        <value>There are no reports available.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_PBIType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_PBIType</shortDescription>
+        <value>Power BI</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextAction</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextAction</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileName</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileName</shortDescription>
+        <value>File Name/ Report Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileType</shortDescription>
+        <value>File Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextOpen</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextOpen</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextPostedDate</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextPostedDate</shortDescription>
+        <value>Posted Date</value>
     </labels>
     <labels>
         <fullName>CSP_Service_TIPReports_Title</fullName>

@@ -485,6 +485,20 @@ lightning-datatable .slds-th__action {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modalNarrowTopMargin {
+    position: fixed; /* Stay in place */ 
+    z-index: 2; /* Sit on top */
+    padding-top: 2vh; /* Location of the box */
+    padding-bottom: 2vh;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
 .customPopupInteriorHalfScreenCentered {
   background-color: #f7f8fa;
   width: 35%;

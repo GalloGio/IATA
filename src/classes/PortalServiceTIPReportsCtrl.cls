@@ -3,17 +3,17 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	/*
 	* This class was created for TIP Reports Service 
 	* It is based on the existing ISSP_TIP_External_Reports_Controller 
-	* and if the page that is using that controller is deleted
-	* the controlled should be deleted and the methods  
-	* getExpiringLinkIfap and createDocumentTrackerRecord 
-	* should be moved to here.
+	* some methods were copyed, other created or changed a bit. 
 	*/
 
 	public static final String REPORT_TYPE_AMAZON = 'Amazon File';
 	public static final String REPORT_TYPE_POWERBI = 'Power BI';
 
-	public static final String PORTAL_ACCESS_GRANTED = 'Access Granted';
+	public static final String REPORT_TYPE_AMAZON_LABEL = Label.CSP_Service_TIPReports_AmazonType;
+	public static final String REPORT_TYPE_POWERBI_LABEL = Label.CSP_Service_TIPReports_PBIType;
 
+	public static final String PORTAL_ACCESS_GRANTED = 'Access Granted';
+	public static final String SEPARATOR = '/';
 
 	@AuraEnabled(cacheable=false)
 	public static TIPReportPageWrapper getTIPReportPageWrapper(){
@@ -74,6 +74,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 			for(PowerBI_Report_Config__mdt metadataReportAux : lstMetadataReports){
 				TIPReportWrapperObject tipReportAux = new TIPReportWrapperObject();
 				tipReportAux.reportType = REPORT_TYPE_POWERBI;
+				tipReportAux.reportTypeLabel = REPORT_TYPE_POWERBI_LABEL;
 				tipReportAux.id = metadataReportAux.Id;
 				tipReportAux.developerName = metadataReportAux.DeveloperName;
 				tipReportAux.masterLabel = metadataReportAux.MasterLabel;
@@ -102,27 +103,23 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 		//Check if user have an account and get either the top parent account if exists or the direct user account
 		Contact currentUserContact = [SELECT Id, Account.Id, Account.Top_Parent__c
-									 FROM Contact WHERE Id = :currentUserContactId];
-		System.debug('currentUserContact: ' + currentUserContact);							 
+									 FROM Contact WHERE Id = :currentUserContactId];							 
 		if(currentUserContact == null && currentUserContact.Account.Id == null && currentUserContact.Account.Top_Parent__c == null){
 			return lstAmazonToReturn;
 		}
 		String userAccountId = currentUserContact.Account.Top_Parent__c != null ? currentUserContact.Account.Top_Parent__c +'' : contact.Account.Id+'';
-		System.debug('userAccountId: ' + userAccountId);
 
 		//get the list of available external reports for that account
 		Map<Id,ISSP_External_Report__c> mapExternalReports = new Map<Id,ISSP_External_Report__c>([SELECT Id, CreatedDate
 			 					  FROM ISSP_External_Report__c
 			 					  WHERE Account__c = :userAccountId
 								  ORDER BY CreatedDate DESC]);
-		System.debug('mapExternalReports: ' + mapExternalReports);
 
 		//Based on amazon available external reports, retrieve the existing links for amazon
 		List<AmazonFile__c> lstAmazonFiles = [SELECT Id, Name, CreatedDate, Full_Name_Unique__c, sObject_Id__c
 											FROM AmazonFile__c
 											WHERE isPublic__c = True AND sObject_Id__c in :mapExternalReports.keySet()
 											ORDER BY sObject_Id__c ASC ];
-		System.debug('lstAmazonFiles: ' + lstAmazonFiles);
 
 		//Iterate over those links and construct the final list to display in the page
 		if(lstAmazonFiles != null && !lstAmazonFiles.isEmpty()){
@@ -131,6 +128,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 				TIPReportWrapperObject tipReportObjectAux = new TIPReportWrapperObject();
 				tipReportObjectAux.lastModifiedDate = amazonFileAux.CreatedDate;
 				tipReportObjectAux.reportType = REPORT_TYPE_AMAZON;
+				tipReportObjectAux.reportTypeLabel = REPORT_TYPE_AMAZON_LABEL;
 				tipReportObjectAux.id = amazonFileAux.Id;
 				tipReportObjectAux.developerName = amazonFileAux.Full_Name_Unique__c;
 				tipReportObjectAux.masterLabel = amazonFileAux.Name;
@@ -143,21 +141,71 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		return lstAmazonToReturn;
 	}
 
-	/*
-	* Reuses ISSP_TIP_External_Reports_Controller method.
-	* If old method is deprecated the contents for getExpiringLinkIfap method should be moved to here. 
-	*/
 	@AuraEnabled(cacheable=false)
 	public static string getExpiringLinkIfap(String fileName){
-		return ISSP_TIP_External_Reports_Controller.getExpiringLinkIfap(fileName);
+		AmazonCredentials credentials = AmazonCredentials.getCredentials('GenericAttach');
+		return genPublicExpiringAWSLinkIFAP(credentials, fileName);
 	}
+
 	/*
 	* Reuses ISSP_TIP_External_Reports_Controller method.
-	* If old method is deprecated the contents for createDocumentTrackerRecord method should be moved to here. 
+	* This method is an integral copy of genPublicExpiringAWSLinkIFAP from ISSP_TIP_External_Reports_Controller.
+	*/
+	private static string genPublicExpiringAWSLinkIFAP(AmazonCredentials credentials, string filename) {
+		String path = credentials.Bucket + SEPARATOR;
+		string  stringToSplit = '/'+filename;
+		list<string> splittedName = stringToSplit.split('/');
+		splittedName.remove(0);
+		string encoded;
+		for(string dirNm:splittedName)
+			encoded+=  EncodingUtil.urlENcode(dirNm,'UTF-8') +'/';
+		encoded = encoded.substring(0,encoded.length()-1).replaceAll('null','');
+
+		Decimal timeInMili = Math.floor(System.now().getTime()/1000)+300;
+		string check = string.valueof(timeInMili);
+		if(check.indexOf('E') <> -1)    {
+			check =check.substring(0,check.indexOf('E')).replace('.', '');
+			check +='9';
+		}
+		long timeOut= Long.ValueOf(check);
+
+		string stringToSign = 'GET\n\n\n' + timeOut+ '\n/' + path+ encoded ;//+ filename;
+		string signature = make_sig(credentials,stringToSign);
+		string queryString = '?AWSAccessKeyId=' + credentials.AWSAccessKeyId + '&Expires=' + timeOut+ '&Signature=' + signature;
+
+		PageReference page = new PageReference(credentials.EndpointBaseURL + path+encoded );
+		map<String,String> params = page.getParameters();
+		params.put('AWSAccessKeyId', credentials.AWSAccessKeyId);
+		params.put('Expires', String.ValueOf(timeOut));
+		params.put('Signature', signature);
+
+		String result = page.getUrl();
+		return result ;
+	}
+
+	/*
+	* Reuses ISSP_TIP_External_Reports_Controller method.
+	* This method is an integral copy of make_sig from ISSP_TIP_External_Reports_Controller.
+	*/
+	private static String make_sig(AmazonCredentials credentials,string canonicalBuffer) {
+		String macUrl;
+		String signingKey = EncodingUtil.base64Encode(Blob.valueOf(CREDENTIALS.Secret));
+		Blob mac = Crypto.generateMac('HMacSHA1', blob.valueof(canonicalBuffer),blob.valueof(CREDENTIALS.Secret));
+		macUrl = EncodingUtil.base64Encode(mac);
+		return macUrl;
+	}
+
+	/*
+	* Reuses ISSP_TIP_External_Reports_Controller method.
+	* This method is an integral copy of createDocumentTrackerRecord from ISSP_TIP_External_Reports_Controller.
 	*/
 	@AuraEnabled(cacheable=false)
 	public static void createDocumentTrackerRecord(String fileId, String reportId){
-		ISSP_TIP_External_Reports_Controller.createDocumentTrackerRecord(fileId,reportId);
+		ISSP_Document_Tracker__c tracker = new ISSP_Document_Tracker__c(Amazon_File__c = fileId,
+	 																	Report_Id__c = reportId,
+																		User__c = UserInfo.getUserId(),
+																		Type__c = 'TIP Report');
+		insert tracker;
 	}
 
 	public class TIPReportPageWrapper {
@@ -190,6 +238,8 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		public String id {get; set;}
 		@AuraEnabled
 		public String reportType {get; set;}
+		@AuraEnabled
+		public String reportTypeLabel {get;set;}
 		@AuraEnabled
 		public String groupId {get; set;}
 		@AuraEnabled
