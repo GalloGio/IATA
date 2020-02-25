@@ -320,7 +320,7 @@ global class AMS_OSCAR_Webservice {
 		}
 		if (step=='44') {
 			if(oscar.Process__c == AMS_Utils.NGANNUALREVAL) {
-				if (oscar.Step44__c == 'Passed') return;
+				if (oscar.Step44__c == AMS_Utils.PASSED) return;
 				message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
 				throw new OSCARException(message);
 			} else {
@@ -530,105 +530,86 @@ global class AMS_OSCAR_Webservice {
 	}
 
 	WebService static String createRiskEvent(String oscarId){
-
 		try{
-
 			List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c, Is_NewGen__c, ANG_Change_Entity_Location__c, Change_of_Entity_Location_within_EU__c, Account__r.ANG_Accreditation_Model__c, Account__r.Location_type__c, AMS_Online_Accreditation__r.Location_Type__c, Account__c from AMS_OSCAR__c where Id =: oscarId];
-
+	
 			if(oscar!=null && oscar.size()>0){
-
 				AMS_OSCAR__c currentOscar = oscar[0];
-
-				if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+	
+				Set<String> processesThatNeedApproval = new Set<String>{
+					AMS_Utils.NEWHESTANDARD,
+					AMS_Utils.NEWGESTANDARD,
+					AMS_Utils.NGCONVERSIONTOMULTICOUNTRY,
+					AMS_Utils.NGCONVERSIONMCTOST
+				};
+	
+				if((processesThatNeedApproval.contains(currentOscar.Process__c) || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL) {
 					return 'Error - In order to generate a risk event you need to have the Manager Approval.';
-
+				}
+	
 				currentOscar.Risk_event_creation_date__c = System.today();
-				currentOscar.STEP36__c = 'Passed';
-
-				boolean isNGNewAccreditation =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NEWHESTANDARD;
-
-				boolean isNGNewChangeAccreditationTypeCash =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCHANGES &&
-						currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE &&
-						currentOscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH;
-
-				boolean isNGChangeOfHierarchyWithNewRHC =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCHANGES &&
-						currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
-						currentOscar.Account__r.Location_type__c == AMS_Utils.HE &&
-						currentOscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
-
-				Boolean isNewGEAccreditation =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGE &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NEWGESTANDARD;
-
-				Boolean isConversionToMulticountry =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
-
-				if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC || isNewGEAccreditation || isConversionToMulticountry){
+				currentOscar.STEP36__c = AMS_Utils.PASSED;
+	
+				Boolean isProcessEligibleForREGeneration = isEligibleForRiskEventGeneration(currentOscar); 
+	
+				//In this scenario, we need to force the RHC update
+				Boolean isNGChangeOfHierarchyWithNewRHC =
+					currentOscar.Process__c == AMS_Utils.NGCHANGES &&
+					currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
+					currentOscar.Account__r.Location_type__c == AMS_Utils.HE &&
+					currentOscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
+	
+				if (isNGChangeOfHierarchyWithNewRHC || isProcessEligibleForREGeneration) {
 					AMS_OscarTriggerHandler.applyRHCForecast = true;
 				}
-
+	
 				update currentOscar;
-
-				if(isNGChangeOfHierarchyWithNewRHC){
-
+	
+				if(isNGChangeOfHierarchyWithNewRHC){ 
 					ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
-
-					if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c)
+	
+					if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c) {
 						update rhcInfo;
+					}
 				}
-
+	
 				AMS_OscarTriggerHandler.applyRHCForecast = false;
-
+	
 				List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
-
+	
 				if(rskEventLst.isEmpty()){
-
-					if(isNGNewAccreditation || isNewGEAccreditation || isConversionToMulticountry){
-
+					if(isProcessEligibleForREGeneration){
 						ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
-
+	
 						if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
 							AMS_OscarTriggerHandler.applyRHCForecast = true;
 							update rhcInfo;
 							AMS_OscarTriggerHandler.applyRHCForecast = false;
 						}
 					}
-
+	
 					return 'No risk event is needed for this OSCAR.';
-
+	
 				}
-				else
+				else {
 					return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
-
+				}
 			}
-
+	
 			return 'ERROR: OSCAR not found.';
-
+	
 		}catch(Exception ex){
 			return AMS_Utils.errorMessageBeautifyer(ex);
 		}
+	}
+	
+	private static Boolean isEligibleForRiskEventGeneration(AMS_OSCAR__c currentOscar) {
+		return (currentOscar.Is_NewGen__c &&
+			((currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE && currentOscar.Process__c == AMS_Utils.NEWHESTANDARD) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGE && currentOscar.Process__c == AMS_Utils.NEWGESTANDARD) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY && currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD && currentOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST) ||
+			(currentOscar.Process__c == AMS_Utils.NGCHANGES && currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE && currentOscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH)));
 	}
 
 	WebService static String createIfapPortalServiceRight(String oscarId) {
