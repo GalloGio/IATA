@@ -11130,7 +11130,7 @@ The sum of percentage cannot exceed 100%</value>
         <value>Status: Notification Not Received</value>
     </labels>
     <labels>
-        <fullName>ICCS_Status_For_Preassinged</fullName>
+        <fullName>ICCS_Status_For_Preassigned</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
