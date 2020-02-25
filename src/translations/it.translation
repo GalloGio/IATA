@@ -3738,6 +3738,10 @@ la seguente procedura per completarlo :
         <name>Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Copyright --></label>
         <name>Copyright</name>
     </customLabels>
