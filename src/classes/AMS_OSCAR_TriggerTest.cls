@@ -83,11 +83,11 @@
 		Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = oscarCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = oscarCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 
@@ -98,7 +98,7 @@
 			Last_name__c = 'owner',
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			Financial_interest__c= 100,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
@@ -217,11 +217,11 @@
 		insert oscarCase;
 
 		Attachment a = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = oscarCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = oscarCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert a;
 
@@ -338,11 +338,11 @@
 		Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = oscarCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = oscarCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 
@@ -354,7 +354,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -811,11 +811,11 @@
 		Case oscarCase = [Select id from case where Oscar__c = :oscar.id];
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = oscarCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = oscarCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 
@@ -829,7 +829,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1039,8 +1039,8 @@
 		Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
 
 		AMS_OSCAR__c oscar = [SELECT id, STEP6__c, (SELECT Id FROM Cases__r)
-							  FROM AMS_OSCAR__c
-							  WHERE Account__c =: a.Id and Id IN (SELECT OSCAR__c FROM Case) limit 1];
+								FROM AMS_OSCAR__c
+								WHERE Account__c =: a.Id and Id IN (SELECT OSCAR__c FROM Case) limit 1];
 
 		AMS_Accreditation_Contact__c dgr = [SELECT Id, Type_Of_Certificate__c FROM AMS_Accreditation_Contact__c WHERE Last_name__c = 'Plitt'];
 		dgr.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
@@ -1080,10 +1080,10 @@
 
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocationType',
-														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
-														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
-														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
-														  TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+															TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
+															TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+															TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
 
 		insert customsettings;
 
@@ -1113,11 +1113,11 @@
 		insert newCase;
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = newCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 
@@ -1140,7 +1140,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1191,10 +1191,10 @@
 
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
-														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
-														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = true,
-														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
-														  TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CHF'));
+															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+															TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = true,
+															TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+															TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CHF'));
 
 		insert customsettings;
 
@@ -1223,11 +1223,11 @@
 		Test.startTest();
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = newCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c,
@@ -1281,10 +1281,10 @@
 
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination09', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
-														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
-														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
-														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false,
-														  TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CHF'));
+															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+															TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
+															TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false,
+															TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CHF'));
 
 		insert customsettings;
 
@@ -1307,11 +1307,11 @@
 		insert newCase;
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = newCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c ,
@@ -1333,7 +1333,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1370,10 +1370,10 @@
 
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination02', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
-														  TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
-														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
-														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
-														  TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CLF'));
+															TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
+															TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
+															TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+															TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CLF'));
 
 		insert customsettings;
 
@@ -1400,11 +1400,11 @@
 		insert newCase;
 
 		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
+			ParentId = newCase.Id,
+			Body = Blob.valueOf('Test'),
+			Name = 'test'
 		);
 		insert attc;
 
@@ -1436,7 +1436,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
-            Agency_owner__c= true,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1682,7 +1682,7 @@
 		owner.Phone__c = '123456789';
 		owner.Financial_interest__c = 100;
 		owner.AMS_Pax_Accreditation_Form__c = stagingArea.Id;
-        owner.Agency_Owner__c = true;
+		owner.Agency_Owner__c = true;
 		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 		insert owner;
 

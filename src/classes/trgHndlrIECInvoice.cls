@@ -1,13 +1,13 @@
-/**  
-  * Description: Trigger Handler for the Zuora Invoice object
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: Trigger Handler for the Zuora Invoice object
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 public with sharing class trgHndlrIECInvoice {
 	public static void OnAfterInsert(List<Zuora__ZInvoice__c> newRecords, Map<Id, Zuora__ZInvoice__c> newRecordsMap) {
 		String sInvoiceZIds = '';
-		Map<String, String> mapInvoiceZIdToNumber = new Map<String, String>(); 
+		Map<String, String> mapInvoiceZIdToNumber = new Map<String, String>();
 		Set<String> setNonZeroInvoiceNumber = new Set<String>();
 		Set<String> setNonZeroInvoiceId = new Set<String>();
 		List<Zuora__ZInvoice__c> lstNonZeroInvoices = new List<Zuora__ZInvoice__c>();
@@ -17,10 +17,10 @@ public with sharing class trgHndlrIECInvoice {
 			//sInvoiceZIds = '';
 			//mapInvoiceZIdToNumber.clear();
 			//setNonZeroInvoiceId.clear();
-			
+
 			sInvoiceZIds += ((sInvoiceZIds == '') ? '\'' : ' OR InvoiceId = \'') + invoice.Zuora__Zuora_Id__c + '\'';
 			mapInvoiceZIdToNumber.put(invoice.Zuora__Zuora_Id__c, invoice.Name);
-			
+
 			// Filter out invoice and invoice items with zero amount
 			if (invoice.Zuora__TotalAmount__c > 0) {
 				setNonZeroInvoiceNumber.add(invoice.Name);
@@ -35,7 +35,7 @@ public with sharing class trgHndlrIECInvoice {
 
 		DownloadRelatedInvoiceItems(sInvoiceZIds, mapInvoiceZIdToNumber, setNonZeroInvoiceId);
 	}
-	
+
 	/**
 	 * Create SAP Invoice records for all new invoices that has not been created before
 	 * @ param setNonZeroInvoiceNumber Set of Zuora of Invoice Numbers
@@ -43,16 +43,16 @@ public with sharing class trgHndlrIECInvoice {
  	 **/
  	 private static void CreateSAPInvoices(Set<String> setNonZeroInvoiceNumber, List<Zuora__ZInvoice__c> ZInvoices) {
 		Set<String> setSAPInvoiceNumber = new Set<String>();
-		
+
 		// Determine which Invoices has been already created in SAP Invoice object
 		for (IEC_SAP_Invoice__c SAPInv : [SELECT Zuora_Invoice_Number__c FROM IEC_SAP_Invoice__c WHERE Zuora_Invoice_Number__c IN :setNonZeroInvoiceNumber]) {
 			setSAPInvoiceNumber.add(SAPInv.Zuora_Invoice_Number__c);
 		}
-		
+
 		List<Zuora__ZInvoice__c> lstInvoicesToSAP = new List<Zuora__ZInvoice__c>();
 		//Set<Id> setBillingAccountId = new Set<Id>();
 		//Set<String> setInvoiceZId = new Set<String>();
-		
+
 		// Filter out Invoices that has been already created in SAP Invoice object
 		for (Zuora__ZInvoice__c ZInv : ZInvoices) {
 			if (!setSAPInvoiceNumber.contains(ZInv.Name)) {
@@ -61,9 +61,9 @@ public with sharing class trgHndlrIECInvoice {
 		//		setInvoiceZId.add(ZInv.Zuora__External_Id__c);
 			}
 		}
-		
+
 		// Get related objects that will help building the SAP Invoice record (i.e. Billing Account, Subscription History)
-		
+
 		// Related: Billing Account
 		//Map<Id, Zuora__CustomerAccount__c> mapBillingAccount = new Map<Id, Zuora__CustomerAccount__c>(
 		//	[SELECT Id, Contact__r.Name, Zuora__External_Id__c, Zuora__DefaultPaymentMethod__c, SAPBillTo__c
@@ -75,7 +75,7 @@ public with sharing class trgHndlrIECInvoice {
 		//		, Contact__r.BillTo_Location__r.SAP_Id__c
 		//	FROM Zuora__CustomerAccount__c
 		//	WHERE Id IN :setBillingAccountId]);
-			
+
 		// Related: Subscription History
 		//Map<String, IEC_Subscription_History__c> mapInvZIdToSubHist = new Map<String, IEC_Subscription_History__c>();
 		//for (IEC_Subscription_History__c subHist :
@@ -83,20 +83,20 @@ public with sharing class trgHndlrIECInvoice {
 		//		, VAT_Number__c, Selected_Payment_Method__c
 		//	FROM IEC_Subscription_History__c
 		//	WHERE Invoice_Zuora_ID__c IN :setInvoiceZId]) {
-			
+
 		//	mapInvZIdToSubHist.put(subHist.Invoice_Zuora_ID__c, subHist);
 		//}
-		
+
 		// Create the SAP Invoice records
 		List<IEC_SAP_Invoice__c> lstNewSAPInvoice = new List<IEC_SAP_Invoice__c>();
 
 		for (Zuora__ZInvoice__c ZInv : lstInvoicesToSAP) {
 			IEC_SAP_Invoice__c SAPInv = new IEC_SAP_Invoice__c();
-			
+
 			// Prep Data for processing
 			//Zuora__CustomerAccount__c ZAcc = (mapBillingAccount.containsKey(ZInv.Zuora__BillingAccount__c)) ? mapBillingAccount.get(ZInv.Zuora__BillingAccount__c) : null;
 			//IEC_Subscription_History__c SubHist = (mapInvZIdToSubHist.containsKey(ZInv.Zuora__External_Id__c)) ? mapInvZIdToSubHist.get(ZInv.Zuora__External_Id__c) : null;
-			
+
 			//if (ZAcc != null) {
 			//	SAPInv.Billing_Name__c = ZAcc.Contact__r.Name;
 			//	SAPInv.Zuora_Billing_Account_ID__c = ZAcc.Zuora__External_Id__c;
@@ -113,7 +113,7 @@ public with sharing class trgHndlrIECInvoice {
 			//	// Also replace the values to match the other previous two approaches
 			//	SAPInv.Pay_Method__c = ZAcc.Zuora__DefaultPaymentMethod__c.replace('Other', 'ICH').replace('CreditCard', 'Credit Card');
 			//}
-				
+
 			// Try to get the billing details from the Billing Account
 			//if (ZAcc != null) {
 			//	SAPInv.Billing_City__c = ZAcc.Contact__r.BillTo_Location__r.City__c;
@@ -138,14 +138,14 @@ public with sharing class trgHndlrIECInvoice {
 			SAPInv.Name = ZInv.Name;
 			SAPInv.Account__c = ZInv.Zuora__Account__c;
 			SAPInv.Billing_Account__c = ZInv.Zuora__BillingAccount__c;
-			
+
 			// if currently running a test method, flag the SAP Invoice
 			if (Test.isRunningTest())
 				SAPInv.Text_Print__c = IECSAPManager_tst.TEST_FLAG_SUCCESS;
-			
+
 			lstNewSAPInvoice.add(SAPInv);
 		}
-		
+
 		if (!lstNewSAPInvoice.isEmpty()) {
 			insert lstNewSAPInvoice;
 		}
@@ -179,10 +179,10 @@ public with sharing class trgHndlrIECInvoice {
 					'	from InvoiceItem ' +
 					'	where InvoiceId = ' + sInvoiceZIds + '');
 			}
-			
+
 			List<Invoice_Item__c> lstInvoiceItemsToInsert = new List<Invoice_Item__c>();
 			Map<String, IEC_SAP_Invoice__c> mapInvoiceItemCounter = new Map<String, IEC_SAP_Invoice__c>();
-			
+
 			// Loop over the result and replicate them in SFDC
 			for (Zuora.zObject zInvoiceItem : lstZInvoiceItems) {
 				String sInvoiceId = (String)zInvoiceItem.getValue('InvoiceId');
@@ -222,14 +222,14 @@ public with sharing class trgHndlrIECInvoice {
 				}
 			}
 
-			
+
 			if (!lstInvoiceItemsToInsert.isEmpty()){
 				try{
 					upsert lstInvoiceItemsToInsert Zuora_ID__c;
 				}catch(Exception ex){
 					IECErrorLogger.logApexException('trgHndlrIECInvoice/DownloadRelatedInvoiceItems'
-					                              , 'Cannot upsert Invoice Items\n' + String.join(lstInvoiceItemsToInsert, '\n')
-					                              , ex.getMessage(), ex.getStackTraceString(), false);
+																				, 'Cannot upsert Invoice Items\n' + String.join(lstInvoiceItemsToInsert, '\n')
+																				, ex.getMessage(), ex.getStackTraceString(), false);
 				}
 			}
 
@@ -238,11 +238,11 @@ public with sharing class trgHndlrIECInvoice {
 					upsert mapInvoiceItemCounter.values() Zuora_Invoice_Number__c;
 				}catch(Exception ex){
 					IECErrorLogger.logApexException('trgHndlrIECInvoice/DownloadRelatedInvoiceItems'
-					                              , 'Cannot upsert counters for SAP Invoice\n' + String.join(mapInvoiceItemCounter.values(), '\n')
-					                              , ex.getMessage(), ex.getStackTraceString(), false);
+																				, 'Cannot upsert counters for SAP Invoice\n' + String.join(mapInvoiceItemCounter.values(), '\n')
+																				, ex.getMessage(), ex.getStackTraceString(), false);
 				}
 			}
-				
+
 		}
 	}
 }

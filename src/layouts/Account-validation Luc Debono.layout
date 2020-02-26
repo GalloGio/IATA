@@ -457,6 +457,11 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ParentId</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Issues__c</fields>

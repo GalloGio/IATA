@@ -1,0 +1,103 @@
+<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+    <aura:attribute name="header" type="String" default="New"/>
+    <aura:attribute name="errorMessage" type="String" default="Error"/>
+    <aura:attribute name="divisionList" type="List"/>
+    <aura:attribute name="importanceList" type="List"/>
+    <aura:attribute name="statusList" type="List"/>
+    <aura:attribute name="record" type="Objective__c"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
+    <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
+
+    <aura:handler name="confirmation" event="c:AWW_ConfirmationEvent" action="{!c.confirmation}"/>
+
+    <aura:method name="showModal" action="{!c.handleModalVisibility}">
+        <aura:attribute name="record" type="Object"/>
+    </aura:method>
+
+    <div aura:id="issue-form" class="slds-hide">
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.handleModalVisibility}" alternativeText="close" variant="bare-inverse" size="large" class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.header}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <aura:renderIf isTrue="{!!empty(v.errorMessage)}">
+                        <ui:message  title="" severity="error">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-6">
+                                    <lightning:icon iconName="utility:warning" alternativeText="Error!" variant="error" size="small"/>
+                                </div>
+                                <div class="slds-col slds-size_5-of-6">
+                                    <ui:outputText value="{!v.errorMessage}"/>
+                                </div>
+                            </div>                       
+                        </ui:message>
+                    </aura:renderIf>
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:input maxlength="80" aura:id="recordName" label="Name" type="text" required="true" value="{!v.record.Name}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:select label="Division" value="{!v.record.Division__c}">
+                                <aura:iteration items="{!v.divisionList}" var="option">
+                                    <option text="{!option.label}" value="{!option.id}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:input maxlength="128" label="Source" type="text" value="{!v.record.AM_Source_Text__c}"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:textarea aura:id="recordDescription" label="Description" type="text" value="{!v.record.Details__c}" maxlength="2048"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:select label="Importance" required="true" value="{!v.record.AM_Level_of_importance__c}">
+                                <aura:iteration items="{!v.importanceList}" var="option">
+                                    <option text="{!option.label}" value="{!option.id}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:select label="Status" required="true" value="{!v.record.Status__c}">
+                                <aura:iteration items="{!v.statusList}" var="option">
+                                    <option text="{!option.label}" value="{!option.id}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" for="global">Global</label>
+                            <lightning:input name="global" type="checkbox" checked="{!v.record.AM_Global__c}" variant="label-hidden"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" for="regional">Regional</label>
+                            <lightning:input name="regional" type="checkbox" checked="{!v.record.AM_Regional__c}" variant="label-hidden"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" for="local">Local</label>
+                            <lightning:input name="local" type="checkbox" checked="{!v.record.AM_Local__c}" variant="label-hidden"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" for="issueIata">Issue with IATA</label>
+                            <lightning:input name="issueIata" type="checkbox" checked="{!v.record.AM_Issue_with_IATA__c}" variant="label-hidden"/>   
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" for="public">Visible to all IATA</label>
+                            <lightning:input name="public" type="checkbox" checked="{!v.record.AM_Public__c}" variant="label-hidden"/>   
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.handleModalVisibility}"/>
+                    <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                </footer>
+            </div> 
+            <c:AWW_ConfirmationModal aura:id="confirmationModal"/>   
+        </section> 
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+
+</aura:component>

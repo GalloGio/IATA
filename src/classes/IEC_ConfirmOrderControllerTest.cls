@@ -1,27 +1,27 @@
 @isTest
-private class IEC_ConfirmOrderControllerTest 
+private class IEC_ConfirmOrderControllerTest
 {
 	@isTest (SeeAllData=true)
-	static void test_not_logged() 
+	static void test_not_logged()
 	{
-		IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+		IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
-		//-- Load page 
+		//-- Load page
 		System.assertEquals(null, ctrl.loggedCustomer);
-		ctrl.onLoadAction(); 
+		ctrl.onLoadAction();
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_empty_cart() 
+	static void test_empty_cart()
 	{
-		//-- Create an logged-in has portal customer 
+		//-- Create an logged-in has portal customer
 		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 		System.runAs(usr)
 		{
 			Test.setCurrentPage(Page.IEC_ConfirmOrder);
-			IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+			IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
-			//-- Validate Cart is Empty 
+			//-- Validate Cart is Empty
 			System.assertEquals(null, ctrl.onLoadAction());
 		}
 	}
@@ -85,7 +85,7 @@ private class IEC_ConfirmOrderControllerTest
 				//*** validate SAP Partner
 				ctrl.onLoadAction();
 				system.assert(ctrl.stopProcess == false, 'Wrong value for valid partners');
-				
+
 				//*** validate missing payment
 				oOrder.Payment_Type__c = null;
 				update oOrder;
@@ -96,7 +96,7 @@ private class IEC_ConfirmOrderControllerTest
 	} //*** end of "test_validSAPPartner"
 
 	@isTest (SeeAllData=true)
-	static void test_Payment_BT_Check() 
+	static void test_Payment_BT_Check()
 	{
 		Database.insert(new Apex_Setting__c(Name='Pardot Campaign', Text_1__c='http://go.updates.iata.org'), false);
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -126,7 +126,7 @@ private class IEC_ConfirmOrderControllerTest
 		ord.Payment_Type__c = 'Check';
 		insert ord;
 
-		//-- Create orderitems 
+		//-- Create orderitems
 		Integer nb =2;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(ord.Id, nb, false);
 		for(OrderItem oi : orderitems)
@@ -135,9 +135,9 @@ private class IEC_ConfirmOrderControllerTest
 		}
 		insert orderItems;
 
-		//-- Generate Coupon Code Rate plan for items 
+		//-- Generate Coupon Code Rate plan for items
 		Set<String> productIds = new Set<String>();
-		
+
 		for(OrderItem oi : new OrderItem_Sel().getOrderItems(ord.Id))
 		{
 			productIds.add(oi.Product__c);
@@ -150,29 +150,29 @@ private class IEC_ConfirmOrderControllerTest
 		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
 		for(Integer x = 0; x < products.size(); x++)
 		{
-			Product2 prod = products[x]; 
+			Product2 prod = products[x];
 			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
-			zRatePlans.add(zPlan); 
+			zRatePlans.add(zPlan);
 			zRatePlans.add(unitPricePlan);
 		}
 
 		insert zRatePlans;
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		 //Create Unit Price Charge & Discount for each Plan 
+		 //Create Unit Price Charge & Discount for each Plan
 		for(zqu__ProductRatePlan__c rp : zRatePlans)
 		{
 			//Unit Price Volume Price & Discount
 			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 3, false);
 			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME; 
+			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME;
 			charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
 			zCharges.addAll(charges);
 		}
 		insert zCharges;
 		List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
-		//-- Generate Tiers for Volume Prices 
+		//-- Generate Tiers for Volume Prices
 		for(zqu__ProductRatePlanCharge__c c : zCharges)
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 3, false));
@@ -185,13 +185,13 @@ private class IEC_ConfirmOrderControllerTest
 			System.runAs(usr)
 			{
 				Test.setCurrentPage(Page.IEC_ConfirmOrder);
-				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
 				//-- Load Page
 				ctrl.onLoadAction();
 				if (ctrl.sfOrder == null) ctrl.initorder();   //*** don't understand why sometime "initorder" wasn't called
 
-				//-- Submit without Payment_Type__c 
+				//-- Submit without Payment_Type__c
 				ctrl.sfOrder.Payment_Type__c = null;
 				try{ctrl.submitOrder();}catch(Exception ex){}
 				System.assert(pageMessagesContains(ApexPages.getMessages(),Label.IEC_Error_PleaseSelectPaymentMethod), 'Invalid error: ' + ApexPages.getMessages());
@@ -210,7 +210,7 @@ private class IEC_ConfirmOrderControllerTest
 	} //*** end of "test_Payment_BT_Check"
 
 	@isTest (SeeAllData=true)
-	static void test_Payment_CreditCard() 
+	static void test_Payment_CreditCard()
 	{
 		Database.insert(new Apex_Setting__c(Name='Pardot Campaign', Text_1__c='http://go.updates.iata.org'), false);
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -239,7 +239,7 @@ private class IEC_ConfirmOrderControllerTest
 		ord.Status = 'New';
 		insert ord;
 
-		//-- Create orderitems 
+		//-- Create orderitems
 		Integer nb =2;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(ord.Id, nb, false);
 		for(OrderItem oi : orderitems)
@@ -248,9 +248,9 @@ private class IEC_ConfirmOrderControllerTest
 		}
 		insert orderItems;
 
-		//-- Generate Coupon Code Rate plan for items 
+		//-- Generate Coupon Code Rate plan for items
 		Set<String> productIds = new Set<String>();
-		
+
 		for(OrderItem oi : new OrderItem_Sel().getOrderItems(ord.Id))
 		{
 			productIds.add(oi.Product__c);
@@ -263,28 +263,28 @@ private class IEC_ConfirmOrderControllerTest
 		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
 		for(Integer x = 0; x < products.size(); x++)
 		{
-			Product2 prod = products[x]; 
+			Product2 prod = products[x];
 			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
-			zRatePlans.add(zPlan); 
+			zRatePlans.add(zPlan);
 			zRatePlans.add(unitPricePlan);
 		}
 		insert zRatePlans;
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		 //Create Unit Price Charge & Discount for each Plan 
+		 //Create Unit Price Charge & Discount for each Plan
 		for(zqu__ProductRatePlan__c rp : zRatePlans)
 		{
 			//Unit Price Volume Price & Discount
 			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 3, false);
 			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME; 
+			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME;
 			charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
 			zCharges.addAll(charges);
 		}
 		insert zCharges;
 		List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
-		//-- Generate Tiers for Volume Prices 
+		//-- Generate Tiers for Volume Prices
 		for(zqu__ProductRatePlanCharge__c c : zCharges)
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 3, false));
@@ -297,7 +297,7 @@ private class IEC_ConfirmOrderControllerTest
 			System.runAs(usr)
 			{
 				Test.setCurrentPage(Page.IEC_ConfirmOrder);
-				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
 				//-- Load Page
 				ctrl.onLoadAction();
@@ -379,7 +379,7 @@ private class IEC_ConfirmOrderControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_Payment_ICH() 
+	static void test_Payment_ICH()
 	{
 		Database.insert(new Apex_Setting__c(Name='Pardot Campaign', Text_1__c='http://go.updates.iata.org'), false);
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -413,7 +413,7 @@ private class IEC_ConfirmOrderControllerTest
 		ord.Campaign__c = oCampaign.Id;
 		insert ord;
 
-		//-- Create orderitems 
+		//-- Create orderitems
 		Integer nb =2;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(ord.Id, nb, false);
 		for(OrderItem oi : orderitems)
@@ -422,9 +422,9 @@ private class IEC_ConfirmOrderControllerTest
 		}
 		insert orderItems;
 
-		//-- Generate Coupon Code Rate plan for items 
+		//-- Generate Coupon Code Rate plan for items
 		Set<String> productIds = new Set<String>();
-		
+
 		for(OrderItem oi : new OrderItem_Sel().getOrderItems(ord.Id))
 		{
 			productIds.add(oi.Product__c);
@@ -437,28 +437,28 @@ private class IEC_ConfirmOrderControllerTest
 		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
 		for(Integer x = 0; x < products.size(); x++)
 		{
-			Product2 prod = products[x]; 
+			Product2 prod = products[x];
 			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
-			zRatePlans.add(zPlan); 
+			zRatePlans.add(zPlan);
 			zRatePlans.add(unitPricePlan);
 		}
 		insert zRatePlans;
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		 //Create Unit Price Charge & Discount for each Plan 
+		 //Create Unit Price Charge & Discount for each Plan
 		for(zqu__ProductRatePlan__c rp : zRatePlans)
 		{
 			//Unit Price Volume Price & Discount
 			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 3, false);
 			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME; 
+			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME;
 			charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
 			zCharges.addAll(charges);
 		}
 		insert zCharges;
 		List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
-		//-- Generate Tiers for Volume Prices 
+		//-- Generate Tiers for Volume Prices
 		for(zqu__ProductRatePlanCharge__c c : zCharges)
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 3, false));
@@ -471,7 +471,7 @@ private class IEC_ConfirmOrderControllerTest
 			System.runAs(usr)
 			{
 				Test.setCurrentPage(Page.IEC_ConfirmOrder);
-				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
 				//-- Load Page
 				ctrl.onLoadAction();
@@ -491,7 +491,7 @@ private class IEC_ConfirmOrderControllerTest
 
 
 	@isTest (SeeAllData=true)
-	static void test_Payment_CreditCardExtra() 
+	static void test_Payment_CreditCardExtra()
 	{
 		Database.insert(new Apex_Setting__c(Name='Pardot Campaign', Text_1__c='http://go.updates.iata.org'), false);
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -520,7 +520,7 @@ private class IEC_ConfirmOrderControllerTest
 		ord.Status = 'New';
 		insert ord;
 
-		//-- Create orderitems 
+		//-- Create orderitems
 		Integer nb =2;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(ord.Id, nb, false);
 		for(OrderItem oi : orderitems)
@@ -529,9 +529,9 @@ private class IEC_ConfirmOrderControllerTest
 		}
 		insert orderItems;
 
-		//-- Generate Coupon Code Rate plan for items 
+		//-- Generate Coupon Code Rate plan for items
 		Set<String> productIds = new Set<String>();
-		
+
 		for(OrderItem oi : new OrderItem_Sel().getOrderItems(ord.Id))
 		{
 			productIds.add(oi.Product__c);
@@ -544,28 +544,28 @@ private class IEC_ConfirmOrderControllerTest
 		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
 		for(Integer x = 0; x < products.size(); x++)
 		{
-			Product2 prod = products[x]; 
+			Product2 prod = products[x];
 			zqu__ProductRatePlan__c unitPricePlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zqu__ProductRatePlan__c zPlan = TestDataGenerator.generateZRatePlans2(prod.Id,1,false)[0];
 			zPlan.Couponcode__c = 'COUP123';
-			zRatePlans.add(zPlan); 
+			zRatePlans.add(zPlan);
 			zRatePlans.add(unitPricePlan);
 		}
 		insert zRatePlans;
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		 //Create Unit Price Charge & Discount for each Plan 
+		 //Create Unit Price Charge & Discount for each Plan
 		for(zqu__ProductRatePlan__c rp : zRatePlans)
 		{
 			//Unit Price Volume Price & Discount
 			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 3, false);
 			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME; 
+			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME;
 			charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
 			zCharges.addAll(charges);
 		}
 		insert zCharges;
 		List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
-		//-- Generate Tiers for Volume Prices 
+		//-- Generate Tiers for Volume Prices
 		for(zqu__ProductRatePlanCharge__c c : zCharges)
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 3, false));
@@ -578,7 +578,7 @@ private class IEC_ConfirmOrderControllerTest
 			System.runAs(usr)
 			{
 				Test.setCurrentPage(Page.IEC_ConfirmOrder);
-				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController(); 
+				IEC_ConfirmOrderController ctrl = new IEC_ConfirmOrderController();
 
 				ApexPages.currentPage().getParameters().put('orderId', ord.Id);
 

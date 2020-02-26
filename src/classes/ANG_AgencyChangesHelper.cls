@@ -869,7 +869,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
-  }
+	}
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
@@ -917,6 +917,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
 			if(isAllHierarchySelected){
+				if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
+					allRelations.remove(oscar.New_Parent__c);
+				}
 				changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
 			}
 
@@ -1784,7 +1787,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
 		Set<Id> accountIdsToProcess = new Set<Id>();
 
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
 			rhcInfoList.add(r);
 			accountIdsToProcess.add(r.ANG_AccountId__c);
 		}
@@ -1957,7 +1960,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
 		List<Account> accs = [SELECT ID,Country_ISO_Code__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
-															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
+																WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
 							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
 		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
@@ -2326,7 +2329,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				prevOptOut = String.valueOf(acc.ANG_FA_Opt_out__c);
 
 				if (changesContainer.accountsMap.keySet().contains(acc.Id)){
-			   		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
+				 		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
 				} else {
 					acc.ANG_FA_Opt_out__c = valueToAgency;
 					changesContainer.accountsMap.put(acc.Id,acc);

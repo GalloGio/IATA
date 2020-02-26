@@ -21,7 +21,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 			RecordTypeId = agcRtId,
 			Name = 'Agency',
-			Location_Class__c = 'M',
+			Location_Class__c = 'N',
 			IATA_ISO_Country__c = isoc.Id,
 			Status__c = 'Approved'
 			);
@@ -29,13 +29,13 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		insert new List<Account> {airlineAccount, msoAccount};
 
 		Contact con = new Contact (
-		  AccountId = airlineAccount.id,
-		  RecordTypeId = conRtId,
-		  LastName = 'portalUser',
+			AccountId = airlineAccount.id,
+			RecordTypeId = conRtId,
+			LastName = 'portalUser',
 			FirstName = 'firstname',
 			Phone = '123456789',
-		  User_Portal_Status__c = 'Approved User'
-		  );
+			User_Portal_Status__c = 'Approved User'
+			);
 		insert con;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
@@ -95,7 +95,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 			RecordTypeId = agcRtId,
 			Name = 'Agency',
-			Location_Class__c = 'M',
+			Location_Class__c = 'N',
 			IATA_ISO_Country__c = isoc.Id,
 			Status__c = 'Approved'
 			);
@@ -103,13 +103,13 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		insert new List<Account> {airlineAccount, msoAccount};
 
 		Contact con = new Contact (
-		  AccountId = airlineAccount.id,
-		  RecordTypeId = conRtId,
-		  LastName = 'portalUser',
+			AccountId = airlineAccount.id,
+			RecordTypeId = conRtId,
+			LastName = 'portalUser',
 			FirstName = 'firstname',
 			Phone = '123456789',
-		  User_Portal_Status__c = 'Approved User'
-		  );
+			User_Portal_Status__c = 'Approved User'
+			);
 		insert con;
 
 		Case ccase = new Case();
@@ -161,7 +161,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 				RecordTypeId = agcRtId,
 				Name = 'Agency',
-				Location_Class__c = 'M',
+				Location_Class__c = 'N',
 				IATA_ISO_Country__c = isoc.Id,
 				Status__c = 'Approved'
 		);

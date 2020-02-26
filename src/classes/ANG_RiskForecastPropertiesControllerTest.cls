@@ -151,7 +151,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
 
 		Test.startTest();
-		  ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
+			ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
 			ANG_AccountId__c=[select id from account limit 1].get(0).id,
 			ANG_Risk_Type__c=[select id from ANG_Risk_Event_Type__c limit 1].get(0).id,
 			ANG_Issued_Date__c =System.today(),
@@ -292,14 +292,14 @@ private class ANG_RiskForecastPropertiesControllerTest {
 			];
 
 		Contact cont = new Contact(
-	  		AccountId = acct.id,
-	  		Firstname = 'Richard',
-	  		Lastname = 'Vaughan',
-	  		Phone = '666123456',
-	  		MobilePhone = '911111111',
-	  		Email = 'richard.vaughan@test.com',
-	  		Financial_Assessment_Contact__c = false
-	  	);
+				AccountId = acct.id,
+				Firstname = 'Richard',
+				Lastname = 'Vaughan',
+				Phone = '666123456',
+				MobilePhone = '911111111',
+				Email = 'richard.vaughan@test.com',
+				Financial_Assessment_Contact__c = false
+			);
 
 		insert cont;
 

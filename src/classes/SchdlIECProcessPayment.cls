@@ -1,10 +1,10 @@
-/**  
-  * Description: This class contains schedulable class for processing SAP Payments and sending them to Zuora
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
-  
+/**
+	* Description: This class contains schedulable class for processing SAP Payments and sending them to Zuora
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
+
 global class SchdlIECProcessPayment implements Schedulable {
 	global void execute(SchedulableContext sc) {
 		// Only run the job if the schedule interface is activated through the custom settings
@@ -18,16 +18,16 @@ global class SchdlIECProcessPayment implements Schedulable {
 			// Only process 50 records at a time (Zuora Limitation)
 			Database.executeBatch(btchProc, 50);
 		}
-		
+
 		// This section of code will schedule the next execution X minutes from now depending on the configured setting
 		datetime nextScheduleTime = system.now().addMinutes(IECConstants.SAPSettings_SchedulePeriod);
 		string minute = string.valueof(nextScheduleTime.minute());
 		string second = string.valueof(nextScheduleTime.second ());
 		string cronvalue = second + ' ' + minute + ' * * * ?' ;
 		string jobName = 'SchdlIECProcessPayment ' + nextScheduleTime.format('hh:mm');
- 
+
 		system.schedule(jobName, cronvalue , new SchdlIECProcessPayment());
- 
+
 		// this section of code will abort the current schedule job
 		system.abortJob(sc.getTriggerId());
 	}

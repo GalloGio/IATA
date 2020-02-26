@@ -1,116 +1,116 @@
 @isTest(SeeAllData=true)
 private class IEC_WebService_tst {
 
-    @isTest
-    static void testAssignOpportunityToQuote() {
+	@isTest
+	static void testAssignOpportunityToQuote() {
 
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        IECCustomer loggedCustomer;
+		User usr = IECTestUtil.createSampleGuestUserAndLogin();
+		IECCustomer loggedCustomer;
 
-        System.runAs(usr) {
-            loggedCustomer = IECCustomer.getCurrentIECCustomer();
-        }
-        Opportunity oOpportunity = IECTestUtil.createSampleOpportunity(loggedCustomer.RelatedAccount, 'Sample Opportunity', 100);
-        insert oOpportunity;
+		System.runAs(usr) {
+			loggedCustomer = IECCustomer.getCurrentIECCustomer();
+		}
+		Opportunity oOpportunity = IECTestUtil.createSampleOpportunity(loggedCustomer.RelatedAccount, 'Sample Opportunity', 100);
+		insert oOpportunity;
 
-        //create quote template
-        Zqu__Quote_Template__c quoteTemplate = new Zqu__Quote_Template__c(name = 'Test Quote Template', zqu__Quote_Type__c = 'New Subscription', zqu__Template_Id__c = 'TestID');
-        insert quoteTemplate;
+		//create quote template
+		Zqu__Quote_Template__c quoteTemplate = new Zqu__Quote_Template__c(name = 'Test Quote Template', zqu__Quote_Type__c = 'New Subscription', zqu__Template_Id__c = 'TestID');
+		insert quoteTemplate;
 
-        //create settings for template id
-        IEC_Settings__c iecSettings = IEC_Settings__c.getOrgDefaults();
-        iecSettings.Quote_Template_ID_New_Subscription__c = quoteTemplate.Id;
-        iecSettings.IEC_User_Portal_URL__c = 'https://iec-customer-portal-iata.cs17.force.com/iec';
-        iecSettings.PaymentMethod_ICH_Zuora_ID__c = 'testPaymentMethod';
-        update iecSettings;
+		//create settings for template id
+		IEC_Settings__c iecSettings = IEC_Settings__c.getOrgDefaults();
+		iecSettings.Quote_Template_ID_New_Subscription__c = quoteTemplate.Id;
+		iecSettings.IEC_User_Portal_URL__c = 'https://iec-customer-portal-iata.cs17.force.com/iec';
+		iecSettings.PaymentMethod_ICH_Zuora_ID__c = 'testPaymentMethod';
+		update iecSettings;
 
-        zqu__Quote__c oQuote = IECTestUtil.createSampleQuote(oOpportunity, loggedCustomer.RelatedContact, 'Sample Comments', false);
-        insert oQuote;
+		zqu__Quote__c oQuote = IECTestUtil.createSampleQuote(oOpportunity, loggedCustomer.RelatedContact, 'Sample Comments', false);
+		insert oQuote;
 
-        test.startTest();
+		test.startTest();
 
-        IEC_WebService.assignOpportunityToQuote(oQuote.Id);
+		IEC_WebService.assignOpportunityToQuote(oQuote.Id);
 
-        zqu__Quote__c updatedQuote = [SELECT Id, IEC_Opportunity_Id__c, zqu__Opportunity__c, zqu__Number__c, name FROM zqu__Quote__c WHERE Id = :oQuote.Id];
-        //assert quote was updated
-        System.assertEquals(updatedQuote.IEC_Opportunity_Id__c, updatedQuote.zqu__Opportunity__c);
-        System.assertEquals(updatedQuote.zqu__Number__c, updatedQuote.name);
+		zqu__Quote__c updatedQuote = [SELECT Id, IEC_Opportunity_Id__c, zqu__Opportunity__c, zqu__Number__c, name FROM zqu__Quote__c WHERE Id = :oQuote.Id];
+		//assert quote was updated
+		System.assertEquals(updatedQuote.IEC_Opportunity_Id__c, updatedQuote.zqu__Opportunity__c);
+		System.assertEquals(updatedQuote.zqu__Number__c, updatedQuote.name);
 
-        test.stopTest();
-    }
+		test.stopTest();
+	}
 
-    @isTest
-    static void testContactUpdate() {
+	@isTest
+	static void testContactUpdate() {
 
-        Account oAccount = IECTestUtil.createSampleAccount();
-        insert oAccount;
+		Account oAccount = IECTestUtil.createSampleAccount();
+		insert oAccount;
 
-        Contact oContact = IECTestUtil.createSampleContact(oAccount);
-        insert oContact;
+		Contact oContact = IECTestUtil.createSampleContact(oAccount);
+		insert oContact;
 
-        // reselect contact
-        oContact = [Select id, FirstName, LastName, Salutation,Email, Title, Phone, Tax_1_ID__c, Tax_2_ID__c,VAT_Country_Code__c, User_IECPortal_Status__c from Contact where Id = :oContact.Id limit 1];
+		// reselect contact
+		oContact = [Select id, FirstName, LastName, Salutation,Email, Title, Phone, Tax_1_ID__c, Tax_2_ID__c,VAT_Country_Code__c, User_IECPortal_Status__c from Contact where Id = :oContact.Id limit 1];
 
-        oContact.Title = 'Sith Lord';
+		oContact.Title = 'Sith Lord';
 
-        // update contact via web service
-        Boolean bSuccess = IEC_WebService.updateContact(oContact.Id,
-                                                oContact.FirstName,
-                                                oContact.LastName,
-                                                oContact.Email,
-                                                oContact.Salutation,
-                                                oContact.Title,
-                                                oContact.Phone,
-                                                oContact.Tax_1_ID__c,
-                                                oContact.Tax_2_ID__c,
-                                                oContact.VAT_Country_Code__c,
-                                                oContact.User_IECPortal_Status__c);
+		// update contact via web service
+		Boolean bSuccess = IEC_WebService.updateContact(oContact.Id,
+												oContact.FirstName,
+												oContact.LastName,
+												oContact.Email,
+												oContact.Salutation,
+												oContact.Title,
+												oContact.Phone,
+												oContact.Tax_1_ID__c,
+												oContact.Tax_2_ID__c,
+												oContact.VAT_Country_Code__c,
+												oContact.User_IECPortal_Status__c);
 
-        system.assert(bSuccess, 'Contact update should be successful');
+		system.assert(bSuccess, 'Contact update should be successful');
 
-        // reselect contact
-        oContact = [Select id, FirstName, LastName,Email, Salutation, Title, Phone, Tax_1_ID__c, Tax_2_ID__c,VAT_Country_Code__c, User_IECPortal_Status__c from Contact where Id = :oContact.Id limit 1];
+		// reselect contact
+		oContact = [Select id, FirstName, LastName,Email, Salutation, Title, Phone, Tax_1_ID__c, Tax_2_ID__c,VAT_Country_Code__c, User_IECPortal_Status__c from Contact where Id = :oContact.Id limit 1];
 
-        // compare Title field
-        system.assertEquals('Sith Lord', oContact.Title, 'The field title should be updated accordingly');
-    }
+		// compare Title field
+		system.assertEquals('Sith Lord', oContact.Title, 'The field title should be updated accordingly');
+	}
 
-    @isTest
-    static void testUpdateUserProfile() {
+	@isTest
+	static void testUpdateUserProfile() {
 
 
-        /** COUNTRIES */
-        
-        
-        IATA_ISO_Country__c switzerland = [SELECT Id from IATA_ISO_Country__c WHERE Name='Switzerland' LIMIT 1];
+		/** COUNTRIES */
 
-        Account swiss = new Account(
-            Name = 'TEST AIRLINE', 
-            Sector__c='Airline',
-            Category__c='Passenger only',
-            IATACode__c = '057', 
-            IATA_ISO_Country__c = switzerland.Id,
-            Reason_for_creation__c = 'Created by customer',
-            recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
-        );
 
-        insert swiss;
+		IATA_ISO_Country__c switzerland = [SELECT Id from IATA_ISO_Country__c WHERE Name='Switzerland' LIMIT 1];
 
-        /** CONTACT */
-        Contact con = new Contact(
-            FirstName = 'Test',
-            LastName = 'L1 Contact',
-            Email = 'test' + DateTime.now().getTime() + '@test.test',
-            Community__c = 'ISS Customer Portal',
-            AccountId = swiss.Id
-        );
-        insert con;
+		Account swiss = new Account(
+			Name = 'TEST AIRLINE',
+			Sector__c='Airline',
+			Category__c='Passenger only',
+			IATACode__c = '057',
+			IATA_ISO_Country__c = switzerland.Id,
+			Reason_for_creation__c = 'Created by customer',
+			recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
+		);
 
-        /** USER */
-        User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+		insert swiss;
 
-        portalUser = [select Id, ProfileId from User where id =: portalUser.Id];
+		/** CONTACT */
+		Contact con = new Contact(
+			FirstName = 'Test',
+			LastName = 'L1 Contact',
+			Email = 'test' + DateTime.now().getTime() + '@test.test',
+			Community__c = 'ISS Customer Portal',
+			AccountId = swiss.Id
+		);
+		insert con;
 
-        IEC_WebService.updateUserProfile(portalUser.Id, portalUser.ProfileId);
-    }
+		/** USER */
+		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+
+		portalUser = [select Id, ProfileId from User where id =: portalUser.Id];
+
+		IEC_WebService.updateUserProfile(portalUser.Id, portalUser.ProfileId);
+	}
 }

@@ -1,16 +1,22 @@
 global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
 
+	//Assuming that to move one file it is required 5 callouts (at most)
+	private static final Integer FILE_UNIT_CALLOUT_THRESHOLD = 5;
+
 	String query;
 
 	global Set<Id> accountIds;
 
 	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 
-	global Map<Id,AMS_Pax_Accreditation_Form__c> accountAccreditationFormsMap;
-	Case newCaseMC = null;
-	Account acct = null;
+	Id mainCaseId;
+	List<Case> createdCasesLst;
+	Map<Id,AMS_Pax_Accreditation_Form__c> accountAccreditationFormsMap;
 
-	global ANG_MulticountryOscarCreatorBatch(Set<Id> accountIds) {
+	global ANG_MulticountryOscarCreatorBatch(Id mainCase, Set<Id> accountIds) {
+
+		this.mainCaseId = mainCase;
+		this.createdCasesLst = new List<Case>();
 
 		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 
@@ -34,7 +40,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 		accountAccreditationFormsMap = new Map<Id,AMS_Pax_Accreditation_Form__c>();
 
-		for(AMS_Pax_Accreditation_Form__c accr: [Select Id,ISSP_Branch_AccountId__c, (Select id,Case__c,name from AmazonFiles__r) from AMS_Pax_Accreditation_Form__c where ISSP_Branch_AccountId__c in:accountIds]){
+		for(AMS_Pax_Accreditation_Form__c accr: [Select Id,ISSP_Branch_AccountId__c, (Select id, Case__c, name, Full_Name_Unique__c from AmazonFiles__r) from AMS_Pax_Accreditation_Form__c where ISSP_Branch_AccountId__c in:accountIds]){
 			accountAccreditationFormsMap.put(accr.ISSP_Branch_AccountId__c,accr);
 		}
 
@@ -48,6 +54,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 		System.SavePoint sp = Database.setSavepoint();
 
+		Account acct = null;
 		AMS_OSCAR__c oscar = null;
 		AMS_Pax_Accreditation_Form__c stagingArea = null;
 
@@ -82,7 +89,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			fieldsOfObject.put('Visible_on_ISS_Portal__c', c.Visible_on_ISS_Portal__c);
 			fieldsOfObject.put('Origin', c.Origin);
 
-			newCaseMC = ANG_EntityCreator.createCase(c.RecordTypeId, acct.id, fieldsOfObject);
+			Case newCaseMC = ANG_EntityCreator.createCase(c.RecordTypeId, acct.id, fieldsOfObject);
 			System.debug('[ANG_MulticountryOscarCreatorBatch]new Case = ' + newCaseMC);
 
 			insert newCaseMC;
@@ -95,6 +102,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 				stagingArea = new AMS_Pax_Accreditation_Form__c(Id=accountAccreditationFormsMap.get(acct.Id).Id);
 				stagingArea.SAAM_Case__c = newCaseMC.Id;
+				stagingArea.Location_Type__c = acct.Location_Type__c;
+				stagingArea.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 				update stagingArea;
 
 			}else{
@@ -105,6 +114,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 				stagingArea = ANG_EntityCreator.createStagingArea(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity'), acct.Name, newCaseMC.Id, fieldsOfObject);
 
+				stagingArea.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
 				insert stagingArea;
 			}
 
@@ -114,6 +125,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			ANG_EntityCreator.updateOscar(oscar, fieldsOfObject);
 
 			upsert oscar;
+
+			createdCasesLst.add(newCaseMC);
 
 		}catch(Exception e){
 
@@ -130,27 +143,67 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 	global void finish(Database.BatchableContext BC) {
 
-		if(accountAccreditationFormsMap != NULL && accountAccreditationFormsMap.containsKey(acct.Id)){
-			List<AmazonFile__c> amazonFilesLst = accountAccreditationFormsMap.get(acct.Id).AmazonFiles__r;
-			List<AmazonFile__c> amazonFilesToUpdate = new List<AmazonFile__c>();
+		if(createdCasesLst.isEmpty() || accountAccreditationFormsMap.isEmpty()){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] No need to move files');
+			return;
+		}
 
-			if(amazonFilesLst != NULl && !amazonFilesLst.isEmpty()){
-				Set<String> attatchmentsNameToTransfer = new Set<String>();
-				List<WrapperAttach> attatchments = WrapperAttach.getListAttachments(amazonFilesLst.get(0).case__c);
+		Map<String, Id> newCaseFilesMapping = new Map<String, Id>();
 
-				for(AmazonFile__c a : amazonFilesLst){
-					attatchmentsNameToTransfer.add(a.name);
-					amazonFilesToUpdate.add(new AmazonFile__c(id = a.id, case__c = newCaseMC.id));
+		for(Case newCaseMC : createdCasesLst){
+			AMS_Pax_Accreditation_Form__c stagingArea = accountAccreditationFormsMap.get(newCaseMC.AccountId);
+			if(stagingArea != null && stagingArea.AmazonFiles__r != null){
+				for(AmazonFile__c file : stagingArea.AmazonFiles__r){
+					newCaseFilesMapping.put(file.Full_Name_Unique__c, newCaseMC.Id);
 				}
+			}
+		}
 
-				for(WrapperAttach wa : attatchments){
-					if(attatchmentsNameToTransfer.contains(wa.fileAmazon.amazonFile.name)){
-						wa.transfer(newCaseMC.id);
-						wa.moveToBucket();
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] newCaseFilesMapping: ' + newCaseFilesMapping);
+
+		List<WrapperAttach> wrapAttachmentsLst = WrapperAttach.getListAttachments(mainCaseId);
+
+		Map<String, Id> scopeMapping = new Map<String, Id>();
+		Map<WrapperAttach, Id> amazonFilesToMoveMap = new Map<WrapperAttach, Id>();
+		List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper> afWrapLst = new List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper>();
+
+		for(WrapperAttach wa : wrapAttachmentsLst){
+			if(newCaseFilesMapping.containsKey(wa.fileAmazon.amazonFile.Full_Name_Unique__c)){
+				Id newCaseId = newCaseFilesMapping.get(wa.fileAmazon.amazonFile.Full_Name_Unique__c);
+				System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Processing file ' + wa.fileAmazon.amazonFile.Full_Name_Unique__c + ' to case ' + newCaseId);
+				//If there are not enough callouts to move the file:
+				//We map it with the new case Id so it can be moved later by batch
+				if((Limits.getCallouts() + FILE_UNIT_CALLOUT_THRESHOLD) >= Limits.getLimitCallouts()){
+					amazonFilesToMoveMap.put(wa, newCaseId);
+				}
+				else {
+					afWrapLst.add(MoveAmazonFilesActionBatch.moveAmazonFile(wa, newCaseId));
+					scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, newCaseId);
+				}
 					}
 				}
-				update amazonFilesToUpdate;
+
+		Savepoint sp = Database.setSavepoint();
+
+		try {
+			MoveAmazonFilesActionBatch.commitActions(afWrapLst);
 			}
+		catch(Exception e){
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception: ' + e.getMessage());
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception Stacktrace: ' + e.getStackTraceString());
+			Database.rollback(sp);
+			MoveAmazonFilesActionBatch.commitTechnicalLogs(
+				new Technical_Logs__c(
+					Operation__c = 'ANG_MulticountryOscarCreatorBatch - Moving amazon files',
+					Status__c = (e.getMessage() + '\n' + e.getStackTraceString()).left(254),
+					Log__c = JSON.serialize(scopeMapping)
+				)
+			);
+		}
+
+		if(!amazonFilesToMoveMap.isEmpty()){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] amazonFilesToMoveMap: ' + amazonFilesToMoveMap);
+			Database.executeBatch(new MoveAmazonFilesActionBatch(amazonFilesToMoveMap), MoveAmazonFilesActionBatch.MOVE_AMAZON_FILES_ACTION_BATCH_SIZE);
 		}
 	}
 

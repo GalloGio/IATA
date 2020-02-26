@@ -28,7 +28,7 @@ public class ANG_RiskEventHistoryPagination_Test {
 		for(integer i=0; i<5;i++){
 			areList.add(generateRiskEvent(acc1.id,ret1.id, system.today()));
 		}
-		
+
 		insert areList;
 
 	}

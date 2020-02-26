@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 public with sharing class ISSP_SearchResultCO {
 
@@ -8,91 +8,91 @@ public with sharing class ISSP_SearchResultCO {
 	//basto1p
 	public Map<String,String> mapFieldsValue {get;set;}
 
-	private static List<String> sortedObjNameList; 
-    private static Map<String, List<Schema.FieldSetMember>> objName2tableColumnMap;  
-	private static Map<String, List<Schema.FieldSetMember>> object2SearchFieldMap; 
+	private static List<String> sortedObjNameList;
+	private static Map<String, List<Schema.FieldSetMember>> objName2tableColumnMap;
+	private static Map<String, List<Schema.FieldSetMember>> object2SearchFieldMap;
 	 //CNS
-    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+	public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
 	static {
-        try {
-			searchPreparation();	
-        } 
-        catch(Exception exp)  {
-            ISSP_Utilities.addErrorMessage(exp); 
-        }
+		try {
+			searchPreparation();
+		}
+		catch(Exception exp)  {
+			ISSP_Utilities.addErrorMessage(exp);
+		}
 	}
 
 	public ISSP_SearchResultCO() {
 	}
-    
+
 
 	public static void searchPreparation() {
 		List<ISSPPortalSearchListView__c> portalSearchSettingList = ISSPPortalSearchListView__c.getAll().values();
 
 		ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfileFilter = ISSP_PermissionFilterFactory.createProfilePermissionFilter();
 		ISSP_PermissionFilterFactory.PermissionSetFilter thePermissionSetFilter = ISSP_PermissionFilterFactory.createPermissionSetFilter(portalSearchSettingList, 'Permission_set__c');
-		
-        
+
+
 		Map<String, ISSPPortalSearchListView__c> allowSearchSettingMap = new Map<string,ISSPPortalSearchListView__c>();
-        for(ISSPPortalSearchListView__c searchSettingItem : portalSearchSettingList){
-        	
-        	Boolean resultPermission1 = true; 
-        	if(!theProfileFilter.isDataEmpty(searchSettingItem, 'Profiles_Id__c'))
-        		resultPermission1 = theProfileFilter.isUserPermittedFor(searchSettingItem, 'Profiles_Id__c');
-        	 
-        	Boolean resultPermission2 = true; 
-        	if(!thePermissionSetFilter.isDataEmpty(searchSettingItem, 'Permission_set__c')) 
-            	resultPermission2 = thePermissionSetFilter.isUserPermittedFor(searchSettingItem, 'Permission_set__c');
-            	
-            if(resultPermission1 && resultPermission2) {
-            	if(String.isNotBlank(searchSettingItem.Field_Set_Table_Columns__c)) 
-                	allowSearchSettingMap.put(searchSettingItem.Object_API_Name__c,searchSettingItem);
-            }
-        }
+		for(ISSPPortalSearchListView__c searchSettingItem : portalSearchSettingList){
 
-        objName2tableColumnMap = new Map<String, List<Schema.FieldSetMember>>();
-        object2SearchFieldMap = new Map<String, List<Schema.FieldSetMember>>();
-        sortedObjNameList = new List<String>();
+			Boolean resultPermission1 = true;
+			if(!theProfileFilter.isDataEmpty(searchSettingItem, 'Profiles_Id__c'))
+				resultPermission1 = theProfileFilter.isUserPermittedFor(searchSettingItem, 'Profiles_Id__c');
 
-        Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe(); 
+			Boolean resultPermission2 = true;
+			if(!thePermissionSetFilter.isDataEmpty(searchSettingItem, 'Permission_set__c'))
+				resultPermission2 = thePermissionSetFilter.isUserPermittedFor(searchSettingItem, 'Permission_set__c');
 
-        for(String objectName : allowSearchSettingMap.keySet()) {
-        	ISSPPortalSearchListView__c searchSettingItem = allowSearchSettingMap.get(objectName);
+			if(resultPermission1 && resultPermission2) {
+				if(String.isNotBlank(searchSettingItem.Field_Set_Table_Columns__c))
+					allowSearchSettingMap.put(searchSettingItem.Object_API_Name__c,searchSettingItem);
+			}
+		}
 
-        	Map<String, Schema.FieldSet> fieldSetMap = globalDescribeMap.get(objectName)
-        															    .getDescribe()
-        															    .fieldSets
-        															    .getMap();
+		objName2tableColumnMap = new Map<String, List<Schema.FieldSetMember>>();
+		object2SearchFieldMap = new Map<String, List<Schema.FieldSetMember>>();
+		sortedObjNameList = new List<String>();
 
-        	List<Schema.FieldSetMember> fsTableColumns = fieldSetMap.get(searchSettingItem.Field_Set_Table_Columns__c).getFields();
-			objName2tableColumnMap.put(objectName, fsTableColumns); 
-			
+		Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
+
+		for(String objectName : allowSearchSettingMap.keySet()) {
+			ISSPPortalSearchListView__c searchSettingItem = allowSearchSettingMap.get(objectName);
+
+			Map<String, Schema.FieldSet> fieldSetMap = globalDescribeMap.get(objectName)
+																		.getDescribe()
+																		.fieldSets
+																		.getMap();
+
+			List<Schema.FieldSetMember> fsTableColumns = fieldSetMap.get(searchSettingItem.Field_Set_Table_Columns__c).getFields();
+			objName2tableColumnMap.put(objectName, fsTableColumns);
+
 			if(String.isNotBlank(searchSettingItem.Field_Set_Filter__c)) {
-				List<Schema.FieldSetMember> fsConditionFieldList = fieldSetMap.get(searchSettingItem.Field_Set_Filter__c).getFields();       	
+				List<Schema.FieldSetMember> fsConditionFieldList = fieldSetMap.get(searchSettingItem.Field_Set_Filter__c).getFields();
 				object2SearchFieldMap.put(objectName, fsConditionFieldList);
 			}
 
-            sortedObjNameList.add(searchSettingItem.Object_API_Name__c);
-        }
+			sortedObjNameList.add(searchSettingItem.Object_API_Name__c);
+		}
 
 
 	}
 	public String searchText { get; set;}
 	private SearchValueType oneSearchValueType {get; set;}
 
-	public List<ResultContainer> viewList { 
+	public List<ResultContainer> viewList {
 		get {
 			if(null == viewList) viewList = new List<ResultContainer>();
-			return viewList; 
-		} 
-		set; 
-	} 
+			return viewList;
+		}
+		set;
+	}
 
 	public PageReference searchGet() {
 		try {
-			String inputQuery = Apexpages.currentPage().getParameters().get('q');	
-            search(inputQuery);
+			String inputQuery = Apexpages.currentPage().getParameters().get('q');
+			search(inputQuery);
 		} catch(Exception exp) {
 			ISSP_Utilities.addErrorMessage(exp);
 		}
@@ -101,12 +101,12 @@ public with sharing class ISSP_SearchResultCO {
 
 	public PageReference searchPost() {
 		try {
-			String inputQuery = Apexpages.currentPage().getParameters().get('query');	
-            search(inputQuery);
+			String inputQuery = Apexpages.currentPage().getParameters().get('query');
+			search(inputQuery);
 		} catch (Exception exp) {
 			ISSP_Utilities.addErrorMessage(exp);
 		}
-		return null; 
+		return null;
 	}
 
 	/**
@@ -122,52 +122,52 @@ public with sharing class ISSP_SearchResultCO {
 
 	public void search(String inputQuery) {
 		this.searchText = prepareQuery(inputQuery);
-		if(String.isBlank(searchText)) { 
+		if(String.isBlank(searchText)) {
 			viewList.clear();
 			return;
 		}
 
-		//slSearch(searchText);	
-		qlSearch();	
+		//slSearch(searchText);
+		qlSearch();
 
 	}
 
-    
+
 	public void qlSearch() {
-	
-		if(ISSP_Utilities.isNumeric(this.searchText)) 
-			oneSearchValueType = SearchValueType.Numeric; 
+
+		if(ISSP_Utilities.isNumeric(this.searchText))
+			oneSearchValueType = SearchValueType.Numeric;
 		else
 			oneSearchValueType = SearchValueType.Text;
-		
+
 		viewList.clear();
-        	
+
 		for(Integer x = 0; x < sortedObjNameList.size(); x++) {
-			String objectName = sortedObjNameList[x];	
-            
+			String objectName = sortedObjNameList[x];
+
 			List<Schema.FieldSetMember> searchFieldSetMemberList = object2SearchFieldMap.get(objectName);
 			List<Schema.FieldSetMember> tableColumnList = objName2tableColumnMap.get(objectName);
 			List<sObject> resultList = getSoqlSearchObjectList(objectName, searchFieldSetMemberList, tableColumnList);
 
 			if(ISSP_Utilities.isNotEmpty(resultList))
 				viewList.add(new ResultContainer(resultList));
-		}		
+		}
 	}
 
 	public static String getTheFieldName(String objectName) {
-		return 'Case'.equalsIgnoreCase(objectName) ? 'CaseNumber' : 'Name'; 
+		return 'Case'.equalsIgnoreCase(objectName) ? 'CaseNumber' : 'Name';
 	}
 
 	public List<sObject> getSoqlSearchObjectList(String objectName,
-        										 List<Schema.FieldSetMember> searchFieldSetMemberList, 
-		                                         List<Schema.FieldSetMember> tableColumnList) {
+												 List<Schema.FieldSetMember> searchFieldSetMemberList,
+												 List<Schema.FieldSetMember> tableColumnList) {
 		String conditional = '';
 		String generalFieldName = getTheFieldName(objectName);
 
-        if(ISSP_Utilities.isNotEmpty(searchFieldSetMemberList)) {
-			for(Schema.FieldSetMember fsMember: searchFieldSetMemberList) 
+		if(ISSP_Utilities.isNotEmpty(searchFieldSetMemberList)) {
+			for(Schema.FieldSetMember fsMember: searchFieldSetMemberList)
 				conditional += operator(fsMember);
-    	}
+		}
 
 		String soqlQuery = generalFieldName;
 		Boolean hasStatus = false;
@@ -183,32 +183,32 @@ public with sharing class ISSP_SearchResultCO {
 					hasStatus = true;
 
 				}
-			} 	
+			}
 		}
 
 		//basto1p
 		if (objectName == 'Case'){
-			
+
 			soqlQuery += ', Contact.Name, RecordTypeId, BSP_CASS__c, IATA_Code__c, Remittance_period__c';
 
 			if (!hasStatus) {
 				soqlQuery += ', Status';
 			}
 		}
-		
+
 		soqlQuery = 'SELECT ' + soqlQuery + ' FROM '+ objectName;
-        if(String.isNotBlank(conditional)){
-        	if (objectName == 'Case')
-        		soqlQuery += ' WHERE (' + conditional.substring(4);
-        	else
-        		soqlQuery += ' WHERE ' + conditional.substring(4);
-        }
-        
-        if (objectName == 'Case')
-        	soqlQuery += ') AND Visible_on_ISS_Portal__c = true AND RecordType__c != \'IATA Financial Review\' Limit 10000';
-        else
-        	soqlQuery += ' Limit 10000';
-        system.debug('soqlQuery >> ' + soqlQuery);
+		if(String.isNotBlank(conditional)){
+			if (objectName == 'Case')
+				soqlQuery += ' WHERE (' + conditional.substring(4);
+			else
+				soqlQuery += ' WHERE ' + conditional.substring(4);
+		}
+
+		if (objectName == 'Case')
+			soqlQuery += ') AND Visible_on_ISS_Portal__c = true AND RecordType__c != \'IATA Financial Review\' Limit 10000';
+		else
+			soqlQuery += ' Limit 10000';
+		system.debug('soqlQuery >> ' + soqlQuery);
 
 		//basto1p
 		List<SObject> objList=new List<Case>();
@@ -223,20 +223,20 @@ public with sharing class ISSP_SearchResultCO {
 			for (SObject Item : objList) {
 
 				//ACAMBAS - WMO-389 - Start
-	            if(Item.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
-	            	//String subject = (String) Item.get('Subject');
-	            	String iataCode = (String) Item.get('IATA_Code__c');
-	            	String bSPCASS = (String) Item.get('BSP_CASS__c');
-	            	String remittancePeriod = (String) Item.get('Remittance_period__c');
+				if(Item.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+					//String subject = (String) Item.get('Subject');
+					String iataCode = (String) Item.get('IATA_Code__c');
+					String bSPCASS = (String) Item.get('BSP_CASS__c');
+					String remittancePeriod = (String) Item.get('Remittance_period__c');
 
-	            	String subject = 'IMPORTANT: ';
-	                subject = (bSPCASS != null) ? subject + bSPCASS + ' Payment' : subject;
-	                subject = (iataCode != null) ? subject + ' - IATA Code ' + iataCode : subject;
-	                subject = (remittancePeriod != null) ? subject + ' - Period ' +  remittancePeriod : subject;
+					String subject = 'IMPORTANT: ';
+					subject = (bSPCASS != null) ? subject + bSPCASS + ' Payment' : subject;
+					subject = (iataCode != null) ? subject + ' - IATA Code ' + iataCode : subject;
+					subject = (remittancePeriod != null) ? subject + ' - Period ' +  remittancePeriod : subject;
 
-	                Item.put('Subject', subject);
-	            }
-	            //ACAMBAS - WMO-389 - End
+					Item.put('Subject', subject);
+				}
+				//ACAMBAS - WMO-389 - End
 
 				System.debug('basto1p - Item.get(Status)='+Item.get('Status'));
 				//Add mapping for Status field
@@ -250,33 +250,33 @@ public with sharing class ISSP_SearchResultCO {
 		return objList;
 	}
 
-    private String operator(Schema.FieldSetMember fsMember) {
-        
-        if(fsMember.getType() == Schema.DisplayType.Double
-           || fsMember.getType() == Schema.DisplayType.Integer 
-           || fsMember.getType() == Schema.DisplayType.PERCENT
-           || fsMember.getType() == Schema.DisplayType.Currency) {
-           
-            return (SearchValueType.Numeric == this.oneSearchValueType) ? ' OR ' + fsMember.getFieldPath() + ' = '  + this.searchText : '';
-        }
-        else if(fsMember.getType() == Schema.DisplayType.Combobox
-                || fsMember.getType() == Schema.DisplayType.Phone
-                || fsMember.getType() == Schema.DisplayType.Picklist
-                || fsMember.getType() == Schema.DisplayType.String
-                || fsMember.getType() == Schema.DisplayType.TextArea 
+	private String operator(Schema.FieldSetMember fsMember) {
+
+		if(fsMember.getType() == Schema.DisplayType.Double
+		   || fsMember.getType() == Schema.DisplayType.Integer
+		   || fsMember.getType() == Schema.DisplayType.PERCENT
+		   || fsMember.getType() == Schema.DisplayType.Currency) {
+
+			return (SearchValueType.Numeric == this.oneSearchValueType) ? ' OR ' + fsMember.getFieldPath() + ' = '  + this.searchText : '';
+		}
+		else if(fsMember.getType() == Schema.DisplayType.Combobox
+				|| fsMember.getType() == Schema.DisplayType.Phone
+				|| fsMember.getType() == Schema.DisplayType.Picklist
+				|| fsMember.getType() == Schema.DisplayType.String
+				|| fsMember.getType() == Schema.DisplayType.TextArea
 				|| fsMember.getType() == Schema.DisplayType.URL	) {
-                    
-            return ' OR ' + fsMember.getFieldPath() + ' like \'%'  + this.searchText + '%\'';           
-            
-        }
-        else if(fsMember.getType() == Schema.DisplayType.MultiPicklist) {
-            return ' OR ' + fsMember.getFieldPath() + ' includes(\''  + this.searchText + '\')'; 
-        }
-        else
-            return '';
-        
-    }
-    /*
+
+			return ' OR ' + fsMember.getFieldPath() + ' like \'%'  + this.searchText + '%\'';
+
+		}
+		else if(fsMember.getType() == Schema.DisplayType.MultiPicklist) {
+			return ' OR ' + fsMember.getFieldPath() + ' includes(\''  + this.searchText + '\')';
+		}
+		else
+			return '';
+
+	}
+	/*
 	public void slSearch(String searchText) {
 
 		String soslQuery = 'FIND \'' + prepareQuery(searchText) + '\'' + ' IN ALL FIELDS RETURNING ';
@@ -303,7 +303,7 @@ public with sharing class ISSP_SearchResultCO {
 
 	private String testQuery() {
 		String query = 'FIND \'Tester\' IN ALL FIELDS RETURNING Account (Id, Name, Quality__c, Industry, Site, Field_Head_Office__c,BillingCountry,BillingCity,Location_Type__c)'
-		             + ',Contact(Id, Name, Status__c, Title, AccountId, Account_site__c, Phone, Email, Financial_Assessment_Contact__c)'
+					 + ',Contact(Id, Name, Status__c, Title, AccountId, Account_site__c, Phone, Email, Financial_Assessment_Contact__c)'
 					 + ',Case(Id, CaseNumber, Subject, Country_concerned_by_the_query__c, CreatedDate, Status)';
 		return query;
 
@@ -313,7 +313,7 @@ public with sharing class ISSP_SearchResultCO {
 
 		//public Boolean isNotEmpty 			{ get; set; }
 		public String  objectLabel 			{ get; set; }
-		public String  objectName  			{ get; set; }	 
+		public String  objectName  			{ get; set; }
 		public List<SObject> theObjectList  { get; set; }
 		public List<Schema.FieldSetMember>  fieldNameList	{ get; set; }
 
@@ -326,16 +326,16 @@ public with sharing class ISSP_SearchResultCO {
 			DescribeSObjectResult  dsoResult = objList[0].getSObjectType().getDescribe();
 
 			this.objectName = dsoResult.getName();
-			this.objectLabel = dsoResult.getLabelPlural(); 
-            this.theFieldLabel = dsoResult.fields.getMap().get(theFieldName).getDescribe().getLocalName();
-            
-            fieldNameList = new List<Schema.FieldSetMember>();
-            list<Schema.FieldSetMember> fsMembers = objName2tableColumnMap.get(this.objectName);
-            for(Integer x = 0; x < fsMembers.size(); x++) {
-                Schema.FieldSetMember member = fsMembers[x];
-                if(!member.getFieldPath().equalsIgnoreCase(this.theFieldName))
-                    fieldNameList.add(member);
-            }
+			this.objectLabel = dsoResult.getLabelPlural();
+			this.theFieldLabel = dsoResult.fields.getMap().get(theFieldName).getDescribe().getLocalName();
+
+			fieldNameList = new List<Schema.FieldSetMember>();
+			list<Schema.FieldSetMember> fsMembers = objName2tableColumnMap.get(this.objectName);
+			for(Integer x = 0; x < fsMembers.size(); x++) {
+				Schema.FieldSetMember member = fsMembers[x];
+				if(!member.getFieldPath().equalsIgnoreCase(this.theFieldName))
+					fieldNameList.add(member);
+			}
 			//this.fieldNameList = new List<Schema.FieldSetMember>(objName2tableColumnMap.get(this.objectName));
 		}
 
@@ -346,7 +346,7 @@ public with sharing class ISSP_SearchResultCO {
 		}
 
 		public String theFieldLabel { get; set; }
-        
-        
-	} 
+
+
+	}
 }

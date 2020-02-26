@@ -29,9 +29,9 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	public Boolean canEdit {get; set;}
 
-    // public AMP_KeyAccountPlanExtension() {}
-    public AMP_KeyAccountPlanExtension(ApexPages.StandardController stdController) {
-        // this.mysObject = (sObject)stdController.getRecord();
+		// public AMP_KeyAccountPlanExtension() {}
+		public AMP_KeyAccountPlanExtension(ApexPages.StandardController stdController) {
+				// this.mysObject = (sObject)stdController.getRecord();
 		taskRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Task', 'Key_Account_Plan_Milestone');
 		objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
 
@@ -48,12 +48,12 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			objectiveName = [SELECT Id, Name FROM Objective__c WHERE Id =:objectiveId LIMIT 1].Name;
 		}
 		canEdit = getCanEdit();
-    }
+		}
 
 	public static List<String> getKAPFields() {
-        List<String> kapAccessFields = new String [] {
-            // 'Id',
-            'Name',
+				List<String> kapAccessFields = new String [] {
+						// 'Id',
+						'Name',
 			'Account_Issue_or_Priority__c',
 			// 'Account_Issue_or_Priority__r.Name',
 			'Benefits_to_Account__c',
@@ -62,25 +62,25 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			'Status__c',
 			'Deadline__c',
 			'Division__c'
-        };
-        return kapAccessFields;
+				};
+				return kapAccessFields;
 
-        }
+				}
 	@AuraEnabled
 	public static Boolean getCanEdit() {
-	  Boolean canEdit = true;
-	  // Obtain the field name/token map for the Objective__c object
-	  Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+		Boolean canEdit = true;
+		// Obtain the field name/token map for the Objective__c object
+		Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
 
-	  List<String> lsKAPFields = getKAPFields();
-	  for (String fieldToCheck : lsKAPFields) {
-	      // Check if the user has access to view field
-	      if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
-	          canEdit = false;
-	      }
-	  }
+		List<String> lsKAPFields = getKAPFields();
+		for (String fieldToCheck : lsKAPFields) {
+				// Check if the user has access to view field
+				if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+						canEdit = false;
+				}
+		}
 
-	  return canEdit;
+		return canEdit;
 	}
 
 	public void updateLists() {
@@ -192,7 +192,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 		try {
 			for(Task t : lsMilestones) {
 				if(t.Id == idTaskConcerned) {
-					tmpTask = t;					
+					tmpTask = t;
 					break;
 				}
 			}
@@ -247,7 +247,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			updateLists();
 			isEditMode = false;
 			isNewLine = false;
-			
+
 			System.debug(newObjective);
 		} catch (DMLException e) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
@@ -292,9 +292,9 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	}
 
 	@AuraEnabled
-    public static List<Objective__c> getObjectives(Id accountId) {
+		public static List<Objective__c> getObjectives(Id accountId) {
 		Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan');
-        List<Objective__c> lsObjectives = new List<Objective__c>();
+				List<Objective__c> lsObjectives = new List<Objective__c>();
 		lsObjectives =
 			[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
 							Details__c, AM_Level_of_importance__c,
@@ -309,7 +309,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			ORDER BY Deadline__c ASC
 			];
 		return lsObjectives;
-    }
+		}
 
 	@AuraEnabled
 	public static Objective__c upsertActivity(Objective__c activity) {
@@ -366,7 +366,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 				];
 		}
 		return lsTasks;
-    }
+		}
 
 	@AuraEnabled
 	public static Task upsertMilestone(Task milestone) {

@@ -9,43 +9,43 @@ global class AMS_EmployeeHelper {
 		Set<String> emails = new Set<String>();
 		//Map<ID,ID> AgencyToAccount = new Map<ID,ID>();#AMSFTS
 		List<AMS_Person__c> listOfPersonsToUpdate = new List<AMS_Person__c>();
-		
+
 		//jfo 2015-10-27 adding the IDCARD <> new contact mnanagment
 		Map<String,AMS_Account_Role__c > employeeBySimplex = new Map<String,AMS_Account_Role__c >();
 		//List<AMS_Employee__c> listOfEmployees = [select id, Contact__c, Agency__c, Person__c, Person__r.Name, Person__r.DOB__c, Person__r.Email__c from AMS_Employee__c where id IN :employees];
 		Map<String,Contact> contactPerEmail = new Map<String,Contact>();
-		
+
 		for(AMS_Account_Role__c emp: employees){
 			PersonIDs.add(emp.Person__c);
 		}
-		
+
 		Map<ID, AMS_Person__c> mapOfPersons = new Map<ID, AMS_Person__c>([select id,legacy_system__c, Contact__c, Name, DOB__c, Phone__c, Email__c,Lastname__c, First_Name__c, Mobile__c, Fax__c from AMS_Person__c where id IN: PersonIDs]);
 		//jfo 2015-11-13: add vernum to crieteia
 		Map<String,AMS_Account_Role__c> empSimplexes = new Map<String,AMS_Account_Role__c>();
 		for(AMS_Account_Role__c emp : employees){
 			if(emp.Simplex__c !=null)
 				empSimplexes.put(emp.Simplex__c,emp);
-			
+
 			//AgencyIDs.add(emp.Agency__c);#AMSFTS
 			AccountIDs.add(emp.Account__c);
 			LastNames.add(mapOfPersons.get(emp.Person__c).Lastname__c);
 			DoBs.add(mapOfPersons.get(emp.Person__c).DOB__c);
-			emails.add(mapOfPersons.get(emp.Person__c).Email__c); 
+			emails.add(mapOfPersons.get(emp.Person__c).Email__c);
 		}
 
 		List<String> iataCodeList = new list<String>();
-		
+
 		for(Account acc:[select Id, IATACode__c  from Account where Id in :AccountIDs])
 			iataCodeList .add(acc.IATACode__c  );
 
 		for(Contact c : [SELECT AccountId, FirstName, LastName, Name, Birthdate, Email, Person__c,VER_Number_2__c
-						 FROM Contact 
+						 FROM Contact
 						 WHERE (AccountId IN : AccountIDs
 								AND LastName IN :LastNames
 								AND Birthdate IN :DoBs
-								AND Email IN :emails) 
+								AND Email IN :emails)
 								or
-								(VER_Number_2__c in :empSimplexes.keyset() 
+								(VER_Number_2__c in :empSimplexes.keyset()
 								AND AccountId IN : AccountIDs)]){
 			mapContacts.put(c.AccountId+'-'+c.FirstName+'-'+c.LastName+'-'+c.Birthdate, c);
 			//jfo 2015-11-13 from LSB
@@ -70,11 +70,11 @@ global class AMS_EmployeeHelper {
 			system.debug('thecontact: ' + theContact);
 			if(theContact != null){
 				emp.Contact__c = theContact.ID;
-				
+
 				//RP 6/11/2016 add the contact to the person
 				mapOfPersons.get(emp.Person__c).Contact__c = theContact.ID;
 				listOfPersonsToUpdate.add(mapOfPersons.get(emp.Person__c));
-				
+
 				if(theContact.Person__c == null){
 					theContact.Person__c = emp.Person__c;
 					//we only update WEBSTAR DATA
@@ -120,12 +120,12 @@ global class AMS_EmployeeHelper {
 			for( ID_Card__c  idc : [select id, Related_Contact__c,VER_Number__c from ID_Card__c where   Id in :idCardsids   ]){
 				idcardsPervernum.put(idc.VER_Number__c,idc);
 			}
-	
+
 			contactPerEmail.clear();
 			for(Contact ac:newContacts.values()){
 			contactPerEmail.put(ac.Email, ac);
 			}
-			
+
 			//jfo won't work if several new contact has the same email
 			Map<String, Contact>  contactEmail2remove = new Map<String, Contact> ();
 			for(Contact ac:[select ID,  Email from Contact where Email in:contactPerEmail.keySet() ])
@@ -133,30 +133,30 @@ global class AMS_EmployeeHelper {
 				contactEmail2remove.put(ac.Email,contactPerEmail.get(ac.Email));
 				//contactPerEmail.get(ac.Email).Email = null;
 			}
-			
+
 			/* creating final list */
 			Map<Id, Contact> cleanNewContact = new Map<Id,Contact>();
 			for(ID akey:newContacts.keySet()){
 				if(contactEmail2remove.get(newContacts.get(akey).Email)==null)
 					cleanNewContact.put(akey,newContacts.get(akey));
 			}
-	
+
 			newContacts = cleanNewContact;
 			insert newContacts.values();
-	
+
 			//jfo 2015-10-27 adding the IDCARD <> new contact mnanagment
 			List<ID_Card__c> idCards2update = new List<ID_Card__c>();
-			
-			
+
+
 			for(AMS_Account_Role__c emp : employees){
 				if(emp.Contact__c == null && newContacts.get(emp.ID) != null ){
 					//this method is called from a trigger. no need to save data here.
 					emp.Contact__c = newContacts.get(emp.ID).ID;
-					
+
 					//RP 6/11/2015 add the contact to the person
 					mapOfPersons.get(emp.Person__c).Contact__c = newContacts.get(emp.ID).ID;
 					listOfPersonsToUpdate.add(mapOfPersons.get(emp.Person__c));
-					
+
 					//jfo 2015-10-27 adding the IDCARD <> new contact mnanagment
 					ID_Card__c idc  = idcardsPervernum.get(emp.Simplex__c);
 					if(idc !=null ){
@@ -165,7 +165,7 @@ global class AMS_EmployeeHelper {
 					}
 				}
 			}
-			
+
 			if(idCards2update.size()>0)
 				update idCards2update;
 		}
@@ -178,7 +178,7 @@ global class AMS_EmployeeHelper {
 					contactPerEmail.put(ac.Email, ac);
 			}
 			//jfo won't owrk if several new contact has the same email
-			
+
 			for(Contact ac:[select ID,  Email from Contact where Email in:contactPerEmail.keySet() ])
 				if(contactPerEmail.get(ac.Email)!=null && contactPerEmail.get(ac.Email).ID !=ac.Id  ){
 					contactPerEmail.get(ac.Email).Email = null;
@@ -196,7 +196,7 @@ global class AMS_EmployeeHelper {
 		List<Id> r = new  List<Id>();
 		system.debug('[employeeBySimplex]  try to find IdCard from  ' + iataCodes+'  NA dverNum '+vernums);
 		try{
-			Map<Id,ID_Card__c > idCardsMap = new Map<Id,ID_Card__c >( [select id, Related_Contact__c,VER_Number__c from ID_Card__c where   Agency_IATA_Code__c in :iataCodes and Related_Contact__c = null and VER_Number__c  in :vernums ]);//  
+			Map<Id,ID_Card__c > idCardsMap = new Map<Id,ID_Card__c >( [select id, Related_Contact__c,VER_Number__c from ID_Card__c where   Agency_IATA_Code__c in :iataCodes and Related_Contact__c = null and VER_Number__c  in :vernums ]);//
 			for(Id idc:idCardsMap.keySet())
 				r.add(idc);
 		}catch(Exception e){

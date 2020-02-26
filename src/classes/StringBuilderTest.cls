@@ -1,8 +1,8 @@
 @isTest
 private class StringBuilderTest {
-	
+
 	@isTest static void StringBuilderTestMthod1() {
-		
+
 		String x1 = 'test string1';
 		String x2 = 'test string2';
 		String x3 = 'test string3';
@@ -22,7 +22,7 @@ private class StringBuilderTest {
 		StringBuilder.MultiCurrencyFieldListBuilder mcflb = new StringBuilder.MultiCurrencyFieldListBuilder(new List<Schema.SObjectField>{Case.subject});
 
 	}
-	
-	
-	
+
+
+
 }

@@ -1,5 +1,5 @@
 public class ProcessIDCardMassApplications extends TriggerAction {
-	
+
 	private Set<String> idCardAppToUpdate;
 
 	/**
@@ -13,7 +13,7 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 
 		Map<Id, ID_Card_Application__c> oldMap = (Map<Id, ID_Card_Application__c>) Trigger.oldMap;
 
-		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') 
+		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application')
 			&& (Trigger.isInsert || (Trigger.isUpdate && idCardAppRecord.Application_Status__c != oldMap.get(idCardAppRecord.Id).Application_Status__c)))
 			return true;
 
@@ -21,7 +21,7 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 	}
 
 	/**
-	 * Method to process mass applications 
+	 * Method to process mass applications
 	 * @param records relevant records
 	 * @param uw 	  unit of work to include all DML operations
 	 * @return
@@ -85,7 +85,7 @@ public class ProcessIDCardMassApplications extends TriggerAction {
 				System.debug('____ [cls ProcessIDCardMassApplications - execute: update card paymnent status]');
 				idCardAppToUpdate.add(app.Id);
 				registerFuture();
-				
+
 			} else {
 				System.debug('____ [cls ProcessIDCardMassApplications - execute: do nothing]');
 			}

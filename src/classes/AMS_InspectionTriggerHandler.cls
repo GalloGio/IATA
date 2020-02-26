@@ -11,24 +11,24 @@ public with sharing class AMS_InspectionTriggerHandler {
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
 		enforce1To1RelationshipAppointmentMSO();
 		AMS_InspectionHelper.createTerritoryForAppointments(newValues); //AMSU-188
-	
+
 	}
 
 	public static void handleAfterUpdate(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
 
 		//FM - 22-09-2016 - stop creating "agency update" Records
-        //AMS_AgencyUpdateHelper.agencyUpdate(cleanListWithoutAgencyId(newValues));
+		//AMS_AgencyUpdateHelper.agencyUpdate(cleanListWithoutAgencyId(newValues));
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
 		enforce1To1RelationshipAppointmentMSO();
-	
+
 	}
 
 	private static void processAgency(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues){
 
 		AMS_InspectionHelper.setStatusCodeOnAgency(newValues);
 
-        AMS_InspectionHelper.setRecertExpiryDateOnAccount(new Map<Id,AMS_Inspection__c>(oldValues), new Map<Id,AMS_Inspection__c>(newValues) );
+		AMS_InspectionHelper.setRecertExpiryDateOnAccount(new Map<Id,AMS_Inspection__c>(oldValues), new Map<Id,AMS_Inspection__c>(newValues) );
 
 	}
 

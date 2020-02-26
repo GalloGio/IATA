@@ -1,0 +1,244 @@
+<template>
+    <div class="header">
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div>
+                    <div class="breadcrumbsHeight">
+                        <c-portal-breadcrumbs show-in-white=true>
+                        </c-portal-breadcrumbs>
+                    </div>
+                    <div style="height:115px" class="slds-p-left_headerContainer headerContainerShadow">
+                        <div class="slds-p-vertical_x-small text-white text-large ">
+                            Deduction Notice
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+    <div class="slds-grid slds-grid_align-center slds-is-relative">
+        <!--LOADING SPINNER-->
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <!--LOADING SPINNER-->
+        <!-- CASE CREATE MODAL -->
+        <div class="topOfModal"></div>
+        <!--Scroll Anchor-->
+        <template if:true={bShowModal}>
+            <div class="slds-backdrop slds-backdrop_open createModalContainer">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1"
+                    class="slds-modal slds-fade-in-open slds-text-align_center">
+                    <div class="dot-lightgreen overlap-top-center">
+                        <div class="dot-green dot-allign">
+                            <div class="dot-white-small dot-allign">
+                                <lightning-icon icon-name="utility:check" variant="success"
+                                    alternative-text="Approved" size="medium"
+                                    class="dot-allign slds-current-color success-variant">
+                                </lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-modal__container customCreateCaseModal">
+                        <div class="slds-p-top_xx-large ">
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large text-medium text-bold">
+                                Case Created Successfully
+                            </h2>
+                        </div>
+                        <div class="slds-p-vertical_x-large">
+                            <p class="slds-align_absolute-center slds-p-bottom_xx-small text-xxsmall">
+                                Case Number:
+                            </p>
+                            <div
+                                class="slds-box slds-theme_shade slds-align_absolute-center greybox-noborder background-anotherGray">
+                                <p class="slds-align_absolute-center text-xsmall text-gray">
+                                    {caseNumber}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="slds-align_absolute-center slds-m-around_xx-large">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <button class="containedButtonAlt uiButton contactSupport text-bold text-xsmall"
+                                        onclick={navigateToHome}>
+                                        Return to Homepage
+                                    </button>
+                                </div>
+                                <div class="slds-col">
+                                    <button
+                                        class="containedButton containedButton-size uiButton contactSupport text-bold text-xsmall"
+                                        onclick={navigateToCase}>
+                                        View Case Summary
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </template>
+        <!-- CASE CREATE MODAL -->
+        <div class="customWhiteBackground">
+            <div class="slds-align_absolute-center" data-id="caseDetails">
+                <div class="basicInfoBox">
+                    <template if:true={isBeforeFifteenth}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                            <p class="text-xsmall slds-p-bottom_small">This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner's instructions.
+                                </p>
+                        </div>
+
+                        <!--AIRLINE LOOKUP-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                            <p class="text-xsmall slds-p-bottom_small">Airline</p>
+                            <c-portal-search-lookup-component onsearch={handleIataSearch} data-id="iatalookup"
+                                item-name="iatalookup" oniatalookup={showIataResults}
+                                required-class={requiredClass} single-lookup-result={singleresult}
+                                placeholder="Search on Airline name or 3-letter code"
+                                hide-icon=true
+                                onclick={removeRequired}>
+                            </c-portal-search-lookup-component>
+                        </div>
+                        <!--AIRLINE LOOKUP-->
+
+                        <!--AIRLINE EMAIL-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
+                            <p class="text-xsmall slds-p-bottom_small">Airline Email</p>
+                            <lightning-input data-id="email" type="email"
+                                class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
+                                required onchange={handleEmail}>
+                            </lightning-input>
+                        </div>
+                        <!--AIRLINE EMAIL-->
+
+                        <!--REQUEST TYPE-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
+                            <p class="text-xsmall">Request Type</p>
+                            <lightning-combobox data-id="reqtype"
+                                            value={value}
+                                            placeholder="-Select-"
+                                            options={requestTypeOptions}
+                                            onchange={handleRequestType} >
+                            </lightning-combobox>
+                        </div>
+                        <!--REQUEST TYPE-->
+
+                        <!--REASON FOR DEDUCTION-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
+                            <p class="text-xsmall slds-p-bottom_small">Reason For Deduction</p>
+                            
+                            <lightning-textarea class="hideInputLabel heightTextArea customTextArea" required
+                                onchange={handleReasonDeduction}>
+                            </lightning-textarea>
+                        </div>
+                        <!--REASON FOR DEDUCTION-->
+
+                        <!--DOCUMENT NUMBER-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
+                            <p class="text-xsmall slds-p-bottom_small">Document Number</p>
+                            
+                            <lightning-input data-id="docnumber" pattern="[0-9]{10}" max-length="10"
+                                message-when-pattern-mismatch="Enter a 10 digits document number"
+                                class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
+                                placeholder="10 digits document number"
+                                required onchange={handleDocNumber}>
+                            </lightning-input>
+                        </div>
+                        <!--DOCUMENT NUMBER-->
+
+                        <!--DOCUMENT ISSUE DATE-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
+                            <p class="text-xsmall slds-p-bottom_small">Document Issue Date</p>
+                            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                                <div class="slds-col">
+                                    <lightning-input data-id="docissuedate" type="date" date-style="short"
+                                        class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
+                                        placeholder="--/--/----"
+                                        required onchange={handleIssueDate}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <img src={calendarIcon} class="page" height="36" width="36">
+                                    <!--lightning-icon icon-name="utility:date_input"></lightning-icon-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--DOCUMENT ISSUE DATE-->
+
+                        <!--AMOUNT DISPUTED-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
+                            <p class="text-xsmall slds-p-bottom_small">Amount Disputed</p>
+                            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                                <div class="slds-col">
+                                    <lightning-input data-id="amountdisputed" type="number" formatter="currency"
+                                        class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
+                                        required onchange={handleAmountDisputed}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <h3 class="text-medium">USD</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!--AMOUNT DISPUTED-->
+
+                        <!--EMAIL RECIPIENTS-->
+                        <div class="slds-p-horizontal_xx-large">
+                            <p class="text-xsmall slds-p-bottom_small">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
+                            </p>
+                            <c-portal-search-lookup-component onsearch={handleContactSearch}
+                                item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
+                                required-class={requiredClass} placeholder="Search Email Recipient"
+                                onselectionchange={addNewRecipientButtonClick}>
+                            </c-portal-search-lookup-component>
+                            <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                                <template for:each={lstRecipients} for:item="recipient">
+                                    <span key={recipient.id}
+                                        class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
+                                        {recipient.email}
+                                        <lightning-icon class="cursorPointer" key={recipient.id}
+                                            icon-name="utility:close" size="x-small" onclick={removeRecipient}
+                                            data-item={recipient.email}>
+                                        </lightning-icon>
+                                    </span>
+                                </template>
+                            </div>
+                        </div>
+                        <!--EMAIL RECIPIENTS-->
+                        <div class="slds-align_absolute-center slds-m-around_x-large slds-p-vertical_large">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <button onclick={finishCreatingCase} data-id="Show_Success"
+                                        class="containedButton containedButton-size cursorPointer uiButton contactSupport">
+                                        Submit to IATA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={isBeforeFifteenth}>
+                        <div class="slds-p-horizontal_xx-large  slds-p-top_xx-large ">
+                            <p class="text-xsmall slds-p-bottom_small">Dear Agent,
+                                </p>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
+                            <p class="text-xsmall slds-p-bottom_small">Please note that deduction notices will not be accepted from the 16th until the end of the month. New deduction notices will be accepted as of 1st until the 15th of each month.
+                                </p>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-top_xx-large slds-float_right ">
+                            <p class="text-xsmall slds-p-bottom_small slds-float_right">,סוכן יקר
+                                </p>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-float_right ">
+                            <span dir="rtl">
+                            <p class="text-xsmall slds-p-bottom_small slds-float_right">.לידיעתך לא ניתן להודיע על שינוי בתשלום בין ה 16 לסוף החודש. הודעות חדשות יתקבלו ב 1 לחודש עד ה 15
+                                </p>
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

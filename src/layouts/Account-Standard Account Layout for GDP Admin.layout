@@ -263,6 +263,10 @@
                 <behavior>Edit</behavior>
                 <field>GDS__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Agent__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -546,6 +550,14 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ParentId</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>

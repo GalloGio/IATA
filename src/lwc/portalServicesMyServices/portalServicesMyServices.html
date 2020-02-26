@@ -5,8 +5,15 @@
         {label.CSP_Services_MyServicesHelpText}
     </div>
 
+    <!-- Show Only Favorites Button -->
+    <div class="slds-p-around_medium text-xsmall text-gray" > 
+        <!--lightning-button class="slds-float_left containedButton customBtn" label={buttonsLabel} onclick={handleShowOnlyFavorites}-->
+        <lightning-button class="showOnlyFavorites" variant="brand" label={buttonsLabel} onclick={handleShowOnlyFavorites}>
+        </lightning-button>
+    </div>
+
     <!-- Access granted component -->
-    <c-portal-services-access-granted></c-portal-services-access-granted>
+    <c-portal-services-access-granted show-only-favorites={showOnlyFavorites}></c-portal-services-access-granted>
 
 
     <!-- Access Requested component -->

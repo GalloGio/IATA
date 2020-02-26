@@ -353,13 +353,13 @@ public with sharing class AMS_AccreditationContactController {
 
 		}
 
-        //WMO-492
-        if(!isCertificationOSCAR) {
-            List<String> ownershipErrors = validateOwnership();
-            if(!ownershipErrors.isEmpty()) {
-                for(String errorMessage : ownershipErrors) {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMessage));
-                }
+		//WMO-492
+		if(!isCertificationOSCAR) {
+			List<String> ownershipErrors = validateOwnership();
+			if(!ownershipErrors.isEmpty()) {
+				for(String errorMessage : ownershipErrors) {
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMessage));
+				}
 				return null;
 			}
 		}
@@ -572,38 +572,38 @@ public with sharing class AMS_AccreditationContactController {
 		return new PageReference('/' + ApexPages.currentPage().getParameters().get('Id'));
 	}
 
-    //WMO-492
-    public List<String> validateOwnership() {
-        List<String> errors = new List<String>();
-        Decimal totalOwnership = 0;
-        Boolean validRange = true;
-        
-        for(AccreditationContactWrapper wrapped : acWrapper) {
-            if(wrapped.ac.Financial_interest__c <> null) {
-                totalOwnership += wrapped.ac.Financial_interest__c;
-                validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
-            }
-        }
+	//WMO-492
+	public List<String> validateOwnership() {
+		List<String> errors = new List<String>();
+		Decimal totalOwnership = 0;
+		Boolean validRange = true;
 
-        for(AccountWrapper aWrapped : accountWrapper) {
-            if(aWrapped.financialInterest <> null) {
-            	totalOwnership += aWrapped.financialInterest;
-            	validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
-            }
-        }
+		for(AccreditationContactWrapper wrapped : acWrapper) {
+			if(wrapped.ac.Financial_interest__c <> null) {
+				totalOwnership += wrapped.ac.Financial_interest__c;
+				validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
+			}
+		}
 
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {
-            if(totalOwnership < 99.99 || totalOwnership > 100) {
-                errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
-            }
+		for(AccountWrapper aWrapped : accountWrapper) {
+			if(aWrapped.financialInterest <> null) {
+				totalOwnership += aWrapped.financialInterest;
+				validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
+			}
+		}
 
-            if(!validRange) {
-                 errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
-            }            
-        }
+		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {
+			if(totalOwnership < 99.99 || totalOwnership > 100) {
+				errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
+			}
 
-        return errors;
-    }
+			if(!validRange) {
+				errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
+			}
+		}
+
+		return errors;
+	}
 
 	//AMSU-132
 	public void doSelectAll(){
@@ -650,7 +650,7 @@ public with sharing class AMS_AccreditationContactController {
 			ownership = ownership + aWrapped.financialInterest;
 		}
 
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (ownership < 99.99 || ownership > 100)) //AMSU-180//WMO-492
+		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (ownership < 99.99 || ownership > 100)) //AMSU-180//WMO-492
 		{
 			return false;
 		} else
@@ -742,8 +742,8 @@ public with sharing class AMS_AccreditationContactController {
 			return false;
 
 		if(Integer.valueOf(fieldSplit[0]) < 1950 || Integer.valueOf(fieldSplit[0]) > 2100 ||
-		   Integer.valueOf(fieldSplit[1]) < 1 || Integer.valueOf(fieldSplit[1]) > 12 ||
-		   Integer.valueOf(fieldSplit[2]) < 1 || Integer.valueOf(fieldSplit[2]) > 31)
+			 Integer.valueOf(fieldSplit[1]) < 1 || Integer.valueOf(fieldSplit[1]) > 12 ||
+			 Integer.valueOf(fieldSplit[2]) < 1 || Integer.valueOf(fieldSplit[2]) > 31)
 		{
 			return false;
 		}
@@ -1081,13 +1081,13 @@ public with sharing class AMS_AccreditationContactController {
 			//although when the associated process is a CORRECTION edit should be allowed
 			get{
 				return ac.Agency_Owner__c &&
-					   (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
-					   (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO &&
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE &&
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.GE &&
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AE &&
-					   ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
+						 (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
+						 (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
+						 ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO &&
+						 ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE &&
+						 ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.GE &&
+						 ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AE &&
+						 ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
 				}
 			set;

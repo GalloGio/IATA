@@ -97,6 +97,10 @@
         <name>IEC_Admin_Console</name>
     </customApplications>
     <customApplications>
+        <label><!-- IFTP --></label>
+        <name>IFTP</name>
+    </customApplications>
+    <customApplications>
         <label><!-- MITA / BIETA --></label>
         <name>MITA_BIETA</name>
     </customApplications>
@@ -1069,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -1513,6 +1521,10 @@
         <name>API_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- ASD Service Description --></label>
+        <name>ASD_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Acc_Fin_Mgmt_Agencies_Description --></label>
         <name>Acc_Fin_Mgmt_Agencies_Description</name>
     </customLabels>
@@ -1647,6 +1659,10 @@
         <name>Assist_Travelers_Special_Needs_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- Attach_Proof_Of_Payment --></label>
+        <name>Attach_Proof_Of_Payment</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Attachment Name --></label>
         <name>Attachment_Name</name>
     </customLabels>
@@ -1683,12 +1699,36 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP/CASS Ch Bank Service Description --></label>
+        <name>BSP_CASS_Ch_Bank_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP/CASS Ch Request Service Description --></label>
+        <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSPlink Service Description --></label>
+        <name>BSPlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Bank Transfer Payment terms --></label>
         <name>Bank_Transfer_Payment_terms</name>
     </customLabels>
     <customLabels>
         <label><!-- Bank transfer validation for auto renew --></label>
         <name>Bank_transfer_validation_for_auto_renew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Accounting Code --></label>
+        <name>Billing_Member_Accounting_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Designator Code --></label>
+        <name>Billing_Member_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Name --></label>
+        <name>Billing_Member_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Billing address --></label>
@@ -1823,8 +1863,32 @@
         <name>CASSLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- CASSlink Analytics Service Description --></label>
+        <name>CASSlink_Analytics_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Export Service Description --></label>
+        <name>CASSlink_Export_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Import Service Description --></label>
+        <name>CASSlink_Import_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Service Description --></label>
+        <name>CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS CASSlink Service Description --></label>
+        <name>CNS_CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS End Changes Service Description --></label>
+        <name>CNS_End_Changes_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -1859,6 +1923,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1889,6 +1957,10 @@
     <customLabels>
         <label>Bài viết này hữu ích không?</label>
         <name>CSP_ArticleHelpful</name>
+    </customLabels>
+    <customLabels>
+        <label>Chỉ định dịch vụ mới</label>
+        <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -1933,10 +2005,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Mua trực tuyến</label>
@@ -2031,6 +2099,10 @@
         <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Close --></label>
+        <name>CSP_Close</name>
+    </customLabels>
+    <customLabels>
         <label>Cộng đồng</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -2065,6 +2137,10 @@
     <customLabels>
         <label>&quot;Yêu cầu truy cập {0} của bạn đã được gửi tới quản trị viên cổng thông tin. Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào về quy trình, bạn có thể liên hệ với quản trị viên bên dưới:&quot;</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Thay đổi tên hồ sơ của bạn sẽ ảnh hưởng đến hiệu lực Thẻ ID của bạn. Vui lòng liên hệ với Đội Chăm sóc Khách hàng của chúng tôi để thay đổi tên hồ sơ của bạn</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
@@ -2115,7 +2191,15 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Từ chối quyền truy cập của người dùng</label>
+        <label><!-- CSP_Deduction_Notice --></label>
+        <name>CSP_Deduction_Notice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Deduction Notice Israel Description --></label>
+        <name>CSP_Deduction_Notice_Israel_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Từ chối Truy cập</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2137,6 +2221,10 @@
     <customLabels>
         <label>Các nước xuất bản</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invoices --></label>
+        <name>CSP_EF_Invoices</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email --></label>
@@ -2343,7 +2431,11 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Cấp quyền truy cập người dùng</label>
+        <label><!-- CSP Go to Webstar --></label>
+        <name>CSP_Go_to_Webstar</name>
+    </customLabels>
+    <customLabels>
+        <label>Cho phép Truy cập</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2351,12 +2443,48 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP IATAN Register Info --></label>
+        <name>CSP_IATAN_Register_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Invoices --></label>
+        <name>CSP_IATA_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label>Tên trên thẻ ID</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhấn vào đây để xem chi tiết ảnh thẻ ID của mình</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Ảnh</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Trạng thái</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Ngày Hết hạn</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã số VER thẻ ID</label>
+        <name>CSP_IDCard_Ver_Number</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
         <name>CSP_IMPORTANT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Id Card --></label>
+        <name>CSP_Id_Card</name>
     </customLabels>
     <customLabels>
         <label>Email không hợp lệ</label>
@@ -2651,7 +2779,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Xin chào quý khách</label>
+        <label>Hãy cho chúng tôi biết thêm</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2847,6 +2975,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>Rất tiếc, không tìm thấy kết quả nào theo các bộ lọc được sử dụng</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>Không có kết quả</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>
@@ -2861,6 +2993,10 @@
     <customLabels>
         <label>Xem hàng tháng</label>
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Outstanding_Invoices --></label>
+        <name>CSP_Outstanding_Invoices</name>
     </customLabels>
     <customLabels>
         <label>Mật khẩu</label>
@@ -3055,7 +3191,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
+        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -3187,6 +3323,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Thêm mục yêu thích</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Tất cả các dịch vụ có sẵn cho công ty của bạn được liệt kê dưới đây.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3219,6 +3359,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Xóa mục yêu thích</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Xem các dịch vụ có sẵn</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3233,6 +3377,14 @@
     <customLabels>
         <label>Thông tin dịch vụ</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiển thị tất cả</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Chỉ hiển thị yêu thích</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Dịch vụ</label>
@@ -3297,6 +3449,10 @@
     <customLabels>
         <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Bấm vào đây để yêu cầu dịch vụ Cấp phép IATA và Thay đổi&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard --></label>
+        <name>CSP_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label>xử lý sự cố</label>
@@ -3367,16 +3523,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Những điểm nổi bật dành riêng cho bạn</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Tại đây bạn có thể khám phá rất nhiều dịch vụ, ấn phẩm, sản phẩm và tài nguyên của IATA về ngành hàng không. Lựa chọn đặc biệt dựa trên sở thích và lịch sử hoạt động của bạn.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3547,6 +3695,10 @@
         <name>Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Company --></label>
         <name>Company</name>
     </customLabels>
@@ -3583,12 +3735,20 @@
         <name>Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Copyright --></label>
         <name>Copyright</name>
     </customLabels>
     <customLabels>
         <label><!-- Country --></label>
         <name>Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Requirements Service Description --></label>
+        <name>Country_Requirements_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Country cannot be empty --></label>
@@ -3609,6 +3769,10 @@
     <customLabels>
         <label><!-- Creation date --></label>
         <name>Creation_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Credit_Card_Payment_Link --></label>
+        <name>Credit_Card_Payment_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- Credit card payment msg --></label>
@@ -4083,6 +4247,10 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
+        <label><!-- Currency Center Service Description --></label>
+        <name>Currency_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Mật khẩu hiện tại</label>
         <name>Current_password</name>
     </customLabels>
@@ -4155,6 +4323,10 @@
         <name>Date</name>
     </customLabels>
     <customLabels>
+        <label><!-- Deduction Notice Service Description --></label>
+        <name>Deduction_Notice_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Del --></label>
         <name>Del</name>
     </customLabels>
@@ -4205,6 +4377,10 @@
     <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E-Bulletin Service Description --></label>
+        <name>E_Bulletin_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- E-mail to Case - IS Help Desk --></label>
@@ -4307,6 +4483,10 @@
         <name>FW</name>
     </customLabels>
     <customLabels>
+        <label><!-- Fee Codes --></label>
+        <name>Fee_Codes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Feed Item Invalid Topics --></label>
         <name>Feed_Item_Invalid_Topics</name>
     </customLabels>
@@ -4345,6 +4525,10 @@
     <customLabels>
         <label>Tài Liệu Tài Chính</label>
         <name>Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Financial Securities Service Description --></label>
+        <name>Financial_Securities_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- First name --></label>
@@ -4547,6 +4731,18 @@
         <name>GADM_Power_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- GADM Service Description --></label>
+        <name>GADM_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Status Change Template Link --></label>
+        <name>GADM_Status_Change_Template_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Already Invited --></label>
+        <name>GADM_User_Already_Invited</name>
+    </customLabels>
+    <customLabels>
         <label><!-- GADM_User_Invitation_Mr --></label>
         <name>GADM_User_Invitation_Mr</name>
     </customLabels>
@@ -4623,6 +4819,10 @@
         <name>GADM_active_users_reached</name>
     </customLabels>
     <customLabels>
+        <label><!-- GDI Service Description --></label>
+        <name>GDI_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Quốc Gia</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
@@ -4671,8 +4871,32 @@
         <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Acr Changes Service Description --></label>
+        <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Airl Location Codes Service Description --></label>
+        <name>IATA_Airl_Location_Codes_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
         <name>IATA_Alpha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Certificates Service Description --></label>
+        <name>IATA_Certificates_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (2C2P) Service Description --></label>
+        <name>IATA_EasyPay_2C2P_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (EDENRED) Service Description --></label>
+        <name>IATA_EasyPay_EDENRED_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (MSTS) Service Description --></label>
+        <name>IATA_EasyPay_MSTS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA_GDPR_URL --></label>
@@ -4681,6 +4905,10 @@
     <customLabels>
         <label><!-- IATA GDPR White Logo --></label>
         <name>IATA_GDPR_White_Logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Store Service Description --></label>
+        <name>IATA_Store_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -5731,6 +5959,10 @@
         <name>ICE_Portal_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICE Service Description --></label>
+        <name>ICE_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICH --></label>
         <name>ICH</name>
     </customLabels>
@@ -6539,6 +6771,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký &amp; thanh toán cho Thẻ ID của quý khách (tạo mới, gia hạn, thay đổi đại lý) và nhận các phúc lợi của Đại lý du lịch IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6831,6 +7067,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(dành cho Đại lý Hoa Kỳ) Yêu cầu Thẻ ID, đăng ký Đại lý, trả Phí dịch vụ hàng năm, quy trình Tái chứng nhận Đại lý, v.v.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -7863,6 +8103,10 @@ and
         <name>IFAP_Save</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP Service Description --></label>
+        <name>IFAP_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFAP Submit for approval message --></label>
         <name>IFAP_Submit_for_approval_message</name>
     </customLabels>
@@ -7887,6 +8131,10 @@ and
         <name>IFAP_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFG Production Service Description --></label>
+        <name>IFG_Production_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFG_Prov_Declined --></label>
         <name>IFG_Prov_Declined</name>
     </customLabels>
@@ -7901,6 +8149,10 @@ and
     <customLabels>
         <label><!-- IFG_Thanks_for_request --></label>
         <name>IFG_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IFTP Service Description --></label>
+        <name>IFTP_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_My_Application --></label>
@@ -12507,6 +12759,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13259,6 +13515,10 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
+        <label>Để thông báo cho IATA về việc thay đổi chi tiết tài khoản ngân hàng, quý vị vui lòng liên hệ với chúng tôi</label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -13313,6 +13573,10 @@ and
     <customLabels>
         <label><!-- Type of Agency --></label>
         <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_DISCARD_APPLICATION --></label>
+        <name>ISSP_ANG_DISCARD_APPLICATION</name>
     </customLabels>
     <customLabels>
         <label>Toàn bộ Cấp bậc</label>
@@ -13743,6 +14007,18 @@ and
         <name>ISSP_AP_Form</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
     </customLabels>
@@ -13845,6 +14121,10 @@ and
     <customLabels>
         <label><!-- ISSP Add FAP Contact --></label>
         <name>ISSP_Add_FAP_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Add_New_Associate_Entity --></label>
+        <name>ISSP_Add_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
         <label>Thêm Người dùng vào dịch vụ này</label>
@@ -15857,6 +16137,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
+        <label>Nền tảng Thẻ ID Trực tuyến</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ Trực tuyến của IATAN</label>
+        <name>ISSP_IdCard_US</name>
+    </customLabels>
+    <customLabels>
         <label>Đang xử lý</label>
         <name>ISSP_In_Progress</name>
     </customLabels>
@@ -16171,6 +16459,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Hành động</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Trường Hợp Mới</label>
@@ -17822,7 +18118,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>IP máy tính của bạn được xác định nguồn từ một trong những quốc gia bị cấm vận bởi Hoa kỳ&lt;br/&gt;Hệ thống hỗ trợ khách hàng của chúng tôi tuân thủ với quy định này của Hoa Kỳ, do đó chúng hiện không thể cung cấp quyền truy cập vào Cổng thông tin khách hàng cho địa chỉ IP của bạn&lt;br/&gt;Click&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;tại đây&lt;/a&gt;để liên hệ tới văn phòng IATA tại khu vực của bạn</label>
+        <label>IP máy tính của bạn được xác định nguồn từ một trong những quốc gia bị cấm vận bởi Hoa kỳ&lt;br/&gt;Hệ thống hỗ trợ khách hàng của chúng tôi tuân thủ với quy định này của Hoa Kỳ, do đó chúng hiện không thể cung cấp quyền truy cập vào Cổng thông tin khách hàng cho địa chỉ IP của bạn&lt;br/&gt;Click&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;tại đây&lt;/a&gt;để liên hệ tới văn phòng IATA tại khu vực của bạn</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
@@ -18715,6 +19011,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
         <name>InputRequiredMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Insurance Providers Service Description --></label>
+        <name>Insurance_Providers_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Internal and external emails error --></label>
         <name>Internal_and_external_emails_error</name>
     </customLabels>
@@ -18725,6 +19025,18 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label><!-- Invalid Topic Assignment --></label>
         <name>Invalid_Topic_Assignment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Amount --></label>
+        <name>Invoice_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Status --></label>
+        <name>Invoice_Status</name>
     </customLabels>
     <customLabels>
         <label><!-- Invoice number --></label>
@@ -18757,6 +19069,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label><!-- Job title required --></label>
         <name>Job_title_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Join BSP/CASS Service Description --></label>
+        <name>Join_BSP_CASS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
@@ -19260,6 +19576,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Line_of_Business_LoB</name>
     </customLabels>
     <customLabels>
+        <label><!-- Link To SIS --></label>
+        <name>Link_To_SIS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -19366,6 +19686,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>Đăng xuất</label>
         <name>Logout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MIR Service Description --></label>
+        <name>MIR_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MITA Agreements Service Description --></label>
+        <name>MITA_Agreements_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Make All Private --></label>
@@ -19486,6 +19814,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- NoSameName --></label>
         <name>NoSameName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Invoices_To_Display --></label>
+        <name>No_Invoices_To_Display</name>
     </customLabels>
     <customLabels>
         <label><!-- No-Reply --></label>
@@ -19948,8 +20280,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Trong trường hợp không tìm thấy công ty nào cho tổ hợp mã GSA và quốc gia của bạn, xin vui lòng đảm bảo bạn đã nhập đúng thông tin hoặc tham khảo &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;hướng dẫn khắc phục sự cố&lt;/a&gt; của chúng tôi&quot;</label>
@@ -21059,6 +21399,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Payment_number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Paymentlink Service Description --></label>
+        <name>Paymentlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Period --></label>
         <name>Period</name>
     </customLabels>
@@ -21307,6 +21651,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -21377,6 +21725,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- Section Title Top Sellers --></label>
         <name>Section_Title_Top_Sellers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- See_Bank_Account_Details --></label>
+        <name>See_Bank_Account_Details</name>
     </customLabels>
     <customLabels>
         <label><!-- See details --></label>
@@ -21523,6 +21875,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Stay_Informed</name>
     </customLabels>
     <customLabels>
+        <label><!-- Stop creating accounts from Owners and Subsidiaries --></label>
+        <name>Stop_creating_accounts_from_Owners_and_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Street cannot be empty --></label>
         <name>Street_cannot_be_empty</name>
     </customLabels>
@@ -21555,8 +21911,20 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIP Reports Service Description --></label>
+        <name>TIP_Reports_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label>Các nhiệm vụ</label>
@@ -21587,6 +21955,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Title_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total_Cost --></label>
         <name>Total_Cost</name>
     </customLabels>
@@ -21599,8 +21971,128 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Tracking_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Training Platform (LMS) Service Description --></label>
+        <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Transfer Attachments --></label>
         <name>Transfer_Attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP --></label>
+        <name>Treasury_Dashboard_BSP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP Long --></label>
+        <name>Treasury_Dashboard_BSP_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays --></label>
+        <name>Treasury_Dashboard_Bank_Holidays</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays URL --></label>
+        <name>Treasury_Dashboard_Bank_Holidays_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS --></label>
+        <name>Treasury_Dashboard_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS Long --></label>
+        <name>Treasury_Dashboard_CASS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide URL --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center --></label>
+        <name>Treasury_Dashboard_Currency_Center</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center URL --></label>
+        <name>Treasury_Dashboard_Currency_Center_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates --></label>
+        <name>Treasury_Dashboard_Exchange_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates Long --></label>
+        <name>Treasury_Dashboard_Exchange_Rates_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates --></label>
+        <name>Treasury_Dashboard_FX_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates URL --></label>
+        <name>Treasury_Dashboard_FX_Rates_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Header Text --></label>
+        <name>Treasury_Dashboard_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS --></label>
+        <name>Treasury_Dashboard_ICCS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS Long --></label>
+        <name>Treasury_Dashboard_ICCS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH --></label>
+        <name>Treasury_Dashboard_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH Long --></label>
+        <name>Treasury_Dashboard_ICH_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Links --></label>
+        <name>Treasury_Dashboard_Links</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News --></label>
+        <name>Treasury_Dashboard_Market_News</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News URL --></label>
+        <name>Treasury_Dashboard_Market_News_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Premium Dashboard --></label>
+        <name>Treasury_Dashboard_Premium_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Service Name --></label>
+        <name>Treasury_Dashboard_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Standard Dashboard --></label>
+        <name>Treasury_Dashboard_Standard_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms Of Use --></label>
+        <name>Treasury_Dashboard_Terms_Of_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms of Use URL --></label>
+        <name>Treasury_Dashboard_Terms_of_Use_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide --></label>
+        <name>Treasury_Dashboard_User_Guide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide URL --></label>
+        <name>Treasury_Dashboard_User_Guide_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Trust Weaver --></label>
@@ -22555,6 +23047,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>Dịch Vụ Khả Dụng</label>
         <name>Available_Services</name>
     </customTabs>
@@ -22691,6 +23187,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>My_Status</name>
     </customTabs>
     <customTabs>
+        <label><!-- Notification Center --></label>
+        <name>Notification_Center</name>
+    </customTabs>
+    <customTabs>
         <label><!-- OPS --></label>
         <name>OPS</name>
     </customTabs>
@@ -22737,6 +23237,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customTabs>
         <label><!-- Unregistered users --></label>
         <name>Unregistered_users</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Usage Report --></label>
+        <name>Usage_Report</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

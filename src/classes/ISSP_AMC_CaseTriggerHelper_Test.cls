@@ -1,17 +1,17 @@
 /*
-    Class Name: ISSP_AMC_CaseTriggerHelper_Test
-    Related Classes: ISSP_AMC_CaseTriggerHelper
-    Copyright @Right IT Services
+	Class Name: ISSP_AMC_CaseTriggerHelper_Test
+	Related Classes: ISSP_AMC_CaseTriggerHelper
+	Copyright @Right IT Services
 
-    Purpose: Test class for ISSP_AMC_CaseTriggerHelper
+	Purpose: Test class for ISSP_AMC_CaseTriggerHelper
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         TIAGO MENDES    				04-03-2018          INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         TIAGO MENDES    				04-03-2018          INITIAL DEVELOPMENT
 */
 
 @isTest
 public class ISSP_AMC_CaseTriggerHelper_Test {
-	
+
 
 	public static testMethod void testCaseTriggerHelper(){
 
@@ -20,7 +20,7 @@ public class ISSP_AMC_CaseTriggerHelper_Test {
 		GlobalCaseTrigger__c gct = new GlobalCaseTrigger__c(Name = 'ISSP_AMC_CaseTriggerHelper', ON_OFF__c = true);
 		IATA_Process_Orchestrator__c orchestrator = new IATA_Process_Orchestrator__c();
 		orchestrator.RecordTypeId = [SELECT Id,Name FROM RecordType WHERE Name='Orchestrator'][0].Id;
-		
+
 		User myOtherUser = [select Id from User WHERE Profile.Name = 'Developer' AND IsActive = true LIMIT 1];
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 		Test.StartTest();

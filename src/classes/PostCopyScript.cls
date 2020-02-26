@@ -4,12 +4,13 @@
 global class PostCopyScript implements SandboxPostCopy {
 
 	global void runApexClass(SandboxContext context) {
-		
+
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
-
+		deleteScheduleDashboards();
+		updateNamedCredentials();
+		deleteConnectedApps();
 	}
-
 
 	/**
 	 * This method deletes the following custom settings records:
@@ -24,7 +25,7 @@ global class PostCopyScript implements SandboxPostCopy {
 		if(!listBSPLinkIntegrations.isEmpty()) {
 			System.debug('List of BSPLink Integration records to delete: ' + listBSPLinkIntegrations);
 			delete listBSPLinkIntegrations;
-		}	
+		}
 
 
 		//delete AMS SAP Settings custom setting record
@@ -61,7 +62,7 @@ global class PostCopyScript implements SandboxPostCopy {
 			System.debug('List of HPM Setting records to delete: ' + listHPMSettings);
 			delete listHPMSettings;
 		}
-		
+
 		//delete ISSP Kavi Setting custom setting record
 		List<ISSP_Kavi_Settings__c> listKVSettings = new List<ISSP_Kavi_Settings__c>();
 		listKVSettings = ISSP_Kavi_Settings__c.getAll().values();
@@ -78,17 +79,94 @@ global class PostCopyScript implements SandboxPostCopy {
 				delete a;
 			}
 		}
+
+		//delete RTS Senior Manager custom setting record
+		List<RTS_Senior_Manager__c>  lstSeniorManager = new List<RTS_Senior_Manager__c>();
+		lstSeniorManager = RTS_Senior_Manager__c.getAll().values();
+		if(!lstSeniorManager.isEmpty()){
+			System.debug('List of RTS Senior Manager to delete: '+lstSeniorManager);
+			delete lstSeniorManager;
+		}
+
+		//delete RTS Orange Senior Manager custom setting record
+		List<RTS_Orange_Senior_Manager__c>  lstOrangeSeniorManager = new List<RTS_Orange_Senior_Manager__c>();
+		lstOrangeSeniorManager = RTS_Orange_Senior_Manager__c.getAll().values();
+		if(!lstOrangeSeniorManager.isEmpty()){
+			System.debug('List of RTS Orange Senior Manager to delete: '+lstOrangeSeniorManager);
+			delete lstOrangeSeniorManager;
+		}
 	}
 
 	@TestVisible
 	private void updateQueuesEmail() {
 		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and email != ''];
-		
+
 		for (Group q : lstQueues) {
 				List<String> updateEmail = q.Email.split('@');
-                q.Email = q.Email.replace('@'+updateEmail[1],'='+updateEmail[1] + '@example.com');
-		} 
+				q.Email = q.Email.replace('@'+updateEmail[1],'='+updateEmail[1] + '@example.com');
+		}
 			update lstQueues;
 	}
 
+	/**
+	 * This method deletes all Schedule Dashboards":
+	*/
+	@TestVisible
+	private void deleteScheduleDashboards(){
+		System.debug('#1 deleteScheduleDashboards');
+		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
+		Database.executeBatch(deleteScheduleDashboards,10);
+	}
+
+	/**
+	 * This create a service to connect with MetadataAPI service:
+	*/
+	@TestVisible
+	private static MetadataService.MetadataPort createService(){
+		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+		service.SessionHeader = new MetadataService.SessionHeader_element();
+		service.SessionHeader.sessionId = UserInfo.getSessionId();
+		return service;
+	}
+
+	/**
+	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
+	*/
+	@TestVisible
+	private void updateNamedCredentials(){
+		System.debug('#1 updateNamedCredentials');
+		List<MetadataService.NamedCredential> namedCredentialList = new List<MetadataService.NamedCredential>();
+		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
+			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
+			namedCredential.fullName = nc.DeveloperName;
+			namedCredential.label = nc.MasterLabel;
+			namedCredential.endpoint = nc.endpoint + '/test';
+			namedCredential.principalType = nc.PrincipalType;
+			namedCredential.protocol = 'NoAuthentication';
+
+			namedCredentialList.add(namedCredential);
+		}
+		System.debug('#2 updateNamedCredentials');
+		if(!namedCredentialList.isEmpty()){
+			System.debug('#3 updateNamedCredentials');
+			createService().updateMetadata(namedCredentialList);
+		}
+	}
+
+	/**
+	 * This method delete all ConnectedApps from the ORG:
+	*/
+	@TestVisible
+	private void deleteConnectedApps(){
+		System.debug('#1 deleteConnectedApps');
+		List<String> fullNameList = new List<String>();
+		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
+			fullNameList.add(ca.Name.replace(' ','_'));
+		}
+		System.debug('#2 deleteConnectedApps');
+		if(!fullNameList.isEmpty()){
+			System.debug('#3 deleteConnectedApps');
+			createService().deleteMetadata('ConnectedApp', fullNameList);
+		}
+	}
 }

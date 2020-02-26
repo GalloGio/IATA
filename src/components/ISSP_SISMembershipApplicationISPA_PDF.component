@@ -305,7 +305,7 @@
             {!newForm.Company_Country__r.Name}<br/>
             {!newForm.Postal_code__c}
         </p>
-        <p ><span class="bold">Attn: </span>{!newForm.Contact_First_name__c} {!newForm.Contact_Last_name__c}</p>
+        <p ><span class="bold">Attn: </span>{!attentionUser.First_name__c} {!attentionUser.Last_name__c}</p>
         <br/>
         <p class="bold">IATA:</p>
         <p class="margin-3">

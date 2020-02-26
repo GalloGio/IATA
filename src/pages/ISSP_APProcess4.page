@@ -1,0 +1,37 @@
+<apex:page controller="ISSP_APProcess"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}">
+    
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
+            
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/main.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/main.min.js')}"></script>
+            <c:iss_ap_css />
+            <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+                
+            <c:ISSP_CustomNavigation />
+            <div class="container">
+                <div id="contentWrapper">
+                    
+                    <c:ISSP_WaitingStatus />
+                    <!-- ------------------------------- -->
+                    <!--STEP 3 Display BSP/CASS/ICH FORM -->
+                    <!-- ------------------------------- -->
+                    <apex:include pageName="ISSP_AP_Submit" rendered="{!isStep4}"/>
+
+                </div>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
+    </html>
+    
+</apex:page>

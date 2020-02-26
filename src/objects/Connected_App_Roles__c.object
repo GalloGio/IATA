@@ -150,5 +150,28 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>EasyPay</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Provisioning_Id__c</columns>
+        <columns>Connected_App_Provisioning_Name__c</columns>
+        <columns>Connected_App__c</columns>
+        <columns>Permission_set_SSO__c</columns>
+        <columns>Role__c</columns>
+        <columns>Default_User_Role__c</columns>
+        <columns>PermissionSet_Provisioning__c</columns>
+        <columns>Order__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Connected_App__c</field>
+            <operation>contains</operation>
+            <value>Easy</value>
+        </filters>
+        <label>EasyPay</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

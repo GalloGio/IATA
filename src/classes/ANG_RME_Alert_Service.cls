@@ -189,9 +189,9 @@ global class ANG_RME_Alert_Service {
 		Expose webservice as a RESTfull service for NewGen Mobile APP
 	*/
 	@HttpPost
-  	global static void doPost(String accountId){
-  		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
-  	}
+		global static void doPost(String accountId){
+			ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
+		}
 
 	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();

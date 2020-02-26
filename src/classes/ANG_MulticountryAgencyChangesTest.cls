@@ -577,6 +577,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		staging.Location_Type__c = acct.Location_Type__c;
 		staging.SAAM_Case__c = oscarCase.Id;
 		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		staging.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert staging;
 

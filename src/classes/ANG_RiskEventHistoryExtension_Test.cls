@@ -1,5 +1,5 @@
 @isTest
-public class ANG_RiskEventHistoryExtension_Test {  
+public class ANG_RiskEventHistoryExtension_Test {
 
 	@testSetup static void testSetup(){
 

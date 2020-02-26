@@ -1,7 +1,7 @@
 /**
-           File: AMS_VoucherPDFCreationBatch_Test.cls
-        Subject: Test Class for AMS_VoucherPDFCreationBatch class.
-        History: amtosantos, 2017-04-17, Initial Release.
+					 File: AMS_VoucherPDFCreationBatch_Test.cls
+				Subject: Test Class for AMS_VoucherPDFCreationBatch class.
+				History: amtosantos, 2017-04-17, Initial Release.
 
 
 */
@@ -19,9 +19,9 @@ private class AMS_VoucherPDFCreationBatch_Test {
 		Test.startTest();
 
 		country  = new IATA_ISO_Country__c(
-              Name = 'Portugal',
-              ISO_Code__c = 'PT',
-              AIMS_Area_Name__c = 'Lisboa'
+							Name = 'Portugal',
+							ISO_Code__c = 'PT',
+							AIMS_Area_Name__c = 'Lisboa'
 		);
 
 		insert country;
@@ -79,11 +79,11 @@ private class AMS_VoucherPDFCreationBatch_Test {
 			voucherRegion,
 			processRun
 		);
-	
+
 		batchJob.start(null);
 		batchJob.execute(null, new List<AMS_Voucher__c> { voucher });
 		batchJob.finish(null);
-		
+
 		batchJob.isTestCompliant();
 
 		Test.stopTest();

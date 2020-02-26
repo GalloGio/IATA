@@ -34,5 +34,16 @@
         <unique>false</unique>
     </fields>
     <label>AMS Change Codes Integration</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RecId_A__c</columns>
+        <columns>RecId_B__c</columns>
+        <columns>RecId_Res__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

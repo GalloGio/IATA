@@ -106,7 +106,7 @@ global with sharing class ANG_ConversionHelper {
 	}
 
 
-   public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
+	 public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
 
 		Set<Id> allAgenciesGlobal = new Set<Id>();
 
@@ -131,7 +131,7 @@ global with sharing class ANG_ConversionHelper {
 
 		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure,countryName));
 
-   }
+	 }
 
 	public static Map<Id,ANG_ConversionHelper.HierarchyStructure> buildHierarchyStructure(String country){
 

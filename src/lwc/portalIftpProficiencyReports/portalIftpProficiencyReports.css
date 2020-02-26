@@ -1,0 +1,14 @@
+.addProficiencyLevelButtonContainer{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.mainSearchClass label{
+    display: none !important;
+}
+
+.align-right-class{
+    display: flex;
+    justify-content: end;
+}

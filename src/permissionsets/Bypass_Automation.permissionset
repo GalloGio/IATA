@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_Platform_Events</name>
+    </customPermissions>
+    <description>Permission Set to be used in Conjunction with Custom Permissions or Hierarchy Custom Setting to be assigned to a User for configuring SHORT TERM/ONE-OFF automation bypasses.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Automation</label>
+    <license>Salesforce</license>
+</PermissionSet>

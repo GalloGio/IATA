@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: Order_Sel_Test.cls
+		 File: Order_Sel_Test.cls
 	Subject: Test Class for Order_Sel Class.
 	History: 2017-06-26, asantos, Initial Release.
 
@@ -73,9 +73,9 @@ private class Order_Sel_Test {
 
 			order = orderSel.initializeOrder(account, contact, user.Id);
 			order = orderSel.initializeOrder(account, contact, user.Id, true);
-			
+
 			Test.stopTest();
-			
+
 			orderSel.cleanOrderItems(orderId);
 			orderIdSet = orderSel.findOrders4SAP(orderList, orderList);
 			orderList = orderSel.getOrdersReady4SAP();
@@ -85,7 +85,7 @@ private class Order_Sel_Test {
 			orderList = orderSel.getQuotes(null);
 		}
 
-		
+
 	}
 
 	@isTest
@@ -140,9 +140,9 @@ private class Order_Sel_Test {
 
 			order = orderSel.initializeOrder(account, contact, user.Id);
 			order = orderSel.initializeOrder(account, contact, user.Id, true);
-			
+
 			Test.stopTest();
-			
+
 			order = orderSel.getQuoteDetails(null);
 			order = Order_Sel.getQuoteDetail(null, null);
 			order = Order_Sel.getOrderDetail(null, null, null);
@@ -153,7 +153,7 @@ private class Order_Sel_Test {
 			orderList = orderSel.getMyOrders(null, null);
 		}
 
-		
+
 	}
 
 }

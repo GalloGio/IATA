@@ -1,6 +1,6 @@
 /**
 
-	   File: OrderItemAcceptedPaymentMethodsBatch.cls
+		 File: OrderItemAcceptedPaymentMethodsBatch.cls
 	Purpose: Replicate the updated Product Accepted Payment Methods to "open" Order Items.
 	 Author: blue-infinity sa.
 	History: 2017-06-19, aosantos, Initial Release.

@@ -14,7 +14,7 @@ private class AMP_IATAGroupExtensionTest
 		);
 
 		System.runAs(testUser) {
-			
+
 			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
 			insert a;
