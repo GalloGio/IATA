@@ -1936,11 +1936,6 @@
                     <label>Papua New Guinea</label>
                 </value>
                 <value>
-                    <fullName>Papua Niugini</fullName>
-                    <default>false</default>
-                    <label>Papua Niugini</label>
-                </value>
-                <value>
                     <fullName>Paraguay</fullName>
                     <default>false</default>
                     <label>Paraguay</label>
@@ -2613,10 +2608,6 @@
             <valueSettings>
                 <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
                 <valueName>Papua New Guinea</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
-                <valueName>Papua Niugini</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
@@ -5609,7 +5600,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -5761,7 +5751,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -5923,7 +5912,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -12063,10 +12051,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Papua Niugini</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paraguay</fullName>
                 <default>false</default>
             </values>
@@ -16656,10 +16640,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Papua Niugini</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paraguay</fullName>
                 <default>false</default>
             </values>
@@ -20964,10 +20944,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Papua New Guinea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Papua Niugini</fullName>
                 <default>false</default>
             </values>
             <values>
