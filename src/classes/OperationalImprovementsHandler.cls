@@ -3,7 +3,7 @@
 **/
 public with sharing class OperationalImprovementsHandler {
 
-	public static final Id CPS_RECORDTYPE_ID = Schema.SObjectType.Operational_Improvements__c.getRecordTypeInfosByDeveloperName().get('CPS_Checks').getRecordTypeId();
+	public static final Id CPS_RECORDTYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Operational_Improvements__c','CPS_Checks');
 
 	private static Map<String,Decimal> MAP_CURRENCY_RATES;
 	public static Map<String,Decimal> getMapCurrencyRate() {

@@ -4,7 +4,7 @@
 @isTest
 private class OperationalImprovementsHandlerTest {
 
-	public static final Id OI_RECORDTYPE_ID = Schema.SObjectType.Operational_Improvements__c.getRecordTypeInfosByDeveloperName().get('Operational_Improvements').getRecordTypeId();
+	public static final Id OI_RECORDTYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Operational_Improvements__c','Operational_Improvements');
 
 	@isTest
 	public static void test_populateExchangeRate_notCPS() {
