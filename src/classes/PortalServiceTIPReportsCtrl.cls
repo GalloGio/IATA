@@ -2,8 +2,9 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 	/*
 	* This class was created for TIP Reports Service 
-	* It is based on the existing ISSP_TIP_External_Reports_Controller 
-	* some methods were copyed, other created or changed a bit. 
+	* It is based on the previously existing ISSP_TIP_External_Reports_Controller
+	* The methods genPublicExpiringAWSLinkIFAP, make_sig and createDocumentTrackerRecord 
+	* were moved from the old class. 
 	*/
 
 	public static final String REPORT_TYPE_AMAZON = 'Amazon File';
@@ -17,9 +18,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 	@AuraEnabled(cacheable=false)
 	public static TIPReportPageWrapper getTIPReportPageWrapper(){
-
 		TIPReportPageWrapper tipReportPageWrapperToReturn = new TIPReportPageWrapper();
-		
 
 		//Check if the current user have access to TIP Reports service
 		String userId = UserInfo.getUserId();
@@ -29,7 +28,6 @@ public with sharing class PortalServiceTIPReportsCtrl {
 			User currentUser = [SELECT Id, ContactId FROM User WHERE Id = :userId];
 
 			if(currentUser != null) {
-
 				currentUserContactId = currentUser.ContactId;
 
 				if (!String.isBlank(currentUserContactId)) {
@@ -53,22 +51,27 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 			//get the reports from the amazon
 			tipReportPageWrapperToReturn.lstTIPReports.addAll(getAmazonReports(currentUserContactId));
-
 		}
 		
 		return tipReportPageWrapperToReturn;
 	}
 
+	/*
+	* Method for retrieve reports from Custom Metadata Type
+	*/
 	private static List<TIPReportWrapperObject> getMetadataReports(){
 
 		List<TIPReportWrapperObject> lstReportsToReturn = new List<TIPReportWrapperObject>();
 
+		//check if the code is running in a sandbox
 		Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
 
+		//Queries the specific metadata object having the Type for "TIP" 
 		List<PowerBI_Report_Config__mdt> lstMetadataReports = [SELECT Id,DeveloperName, MasterLabel, Group_Id_Dev__c, Group_Id_Prod__c, 
 															   Report_Id_Dev__c, Report_Id_Prod__c
 															   FROM PowerBI_Report_Config__mdt WHERE Type__c = 'TIP_report'];
 
+		//If contains record, create a wrapper for each one to return to the page
 		if(lstMetadataReports != null && !lstMetadataReports.isEmpty()){
 
 			for(PowerBI_Report_Config__mdt metadataReportAux : lstMetadataReports){
@@ -78,24 +81,19 @@ public with sharing class PortalServiceTIPReportsCtrl {
 				tipReportAux.id = metadataReportAux.Id;
 				tipReportAux.developerName = metadataReportAux.DeveloperName;
 				tipReportAux.masterLabel = metadataReportAux.MasterLabel;
-
-				if(runningInASandbox){
-					tipReportAux.groupId = metadataReportAux.Group_Id_Dev__c;
-					tipReportAux.reportId = metadataReportAux.Report_Id_Dev__c;
-				}else{
-					tipReportAux.groupId = metadataReportAux.Group_Id_Prod__c;
-					tipReportAux.reportId = metadataReportAux.Report_Id_Prod__c;
-				}
+				tipReportAux.groupId = runningInASandbox ? metadataReportAux.Group_Id_Dev__c : metadataReportAux.Group_Id_Prod__c;
+				tipReportAux.reportId = runningInASandbox ? metadataReportAux.Report_Id_Dev__c :  metadataReportAux.Report_Id_Prod__c;
 
 				lstReportsToReturn.add(tipReportAux);
-
 			}
-
 		}
 
 		return lstReportsToReturn;
 	}
 
+	/*
+	* Method for retrieve amazon files list for the user
+	*/
 	private static List<TIPReportWrapperObject> getAmazonReports(String currentUserContactId){
 
 		//List that contains amazon files to return 
@@ -103,8 +101,8 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 		//Check if user have an account and get either the top parent account if exists or the direct user account
 		Contact currentUserContact = [SELECT Id, Account.Id, Account.Top_Parent__c
-									 FROM Contact WHERE Id = :currentUserContactId];							 
-		if(currentUserContact == null && currentUserContact.Account.Id == null && currentUserContact.Account.Top_Parent__c == null){
+									 FROM Contact WHERE Id = :currentUserContactId];
+		if(currentUserContact.Account.Id == null && currentUserContact.Account.Top_Parent__c == null){
 			return lstAmazonToReturn;
 		}
 		String userAccountId = currentUserContact.Account.Top_Parent__c != null ? currentUserContact.Account.Top_Parent__c +'' : contact.Account.Id+'';
@@ -121,7 +119,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 											WHERE isPublic__c = True AND sObject_Id__c in :mapExternalReports.keySet()
 											ORDER BY sObject_Id__c ASC ];
 
-		//Iterate over those links and construct the final list to display in the page
+		//Iterate over those links and add the wrapper list to display in the page
 		if(lstAmazonFiles != null && !lstAmazonFiles.isEmpty()){
 			for(AmazonFile__c amazonFileAux : lstAmazonFiles){
 
@@ -141,6 +139,9 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		return lstAmazonToReturn;
 	}
 
+	/*
+	* Returns a link for the requested amazon file
+	*/
 	@AuraEnabled(cacheable=false)
 	public static string getExpiringLinkIfap(String fileName){
 		AmazonCredentials credentials = AmazonCredentials.getCredentials('GenericAttach');
@@ -148,8 +149,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	}
 
 	/*
-	* Reuses ISSP_TIP_External_Reports_Controller method.
-	* This method is an integral copy of genPublicExpiringAWSLinkIFAP from ISSP_TIP_External_Reports_Controller.
+	* Construct the link to the amazon file based on the amazon credentials and the requested filename.
 	*/
 	private static string genPublicExpiringAWSLinkIFAP(AmazonCredentials credentials, string filename) {
 		String path = credentials.Bucket + SEPARATOR;
@@ -184,8 +184,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	}
 
 	/*
-	* Reuses ISSP_TIP_External_Reports_Controller method.
-	* This method is an integral copy of make_sig from ISSP_TIP_External_Reports_Controller.
+	* Creates the hash to include in the link
 	*/
 	private static String make_sig(AmazonCredentials credentials,string canonicalBuffer) {
 		String macUrl;
@@ -196,8 +195,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	}
 
 	/*
-	* Reuses ISSP_TIP_External_Reports_Controller method.
-	* This method is an integral copy of createDocumentTrackerRecord from ISSP_TIP_External_Reports_Controller.
+	* Creates a tracker record so the business have knowledge the user clicked on the amazon file report
 	*/
 	@AuraEnabled(cacheable=false)
 	public static void createDocumentTrackerRecord(String fileId, String reportId){
@@ -208,8 +206,8 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		insert tracker;
 	}
 
+	//Wrapper class to return access to page and the list of reports 
 	public class TIPReportPageWrapper {
-
 		@AuraEnabled
 		public Boolean haveAccessToTIPReports {get; set;}
 		@AuraEnabled
@@ -227,7 +225,6 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	}
 
 	public class TIPReportWrapperObject {
-
 		@AuraEnabled
 		public DateTime lastModifiedDate {get; set;}
 		@AuraEnabled
@@ -246,10 +243,6 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		public String reportId {get; set;}
 		@AuraEnabled
 		public String isspExternalReportId {get; set;}
-
-		public TIPReportWrapperObject(){}
-
 	}
-
 
 }

@@ -1,16 +1,9 @@
 @isTest
 public class PortalServiceTIPReportsCtrlTest {
-    
-	private static ISSP_External_Report__c er;
-    private static AmazonFile file1;
-    private static AmazonFile file2;
+	
+	static testMethod void Test_1() {
 
-	@testSetup
-	public static void loadCredentials() {
 		WrapperAttachTest.loadTestCredentials();
-	}
-
-	static void createTestData() {
 
 		//Account
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -46,50 +39,45 @@ public class PortalServiceTIPReportsCtrlTest {
 		insert appRight;
 
 		//External report
-		er = new ISSP_External_Report__c();
+		ISSP_External_Report__c er = new ISSP_External_Report__c();
 		er.Account__c = acc.Id;
 		er.Report_ID__c = 'ER-001';
 		er.Name = 'ER-001';
 		insert er;
 
 		//Amazon file
-        file1 = WrapperAttachTest.createAmazonFile(er, 'testname');
-        file2 = WrapperAttachTest.createAmazonFile(er, 'testname2');
+		AmazonFile file1 = WrapperAttachTest.createAmazonFile(er, 'testname');
+		AmazonFile file2 = WrapperAttachTest.createAmazonFile(er, 'testname2');
 
-        System.runAs(user) {
-            
-            PortalServiceTIPReportsCtrl.TIPReportPageWrapper pageWrapper = PortalServiceTIPReportsCtrl.getTIPReportPageWrapper();
+		Test.startTest();
+		System.runAs(user) {
+			PortalServiceTIPReportsCtrl.TIPReportPageWrapper pageWrapper = PortalServiceTIPReportsCtrl.getTIPReportPageWrapper();
 
+			PortalServiceTIPReportsCtrl.TIPReportWrapperObject tipwrapperObjectAux = new PortalServiceTIPReportsCtrl.TIPReportWrapperObject();
+			tipwrapperObjectAux.lastModifiedDate = Date.today();
+			tipwrapperObjectAux.developerName = 'devname';
+			tipwrapperObjectAux.masterLabel ='masterlabel';
+			tipwrapperObjectAux.id = 'someid';
+			tipwrapperObjectAux.reportType = 'typeA';
+			tipwrapperObjectAux.reportTypeLabel = 'typeALabel';
+			tipwrapperObjectAux.groupId = 'somegroupid';
+			tipwrapperObjectAux.reportId = 'somereportid';
+			tipwrapperObjectAux.isspExternalReportId = 'someisspexternalreportid';
+			
+			List<PortalServiceTIPReportsCtrl.TIPReportWrapperObject> lsttipwrapperObjectAux = new List< PortalServiceTIPReportsCtrl.TIPReportWrapperObject>();
+			lsttipwrapperObjectAux.add(tipwrapperObjectAux);
+		
+			PortalServiceTIPReportsCtrl.TIPReportPageWrapper tipAux = new PortalServiceTIPReportsCtrl.TIPReportPageWrapper();
+			PortalServiceTIPReportsCtrl.TIPReportPageWrapper tipAux2 = new PortalServiceTIPReportsCtrl.TIPReportPageWrapper(true, lsttipwrapperObjectAux);
+
+			System.assertEquals(2, [select count() from AmazonFile__c]);
+
+			PortalServiceTIPReportsCtrl.getExpiringLinkIfap('testname');
+
+			PortalServiceTIPReportsCtrl.createDocumentTrackerRecord(file1.getId(), er.Id);
+			System.assertEquals(1, [select count() from ISSP_Document_Tracker__c where Type__c = 'TIP Report']);
 		}
+		Test.stopTest();
 	}
-
-	static testMethod void Test_1() {
-        createTestData();
-
-        PortalServiceTIPReportsCtrl.TIPReportWrapperObject tipwrapperObjectAux = new PortalServiceTIPReportsCtrl.TIPReportWrapperObject();
-        tipwrapperObjectAux.lastModifiedDate = Date.today();
-		tipwrapperObjectAux.developerName = 'devname';
-		tipwrapperObjectAux.masterLabel ='masterlabel';
-		tipwrapperObjectAux.id = 'someid';
-		tipwrapperObjectAux.reportType = 'typeA';
-		tipwrapperObjectAux.reportTypeLabel = 'typeALabel';
-		tipwrapperObjectAux.groupId = 'somegroupid';
-		tipwrapperObjectAux.reportId = 'somereportid';
-        tipwrapperObjectAux.isspExternalReportId = 'someisspexternalreportid';
-        
-        List<PortalServiceTIPReportsCtrl.TIPReportWrapperObject> lsttipwrapperObjectAux = new List< PortalServiceTIPReportsCtrl.TIPReportWrapperObject>();
-        lsttipwrapperObjectAux.add(tipwrapperObjectAux);
-    
-        PortalServiceTIPReportsCtrl.TIPReportPageWrapper tipAux = new PortalServiceTIPReportsCtrl.TIPReportPageWrapper();
-        PortalServiceTIPReportsCtrl.TIPReportPageWrapper tipAux2 = new PortalServiceTIPReportsCtrl.TIPReportPageWrapper(true, lsttipwrapperObjectAux);
-
-		System.assertEquals(2, [select count() from AmazonFile__c]);
-
-		PortalServiceTIPReportsCtrl.getExpiringLinkIfap('testname');
-
-		PortalServiceTIPReportsCtrl.createDocumentTrackerRecord(file1.getId(), er.Id);
-        System.assertEquals(1, [select count() from ISSP_Document_Tracker__c where Type__c = 'TIP Report']);
-        
-    }
 
 }
