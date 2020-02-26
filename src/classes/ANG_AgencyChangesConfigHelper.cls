@@ -1,6 +1,6 @@
 public class ANG_AgencyChangesConfigHelper{
 
-	private static String CONVERSION_STANDARD_TO_MULTICOUNTRY = 'Conversion Multicountry';
+	private static String CONVERSION = 'Conversion';
 
 	public class ChangesConfig {
 		public ANG_AgencyChangesConfig__c config;
@@ -48,10 +48,10 @@ public class ANG_AgencyChangesConfigHelper{
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES'){
 			return null;
 		}
-		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
-			c = getConfig(CONVERSION_STANDARD_TO_MULTICOUNTRY, accreditationModel);
+		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
+			c = getConfig(CONVERSION, accreditationModel);
 		}
-		else{
+		else {
 			c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
 		}
 

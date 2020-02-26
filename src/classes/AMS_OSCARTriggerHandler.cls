@@ -138,28 +138,35 @@ public class AMS_OSCARTriggerHandler {
 
 	public static List<Account> accToGenerateCC = new List<Account>();
 
-	public static Map<Id, AMS_OSCAR__c> queriedOscarsMap = null;
+	public static Map<Id, AMS_OSCAR__c> queriedOscarsMap {
+		get {
+			if(queriedOscarsMap == null){
+				queriedOscarsMap = new Map<Id, AMS_OSCAR__c>(
+					[SELECT 
+						Id, 
+						Account__c,
+						Process__c,
+						Location_Type__c,
+						Account__r.Sector__c, 
+						Account__r.CNS_Agency__c,
+						Account__r.Parent.Status__c,
+						Account__r.Parent.Accreditation_date__c,
+						(SELECT Id, Process__c, STEP6__c, RPM_Approval__c FROM ChildOscars__r) 
+					FROM AMS_OSCAR__c 
+					WHERE Id IN :Trigger.New
+					]
+				);
+			}
+			return queriedOscarsMap;
+		}
+		set;
+	}
 
 	//*************************************
 	//********* context methods ***********
 	//*************************************
 
 	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
-
-		queriedOscarsMap = new Map<Id, AMS_OSCAR__c>(
-			[SELECT 
-				Id, 
-				Account__c,
-				Process__c,
-				Location_Type__c,
-				Account__r.Sector__c, 
-				Account__r.CNS_Agency__c,
-				Account__r.Parent.Status__c,
-				Account__r.Parent.Accreditation_date__c
-			 FROM AMS_OSCAR__c 
-			 WHERE Id IN :Trigger.New
-			]
-		);
 
 		prepopulateValues();
 
@@ -847,7 +854,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 			else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
 				oscar.Sanity_check_deadline__c = Date.today();
-			else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES  || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES  || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
 				oscar.Sanity_check_deadline__c = Date.today() + 15;
 				oscar.OSCAR_Deadline__c = Date.today() + 30;
 

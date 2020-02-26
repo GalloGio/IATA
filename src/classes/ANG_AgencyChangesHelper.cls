@@ -1,5 +1,8 @@
 public with sharing class ANG_AgencyChangesHelper {
 
+	@TestVisible
+	private static final String CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION = 'Cannot pass sanity check until all the related BSPs OSCAR cases have passed sanity checks.';
+
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 	public static AChangeStructure changesContainer = null;
@@ -241,10 +244,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		AMS_OSCAR__c oscar = oscars[0];
 
-		if(oscar.Process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY){
-			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [BEFORE CONVERSION] BEGIN SOQL:' + Limits.getQueries());
+		if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [BEFORE CONVERSION] Begin SOQL:' + Limits.getQueries());
 			handleConversionToMulticountry(oscar);
-			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [AFTER CONVERSION] END SOQL:' + Limits.getQueries());
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [AFTER CONVERSION] After SOQL:' + Limits.getQueries());
+			return;
+		}
+
+		if(oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [BEFORE CONVERSION] Begin SOQL:' + Limits.getQueries());
+			handleConversionToStandard(oscar);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [AFTER CONVERSION] After SOQL:' + Limits.getQueries());
 			return;
 		}
 
@@ -622,7 +632,107 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void handleConversionToMulticountry(AMS_OSCAR__c oscar){
+	private static void handleConversionToStandard(AMS_OSCAR__c oscar){
+
+		AMS_OSCAR__c oldOSCAR = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
+
+		changesContainer = new AChangeStructure();
+
+		Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+
+		//Sanity check passed
+		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Sanity check step passed');
+
+			//If we are processing the OSCAR associated with 
+			//the agency that was initially the GE we need to check 
+			//if all the other OSCARs for each HE already passed the sanity check
+			if(oscar.Parent_OSCAR__c == null){
+	
+				AMS_OSCAR__c queriedOscar = AMS_OSCARTriggerHandler.queriedOscarsMap.get(oscar.Id);
+				System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Retrieved Child OSCARs: ' + queriedOscar);
+
+				if(!queriedOscar.ChildOSCARs__r.isEmpty()){
+					for(AMS_OSCAR__c childOscar : queriedOscar.ChildOSCARs__r){
+						if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && childOscar.STEP6__c != AMS_Utils.PASSED){
+							oscar.addError(CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION);
+							return;
+						}
+					}
+				}
+			}
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			//The account related with the oscar is the HE
+			Account accountHE = changesContainer.accountsMap.get(oscar.Account__c);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+
+				if(acct.Location_Type__c == AMS_Utils.HE){
+					// If there is an existing RHC record removes it
+					List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects('RHC_Informations__r');
+
+					if(rhcLst != null && !rhcLst.isEmpty()){
+						changesContainer.addRhcInformationToDeactivate(rhcLst.get(0));
+					}
+					//Create a new RHC record
+					changesContainer.addAccountToCreateRHC(acct);
+				}
+
+				//Initialize risk information
+				acct.ANG_HE_CashCondition__c = false;
+				acct.Financial_Review_Result__c = null;
+				acct.Assessment_Performed_Date__c = null;
+				acct.Financial_Assessment_Points__c = null;
+				acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
+				acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
+
+				changesContainer.addAccount(acct);
+				
+				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
+				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
+
+					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
+					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+
+					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
+						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountHE.Id);
+					}
+
+				}
+
+				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+
+				if(activeChgCode != null){
+					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+				}
+
+			}
+
+			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH);
+
+			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
+
+		}
+
+		if(changesContainer.changesStruct != null){
+			changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
+		}
+
+		if(changesContainer != null){
+			changesContainer.runUpsert();
+		}
+
+	}
+
+	private static void handleConversionToMulticountry(AMS_OSCAR__c oscar){
 
 		AMS_OSCAR__c oldOSCAR = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
 

@@ -3724,6 +3724,18 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Parent_OSCAR_Account_Id__c</fullName>
+        <description>Formula field to stores the Account Id associated with the parent OSCAR</description>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(Parent_OSCAR__c), Account__c, Parent_OSCAR__r.Account__c)</formula>
+        <label>Parent OSCAR Account Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Parent_OSCAR__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Stores the OSCAR reference to a parent OSCAR. Introduced for the multicountry to standard full conversion process where every child OSCAR created on the different BSPs need to have a link to the original OSCAR created on the main BSP (GE)</description>
@@ -80595,7 +80607,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
-        <errorConditionFormula>OR(ISPICKVAL(Process__c, &apos;ANG.CONVERT.ST.TO.MC&apos;), ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;)) &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
+        <errorConditionFormula>OR(ISPICKVAL(Process__c, &apos;ANG.CONVERT.MC.TO.ST&apos;), ISPICKVAL(Process__c, &apos;ANG.CONVERT.ST.TO.MC&apos;), ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;)) &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if the &quot;Change effective as of&quot; is empty or in the future</errorMessage>
     </validationRules>
     <validationRules>
