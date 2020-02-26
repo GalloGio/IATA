@@ -151,7 +151,7 @@ public class AMS_OSCARTriggerHandler {
 						Account__r.CNS_Agency__c,
 						Account__r.Parent.Status__c,
 						Account__r.Parent.Accreditation_date__c,
-						(SELECT Id, Process__c, STEP6__c, RPM_Approval__c FROM ChildOscars__r) 
+						(SELECT Id, Process__c, STEP6__c, RPM_Approval__c FROM Child_OSCARs__r) 
 					FROM AMS_OSCAR__c 
 					WHERE Id IN :Trigger.New
 					]

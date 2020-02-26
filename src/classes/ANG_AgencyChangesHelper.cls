@@ -653,8 +653,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				AMS_OSCAR__c queriedOscar = AMS_OSCARTriggerHandler.queriedOscarsMap.get(oscar.Id);
 				System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Retrieved Child OSCARs: ' + queriedOscar);
 
-				if(!queriedOscar.ChildOSCARs__r.isEmpty()){
-					for(AMS_OSCAR__c childOscar : queriedOscar.ChildOSCARs__r){
+				if(!queriedOscar.Child_OSCARs__r.isEmpty()){
+					for(AMS_OSCAR__c childOscar : queriedOscar.Child_OSCARs__r){
 						if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && childOscar.STEP6__c != AMS_Utils.PASSED){
 							oscar.addError(CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION);
 							return;
