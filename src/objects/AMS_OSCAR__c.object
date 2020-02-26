@@ -2010,6 +2010,44 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         </valueSet>
     </fields>
     <fields>
+        <fullName>Child_OSCAR_Status__c</fullName>
+        <defaultValue>&quot;N/A&quot;</defaultValue>
+        <description>Used in the multicountry to standard conversion to store the current status of the child oscars creation.</description>
+        <externalId>false</externalId>
+        <label>Child OSCAR Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Finished</fullName>
+                    <default>false</default>
+                    <label>Finished</label>
+                </value>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Close_IFAP_Disapproval_Date__c</fullName>
         <externalId>false</externalId>
         <label>Close IFAP</label>
@@ -3697,6 +3735,22 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Parent_OSCAR__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Stores the OSCAR reference to a parent OSCAR. Introduced for the multicountry to standard full conversion process where every child OSCAR created on the different BSPs need to have a link to the original OSCAR created on the main BSP (GE)</description>
+        <externalId>false</externalId>
+        <label>Parent OSCAR</label>
+        <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipLabel>OSCARs</relationshipLabel>
+        <relationshipName>Child_OSCARs</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Payment_requested__c</fullName>
         <externalId>false</externalId>
         <label>Payment requested</label>
@@ -19999,6 +20053,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
