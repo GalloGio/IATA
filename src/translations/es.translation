@@ -12783,7 +12783,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_IATA_Reg_Cargo_Agent</name>
     </customLabels>
     <customLabels>
-        <label>* Indique los GDS con los que ha firmado un contrato</label>
+        <label>Indique los GDS con los que ha firmado un contrato</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
@@ -13543,7 +13543,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Para notificar a IATA que ha cambiado de cuenta bancaria, póngase en contacto con nosotros.</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
@@ -16495,11 +16495,11 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_My_Contact_Action</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <label>Al realizar la confirmación, se le pedirá que proporcione a IATA una carta de recomendación de una compañía aérea miembro de IATA.</label>
         <name>ISSP_NDC_Transaction_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <label>Si no dispone de un contrato con el Sistema Global de Distribución (GDS), confirme que solo lleva a cabo transacciones de la NDC con las compañías aéreas.</label>
         <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
