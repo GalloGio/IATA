@@ -366,7 +366,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <inlineHelpText>Enable this country for IATA EasyPay by selecting the EasyPay Portal Service corresponding to the Vendor that covers this country.</inlineHelpText>
         <label>IATA EasyPay Portal Service</label>
         <referenceTo>Portal_Applications__c</referenceTo>
-        <relationshipLabel>IATA ISO Countries</relationshipLabel>
+        <relationshipLabel>IATA EasyPay Country Availability</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1609,6 +1609,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Cuba</fullName>
                     <default>false</default>
                     <label>Cuba</label>
+                </value>
+                <value>
+                    <fullName>Curacao</fullName>
+                    <default>false</default>
+                    <label>Curacao</label>
                 </value>
                 <value>
                     <fullName>Cyprus</fullName>

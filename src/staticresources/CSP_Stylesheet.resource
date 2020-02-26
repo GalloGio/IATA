@@ -719,6 +719,15 @@ lightning-datatable .slds-th__action {
     width: 200px;
 }
 
+@media screen and (max-width: 640px) {
+  .containedButton-size,
+  .containedButtonAlt {
+    height: auto;
+    min-height: 56px;
+    width: 100%;
+  }
+}
+
 .filterButton,
 .filterButton button,
 .filterButton button:active {
@@ -743,6 +752,7 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeightDiv,
 .fullHeight,
 .fullHeight button,
 .fullHeight button:active,
@@ -1309,6 +1319,10 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
+/***** HP Recent Casses Table ******/
+.hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
+    border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
 
 /*       New Documents Button Overrides*/
 .newattlist .slds-cell-fixed,.newattlist .slds-has-button-menu{
@@ -2631,9 +2645,22 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 .remove_focus .slds-table [role="gridcell"]:focus, .remove_focus .slds-table [role="gridcell"].slds-has-focus{
 	box-shadow: unset;
 }
-.displayWrapText .slds-button_icon-bare {
+
+.displayCalendarIcon .slds-button_icon-bare {
   display: block;
 }
+
+.displayWrapText .slds-button_icon-bare {
+  display: none;
+}
+
+.displayWrapText tbody .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
 
 /* FM - added for error toast to work correctly on IFTP app*/
 .toastContainer .slds-button_icon-bare {

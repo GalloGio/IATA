@@ -2159,6 +2159,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>4200.00</label>
                 </value>
+                <value>
+                    <fullName>1.00</fullName>
+                    <default>false</default>
+                    <label>1.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2169,8 +2174,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>BSPFEE_RFABA</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_ADMIN</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_RPACT</controllingFieldValue>
-                <controllingFieldValue>NDCFEE_NSUCR</controllingFieldValue>
-                <controllingFieldValue>NDCFEE_RENEW</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_TRAIN</controllingFieldValue>
                 <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_LEGAL</controllingFieldValue>
@@ -2272,6 +2275,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_RSBCH</controllingFieldValue>
                 <valueName>0.50</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>NDCFEE_NSUCR</controllingFieldValue>
+                <controllingFieldValue>NDCFEE_RENEW</controllingFieldValue>
+                <valueName>1.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_STATM</controllingFieldValue>

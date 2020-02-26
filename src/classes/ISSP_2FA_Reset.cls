@@ -7,7 +7,7 @@ global class ISSP_2FA_Reset implements Process.Plugin {
 		List <TwoFactorInfo> tfList = [SELECT Id FROM TwoFactorInfo WHERE UserId = :userId];
 		delete tfList;
 
-		List <User> myUserList = [SELECT Id, Email, ContactId FROM User WHERE Id = :userId];
+		List <User> myUserList = [SELECT Id, Email, ContactId, Contact.Email, Contact.IsEmailBounced, isActive FROM User WHERE Id = :userId];
 		if (!myUserList.isEmpty()){
 			User myUser = myUserList[0];
 			String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'ISSP_Reset_2FA_Device'].Id;
@@ -20,7 +20,9 @@ global class ISSP_2FA_Reset implements Process.Plugin {
 				system.debug('bccAddresses: ' + bccAddresses);
 				mail.setBccAddresses(bccAddresses);
 			}
-			mail.setTargetObjectId(myUser.ContactId);
+			if(myUser.ContactId != null && !myUser.Contact.IsEmailBounced && String.isNotBlank(myUser.Contact.Email) && !myUser.Contact.Email.endsWithIgnoreCase('.inactive'))
+				mail.setTargetObjectId(myUser.ContactId);
+
 			mail.setTemplateId(templateId);
 			mail.setWhatId(myUser.ContactId);
 			mail.saveAsActivity = false;
