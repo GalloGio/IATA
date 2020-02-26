@@ -75,14 +75,10 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 	}
 
 	handleRowAction(event){
-
 		const actionName = event.detail.action.name;
 		const row = event.detail.row;
-		switch (actionName) {
-			case 'openReportOrFile':
+		if(actionName === 'openReportOrFile'){
 				this.openReportPopup(row);
-				break;
-			default:
 		}
 	}
 
@@ -93,7 +89,6 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 			this.selectedReport = selectedReportAux;
 			this.showReportPopup = true;
 		}else{
-			
 			getExpiringLinkIfap({fileName : selectedReportAux.developerName})
 			.then(getExpiringLinkIfapresults => {
 				
@@ -107,10 +102,7 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 
 			createDocumentTrackerRecord({fileId : selectedReportAux.id, reportId : selectedReportAux.isspExternalReportId})
 			.then(() => {});
-
 		}
-
-		
 	}
 
 	handleReportPopupCloseButton(event){
