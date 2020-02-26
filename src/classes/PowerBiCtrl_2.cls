@@ -139,43 +139,26 @@ public without sharing class PowerBiCtrl_2 {
 
 
 	public static ReportDetails getReportConfigDetails(String reportName) {
-		ReportDetails detailsToReturn = new ReportDetails();
 
 		List<PowerBI_Report_Config__mdt> reportDetails = [SELECT Id, Label, Group_Id_Dev__c, Group_Id_Prod__c, Report_Id_Dev__c, Report_Id_Prod__c, Type__c FROM PowerBI_Report_Config__mdt WHERE DeveloperName = :reportName];
 		if(! reportDetails.isEmpty()) {
 
 			PowerBI_Report_Config__mdt reportDetail = reportDetails[0];
 
-			if(reportDetail.Label != null) {
-				detailsToReturn.reportLabel = reportDetail.Label;
-			}
+			Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
 
-			if(reportDetail.Type__c != null) {
-				detailsToReturn.type = reportDetail.Type__c;
-			}
+			ReportDetails detailsToReturn = new ReportDetails();
+			detailsToReturn.groupId = runningInASandbox ? reportDetail.Group_Id_Dev__c : reportDetail.Group_Id_Prod__c;
+			detailsToReturn.reportId = runningInASandbox ? reportDetail.Report_Id_Dev__c : reportDetail.Report_Id_Prod__c;
+			detailsToReturn.reportLabel = reportDetail.Label;
+			detailsToReturn.type = reportDetail.Type__c;
 
-			Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
-			if(isProd) {
-				if(reportDetail.Group_Id_Prod__c != null) {
-					detailsToReturn.groupId = reportDetail.Group_Id_Prod__c;
-				}
-				if(reportDetail.Report_Id_Prod__c != null) {
-					detailsToReturn.reportId = reportDetail.Report_Id_Prod__c;
-				}
-				//use DEV config
-			}else{
-				if(reportDetail.Group_Id_Dev__c != null) {
-					detailsToReturn.groupId = reportDetail.Group_Id_Dev__c;
-				}
-				if(reportDetail.Report_Id_Dev__c != null) {
-					detailsToReturn.reportId = reportDetail.Report_Id_Dev__c;
-				}
+			return detailsToReturn;
 
-			}
-
+		} else {
+			TransformationHelper.sendEmailSupport('FATAL: PowerBI Config ' + reportName ,'PowerBI Config ' + reportName);
+			throw new transformationException('Error PowerBI config - no metadata for report ' + reportName + ' found!');
 		}
-
-		return detailsToReturn;
 
 	}
 
@@ -208,25 +191,17 @@ public without sharing class PowerBiCtrl_2 {
 
 	}
 
-	@TestVisible
 	public static OAuthResult refreshToken(String refreshToken, PowerBI_Config__c conf) {
 
 		if(conf == null) {
 			return null;
 		}
 
-		String refreshTokenString;
-		if(Test.isRunningTest()){
-			refreshTokenString = 'refreshTokenString';
-		} else {
-			refreshTokenString = refreshToken;
-		}
-
 		HttpRequest req = new HttpRequest();
 		req.setEndpoint('callout:'+conf.Named_Credentials__c + '/' + conf.Tenant_Id__c+'/oauth2/token');
 		String sBody=
 				'grant_type=refresh_token'
-						+ '&refresh_token=' + EncodingUtil.urlEncode(refreshTokenString, 'UTF-8')
+						+ '&refresh_token=' + EncodingUtil.urlEncode(refreshToken, 'UTF-8')
 						+ '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
 						+ '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
 						+ '&username={!$Credential.Username}'

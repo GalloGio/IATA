@@ -174,7 +174,10 @@ public class PowerBiCtrl_2Test {
 		}
 		Test.stopTest();
 
-		System.assertEquals(false, config == null, 'PowerBI config should not be null!');
+		System.assert(config != null, 'PowerBI config should not be null!');
+		System.assertEquals('https://analysis.windows.net/powerbi/api', config.Resource__c, 'Wrong Resource__c returned!');
+		System.assertEquals('https://api.powerbi.com/v1.0/myorg', config.Details_Resource__c, 'Wrong Details_Resource__c returned!');
+		System.assertEquals('https://app.powerbi.com', config.Report_Resource__c, 'Wrong Report_Resource__c returned!');
 
 	}
 
@@ -209,12 +212,12 @@ public class PowerBiCtrl_2Test {
 	@IsTest
 	private static void refreshTokenTest() {
 
-		Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
+		Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
 		String configName = '';
-		if(isProd) {
-			configName = 'TreasuryDashboard_PowerBI_Production';
-		}else{
+		if(runningInASandbox) {
 			configName = 'TreasuryDashboard_PowerBI_Dev';
+		}else{
+			configName = 'TreasuryDashboard_PowerBI_Production';
 		}
 
 		PowerBI_Config__c conf = PowerBI_Config__c.getValues(configName);
@@ -223,7 +226,7 @@ public class PowerBiCtrl_2Test {
 		Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-		PowerBiCtrl_2.OAuthResult result = PowerBiCtrl_2.refreshToken(null, conf);
+		PowerBiCtrl_2.OAuthResult result = PowerBiCtrl_2.refreshToken('refreshtokenstring', conf);
 
 		Test.stopTest();
 
@@ -326,8 +329,20 @@ public class PowerBiCtrl_2Test {
 
 		Test.stopTest();
 
-		System.assertEquals(true, result.reportId != null, 'ReportId should not be null!');
-		System.assertEquals(true, result.groupId != null, 'GroupId should not be null!');
+
+		List<PowerBI_Report_Config__mdt> reportDetails = [SELECT Id, Label, Group_Id_Dev__c, Group_Id_Prod__c, Report_Id_Dev__c, Report_Id_Prod__c, Type__c FROM PowerBI_Report_Config__mdt WHERE DeveloperName = 'Treasury_Dashboard'];
+		Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
+		String expectedGroupId;
+		String expectedReportId;
+		if(! reportDetails.isEmpty()) {
+			expectedGroupId = runningInASandbox ? reportDetails[0].Group_Id_Dev__c : reportDetails[0].Group_Id_Prod__c;
+			expectedReportId = runningInASandbox ? reportDetails[0].Report_Id_Dev__c : reportDetails[0].Report_Id_Prod__c;
+		}
+
+		System.assert(result.reportId != null, 'ReportId should not be null!');
+		System.assert(result.groupId != null, 'GroupId should not be null!');
+		System.assertEquals(expectedGroupId, result.groupId, 'Wrong groupId returned!');
+		System.assertEquals(expectedReportId, result.reportId, 'Wrong reportId returned!');
 
 	}
 
