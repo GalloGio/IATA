@@ -8,6 +8,9 @@
 global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable<SObject>, Database.Stateful {
 	private Id accountGE;
 	private Boolean processSingleBsp;
+
+	private Integer currentThreads = 0;
+	private Integer finishedThreads = 0;
 	
 	/**
 	 * Used when testing to limit the "start" method query. If the batch is executed in testing, it can only return 1 result.
@@ -41,6 +44,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 	
 	global void execute(Database.BatchableContext BC, List<SObject> scope) {
+		currentThreads++;
+
 		System.SavePoint sp = Database.setSavepoint();
 
 		List<Account> accts = (List<Account>) scope;
@@ -57,10 +62,14 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			Database.rollback(sp);
 			ANG_TechnicalLogHelper.commitTechnicalLogs(ANG_TechnicalLogHelper.createTechnicalLog('ANG_SplitMcHierarchyIntoStandardBatch - Changing hierarchy', e, JSON.serialize(scope)));
 		}
+
+		finishedThreads++;
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		// NOTHING
+		String status = currentThreads == finishedThreads ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED : AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
+		AMS_OSCAR__c oscar = getOscarFromCase(getOscarCase(accountGE));
+		update new AMS_OSCAR__c(Id = oscar.Id, Child_OSCAR_Status__c = status);
 	}
 
 	private Case getOscarCase(Id acct) {

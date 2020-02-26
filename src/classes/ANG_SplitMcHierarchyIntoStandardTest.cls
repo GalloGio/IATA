@@ -213,7 +213,8 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		}
 
 		// oscar
-		List<AMS_OSCAR__c> oscars = [SELECT Id, Process__c, RecordTypeId, Step51__c, Parent_OSCAR__c, AMS_Online_Accreditation__c
+		List<AMS_OSCAR__c> oscars = [SELECT Id, Process__c, RecordTypeId, Step51__c, Parent_OSCAR__c, AMS_Online_Accreditation__c,
+										 Child_OSCAR_Status__c
 									 FROM AMS_OSCAR__c
 									 WHERE Account__c = :acct.Id];
 		
@@ -226,6 +227,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 				System.assertEquals(AMS_Utils.NOT_APPLICABLE, oscars.get(0).Step51__c);
 			} else {
 				System.assertEquals(null, oscars.get(0).Parent_OSCAR__c);
+				System.assertEquals(AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED, oscars.get(0).Child_OSCAR_Status__c);
 			}
 		} else {
 			System.assertEquals(0, oscars.size());

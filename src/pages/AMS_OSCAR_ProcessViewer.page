@@ -751,7 +751,7 @@ function buildFunctionCall(func, argList){
                     </apex:repeat>
                     
                     <br/>
-                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();"/>
+                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();" disabled="{!NOT(step.saveActionEnabled)}"/>
                     <apex:commandButton value="Cancel" onClick="lightcase.lightcaseClose();"/>
                     <div class="modal"><br/><br/><br/><br/><br/><br/>Please Wait!<!-- Place at bottom of page --></div>
                 </div>

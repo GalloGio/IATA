@@ -399,6 +399,10 @@ public without sharing class AMS_Utils {
 	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'STANDARD_ACQUIRED_BY_MULTICOUNTRY';
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
 
+	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
+	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
+	public static final String OSCAR_CHILD_PROCESSING_ERROR = 'Error';
+
 	public static String ENCRYPTION_KEY {
 		get {
 			return Test.isRunningTest() ? 'hasd==aSDFclDDGasjdhfclx' : AMS_SAP_Settings__c.getOrgDefaults().Encryption_Key__c;

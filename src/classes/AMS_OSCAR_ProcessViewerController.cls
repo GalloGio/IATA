@@ -404,6 +404,10 @@ public class AMS_OSCAR_ProcessViewerController {
 					firstExpanded = true;
 				}
 
+				if (step.name == 'STEP6') { // sanity check
+					if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && isParentOscar && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED)
+						step.saveActionEnabled = false;
+				}
 			}
 
 		}
