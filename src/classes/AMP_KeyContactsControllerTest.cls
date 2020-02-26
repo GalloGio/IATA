@@ -72,6 +72,10 @@ private class AMP_KeyContactsControllerTest
 
 			System.assertEquals(a.Name, keyContactsController.accountName);
 
+			ApexPages.currentPage().getParameters().put('accountId',a.id);
+			ApexPages.currentPage().getParameters().put('isWWAccount','true');
+			keyContactsController  = new AMP_KeyContactsController();
+
 			String reportId = AMP_KeyContactsController.getReportId();
 		}
 	}

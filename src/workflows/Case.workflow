@@ -7941,7 +7941,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_completed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.CR_Status__c</field>
@@ -7962,7 +7962,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_escalated</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalate_to_ACCA__c</field>
             <operation>equals</operation>
@@ -7977,7 +7977,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_scheduled</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.Planned_End_CR__c</field>
@@ -8020,7 +8020,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>UnchecknewcommentforACCA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalated_Status_ACCA__c</field>
             <operation>equals</operation>
@@ -8055,7 +8055,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ESCCaseStatusEscalated</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalated_Status_ACCA__c</field>
             <operation>equals</operation>
@@ -8070,7 +8070,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ESCEscalatedStatusACCAACCAInvesti</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.ACCA_Owner__c</field>
             <operation>notEqual</operation>
@@ -8088,7 +8088,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Update_CSR_Status</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) and 3</booleanFilter>
         <criteriaItems>
             <field>Case.Planned_Start_CR__c</field>
@@ -8227,7 +8227,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Record_Type_ACR_DPC_locked</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -8565,7 +8565,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Email_notification_dispute_Airline</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -12322,7 +12322,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>External_OPS_Mgt_cases</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -16459,7 +16459,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Internal_OPS_Mgt_cases</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -17190,7 +17190,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeCaseOrigintoFax</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Subject</field>
             <operation>startsWith</operation>
