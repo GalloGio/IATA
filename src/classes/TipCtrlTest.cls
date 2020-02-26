@@ -161,7 +161,16 @@ public class TipCtrlTest {
 		}
 		Test.stopTest();
 
-		System.assertEquals(false, config == null, 'PowerBI config should not be null!');
+
+		Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
+		String expectedClientId = runningInASandbox ? 'some-client-id' : 'some-client-id-prod';
+		String expectedTenantId = runningInASandbox ? 'some-tennt-id' : 'some-tenant-id-prod';
+		String expectedAppIdentifier = runningInASandbox ? 'TRdev' : 'TRprod';
+
+		System.assert(config != null, 'PowerBI config should not be null!');
+		System.assertEquals(expectedClientId, config.ClientId__c, 'Wrong Client__c retrieved!');
+		System.assertEquals(expectedTenantId, config.Tenant_Id__c, 'Wrong Tenant_Id__c retrieved!');
+		System.assertEquals(expectedAppIdentifier, config.Application_Identifier__c, 'Wrong Application_Identifier__c retrieved!');
 
 	}
 
