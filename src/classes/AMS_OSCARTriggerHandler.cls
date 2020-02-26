@@ -3053,7 +3053,7 @@ public class AMS_OSCARTriggerHandler {
 
 
 	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
-		Map<Id, Set<String>> contacts = null;        
+		Map<Id, Set<String>> contacts = null;
 		Map<Id, Double> allPercentages = null;
 
 		for(AMS_OSCAR__c oscar: oscars){
@@ -3075,7 +3075,7 @@ public class AMS_OSCARTriggerHandler {
 						oscar.addError(errorMessage);
 					}
 				} else {
-					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180//WMO-492                       
+					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180//WMO-492
 						oscar.addError('Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.');
 					}
 				}
