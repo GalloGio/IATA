@@ -32,7 +32,6 @@ global with sharing class TipPowerBiCtrl {
 			PowerBiCtrl_2.EmbedTokenResult resultEmbed = TipCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
 			toReturn = resultEmbed.token+'expiration='+resultEmbed.expiration;
 
-			return toReturn;
 		}
 
 		return toReturn;
