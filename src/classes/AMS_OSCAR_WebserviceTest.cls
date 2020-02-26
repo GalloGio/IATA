@@ -15,6 +15,12 @@ public class AMS_OSCAR_WebserviceTest {
 	private static Case oscarCase;
 
 	private static void setup(){
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'US', ISO_Code__c = 'US');
+		insert ctry;
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', AIMS_Area_ID__c = '1');
+		insert ctry2;
+
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
 		insert account;
@@ -22,15 +28,15 @@ public class AMS_OSCAR_WebserviceTest {
 		oscar = new AMS_OSCAR__c(Account__c=account.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
 		insert oscar;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-		insert ctry ;
-
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		a1 = new Account(RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+		a1.BillingCountry = 'Portugal';
 		a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
+		a2.BillingCountry = 'Portugal';
+		a2.Type = 'IATA Passenger Sales Agent';
 		a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
-		a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
-		a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
+		a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = agencyRT, Name = 'Test Account', BillingCountry = 'Portugal', Type = 'IATA Passenger Sales Agent', IATACode__c = '1234563');
+		a5 = new Account(IATA_ISO_Country__c = ctry2.id, RecordTypeId = agencyRT, Name = 'Test Account', BillingCountry = 'Portugal', Type = 'IATA Passenger Sales Agent', IATACode__c = '1234564', BillingCity = 'Lisboa');
 
 
 		insert new List<Account>{a1, a2, a3, a4, a5};
@@ -85,6 +91,8 @@ public class AMS_OSCAR_WebserviceTest {
 		String resultIFAPFromOSCAR5 = AMS_OSCAR_Webservice.createIFAPFromOSCAR(oscar5.Id);
 		String resultIFAPFromOSCAR6 = AMS_OSCAR_Webservice.createIFAPFromOSCAR(oscar6.Id);
 
+		System.assert(resultIFAPFromOSCAR6 != null && ! resultIFAPFromOSCAR6.contains('ERROR'));
+
 		Test.stopTest();
 	}
 
@@ -119,7 +127,10 @@ public class AMS_OSCAR_WebserviceTest {
 
 		Test.startTest();
 
+		insert new AMS_ChangeCodes__c(Name = 'NEW-AMS', Change_Code__c = 'UGR', Integration_RecId__c = 'C');
+
 		String resultcreateChangeCodeNEW = AMS_OSCAR_Webservice.createChangeCodeNEW(oscar.Id);
+		System.assertEquals('OK', resultcreateChangeCodeNEW);
 
 		Test.stopTest();
 	}
@@ -277,10 +288,16 @@ public class AMS_OSCAR_WebserviceTest {
 		AmazonRestTest.createCredentials(AMS_CertificateHelper.CREDENTIAL_NAME);
 		AmazonRestTest.createCredentials('RecycleBin');
 
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(Account__c = oscar.Account__c, Change_Code__c = 'TST', Sent_to_external_system__c = false,
+			Active__c = true);
+		insert cc;
+
 		Test.startTest();
 
 		String resultgenerateCertificates = AMS_OSCAR_Webservice.generateCertificates(oscar6.Id, oscar.Account__c);
 		System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCAR_WebserviceTest - test_generateCertificates] resultgenerateCertificates - ' + resultgenerateCertificates);
+
+		System.assert(resultgenerateCertificates != null && ! resultgenerateCertificates.contains('ERROR'));
 
 		Test.stopTest();
 	}
@@ -305,11 +322,29 @@ public class AMS_OSCAR_WebserviceTest {
 
 		setup();
 
+		Portal_Applications__c easyPay1 = new Portal_Applications__c(Name = 'Test', Application_URL__c = '/ISSP_IFAPCases');
+
+		insert easyPay1;
+
 		Test.startTest();
 
 		String result_createIfapPortalServiceRight = AMS_OSCAR_Webservice.createIfapPortalServiceRight(oscar5.Id);
 
+		System.assertEquals('OK', result_createIfapPortalServiceRight);
+
 		Test.stopTest();
+	}
+
+	@isTest
+	public static void test_mcToStSplitBatchCreation() {
+
+		setup();
+		
+		Test.startTest();
+		String result = AMS_OSCAR_Webservice.executeMcToStSplitBatch(oscar6.Id);
+		Test.stopTest();
+
+		System.assertEquals('', result);
 	}
 
 }

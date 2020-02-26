@@ -69,7 +69,9 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
             
             var addedApiName;
             var addedApiValue;
-            
+
+            let additionalServiceRequest = undefined;
+
             var elem;
             for (i = 0; i < inputDivs.length; i++) {
             
@@ -192,11 +194,27 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     }
                 }
 
-                if ({!oscar.Process__c == 'ANG.CONVERT.ST.TO.MC'} && arrayContains(fieldValueToServer, "Passed")
+                if ({!oscar.Process__c == NGCONVERSIONTOMULTICOUNTRY} && arrayContains(fieldValueToServer, "Passed")
                     && arrayContains(fieldsApiName, "STEP45__c"))
                 {
                     if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
                         return 'false';
+                }
+
+                if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD} && arrayContains(fieldValueToServer, "Passed")
+                    && arrayContains(fieldsApiName, "STEP51__c"))
+                {
+                    additionalServiceRequest = "executeMcToStSplitBatch";
+                    const message = '{!cannotProceedConversionToStandardMessage}';
+
+                    if(message){
+                        alert(message);
+                        return 'false';
+                    }
+
+                    if (! confirm("{!CONFIRM_MC_CONVERSION_MSG}")){
+                        return 'false';
+                    }
                 }
 
                 sforce.connection.header = null;
@@ -205,8 +223,12 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                                             fieldsToUpdateValue:fieldValueToServer,
                                             recordId:idToUpdate});
                 if (result.length > 0) {
-                
                     alert(result);
+                }
+                else if (additionalServiceRequest !== undefined) { // no errors
+                    result = "" + sforce.apex.execute("AMS_OSCAR_Webservice", additionalServiceRequest, { oscarId:idToUpdate });
+                    if (result.length > 0)
+                        alert(result);
                 }
             }
         }
@@ -700,7 +722,7 @@ function buildFunctionCall(func, argList){
                         <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
                                 <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                                <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                <apex:selectList disabled="{!OR(NOT(isValidationCompleted) && step.name == 'STEP2', NOT(isParentOscar) && step.name == 'STEP51')}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                     <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                                 </apex:selectList>
                             </apex:outputPanel>
@@ -729,7 +751,7 @@ function buildFunctionCall(func, argList){
                     </apex:repeat>
                     
                     <br/>
-                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();"/>
+                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();" disabled="{!NOT(step.saveActionEnabled)}"/>
                     <apex:commandButton value="Cancel" onClick="lightcase.lightcaseClose();"/>
                     <div class="modal"><br/><br/><br/><br/><br/><br/>Please Wait!<!-- Place at bottom of page --></div>
                 </div>

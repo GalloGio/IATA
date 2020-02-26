@@ -199,6 +199,7 @@ public without sharing class AMS_Utils {
 
 	public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
+	public static final String RECTYPE_GENERAL_ONLINE_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');
 
 	public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
 	public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
@@ -397,6 +398,10 @@ public without sharing class AMS_Utils {
 
 	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'STANDARD_ACQUIRED_BY_MULTICOUNTRY';
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
+
+	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
+	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
+	public static final String OSCAR_CHILD_PROCESSING_ERROR = 'Error';
 
 	public static String ENCRYPTION_KEY {
 		get {
