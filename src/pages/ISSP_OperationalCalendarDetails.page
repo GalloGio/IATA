@@ -94,6 +94,7 @@
         defaultOperationType = "";
         defaultFrequency = "";
     }
+	
     var isMultiButtonVisible = {!IsMultiButtonVisible};
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     console.log(MAP_FREQUENCIES);
@@ -307,6 +308,9 @@
                         return data;
                     }
                 }
+			},
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNameCSV();}
@@ -328,6 +332,9 @@
                         return data;
                     }
                 }
+            },
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNamePDF();},
@@ -705,11 +712,18 @@
         $.each(tableDef.headers, function (i, line) {
             if (line.bVisible) {
                 colTypes.push(line.sType);
-                if (firstVisibleCol==null) firstVisibleCol=i;
+				if (firstVisibleCol === null) firstVisibleCol = i;
+				if (line.sTitle === 'Billing To') billingToCol = i;
             }
         });
         //console.log(firstVisibleCol);
         
+		var tableOrderIndex = firstVisibleCol;
+		var typeFilter = $("#typeFilter :selected");
+		if (typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS") {
+			tableOrderIndex = billingToCol;
+		}
+
         $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
             $.each(node.cells, function (j, cell) {
@@ -728,7 +742,7 @@
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
-        table.order([ firstVisibleCol, 'asc']).draw();
+        table.order([ tableOrderIndex, 'asc']).draw();
         //PDF button depends on the operation type value
         addExportButtons();
         $(".buttons-csv").prop("disabled",tableDef.data.length==0);
