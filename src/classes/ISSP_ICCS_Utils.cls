@@ -528,19 +528,25 @@ public without sharing class ISSP_ICCS_Utils{
 				}
 				// Adding preassigned participations
 				for(ISSP_ICCS_CoreRest.Participation participation : getPreassignedCycleParticipation(this.selectedCycle)){
-					// create fake participationRow
-					ParticipationRow participationRow = new ParticipationRow(this, participation.Id);
-					participationRowsMap.put(participation.Id, participationRow);
+					ParticipationRow participationRow = participationRowsMap.get(participation.Id);
 
-					// add participation to currencyRowsMap
-					String processingCurrency = participation.cashflow.processingCurrency;
-					CurrencyRow currencyRow = currencyRowsMap.get(processingCurrency);
-					if (currencyRow==null) {
-						currencyRow = new CurrencyRow(this, processingCurrency);
-						currencyRowsMap.put(processingCurrency, currencyRow);
-						currencySet.add(processingCurrency);
+					if (participationRow==null) {
+						// create fake participationRow
+						participationRow = new ParticipationRow(this, participation.Id);
+						participationRowsMap.put(participation.Id, participationRow);
+
+						// add participation to currencyRowsMap
+						String processingCurrency = participation.cashflow.processingCurrency;
+						CurrencyRow currencyRow = currencyRowsMap.get(processingCurrency);
+						if (currencyRow==null) {
+							currencyRow = new CurrencyRow(this, processingCurrency);
+							currencyRowsMap.put(processingCurrency, currencyRow);
+							currencySet.add(processingCurrency);
+						}
+						currencyRow.currencyParticipationRows.add(participationRow);
+					} else {
+						participationRow.participation.cashflow = participation.cashflow;
 					}
-					currencyRow.currencyParticipationRows.add(participationRow);
 				}
 				currencyRows = currencyRowsMap.values();
 				currencyRows.sort();
@@ -732,8 +738,19 @@ public without sharing class ISSP_ICCS_Utils{
 			List<ISSP_ICCS_CoreRest.Participation> participations;
 			participations = componentController.pageController.coreRest.getParticipations();
 			if(type == SI_ADHOC){
-				participations.addAll(componentController.pageController.coreRest.getCycleParticipations(selectedCycle));
-				participations.addAll(getPreassignedCycleParticipation(selectedCycle));
+				map<Integer,ISSP_ICCS_CoreRest.Participation> mapIdParticipation = new map<Integer,ISSP_ICCS_CoreRest.Participation>();
+				for(ISSP_ICCS_CoreRest.Participation participation : componentController.pageController.coreRest.getCycleParticipations(selectedCycle)){
+					mapIdParticipation.put(participation.Id, participation);
+				}
+				for(ISSP_ICCS_CoreRest.Participation participation : getPreassignedCycleParticipation(this.selectedCycle)){
+					ISSP_ICCS_CoreRest.Participation foundParticipation = mapIdParticipation.get(participation.Id);
+					if (foundParticipation == null ) {
+						mapIdParticipation.put(participation.Id, participation);
+					} else {
+						foundParticipation.cashflow = participation.cashflow;
+					}
+				}
+				participations.addAll(mapIdParticipation.values());
 			}
 
 			// Retrieve the configuration cashflows with all the details to update the participations
