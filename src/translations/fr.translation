@@ -12794,7 +12794,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Step3_IATA_Reg_Cargo_Agent</name>
     </customLabels>
     <customLabels>
-        <label>* Veuillez indiquer le(s) GDS (système de réservation électronique) avec le(s)quel(s) vous avez signé un contrat</label>
+        <label>Veuillez indiquer le(s) GDS (système de réservation électronique) avec le(s)quel(s) vous avez signé un contrat</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
@@ -13554,7 +13554,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Veuillez nous contacter pour informer l’IATA d’un changement de coordonnées bancaires		</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
@@ -16506,11 +16506,11 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_My_Contact_Action</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <label>Lors de la confirmation, vous devrez fournir à l’IATA une lettre de recommandation d’une compagnie aérienne membre de l’IATA</label>
         <name>ISSP_NDC_Transaction_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <label>En l’absence de contrat avec GDS, veuillez nous confirmer que vous n’effectuez que des transactions NDC avec les compagnies aériennes</label>
         <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>

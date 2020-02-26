@@ -13515,7 +13515,7 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Để thông báo cho IATA về việc thay đổi chi tiết tài khoản ngân hàng, quý vị vui lòng liên hệ với chúng tôi</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
