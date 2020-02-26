@@ -78,6 +78,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 							FROM Case
 							WHERE AccountId = :acct
 								AND reason1__c = 'Accreditation Type'
+								AND RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
 							ORDER BY CaseNumber DESC];
 		return cases.get(0);
 	}
@@ -248,7 +249,6 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			pd.Oscar__c = oscars.get(acct.ParentId).Id;
 			pd.Account__c = acct.Id;
 			pd.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
-			pd.ANG_Location_Type_Conversion__c = acct.Location_Type__c;
 			processDetailLst.add(pd);
 		}
 		
