@@ -27,8 +27,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track stationValue;
     @track itpValue;
     @track experiationstatusValue = 'All';
-    @track aircraftTypeValue = 'All Level 2';
-    @track levelValue = 'Level 2';
+    @track aircraftTypeValue = 'All';
+    @track levelValue = 'All';
 
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
@@ -49,7 +49,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     
     get experiationstatusOptions() {
         return [
-            { label: 'All', value: 'All' },
+            { label: '- All -', value: 'All' },
             { label: 'Not Expired', value: 'Not Expired' },
             { label: 'Expired', value: 'Expired' },
             { label: 'Expired in 30 days', value: 'Expired in 30 days' },
@@ -61,9 +61,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
     get levelOptions() {
         return [
+            { label: '- All - ', value: 'All' },
             { label: 'Level 2', value: 'Level 2' },
             { label: 'Level 3', value: 'Level 3' },
-            { label: 'All', value: 'All' },
         ];
     }
  
@@ -85,7 +85,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
         
         if(myTopicOptions.length > 1){
-            this.itpOptions.unshift({label: 'All', value: 'All'}); 
+            this.itpOptions.unshift({label: '- All -', value: 'All'}); 
         }
     }
 
@@ -181,8 +181,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             let isToDateValueOk = true;
             if(this.experiationstatusValue === 'Manual'){
                 let today = new Date();
-                today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                if(!this.toDateValue || this.toDateValue <= today){
+                let toDateValue = new Date(this.toDateValue);
+                if(!this.toDateValue || toDateValue.getTime() <= today.getTime()){
                     isToDateValueOk = false;
                     const event = new ShowToastEvent({
                         title: 'Search Training Records Result',
@@ -210,15 +210,15 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.itpValue = null;
         this.itpOptions = [];
         this.experiationstatusValue = 'All';
-        this.aircraftTypeValue = 'All Level 2';
-        let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
+        
+        this.aircraftTypeValue = 'All';
+        let myTopicOptions = [{ label: '- All -', value: 'All' }];
+
         this.certificationTypesWithLevel.forEach(cert =>{
-            if(cert.Prerequisite_Level__c === 'Level 2'){
-                myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-            }  
+            myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
         });
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
-        this.levelValue = 'Level 2';
+        this.levelValue = 'All';
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
         let today = new Date();
@@ -260,14 +260,13 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
             this.certificationTypesWithLevel = myResult;
 
-            let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
+            let myTopicOptions = [{ label: '- All -', value: 'All'}];
             myResult.forEach(cert =>{
-                if(cert.Prerequisite_Level__c === 'Level 2'){
-                    myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-                }  
+                myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
+ 
             });
             this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
-            this.aircraftTypeValue = 'All Level 2';
+            this.aircraftTypeValue = 'All';
             
         })
         .catch(error => {
@@ -331,7 +330,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
 
     handleSearch(){
-        //let auxSearchValues = new Map();
         let auxSearchValues = {};
         let i;
         // It is mandatory to choose one station, and one station only, checked before intering this method
@@ -340,7 +338,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
         let auxExperiationstatus = (this.experiationstatusValue == null) ? 'null' : this.experiationstatusValue;
         let auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
-        //let auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
         let auxLevel = (this.levelValue == null) ? 'null' : this.levelValue;
         let auxProficiency = 'Yes';
         let auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
@@ -351,10 +348,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         }
     
         if(!this.itpValue || this.itpValue === 'All'){
+            auxItp = '';
             for(i=0; i < this.itpOptions.length; i++){
-                if(this.itpOptions[i].value === 'All'){
-                    auxItp = '';
-                }else{
+                if(this.itpOptions[i].value !== 'All'){
                 auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
                 }
             }
@@ -435,13 +431,13 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleExportToCsv(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "TrainingRecordsDetailSearchResults.csv");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "TrainingRecordsDetailSearchResults");
     }
 
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "TrainingRecordsDetailSearchResults");
     }
 
     handleExportAllDataToCSV(){
@@ -475,7 +471,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         auxSearchValues = [
             auxStations,
             'null',                 // auxItp,
-            'null',                 // place holder for auxExperiationstatus,
+            'Active, Expired',                 // place holder for auxExperiationstatus,
             auxAircraftType,
             'Yes',                  // place holder for auxProficiency,
             'null',                 // place holder for auxFromDate,
@@ -493,10 +489,10 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             if(results && results.length > 0) {
                 if(type === 'Excel'){
                     // 2nd - create excel file
-                    this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
+                    this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults");
                 } else {
                     if(type === 'CSV'){
-                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "AllDataRequestResults.csv");
+                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "AllDataRequestResults");
                     }
                 }
             } else {

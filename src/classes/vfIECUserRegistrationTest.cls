@@ -293,7 +293,7 @@ private class vfIECUserRegistrationTest {
 		Test.setCurrentPage(pgRef);
 
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
-
+		Test.startTest();
 		System.runAs(usr) {
 
 
@@ -306,7 +306,7 @@ private class vfIECUserRegistrationTest {
 			pgCont.validateUserEmail();
 			system.assertNotEquals(pgCont.con.Id, null);
 			system.assert(!pgCont.bExistingEmail, 'No exisinting user email' + pgCont.con.Email);
-
+		Test.stopTest();
 		}
 
 	}
@@ -541,7 +541,7 @@ private class vfIECUserRegistrationTest {
 			system.assert(pgCont.lSearchOptios.size() > 0, 'Search Ariline result empty');
 
 
-
+			Test.startTest();
 			//Searches a GAS Account
 			pgCont.selectedCustomerType = IECConstants.PARAM_CUSTOMERTYPE_GAS;
 			pgCont.TypeOfCustomerChange();
@@ -581,6 +581,7 @@ private class vfIECUserRegistrationTest {
 			pgCont.sCompanyName = 'Account 12';
 			pgCont.searchAccount();
 			system.assert(pgCont.lSearchOptios.size() > 0, 'Search OTHER result empty');
+            Test.stopTest();
 		}
 	}
 
