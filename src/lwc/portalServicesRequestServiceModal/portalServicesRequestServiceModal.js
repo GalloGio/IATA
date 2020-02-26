@@ -457,6 +457,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
         this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true);
+		availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
+			.then(result => {
+			let myResults = JSON.parse(JSON.stringify(result));
+			let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
+			if (mydefaultPortalUserRole) {
+				this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
+				this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
+			} else {
+				console.log('Custom Setting configuration missing');
+			}
+		});
     }
 
     ICCSRolePick(event) {
