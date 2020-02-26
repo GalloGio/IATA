@@ -548,7 +548,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*trgICCS_ASP_CaseClosed Trigger*/
 
 		// START PASS
-		if(Trigger.isUpdate && PASS_UserProvisioningRequestHandler.sendPASS_Airline_PE(Trigger.New)) {
+		if(Trigger.isUpdate) {
 			List<Case> passCaseList = new List<Case>();
 			Case oldCaseStatus;
 			for(Case cs : Trigger.New){
@@ -558,22 +558,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				}
 			}
 			if(passCaseList.size() > 0){
-				Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
+				if(PASS_UserProvisioningRequestHandler.sendPASS_Airline_PE(passCaseList)){
+					Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
 	
-				List<AP_Process_Form__c> apFormList = [SELECT Id,Case__c, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:passCaseList];
-				for(Case c : passCaseList) {
-						for(AP_Process_Form__c form : apFormList) {
-							if(form.Case__c == c.Id){
-								casePassCountryMap.put(form.Id,form);
+					List<AP_Process_Form__c> apFormList = [SELECT Id,Case__c, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:passCaseList];
+					for(Case c : passCaseList) {
+							for(AP_Process_Form__c form : apFormList) {
+								if(form.Case__c == c.Id){
+									casePassCountryMap.put(form.Id,form);
+								}
 							}
 						}
-					}
-	
-				if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
-					if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-						System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete));
-					} else {
-						PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete);
+		
+					if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
+						if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+							System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete));
+						} else {
+							PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', true, false, trigger.isDelete, trigger.isUndelete);
+						}
 					}
 				}
 			}

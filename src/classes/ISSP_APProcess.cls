@@ -1408,9 +1408,10 @@ global without sharing class ISSP_APProcess {
 			}
 
 			//*******************************
+			String countryWithoutBankMandate='';
+			Boolean caseWithAttachment;
  			if(isPassAirline && !string.isEmpty(newCase.Country_Concerned__c)){
-				String countryWithoutBankMandate='';
-				Boolean caseWithAttachment;
+				
 				List<Case> childCaseList = new List<Case>();
 				List<String> isocodeList = newCase.Country_Concerned__c.split(';');
 				Map<String,IATA_ISO_Country__c> isoCountryMap=fetchISOCountryMap(isocodeList);
@@ -1461,10 +1462,7 @@ global without sharing class ISSP_APProcess {
 					newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
 					return null;
 				}
-				if (!newForm.Accept_terms_and_conditions__c) {
-					newForm.addError('Please Accept our Terms and Conditions.');
-					return null;
-				}
+				
 
  				insert childCaseList;
 				Map<Id,String> childCaseIdIsoCodeMap=new Map<Id,String>();
@@ -1475,6 +1473,33 @@ global without sharing class ISSP_APProcess {
 				copyAttachmentsToChildCases(vCaseId,childCaseIdIsoCodeMap);
 
 			}
+			if(isPassAirline && string.isEmpty(newCase.Country_Concerned__c)){
+				caseWithAttachment=false;
+					for(Attachment attachmentRecord:attch){
+						if(attachmentRecord.Name.startsWith(newCase.IFAP_Country_ISO__c+' - ')){
+							caseWithAttachment=true;
+						}
+					}
+
+					if(!caseWithAttachment){
+						if(String.isEmpty(countryWithoutBankMandate)){
+							countryWithoutBankMandate= newCase.BSPCountry__c;
+						}else{
+							countryWithoutBankMandate+='; '+newCase.BSPCountry__c;
+						}
+					}
+				
+				
+				if(!String.isEmpty(countryWithoutBankMandate)){
+						newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
+						return null;
+				}
+			}
+			if(isPassAirline && !newForm.Accept_terms_and_conditions__c) {
+				newForm.addError('Please Accept our Terms and Conditions.');
+				return null;
+			}
+
 			newCase.Status = 'For Review and Acceptance';
 			newCase.Dossier_Reception_Date__c = Date.today();
 			if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
