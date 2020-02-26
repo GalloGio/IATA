@@ -18976,6 +18976,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Domestic</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Download_PASS_PDF_Copy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Download_PASS_PDF_Copy</shortDescription>
+        <value>Download Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Download_PDF_Copy</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18999,6 +19006,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Agency Accreditation Branch Abroad Office Draft Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Email_Branch_PASS_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Email_Branch_PASS_Subject</shortDescription>
+        <value>Branch Office Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Email_Branch_Subject</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -19013,6 +19027,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Email Change Subject</shortDescription>
         <value>Change of Agency details - Draft request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Email_HO_PASS_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Email_HO_PASS_Subject</shortDescription>
+        <value>Head Office Draft Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Email_HO_Subject</fullName>
@@ -22330,6 +22351,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_PASS_Contact</shortDescription>
         <value>PASS Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Email_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Email_Description</shortDescription>
+        <value>Thank you for creating your application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_PASS_HO_ReadOnly_SECTION1</fullName>
@@ -28838,6 +28866,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_Draft_Change_Process_VR</shortDescription>
         <value>Thank you for creating your draft Voluntary Relinquishment online form.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Draft_PASS_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_PASS_Process</shortDescription>
+        <value>You can access any ongoing applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>

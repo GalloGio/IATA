@@ -648,7 +648,7 @@
 <!--                          <apex:outputLink value="/ISSP_AMS_PDF_ApplicationForm?caseId={!newCase.Id}" id="amsFormLink" target="_new">
                              {!$Label.ISSP_AMS_Download_PDF_Copy}
                         </apex:outputLink> -->
-                                        <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
+                                        <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PASS_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
                      </apex:pageBlockSectionItem>
                  </apex:pageBlockSection>
 
