@@ -10,29 +10,29 @@ import getEmbedToken from '@salesforce/apex/TipCtrl.getEmbedToken';
 
 export default class PortalTipReports extends LightningElement {
 
-    applicationName = 'TipReports';
+	applicationName = 'TipReports';
 
-    @track loading = true;
-    @track powerBiSource;
+	@track loading = true;
+	@track powerBiSource;
 
-    //report details
+	//report details
 	@api reportId;
 	@api groupId;
-    @track datasetId;
-    @track embedUrl;
-    @track embedToken;
-    @track embedTokenExpiration;
+	@track datasetId;
+	@track embedUrl;
+	@track embedToken;
+	@track embedTokenExpiration;
 
 	//access token
 	accessToken;
-    powerBiConfig;
+	powerBiConfig;
 
 
-    connectedCallback() {
+	connectedCallback() {
 
-        if(this.reportId != undefined && this.groupId != undefined) {
+		if(this.reportId && this.groupId) {
 
-            getPowerBICredentials({configurationName: this.applicationName})
+			getPowerBICredentials({configurationName: this.applicationName})
 				.then(result => {
 
 					this.powerBiConfig = result;
@@ -72,7 +72,7 @@ export default class PortalTipReports extends LightningElement {
 											} else{
 												//datasetId is empty
 												this.loading = false;
-												this.logMessage('Access token is empty!');
+												this.logError('Access token is empty!');
 											}
 
 										})
@@ -85,7 +85,7 @@ export default class PortalTipReports extends LightningElement {
 								}else{
 									//access token is empty
 									this.loading = false;
-									this.logMessage('Access token is empty!');
+									this.logError('Access token is empty!');
 								}
 
 							})
@@ -98,7 +98,7 @@ export default class PortalTipReports extends LightningElement {
 					}else{
 						//powerBiConfig is empty
 						this.loading = false;
-						this.logMessage('PowerBiConfig is empty!');
+						this.logError('PowerBiConfig is empty!');
 					}
 
 				})
@@ -108,37 +108,37 @@ export default class PortalTipReports extends LightningElement {
 					this.logError(error);
 				});
 
-        } else {
+		} else {
 			//groupId or reportId is undefined
 			this.loading = false;
-			this.logMessage('GroupId/ReportId is empty!');
+			this.logError('GroupId/ReportId is empty!');
 		}
 
 
-    }
+	}
 
 
-    createSrcAddress(reportId, groupId, accessToken, objectId, conf, datasetId, expiration, embedUrl) {
-        let address = '';
-        if(embedUrl) {
-            address= '/TipPowerBiPage?embedUrl='+embedUrl+'+&accessToken='+accessToken+'&objectId='+objectId+'&datasetId='+datasetId+'&groupId='+groupId+'&expiration='+expiration;
-        } else {
-            address= '/TipPowerBiPage?embedUrl='+encodeURIComponent(conf.Report_Resource__c + '?reportId=' + reportId
-            										+ '&groupId=' + groupId) +'+&accessToken='+accessToken+'&objectId='+objectId+'&datasetId='+datasetId+'&groupId='+groupId+'&expiration='+expiration;
-        }
+	createSrcAddress(reportId, groupId, accessToken, objectId, conf, datasetId, expiration, embedUrl) {
+		let address = '';
+		if(embedUrl) {
+			address= '/TipPowerBiPage?embedUrl='+embedUrl+'+&accessToken='+accessToken+'&objectId='+objectId+'&datasetId='+datasetId+'&groupId='+groupId+'&expiration='+expiration;
+		} else {
+			address= '/TipPowerBiPage?embedUrl='+encodeURIComponent(conf.Report_Resource__c + '?reportId=' + reportId
+													+ '&groupId=' + groupId) +'+&accessToken='+accessToken+'&objectId='+objectId+'&datasetId='+datasetId+'&groupId='+groupId+'&expiration='+expiration;
+		}
 		this.powerBiSource = address;
 		this.loading = false;
 	}
 
 	logError(error) {
-		let message = JSON.parse(JSON.stringify(error)).body.message;
+		let message;
+		if(typeof error === 'object') {
+			message = JSON.parse(JSON.stringify(error)).body.message;
+		}else{
+		   message = error;
+		}
 		console.error('Iframe error: ', message);
-		this.showToast(message);
-	}
-
-	logMessage(message) {
-		console.error('Iframe error: ', message);
-		this.showToast(message);
+		this.showToast(message)
 	}
 
 	showToast(toastMessage) {
