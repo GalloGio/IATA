@@ -164,7 +164,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Account_Contact_Role__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -203,16 +203,15 @@
     </fields>
     <fields>
         <fullName>Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Airport</label>
         <referenceTo>Airport_Detail__c</referenceTo>
         <relationshipLabel>Role Addresses</relationshipLabel>
         <relationshipName>Role_Addresses</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Airport_Details__c</fullName>
@@ -385,6 +384,6 @@
     </nameField>
     <pluralLabel>Role Addresses</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

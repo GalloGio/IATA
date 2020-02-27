@@ -26,6 +26,7 @@
             </lightning:card>
             <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
                 <lightning:datatable
+					class="no-truncate"
                     keyField="Id"
                     data="{!v.data}"
                     columns="{!v.columns}"
