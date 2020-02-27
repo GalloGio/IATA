@@ -2287,7 +2287,7 @@
 
 				if (element.checked === false) {
 					addFinancialAssessmentContactItem.css('display', 'none');
-				} else if (element.value === 'Cash') {
+				} else if (element.value === 'Cash' && '{!hqAccount.ANG_Accreditation_Model__c}' !== '{!ACCREDITATION_MODEL_MC}') {
 					addFinancialAssessmentContactItem.css('display', '');
 				}
 			}
