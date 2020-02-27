@@ -13513,7 +13513,7 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>เพื่อแจ้งให้ IATA ทราบถึงการเปลี่ยนแปลงรายละเอียดบัญชีธนาคาร กรุณาติดต่อเรา</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>

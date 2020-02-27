@@ -13510,7 +13510,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Banka hesabı bilgilerinizin değiştiğini IATA’ya bildirmek için lütfen bizimle iletişime geçin</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
