@@ -178,6 +178,13 @@
         <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_Select_From_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Select From List</shortDescription>
+        <value>If possible select your city from the suggestion list</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Street_Compulsory</fullName>
         <language>en_US</language>
         <protected>false</protected>
