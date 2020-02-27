@@ -159,7 +159,7 @@ public without sharing class TipCtrl {
 					if(String.isNotBlank(cacheExpireson)) {
 
 						Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
-						System.debug('expiresonDatetime:: ' + expiresonDatetime);
+						
 						if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
 							//token expires in less than 10 minutes - get new
 							result = PowerBiCtrl_2.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
