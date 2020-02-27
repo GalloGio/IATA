@@ -4028,7 +4028,7 @@ Product__r.Product_Section__c = &quot;TRQ003&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Mira_Hmoud</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
@@ -4157,7 +4157,7 @@ Product__r.Product_Section__c = &quot;TRA006&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Adelia_Candido</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
