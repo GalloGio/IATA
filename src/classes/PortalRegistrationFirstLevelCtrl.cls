@@ -400,17 +400,19 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
 
-		List<User> userList =  [SELECT Id FROM User WHERE languagelocalekey =:langKey LIMIT 1];
+		List<User> userList =  [SELECT Id, Name FROM User WHERE languagelocalekey =:langKey LIMIT 1];
 		if(!userList.isEmpty()){
-			userId = userList.get(0).Id;
+			if(userList.get(0).Id != null && userList.get(0).Name != 'System'){
+				userId = userList.get(0).Id;
+			}
 		}
 
-        if(params.existingContactName != null && params.existingContactName != ''){
-            result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
-        }
-        else{
-        result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
-        }
+		if(params.existingContactName != null && params.existingContactName != ''){
+			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
+		}
+		else{
+		result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+		}
 
 		return result;
 	}
@@ -1307,11 +1309,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			insert acr;
 		}
 
-        if(existingTrainingId != ''){
-            system.debug('CHECK 6');
-			// Contact toDeleteContact = new Contact(Id = existingTrainingId);
-			// delete toDeleteContact;
-
+		if(existingTrainingId != ''){
+	   
 			//Inactivate the registering Contact
 			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 												AccountId,Email,Additional_Email__c,Phone,
