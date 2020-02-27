@@ -545,9 +545,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Change_Code__c</field>
-            <operation>contains</operation>
-            <value>CLO</value>
+            <field>Billable__c</field>
+            <operation>equals</operation>
+            <value>1</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
