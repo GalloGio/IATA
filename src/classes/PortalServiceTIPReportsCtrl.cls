@@ -153,9 +153,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	*/
 	private static string genPublicExpiringAWSLinkIFAP(AmazonCredentials credentials, string filename) {
 		String path = credentials.Bucket + SEPARATOR;
-		string  stringToSplit = '/'+filename;
-		list<string> splittedName = stringToSplit.split('/');
-		splittedName.remove(0);
+		list<string> splittedName = filename.split('/');
 		string encoded;
 		for(string dirNm:splittedName)
 			encoded+=  EncodingUtil.urlENcode(dirNm,'UTF-8') +'/';
