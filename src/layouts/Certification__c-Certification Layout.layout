@@ -89,10 +89,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Prerequisite_Level__c</fields>
         <relatedList>IFTP_Certification_Detail__c.Certification__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Expiration_Date__c</fields>
         <relatedList>Contact_Role_Certification__c.Certification__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

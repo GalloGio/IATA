@@ -22,6 +22,28 @@ public without sharing class portalIftpHistoryManagement {
 		insertIntoIftpHistory(iftpHistoryRecordList);
 	}
 
+
+	public static void  generateMassIFTPHistoryStartWorkingForITP(set<id> accContRlIdList){
+		list<Account_Contact_Role__C> accRoleList = [select id,Account_Role__r.account__r.Name, First_Name__c, Last_Name__c,Company_Code__c from Account_Contact_Role__C where id in :accContRlIdList];
+		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		for(Account_Contact_role__C acr:accRoleList){
+			
+			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
+			acr.Company_Code__c,
+			acr.Account_Role__r.account__r.Name,
+			acr.First_Name__C,
+			acr.Last_Name__c);
+			
+			IftpHistoryRecordsToBeInserted.add(ihrec);
+			
+		}
+
+		if(IftpHistoryRecordsToBeInserted.size() > 0){
+			
+			insert IftpHistoryRecordsToBeInserted;
+		}
+	}
+
 	@AuraEnabled (cacheable=false)
 	public static IFTP_History__c createIftpHistoryRecord(Integer eventType,
 															String employeeCode,
@@ -390,10 +412,12 @@ public without sharing class portalIftpHistoryManagement {
 
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
-				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
+				// Employees deleted manually from Salesforce backend will not be counted
+				// String.isBlank(sEmpType) - Verification needed because those employees will not have all their history in IFTP-History
+				// Also Training Coordinatores that have no proficiency and no certifications will not be counted as well
+				if(String.isBlank(sEmpType) || (sEmpType.contains('ITP Training Coordinator') && ikey == '0' && !hasCert.contains(rec))){
 					continue;
 				}
-			}
 
 			if(mapResults.containsKey(ikey)){
 				Integer aux = ((Integer)mapResults.get(ikey));
@@ -403,6 +427,7 @@ public without sharing class portalIftpHistoryManagement {
 				mapResults.put(ikey,1);
 			}
 		}
+			}
 
 		List<ITPReportWrapper> resultList = new List<ITPReportWrapper>();
 

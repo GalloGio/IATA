@@ -49,17 +49,6 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		List<AMS_Voucher__c> toUpdate = new List<AMS_Voucher__c>();
 
-/*
-		for(AMS_Voucher__c v : scope){
-
-			v.Pdf_Attachment_File__c = filename;
-			toUpdate.add(v);
-		}
-
-		if(!toUpdate.isEmpty())
-			update toUpdate;
-*/
-
 		System.debug('Vouchers to Update pdf name:' + toUpdate);
 
 		System.debug('CPU time is ' + Limits.getCpuTime() + '(5)');
@@ -72,7 +61,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		if(!attachments.isEmpty())
 			insert attachments;
 
-		sendSingleMail(buildCustomReport(), region);
+		sendSingleMail(buildCustomReport(),region);
 
 		process.Status__c = 'Ended';
 
@@ -139,7 +128,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		plainBody = plainBody.replace('##REPORT##', myCustomString);
 		plainBody = plainBody.replace('##PDFLINK##', buildCustomPDFLink(region));
 
-			//build the email message
+		//build the email message
 		Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
 
 		email.setTargetObjectId(UserInfo.getUserId());
@@ -149,7 +138,6 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 		email.setSubject(subject);
 		email.setHtmlBody(htmlBody);
-		//email.setPlainTextBody(plainBody);
 		if(!Test.isRunningTest())
 			Messaging.sendEmail(new Messaging.SingleEmailmessage[] {email});
 	}

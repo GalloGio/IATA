@@ -207,10 +207,8 @@ public class ANG_AccountTriggerHandler {
 		if (! downGradeBtoC.isEmpty())
 		{
 			// NEWGEN-4460 - also update the child multicountry HE accounts
-			Set<Id> multicountryGEAccounts = getGEAccountIds(downGradeBtoC);
-			launchPlatformEventForMulticoutryDowngrade(multicountryGEAccounts);
-
-			createVMFROscars(downGradeBtoC, rhcContacts);
+			Set<Id> accountsToProcess = getAccountIDs(downGradeBtoC);
+			launchPlatformEventForMulticoutryDowngrade(accountsToProcess);
 		}
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
@@ -462,7 +460,7 @@ public class ANG_AccountTriggerHandler {
 		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
 
 		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
@@ -631,19 +629,19 @@ public class ANG_AccountTriggerHandler {
 		}
 	}
 
-	private Set<Id> getGEAccountIds(List<Account> accounts)
+	private Set<Id> getAccountIDs(List<Account> accounts)
 	{
-		Set<Id> geAccountIds = new Set<Id>();
+		Set<Id> accountIds = new Set<Id>();
 
-		// get the GE accounts
+		// get the GE and HE accounts
 		for (Account a : accounts)
 		{
-			if (AMS_Utils.GE.equals(a.Location_Type__c))
-				geAccountIds.add(a.Id);
+			if ( AMS_Utils.GE.equals(a.Location_Type__c) || (AMS_Utils.HE.equals(a.Location_Type__c) && !ANG_MulticountryHelper.isMulticountryAccount(a)))
+				accountIds.add(a.Id);
 		}
 
 		// look for the child HE accounts
-		return geAccountIds;
+		return accountIds;
 	}
 
 	private List<Account> getMulticountryAccounts(List<Account> accounts)
@@ -667,7 +665,9 @@ public class ANG_AccountTriggerHandler {
 		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
 			Accounts__c = JSON.serialize(geAccounts)
 		);
+	
 		EventBus.publish(evt);
+	
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
@@ -744,7 +744,7 @@ public class ANG_AccountTriggerHandler {
 		 	agOpMap.keySet());
 
 		Map<Id, String> freqMap = new Map<Id, String>();
-
+	
 		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
 		for (AMS_Settlement_System__c op : ops)
 		{

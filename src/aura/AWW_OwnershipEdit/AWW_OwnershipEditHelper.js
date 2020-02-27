@@ -252,6 +252,8 @@
             component.set('v.data', null);
             component.set('v.removeData', null);
             component.set('v.selectedRowsCount',0);
+            component.set('v.isGreaterThanOneHundred',false);
+            component.set('v.searchName', '');
         }
     }
 })

@@ -48,10 +48,13 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
    static void test03_BasicTestOnBatchJobWithTestData() {
 
 		//Generate SAP Settings
+		Test.startTest();
 		TestDataGenerator.generateSAPSettings();
-
+		
 		IECEBC_TestUtility.createEbcSetupAndRelatedData();
 		IECEBC_TestUtility.createTestUser();
+       
+		Test.stopTest();
 		Date dSubscriptionEndDate = Date.today().addMonths(6);
 		IECEBC_TestUtility.createEbcSubscription( IECEBC_TestUtility.lEbcProductRatePlanMember[0], IECEBC_TestUtility.oEbcProductMember, dSubscriptionEndDate);
 		List<zqu__ProductRatePlan__c> subProdRatePlanId = [select Id, Name
@@ -77,11 +80,11 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 		 memberRatePlanIdList.add(prp.id);
 		IECEBC_Utility.ebcMemberProductRatePlanIdList = memberRatePlanIdList;
 		createEbcCampaign();
-
-		Test.startTest();
+		
+		
 		vfIECEBC_ReportList cont = new vfIECEBC_ReportList();
 		BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
-		Test.stopTest();
+		
 		System.debug('Unit Test: Finish: test03_BasicTestOnBatchJobWithTestData');
 	} // test03_BasicTestOnBatchJobWithTestData
 

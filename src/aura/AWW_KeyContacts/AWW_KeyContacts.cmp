@@ -62,6 +62,9 @@
                                         </a>
                                     </th>
                                     <th data-label="Type" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedRichText value="{!item.accountName}"/>
+                                    </th>  
+                                    <th data-label="Type" scope="row" class="slds-cell-wrap">
                                         <lightning:formattedRichText value="{!item.contactType}"/>
                                     </th>  
                                     <th data-label="Primary for" scope="row" class="slds-cell-wrap">
