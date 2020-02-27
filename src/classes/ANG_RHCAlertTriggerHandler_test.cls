@@ -834,7 +834,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    //NEWGEN-2005
 	    insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com', User_Id__c = UserInfo.getUserId());
 	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true, User_Id__c = UserInfo.getUserId());
-	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true, User_Id__c = [SELECT Id FROM User WHERE isActive = true LIMIT 1].Id);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true, User_Id__c = [SELECT Id FROM User WHERE isActive = true AND Id != :UserInfo.getUserId() LIMIT 1].Id);
 	    
 	    
 	    test.StartTest();
