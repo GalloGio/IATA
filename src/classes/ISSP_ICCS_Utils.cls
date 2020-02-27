@@ -45,17 +45,66 @@ public without sharing class ISSP_ICCS_Utils{
 	public static final String NONE = '-- None --';
 
 	// ICCS Document types
+	public static final String ICCS_DOCUMENT_USER_GUIDE = 'ICCS_User_Guide';
+	public static final String ICCS_DOCUMENT_NEW_ICCS = 'New_ICCS';
+	public static final String ICCS_DOCUMENT_ICCS_DESCRIPTION = 'ICCS_Description';
+	public static final String ICCS_DOCUMENT_ICCS_FAQ = 'ICCS_FAQs';
+	public static final String ICCS_DOCUMENT_ICCS_PRESENTATION_WEBINAR = 'ICCS_Presentation_Webinar';
 	public static final String ICCS_DOCUMENT_AML = 'AML';
-	public static final String ICCS_DOCUMENT_FORM_A = 'Form A';
-	public static final String ICCS_DOCUMENT_FORM_K = 'Form K';
+	public static final String ICCS_DOCUMENT_FORM_A = 'Form_A';
+	public static final String ICCS_DOCUMENT_FORM_K = 'Form_K';
 	public static final String ICCS_DOCUMENT_ASP = 'ASP';
-	public static final String ICCS_DOCUMENT_BANK_ACCOUNTS = 'Bank Accounts';
+	public static final String ICCS_DOCUMENT_BANK_ACCOUNTS = 'Bank_Accounts';
 	public static final String ICCS_DOCUMENT_DEACTIVATION = 'Deactivation';
-	public static final String ICCS_DOCUMENT_MEMBERSHIP = 'Membership Agreement';
-	public static final String ICCS_DOCUMENT_JOIN_PARTICIPATION = 'Join Participation';
-	public static final String ICCS_DOCUMENT_LEAVE_PARTICIPATION = 'Leave Participation';	/* CHECK WHY WE HAD AN AMAZON FILE WITH THE VALUE 'Stop Operation' */
-	public static final String ICCS_DOCUMENT_NOA_RELEASE = 'NoA Release';
-	public static final String ICCS_DOCUMENT_REVISED_INSTRUCTIONS = 'Revised Instructions';
+	public static final String ICCS_DOCUMENT_MEMBERSHIP = 'Membership_Agreement';
+	public static final String ICCS_DOCUMENT_JOIN_PARTICIPATION = 'ICCS_Join_Participation';
+	public static final String ICCS_DOCUMENT_LEAVE_PARTICIPATION = 'ICCS_Leave_Participation';
+	public static final String ICCS_DOCUMENT_NOA_RELEASE = 'NoA_Release';
+	public static final String ICCS_DOCUMENT_REVISED_INSTRUCTIONS = 'ICCS_Revised_Instructions';
+	public static final String ICCS_DOCUMENT_ICCS_COUNTRIES = 'ICCS_Countries';
+	public static final String ICCS_DOCUMENT_PRICING_POLICY_AGENTS = 'ICCS_Pricing_Policy_Agents';
+	public static final String ICCS_DOCUMENT_PRICING_POLICY_AIRLINES = 'ICCS_Pricing_Policy_Airlines';
+	public static final String ICCS_DOCUMENT_FX_POLICY_AGENTS = 'FX_Policy_Agents';
+	public static final String ICCS_DOCUMENT_FX_POLICY_AIRLINES = 'FX_Policy_Airlines';
+	public static final String ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AGENTS = 'ICCS_Registration_Documents_Agents';
+	public static final String ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AIRLINES = 'ICCS_Registration_Documents_Airlines';
+	public static final String ICCS_DOCUMENT_AML_REQUEST = 'ICCS_AML_Request';
+	public static final String ICCS_DOCUMENT_BANK_ACCOUNT_DETAILS = 'ICCS_Bank_Account_Details';
+	public static final String ICCS_DOCUMENT_FDS_AUTHORIZED_SIGNATORIES = 'ICCS_FDS_Authorized_Signatories_Package';
+	public static final String ICCS_DOCUMENT_MEMBERSHIP_AGREEMENT = 'ICCS_Membership_Agreement';
+	public static final String ICCS_DOCUMENT_SIGNATORY_AUTHORITY_CHANGE = 'ICCS_Signatory_Authority_Change';
+
+	public static final list<String> LIST_ICCS_DOCUMENTS = new list<String> {
+		ICCS_DOCUMENT_USER_GUIDE,
+		ICCS_DOCUMENT_NEW_ICCS,
+		ICCS_DOCUMENT_ICCS_DESCRIPTION,
+		ICCS_DOCUMENT_ICCS_FAQ,
+		ICCS_DOCUMENT_ICCS_PRESENTATION_WEBINAR,
+		ICCS_DOCUMENT_ICCS_COUNTRIES,
+		ICCS_DOCUMENT_AML,
+		ICCS_DOCUMENT_FORM_A,
+		ICCS_DOCUMENT_FORM_K,
+		ICCS_DOCUMENT_ASP,
+		ICCS_DOCUMENT_BANK_ACCOUNTS,
+		ICCS_DOCUMENT_DEACTIVATION,
+		ICCS_DOCUMENT_MEMBERSHIP,
+		ICCS_DOCUMENT_JOIN_PARTICIPATION,
+		ICCS_DOCUMENT_LEAVE_PARTICIPATION,
+		ICCS_DOCUMENT_NOA_RELEASE,
+		ICCS_DOCUMENT_REVISED_INSTRUCTIONS,
+		ICCS_DOCUMENT_ICCS_COUNTRIES,
+		ICCS_DOCUMENT_PRICING_POLICY_AGENTS,
+		ICCS_DOCUMENT_PRICING_POLICY_AIRLINES,
+		ICCS_DOCUMENT_FX_POLICY_AGENTS,
+		ICCS_DOCUMENT_FX_POLICY_AIRLINES,
+		ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AGENTS,
+		ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AIRLINES,
+		ICCS_DOCUMENT_AML_REQUEST,
+		ICCS_DOCUMENT_BANK_ACCOUNT_DETAILS,
+		ICCS_DOCUMENT_FDS_AUTHORIZED_SIGNATORIES,
+		ICCS_DOCUMENT_MEMBERSHIP_AGREEMENT,
+		ICCS_DOCUMENT_SIGNATORY_AUTHORITY_CHANGE
+	};
 
 	// Account record type Ids
 	public static final Id ACCOUNT_RECORD_TYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');

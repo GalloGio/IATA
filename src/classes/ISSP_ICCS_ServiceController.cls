@@ -13,10 +13,13 @@ public class ISSP_ICCS_ServiceController{
 	public Map<String, Document> downloadableDocumentsMap {
 		get{
 			if(downloadableDocumentsMap == null){
-				Folder ICCSDocumentFolder = [select id from Folder where developername ='ICCS_Portal_Service' limit 1];
-				List<Document> documentList = [select Id, Name, DeveloperName, LastModifiedDate from Document where FolderId =: ICCSDocumentFolder.Id];
-
 				downloadableDocumentsMap = new Map<String, Document>();
+				// put all keys to the documents map
+				for(String docNames : ISSP_ICCS_Utils.LIST_ICCS_DOCUMENTS){
+					downloadableDocumentsMap.put(docNames, new Document());
+				}
+				// find and add the documents to the map
+				List<Document> documentList = [select Id, Name, DeveloperName, LastModifiedDate from Document where Folder.DeveloperName = 'ICCS_Portal_Service'];
 				for(Document doc : documentList){
 					downloadableDocumentsMap.put(doc.DeveloperName, doc);
 				}
@@ -111,10 +114,10 @@ public class ISSP_ICCS_ServiceController{
 	public String pricingPolicyFileUniqueName {
 		get{
 			if(isAgency){
-				return 'ICCS_Pricing_Policy_Agents';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_PRICING_POLICY_AGENTS;
 			}
 			else if(isAirline){
-				return 'ICCS_Pricing_Policy_Airlines';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_PRICING_POLICY_AIRLINES;
 			}
 			return '';
 		}
@@ -123,10 +126,10 @@ public class ISSP_ICCS_ServiceController{
 	public String fxPolicyFileUniqueName {
 		get{
 			if(isAgency){
-				return 'FX_Policy_Agents';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_FX_POLICY_AGENTS;
 			}
 			else if(isAirline){
-				return 'FX_Policy_Airlines';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_FX_POLICY_AIRLINES;
 			}
 			return '';
 		}
@@ -135,10 +138,10 @@ public class ISSP_ICCS_ServiceController{
 	public String registrationZipFileUniqueName {
 		get{
 			if(isAgency){
-				return 'ICCS_Registration_Documents_Agents';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AGENTS;
 			}
 			else if(isAirline){
-				return 'ICCS_Registration_Documents_Airlines';
+				return ISSP_ICCS_Utils.ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AIRLINES;
 			}
 			return '';
 		}
