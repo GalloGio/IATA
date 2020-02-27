@@ -376,7 +376,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, attachments, true);
 	}
 
-	public static Map<ID,Messaging.SingleEmailMessage> sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments, Boolean sendEmail) {
+	public static List<Messaging.SingleEmailMessage> sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments, Boolean sendEmail) {
 		Id templateId;
 		Boolean templateToIATA = false;
 		List<EmailTemplate> tempIata = new List<EmailTemplate>();
@@ -405,8 +405,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 		if(recipents != null){
 
-			//List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-			Map<ID,Messaging.SingleEmailMessage> mailsToSend = new Map<ID,Messaging.SingleEmailMessage>();
+			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
 			system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
 			system.debug('DGR sendEmailAlert: recipents ' + recipents);
@@ -437,7 +436,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					}
 					mail.setWhatId(oscarId);
 					mail.setOrgWideEmailAddressId(owea.Id);
-					mailsToSend.put(oscarCommCaseId, mail);
+					mailsToSend.add(mail);
 
 				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
 				//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
@@ -479,7 +478,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						mail.setTargetObjectId(recipient.Id);
 						mail.setWhatId(oscarId);
 						mail.setOrgWideEmailAddressId(owea.Id);
-						mailsToSend.put(oscarCommCaseId, mail);
+						mailsToSend.add(mail);
 					}
 				}
 			}
@@ -504,7 +503,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					mailPortalAdmin.setTargetObjectId(auxCont.Id);
 					mailPortalAdmin.setWhatId(oscarId);
 					mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
-					mailsToSend.put(oscarCommCaseId, mailPortalAdmin);
+					mailsToSend.add(mailPortalAdmin);
 				}
 			}
 
@@ -514,16 +513,15 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			if(!sendEmail) return mailsToSend;
 
 			else if(!mailsToSend.isEmpty()){
-				if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend.values());
-				for(Id caseId : mailsToSend.keySet()){
+				if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
+				for(Messaging.SingleEmailMessage mail: mailsToSend){
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-					Messaging.SingleEmailMessage mail = mailsToSend.get(caseId);
 					emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
 					emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
 					emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
 					emailMsg.Subject = mail.getSubject();
 					emailMsg.HtmlBody = mail.getHtmlBody();
-					emailMsg.ParentId = caseId; //Attach with the case
+					emailMsg.ParentId = oscarCommCaseId; //Attach with the case
 					emailMsg.MessageDate = system.now();
 					emailMsg.Status = '0';
 					mailsToTrackInCase.add(emailMsg);
@@ -531,7 +529,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				insert mailsToTrackInCase;
 			}
 		}
-		return new Map<ID, Messaging.SingleEmailMessage>();
+		return new List<Messaging.SingleEmailMessage>();
 	}
 
 	private static Map<String, Id> DGRemailTemplates(String type){
