@@ -2071,6 +2071,7 @@ public class AMS_OSCARTriggerHandler {
 				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED && oscar.Process__c != AMS_Utils.VOLRELINQUISH)
 				|| (oscar.Termination_Date__c != oldMap.get(oscar.Id).Termination_Date__c && oscar.Process__c == AMS_Utils.VOLRELINQUISH)
 				|| (oscar.Process__c == AMS_Utils.NGCHANGES && newMap.get(oscar.Id).ANG_Type_Of_Change__c != oldMap.get(oscar.Id).ANG_Type_Of_Change__c )
+				|| (oscar.Process__c == AMS_Utils.AGENCYCHANGES && newMap.get(oscar.Id).Type_Of_Change__c != oldMap.get(oscar.Id).Type_Of_Change__c)
 				|| (oscar.Step10__c == AMS_Utils.PASSED && oscar.AMS_Online_Accreditation__r.SAAM_Case__r.BSPCountry__c == null)
 			){
 				updatedOscars.add(oscar);
