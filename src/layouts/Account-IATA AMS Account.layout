@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -850,7 +853,7 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
-        <fields>Primary_Contact__c</fields>
+        <fields>CONTACT.CREATED_DATE</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
