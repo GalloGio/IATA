@@ -41,7 +41,6 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 	connectedCallback() {
 
 		this.tipReportsTableColumns = [
-			{label: this.label.CSP_Service_TIPReports_TextFileType , fieldName: 'reportType', type: 'text'},
 			{label: this.label.CSP_Service_TIPReports_TextPostedDate , fieldName: 'lastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: ''}},
 			{label: this.label.CSP_Service_TIPReports_TextFileName, fieldName: 'masterLabel', type: 'text', cellAttributes: {class: ''}},
 			{label: this.label.CSP_Service_TIPReports_TextAction, type: 'button', typeAttributes: { label: this.label.CSP_Service_TIPReports_TextOpen, name: 'openReportOrFile', variant: 'base' }}
