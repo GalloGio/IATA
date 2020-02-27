@@ -75,11 +75,11 @@ public without sharing class TreasuryDashboardCtrl {
 			/* Check for Bypass_TD_2FA permission set
 			This permission set is used for automation testing user to bypass the 2FA check on Treasury Dashboard page.
 			 */
-			List<PermissionSetAssignment> permissionsList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :users[0].Id AND PermissionSet.Name = 'Bypass_TD_2FA'];
-			if(! permissionsList.isEmpty()) {
-
-				userInfoToReturn.hasTwoFactor = true;
-
+			List<String> resultList = hasBypass2FA(new List<String>{users[0].Id});
+			if(! resultList.isEmpty()) {
+				if('true'.equals(resultList[0])) {
+					userInfoToReturn.hasTwoFactor = true;
+				}
 			}
 
 			//get is standard user
@@ -356,6 +356,23 @@ public without sharing class TreasuryDashboardCtrl {
 			sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);
 
 		}
+	}
+
+	/*
+	This method is used in Accept Terms and 2FA 2 login flow and Treasury Dashboard page for bypassing 2FA for users
+	that have Bypass_TD_2FA permission set assigned.
+	 */
+	@InvocableMethod
+	public static List<String> hasBypass2FA(List<String> userId) {
+		List<String> resultList = new List<String>();
+		List<PermissionSetAssignment> permissionsList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :userId[0] AND PermissionSet.Name = 'Bypass_TD_2FA'];
+		if(! permissionsList.isEmpty()) {
+			resultList.add('true');
+		}else{
+			resultList.add('false');
+		}
+
+		return resultList;
 	}
 
 

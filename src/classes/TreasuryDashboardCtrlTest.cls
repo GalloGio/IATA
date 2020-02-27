@@ -253,12 +253,21 @@ public class TreasuryDashboardCtrlTest {
 
 		TreasuryDashboardCtrl.UserInformation info = null;
 
-		PermissionSet permission = new PermissionSet(Label='Bypass TD 2FA', Name='Bypass_TD_2FA');
-		insert permission;
+		Id permissionSetId;
+
+		List<PermissionSet> permissionSets = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_TD_2FA'];
+		if(permissionSets.isEmpty()) {
+			PermissionSet permission = new PermissionSet(Label='Bypass TD 2FA', Name='Bypass_TD_2FA');
+			insert permission;
+
+			permissionSetId = permission.Id;
+		}else{
+			permissionSetId = permissionSets[0].Id;
+		}
 
 		PermissionSetAssignment permissionAssignment = new PermissionSetAssignment();
 		permissionAssignment.AssigneeId=testUser.Id;
-		permissionAssignment.PermissionSetId=permission.id;
+		permissionAssignment.PermissionSetId=permissionSetId;
 		insert permissionAssignment;
 
 		Test.startTest();
@@ -706,6 +715,63 @@ public class TreasuryDashboardCtrlTest {
 		Test.stopTest();
 
 		System.assertEquals(true, testException.getMessage().contains('No HTTP resource was found that matches the request URI.'));
+
+	}
+
+	@IsTest
+	private static void hasBypass2FA_negativeTest() {
+
+		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+		List<String> testResult = new List<String>();
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+			testResult = TreasuryDashboardCtrl.hasBypass2FA(new List<String>{testUser.Id});
+		}
+
+		Test.stopTest();
+
+		System.assert(testResult.size() == 1, 'List with result should have only one element!');
+		System.assertEquals('false', testResult[0], 'Wrong result retrieved - user does NOT have Bypass_TD_2FA permission set assigned!');
+
+	}
+
+	@IsTest
+	private static void hasBypass2FA_positiveTest() {
+
+		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+		Id permissionSetId;
+
+		List<PermissionSet> permissionSets = [SELECT Id FROM PermissionSet WHERE Name = 'Bypass_TD_2FA'];
+		if(permissionSets.isEmpty()) {
+			PermissionSet permission = new PermissionSet(Label='Bypass TD 2FA', Name='Bypass_TD_2FA');
+			insert permission;
+
+			permissionSetId = permission.Id;
+		}else{
+			permissionSetId = permissionSets[0].Id;
+		}
+
+		PermissionSetAssignment permissionAssignment = new PermissionSetAssignment();
+		permissionAssignment.AssigneeId=testUser.Id;
+		permissionAssignment.PermissionSetId=permissionSetId;
+		insert permissionAssignment;
+
+		List<String> testResult = new List<String>();
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+			testResult = TreasuryDashboardCtrl.hasBypass2FA(new List<String>{testUser.Id});
+		}
+
+		Test.stopTest();
+
+		System.assert(testResult.size() == 1, 'List with result should have only one element!');
+		System.assertEquals('true', testResult[0], 'Wrong result retrieved - user DOES have Bypass_TD_2FA permission set assigned!');
 
 	}
 
