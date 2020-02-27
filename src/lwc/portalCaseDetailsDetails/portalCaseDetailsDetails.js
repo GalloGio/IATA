@@ -213,9 +213,9 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         let caseDetailsLocal = this.caseDetails;
         if (this.optionBuilder) {
             return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation &&
-                caseDetailsLocal.Reason1__c.startsWith('New') && caseDetailsLocal.Reason1__c !== 'New HE standard' &&
-				caseDetailsLocal.Reason1__c !== 'New HE lite' && caseDetailsLocal.Reason1__c !== 'New AE' &&
-				caseDetailsLocal.Reason1__c !== 'New HE Multicountry' && caseDetailsLocal.Reason1__c !== 'New AE Multicountry';
+                caseDetailsLocal.Reason1__c.startsWith('New') && caseDetailsLocal.Reason1__c !== AMS_Utils.CASE_REASON_HE_STANDARD &&
+				caseDetailsLocal.Reason1__c !== AMS_Utils.CASE_REASON_HE_LITE && caseDetailsLocal.Reason1__c !== AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD &&
+				caseDetailsLocal.Reason1__c !== AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && caseDetailsLocal.Reason1__c !== AMS_Utils.CASE_REASON_AE_MULTICOUNTRY;
         }
         return null;
     }
@@ -266,7 +266,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     get getPDF5() {
         if (this.caseDetails) {
-            return this.caseDetails.Reason1__c.startsWith('New AE');
+            return this.caseDetails.Reason1__c.startsWith(AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD);
         }
         return null;
     }
