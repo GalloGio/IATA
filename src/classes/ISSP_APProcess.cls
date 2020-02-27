@@ -458,7 +458,7 @@ global without sharing class ISSP_APProcess {
 
 			getLoB(strOperationType); //Get the line of business - BSP or CASS
 
-			if(!isPassAirline || (isPassAirline && newCase.Country_concerned_by_the_query__c!='Multiple') ){
+			if(!isPassAirline || (isPassAirline && newCase.Country_concerned_by_the_query__c!='Multiple') || isGSSAUser ){
 				apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
 			}
 			SYSTEM.DEBUG('INIT - LOB: ' + strLoB);
@@ -486,21 +486,50 @@ global without sharing class ISSP_APProcess {
 					newForm.Airline_Local_address_in_the_BSP_Country__c = newCase.BSPCountry__c;
 				}
 				if(isPASSAirline){
-					newForm.Receive_HOT_files__c='YES';
-					newForm.Receive_PDF_Reports__c='YES';
+					if(String.isBlank(newForm.Receive_HOT_files__c)){
+						if(newForm.Receive_HOT_files__c=='NO'){
+							newForm.Hot_files_delivery_format__c = '';
+						}else{
+							newForm.Receive_HOT_files__c='YES';
+						}
+						
+					}
+					if(String.isBlank(newForm.Receive_PDF_Reports__c)){
+						if(newForm.Receive_PDF_Reports__c=='NO'){
+							newForm.PDF_Report_Delivery_Format__c = '';
+						}else{
+							newForm.Receive_PDF_Reports__c='YES';
+						}
+					}
 					showHideHotFilesPreferenceMethod();
 					showHidePdfReportsPreferenceMethod();
 				}
-
 				if(isPASSGSSA){
-					newForm.GSSA_Legal_Name__c = newCase.Account.Name;
-					newForm.GSSA_Code__c = '';
-					newForm.GSSA_HQ_Address__c = strParentBillingStreet;
-					newForm.GSSA_HQ_City__c = strParentBillingCity;
-					newForm.GSSA_HQ_State__c = strParentBillingState;
-					newForm.GSSA_HQ_Post_Code__c = strParentBillingCode;
-					newForm.GSSA_HQ_Country__c = strParentBillingCountry;
-					newForm.GSSA_VAT_Id__c = '';
+					if(String.isBlank(newForm.GSSA_Legal_Name__c)){
+						newForm.GSSA_Legal_Name__c = newCase.Account.Name;
+					}
+					if(String.isBlank(newForm.GSSA_VAT_Id__c)){
+						newForm.GSSA_VAT_Id__c = '';
+					}
+					if(String.isBlank(newForm.GSSA_Code__c)){
+						newForm.GSSA_Code__c = '';
+					}
+					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
+						newForm.GSSA_HQ_Address__c = strParentBillingStreet;
+					}
+					if(String.isBlank(newForm.GSSA_HQ_City__c)){
+						newForm.GSSA_HQ_City__c = strParentBillingCity;
+					}
+					if(String.isBlank(newForm.GSSA_HQ_State__c)){
+						newForm.GSSA_HQ_State__c = strParentBillingState;
+					}
+					if(String.isBlank(newForm.GSSA_HQ_Post_Code__c)){
+						newForm.GSSA_HQ_Post_Code__c = strParentBillingCode;
+					}
+					if(String.isBlank(newForm.GSSA_HQ_Country__c)){
+						newForm.GSSA_HQ_Country__c = strParentBillingCountry;
+					}
+					
 				}
 				getCityData();//TF
 				newForm.Submitted_to_IATA__c = FALSE;
@@ -686,6 +715,12 @@ global without sharing class ISSP_APProcess {
 									break;
 								}
 							}
+							if(isPASSGSSA){
+								if(newForm.Accept_Online_Corrections__c==null){
+									allfieldsfilled = false;
+								}
+							}
+							
 					}else {
 						allfieldsfilled = true;
 					}
@@ -778,7 +813,7 @@ global without sharing class ISSP_APProcess {
 			Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,
 			Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c,
 			ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c, Billing_Value_Confirmation__c, Legal_Archiving__c, Auto_billing__c,
-			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c
+			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c,GSSA_VAT_Id__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,Accept_Online_Corrections__c
 			FROM AP_Process_Form__c
 			WHERE Case__c = :newCase.Id
 			LIMIT 1
@@ -1010,7 +1045,7 @@ global without sharing class ISSP_APProcess {
 			newCase.Type= 'ICH Membership';
 		}
 
-		if(!isPassAirline || isPassAirline && selectedPASSCountries.size() == 1 ){
+		if(!isPassAirline || isPassAirline && selectedPASSCountries.size() == 1 || isGSSAUser ){
 			apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
 		}
 
@@ -1124,7 +1159,7 @@ global without sharing class ISSP_APProcess {
 			newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
 			String passProcess = ' Joining Process ';
 			if(managePASS){
-				passProcess = ' Countries - ';
+				passProcess = ' Countries ';
 			}
 			newCase.Subject='Airline Participation - '+ strOperationType + passProcess;
 		} else {
