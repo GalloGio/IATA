@@ -106,10 +106,11 @@ private class OperationalImprovementsHandlerTest {
 		list<Operational_Improvements__c> listResult = [SELECT Id, Exchange_rate__c, Currency__c FROM Operational_Improvements__c];
 		System.assertEquals(4, listResult.size());
 		for (Operational_Improvements__c result : listResult) {
+			Decimal resultRate = result.Exchange_rate__c==null? 0: result.Exchange_rate__c;
 			if (result.Currency__c == 'USD') {
-				System.assert(result.Exchange_rate__c!=null);
+				System.assert(resultRate>0, 'USD ' + result);
 			} else {
-				System.assert(result.Exchange_rate__c==null);
+				System.assert(resultRate==0, 'nonUSD ' + result);
 			}
 		}
 
