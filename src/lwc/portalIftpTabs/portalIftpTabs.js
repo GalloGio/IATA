@@ -161,14 +161,7 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
         getRedirectURL()
         .then(result => {
             // Navigate to a URL
-                this[NavigationMixin.Navigate]({
-                    type: 'standard__webPage',
-                    attributes: {
-                        url: result
-                    }
-                },
-                true // Replaces the current page in your browser history with the URL
-            );
+            window.open(result,'_blank');
 
         })
         .catch(error => {

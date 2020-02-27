@@ -1,14 +1,15 @@
 ({
     initTable : function(component) {
         component.set('v.gridColumns',[
-            {label: 'IATA Group Name', cssClass: 'th_17'},
-            {label: 'IATA Group Owner', cssClass: 'th_12'},
-            {label: 'Mission of IATA Group', cssClass: 'th_30'},
-            {label: 'Role Within Group', cssClass: 'th_11'},
-            {label: 'Salut.', cssClass: 'th_5'},
-            {label: 'First Name', cssClass: 'th_8'},
-            {label: 'Last Name', cssClass: 'th_8'},
-            {label: 'Title', cssClass: 'th_9'}
+            {label: 'IATA Group Name', cssClass: 'th_7 no-truncate'},
+            {label: 'Account Name', cssClass: 'th_9 no-truncate'},
+            {label: 'IATA Group Owner', cssClass: 'th_12 no-truncate'},
+            {label: 'Mission of IATA Group', cssClass: 'th_30 no-truncate'},
+            {label: 'Role Within Group', cssClass: 'th_11 no-truncate'},
+            {label: 'Salut.', cssClass: 'th_5 no-truncate'},
+            {label: 'First Name', cssClass: 'th_8 no-truncate'},
+            {label: 'Last Name', cssClass: 'th_8 no-truncate'},
+            {label: 'Title', cssClass: 'th_9 no-truncate'}
         ]);
     },
     fetchData : function(component) {
@@ -22,7 +23,6 @@
             var state = response.getState();
             if(component.isValid() && state === "SUCCESS") {
                 var result = response.getReturnValue();
-                console.log(result);
                 component.set('v.gridData', result.groups);
                 component.set('v.originalData', result.groups);
                 component.set('v.gridExpandedRows', result.expandedRows);
@@ -35,14 +35,12 @@
         $A.enqueueAction(action);
     },
     displayChilds : function(component,rowId) {
-        var childs = component.get('v.gridExpandedRows')[rowId];
-        var childsOfChilds = component.get('v.originalData');
-        
-        for(var i=0; i<childs.length; i++) {
-            for(var j=0; j<childsOfChilds.length; j++) {
-                for(var h=0; h<childsOfChilds[j].childrens.length; h++) {
-                    for(var k=0; k<childsOfChilds[j].childrens[h].childrens.length; k++) {
-                        let testID = childs[i]+'-'+childsOfChilds[j].childrens[h].childrens[k].rowId;
+        var originalData = component.get('v.originalData');
+        for(var i=0; i<originalData.length; i++) {
+            if(originalData[i].rowId == rowId){
+                for(var j=0; j<originalData[i].childrens.length; j++) {
+                    for(var k=0; k<originalData[i].childrens[j].childrens.length; k++) {
+                        let testID = originalData[i].childrens[j].rowId+'-'+originalData[i].childrens[j].childrens[k].rowId;
                         document.getElementById(testID).classList.remove("slds-hide");
                         var childExpandIcon = document.getElementById('expand_'+testID);
                         if(childExpandIcon) {
@@ -54,24 +52,13 @@
         }        
     },
     hideChilds : function(component,rowId) {
-        var relationsList = component.get('v.gridExpandedRows');
-        var childs = relationsList[rowId];
-        var childsOfChilds = component.get('v.originalData');
-        for(var i=0; i<childs.length; i++) {
-            for(var j=0; j<childsOfChilds.length; j++) {
-                for(var h=0; h<childsOfChilds[j].childrens.length; h++) {
-                    for(var k=0; k<childsOfChilds[j].childrens[h].childrens.length; k++) {
-                        let testID = childs[i]+'-'+childsOfChilds[j].childrens[h].childrens[k].rowId;
+        var originalData = component.get('v.originalData');
+        for(var i=0; i<originalData.length; i++) {
+            if(originalData[i].rowId == rowId){
+                for(var j=0; j<originalData[i].childrens.length; j++) {
+                    for(var k=0; k<originalData[i].childrens[j].childrens.length; k++) {
+                        let testID = originalData[i].childrens[j].rowId+'-'+originalData[i].childrens[j].childrens[k].rowId;
                         document.getElementById(testID).classList.add("slds-hide");
-                        var expandIcon = document.getElementById('expand_'+testID);
-                        var collapseIcon = document.getElementById('collapse_'+testID);
-
-                        if(expandIcon) {
-                            expandIcon.classList.add("slds-hide");
-                        }
-                        if(collapseIcon) {
-                            collapseIcon.classList.add("slds-hide");
-                        }
                     }
                 }
             }
