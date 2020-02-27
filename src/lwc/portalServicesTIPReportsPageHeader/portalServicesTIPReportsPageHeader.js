@@ -12,6 +12,6 @@ export default class PortalServicesTIPReportsPageHeader extends LightningElement
     @track imageInfo = '';
 
     connectedCallback() {
-        this.imageInfo = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:185px;'
+        this.imageInfo = 'background-image: url("' + this.backgroundIcon + '");'
     }
 }

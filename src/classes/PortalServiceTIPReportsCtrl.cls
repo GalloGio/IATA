@@ -154,10 +154,12 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	private static string genPublicExpiringAWSLinkIFAP(AmazonCredentials credentials, string filename) {
 		String path = credentials.Bucket + SEPARATOR;
 		list<string> splittedName = filename.split('/');
-		string encoded;
-		for(string dirNm:splittedName)
-			encoded+=  EncodingUtil.urlENcode(dirNm,'UTF-8') +'/';
-		encoded = encoded.substring(0,encoded.length()-1).replaceAll('null','');
+		String encoded = '';
+
+		for(String dirNm : filename.split(SEPARATOR )){
+			encoded += EncodingUtil.urlENcode(dirNm,'UTF-8') +SEPARATOR ;
+		}
+		encoded = encoded.removeEnd(SEPARATOR);
 
 		Decimal timeInMili = Math.floor(System.now().getTime()/1000)+300;
 		string check = string.valueof(timeInMili);
