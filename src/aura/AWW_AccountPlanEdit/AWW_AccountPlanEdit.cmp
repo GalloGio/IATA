@@ -6,6 +6,7 @@
     <aura:attribute name="statusList" type="List"/>
     <aura:attribute name="renderLookup" type="Boolean" default="true"/>
     <aura:attribute name="fieldValidity" type="Boolean" default="true"/>
+    <aura:attribute name="errorMessage" type="String" default=""/>
 
     <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
     <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
@@ -42,7 +43,7 @@
                     <div class="slds-grid slds-gutters slds-wrap">
                         <aura:if isTrue="{!v.fieldValidity}">
                             <div class="slds-col slds-size_1-of-2">
-                                <lightning:input aura:id="recordName" label="Activity" type="text" required="true" value="{!v.record.objectiveName}"/>
+                                <lightning:input maxlength="80" aura:id="recordName" label="Activity" type="text" required="true" value="{!v.record.objectiveName}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-2">
                                 <lightning:select label="Division" value="{!v.record.division}">
@@ -76,10 +77,10 @@
                             </div>
                             <div class="slds-col slds-size_1-of-2"></div>
                             <div class="slds-col slds-size_1-of-2">
-                                <lightning:textarea label="Description" value="{!v.record.description}"/>
+                                <lightning:textarea maxlength="32768" label="Description" value="{!v.record.description}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-2">
-                                <lightning:textarea label="Comment" value="{!v.record.comments}"/>
+                                <lightning:textarea maxlength="1024" label="Comment" value="{!v.record.comments}"/>
                             </div>
                         </aura:if>
                     </div>

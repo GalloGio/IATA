@@ -6048,6 +6048,15 @@ albam@iata.org</description>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>In_house_Training_Lead</fullName>
+        <filterScope>Queue</filterScope>
+        <label>In-house Training</label>
+        <queue>In_house_Training</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>MediacontactsCorporateCommunication</fullName>
         <columns>FULL_NAME</columns>
         <columns>LEAD.TITLE</columns>
