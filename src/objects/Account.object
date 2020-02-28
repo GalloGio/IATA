@@ -120794,6 +120794,20 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <errorMessage>ACLI Customer Number has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>AOC_Expiry_Date</fullName>
+        <active>true</active>
+        <description>Prevent AoC Expiry date from being less than 3 days from TODAY</description>
+        <errorConditionFormula>AND(
+ISCHANGED( AOC_Expiry_Date__c ),
+AOC_Expiry_Date__c &lt;= TODAY()+3,
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+ISPICKVAL(ACLI_Status__c , &apos;Active Company&apos;),
+NOT(ISBLANK( ACLI_SAP_Id__c ))
+)</errorConditionFormula>
+        <errorDisplayField>AOC_Expiry_Date__c</errorDisplayField>
+        <errorMessage>You can&apos;t set AoC expiry date to this value. Please choose a future date.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Account_Name_cannot_include_Ltd_or_Intl</fullName>
         <active>false</active>
         <errorConditionFormula>OR(
