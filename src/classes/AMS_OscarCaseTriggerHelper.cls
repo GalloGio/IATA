@@ -357,6 +357,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 	private static id RTSidra = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 	private static id RTSidraLite = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+	private static id RTSaam = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 	public static void CreateRiskChangeCode(){
 		if(AMS_OscarCase_RiskMgmt.runOnce()){
@@ -365,7 +366,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 			for(Case c : (List<Case>)Trigger.new){
 				Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
-				if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
+				if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite || c.RecordTypeId == RTSaam){
 					mapNewCase.put(c.Id, c);
 					if(cOld!=null)
 						mapOldCase.put(cOld.id, cOld);

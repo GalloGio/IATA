@@ -1779,11 +1779,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <fullName>SIDRA_Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>SIDRA Case</label>
+        <label>Case</label>
         <lookupFilter>
             <active>true</active>
-            <booleanFilter>1 OR 2</booleanFilter>
-            <errorMessage>You can only select SIDRA or SIDRA Lite cases, make sure the selected case has the correct record type</errorMessage>
+            <booleanFilter>1 OR 2 OR 3</booleanFilter>
+            <errorMessage>You can only select SIDRA, SIDRA Lite or SAAM cases, make sure the selected case has the correct record type</errorMessage>
             <filterItems>
                 <field>Case.RecordType.DeveloperName</field>
                 <operation>equals</operation>
@@ -1793,6 +1793,11 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
                 <field>Case.RecordType.DeveloperName</field>
                 <operation>equals</operation>
                 <value>SIDRA_Lite</value>
+            </filterItems>
+            <filterItems>
+                <field>Case.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>ProcessEuropeSCE</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
