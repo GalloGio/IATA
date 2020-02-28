@@ -26,6 +26,10 @@
                 <behavior>Readonly</behavior>
                 <field>SIDRA_logo__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Financial_Security_needed__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
