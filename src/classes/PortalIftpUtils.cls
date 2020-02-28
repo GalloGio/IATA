@@ -1406,7 +1406,6 @@ public without sharing class PortalIftpUtils {
 				Case transferCase = new Case();
 				transferCase.recordtypeID = ProcessRTId;
 				transferCase.AccountId = ui.accountId;
-				transferCase.OwnerId = ownerId;
 				transferCase.Subject = subject;
 				transferCase.Description = description;
 				transferCase.ContactId = ui.contactId;
@@ -1416,7 +1415,14 @@ public without sharing class PortalIftpUtils {
 				transferCase.Reason1__c  = 'IFTP OJT File Validation';
 				transferCase.Region__c = ui.accountRegion;
 				transferCase.BSPCountry__c = ui.accountCountry;
+				
 				insert transferCase;
+				transferCase.OwnerId = ownerId;
+
+				Database.DMLOptions dlo = new Database.DMLOptions();
+				dlo.EmailHeader.triggerUserEmail = true;
+				Database.update(transferCase, dlo);
+
 
 				Attachment att = new Attachment();
 				att.ParentId = transferCase.Id;
