@@ -293,8 +293,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
 			Boolean isMulticountry = 
-				oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
-				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+				((oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
+				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) && 
+				oscar.Change_of_Hierarchy_Scenario__c != AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD);
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);

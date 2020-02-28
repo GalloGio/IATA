@@ -1182,12 +1182,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 				if (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
-
-					for(HierarchyItem item: hierarchyValues){
-						if ((item.selected || item.main) && item.acc.Location_Type__c == AMS_Utils.AE) {
-							if (item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c) {
-								return null;
-							}
+					for(HierarchyItem item: hierarchyValues){						
+						if ((item.selected || item.main) && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c) {
+							return null;
 						}
 					}
 
