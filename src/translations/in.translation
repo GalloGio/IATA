@@ -2064,6 +2064,10 @@
         <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
+    </customLabels>
+    <customLabels>
         <label>Kasus</label>
         <name>CSP_Cases</name>
     </customLabels>
