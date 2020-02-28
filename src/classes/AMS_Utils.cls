@@ -126,10 +126,10 @@ public without sharing class AMS_Utils {
 	//Process of type PASS
 	public static final String new_PASS_HO        = 'NEW.PASS.HO.1.0' ;
 	public static final String new_PASS_BR        = 'NEW.PASS.BR.1.0' ;
-	public static final String SECTOR_PASS        = 'Cargo Agent';
-	public static final String sectorValuePass    = 'Cargo_Agent' ;
-	public static final String categoryPass       = 'Postal Service' ;
-	public static final String customerTypePass   = 'PostalService' ;
+	public static final String SECTOR_PASS        = 'Postal Service';
+	public static final String sectorValuePass    = 'Postal_Service' ;
+	public static final String categoryPass       = 'Postal Operator' ;
+	public static final String customerTypePass   = 'Postal_Operator' ;
 	public static final String passParticipation  = 'PASS' ;
 	public static final String passAirlineCaseReason = 'PASS Participation';
 	public static final String passCountryCaseReason = 'PASS Country';

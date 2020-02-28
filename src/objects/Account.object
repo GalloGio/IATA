@@ -6988,6 +6988,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Payment Provider</label>
                 </value>
                 <value>
+                    <fullName>Postal Operator</fullName>
+                    <default>false</default>
+                    <label>Postal Operator</label>
+                </value>
+                <value>
                     <fullName>Postal Service</fullName>
                     <default>false</default>
                     <label>Postal Service</label>
@@ -16802,6 +16807,11 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <fullName>Non-Airline Transportation</fullName>
                     <default>false</default>
                     <label>Non-Airline Transportation</label>
+                </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
                 </value>
                 <value>
                     <fullName>Recreational</fullName>
@@ -50349,6 +50359,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
@@ -53160,6 +53174,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
