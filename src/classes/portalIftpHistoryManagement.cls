@@ -27,19 +27,19 @@ public without sharing class portalIftpHistoryManagement {
 		list<Account_Contact_Role__C> accRoleList = [select id,Account_Role__r.account__r.Name, First_Name__c, Last_Name__c,Company_Code__c from Account_Contact_Role__C where id in :accContRlIdList];
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
 		for(Account_Contact_role__C acr:accRoleList){
-			
+
 			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
 			acr.Company_Code__c,
 			acr.Account_Role__r.account__r.Name,
 			acr.First_Name__C,
 			acr.Last_Name__c);
-			
+
 			IftpHistoryRecordsToBeInserted.add(ihrec);
-			
+
 		}
 
 		if(IftpHistoryRecordsToBeInserted.size() > 0){
-			
+
 			insert IftpHistoryRecordsToBeInserted;
 		}
 	}
@@ -343,7 +343,7 @@ public without sharing class portalIftpHistoryManagement {
 
 		List<AggregateResult> lContRolePreReqCert = [SELECT Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name
-							FROM Contact_Role_Certification__c 
+							FROM Contact_Role_Certification__c
 							WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
 							AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
 							AND Certification__c IN :listPreReqCert
