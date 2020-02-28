@@ -154,29 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Portal Service Assignment</label>
-    <nameField>
-        <displayFormat>PSV-{00000}</displayFormat>
-        <label>Portal Service Assignment Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Portal Service Assignments</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
-    <fields>
-        <fullName>Portal_Service__c</fullName>
-        <externalId>false</externalId>
-        <label>Portal Service</label>
-        <referenceTo>Portal_Applications__c</referenceTo>
-        <relationshipLabel>Country Visibility Restriction</relationshipLabel>
-        <relationshipName>Portal_Service_Assignments</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
-    </fields>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -199,16 +176,39 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Portal_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>Country Visibility Restriction</relationshipLabel>
+        <relationshipName>Portal_Service_Assignments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Portal Service Assignment</label>
+    <nameField>
+        <displayFormat>PSV-{00000}</displayFormat>
+        <label>Portal Service Assignment Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Portal Service Assignments</pluralLabel>
     <recordTypes>
         <fullName>Country_Assignment</fullName>
         <active>true</active>
         <description>Control portal service visibility by country</description>
         <label>Country Assignment</label>
     </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Block_IATA_EasyPay_Usage</fullName>
         <active>true</active>
-        <errorConditionFormula>CONTAINS(Portal_Service__r.Name, &#39;IATA EasyPay&#39;)</errorConditionFormula>
+        <errorConditionFormula>CONTAINS(Portal_Service__r.Name, &apos;IATA EasyPay&apos;)</errorConditionFormula>
         <errorMessage>This setting cannot be used to restrict IATA EasyPay Country Visibility. Link the IATA ISO Country to the IATA EasyPay service instead.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
