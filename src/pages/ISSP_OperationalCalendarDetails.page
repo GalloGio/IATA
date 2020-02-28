@@ -104,6 +104,44 @@
     console.log(defaultCountry);
     console.log(defaultFrequency);
     $(document).ready(function() {
+		pdfMake.fonts = {
+           'Roboto' : {
+              normal: 'Roboto-Regular.ttf',
+              bold: 'Roboto-Medium.ttf',
+              italics: 'Roboto-Italic.ttf',
+              bolditalics: 'Roboto-Italic.ttf'
+           },
+        
+           'mPlus1' : {
+              normal: 'MPLUS1p-Regular.ttf',
+              bold: 'MPLUS1p-Regular.ttf',
+              italics: 'MPLUS1p-Regular.ttf',
+              bolditalics: 'MPLUS1p-Regular.ttf'
+           },
+            
+           'NotoSansKR' : {
+              normal: 'NotoSansKR-Regular.otf',
+              bold: 'NotoSansKR-Regular.otf',
+              italics: 'NotoSansKR-Regular.otf',
+              bolditalics: 'NotoSansKR-Regular.otf'
+           },
+            
+           'Tajawal' : {
+              normal: 'Tajawal-Regular.ttf',
+              bold: 'Tajawal-Regular.ttf',
+              italics: 'Tajawal-Regular.ttf',
+              bolditalics: 'Tajawal-Regular.ttf'
+           },
+            
+           'Mitr' : {
+              normal: 'Mitr-Regular.ttf',
+              bold: 'Mitr-Regular.ttf',
+              italics: 'Mitr-Regular.ttf',
+              bolditalics: 'Mitr-Regular.ttf'
+           }
+        
+        }
+	
         initFilters();
         refreshDetails(false);
         
@@ -301,17 +339,54 @@
             }
         },
         orientation: "portrait",
+		
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
                 image: getLogo(nvl($("#typeFilter").val()))
             });
-            doc['header']=(function(page, pages) {
+            
+            var language = "{!UserLanguage}";
+            var headerFontSize = 9.5;
+            var contentEvenSize = 10;
+            var contentOddSize = 10;
+            var font = 'mPlus1';
+            
+            switch(language) {
+              case 'ko':
+                font = 'NotoSansKR';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'ar':
+                font = 'Tajawal';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'th':
+                font = 'Mitr';
+                headerFontSize = 8.5;
+            	contentEvenSize = 9;
+                contentOddSize = 9;
+                break;
+                    
+            }
+            
+            doc.defaultStyle.font = font;
+            doc.styles.tableHeader.fontSize = headerFontSize;
+            doc.styles.tableBodyEven.fontSize = contentEvenSize;
+            doc.styles.tableBodyOdd.fontSize = contentOddSize;
+
+            doc['header']=(function(page, pages) {                  
                 if (page>1) return {
                     columns: [
                         {
-                            margin: [ 80, 5],
+                            margin: [ 35, 5],
                             alignment: 'left',
                             image: getLogo(nvl($("#typeFilter").val())),
                             width: 40
@@ -319,7 +394,7 @@
                         {
                             margin: [ 0, 10],
                             alignment: 'center',
-                            fontSize: 16,
+                            fontSize: 12,
                             text: getExportFileNamePDF()
                         }
                     ]
