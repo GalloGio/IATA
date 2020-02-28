@@ -502,24 +502,25 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled (cacheable=false)
-	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave){
+	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave, String accountName){
 		InsertStationWrapper isw;
 		try{
-
 			List<Role_Address__c> stationsToInsert = new List<Role_Address__c>();
 
 			List<Airport_Detail__c> ITPStationsInDatabase = getITPStations(accountId);
+			Set<Id> airportIdsSet = new Set<Id>();
+			for(Airport_Detail__c ad: ITPStationsInDatabase){
+				airportIdsSet.add(ad.id);
+			}
 
 			for(Object rec : dataToSave){
 				Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
-				Boolean existsStation = false;
-				for(Airport_Detail__c addr: ITPStationsInDatabase){
-					if(addr.Id == auxStation.Address__c){
-						existsStation = true;
+				if(airportIdsSet.contains(auxStation.Address__c)){
 						isw = new InsertStationWrapper( 'Station has already been added.', true);
-					}
-				}
-				if(!existsStation){
+				} else{
+					String airportCode = auxStation.Name;
+					auxStation.Name = createRoleAddressName(accountName, airportCode);
+					System.debug('auxStation.Name - ' + auxStation.Name);
 					stationsToInsert.add(auxStation);
 				}
 			}
@@ -543,6 +544,20 @@ public without sharing class PortalIftpUtils {
 		}
 
 		return isw;
+	}
+
+	private static String createRoleAddressName(String accountName, String airportCode){
+		String name = '';
+		Integer strMaxSizeAccountName = 38;
+		Integer strMaxSizeAirportCode = 38;
+		if(accountName.length() < strMaxSizeAccountName){
+			strMaxSizeAccountName = accountName.length();
+		}
+		if(airportCode.length() < strMaxSizeAirportCode){
+			strMaxSizeAirportCode = airportCode.length();
+		}
+		name =  accountName.substring(0, strMaxSizeAccountName) + ' - ' + airportCode.substring(0, strMaxSizeAirportCode);
+		return name;
 	}
 
 	@AuraEnabled (cacheable=false)
@@ -608,7 +623,7 @@ public without sharing class PortalIftpUtils {
 					Airport_Detail__c addr = mAllAddr.get(code);
 					stationsToInsert.add(
 							new Role_Address__c( Address__c= addr.Id,
-													Name= ui.accountName + ' ' + addr.Description__c,
+													Name= createRoleAddressName(ui.accountName, addr.Code__c),
 													Account_Role_Service__c= ui.accountRoleSrv));
 
 					ImportResultsWrapper irw = new ImportResultsWrapper(
