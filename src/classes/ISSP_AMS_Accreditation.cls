@@ -6895,7 +6895,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if (newForm.ISSP_AMS_Portal_admin__c == null ) {
 				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Portal_Admin);
+				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Portal_Admin_PASS);
 				ApexPages.addMessage(myMsg);
 				errorFound = true;
 			}

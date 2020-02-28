@@ -654,16 +654,7 @@ public without sharing class OneId_RegistrationProcessController {
 					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
 						portalServiceNewAgency(con.Id);
 				}
-				/**
-				IFTP Accounts - IFTP Service
-				only for NEW Accounts
-				*/
 
-				if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
-
-					handleIFTPProcess(acc, con, isNewAcc);
-
-				}
 				if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
 					portalServiceNewPASSAgency(con.Id);
 					permissionNewAgency(returnedString);
@@ -1202,95 +1193,6 @@ public without sharing class OneId_RegistrationProcessController {
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
 
 		insert psa;
-	}
-
-	public static void handleIFTPProcess(Account acc, Contact con, Boolean isNewAccount){
-		String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-		String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
-
-		Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c
-								WHERE Name = 'Airline Supplier - ITP' limit 1];
-
-		Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
-								WHERE Name = 'IFTP - ITP' limit 1];
-
-		PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
-
-		List<Contact_Roles__c> contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name in ('ITP Administrator','ITP Training Coordinator') ];
-		Id idContRoleAdmin = null;
-		Id idContRoleTranCoord = null;
-
-		for(Contact_Roles__c cr : contRoles){
-			if(cr.name == 'ITP Administrator'){
-				idContRoleAdmin = cr.id;
-			}else if(cr.name == 'ITP Training Coordinator'){
-				idContRoleTranCoord = cr.id;
-			}
-		}
-
-		Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
-
-		Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
-
-		if(isNewAccount == true){
-			Account_Role__c accRole = new Account_Role__c();
-			accRole.Account__c = acc.Id;
-			accRole.Account_Roles__c = accRoles.id;
-			accRole.RecordTypeId = RECTYPE_ITP_AccRole;
-			insert accRole;
-
-			Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
-			accRoleSrv.Account_Role__c = accRole.id;
-			accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
-			insert accRoleSrv;
-
-			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			accContRoleToInsert.Service_Rendered__c = 'IFTP';
-			accContRoleToInsert.Status__c = 'Active';
-			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-			accContRoleToInsert.Account_Role__c = accRole.Id;
-			accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
-			accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
-			accContRoleToInsert.company_code__c='TC';//temporary employee code 
-			accContRoleToInsert.Details__c = '';
-			accContRoleToInsert.Contact__c = con.Id;
-			insert accContRoleToInsert;
-
-			accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-		}else{
-			Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
-
-			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			accContRoleToInsert.Service_Rendered__c = 'IFTP';
-			accContRoleToInsert.Status__c = 'Active';
-			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-			accContRoleToInsert.Account_Role__c = accRole.Id;
-			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-			accContRoleToInsert.company_code__c='TC';//temporary employee code 
-			accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
-			accContRoleToInsert.Details__c = '';
-			accContRoleToInsert.Contact__c = con.Id;
-			insert accContRoleToInsert;
-
-			accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-		}
-
-		Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
-				Portal_Application__c = pa.id,
-				Right__c = 'Access Requested',
-				Contact__c = con.Id,
-				Favourite_Service__c = true
-			);
-			insert portalApplicationRight;
-
-		if(!Test.isRunningTest()){
-			User u=[select id from user where contactId=:con.id];
-			updatePortalUseProfile(u.id,'ISS Portal (Partner)');
-			assignPermissionSet(psAbsorb.Id, u.id);
-		}
 	}
 
 	/* Manuel Conde commented this...
