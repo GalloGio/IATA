@@ -174,7 +174,7 @@ public without sharing class portalIftpHistoryManagement {
 																WHERE ITP_Name__c = :itpName
 																AND CreatedDate < :checkDate
 																AND Event_Type__c in ('1','2')
-																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
+																ORDER BY Employee_Code__c, CreatedDate];
 
 		String currentEmp = '';
 		Set<String> workingEmp = new Set<String>();
@@ -237,7 +237,7 @@ public without sharing class portalIftpHistoryManagement {
 																AND CreatedDate < :checkDate
 																AND Event_Type__c in ('5','6')
 																AND Employee_Code__c IN :workingEmp
-																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
+																ORDER BY Employee_Code__c, CreatedDate];
 
 		currentEmp = '';
 		Map<String,Set<String>> mapProfEmp = new Map<String,Set<String>>();
@@ -343,7 +343,7 @@ public without sharing class portalIftpHistoryManagement {
 
 		List<AggregateResult> lContRolePreReqCert = [SELECT Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name
-							FROM Contact_Role_Certification__c
+							FROM Contact_Role_Certification__c 
 							WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
 							AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
 							AND Certification__c IN :listPreReqCert
