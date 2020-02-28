@@ -61,7 +61,16 @@ private class ANG_StandardConversionsTest {
 			Integration_RecId__c = 'C'
 		);
 
-		insert new List<AMS_ChangeCodes__c>{cnvCode};
+		AMS_ChangeCodes__c cvfCode = new AMS_ChangeCodes__c(
+			Name = 'CVF',
+			Account_status_change__c = '9;8',
+			Change_Code__c = 'CVF',
+			Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+			Reason_Code__c = '91',
+			Integration_RecId__c = 'C'
+		);
+
+		insert new List<AMS_ChangeCodes__c>{cnvCode, cvfCode};
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
@@ -213,7 +222,6 @@ private class ANG_StandardConversionsTest {
 
 		insert rhcInfoForGE;
 
-		
 		Contact cont = new Contact(
 			AccountId = accountGE.id,
 			Firstname = 'Richard',
@@ -303,9 +311,8 @@ private class ANG_StandardConversionsTest {
 		Test.stopTest();
 	
 	}
-
 	
-	@isTest static void multicountryToStandardGeConversionTest(){
+	@isTest static void multicountryToStandardGeConversionSanityCheckTest(){
 
 		Account acct = 
 			[SELECT
@@ -418,7 +425,56 @@ private class ANG_StandardConversionsTest {
 
 	}
 
-	@isTest static void multicountryToStandardHeConversionTest(){
+	@isTest static void multicountryToStandardConversionApprovalTest(){
+
+		Account acct = 
+			[SELECT
+				Id,
+				Name,
+				IATACode__c,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				Location_Class__c,
+				Location_Type__c,
+				Top_Parent__c,
+				ANG_Accreditation_Model__c,
+				(SELECT Id FROM ChildAccounts),
+				(SELECT Id, Process__c, STEP6__c FROM OSCARs__r WHERE Process__c = :AMS_Utils.NGCONVERSIONMCTOST)
+			 FROM Account
+			 WHERE Name = 'Multicountry GE PT'
+			 LIMIT 1
+			];
+
+		Set<Id> accountsInvolvedSet = new Set<Id>{acct.Id};
+
+		for(Account childAcct : acct.ChildAccounts){
+			accountsInvolvedSet.add(childAcct.Id);
+		}
+
+		AMS_OSCAR__c oscar = acct.OSCARs__r.get(0);
+
+		AMS_OSCARTriggerHandler.isRunningAgeCalculator = true;
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		update oscar;
+
+		AMS_OSCARTriggerHandler.isRunningAgeCalculator = false;
+
+		Test.startTest();
+		
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+
+		assertChangeCodes(oscar.Id, 'CVF', accountsInvolvedSet);
+
+	}
+
+	@isTest static void multicountryToStandardHeConversionSanityCheckTest(){
 		Account acct = 
 			[SELECT
 				Id,
