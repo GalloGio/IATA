@@ -61,7 +61,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 	}
 
 	private List<Financial_Security__c> fetchFinancialSecurityGDI(Id fsId, Id accountId) {
-		String fsQuery = 'SELECT Id, Amount__c, Account__c, Reception_Case__c, Security_Type__c, Security_Status__c'
+		String fsQuery = 'SELECT Id, Amount__c, Account__c, Reception_Case__c, Security_Type__c, Security_Status__c, Expiry_Date__c, Validity_Start_Date__c'
 			+ ' FROM Financial_Security__c WHERE ';
 		String securityTypeGdi = AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI;
 		
@@ -352,8 +352,9 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		inputParams.put('SelectedCaseId',oscarCase.ParentId);
 		inputParams.put('SelectedCurrency',stagingFs.FS_Currency__c );
 		inputParams.put('FSToCloneId',currentFS.Id);
-		inputParams.put('ExpiryDate',system.today());
+		inputParams.put('ExpiryDate',stagingFs.Expiry_Date__c);
 		inputParams.put('UnlimitedValidity',false);
+		inputParams.put('ValidityStartDate', currentFS.Validity_Start_Date__c);
 
 		Process.PluginRequest request = new Process.PluginRequest(inputParams);
 		Process.PluginResult result = plugin.invoke(request);
