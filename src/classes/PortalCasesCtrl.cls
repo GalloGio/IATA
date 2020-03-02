@@ -699,9 +699,10 @@ public with sharing class PortalCasesCtrl {
 						Remittance_Date__c, CurrencyIsoCode, Update_AIMS_IRR__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c,ClosedDate,
 						CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
 						Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c,
-						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
+						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName
+						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c
 						FROM Case 
 						WHERE Id = :caseId];
 
