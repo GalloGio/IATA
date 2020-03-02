@@ -654,6 +654,11 @@ public without sharing class OneId_RegistrationProcessController {
 					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
 						portalServiceNewAgency(con.Id);
 				}
+
+				if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
+					portalServiceNewPASSAgency(con.Id);
+					permissionNewAgency(returnedString);
+				}
 			}
 
 			// We need to create a Case
@@ -1039,7 +1044,20 @@ public without sharing class OneId_RegistrationProcessController {
 
 		}
 	}
+	public static void portalServiceNewPASSAgency(String conId){
+		if (conId != null && conId != '') {
+			List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_PASS_SERVICE_NAME];
 
+			if(!pApplication.isEmpty()){
+				Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+				appRight.Contact__c = conId;
+				appRight.Portal_Application__c = pApplication[0].Id;
+				appRight.Right__c = 'Access Granted';
+				insert appRight;
+			}
+
+		}
+	}
 	@AuraEnabled
 	public static void checkConAvailable (Contact con){
 

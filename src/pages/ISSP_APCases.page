@@ -7,10 +7,10 @@
            applyHtmlTag="false">
 <html>
   <c:ISSP_Header />
- 	<body>
+    <body>
 
- 	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
- 	<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
+    <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
 
   <style>
     .iatainputbox {
@@ -67,56 +67,56 @@
     var optInOut;
 
     function optInOut() {
-      	$('#optInOut').modal('toggle');
+        $('#optInOut').modal('toggle');
     }
 
     function toggleCountryLists() {
-    	optinOut = $("[Id$='optInOutSelected']").val();
-    	$('.selectpicker').selectpicker('render');
+        optinOut = $("[Id$='optInOutSelected']").val();
+        $('.selectpicker').selectpicker('render');
       var daysIn = "{!airlineOptInDays}";
       var daysOut = "{!airlineOptOutDays}";
-    	    	
-    	if (optinOut == 'IN') {
-    			var countriesIn = "{!hasCountriesIn}";
-    			document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
-    					if (countriesIn === 'true') {
-    							document.querySelector("[Id$='countryDatePanel']").style.display = '';
-          				document.querySelector("[Id$='coutriesIn']").style.display = '';
-          				document.querySelector("[Id$='coutriesInLabel']").style.display = '';
-          				document.querySelector("[Id$='coutriesOut']").style.display = 'none';
-          				document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
+                
+        if (optinOut == 'IN') {
+                var countriesIn = "{!hasCountriesIn}";
+                document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
+                        if (countriesIn === 'true') {
+                                document.querySelector("[Id$='countryDatePanel']").style.display = '';
+                        document.querySelector("[Id$='coutriesIn']").style.display = '';
+                        document.querySelector("[Id$='coutriesInLabel']").style.display = '';
+                        document.querySelector("[Id$='coutriesOut']").style.display = 'none';
+                        document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
                   document.querySelector("[Id$='dateInfo']").style.display = 'none';
-          				$("#datepicker").datepicker("destroy");
-          				$("#datepicker").datepicker({minDate: daysIn});
-          				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
-    					} else {
-    							document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-    							document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
-    							document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
-    					}  
+                        $("#datepicker").datepicker("destroy");
+                        $("#datepicker").datepicker({minDate: daysIn});
+                        document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+                        } else {
+                                document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+                                document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
+                                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+                        }  
       } else if (optinOut == 'OUT') {
-      		var countriesOut = "{!hasCountriesOut}";
-      		document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
-      				if (countriesOut === 'true') {
-          				document.querySelector("[Id$='countryDatePanel']").style.display = '';
-          				document.querySelector("[Id$='coutriesIn']").style.display = 'none';
-          				document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
-          				document.querySelector("[Id$='coutriesOut']").style.display = '';
-          				document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
+            var countriesOut = "{!hasCountriesOut}";
+            document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
+                    if (countriesOut === 'true') {
+                        document.querySelector("[Id$='countryDatePanel']").style.display = '';
+                        document.querySelector("[Id$='coutriesIn']").style.display = 'none';
+                        document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
+                        document.querySelector("[Id$='coutriesOut']").style.display = '';
+                        document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
                   document.querySelector("[Id$='dateInfo']").style.display = '';
-          				$("#datepicker").datepicker("destroy");
-          				$("#datepicker").datepicker({minDate: daysOut});
-          				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
-          		} else {
-          				document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-    							document.querySelector("[Id$='noCountriesOutMsg']").style.display = '';
-    							document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
-          		}
-      		} else {
-      				document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
-      				document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
-          		document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-          		document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+                        $("#datepicker").datepicker("destroy");
+                        $("#datepicker").datepicker({minDate: daysOut});
+                        document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+                } else {
+                        document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+                                document.querySelector("[Id$='noCountriesOutMsg']").style.display = '';
+                                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+                }
+            } else {
+                    document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
+                    document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
+                document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
       }
 
       $("#datepicker").datepicker("option", $.datepicker.regional[ 'en' ]);
@@ -124,45 +124,45 @@
     }
 
     function submitOptInOut() {
-      	var countries;
+        var countries;
 
         var effectiveDate = $('#datepicker').val();
         
-      	if (optinOut == 'IN') {
-      			countries = $("[id$='countriesInList']").val();
-      	} else {
-      			countries = $("[id$='countriesOutList']").val();
-      	}
+        if (optinOut == 'IN') {
+                countries = $("[id$='countriesInList']").val();
+        } else {
+                countries = $("[id$='countriesOutList']").val();
+        }
 
-      	var ok = 1;
+        var ok = 1;
 
-      	if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
-        		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
-        		ok = 0;
+        if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
+                document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
+                ok = 0;
         } else if (!effectiveDate.match(/(\d{4})-(\d{2})-(\d{2})/)) {
             document.querySelector("[Id$='dateFormatErrorMsg']").style.display = '';
             ok = 0;
-      	} else {
-        		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
+        } else {
+                document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
             document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
             document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
-      	}
+        }
 
-      	if(countries == undefined || countries == null || countries == "") {
-        		document.querySelector("[Id$='countriesErrorMsg']").style.display = '';
-        		ok = 0;
-      	} else {
-        		document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
-      	}
+        if(countries == undefined || countries == null || countries == "") {
+                document.querySelector("[Id$='countriesErrorMsg']").style.display = '';
+                ok = 0;
+        } else {
+                document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
+        }
 
-      	if(ok == 1) {
-        		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
+        if(ok == 1) {
+                submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
             document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
             document.querySelector("[Id$='cancelBtn']").disabled = true;
             document.querySelector("[Id$='modalClose']").style.display = 'none';
             document.querySelector("[Id$='load_scrl']").style.display = '';
             setTimeout(loadingCaseCreation, 15000);
-      	}
+        }
     }
 
     function loadingCaseCreation() {
@@ -182,7 +182,7 @@
 
   </script>
 
-	
+    
     <c:ISSP_CustomNavigation />
  <div class="container" style="min-height: 500px;">
       <div class="panel-primary">
@@ -191,7 +191,8 @@
         </div>
         <div class="panel-body">
     <p/>
-      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} was already created for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
+      <apex:outputText rendered="{!dupeDraftExists && $CurrentPage.parameters.cdupetype!='PASS'}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
+      <apex:outputText rendered="{!dupeDraftExists && $CurrentPage.parameters.cdupetype=='PASS'}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} is already in progress for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
     <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
     <div style="margin-bottom:6px;padding-left:24px">
@@ -213,7 +214,10 @@
         <div class="panel-body">
           <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
-              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2" rendered="{!MyIFAPCases.Reason1__c!='PASS Participation' && MyIFAPCases.Reason1__c!='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&airline=PASS&step=2" rendered="{!MyIFAPCases.Reason1__c=='PASS Participation'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess4?caseId={!MyIFAPCases.Id}&airline=PASS&managePASS=true&step=4" rendered="{!MyIFAPCases.Reason1__c=='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+
             </apex:column>
             <apex:column value="{!MyIFAPCases.Account_Concerned__r.Site}"/>
             <apex:column value="{!MyIFAPCases.Subject}"/>
@@ -242,7 +246,7 @@
         </div>
       </div>
     </apex:pageBlock>
-	</div>
+    </div>
       </div>
     </div>
     <c:ISSP_CustomFooter />
@@ -295,9 +299,9 @@
                   <apex:outputLabel value="My Airline wishes to:"/>
                 </div>
                 <div>
-                	<apex:selectList styleClass="iatainputbox, selectpicker" id="optInOutSelected" onchange="toggleCountryLists(); return false;">
-                	 	<apex:selectOptions id="optInOutOptions" value="{!optInOutOptions}"/>
-            			</apex:selectList>
+                    <apex:selectList styleClass="iatainputbox, selectpicker" id="optInOutSelected" onchange="toggleCountryLists(); return false;">
+                        <apex:selectOptions id="optInOutOptions" value="{!optInOutOptions}"/>
+                        </apex:selectList>
                 </div>
               </div>
             </div>
@@ -308,30 +312,30 @@
                 <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
-                  	<div>
-                    	<apex:outputPanel id="coutriesInLabel" style="display: none">
-                      	<apex:outputLabel value="Countries to Opt-In: "/>
-                    	</apex:outputPanel>
-                    	<apex:outputPanel id="coutriesOutLabel" style="display: none">
-                      	<apex:outputLabel value="Countries to Opt-Out: "/>
-                    	</apex:outputPanel>
-                  	</div>
                     <div>
-                    	<apex:outputPanel id="coutriesIn" style="display: none">
-                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
+                        <apex:outputPanel id="coutriesInLabel" style="display: none">
+                        <apex:outputLabel value="Countries to Opt-In: "/>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="coutriesOutLabel" style="display: none">
+                        <apex:outputLabel value="Countries to Opt-Out: "/>
+                        </apex:outputPanel>
+                    </div>
+                    <div>
+                        <apex:outputPanel id="coutriesIn" style="display: none">
+                        <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
                         title="Countries to Opt-In: ">
-                        	<apex:selectOptions value="{!countriesIn}" />
-                      	</apex:selectList>
-                    	</apex:outputPanel>
-											
-											<apex:outputPanel id="coutriesOut" style="display: none">
-                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
+                            <apex:selectOptions value="{!countriesIn}" />
+                        </apex:selectList>
+                        </apex:outputPanel>
+                                            
+                                            <apex:outputPanel id="coutriesOut" style="display: none">
+                        <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
                         title="Countries to Opt-Out: ">
-													<apex:selectOptions value="{!countriesOut}" />
-                      	</apex:selectList>
-                    	</apex:outputPanel>
+                                                    <apex:selectOptions value="{!countriesOut}" />
+                        </apex:selectList>
+                        </apex:outputPanel>
                     </div>
                   </div>
                 </div>

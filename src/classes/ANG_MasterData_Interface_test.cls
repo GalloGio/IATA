@@ -345,5 +345,13 @@ private class ANG_MasterData_Interface_test {
 			Test.stopTest();
 
 		}
+		@isTest
+		static void ANG_MasterData_Interface_PASS_MasterDataPayloadConstructor() {
+				Account a = new Account(Name = 'a', Location_Class__c = 'L');
+
+				Test.startTest();
+						ANG_MasterData_Interface.MasterDataPayload mdp = new ANG_MasterData_Interface.MasterDataPayload(a, false, '123');
+				Test.stopTest();
+		}
 
 }

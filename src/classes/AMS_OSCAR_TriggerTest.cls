@@ -683,7 +683,7 @@
 
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
-		Account a = [SELECT id,Status__c, CNS_Agency__c from Account where Name = 'Test1 Agency' LIMIT 1];
+		Account a = [SELECT id,Status__c, CNS_Agency__c, Sector__c, Location_Class__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
 		ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 

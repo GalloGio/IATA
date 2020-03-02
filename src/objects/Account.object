@@ -4535,6 +4535,20 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Airline_PASS_Participations__c</fullName>
+        <description>Number of active PASS Services Rendered where the customer is either the airline HQ or one of its branches.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of active PASS Services Rendered where the customer is either the airline HQ or one of its branches.</inlineHelpText>
+        <label>Total PASS Participations</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_Prefix__c</fullName>
         <externalId>false</externalId>
         <label>Airline Prefix</label>
@@ -6974,6 +6988,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Payment Provider</label>
                 </value>
                 <value>
+                    <fullName>Postal Operator</fullName>
+                    <default>false</default>
+                    <label>Postal Operator</label>
+                </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
+                </value>
+                <value>
                     <fullName>Processor</fullName>
                     <default>false</default>
                     <label>Processor</label>
@@ -7309,6 +7333,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Postal Service</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Training</controllingFieldValue>
@@ -13863,6 +13891,18 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IMPC_Code__c</fullName>
+        <description>Field copied from the PASS Online Accreditation form.</description>
+        <externalId>false</externalId>
+        <label>IMPC Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ISS_SIS_TC_Accepted_Date__c</fullName>
         <externalId>false</externalId>
         <label>SIS TC Accepted Date</label>
@@ -14624,6 +14664,7 @@ D-Domestic
 E-External Registrars
 G-General Sales Agents
 K-CATO
+L-PASS
 M-Members &amp; Airlines Sales Offices
 N-NISI
 O-SATO
@@ -14675,6 +14716,11 @@ J-Joint Vent</inlineHelpText>
                     <fullName>K</fullName>
                     <default>false</default>
                     <label>K</label>
+                </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>L</label>
                 </value>
                 <value>
                     <fullName>M</fullName>
@@ -15761,6 +15807,18 @@ J-Joint Vent</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>PASS_Participant_formula__c</fullName>
+        <description>Checkbox indicating if there are any PASS Participations related to the Account</description>
+        <externalId>false</externalId>
+        <formula>IF( Airline_PASS_Participations__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Airline participating in this PASS</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PAX_Cargo__c</fullName>
         <externalId>false</externalId>
         <label>Pax / Cargo</label>
@@ -16791,6 +16849,11 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <fullName>Non-Airline Transportation</fullName>
                     <default>false</default>
                     <label>Non-Airline Transportation</label>
+                </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
                 </value>
                 <value>
                     <fullName>Recreational</fullName>
@@ -50338,6 +50401,14 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS Agent</fullName>
                 <default>false</default>
             </values>
@@ -53145,6 +53216,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -56194,6 +56269,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63386,6 +63465,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Vendor</fullName>
                 <default>false</default>
             </values>
@@ -69537,6 +69620,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -91143,6 +91230,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Processor</fullName>
                 <default>false</default>
             </values>
@@ -106517,6 +106608,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Processor</fullName>
                 <default>false</default>
             </values>
@@ -113108,6 +113203,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
