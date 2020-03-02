@@ -72,10 +72,10 @@
 							</div>
 							<!--  Currency Rows -->
 							<apex:outputPanel rendered="{! selectedAdhocCycle != ''}">
+
 								<apex:outputPanel layout="block" styleclass="expand" style="padding-top: 0px;" rendered="{!AdhocCurrencyRows.size > 0}">
-									<apex:commandLink style="color: #0075bb; white-space:nowrap;" action="{! expandAllCycleCurrencyTable}" value="{! $Label.ICCS_Expand_All}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
-									<div class="v-line"></div>
-									<apex:commandLink style="color: #0075bb; white-space:nowrap;" action="{! collapseAllCycleCurrencyTable}" value="{! $Label.ICCS_Collapse_All}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
+									<apex:commandButton action="{! expandAllCycleCurrencyTable }" value="{! $Label.ICCS_Expand_All }" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
+									<apex:commandButton action="{! collapseAllCycleCurrencyTable }" value="{! $Label.ICCS_Collapse_All }" style="margin-left: 10px;" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
 								</apex:outputPanel>
 								<apex:outputPanel id="cycleSiTable">
 									<apex:repeat value="{! AdHocCurrencyRows}" var="currencyRow">
@@ -285,14 +285,17 @@
 								</apex:outputPanel>
 
 								<div class="expand">
-									<apex:outputPanel style="float:left;" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
-										<apex:commandButton action="{! massAdHocEditParticipation }" value="{! $Label.ICCS_Multi_Countries_Adhoc_SI }" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
-									</apex:outputPanel>
-									<apex:outputPanel style="float:left; margin-left: 1em;" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
-										<apex:commandButton action="{! massCurrencyEditParticipation }" value="{! $Label.ICCS_Adhoc_SI_by_Currency }" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
-									</apex:outputPanel>
 									<apex:commandLink id="expandCycleParticipation" style="color: #0075bb; white-space:nowrap;" action="{! expandCollapseCycleCurrencyTable}" value="{! IF(isCycleCurrencyTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isCycleCurrencyTableExpandable}" rerender="cycleSiTable,expandCycleParticipation" status="processActStatusId"/>
+									<div class="btn-2">
+										<apex:outputPanel style="float:left;" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
+											<apex:commandButton action="{! massAdHocEditParticipation }" value="{! $Label.ICCS_Multi_Countries_Adhoc_SI }" styleclass="apbutton" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
+										</apex:outputPanel>
+										<apex:outputPanel style="float:left;" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
+											<apex:commandButton action="{! massCurrencyEditParticipation }" value="{! $Label.ICCS_Adhoc_SI_by_Currency }" styleclass="apbutton" style="white-space:nowrap;" rerender="pageMainPanel" status="processActStatusId"/>
+										</apex:outputPanel>
+									</div>
 								</div>
+
 								<div class="divider-cycle-2"/>
 								<apex:outputPanel layout="block" styleclass="pddg-2" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
 									<apex:outputText value="{! $Label.ICCS_Adhoc_Button_Help_Text}" escape="false"/>
