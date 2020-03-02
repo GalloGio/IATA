@@ -736,7 +736,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Case transferCase = new Case();
 			transferCase.recordtypeID = ProcessRTId;
 			transferCase.AccountId = ui.accountId;
-			transferCase.OwnerId = ownerId;
 			transferCase.Subject = 'Request Employee Records Transfer';
 			transferCase.Description = description;
 			transferCase.ContactId = ui.contactId;
