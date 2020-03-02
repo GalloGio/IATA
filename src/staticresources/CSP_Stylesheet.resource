@@ -1319,9 +1319,29 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
-/***** HP Recent Casses Table ******/
+/***** HP Recent Cases Table ******/
 .hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
     border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
+.hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 1500px) {
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: hidden;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .cardBodyContentSmall {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    overflow-x: auto;
+  }
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: auto;
+  }
 }
 
 /*       New Documents Button Overrides*/
