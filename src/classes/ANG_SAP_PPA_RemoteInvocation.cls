@@ -14,9 +14,8 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
-		System.debug('[ANG_SAP_PPA_RemoteInvocation] Start doSanityCheck ' );
-
-		System.debug('[ANG_SAP_PPA_RemoteInvocation] remoteInvocationsIdToProcess: ' + remoteInvocationsIdToProcess );
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doSanityCheck] Start ');
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doSanityCheck] remoteInvocationsIdToProcess: ' + remoteInvocationsIdToProcess);
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
 
@@ -29,16 +28,15 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 		//No SPA PPA Remote Invocations to process
 		if(mapRemoteInvocations.isEmpty()) return;
 
-		System.debug('[ANG_SAP_PPA_RemoteInvocation] Map at start: ' + remoteInvocationsWithoutArtifcts);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doSanityCheck] Map at start: ' + remoteInvocationsWithoutArtifcts);
 
 		for(Remote_Invocation_Artefact__c artifact : [SELECT ID, Remote_Invocation__c, Internal_ID__c, External_Id__c, Payment_type__c
 													  FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :mapRemoteInvocations.keySet()]){
 			
-			System.debug('[ANG_SAP_PPA_RemoteInvocation] current Remote_Invocation_Artefact__c: ' + artifact);
-
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doSanityCheck] current Remote_Invocation_Artefact__c: ' + artifact);
 			//remove from the list the parent of the artifact
 			remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__c);
-			system.debug('[ANG_SAP_PPA_RemoteInvocation] Removing from map: ' + artifact.Remote_Invocation__c);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doSanityCheck] Removing from map: ' + artifact.Remote_Invocation__c);
 
 			Remote_Invocation__c ri = mapRemoteInvocations.get(artifact.Remote_Invocation__c);
 
@@ -51,16 +49,16 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 				}else{
 					ri.Status_Detail__c = 'Remote Invocation Artefact IATA code ('+ ri.Internal_ID__c+') must have a Payment Type';
 					artifact.Status_Detail__c = 'Remote Invocation Artefact IATA code ('+ ri.Internal_ID__c+') must have a Payment Type';
-					ri.Status__c = 'Failed';
-					artifact.Request_Result__c = 'Failed';
+					ri.Status__c = AMS_Utils.FAILED;
+					artifact.Request_Result__c = AMS_Utils.FAILED;
 					rmtInvocationArtListToUpdate.add(artifact);
 				}
 			}
 			else{
 				ri.Status_Detail__c = 'Remote Invocation IATA code ('+ ri.Internal_ID__c+') doesn\'t match the Artifact IATA code ('+ artifact.Internal_ID__c+')';
 				artifact.Status_Detail__c = 'Remote Invocation IATA code ('+ ri.Internal_ID__c+') doesn\'t match the Artifact IATA code ('+ artifact.Internal_ID__c+')';
-				ri.Status__c = 'Failed';
-				artifact.Request_Result__c = 'Failed';
+				ri.Status__c = AMS_Utils.FAILED;
+				artifact.Request_Result__c = AMS_Utils.FAILED;
 				rmtInvocationArtListToUpdate.add(artifact);
 			}
 		}
@@ -69,7 +67,7 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 		for(String remoteInvocationID : remoteInvocationsWithoutArtifcts){
 			Remote_Invocation__c ri = mapRemoteInvocations.get(remoteInvocationID);
 			ri.Status_Detail__c = 'Remote Invocation IATA code (' + ri.Internal_ID__c + ') doesn\'t have a artifact.';
-			ri.Status__c = 'Failed';
+			ri.Status__c = AMS_Utils.FAILED;
 		}
 
 		//Update Remote Invocation Artefact Status
@@ -79,21 +77,23 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
-		System.debug('[ANG_SAP_PPA_RemoteInvocation] Start doProcess mapRemoteInvocationArtifacts: ' + mapRemoteInvocationArtifacts);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doProcess] mapRemoteInvocationArtifacts: ' + mapRemoteInvocationArtifacts);
  
 		//No SPA PPA Remote Invocations to process
 		if(remoteInvocationsIdToProcess.isEmpty()) return;
 
 		if(!mapRemoteInvocationArtifacts.isEmpty()){
 
-			List<AMS_OSCAR__c> oscarList = [SELECT ID, Name, Invoice_number__c, Endorsement_Requested__c, Endorsement_requested_date__c, 
-											STEP47__c, STEP9__c, STEP49__c, Oscar_Communication_Case_Id__c
-											FROM AMS_OSCAR__c WHERE Oscar_Communication_Case_Id__c IN :mapRemoteInvocationArtifacts.keySet()]; 
+			List<Case> caseLst = 
+				[SELECT Id, OSCAR__r.Name, OSCAR__r.Invoice_number__c, OSCAR__r.Endorsement_Requested__c, 
+					OSCAR__r.Endorsement_requested_date__c, OSCAR__r.STEP47__c, OSCAR__r.STEP9__c, OSCAR__r.STEP49__c 
+				 FROM Case WHERE Id IN :mapRemoteInvocationArtifacts.keySet()];
 
 			Map<ID, AMS_OSCAR__c> mapCaseIdWithRemoteInternalID = new Map<ID, AMS_OSCAR__c>();
 
-			for(AMS_OSCAR__c oscar : oscarList){
-				mapCaseIdWithRemoteInternalID.put(oscar.Oscar_Communication_Case_Id__c, oscar);
+			for(Case cse : caseLst){
+				AMS_OSCAR__c oscar = (AMS_OSCAR__c) cse.getSObject('OSCAR__r');
+				mapCaseIdWithRemoteInternalID.put(cse.Id, oscar);
 			}
 							
 			Remote_Invocation__c ri;
@@ -107,34 +107,31 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 				ID idToCompare = remoteInovArt.Internal_ID__c;
 				AMS_OSCAR__c osc = mapCaseIdWithRemoteInternalID.get(idToCompare);
 
-				if(osc != null){
-
-					if(remoteInovArt.Payment_type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA && String.isBlank(mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c)){
-						ri.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
-						ri.Status__c = 'Failed';
-						remoteInovArt.Request_Result__c = 'Failed';
-						remoteInovArt.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
-						rmtInvocationArtListToUpdate.add(remoteInovArt);
-						break;
-					}
-
-					osc.Payment_Type__c = remoteInovArt.Payment_type__c;
-					osc.Billing_Document_Number__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c;
-
-					//NEWGEN-5450-BugFix - Fill the Object_Id_Created__c with the value of the Internal_ID__c
-					remoteInovArt.Object_Id_Created__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).Internal_ID__c;
-
-					ri.Status__c = 'Completed';
-					ri.Status_Detail__c = '';
-					remoteInovArt.Request_Result__c = 'Completed';
-					remoteInovArt.Status_Detail__c = '';
+				if(remoteInovArt.Payment_type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA && String.isBlank(remoteInovArt.External_Id__c)){
+					ri.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
+					ri.Status__c = AMS_Utils.FAILED;
+					remoteInovArt.Request_Result__c = AMS_Utils.FAILED;
+					remoteInovArt.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
 					rmtInvocationArtListToUpdate.add(remoteInovArt);
-					oscarsToUpdate.add(osc);
+					break;
 				}
+
+				osc.Payment_Type__c = remoteInovArt.Payment_type__c;
+				osc.Billing_Document_Number__c = remoteInovArt.External_Id__c;
+
+				//NEWGEN-5450-BugFix - Fill the Object_Id_Created__c with the value of the Internal_ID__c
+				remoteInovArt.Object_Id_Created__c = remoteInovArt.Internal_ID__c;
+
+				ri.Status__c = AMS_Utils.COMPLETED;
+				ri.Status_Detail__c = '';
+				remoteInovArt.Request_Result__c = AMS_Utils.COMPLETED;
+				remoteInovArt.Status_Detail__c = '';
+				rmtInvocationArtListToUpdate.add(remoteInovArt);
+				oscarsToUpdate.add(osc);
+
 			}
 
-
-			System.debug('[ANG_SAP_PPA_RemoteInvocation] - doProcess - Before Update OscarList: ' + oscarList);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doProcess] Before Update oscarsToUpdate: ' + oscarsToUpdate);
 
 			//Update Oscar list
 			if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
