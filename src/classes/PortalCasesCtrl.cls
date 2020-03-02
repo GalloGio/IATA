@@ -677,25 +677,25 @@ public with sharing class PortalCasesCtrl {
 	}
 
 	/**
-	Returns true if the input case has an specific RecordType
-	and is closed for more than 2 weeks
-	**/
+	 * Returns true if the input case has an specific RecordType
+	 * and is closed for more than 2 weeks
+	 **/
 	
 	@AuraEnabled
 	public static Boolean getHideForClosedCases(String caseId) {
-		set<String> validRecordtypes = new set<String>{'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 
-		'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs'};
+		set<String> validRecordtypes = new set<String> {
+			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
-
-		List<Case> cases = 
-		[SELECT Id,RecordType.Id 
-		FROM Case 
-		WHERE 
-		RecordType.Id = :newCase.RecordType.Id
-		AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
+		List<Case> cases = [SELECT Id, RecordType.Id
+							FROM Case
+							WHERE RecordType.Id = :newCase.RecordType.Id
+								AND (RecordType.DeveloperName IN :validRecordtypes)];
+		
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO);
 	}
 
 	private Static boolean isMSOcase(Case newCase){
