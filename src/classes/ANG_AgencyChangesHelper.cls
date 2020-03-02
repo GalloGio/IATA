@@ -295,7 +295,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Boolean isMulticountry = 
 				((oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
 				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) && 
-				oscar.Change_of_Hierarchy_Scenario__c != AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD);
+				!oscar.Change_of_Hierarchy_Scenario__c.contains(AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD));
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);
