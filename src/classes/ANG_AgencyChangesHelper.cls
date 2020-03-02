@@ -2,7 +2,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	@TestVisible
 	private static final String CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION = 'Cannot pass sanity check until all the related BSPs OSCAR cases have passed sanity checks.';
-
+	
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 	public static AChangeStructure changesContainer = null;
@@ -644,23 +644,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
 
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Sanity check step passed');
-
-			//If we are processing the OSCAR associated with 
-			//the agency that was initially the GE we need to check 
-			//if all the other OSCARs for each HE already passed the sanity check
-			if(oscar.Parent_OSCAR__c == null){
-	
-				AMS_OSCAR__c queriedOscar = AMS_OSCARTriggerHandler.queriedOscarsMap.get(oscar.Id);
-				System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Retrieved Child OSCARs: ' + queriedOscar);
-
-				if(!queriedOscar.Child_OSCARs__r.isEmpty()){
-					for(AMS_OSCAR__c childOscar : queriedOscar.Child_OSCARs__r){
-						if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && childOscar.STEP6__c != AMS_Utils.PASSED){
-							oscar.addError(CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION);
-							return;
-						}
-					}
-				}
+			
+			if(!canProceedWithConversionStep(oscar, 'STEP6__c', new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
+				return;
 			}
 
 			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
@@ -698,27 +684,41 @@ public with sharing class ANG_AgencyChangesHelper {
 				
 				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
 				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
-
 					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
-
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountHE.Id);
 					}
-
 				}
 
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != null){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
+		} //Approval step passed 
+		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Approval step passed');
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+				Agency_Authorization__c cashMethodFoP = getAccountCashFoP(acct);
+				if(cashMethodFoP != null){
+					cashMethodFoP.Status__c = AMS_Utils.ACTIVE;
+					changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoP);
+				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+			}
+
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.APPROVAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 
@@ -851,11 +851,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 				}
 
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != null){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}
 
@@ -874,9 +870,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 			);
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
@@ -908,17 +902,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				if (acct.Id != accountGE.Id && geCashMethodFoP != null)
 					updateAccountCashFoP(acct, geCashMethodFoP);
 
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != null){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.APPROVAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 		else if(oscar.STEP4__c == AMS_Utils.PASSED && oldOSCAR.STEP4__c != AMS_Utils.PASSED){
@@ -929,18 +917,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
 
 			for(Account acct : changesContainer.accountsMap.values()){
-
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != null){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
-
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 			}
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 
@@ -2560,4 +2540,41 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 		}
 	}
+
+	private static Boolean canProceedWithConversionStep(AMS_OSCAR__c oscar, String stepToCheck, Set<String> stepValues, String errorMessage){
+
+		//If we are processing the OSCAR associated with 
+		//the agency that was initially the GE we need to check 
+		//if all the other OSCARs for each HE already passed the given step
+		if(oscar.Parent_OSCAR__c == null){
+
+			AMS_OSCAR__c queriedOscar = AMS_OSCARTriggerHandler.queriedOscarsMap.get(oscar.Id);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Retrieved Child OSCARs: ' + queriedOscar);
+
+			if(!queriedOscar.Child_OSCARs__r.isEmpty()){
+				for(AMS_OSCAR__c childOscar : queriedOscar.Child_OSCARs__r){
+					if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && stepValues.contains((String) childOscar.get(stepToCheck))){
+						oscar.addError(errorMessage);
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+
+	}
+
+	private static void pushAccountCurrentChangeCodes(Account acct, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode){
+		Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+		if(activeChgCode != null){
+			accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+		}
+	}
+
+	private static ANG_AgencyChangesHelper.AChangeStructure processChangeCodeGeneration(AMS_OSCAR__c oscar, String accreditationModel, String currentStep, Set<Id> allAccountsInvolvedSet, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode){
+		ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, accreditationModel);
+		return generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, currentStep, allAccountsInvolvedSet, changesContainer);
+	}
+
 }
