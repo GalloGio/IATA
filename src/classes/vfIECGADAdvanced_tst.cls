@@ -115,12 +115,15 @@ private class vfIECGADAdvanced_tst {
 		//Set current page to GAD
 		PageReference pgRef = Page.IECGADAdvanced;
 		Test.setCurrentPage(pgRef);
-
+		
+        
+       
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
 		System.runAs(usr) {
+             Test.startTest();
 			Init();
 
-			Test.startTest();
+			
 
 			//Instantiate Base Controller
 			IECPageController baseCont = new IECPageController();
@@ -232,9 +235,11 @@ private class vfIECGADAdvanced_tst {
 			// Misc Coverage
 			pgCont.OnChangeCountry();
 			pgCont.onClickOKError();
+            
 
 		}
 		System.debug('Unit Test: Finish: TestGADAdvanced');
+        Test.stopTest();
 	}
 
 	static testMethod void TestGADAdvanced_Errors() {
