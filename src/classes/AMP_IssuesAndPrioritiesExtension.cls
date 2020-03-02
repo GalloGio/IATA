@@ -33,7 +33,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:ApexPages.currentPage().getParameters().get('accountId') LIMIT 1];
 			if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
 		}else{
-			this.myAccount = acc;
+			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =: acc.Id LIMIT 1];
 		}
 		accountId =  this.myAccount.id;
 		accountName =  this.myAccount.Name;
