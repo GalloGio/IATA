@@ -127,7 +127,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 		Set<Id> oscarIds = new Set<Id>();
 		List<Case> oscarCases = new List<Case>();
-		List<AMS_OSCAR_reset_dossier_reception__mdt> resetDossierReceptionDateMDT = [SELECT DeveloperName FROM AMS_OSCAR_reset_dossier_reception__mdt];
+		List<AMS_OSCAR_reset_dossier_reception__mdt> resetDossierReceptionDateMDT = [SELECT Label, DeveloperName FROM AMS_OSCAR_reset_dossier_reception__mdt];
 
 		 for(Case c : triggerNew){
 			if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) {
@@ -185,7 +185,7 @@ public class AMS_OscarCaseTriggerHelper {
 			boolean statusExists = false;
 			if(isUpdate){
 				for(AMS_OSCAR_reset_dossier_reception__mdt dossierMDT : resetDossierReceptionDateMDT){
-					if(dossierMDT.DeveloperName == oldMap.get(c.Id).Status){
+					if(dossierMDT.Label == oldMap.get(c.Id).Status){
 						statusExists = true;
 					}
 				}
