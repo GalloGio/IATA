@@ -750,6 +750,15 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Savepoint sp = Database.setSavepoint();
 			try {
 				insert transferCase;
+				
+				transferCase.OwnerId = ownerId;
+				
+				Database.DMLOptions dlo=new Database.DMLOptions();
+				dlo.EmailHeader.triggerUserEmail=true;
+				//To assign the case to the correct queue and send the email notification
+				
+				Database.update(transferCase,dlo);				
+				
 				resultWrapper = new EmployeeTransferRequestResultWrapper(employeeToTransferData.firstName + employeeToTransferData.lastName,
 																		'Transfer requested successfully. ',
 																		true);
