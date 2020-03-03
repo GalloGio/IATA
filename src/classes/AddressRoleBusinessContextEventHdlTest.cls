@@ -65,7 +65,10 @@ private class AddressRoleBusinessContextEventHdlTest {
 	static void testCreateIntegrationLogWhenEventIsPublishedInTheFlow() {
 		User admin = [SELECT Id FROM User WHERE Username LIKE 'test-%@weitclick.de.test' LIMIT 1];
 		System.runAs(admin){
-			Address_Role_Business_Context__c arbc = [SELECT Id FROM Address_Role_Business_Context__c LIMIT 1];
+			Address_Role_Business_Context__c arbc = [SELECT Id, Account_Activation_Context_Status__c, Address_Role__r.Role_Type__c FROM Address_Role_Business_Context__c LIMIT 1];
+			CustomerSyncUtils.createIntegrationLogs(new Map<Id, SObject>{
+				arbc.id => arbc
+			});
 			AddressRoleBusinessContext__e event = new AddressRoleBusinessContext__e(RecordType__c = 'MASTER', RecordId__c = arbc.Id, EventType__c = 'Insert');
 
 			Test.startTest();
@@ -73,7 +76,7 @@ private class AddressRoleBusinessContextEventHdlTest {
 			Test.stopTest();
 
 			System.assertEquals(true, result.isSuccess());
-			List<Integration_Log__c> integrationLogs = [SELECT Id, External_Transaction_Id__c FROM Integration_Log__c WHERE Record_Id__c = :arbc.Id];
+			List<Integration_Log__c> integrationLogs = [SELECT Id, External_Transaction_Id__c FROM Integration_Log__c WHERE RecordId__c = :arbc.Id];
 			System.assertEquals(1, integrationLogs.size());
 			System.assertNotEquals(null, integrationLogs[0].External_Transaction_Id__c);
 		}

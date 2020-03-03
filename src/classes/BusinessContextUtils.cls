@@ -60,7 +60,7 @@ public inherited sharing class BusinessContextUtils {
 		Set<String> availableSalesAreas = getAvailableSalesAreas(availableSalesAreaByBusinessContext); 										// {ACLI, E&F India, E&F Standard}
 		Set<String> availableBusinessContexts = availableSalesAreaByBusinessContext.keySet();
 		removeBusinessContextAlreadyUsedInFlow(accountId, availableBusinessContexts, availableSalesAreaByBusinessContext);
-		removeSalesAreasAlreadyCompleted(accountId, availableBusinessContexts, availableSalesAreas, availableSalesAreaByBusinessContext);
+		removeSoldToSalesAreasAlreadyCompleted(accountId, availableBusinessContexts, availableSalesAreas, availableSalesAreaByBusinessContext);
 		return availableSalesAreaByBusinessContext;
 	}
 
@@ -114,9 +114,9 @@ public inherited sharing class BusinessContextUtils {
 				AND Flow_Status__c = :PENDING_STATUS];
 	}
 
-	private static void removeSalesAreasAlreadyCompleted(Id accountId, Set<String> availableBusinessContexts, Set<String> availableSalesAreas,
+	private static void removeSoldToSalesAreasAlreadyCompleted(Id accountId, Set<String> availableBusinessContexts, Set<String> availableSalesAreas,
 			Map<String, Set<String>> availableSalesAreaByBusinessContext){
-		for(Address_Role_Business_Context__c addressRole : getSalesAreasCompleted(accountId, availableBusinessContexts, availableSalesAreas)){
+		for(Address_Role_Business_Context__c addressRole : getSoldToSalesAreasCompleted(accountId, availableBusinessContexts, availableSalesAreas)){
 			if(availableSalesAreaByBusinessContext.containsKey(addressRole.Business_Context__r.Business_Context__c))
 				if(availableSalesAreaByBusinessContext.get(addressRole.Business_Context__r.Business_Context__c).contains(addressRole.Business_Context__r.Sub_Context__c)){
 					availableSalesAreaByBusinessContext.get(addressRole.Business_Context__r.Business_Context__c).remove(addressRole.Business_Context__r.Sub_Context__c);
@@ -126,13 +126,14 @@ public inherited sharing class BusinessContextUtils {
 		}
 	}
 
-	private static List<Address_Role_Business_Context__c> getSalesAreasCompleted(Id accountId, Set<String> availableBusinessContexts,
+	private static List<Address_Role_Business_Context__c> getSoldToSalesAreasCompleted(Id accountId, Set<String> availableBusinessContexts,
 			Set<String> availableSalesAreas){
 		return availableBusinessContexts.isEmpty() ? new List<Address_Role_Business_Context__c>()
 				: [SELECT Id, Business_Context__r.Business_Context__c, Business_Context__r.Sub_Context__c
 				FROM Address_Role_Business_Context__c
 				WHERE Address_Role__r.Address__r.Account__c = :accountId
 				AND Business_Context__r.Business_Context__c IN :availableBusinessContexts
-				AND Business_Context__r.Sub_Context__c IN :availableSalesAreas];
+				AND Business_Context__r.Sub_Context__c IN :availableSalesAreas
+				AND Address_Role__r.Role_Type__c = 'Business'];
 	}
 }
