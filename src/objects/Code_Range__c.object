@@ -471,12 +471,8 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <columns>Country_Code__c</columns>
         <columns>ProgramCode__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>ProgramCode__c</field>
-            <operation>equals</operation>
-            <value>T</value>
-        </filters>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>China_Ranges</fullName>
@@ -549,6 +545,29 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             <value>M</value>
         </filters>
         <label>MSO Ranges</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Missing_State</fullName>
+        <columns>NAME</columns>
+        <columns>Area__c</columns>
+        <columns>Area_Code__c</columns>
+        <columns>Country_Code__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Max_Range__c</columns>
+        <columns>Min_Range__c</columns>
+        <columns>Original_Max_Range__c</columns>
+        <columns>Original_Min_Range__c</columns>
+        <columns>Placeholder__c</columns>
+        <columns>Prefix__c</columns>
+        <columns>ProgramCode__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_State__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Missing State</label>
         <language>en_US</language>
     </listViews>
     <listViews>

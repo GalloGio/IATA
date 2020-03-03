@@ -5,8 +5,7 @@
             {label: 'Owner Type', fieldName: 'ownerType', type: 'text', sortable : true},
             {label: 'Percentage Held', fieldName: 'percentageTable', type: 'percent', sortable : true, typeAttributes : {maximumFractionDigits: 2, minimumFractionDigits: 2}}            
         ];
-
-        if(component.get('v.canEdit') == true) {
+        if(component.get('v.canEdit') == true || (component.get('v.canEdit') == false && component.get('v.canAdd') == true)) {
             var actions = [  
                 {label: 'Edit', name: 'edit_record', iconName: 'utility:edit'},
                 {label: 'Remove', name: 'remove_record', iconName: 'utility:delete'}

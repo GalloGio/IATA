@@ -47,7 +47,7 @@ public with sharing class vfIECHistInvoices_tst {
 		System.debug('Unit Test: Start: TestHistInvoices');
 
 		setupInvoicesAndPayments();
-
+		Test.startTest();
 		System.runAs(usr) {
 
 			PageReference pgRef = Page.IECHistInvoices;
@@ -80,6 +80,7 @@ public with sharing class vfIECHistInvoices_tst {
 			pageController.sSelectedPaymentID = oPayment1.Id;
 			pr = pageController.selectPayment();
 		}
+        Test.stopTest();
 		System.debug('Unit Test: Finish: TestHistInvoices');
 	}
 

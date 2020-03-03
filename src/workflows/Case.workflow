@@ -1366,10 +1366,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>badanovam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1379,6 +1375,10 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1422,6 +1422,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinezd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1451,10 +1455,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2910,7 +2910,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2951,6 +2951,10 @@
         </recipients>
         <recipients>
             <recipient>lopezbaism@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>martinezd@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3030,10 +3034,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>badanovam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3046,7 +3046,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3094,6 +3094,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinezd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3127,10 +3131,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -7941,7 +7941,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_completed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.CR_Status__c</field>
@@ -7962,7 +7962,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_escalated</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalate_to_ACCA__c</field>
             <operation>equals</operation>
@@ -7977,7 +7977,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ACCA_Date_Time_case_was_scheduled</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.Planned_End_CR__c</field>
@@ -8020,7 +8020,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>UnchecknewcommentforACCA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalated_Status_ACCA__c</field>
             <operation>equals</operation>
@@ -8055,7 +8055,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ESCCaseStatusEscalated</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Escalated_Status_ACCA__c</field>
             <operation>equals</operation>
@@ -8070,7 +8070,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>ESCEscalatedStatusACCAACCAInvesti</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.ACCA_Owner__c</field>
             <operation>notEqual</operation>
@@ -8088,7 +8088,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Update_CSR_Status</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) and 3</booleanFilter>
         <criteriaItems>
             <field>Case.Planned_Start_CR__c</field>
@@ -8227,7 +8227,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Record_Type_ACR_DPC_locked</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -8565,7 +8565,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Email_notification_dispute_Airline</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -10507,7 +10507,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10620,7 +10620,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10678,7 +10678,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10731,7 +10731,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10794,7 +10794,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10852,7 +10852,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10910,7 +10910,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10968,7 +10968,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11026,7 +11026,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11084,7 +11084,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11142,7 +11142,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11200,7 +11200,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11258,7 +11258,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11316,7 +11316,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11374,7 +11374,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11432,7 +11432,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 8:00 PM</value>
+            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -12322,7 +12322,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>External_OPS_Mgt_cases</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -13685,7 +13685,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/20/2013 2:00 AM</value>
+            <value>&quot;12/20/2013, 2:00 AM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -13759,7 +13759,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterThan</operation>
-            <value>9/29/2012 8:00 PM</value>
+            <value>&quot;9/29/2012, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Short_Payment_Amount_USD__c</field>
@@ -13917,7 +13917,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 8:00 PM</value>
+            <value>&quot;9/1/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -13957,7 +13957,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 8:00 PM</value>
+            <value>&quot;9/1/2013, 8:00 PM&quot;</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -15715,7 +15715,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>5/30/2016 8:00 PM</value>
+            <value>&quot;5/30/2016, 8:00 PM&quot;</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -16459,7 +16459,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Internal_OPS_Mgt_cases</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -17190,7 +17190,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeCaseOrigintoFax</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Subject</field>
             <operation>startsWith</operation>
