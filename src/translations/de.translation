@@ -2065,6 +2065,10 @@
         <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
+    </customLabels>
+    <customLabels>
         <label>Fälle</label>
         <name>CSP_Cases</name>
     </customLabels>
@@ -3737,6 +3741,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Kontaktname</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- Copyright --></label>

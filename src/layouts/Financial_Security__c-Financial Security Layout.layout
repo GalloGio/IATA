@@ -95,6 +95,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Financial_Security_Currency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_isToUpdateRHC__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
