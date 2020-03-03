@@ -120,12 +120,12 @@ public without sharing class ISSP_TIP_Home_Controller {
 		set;}
 
 
-	private map<string,IATA_ISO_Country__C> isoCodeCountryMap{
+	private static map<string,IATA_ISO_Country__C> isoCodeCountryMap{
 		get{
 			if(isoCodeCountryMap==null){
 				isoCodeCountryMap= new map<string,IATA_ISO_Country__C>();
 
-				List<IATA_ISO_Country__c> auxIsoCountries = IATAIsoCountryDAO.getIsoCountries();
+				transient List<IATA_ISO_Country__c> auxIsoCountries = IATAIsoCountryDAO.getIsoCountries();
 				List<IATA_ISO_Country__c> filteredIsoCountries = new List<IATA_ISO_Country__c>();
 
 				for(IATA_ISO_Country__c c : auxIsoCountries) {
