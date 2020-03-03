@@ -720,6 +720,24 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.APPROVAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
+		} //Withdrawal Finalization step passed
+		else if(oscar.STEP4__c == AMS_Utils.PASSED && oldOSCAR.STEP4__c != AMS_Utils.PASSED){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Withdrawal finalization step passed');
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+			}
+
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
+
 		}
 
 		if(changesContainer.changesStruct != null){

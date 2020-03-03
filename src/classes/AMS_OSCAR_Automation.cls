@@ -802,7 +802,7 @@ public with sharing class AMS_OSCAR_Automation {
 			if (oscar != null) {
 				oscar.Withdrawal_result__c = 'Passed';
 
-				if(oscar.Process__c == AMS_Utils.NGCHANGES){
+				if(oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
 					List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
 					if(riskEvents != null && !riskEvents.isEmpty()){
 						for(ANG_Agency_Risk_Event__c rEvent : riskEvents)
