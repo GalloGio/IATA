@@ -239,6 +239,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'You cannot select the change of hierarchy in combination with any other agency change for a multicountry hierarchy.'
 				);
 
+				errorMessages.put(
+					'Standard Acquisition of MC Hierarchy Wrong BSP',
+					'Missing error.'
+				);
+
 			}
 			return errorMessages;
 		}
@@ -1151,6 +1156,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		//TEST SCENARIO 4
 		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 			errorChecks.put('Multicountry change hierarchy must select GE', true);
+
+		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+			for (HierarchyItem item: hierarchyValues) {
+				if ((item.selected || item.main) && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c) {
+					errorChecks.put('Standard Acquisition of MC Hierarchy Wrong BSP', true);
+					break;
+				}
+			}
+		}
 	}
 
 	private boolean isOnlyGeBspLeft(){
@@ -1182,12 +1196,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 				if (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
-					for(HierarchyItem item: hierarchyValues){						
-						if ((item.selected || item.main) && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c) {
-							return null;
-						}
-					}
-
 					return AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD;
 				}
 			}
