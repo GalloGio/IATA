@@ -157,6 +157,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <externalSharingModel>FullAccess</externalSharingModel>
     <fields>
         <fullName>ActualCost</fullName>
     </fields>
@@ -659,34 +660,6 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <language>en_US</language>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
-            <role>VPMACS</role>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>DirectSalesAllLive</fullName>
-        <columns>CAMPAIGN.NAME</columns>
-        <columns>CAMPAIGN.START_DATE</columns>
-        <columns>Campaign_Live_Days__c</columns>
-        <columns>CAMPAIGN.STATUS</columns>
-        <columns>PARENT_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CAMPAIGN.STATUS</field>
-            <operation>equals</operation>
-            <value>Planned,Live</value>
-        </filters>
-        <filters>
-            <field>CORE.USERS.ALIAS</field>
-            <operation>equals</operation>
-            <value>psipo</value>
-        </filters>
-        <label>Direct Sales - All Live</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>MACSDirectSalesAll</group>
-            <group>MACSDirectSalesArea1</group>
-            <group>MACSDirectSalesArea2</group>
-            <group>MACSDirectSalesArea3</group>
             <role>VPMACS</role>
         </sharedTo>
     </listViews>
