@@ -3647,13 +3647,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP_Case_Details</shortDescription>
         <value>Case-Detail_</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Case_hasInvoicePaid</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Case_hasInvoicePaid</shortDescription>
         <value>Has the customer paid invoice?</value>
-	</labels>
+    </labels>
     <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
