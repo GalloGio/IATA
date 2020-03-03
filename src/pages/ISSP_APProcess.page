@@ -99,7 +99,7 @@
                                             </apex:actionRegion>
                                         </div>
                                     </div>
-                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true) && strAreaType=='Airline Joining'}">
+                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true)) && strAreaType=='Airline Joining'}">
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
                                             <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
                                             <div class="col-sm-10">
@@ -119,18 +119,6 @@
                                         </div>
                                     </apex:outputPanel>
                                     <script>$('.ich-type-select').select2({width : 'resolve'});</script>
-                                    
-                                    <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
-                                        <div class="form-group">
-                                            <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
-                                            <div class="col-sm-10">
-                                                <apex:selectList styleClass="cass-airlines-select"  Label="Airline Concerned" id="airlineconcerned" value="{!cassairlineid}" required="true" size="1">
-                                                    <apex:selectOptions value="{!CassAirlines}"/>
-                                                </apex:selectList>&nbsp;
-                                                <apex:image value="/img/msg_icons/info16.png" title="Start typing Airline name, 2-letter designator code or IATA Code in the box to quickly locate the airline." html-data-placement="right" html-data-toggle="tooltip"/>
-                                            </div>
-                                        </div>
-                                    </apex:outputPanel>
 
                                     <apex:outputPanel >
                                         <div class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess!='chg' && isGSSAUser!= true, 'block','none')}">
@@ -169,7 +157,21 @@
                                         </div>
                                     </apex:outputPanel>
 
-                                    
+                                    <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
+                                        <div class="form-group">
+                                            <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
+                                            <div class="col-sm-10">
+                                                <apex:selectList styleClass="cass-airlines-select"  Label="Airline Concerned" id="airlineconcerned" value="{!cassairlineid}" required="true" size="1">
+                                                    <apex:selectOptions value="{!CassAirlines}"/>
+                                                </apex:selectList>&nbsp;
+                                                <apex:image value="/img/msg_icons/info16.png" title="Start typing Airline name, 2-letter designator code or IATA Code in the box to quickly locate the airline." html-data-placement="right" html-data-toggle="tooltip"/>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+
+
+
+
                                     <div class="form-group">
                                         <label for="description" class="col-sm-2 control-label">Description</label>
                                         <div class="col-sm-10">
