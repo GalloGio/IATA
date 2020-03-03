@@ -68,7 +68,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 		//Queries the specific metadata object having the Type for "TIP" 
 		List<PowerBI_Report_Config__mdt> lstMetadataReports = [SELECT Id,DeveloperName, MasterLabel, Group_Id_Dev__c, Group_Id_Prod__c, 
-															   Report_Id_Dev__c, Report_Id_Prod__c
+															   Report_Id_Dev__c, Report_Id_Prod__c, LastModifiedDate__c
 															   FROM PowerBI_Report_Config__mdt WHERE Type__c = 'TIP_report'];
 
 		//If contains record, create a wrapper for each one to return to the page
@@ -83,6 +83,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 				tipReportAux.masterLabel = metadataReportAux.MasterLabel;
 				tipReportAux.groupId = runningInASandbox ? metadataReportAux.Group_Id_Dev__c : metadataReportAux.Group_Id_Prod__c;
 				tipReportAux.reportId = runningInASandbox ? metadataReportAux.Report_Id_Dev__c :  metadataReportAux.Report_Id_Prod__c;
+				tipReportAux.lastModifiedDate = metadataReportAux.LastModifiedDate__c;
 
 				lstReportsToReturn.add(tipReportAux);
 			}
