@@ -68,10 +68,24 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 		test.StartTest();
 
 		artifact.Payment_type__c = AMS_Utils.SAP_PAYMENT_TYPE_PPA;
+		update artifact;
+
+		//This will trigger the interface 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		update ri;
+
+		Remote_Invocation_Artefact__c updatedRmtInvArt = [SELECT Status_Detail__c FROM Remote_Invocation_Artefact__c limit 1];
+
+		System.assertEquals(updatedRmtInvArt.Status_Detail__c, 'Remote Invocation Artefact must have an External ID');
+
+		artifact.Payment_type__c = AMS_Utils.SAP_PAYMENT_TYPE_PPA;
 		artifact.External_ID__c = '123456';
 		update artifact;
 
 		//This will trigger the interface 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING;
+		update ri;
+
 		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 		update ri;
 
@@ -82,7 +96,7 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 		//Check External_ID be copied to oscar field Billing_Document_Number__c
 		System.assertEquals(artifact.External_ID__c, updatedOscar.Billing_Document_Number__c);
 
-		Remote_Invocation_Artefact__c updatedRmtInvArt = [SELECT Payment_type__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
+		updatedRmtInvArt = [SELECT Payment_type__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
 
 		System.assertEquals(artifact.Internal_ID__c, updatedRmtInvArt.Object_Id_Created__c);
 	}
@@ -149,6 +163,30 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 		System.assert(expectedExceptionThrown);
 
 		test.StopTest();
+	}
+
+	@isTest static void testRemoteInvocationDoesntMatchIds(){
+
+		Remote_Invocation__c ri = [SELECT Status__c, Internal_ID__c FROM Remote_Invocation__c limit 1];
+
+		Remote_Invocation_Artefact__c artifact = [SELECT Payment_type__c,External_ID__c, Internal_ID__c FROM Remote_Invocation_Artefact__c limit 1 ];
+
+		Test.StartTest();
+
+		artifact.Payment_type__c = AMS_Utils.SAP_PAYMENT_TYPE_PPA;
+		artifact.Internal_ID__c = 'FAKE_ID';
+		update artifact;
+
+		//This will trigger the interface 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		update ri;
+
+		Test.stopTest();
+
+		Remote_Invocation__c ri_AfterUpdate = [SELECT Internal_ID__c, Status__c, Status_Detail__c FROM Remote_Invocation__c Where ID = :ri.ID];
+
+		system.assertEquals(ri_AfterUpdate.Status__c, AMS_Utils.FAILED);
+
 	}
 
 }
