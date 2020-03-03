@@ -30,6 +30,8 @@
 
 			<apex:pageBlockSection columns="1" title="Please select Region and Mode" >
 
+			<apex:pageMessage detail="{!infoNote}" severity="info" escape="false" strength="3" />
+
 				<apex:pageblockSectionItem >
 
 				    <apex:outputLabel value="Region Name"/>
@@ -128,8 +130,6 @@
 
 			</apex:pageBlockSection>
 
-
-
 			<apex:pageBlockSection id="parameter4">
 
 				<div align="center">
@@ -151,7 +151,6 @@
 			
 			</apex:pageBlockSection>
 
-			<apex:pageMessage detail="{!infoNote}" severity="info" escape="false" strength="3" />
 
 </apex:pageBlock>
 
