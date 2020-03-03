@@ -257,7 +257,7 @@ private class ANG_AccreditationAreaViewerTest {
 		annualRevalCaseCtrl.getcountryobj();
 		annualRevalCaseCtrl.getshouldDisableButton();
 
-		//annualRevalCaseCtrl.launchCampaign();
+		annualRevalCaseCtrl.launchCampaign();
 
 		annualRevalCaseCtrl.refreshPageSize();
 
