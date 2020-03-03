@@ -83,7 +83,17 @@
 										<div class="panel-title-3">
 											<apex:repeat value="{! listParticipation}" var="participationRow">
 												<h3>
-													<apex:outputText value="{! cycleId + ' ' + participationRow.participation.cashflow.name + ' ' + participationRow.participation.cashflow.processingCurrency}" escape="false"/>
+													<apex:outputText value="{! participationRow.participation.cashflow.name }" escape="false"/>
+													<apex:outputText value="{! ' ' + participationRow.participation.cashflow.processingCurrency }" escape="false"/>
+													<apex:outputText value=" - Settlement Amount : " rendered="{! participationRow.numericSettlementAmount>0 }" />
+													<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! participationRow.numericSettlementAmount>0 }">
+														<apex:param value="{! participationRow.numericSettlementAmount}"/>
+													</apex:outputText>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Cycle_Label + ' ' + cycleId }" escape="false"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isPreassigned}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Not_Received}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isNotReceived}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isPreassigned}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Not_Received_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isNotReceived}"/>
 												</h3>
 											</apex:repeat>
 										</div>

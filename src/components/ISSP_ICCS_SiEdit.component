@@ -50,10 +50,26 @@
 								<br/>
 
 								<div class="panel-heading head_panel_green">
-									<apex:outputPanel rendered="{!settlementInstruction.type.code != siCurrency}">
+									<apex:outputPanel rendered="{!settlementInstruction.type.code == siStandard}">
 										<div class="panel-title-3">
 											<h3>
-												<apex:outputText value="{! settlementInstruction.participation.cashflow.name + ' ' + settlementInstruction.participation.cashflow.processingCurrency + IF(settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture, ' - ' + $Label.ICCS_Cycle_Label + ' ' + settlementInstruction.cycle.cycleId, '')}" escape="false"/>
+												<apex:outputText value="{! settlementInstruction.participation.cashflow.name }" escape="false"/>
+												<apex:outputText value="{! ' ' + settlementInstruction.participation.cashflow.processingCurrency }" escape="false"/>
+											</h3>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture}">
+										<div class="panel-title-3">
+											<h3>
+												<apex:outputText value="{! settlementInstruction.participation.cashflow.name }" escape="false"/>
+												<apex:outputText value="{! ' ' + settlementInstruction.participation.cashflow.processingCurrency }" escape="false"/>
+												<apex:outputText value=" - Settlement Amount : " rendered="{! settlementInstruction.settlementAmount>0 }" />
+												<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! settlementInstruction.settlementAmount>0 }">
+													<apex:param value="{! settlementInstruction.settlementAmount}"/>
+												</apex:outputText>
+												<apex:outputText value="{! ' - ' + $Label.ICCS_Cycle_Label + ' ' + settlementInstruction.cycle.cycleId }" escape="false" rendered="{!settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture}"/>
+												<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned}" rendered="{! settlementInstruction.settlementAmount=0 && isPreassigned}"/>
+												<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned_With_Amount}" rendered="{! settlementInstruction.settlementAmount>0 && isPreassigned}"/>
 											</h3>
 										</div>
 									</apex:outputPanel>
@@ -61,11 +77,17 @@
 										<div class="panel-title-3">
 											<apex:repeat value="{! listCurrencyParticipations}" var="participationRow">
 												<h3>
-													<apex:outputText value="{! cycleId + ' ' + participationRow.participation.cashflow.name + ' - Settlement Amount: '}" escape="false"/>
-													<apex:outputText value="{0, number, ###,###,###,##0.00}">
+													<apex:outputText value="{! participationRow.participation.cashflow.name }" escape="false"/>
+													<apex:outputText value="{! ' ' + participationRow.participation.cashflow.processingCurrency }" escape="false"/>
+													<apex:outputText value=" - Settlement Amount : " rendered="{! participationRow.numericSettlementAmount>0 }" />
+													<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! participationRow.numericSettlementAmount>0 }">
 														<apex:param value="{! participationRow.numericSettlementAmount}"/>
 													</apex:outputText>
-													<apex:outputText value=" {!participationRow.participation.cashflow.processingCurrency}"></apex:outputText>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Cycle_Label + ' ' + cycleId }" escape="false"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isPreassigned}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Not_Received}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isNotReceived}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isPreassigned}"/>
+													<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Not_Received_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isNotReceived}"/>
 												</h3>
 											</apex:repeat>
 										</div>

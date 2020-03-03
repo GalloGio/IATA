@@ -9787,6 +9787,22 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Headquarter - Branch</value>
     </labels>
     <labels>
+        <fullName>ICCS_Helptext_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned</shortDescription>
+        <value>ICCS HelpText For Preassigned</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
+        <value>ICCS HelpText For Preassigned With Amount</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11127,7 +11143,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Status For Not Received</shortDescription>
-        <value>Status: Notification Not Received</value>
+        <value>Status: Amount Notification Not Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Status_For_Not_Received_With_Amount</fullName>
@@ -11135,7 +11151,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Status For Not Received With Amount</shortDescription>
-        <value>Additional notifications to be received</value>
+        <value>Status: Partial Amount Notification Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Status_For_Preassigned</fullName>
@@ -11143,7 +11159,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Status For Preassigned</shortDescription>
-        <value>Status: Notification Not Received</value>
+        <value>Status: Amount Notification Not Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Status_For_Preassigned_With_Amount</fullName>
@@ -11151,7 +11167,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Status For Preassigned With Amount</shortDescription>
-        <value>Additional notifications to be received</value>
+        <value>Status: Partial Amount Notification Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Subject_Label</fullName>

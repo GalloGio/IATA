@@ -184,19 +184,19 @@
 																		<td style="width : 3%; text-align : center; display : {!IF(isSuperUser,'','none')}">
 																			<apex:inputCheckbox value="{!participationRow.selected}" disabled="{!currencyRow.numberCurrencySiRows > 0}" title="{! IF(currencyRow.numberCurrencySiRows > 0,$Label.ICCS_Adhoc_Creation_Not_Allowed,'')}"/>
 																		</td>
-																		<td style="width : 47%; text-align : left;">
+																		<td style="width : 37%; text-align : left;">
 																			<apex:outputText value="{! participationRow.participation.cashflow.name + ' ' + participationRow.participation.cashflow.processingCurrency}"/>
 																			<apex:outputText value=" - Settlement Amount : " rendered="{! participationRow.numericSettlementAmount>0 }" />
 																			<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! participationRow.numericSettlementAmount>0 }">
 																				<apex:param value="{! participationRow.numericSettlementAmount}"/>
 																			</apex:outputText>
 																		</td>
-																		<td style="width : 25%; text-align : left;">
+																		<td style="width : 35%; text-align : left;">
 																			<apex:outputText value="{! $Label.ICCS_NoA}" rendered="{! participationRow.participation.noa == 'true'}"/>
-																			<apex:outputText value="{!$Label.ICCS_Status_For_Preassigned}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isPreassigned}"/>
-																			<apex:outputText value="{!$Label.ICCS_Status_For_Not_Received}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isNotReceived}"/>
-																			<apex:outputText value="{!$Label.ICCS_Status_For_Preassigned_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isPreassigned}"/>
-																			<apex:outputText value="{!$Label.ICCS_Status_For_Not_Received_With_Amount}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isNotReceived}"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Preassigned + '*'}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isPreassigned}" escape="false"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Not_Received + '*'}" rendered="{! participationRow.numericSettlementAmount=0 && participationRow.isNotReceived}" escape="false"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Preassigned_With_Amount + '**'}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isPreassigned}" escape="false"/>
+																			<apex:outputText value="{!$Label.ICCS_Status_For_Not_Received_With_Amount + '**'}" rendered="{! participationRow.numericSettlementAmount>0 && participationRow.isNotReceived}" escape="false"/>
 																		</td>
 																		<td style="width : 25%; text-align : right; font-size : 10pt;">
 																			<apex:outputPanel rendered="{! participationRow.participation.noa != 'true' && isSuperUser}">
@@ -299,9 +299,11 @@
 								</div>
 
 								<div class="divider-cycle-2"/>
-								<apex:outputPanel layout="block" styleclass="pddg-2" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}">
-									<apex:outputText value="{! $Label.ICCS_Adhoc_Button_Help_Text}" escape="false"/>
-								</apex:outputPanel>
+								<div class="pddg-2" >
+									<apex:outputText value="{! $Label.ICCS_Adhoc_Button_Help_Text}" escape="false" rendered="{! isSuperUser && AdHocCurrencyRows.size > 0}"/>
+									<apex:outputText value="{! $Label.ICCS_Helptext_For_Preassigned}" escape="false"/><br/>
+									<apex:outputText value="{! $Label.ICCS_Helptext_For_Preassigned_With_Amount}" escape="false"/>
+								</div>
 							</apex:outputPanel>
 
 						</div>

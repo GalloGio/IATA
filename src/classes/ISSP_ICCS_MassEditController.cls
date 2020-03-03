@@ -130,6 +130,7 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 			// Initialize instruction lines with one empty instruction
 			this.listInstruction = new list<ISSP_ICCS_CoreRest.InstructionLine>();
 			addInstructionLine();
+			this.currencyFilter = '';
 		}
 		catch(Exception e){
 			pageController.setMessage(e.getMessage(), false);

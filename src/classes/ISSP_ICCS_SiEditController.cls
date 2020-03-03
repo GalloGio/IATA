@@ -168,11 +168,20 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 				// Create the settlement instruction
 				settlementInstruction = new ISSP_ICCS_CoreRest.SettlementInstruction();
+				settlementInstruction.settlementAmount = 0;
 
 				// Retrieve the participation from the Core
 				ISSP_ICCS_CoreRest.Participation participation;
 
 				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC && !isPreassigned){
+					// Get amount info to show it to the user
+					for(ISSP_ICCS_CoreRest.SettlementInstruction si : pageController.coreRest.getCycleSettlementInstructions(cycleId)) {
+						if (si.participation.Id == participationId) {
+							settlementInstruction.settlementAmount = si.SettlementAmount;
+							break;
+						}
+					}
+
 					for(ISSP_ICCS_CoreRest.Participation cycleParticipation : pageController.coreRest.getCycleParticipations(cycleId)){
 						if(cycleParticipation.id == participationId){
 							participation = cycleParticipation;
@@ -201,6 +210,14 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 				}
 				// for preassigned and not Received we call a different endpoint, and we get cashflows, not participations
 				else if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC && isPreassigned){
+					// Get amount info to show it to the user
+					for(ISSP_ICCS_CoreRest.SettlementInstruction si : pageController.coreRest.getCycleSettlementInstructions(cycleId)) {
+						if (si.participation.Id == participationId) {
+							settlementInstruction.settlementAmount = si.SettlementAmount;
+							break;
+						}
+					}
+
 					for(ISSP_ICCS_CoreRest.Cashflow cycleCashflow : pageController.coreRest.getPreassignedAndNotReceivedCashflows(cycleId)){
 						if(cycleCashflow.participationId == participationId){
 							participation = new ISSP_ICCS_CoreRest.Participation();
