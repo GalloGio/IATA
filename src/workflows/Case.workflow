@@ -2906,6 +2906,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>concessios@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2978,6 +2982,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>quliyevaa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rabahh@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2994,11 +3002,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>shahb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>sughayerm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vidalk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3039,6 +3055,10 @@
         </recipients>
         <recipients>
             <recipient>chiavonf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>concessios@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3130,6 +3150,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>quliyevaa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rabahh@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3146,6 +3170,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>shahb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>sughayerm@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3159,6 +3187,10 @@
         </recipients>
         <recipients>
             <recipient>theryg@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vidalk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -8565,7 +8597,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Email_notification_dispute_Airline</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>

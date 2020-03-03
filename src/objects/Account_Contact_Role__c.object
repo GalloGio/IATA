@@ -373,11 +373,13 @@
                 <value>
                     <fullName>ITP Administrator</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>ITP Administrator</label>
                 </value>
                 <value>
                     <fullName>ITP Master</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>ITP Master</label>
                 </value>
                 <value>
@@ -799,14 +801,6 @@
         <label>ITP</label>
         <picklistValues>
             <picklist>Contact_Role__c</picklist>
-            <values>
-                <fullName>ITP Administrator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ITP Master</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>ITP Trainee</fullName>
                 <default>false</default>
