@@ -579,7 +579,7 @@ public with sharing class AMS_AccreditationContactController {
 		Boolean validRange = true;
 
 		for(AccreditationContactWrapper wrapped : acWrapper) {
-			if(wrapped.ac.Financial_interest__c <> null) {
+			if(wrapped.ac.Financial_interest__c <> null && wrapped.ac.Agency_owner__c) {
 				totalOwnership += wrapped.ac.Financial_interest__c;
 				validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
 			}
