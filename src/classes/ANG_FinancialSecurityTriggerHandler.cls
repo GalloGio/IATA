@@ -317,6 +317,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 				decimal minFsAmount = ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c);
 				setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
 			}
+
 		}
 
 	}
@@ -521,4 +522,4 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 	}
 
-} 
+}
