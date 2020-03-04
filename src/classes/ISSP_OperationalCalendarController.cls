@@ -618,7 +618,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		String query = '';
 		Schema.FieldSet fieldset = getDescriptionFieldSet(IS_AIRLINE, operationType);
 		if (operationType.contains('BSP') || operationType.contains('CASS')) {
-			query = getBspCassQuery(operationType, country, frequency, currencyCode, billingPeriod);
+			query = getBspCassQuery(operationType, country, frequency, currencyCode, billingPeriod, 'Last_Day__c ASC');
 		}
 		if (operationType.contains('SIS')) {
 			query = getSISQuery(frequency, billingPeriod);
@@ -650,6 +650,10 @@ global without sharing class ISSP_OperationalCalendarController {
 	}
 
 	private static String getBspCassQuery(String operationType, String country, String frequency, String currencyCode, Integer billingPeriod) {
+		return getBspCassQuery(operationType, country, frequency, currencyCode, billingPeriod, null);
+	}
+
+	private static String getBspCassQuery(String operationType, String country, String frequency, String currencyCode, Integer billingPeriod, String orderBy) {
 		String query = 'SELECT ' + ALL_FIELDS
 			+ ' FROM Operational_Calendar__c'
 			+ ' WHERE Visible_on_the_portal__c = true';
@@ -685,11 +689,17 @@ global without sharing class ISSP_OperationalCalendarController {
 			query += ' AND Operation_Currency__c = \'' + currencyCode + '\'';
 		}
 		query += getBillingPeriodCondition(billingPeriod,'First_Day__c');
-		if (IS_AIRLINE) {
-			query += ' ORDER BY Settlement_Day__c ASC';
-		} else {
-			query += ' ORDER BY Remittance_Day__c ASC';
+		if(String.isBlank(orderBy)) {
+			if (IS_AIRLINE) {
+				query += ' ORDER BY Settlement_Day__c ASC';
+			} else {
+				query += ' ORDER BY Remittance_Day__c ASC';
+			}
 		}
+		else {
+			query += ' ORDER BY ' + orderBy;
+		}
+		
 		return query;
 	}
 
@@ -1069,8 +1079,8 @@ global without sharing class ISSP_OperationalCalendarController {
 			if (op.contains('SIS')) otherOperations.add(op);
 			if (op.contains('ICCS')) otherOperations.add(op);
 		}
-		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId, billingPeriod));
-		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId,billingPeriod));
+		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId, billingPeriod, 'Last_Day__c ASC'));
+		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId));
 
 		// set folders
 		Map<String,FolderWrapper> mapFolders = new Map<String,FolderWrapper>();
@@ -1093,6 +1103,10 @@ global without sharing class ISSP_OperationalCalendarController {
 	}
 
 	public static Map<String,Map<String,FileWrapper>> findDataForBSPCASS(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId, String billingPeriod) {
+		return findDataForBSPCASS(option, operations, remittance, countries, accountId, billingPeriod, null);
+	}
+
+	public static Map<String,Map<String,FileWrapper>> findDataForBSPCASS(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId, String billingPeriod, String orderBy) {
 		Map<String,Map<String,FileWrapper>> mapFilesByFolder = new Map<String,Map<String,FileWrapper>>();
 		if (operations.isEmpty()) return mapFilesByFolder;
 
@@ -1127,7 +1141,12 @@ global without sharing class ISSP_OperationalCalendarController {
 		if(!conditions.isEmpty()) {
 			queryStr += ' AND' + String.join(conditions, ' AND ');
 		}
-		queryStr += ' ORDER BY Settlement_Day__c';
+		if(String.isBlank(orderBy)) {
+			queryStr += ' ORDER BY Settlement_Day__c';
+		}
+		else {
+			queryStr += ' ORDER BY ' + orderBy;
+		}
 
 		System.debug('queryStr: ' + queryStr);
 		//List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr);
