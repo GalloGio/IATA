@@ -753,6 +753,9 @@ public class AMS_OSCARTriggerHandler {
 
 				// this was pulled from Automation on STEP 9 since when he reaches this part of the code, he already passed the automation
 				if(updatedOSCAR.STEP9__c == AMS_Utils.PASSED){
+
+					updatedOSCAR.Proof_of_payment_received__c = Date.today();
+
 					if (updatedOSCAR.STEP17__c == AMS_Utils.NOT_STARTED || updatedOSCAR.STEP17__c == AMS_Utils.NOT_APPLICABLE || updatedOSCAR.STEP17__c == AMS_Utils.PASSED){
 						updatedOSCAR.Process_Start_Date__c = Date.today();
 					}
