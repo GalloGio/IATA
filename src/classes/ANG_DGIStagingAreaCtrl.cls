@@ -222,6 +222,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 			movePdfEndorsementAttachment(stagingFs.Id, newFsId);
 		}
 		catch(Exception e){
+			newFsId = null; 
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, parseException(e)));
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_DGIStagingAreaCtrl - accept] ' + e.getStackTraceString());
 			Database.rollback(sp);
