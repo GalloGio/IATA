@@ -370,6 +370,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean isMultiCountry {get; private set;}
 	public Boolean isMultiCountryStarted {get; private set;}
 	@TestVisible public Boolean isMultiCountryNewAE {get; private set;}
+	public Boolean isCNSAgency {get; private set;}
 
 	public List<AMS_Pax_Accreditation_Form__c> multiCountryApplicationForms {
 		get {
@@ -549,6 +550,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
 		isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+		isCNSAgency = con.Account.CNS_Agency__c && con.Account.Location_Type__c == 'HO';
 
 		defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
 		String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
@@ -1628,6 +1630,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 				}
 			} else if (isHOAccredited && con.Account.Sector__c == AMS_Utils.SECTOR_CARGO) { //An accredited CGO Agent
+
 				options.add(new SelectOption('', Label.ISSP_Select));
 
 				if (con.Account.Category__c == 'IATA Cargo Agent') { // Accredited IATA CGO Agent / EACP Intermediary
@@ -1699,26 +1702,30 @@ public without sharing class ISSP_AMS_Accreditation {
 						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 					}
 				}
-			} else  {  //CGO Options for PAX Agents (Accredited or Non-Accredited)
+			}else{//CGO Options for PAX Agents (Accredited or Non-Accredited)
 				options.add(new SelectOption('', Label.ISSP_Select));
-
-				if (isocountry.EACP_Country__c) {
-					options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
-				} else {
-					options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
-				}
-
-				if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
-					if (isCASSCountry) {
-						options.add(new SelectOption(AMS_Utils.TYPE_CASS_ASSOC_HO, Label.ISSP_AMS_OPTION_CASS_ASSOC_HO));
+				if(isCNSAgency) {
+					options.add(new SelectOption(AMS_Utils.TYPE_CNS_HO, Label.ISSP_AMS_OPTION_CNS_AGENCY_NEW_HO));
+					options.add(new SelectOption('Test', 'Test'));
+				}else{
+					if (isocountry.EACP_Country__c) {
+						options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
+					} else {
+						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 					}
 
-					if (isCASSImport) {
-						options.add(new SelectOption(AMS_Utils.TYPE_IMPORT_HO, Label.ISSP_AMS_OPTION_IMPORT_HO));
-					}
+					if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
+						if (isCASSCountry) {
+							options.add(new SelectOption(AMS_Utils.TYPE_CASS_ASSOC_HO, Label.ISSP_AMS_OPTION_CASS_ASSOC_HO));
+						}
 
-					if (isUKTerritory) {
-						options.add(new SelectOption(AMS_Utils.TYPE_COURIER_HO, Label.ISSP_AMS_OPTION_COURIER_HO));
+						if (isCASSImport) {
+							options.add(new SelectOption(AMS_Utils.TYPE_IMPORT_HO, Label.ISSP_AMS_OPTION_IMPORT_HO));
+						}
+
+						if (isUKTerritory) {
+							options.add(new SelectOption(AMS_Utils.TYPE_COURIER_HO, Label.ISSP_AMS_OPTION_COURIER_HO));
+						}
 					}
 				}
 			}
@@ -1846,7 +1853,6 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference save() {
-		SYSTEM.DEBUG('Saving Record - STEP A');
 
 		if (!isNoticeOfChange) {
 			if (isMultiCountryNewAE || isMCAccredited) {
@@ -7624,7 +7630,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public boolean getIsGSARequired() {
 		Boolean isreq;
-system.debug('aqui sectorValue ' + sectorValue);
 		if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT) {
 			isreq = true;
 		} else {
