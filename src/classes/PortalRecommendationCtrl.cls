@@ -74,7 +74,7 @@ public with sharing class PortalRecommendationCtrl {
 		if( type.equals('Services') ) {
 			whereClause += ' AND Recommendation_Visibility__r.RecordTypeId = \'' + serviceRecommendationRecTypeId + '\'';
 		}
-		
+
 		String recommendationQuery = String.format('SELECT {0} FROM Card_Visibility__c WHERE {1} ORDER BY CreatedDate DESC',
 			new List<String>{String.join(getQueryFields(), ', '), whereClause}
 		);
