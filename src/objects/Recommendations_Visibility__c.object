@@ -158,7 +158,7 @@
         <fullName>ActionButtonLink__c</fullName>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos; &amp;&amp; NOT(ISBLANK(Product__c)), 
-  						&apos;/iec/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c, 
+  						&apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c, 
 						IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos; &amp;&amp; NOT(ISBLANK(PortalService__c)),
 									IF (  PortalService__r.Requestable__c ,
 													&apos;manage-service?serviceId=&apos; + PortalService__r.Id + &apos;&amp;openRequestService=true&apos;,
