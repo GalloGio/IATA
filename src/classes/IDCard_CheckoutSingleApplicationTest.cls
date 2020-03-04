@@ -276,7 +276,7 @@ public class IDCard_CheckoutSingleApplicationTest {
 		boolean b = false;
 
 			for(Apexpages.Message msg:msgs){
-				if (msg.getDetail().contains('We failed to contact your manager. Please contact IATA or your manager to validate your application2')) b = true;
+				if (msg.getDetail().contains('We failed to contact your manager. Please contact IATA or your manager to validate your application3')) b = true;
 			}
 
 		System.assert(b);
