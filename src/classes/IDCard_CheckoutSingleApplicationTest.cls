@@ -177,7 +177,7 @@ public class IDCard_CheckoutSingleApplicationTest {
 
 		}
 
-@isTest
+	@isTest
 	static void alertKeyContactForNewApplicationTest() {
 
 		IATA_ISO_Country__c ct1 = new IATA_ISO_Country__c (
@@ -272,6 +272,102 @@ public class IDCard_CheckoutSingleApplicationTest {
 			controller.updateRecord();
 		Test.stopTest();
 
+	}
+
+	@isTest
+	static void alertKeyContactForNewApplicationWithoutTemplateTest() {
+
+		IATA_ISO_Country__c ct1 = new IATA_ISO_Country__c (
+			Name = 'Portugal', 
+			ISO_Code__c = 'PT', 
+			AIMS_Area_ID__c = '2'
+		);
+		insert ct1;
+
+		Account acc = new Account(
+			Name = 'Test Agency',
+			IATA_ISO_Country__c = ct1.Id,
+			IATACode__c = '1234567'
+		);
+		insert acc;
+
+		Contact con = new Contact(
+			AccountId = acc.Id,
+			LastName = 'test',
+			Email = 'testContact@test.com'
+		);
+		insert con;
+
+		User usr = [Select id from User where Id = :UserInfo.getUserId()];
+		EmailTemplate template = new EmailTemplate(
+			Name = 'Test_Template',
+			DeveloperName = 'test',
+			Subject = 'test template',
+			HtmlValue = '<html></html>',
+			TemplateType = 'text',
+			isActive = true,
+			FolderId = USerInfo.getUSerId()
+		);
+		System.RunAs(usr) {
+			insert template; 
+		}
+
+		Managed_agency__c agency = new Managed_agency__c(
+			Delegate__c = false,
+			Account__c = acc.Id,
+			Contact__c = con.Id
+		);
+		insert agency;
+
+		ID_Card_Application__c idCardApp = new ID_Card_Application__c();
+		idCardApp.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+		idCardApp.Title__c = 'Mr';
+		idCardApp.First_Name__c = 'FIRSTNAME1';
+		idCardApp.Last_Name__c = 'LASTNAME1';
+		idCardApp.Date_of_Birth__c = Date.newInstance(1980,12,12);
+		idCardApp.Displayed_Name__c = 'FIRSTNAME LASTNAME 1';
+		idCardApp.Type_of_application__c = 'New';
+		idCardApp.IATA_Code__c = '1234567';
+		idCardApp.Email_admin__c = 'testidcard1@testmassapp.test';
+		idCardApp.UIR__c = 'PT000001';
+		insert idCardApp;
+
+		List<Case> caseList = new List<Case>();
+		Case cs = new Case();
+		cs.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
+		cs.Related_ID_Card_Application__c = idCardApp.Id;
+		cs.Subject = 'Case ID Card Test';
+		cs.AccountId = acc.Id;
+		caseList.add(cs);
+		insert cs;
+
+		ID_Card__c idCard = new ID_Card__c();
+		idCard.Related_Contact__c = con.Id;
+		idCard.Name_on_ID_Card__c = 'test2';
+		idCard.ID_Card_Application__c = idCardApp.Id;
+		idCard.LastName__c = 'LASTNAME2';
+		idCard.FirstName__c = 'FIRSTNAME2';
+		idCard.Date_of_Birth__c = Date.newInstance(1989,11,25);
+		idCard.Gender__c = 'FEMALE';
+		idCard.Position__c = 'Employee';
+		idCard.Duties__c = 'Sales';
+		idCard.Hours_per_week__c  = '35 h or more';
+		idCard.Start_Date_Agency_Month__c = 'July';
+		idCard.Start_Date_Agency_Year__c = '2020';
+		idCard.Start_Date_Industry__c = '12';
+		idCard.Nature_of_ID_Card__c = 'Reissue';		
+		insert idCard;		
+
+		PageReference pageRef = Page.IDCard_CheckoutSingleApplication;
+		Test.setCurrentPageReference(pageRef);
+		pageRef.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardApp.Id));		
+
+		IDCard_CheckoutSingleApplication controller = new IDCard_CheckoutSingleApplication();
+
+		Test.startTest();
+			controller.updateRecord();
+		Test.stopTest();
+
 		List<Apexpages.Message> msgs = ApexPages.getMessages();
 		boolean b = false;
 
@@ -281,4 +377,5 @@ public class IDCard_CheckoutSingleApplicationTest {
 
 		System.assert(b);
 	}
+
 }
