@@ -200,8 +200,27 @@ public without sharing class ISSP_AMS_Accreditation {
 	public string lblCASSTitle {get; set;}
 	public string lblImporAgentTitle {get; set;}
 	public string lblCourierTitle {get; set;}
-	public string lblCNSAgencyTitle {get; set;}
+	public string lblCNSAgencyTitle {
+		get {
+			if(lblCNSAgencyTitle == null) {
+				if(isCNSAgency && newCase.Reason1__c != null) {
+					lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ';
 
+					if(newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_HO;
+					}
+					else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
+						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_BR;	
+					}
+					else {
+						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_INDEPENDENT_BR;
+					}	
+				}
+			}
+			return lblCNSAgencyTitle;
+		} 
+		set;
+	}
 	public boolean isNewCase {get; set;}
 	public boolean isEUcountry {get; set;}
 	public boolean isCASSCountry {get; set;}
@@ -573,7 +592,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
 		isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-		isCNSAgency = con.Account.CNS_Agency__c && con.Account.Location_Type__c == 'HO';
+		isCNSAgency = con.Account.CNS_Agency__c && (con.Account.Location_Type__c == 'HO' || con.Account.Location_Type__c == 'BR');
 
 		defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
 		String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
@@ -701,7 +720,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
 		lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
 		lblCourierTitle = Label.ISSP_AMS_StepsAll_Courier_Title;
-		lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title;
 
 		if (ApexPages.currentPage().getParameters().containsKey('step')) {
 			stepNumber = ApexPages.currentPage().getParameters().get('step');
@@ -1729,8 +1747,12 @@ public without sharing class ISSP_AMS_Accreditation {
 			}else{//CGO Options for PAX Agents (Accredited or Non-Accredited)
 				options.add(new SelectOption('', Label.ISSP_Select));
 				if(isCNSAgency) {
-					options.add(new SelectOption(AMS_Utils.TYPE_CNS_HO, Label.ISSP_AMS_OPTION_CNS_AGENCY_NEW_HO));
-					options.add(new SelectOption('Test', 'Test'));
+					if(con.Account.Location_Type__c == 'HO') {
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_HO, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_HO));
+					}else{
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
+					}
 				}else{
 					if (isocountry.EACP_Country__c) {
 						options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
@@ -1827,7 +1849,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				includedSummaryPage = 'ISSP_ANG_PAX_AE_ReadOnly';
 			}
 		} else if (sectorValue.StartsWith('Cargo_Agent')) {
-			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || (newForm.Agent_Type__c == 'CNS Agency' && isCNSAgency)) {
+			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || newForm.Agent_Type__c == 'CNS Endorsement') {
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 					includedPageName = 'ISSP_AMS_Cargo_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_ReadOnly';
@@ -4438,6 +4460,12 @@ public without sharing class ISSP_AMS_Accreditation {
 			return Label.ISSP_ANG_OPTION_PAX_HE_standard;
 		} else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH) {
 			return Label.ISSP_ANG_OPTION_PAX_HE_lite;
+		} else if (amsLocationType == AMS_Utils.TYPE_CNS_HO) {
+			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_HO;
+		} else if (amsLocationType == AMS_Utils.TYPE_CNS_BR) {
+			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR;
+		} else if (amsLocationType == AMS_Utils.TYPE_CNS_BR_INDEPEND) {
+			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR;
 		} else {
 			return Label.ISSP_AMS_OPTION_PAX_BRANCH;
 		}

@@ -294,7 +294,8 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
 	public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
-		public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -356,7 +357,9 @@ public without sharing class AMS_Utils {
 	public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES,NGCONVERSIONTOMULTICOUNTRY};
 	public static final String TYPE_PAX_AE_MULTICOUNTRY = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, AGENTTYPE_MULTICOUNTRY);
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
-	public static final String TYPE_CNS_HO = buildOfficeType(CASE_REASON_NEW_HO, 'CNS Agency');
+	public static final String TYPE_CNS_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR_INDEPEND = buildOfficeType(CASE_REASON_BR_ABROAD, CATEGORY_CNS_ENDORSEMENT);
 
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';

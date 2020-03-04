@@ -21,9 +21,9 @@
         <label>Multicountry</label>
     </customValue>
     <customValue>
-        <fullName>CNS Agency</fullName>
+        <fullName>CNS Endorsement</fullName>
         <default>false</default>
-        <label>CNS Agency</label>
+        <label>CNS Endorsement</label>
     </customValue>
     <masterLabel>Accreditation Models</masterLabel>
     <sorted>false</sorted>
