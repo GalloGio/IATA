@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Multicountry</label>
     </customValue>
+    <customValue>
+        <fullName>CNS Agency</fullName>
+        <default>false</default>
+        <label>CNS Agency</label>
+    </customValue>
     <masterLabel>Accreditation Models</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

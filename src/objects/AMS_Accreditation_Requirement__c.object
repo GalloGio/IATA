@@ -741,6 +741,10 @@
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
+                <fullName>CNS Agency</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
             </values>

@@ -4461,10 +4461,16 @@ public without sharing class ISSP_AMS_Accreditation {
 		Set<String> allowIdentifierSetTravel = new Set<String>();
 		Set<String> identifierSetTravel = new Set<String>{AMS_UTILS.PCI_COMPLIANCE, AMS_Utils.NDC};
 
-		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && !isNoticeOfChange) {
+		if ((sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && !isNoticeOfChange) || isCNSAgency) {
 			String selectedLang;
 			String accredModel;
-			Id TravelReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', AMS_Utils.SECTOR_TRAVEL_AGENT);
+			Id reqRecTypeId;
+
+			if(isCNSAgency) {
+				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
+			}else {
+				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Travel_Agent');
+			}
 
 			if (applyLanguage == 'fr') {
 				selectedLang = 'French';
@@ -4513,14 +4519,14 @@ public without sharing class ISSP_AMS_Accreditation {
 			AggregateResult[] distinctReqmentLangs = [SELECT Language__c
 													FROM AMS_Accreditation_Requirement__c
 													WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :iso AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector AND Language__c !=null
-														AND RecordTypeId = :TravelReqRecTypeId
+														AND RecordTypeId = :reqRecTypeId
 													GROUP BY Language__c
 													ORDER BY Language__c ASC];
 
 			List<AMS_Accreditation_Requirement__c> auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
 																FROM AMS_Accreditation_Requirement__c
 																WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :iso AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
-																	AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND RecordTypeId = :TravelReqRecTypeId
+																	AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND RecordTypeId = :reqRecTypeId
 																	AND File_Identifier2__c NOT IN: excludeIdentifierSetTravel
 																ORDER BY Sort_Order__c ASC];
 
