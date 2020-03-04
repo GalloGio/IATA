@@ -21,7 +21,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	// controller.
 	public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
 		if(!Test.isRunningTest())
-			stdController.addFields(new List<String>{'RecordType.DeveloperName'});
+			stdController.addFields(new List<String>{'RecordType.DeveloperName','Name'});
 
 		Account acc = (Account)stdController.getRecord();
 
@@ -33,7 +33,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =:ApexPages.currentPage().getParameters().get('accountId') LIMIT 1];
 			if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
 		}else{
-			this.myAccount = [SELECT Id, Name, RecordType.DeveloperName FROM Account WHERE Id =: acc.Id LIMIT 1];
+			this.myAccount = acc;
 		}
 		accountId =  this.myAccount.id;
 		accountName =  this.myAccount.Name;
