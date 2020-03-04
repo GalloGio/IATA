@@ -131,7 +131,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 			financialSecurityToProcessLst.add(fs);
 
 			// Is it necessary to continue check the account of the min Financial Security
-			if(Trigger.isInsert || (Trigger.isUpdate && (fs.Security_Status__c != oldFs.Security_Status__c || fs.Account__c != oldFs.Account__c))) calculateMinFsLst.add(fs); //Validation in place PRB41975 - Min FS RHC object
+			if(Trigger.isInsert || (Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c || fs.Security_Status__c != oldFs.Security_Status__c || fs.Account__c != oldFs.Account__c))) 
+				calculateMinFsLst.add(fs); //Validation in place PRB41975 - Min FS RHC object
 		}
 
 	}
