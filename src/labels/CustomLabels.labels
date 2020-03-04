@@ -23547,6 +23547,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA rules and regulations?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_Q19_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Q19_CNS</shortDescription>
+        <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the former IATA resolutions or a CNS subscribing carrier?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_Q19_New</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
