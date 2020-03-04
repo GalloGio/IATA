@@ -106,7 +106,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		if(currentUserContact.Account.Id == null && currentUserContact.Account.Top_Parent__c == null){
 			return lstAmazonToReturn;
 		}
-		String userAccountId = currentUserContact.Account.Top_Parent__c != null ? currentUserContact.Account.Top_Parent__c +'' : contact.Account.Id+'';
+		Id userAccountId = currentUserContact.Account.Top_Parent__c != null ? currentUserContact.Account.Top_Parent__c : currentUserContact.Account.Id;
 
 		//get the list of available external reports for that account
 		Map<Id,ISSP_External_Report__c> mapExternalReports = new Map<Id,ISSP_External_Report__c>([SELECT Id, CreatedDate
