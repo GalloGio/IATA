@@ -1080,7 +1080,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			if (op.contains('ICCS')) otherOperations.add(op);
 		}
 		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId, billingPeriod, 'Last_Day__c ASC'));
-		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId));
+		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId,billingPeriod));
 
 		// set folders
 		Map<String,FolderWrapper> mapFolders = new Map<String,FolderWrapper>();
