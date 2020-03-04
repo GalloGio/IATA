@@ -156,17 +156,14 @@
             <h3 class="panel-title">Participation on Joining Process</h3>
         </div>
         <div class="panel-body" id="body-enquiries">
-            <div class="progress" style="display:{!IF(isPassAirline == true, 'block','none')}">
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 33.4%;">
-                    A. Participation Country &amp; Type
+            <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!IF(isPassAirline == true && managePASS=false,true,false)}">
+                <div class="progress-bar iata-tab {!IF(isStep3,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                     <span class="progress-tab-step">A</span> {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
                 </div>
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
-                    B. {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+                <div class="progress-bar iata-tab {!IF(isStep4,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 50%; background-color:#fff;">
+                     <span class="progress-tab-step">B</span> Submit to IATA
                 </div>
-                <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
-                    C. Submit to IATA
-                </div>
-            </div>
+            </apex:outputPanel>
 
             <apex:form id="CASSForm" styleClass="inline">
                 <apex:actionFunction name="showHideHotFilesPreferenceMethod" action="{!showHideHotFilesPreferenceMethod}" reRender="hotFilesSection"/>

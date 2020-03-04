@@ -23458,7 +23458,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar PASS</shortDescription>
-        <value>A. Review Country Requirements</value>
+        <value>A. Review the Checklist</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Separate_Application</fullName>
