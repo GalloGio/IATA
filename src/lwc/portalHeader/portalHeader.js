@@ -215,8 +215,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
     arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
     notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
-    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
-    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.svg';
+    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.png';
+    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.png';
     mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
 
     //notifications
