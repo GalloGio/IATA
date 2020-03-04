@@ -1356,11 +1356,12 @@
                    <apex:pageBlockSection id="section4" columns="2" collapsible="false">
                         <apex:facet name="header">
                             <apex:outputpanel >
-                                {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                                    IF(newlabels, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title_New, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title), $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
+                                {!IF(isCNSAgency, $Label.ISSP_AMS_Step3_4_CNS_Agency_Title,
+                                    IF(newForm.Agent_Type__c!='EACP Intermediary',
+                                        IF(newlabels, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title_New, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title), $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title))}
                             </apex:outputpanel>
                         </apex:facet>
-                       <apex:pageBlockSectionItem >
+                       <apex:pageBlockSectionItem rendered="{!NOT(isCNSAgency)}">
                             <apex:outputLabel value="{!IF(NOT(isocountry.EACP_Country__c),IF(newlabels, $Label.ISSP_AMS_Step3_4_Q1_Agency_New, $Label.ISSP_AMS_Step3_4_Q1_Agency),$Label.ISSP_AMS_Step3_4_Q1_Intermediary)}"/>
                             <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px red solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r2c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -1458,7 +1459,7 @@
                         </apex:pageBlockSection>
                         </apex:outputPanel>
                        
-                       <apex:pageBlockSectionItem labelStyle="width:35%" rendered="{!NOT(isocountry.EACP_Country__c)}">
+                       <apex:pageBlockSectionItem labelStyle="width:35%" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q3}"/>
                             <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_intend_to_request__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_intend_to_request__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r1c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -1503,14 +1504,14 @@
                         </apex:outputPanel> 
                        </apex:pageBlockSection>
                        </apex:outputPanel>
-                        <apex:pageBlockSectionItem rendered="{!NOT(isocountry.EACP_Country__c)}">
+                       <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q5}"/>
                             <apex:selectRadio id="changeItem3" style="width:100px;{!IF(AND(isValError, newForm.Does_the_air_transportation_which_your__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_the_air_transportation_which_your__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r5c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
                         </apex:pageBlockSectionItem>
-                       <apex:outputPanel id="r5c2" style="display:{!IF(newForm.Does_the_air_transportation_which_your__c=='Yes', '', 'none')}" rendered="{!NOT(isocountry.EACP_Country__c)}">
+                        <apex:outputPanel id="r5c2" style="display:{!IF(newForm.Does_the_air_transportation_which_your__c=='Yes', '', 'none')}" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                          <apex:pageBlockSection columns="1">  
                            <apex:pageblocksectionitem >
                                <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_4_Q5_F1}" style="width:400px;"/>
@@ -1519,14 +1520,14 @@
                         </apex:pageblocksectionitem>
                          </apex:pageBlockSection>
                        </apex:outputPanel>
-                        <apex:pageBlockSectionItem rendered="{!NOT(isocountry.EACP_Country__c)}">
+                       <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q6}"/>
                             <apex:selectRadio id="changeItem4" style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_sell_air_cargo__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_sell_air_cargo__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r6c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
                         </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="r6c2" style="display:{!IF(newForm.Does_your_firm_sell_air_cargo__c=='Yes', '', 'none')}" rendered="{!NOT(isocountry.EACP_Country__c)}">
+                        <apex:outputPanel id="r6c2" style="display:{!IF(newForm.Does_your_firm_sell_air_cargo__c=='Yes', '', 'none')}" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                         <apex:pageBlockSection columns="1">  
                             <apex:pageblocksectionitem >
                                <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_4_Q6_F1}" style="width:200px;"/>
