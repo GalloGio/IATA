@@ -75,7 +75,7 @@ global class AMS_PCI_WizardNotification {
 	}
 
 	public static List<User> getContactUser(Id contactId) {
-		return [SELECT Id, ContactId, Email, Account.IATA_ISO_Country__r.BSP__c FROM User WHERE ContactId = :contactId];
+		return [SELECT Id, ContactId, Email, Account.IATA_ISO_Country__r.BSP__c FROM User WHERE ContactId = :contactId AND Contact.isEmailBounced = false AND isActive = true];
 	}
 
 	public static List<Messaging.EmailFileAttachment> getAttachmentsLst(List<Attachment> attechments) {
