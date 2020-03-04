@@ -25,6 +25,7 @@ import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
 import ISSP_Description from '@salesforce/label/c.ISSP_Description';
 import CSP_ContactName from '@salesforce/label/c.Contact_Name';
 import CSP_AccountName from '@salesforce/label/c.ICCS_Account_Name_Label';
+import CSP_Case_hasInvoicePaid from '@salesforce/label/c.CSP_Case_hasInvoicePaid';
 
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
@@ -54,7 +55,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track showNewDescriptionSection = false;
     @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
     @track trackedIsExpired = false;
-
+    @track isICollectionCase;
 
     @api
     get isexpired() {
@@ -63,6 +64,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     set isexpired(value) {
         this.trackedIsExpired = value;
 	}
+	@track israelCase;
 	
 	@track caseobres;
 
@@ -82,7 +84,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         CSP_AdditionalDetails,
 		ISSP_Description,
 		CSP_ContactName,
-		CSP_AccountName
+        CSP_AccountName,
+        CSP_Case_hasInvoicePaid
     };
 
     acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip, .doc, .docx';
@@ -106,7 +109,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         || this.caseDetails.RecordType__c === 'Complaint (IDFS ISS)'
                         || this.caseDetails.RecordType__c === 'Process';
 
-                    this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";
+					this.israelCase = this.caseDetails.RecordType__c === 'Disputes (Israel only)';
+
+                    this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";                
+                    this.isICollectionCase = this.caseDetails.RecordType.Name === 'Invoicing Collection Cases'; 
 
                     optionBuilder({ caseObj: results })
                         .then(result => {
@@ -120,7 +126,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                     console.log('error: ', error);
                     this.loading = false;
                 });
-            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description"];
+            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description", "Airline__c", "Airline_E_mail__c", "Document_number__c", "Amount_disputed__c"];
             //load the rest of the field labels
 
             getFieldLabels({ sObjectType: 'case', sObjectFields: labelsToRetrieve }).then(result => {
@@ -169,6 +175,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         return this.caseDetails !== undefined && this.caseDetails.Account_Concerned__r !== undefined && this.caseDetails.Account_Concerned__r.IATACode__c !== undefined;
     }
 
+    get hasPaidInvoice() {
+        return this.caseDetails !== undefined && this.caseDetails.Has_the_agent_paid_invoice__c !== undefined && this.caseDetails.RecordType.Name === 'Invoicing Collection Cases';
+    }
+
     get hasTypeOfCasePortal() {
         return this.caseDetails !== undefined && this.caseDetails.Type_of_case_Portal__c !== undefined;
     }
@@ -179,8 +189,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     get showNrDocs() {
         return this.nrDocs > 0;
-    }
-    
+    }   
+
 
     get hasAccount() {
         return this.caseDetails !== undefined && this.caseDetails.AccountId !== undefined;
