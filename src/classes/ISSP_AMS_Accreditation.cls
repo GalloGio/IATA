@@ -178,6 +178,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public string lblCASSTitle {get; set;}
 	public string lblImporAgentTitle {get; set;}
 	public string lblCourierTitle {get; set;}
+	public string lblCNSAgencyTitle {get; set;}
 
 	public boolean isNewCase {get; set;}
 	public boolean isEUcountry {get; set;}
@@ -678,6 +679,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
 		lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
 		lblCourierTitle = Label.ISSP_AMS_StepsAll_Courier_Title;
+		lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title;
 
 		if (ApexPages.currentPage().getParameters().containsKey('step')) {
 			stepNumber = ApexPages.currentPage().getParameters().get('step');

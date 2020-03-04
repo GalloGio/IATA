@@ -1076,8 +1076,9 @@
                             {!IF(isNoticeOfChange, lblNoCRequest,
                             IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle,
                                 IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), lblCargoTitle,
+                                IF(isCNSAgency, lblCNSAgencyTitle,
                                     IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), lblEACPTitle,
-                                        lblCASSTitle))))}</h3>
+                                        lblCASSTitle)))))}</h3>
                     </div>
                     <div class="panel-body" id="body-enquiries">
                         <apex:form >

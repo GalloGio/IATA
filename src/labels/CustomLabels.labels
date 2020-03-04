@@ -24267,6 +24267,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Application for approval as a CASS Associate</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepsAll Cargo CNS Agency Title</shortDescription>
+        <value>Application for approval as a CNS – New Head Office Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
