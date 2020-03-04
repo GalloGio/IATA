@@ -635,7 +635,7 @@ public with sharing class PortalCalendarCtrl {
 	@AuraEnabled
 	public static String goToOldPortalCalendar(){
 
-		return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_OperationalCalendar');
+		return '/ISSP_OperationalCalendar';
 
 	}
 
