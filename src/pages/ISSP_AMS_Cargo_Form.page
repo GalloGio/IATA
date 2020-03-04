@@ -1883,7 +1883,7 @@
                 <apex:pageBlockSection id="section8" columns="1" collapsible="false">
                     <apex:facet name="header">
                             <apex:outputpanel >
-                               {!$Label.ISSP_AMS_Step3_8_Sales_Promotion}
+                                {!IF(isCNSAgency, $Label.ISSP_AMS_Step3_7_Sales_Promotion, $Label.ISSP_AMS_Step3_8_Sales_Promotion)}
                             </apex:outputpanel>
                         </apex:facet>
                         <tr><td colspan="2"><strong>{!$Label.ISSP_AMS_Step3_8_H1}</strong></td></tr>

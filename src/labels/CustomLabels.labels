@@ -23791,6 +23791,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>SECTION 7 - Financial</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_7_Sales_Promotion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_7_Sales_Promotion</shortDescription>
+        <value>SECTION 7 - Sales &amp; Promotion</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_7_credit_ref</fullName>
         <language>en_US</language>
         <protected>false</protected>
