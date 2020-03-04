@@ -4,16 +4,35 @@
 		.hidden {
 			display: none;
 		}
+
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+		}
 	</style>
 <apex:sectionHeader title="Annual Revalidation Cases Page" />
 
-	<apex:form>
+	<apex:form >
 
 		<apex:pageBlock mode="edit" id="pageBlock">
 
 			<apex:pageBlockSection columns="1" title="Please select Region and Mode" >
 
-				<apex:pageblockSectionItem>
+			<apex:pageMessage detail="{!infoNote}" severity="info" escape="false" strength="3" />
+
+				<apex:pageblockSectionItem >
 
 				    <apex:outputLabel value="Region Name"/>
 
@@ -32,7 +51,7 @@
 
 				</apex:pageblockSectionItem>
 				<apex:pageblockSectionItem > </apex:pageblockSectionItem> 
-				<apex:pageblockSectionItem>
+				<apex:pageblockSectionItem >
 
 				    <apex:outputLabel value="Mode"/>
 
@@ -102,7 +121,7 @@
 
                <apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' &&  !(region == 'Select Region')}">
 
-	                <apex:outputLabel>IATA Code</apex:outputLabel>
+	                <apex:outputLabel >IATA Code</apex:outputLabel>
                     <apex:inputText label="IATA Code" value="{!account.IATACode__c}"/>
 
  					<!-- <apex:actionSupport event="onchange" reRender="parameter4"/> -->
@@ -111,21 +130,27 @@
 
 			</apex:pageBlockSection>
 
-
-
 			<apex:pageBlockSection id="parameter4">
 
 				<div align="center">
 
 					<apex:pageBlockSectionItem >
-	    				<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" reRender="Overview, parameter5,buttons,actionButton2"/>
+						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" status="blockEditing" reRender="Overview, parameter5,buttons,actionButton2"/>
 					</apex:pageBlockSectionItem>
 
+				</div>
 
-
-	           	</div>
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
 			
 			</apex:pageBlockSection>
+
 
 </apex:pageBlock>
 
@@ -133,17 +158,17 @@
 
 
 	<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable">
-		<apex:column headerValue="Oscar Revalidation Case" rendered="{!NOT(accountsToCreate.size == 0) && (a.OSCARs__r == null || a.OSCARs__r.size == 0)}"/>
-		<apex:column headerValue="Oscar Revalidation Case" rendered="{!a.OSCARs__r != null && a.OSCARs__r.size > 0}"><apex:outputLink value="/{!caseOscars[a.OSCARs__r[0].Id]}">{!a.OSCARs__r[0].Name}</apex:outputLink></apex:column>
-		<apex:column value="{!a.IATACode__c}"/>
-		<apex:column value="{!a.Name}"/>
-		<apex:column value="{!a.Location_Class__c}"/>
-		<apex:column value="{!a.Location_Type__c}"/>
-		<apex:column value="{!a.Status__c}"/>
-		<apex:column value="{!a.IATA_ISO_Country__r.Name}"/>
-		<apex:column value="{!a.IATA_ISO_Country__r.Region__c}"/>
-		<apex:column value="{!a.Financial_Year_End__c}"/>
-	</apex:pageblocktable >
+		<apex:column headerValue="Oscar Revalidation Case" rendered="{!a.oscarCase == null && accountsToCreate.size != 0}"/>
+		<apex:column headerValue="Oscar Revalidation Case" rendered="{!a.oscarCase != null}"><apex:outputLink value="/{!a.oscarCase.Id}">{!a.oscarCase.oscar__r.Name}</apex:outputLink></apex:column>
+		<apex:column value="{!a.account.IATACode__c}"/>
+		<apex:column value="{!a.account.Name}"/>
+		<apex:column value="{!a.account.Location_Class__c}"/>
+		<apex:column value="{!a.account.Location_Type__c}"/>
+		<apex:column value="{!a.account.Status__c}"/>
+		<apex:column value="{!a.account.IATA_ISO_Country__r.Name}"/>
+		<apex:column value="{!a.account.IATA_ISO_Country__r.Region__c}"/>
+		<apex:column value="{!a.account.Financial_Year_End__c}"/>
+	</apex:pageblocktable>
 
 	<apex:outputLabel value="Total Records Found: {!IF(Con == null , 0 ,Con.resultSize)}" rendered="{!Con != null}"/>
 	
@@ -164,7 +189,7 @@
 
         </apex:pageBlock>
 
-        <apex:pageBlock>
+        <apex:pageBlock >
 
 			<div align="center">
 
