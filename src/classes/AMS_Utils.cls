@@ -49,6 +49,18 @@ public without sharing class AMS_Utils {
 																				ANG_LEGAL_STATUS, ANG_MAJOR_SHAREHOLDING, ANG_ACCREDITATION_TYPE};
 
 	public static final String OSCAR_CLOSED = 'Closed';
+	public static final String OSCAR_CLOSED_CLOSED = 'Closed (Closed)';
+	public static final String OSCAR_CLOSED_NOT_ACCEPTED = 'Closed_ Not Accepted';
+	public static final String OSCAR_CLOSED_REJECTED = 'Closed_Rejected';
+	public static final String OSCAR_CLOSED_WITHDRAWN = 'Closed_Withdrawn';
+	public static final String OSCAR_ACCEPTED_FUTURE = 'Accepted_Future Date';
+	public static final String OSCAR_ACCEPTED_PENDING_AGREEMENT = 'Accepted_Pending Agreement';
+	public static final String OSCAR_ACCEPTED_PENDING_BG = 'Accepted_Pending BG';
+	public static final String OSCAR_ACCEPTED_PENDING_DOCS = 'Accepted_Pending Docs';
+	public static final String OSCAR_REOPEN = 'Reopen';
+	public static final String OSCAR_PENDING_APPROVAL = 'Pending Approval';
+	public static final String OSCAR_PENDING_VALIDATION = 'Pending Validation';
+	public static final String OSCAR_OPEN_EDMC = 'Open - EDMC';
 
 	public static final String BR = 'BR';
 	public static final String HO = 'HO';

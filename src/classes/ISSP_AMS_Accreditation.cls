@@ -3577,7 +3577,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			} else {
 				newForm.ANG_Accreditation_type__c = con.Account.ANG_Accreditation_Model__c;
 
-				if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+				if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
+					(newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH && con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 
 					//In case of conversion from standard to multicountry overwrite the case reason
 					newCase.Reason1__c = 'Accreditation Type';

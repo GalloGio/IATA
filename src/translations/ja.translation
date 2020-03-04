@@ -2064,6 +2064,10 @@
         <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
+    </customLabels>
+    <customLabels>
         <label>案件</label>
         <name>CSP_Cases</name>
     </customLabels>
@@ -3735,6 +3739,10 @@
     <customLabels>
         <label>担当者名を半角アルファベット入力</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- Copyright --></label>

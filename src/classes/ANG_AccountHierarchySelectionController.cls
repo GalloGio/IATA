@@ -38,6 +38,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					, 'Account__r.ANG_Accreditation_Model__c'
 					, 'HE_per_BSP_Mapping__c'
 					, 'RecordTypeId'
+					, 'AMS_Online_Accreditation__c'
 				};
 			}
 			return oscarFields;
@@ -49,17 +50,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		//DO NOT include Id on this Set
 		get{
 			if(accountFields == null){
-				accountFields = new Set<String>{
-					'Name'
-					, 'Location_Type__c'
-					, 'Location_Class__c'
-					, 'Is_Branch_Abroad__c'
-					, 'IATACode__c'
-					, 'Status__c'
-					, 'BillingCity'
-					, 'Category__c'
-					, 'IATA_ISO_Country__r.AMS_Settlement_System__c'
-				};
+				accountFields = new Set<String>();
+				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
+				for (String field : schemaFieldMapAccounts.keySet()){
+					accountFields.add(field);
+				}
+				accountFields.add('IATA_ISO_Country__r.name');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__c');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.name');
+			
 			}
 			return accountFields;
 		}
@@ -410,7 +409,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				integer nbrOfPendingCases = 0;
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c, IATA_ISO_Country__r.AMS_Settlement_System__r.name, IATA_ISO_Country__r.name ' + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
+				for(Account a : Database.query('SELECT '+String.join(accountFieldList, ',')+ getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
 					Boolean main = (a.Id == oscar.Account__c);
 					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
@@ -755,12 +754,18 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	@TestVisible private Boolean updateRelatedRecords() {
+
+		Account oscarAcct = null;
+
 		//DTULLO: Added Record Type
 		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
 		for(HierarchyItem hi : hierarchyValues){
 			if(hi.selected && !hi.main){
 				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id, recordtypeid = rtAgencyInvolved));
+			}
+			else if(hi.main){
+				oscarAcct = hi.acc; 
 			}
 		}
 
@@ -770,6 +775,18 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
 			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' OR (Parent.RecordType.Name = 'OSCAR Communication' and Parent.Reason1__c = 'Annual revalidation'))  ].Id;
 			update new Case(Id = cId, AccountId = oscar.Account__c);
+
+			if(oscar.Process__c == AMS_Utils.NGCORRECTION && oscarAcct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+				Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(oscarAcct);
+				AMS_PAX_Accreditation_Form__c accreditationForm = new AMS_PAX_Accreditation_Form__c(Id = oscar.AMS_Online_Accreditation__c);
+				accreditationForm = (AMS_Pax_Accreditation_Form__c) ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+				accreditationForm.HO_Account__c = null;
+				accreditationForm.Account_Name__c = oscarAcct.Name;
+				accreditationForm.Remittance_Frequency__c = oscarAcct.Remittance_Frequency__c;
+				accreditationForm.ANG_Accreditation_type__c = oscarAcct.ANG_Accreditation_Model__c;
+				update accreditationForm;
+			}
+
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
 			return false;
@@ -903,6 +920,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public void save(){
+
+		//Make sure that the proper main account is selected
+		selectMainAccount();
+
 		if(performValidations()){
 
 			Savepoint sp = Database.setSavepoint();
