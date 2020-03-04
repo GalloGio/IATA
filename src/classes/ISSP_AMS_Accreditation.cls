@@ -4467,9 +4467,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			Id reqRecTypeId;
 
 			if(isCNSAgency) {
-				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
+				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', AMS_Utils.SECTOR_CARGO_AGENT);
 			}else {
-				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Travel_Agent');
+				reqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', AMS_Utils.SECTOR_TRAVEL_AGENT);
 			}
 
 			if (applyLanguage == 'fr') {
