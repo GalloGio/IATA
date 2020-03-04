@@ -396,8 +396,10 @@ public without sharing class AMS_Utils {
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
-	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'STANDARD_ACQUIRED_BY_MULTICOUNTRY';
+	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'ST_ACQUIRED_BY_MC';
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
+	public static final String MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD = 'MC_LOCATIONS_ACQUIRED_BY_ST';
+	public static final String MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE = 'GE_LEFT_ALONE';
 
 	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
 	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
@@ -2793,4 +2795,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
 	}
 
+	public static Boolean pickListContains(String picklist, String lookFor) {
+		return picklist != null && picklist.contains(lookFor);
+	}
 }

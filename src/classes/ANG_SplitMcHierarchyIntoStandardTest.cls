@@ -7,30 +7,53 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		// flags
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
-		// entities
+		// config
 		Test.startTest();
-
+		insert new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = false, TC_Legal_status__c = false,
+			TC_Location__c = false, TC_Accreditation_Type__c = false, TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,
+			TC_Ownership__c = false, TC_Major_Shareholding__c = false, TC_VMFR__c = false, TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD',
+			TCA_Manager_approval__c = 'MCF', TC_Hierarchy__c = true, Valid_Accreditation_Models__c = 'ALL');
+		
+		// entities
 		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
 		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
 		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
 		
 		/*
-		 * MC Account 3 GE PT
-		 *	|_ MC Account 5 AE PT
+		 * MC Account 1 GE PT
+		 *	|_ MC Account 1 AE PT
 		 *  |_ MC Account 1 HE GB
-	 	 *  |   |_ MC Account 4 AE GB
-		 *  |_ MC Account 2 HE FR
+	 	 *  |   |_ MC Account 1 AE GB
+		 *  |_ MC Account 1 HE FR
 		 */
-		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 3 GE PT', (Id) null, AMS_Utils.GE, pt, '10000000');
-		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 5 AE PT', ac1.Id, AMS_Utils.AE, pt, '10000001');
-		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, AMS_Utils.HE, gb, '10000002');
-		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 4 AE GB', ac3.Id, AMS_Utils.AE, gb, '10000003');
-		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 HE FR', ac1.Id, AMS_Utils.HE, fr, '10000004');
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE PT', ac1.Id, ac1.Id, AMS_Utils.AE, pt, '10000001');
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000002');
+		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac3.Id, ac1.Id, AMS_Utils.AE, gb, '10000003');
+		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000004');
 		
 		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac1, ac2, ac3, ac4, ac5 });
 
 		Contact cont = ANG_TestDataHelper.insertContact(ac1.Id);
-		AMS_OSCAR__c oscar = ANG_TestDataHelper.insertOscarAndRelatedEntities(ac1, cont.Id, AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX);
+		ANG_TestDataHelper.insertOscarAndRelatedEntities(ac1, cont.Id, AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
+		/*
+		 * MC Account 2 GE PT
+		 *  |_ MC Account 2 HE FR
+		 */
+		Account ac6 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000005');
+		Account ac7 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 HE FR', ac6.Id, ac6.Id, AMS_Utils.HE, fr, '10000006');
+		
+		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac6, ac7 });
+		
+		/*
+		 * MC Account 3 GE PT
+		 *  |_ MC Account 3 HE FR
+		 */
+		Account ac8 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 3 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000007');
+		Account ac9 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 3 HE FR', ac8.Id, ac8.Id, AMS_Utils.HE, fr, '10000008');
+		
+		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac8, ac9 });
 
 		Test.stopTest();
 	}
@@ -40,14 +63,15 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 	{
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE GB'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		verifyChanges('MC Account 1 HE GB', AMS_Utils.HE);
+		verifyChangesOnSplit('MC Account 1 HE GB', AMS_Utils.HE);
 	}
 
 	@isTest
@@ -55,14 +79,15 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 	{
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 2 HE FR'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE FR'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		verifyChanges('MC Account 2 HE FR', AMS_Utils.HE);
+		verifyChangesOnSplit('MC Account 1 HE FR', AMS_Utils.HE);
 	}
 
 	@isTest
@@ -70,14 +95,15 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 	{
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		verifyChanges('MC Account 3 GE PT', AMS_Utils.GE);
+		verifyChangesOnSplit('MC Account 1 GE PT', AMS_Utils.GE);
 	}
 
 	@isTest
@@ -85,14 +111,15 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 	{
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 4 AE GB'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 AE GB'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		verifyChanges('MC Account 4 AE GB', AMS_Utils.AE);
+		verifyChangesOnSplit('MC Account 1 AE GB', AMS_Utils.AE);
 	}
 
 	@isTest
@@ -100,28 +127,30 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 	{
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 5 AE PT'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 AE PT'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		verifyChanges('MC Account 5 AE PT', AMS_Utils.AE);
+		verifyChangesOnSplit('MC Account 1 AE PT', AMS_Utils.AE);
 	}
 
 	@isTest
 	public static void testBatch_aeOnGeAccount_Inactive()
 	{
-		Account accountAE = [SELECT Id FROM Account WHERE Name = 'MC Account 5 AE PT'];
+		Account accountAE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 AE PT'];
 		accountAE.Status__c = AMS_Utils.ACC_S0_TERMINATED;
 		update accountAE;
 
 		Test.startTest();
 		
-		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 3 GE PT'].Id;
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountAE.Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -130,7 +159,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		// account information
 		List<Account> accts = [SELECT Id, ParentId, Top_Parent__c, ANG_Accreditation_Model__c, Location_Type__c
 							  FROM Account
-							  WHERE Name = 'MC Account 5 AE PT'];
+							  WHERE Name = 'MC Account 1 AE PT'];
 		System.assertEquals(1, accts.size());
 		Account acct = accts.get(0);
 
@@ -153,12 +182,50 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		System.assertEquals(0, oscars.size()); // no oscar is created to inactive accounts
 	}
 
-	private static void verifyChanges(String accountName, String locationType) {
-		boolean isGe = locationType == AMS_Utils.GE;
-		boolean isHe = isGe || locationType == AMS_Utils.HE;
+	@isTest
+	public static void testBatch_onGeLeftAlone_ChangeHierarchy()
+	{
+		// flags
+		ANG_AgencyChangesHelper.isMigrationRunning = true; // don't validate the backup process
+
+		// entitites
+		Account accountHE = [SELECT Id, Name, IATA_ISO_Country__c, Iso_State__c, Location_Class__c, Location_Type__c
+							 FROM Account
+							 WHERE Name = 'MC Account 2 HE FR']; // the account being moved away
+		Account accountNewGe = [SELECT Id, Name, IATA_ISO_Country__c, Iso_State__c, Location_Class__c, Location_Type__c
+								FROM Account
+								WHERE Name = 'MC Account 3 GE PT']; // the new parent hierarchy
+		
+		Contact cont = ANG_TestDataHelper.insertContact(accountHE.Id);
+		ANG_TestDataHelper.ResultObjects objs = ANG_TestDataHelper.insertOscarAndRelatedEntities(accountHE, cont.Id, AMS_Utils.NGCHANGES, AMS_Utils.RECTYPE_NGCHANGES, AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+		ANG_TestDataHelper.insertGenericAttachmentToOscar(objs.oscarCase.Id);
+		ANG_TestDataHelper.insertGenericOscarContact(objs.oscarStagingArea.Id, accountHE.Id);
+		
+		Test.startTest();
+
+		// update oscar's Sanity Check to trigger the batch execution
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarMainAccount(oscar, accountNewGe.Id);
+		ANG_TestDataHelper.setOscarTypeOfChange(oscar, AMS_Utils.ANG_HIERARCHY);
+		ANG_TestDataHelper.setOscarSanityCheckPassed(oscar);
+		ANG_TestDataHelper.appendOscarHierarchyScenario(oscar, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE);
+		update oscar;
+		
+		Test.stopTest();
+		
+		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
+	}
+
+	private static void verifyChangesOnSplit(String accountName, String locationType) {
+		verifyChangesOnSplit(accountName, locationType, false);
+	}
+
+	private static void verifyChangesOnSplit(String accountName, String locationType, Boolean justBsp) {
+		boolean isGe = locationType == AMS_Utils.GE && ! justBsp; // GE behaves as HE when "justBsp"
+		boolean isHe = isGe || locationType == AMS_Utils.HE || justBsp;
 
 		// general error on the batch
-		List<Technical_Logs__c> logs = [SELECT Id, Status__c FROM Technical_Logs__c];
+		List<Technical_Logs__c> logs = [SELECT Id, Status__c FROM Technical_Logs__c WHERE Operation__c <> 'Rollback'];
 		System.assertEquals(0, logs.size(), 'An error occurred on the Batch: ' + (!logs.isEmpty() ? logs.get(0).Status__c : ''));
 		
 		// account information
@@ -169,6 +236,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Account acct = accts.get(0);
 
 		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, acct.ANG_Accreditation_Model__c);
+		
 		if (isHe) {
 			System.assertEquals(null, acct.ParentId);
 			System.assertEquals(null, acct.Top_Parent__c);
@@ -222,7 +290,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 			System.assertEquals(1, oscars.size());
 			System.assertEquals(AMS_Utils.NGCONVERSIONMCTOST, oscars.get(0).Process__c);
 			System.assertEquals(AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, oscars.get(0).RecordTypeId);
-			if (!isGe) {
+			if (!isGe && ! justBsp) { // when "justBsp", a GE is marked as HE except in this case
 				System.assertNotEquals(null, oscars.get(0).Parent_OSCAR__c);
 				System.assertEquals(AMS_Utils.NOT_APPLICABLE, oscars.get(0).Step51__c);
 			} else {

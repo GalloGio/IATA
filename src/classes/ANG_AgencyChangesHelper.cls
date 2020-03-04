@@ -250,6 +250,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [AFTER CONVERSION] After SOQL:' + Limits.getQueries());
 			return;
 		}
+		Id parentAccountLeftAlone = null;
 
 		if(oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [BEFORE CONVERSION] Begin SOQL:' + Limits.getQueries());
@@ -303,8 +304,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
 			Boolean isMulticountry = 
-				oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
-				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+				(oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY ||
+				AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) &&
+				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD);
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);
@@ -317,6 +319,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = fetchActiveChangeCodesFromAccounts(changesContainer.accountsMap.values());
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
+
+				Id parentAccountLeftAlone = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)
+					? changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c
+					: null;
 
 				if(!validateTypeOfChange(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c))
 					return;
@@ -520,6 +526,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				}
 
+				if (parentAccountLeftAlone != null)
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, parentAccountLeftAlone, true));
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
 				Map<Id,Account> hierarchyAccs;
@@ -559,12 +567,12 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 					//If it is a multicountry hierarchy split => updates forms of payments (CC, CA, EP)
-					if(isMulticountry && oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT){
+					if (isMulticountry && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT)) {
 						ANG_MulticountryHelper.processAgenciesFormsOfPayment(hierarchyAccs.values(), changesContainer);
 					}
 
 					// if it is a ST to MC acquisition
-					if (oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) {
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) {
 						// recalculate the FoP aligned with the GE
 						Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(newParent);
 						
@@ -630,6 +638,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
+		if (parentAccountLeftAlone != null)
+			ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(parentAccountLeftAlone, true));
 	}
 
 	private static void handleConversionToStandard(AMS_OSCAR__c oscar){
@@ -1311,7 +1321,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 
-		Boolean isHierarchySplit = (oscarToProcess.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
+		Boolean isHierarchySplit = AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
 
 		if(isHierarchySplit){
 

@@ -912,6 +912,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				//E.g. single standard hierarchy being acquired by a multicountry one
 				oscar.Change_of_Hierarchy_Scenario__c = fetchChangeOfHierarchyScenario();
 				
+				if (this.isMulticountry && diffDestination(oscar.New_parent__c) && isOnlyGeBspLeft()) {
+					oscar.Change_of_Hierarchy_Scenario__c = (String.isNotBlank(oscar.Change_of_Hierarchy_Scenario__c)
+						? oscar.Change_of_Hierarchy_Scenario__c + ';'
+						: '') + AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
+				}
+				
 				update oscar;
 
 				//must be after save, to pass validations on the details

@@ -635,6 +635,9 @@ public class AMS_AccountHierarchySelectionController {
 			try {
 				update oscar;
 
+				if (isMulticountry && isOnlyGeBspLeft())
+					oscar.Change_of_Hierarchy_Scenario__c = AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
+				
 				//must be after save, to pass validations on the details
 				if(updateRelatedRecords()) closeTab = true;
 			} catch(Exception e) {

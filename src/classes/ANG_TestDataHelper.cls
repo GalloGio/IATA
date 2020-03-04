@@ -30,33 +30,41 @@ public class ANG_TestDataHelper
 		country.Multicountry_Enabled__c = multicountry;
 		insert country;
 
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertBspAndIsoCountry] Created country: ' + country);
+
 		return country;
 	}
 
-	public static Account insertMulticountryAccount(
-		String name, Id parent, String locationType, IATA_ISO_Country__c isoCountry, String iataCode)
+	public static Account insertMulticountryAccount(String name, Id parent, Id topParent, String locationType, IATA_ISO_Country__c isoCountry,
+		String iataCode)
 	{
 		Account acct = createBasicAccount(true);
 		acct.Name = name;
 		acct.ParentId = parent;
+		acct.Top_Parent__c = topParent;
 		acct.Location_Type__c = locationType;
 		acct.IATA_ISO_Country__c = isoCountry.Id;
 		acct.IATACode__c = iataCode;
 		insert acct;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertMulticountryAccount] Created account: ' + acct);
 
 		return acct;
 	}
 
-	public static Account insertStandardAccount(
-		String name, Id parent, String locationType, IATA_ISO_Country__c isoCountry, String iataCode)
+	public static Account insertStandardAccount(String name, Id parent, String locationType, IATA_ISO_Country__c isoCountry,
+		String iataCode)
 	{
 		Account acct = createBasicAccount(false);
 		acct.Name = name;
 		acct.ParentId = parent;
+		acct.Top_Parent__c = parent;
 		acct.Location_Type__c = locationType;
 		acct.IATA_ISO_Country__c = isoCountry.Id;
 		acct.IATACode__c = iataCode;
 		insert acct;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertStandardAccount] Created account: ' + acct);
 
 		return acct;
 	}
@@ -84,6 +92,8 @@ public class ANG_TestDataHelper
 		h.Main_Account__c = accounts.get(0).Top_Parent__c == null ? accounts.get(0).Id : accounts.get(0).Top_Parent__c;
 		insert h;
 
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertHierarchy] Created hierarchy: ' + h);
+
 		List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
 		for (Account acct : accounts) {
 			if (acct.ParentId == null)
@@ -97,6 +107,8 @@ public class ANG_TestDataHelper
 			rels.add(ar);
 		}
 		insert rels;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertHierarchy] Created relations: ' + rels);
 	}
 
 	public static Contact insertContact(Id accountId) {
@@ -106,7 +118,7 @@ public class ANG_TestDataHelper
 			Lastname = 'Vaughan',
 			Phone = '666123456',
 			MobilePhone = '911111111',
-			Email = 'fwuhxeiufxhmrfefdsiyfsimo@test.com',
+			Email = 'contact_for_' + accountId + '@test.com',
 			Financial_Assessment_Contact__c = false
 		);
 		insert cont;
@@ -114,16 +126,20 @@ public class ANG_TestDataHelper
 		return cont;
 	}
 
-	public static AMS_OSCAR__c insertOscarAndRelatedEntities(Account account, Id contactId, String oscarProcessType, Id oscarRecordType, Id paxRecordType) {
+	public static ResultObjects insertOscarAndRelatedEntities(Account account, Id contactId, String oscarProcessType, Id oscarRecordType, Id paxRecordType, String accreditationType) {
 		AMS_OSCAR__c oscar = insertOscar(account.Id, oscarProcessType, oscarRecordType);
 		Case oscarCase = insertOscarCase(oscar.Id, account.Id, contactId);
-		AMS_Pax_Accreditation_Form__c staging = insertPax(paxRecordType, account, oscarCase.Id);
+		AMS_Pax_Accreditation_Form__c staging = insertPax(paxRecordType, account, oscarCase.Id, accreditationType);
 
 		oscar.AMS_Online_Accreditation__c = staging.Id;
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		update oscar;
 
-		return oscar;
+		ResultObjects objs = new ResultObjects();
+		objs.oscar = oscar;
+		objs.oscarCase = oscarCase;
+		objs.oscarStagingArea = staging;
+		return objs;
 	}
 
 	private static AMS_OSCAR__c insertOscar(Id accountId, String oscarProcessType, Id oscarRecordType) {
@@ -150,7 +166,7 @@ public class ANG_TestDataHelper
 		return oscarCase;
 	}
 
-	private static AMS_Pax_Accreditation_Form__c insertPax(Id paxRecordType, Account acct, Id oscarCaseId) {
+	private static AMS_Pax_Accreditation_Form__c insertPax(Id paxRecordType, Account acct, Id oscarCaseId, String accreditationType) {
 		AMS_Pax_Accreditation_Form__c staging = new AMS_Pax_Accreditation_Form__c();
 		staging.RecordTypeId = paxRecordType;
 		staging.Account_Name__c = acct.Name;
@@ -169,11 +185,50 @@ public class ANG_TestDataHelper
 		staging.Location_Class__c = acct.Location_Class__c;
 		staging.Location_Type__c = acct.Location_Type__c;
 		staging.SAAM_Case__c = oscarCaseId;
-		staging.ANG_Accreditation_type__c = 'Cash';
+		staging.ANG_Accreditation_type__c = accreditationType;
 		staging.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 		insert staging;
 
 		return staging;
+	}
+
+	public static void insertProcessDetails(Id oscarId, Id accountId, String processType) {
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', processType);
+		insert new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscarId, Account__c = accountId);
+	}
+
+	public static void insertGenericAttachmentToOscar(Id oscarCaseId) {
+		Attachment att = new Attachment();
+		att.Name = 'Certificates '+oscarCaseId+'.pdf';
+		att.Body = Blob.valueOf('Test content');
+		att.ParentId = oscarCaseId;
+		insert att;
+	}
+
+	public static void insertGenericOscarContact(Id paxId, Id accountId) {
+		Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = paxId,
+			Company__c = accountId, First_name__c = 'NameToUse1', Last_name__c = 'Last1', Job_title__c = 'ABC1', Mobile__c = '+4112345671',
+			Phone__c = '3424322341', Email__c = 'oscar_contact_for_' + paxId + '@email1.com', RecordTypeId = personAccreditationRT);
+	}
+
+	public static void setOscarMainAccount(AMS_OSCAR__c oscar, Id mainAccount) {
+		oscar.New_parent__c = mainAccount;
+	}
+
+	public static void setOscarTypeOfChange(AMS_OSCAR__c oscar, String typeOfChange) {
+		oscar.ANG_Type_Of_Change__c = typeOfChange;
+	}
+
+	public static void setOscarSanityCheckPassed(AMS_OSCAR__c oscar) {
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+	}
+
+	public static void appendOscarHierarchyScenario(AMS_OSCAR__c oscar, String scenario) {
+		oscar.Change_of_Hierarchy_Scenario__c = (String.isNotBlank(oscar.Change_of_Hierarchy_Scenario__c) ? ';' : '') + scenario;
 	}
 
 	public class CountryInformation
@@ -187,5 +242,11 @@ public class ANG_TestDataHelper
 			this.code = code;
 			this.bspName = bspName;
 		}
+	}
+
+	public class ResultObjects {
+		public AMS_OSCAR__c oscar;
+		public Case oscarCase;
+		public AMS_Pax_Accreditation_Form__c oscarStagingArea;
 	}
 }
