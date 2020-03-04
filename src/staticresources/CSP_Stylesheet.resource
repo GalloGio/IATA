@@ -31,6 +31,12 @@ body {
   	background-color: #f7f8fa;
 }
 
+.cardImageProperties{
+    background-size: contain !important; 
+    background-position: 50% 50% !important; 
+    background-repeat: no-repeat !important;
+}
+
 /*used to display the cards for the portal with opaque background */
 .customCard{
     box-shadow: 5px 5px 20px #e2e2e2;

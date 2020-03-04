@@ -71,6 +71,11 @@ export default class FavoriteServicesLWC extends LightningElement {
                     if (this.auxResult[i].Portal_Application__r.Application_URL__c === undefined || this.auxResult[i].Portal_Application__r.Application_URL__c === '') {
                         this.auxResult[i].Portal_Application__r.Application_URL__c = '';
                     }
+                    if(this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== undefined && this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== ''){
+                        this.auxResult[i].imageCSS = 'background: url(' + this.auxResult[i].Portal_Application__r.Application_icon_URL__c + ');';
+                    }else{
+                        this.auxResult[i].imageCSS = '';
+                    }
                 }
 
 
