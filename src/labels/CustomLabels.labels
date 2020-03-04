@@ -35474,6 +35474,13 @@ CNS Customer Services</value>
         <value>UA-4245951-8</value>
     </labels>
     <labels>
+        <fullName>ISSP_Trade_Name_DBA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trade Name (D/B/A)</shortDescription>
+        <value>Trade Name (D/B/A)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Trade_name_of_Company</fullName>
         <categories>Portal</categories>
         <language>en_US</language>

@@ -1050,7 +1050,11 @@
                             <apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}" />
                             <apex:inputfield value="{!newForm.Account_Name__c}" />
                         </apex:pageblocksectionitem>
-                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"/>
+                        <apex:pageblocksectionitem rendered="{!isCNSAgency}">
+                            <apex:outputlabel value="{!$Label.ISSP_Trade_Name_DBA}" />
+                            <apex:inputfield value="{!newForm.Trade_Name__c}" />
+                        </apex:pageblocksectionitem>
+                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!AND(OR(isTerminatedAgent, isNewHOforAccredAgent), NOT(IsCNSAgency))}"/>
                     <apex:pageBlockSectionItem >
                        
                         <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
