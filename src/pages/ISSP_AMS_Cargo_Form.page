@@ -1815,10 +1815,10 @@
                 <apex:pageBlockSection id="section7" columns="1" collapsible="false">
                     <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_Step3_7_Financial}
+                                {!IF(isCNSAgency, $Label.ISSP_AMS_Step3_6_Financial, $Label.ISSP_AMS_Step3_7_Financial)}
                             </apex:outputpanel>
                         </apex:facet>
-                    <apex:pageblocksectionitem >
+                    <apex:pageblocksectionitem rendered="{!NOT(isCNSAgency)}">
                         <apex:outputlabel value="{!$Label.ISSP_Currency}" />
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.CurrencyIsoCode}" style="float:left" onchange="toggleCurrencyCode(this.value);" />
@@ -1830,6 +1830,7 @@
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.ISSP_AMS_Registered_Capital__c}" onkeypress="return onlyNumbers(event);"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpRegisteredCapital}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            <apex:outputText value=" USD"/>
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
                     <apex:pageblocksectionitem >
@@ -1837,17 +1838,18 @@
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.ISSP_AMS_Paidup_capital__c}" onkeypress="return onlyNumbers(event);"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpPaidUpCapital}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            <apex:outputText value=" USD"/>
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
 
-                    <apex:pageblocksectionitem >
+                    <apex:pageblocksectionitem rendered="{!NOT(isCNSAgency)}">
                         <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_7_F4}" />          
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.ISSP_AMS_Min_Paidup_capital__c}" onkeypress="return onlyNumbers(event);"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpMinPaidCapital}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
-                    <apex:pageblocksectionitem labelStyle="width:35%" rendered="{!isocountry.EACP_Country__c}">
+                    <apex:pageblocksectionitem labelStyle="width:35%" rendered="{!AND(isocountry.EACP_Country__c, NOT(isCNSAgency))}">
                         <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_7_F5}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_Amount_of_credit_requested__c}" onkeypress="return onlyNumbers(event);"/>
                     </apex:pageblocksectionitem>
@@ -1855,7 +1857,7 @@
                         <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
                     </apex:actionfunction>
                     <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, "VAT number", isocountry.Tax_Number_label__c)}" />
+                        <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, 'VAT number', isocountry.Tax_Number_label__c)}" />
                         <apex:outputpanel id="VATNumberInput">
                             <span style="margin-left:6px;padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                             <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" />
@@ -1867,8 +1869,8 @@
                             </apex:actionstatus>
                         </apex:outputpanel>
                       </apex:pageblocksectionitem>
-                    <tr><td colspan="2"><strong>{!$Label.ISSP_AMS_Step3_7_credit_ref}</strong></td></tr>
-                    <apex:pageBlockSection columns="2">
+                      <apex:pageBlockSection rendered="{!NOT(isCNSAgency)}">
+                        <tr><td colspan="2"><strong>{!$Label.ISSP_AMS_Step3_7_credit_ref}</strong></td></tr>
                         <apex:inputfield value="{!newForm.ISSP_AMS_Bank_Address_1__c}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_Bank_Account_Number_1__c}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_Bank_Address_2__c}" />
@@ -1876,7 +1878,6 @@
                         <apex:inputfield value="{!newForm.ISSP_AMS_Bank_Address_3__c}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_Bank_Account_Number_3__c}" />
                     </apex:pageBlockSection>
-                    
                 </apex:pageBlockSection>
                 
                 <span id="nav_eight"></span>

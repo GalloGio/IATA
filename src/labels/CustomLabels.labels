@@ -23719,6 +23719,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>SECTION 5 - Premises of Agency Location for which approval requested</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_6_Financial</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_6_Financial</shortDescription>
+        <value>SECTION 6 - Financial</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_6_Other_Info</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
