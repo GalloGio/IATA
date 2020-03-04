@@ -120,7 +120,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		List<Financial_Security__c> fsLst = Trigger.isDelete ? triggerOld : triggerNew;
 
 		for(Financial_Security__c fs : fsLst){
-			
+
 			if(Trigger.isUpdate){
 				Financial_Security__c oldFs = oldMap.get(fs.id);
 				if(fs.Amount__c == oldFs.Amount__c && fs.CurrencyIsoCode == oldFs.CurrencyIsoCode && fs.Security_Status__c == oldFs.Security_Status__c && fs.Account__c == oldFs.Account__c && fs.ANG_Minimum_Financial_Security__c == oldFs.ANG_Minimum_Financial_Security__c && fs.ANG_Financial_Security_Currency__c == oldFs.ANG_Financial_Security_Currency__c){
