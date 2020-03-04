@@ -1774,7 +1774,7 @@
                     </apex:pageBlockSection>
                 
                 <span id="nav_six"></span>
-                <apex:pageBlockSection id="section6" columns="1" collapsible="false">
+                <apex:pageBlockSection id="section6" columns="1" collapsible="false" rendered="{!NOT(isCNSAgency)}">
                     <apex:facet name="header">
                             <apex:outputpanel >
                                 {!$Label.ISSP_AMS_Step3_6_Trained_Staff_Members}    
