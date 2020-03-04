@@ -56,6 +56,28 @@ public without sharing class ISSP_AMS_Accreditation {
 	private Id vHQAccountId;
 	public Id brAccountId {get; set;}
 	public List<SelectOption> agencyCodesConcerned {get; set;}
+	public List<SelectOption> legalStatusList {
+		get {
+			if(legalStatusList == null) {
+				legalStatusList = new List<SelectOption>{new SelectOption('', '--None--')};
+
+				if(isCNSAgency) {
+					legalStatusList.add(new SelectOption('Sole Proprietorship', 'Sole Proprietorship'));
+					legalStatusList.add(new SelectOption('Corporation', 'Corporation'));
+					legalStatusList.add(new SelectOption('Partnership', 'Partnership'));
+					legalStatusList.add(new SelectOption('Limited Company', 'Limited Company'));
+				}
+				else {
+					List<Schema.PicklistEntry> entries = Utility.getPicklistEntries('AMS_Pax_Accreditation_Form__c', 'ISSP_AMS_Legal_Status__c');
+				
+					for( Schema.PicklistEntry f : entries)
+						legalStatusList.add(new SelectOption(f.getValue(), f.getLabel()));
+				}
+			}
+			return legalStatusList;
+		}
+		private set;
+	}
 	private Id vAccountConcernedId;
 	public String amsCountryLabel {get; set;}
 	public String memberairlineid {get; set;}
@@ -1805,7 +1827,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				includedSummaryPage = 'ISSP_ANG_PAX_AE_ReadOnly';
 			}
 		} else if (sectorValue.StartsWith('Cargo_Agent')) {
-			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') {
+			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || (newForm.Agent_Type__c == 'CNS Agency' && isCNSAgency)) {
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 					includedPageName = 'ISSP_AMS_Cargo_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_ReadOnly';

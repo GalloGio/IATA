@@ -817,9 +817,10 @@
         <div class="panel-heading head_panel_green">
             <h3 class="panel-title">
                 <!-- IMPORTANT - If new Agent_Type__c are created we need to add here the new Label-->
-                {!IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), IF(communityName=='CNS', $Label.ISSP_AMS_StepsAll_Cargo_Title_CNS, IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title)),
-                    IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
-                        $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title))}
+                {!IF(isCNSAgency, $Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title,
+                    IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), IF(communityName=='CNS', $Label.ISSP_AMS_StepsAll_Cargo_Title_CNS, IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title)),
+                        IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
+                            $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title)))}
                
             </h3>
         </div>
@@ -905,11 +906,18 @@
                     </apex:actionFunction>
                     <apex:pageBlockSectionItem labelStyle="width:30%">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}"/>
-                        <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');"/> 
+                        <!--apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');"/-->
+                        <apex:selectList size="1" value="{!newForm.ISSP_AMS_Legal_Status__c}" onchange="toggleLegalStatus('{!$Component.LegalStatus}');">
+                            <apex:selectOptions value="{!legalStatusList}"/>
+                        </apex:selectList>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_legal_establishment__c.Label}"/>
                         <apex:inputField showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" onclick="showPastDates()"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!isCNSAgency}">
+                        <apex:outputLabel value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}"/>          
+                        <apex:inputText label="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" />
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
                 
@@ -943,7 +951,7 @@
                     </apex:outputPanel>
                     <apex:actionRegion >
                     <apex:pageBlockSection columns="1">
-                        <apex:outputPanel id="forWhom"  >
+                        <apex:outputPanel id="forWhom" rendered="{!NOT(isCNSAgency)}">
                             <apex:outputPanel style="width:30%" rendered="{!AND(newForm.ISSP_AMS_Nominee_Trustee__c == 'Yes',newForm.ISSP_AMS_Legal_Status__c == 'Corporation',NOT(isocountry.EACP_Country__c))}">
                                 <apex:pageBlockSection columns="1">   
                                     <apex:inputField value="{!newForm.ISSP_AMS_For_whom_Nominee__c}" />
