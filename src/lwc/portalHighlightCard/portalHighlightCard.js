@@ -2,7 +2,6 @@ import { LightningElement, api, track } from 'lwc';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-import getBaseURL from '@salesforce/apex/PortalRecommendationCtrl.getBaseURL';
 
 export default class PortalHighlightCard extends LightningElement {
 
