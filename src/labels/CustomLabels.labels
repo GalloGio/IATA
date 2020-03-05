@@ -22351,6 +22351,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Cargo Agent / IFACP Forwarder – New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_CNS_AGENCY_NEW_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION CNS AGENCY NEW HO</shortDescription>
+        <value>CNS Endorsement - New Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_COURIER_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -32031,6 +32039,22 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP Owner Name</shortDescription>
         <value>Owner Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Federal_EIN</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Federal EIN</shortDescription>
+        <value>Federal EIN (IRS EIN number)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_Federal_EIN</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating Federal EIN</shortDescription>
+        <value>Validating Federal EIN...</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
