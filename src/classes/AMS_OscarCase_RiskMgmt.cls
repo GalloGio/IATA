@@ -75,7 +75,7 @@ public class AMS_OscarCase_RiskMgmt {
 									Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, ParentId, Parent.RecordtypeId, Parent.AccountId,
 									Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c,
 									Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c,
-									Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c, Group_Single_Agent__c,
+									Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c, Group_Single_Agent__c,Reinstatement_Requirements__c,Additional_Financial_Security_needed__c,
 									(SELECT Id, HOId__c, Case__c, Account__c FROM Hierarchy_Account_Selections__r)
 									FROM Case WHERE Id IN: mapTrgNew.keySet()]);
 
