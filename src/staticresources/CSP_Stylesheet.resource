@@ -1528,6 +1528,7 @@ lightning-datatable .slds-th__action {
     color: #525252;
     padding-top: 5%;
 	display: contents;
+    max-width: none;
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
