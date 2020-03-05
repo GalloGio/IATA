@@ -15,8 +15,9 @@ public without sharing class Pardot_API {
 	public static String getAPIToken() {
 		String url = 'https://pi.pardot.com/api/login/version/'+pardotAPIVersion+'?email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
 
+		Map<String,String> header = new Map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
 		try {
-			String resp = callout('POST', url, null);
+			String resp = callout('POST', url, header);
 			// Get API_KEY from XML
 			return readNode(resp, 'api_key').getText();
 		} catch(Exception e) {
