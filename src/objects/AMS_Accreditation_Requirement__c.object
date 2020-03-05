@@ -741,7 +741,7 @@
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
-                <fullName>CNS Agency</fullName>
+                <fullName>CNS Endorsement</fullName>
                 <default>false</default>
             </values>
             <values>
