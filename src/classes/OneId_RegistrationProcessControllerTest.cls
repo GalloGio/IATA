@@ -285,11 +285,10 @@ private class OneId_RegistrationProcessControllerTest {
 			Boolean doInsert = true;
 
 			Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
+			Contact c2 = new Contact(firstname='firstname2', lastname = 'lastname2',Salutation = 'sig2', email='xpto2@lls.com');
 
-			OneId_RegistrationProcessController.registrationAux(new Account(Sector__c = 'General Public'), c, null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
-																														 'billingStateId' => String.valueOf(state.Id),
-																														 'shippingCityId' => String.valueOf(city.Id),
-																														 'shippingStateId' => String.valueOf(state.Id)});
+			OneId_RegistrationProcessController.registrationAux(new Account(Sector__c = 'General Public'), c, null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id), 'billingStateId' => String.valueOf(state.Id), 'shippingCityId' => String.valueOf(city.Id), 'shippingStateId' => String.valueOf(state.Id)});
+			OneId_RegistrationProcessController.registrationAux(new Account(Sector__c = 'General Public', IATA_ISO_Country__c = country.Id), c2, null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id), 'billingStateId' => String.valueOf(state.Id), 'shippingCityId' => String.valueOf(city.Id),'shippingStateId' => String.valueOf(state.Id)});																											 
 
 		Test.stopTest();
 
