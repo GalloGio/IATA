@@ -17,9 +17,7 @@ export default class PortalHighlightCard extends LightningElement {
 
     goToLink() {
         if (this.highlight.actionType === 'PRODUCT') {
-            getBaseURL().then(result => {
-                window.location.href = result + this.highlight.informationButtonLink;
-            });
+            window.location.href = this.highlight.informationButtonLink;
         } else {
             window.location.href = this.highlight.informationButtonLink;
         }
@@ -28,9 +26,7 @@ export default class PortalHighlightCard extends LightningElement {
 
     goToAction() {
         if (this.highlight.actionType === 'PRODUCT') {
-            getBaseURL().then(result => {
-                window.location.href = result + this.highlight.actionButtonLink;
-            });
+            window.location.href = this.highlight.actionButtonLink;
         } else {
             window.location.href = this.highlight.actionButtonLink;
         }
