@@ -291,6 +291,14 @@
     function showNewTrainedStaffDialog() {
         $j(function() {
             $j( '#addNewTrainedStaffModal').modal('show');
+            if({!isCNSAgency}){
+                var e = document.querySelectorAll('[id$="TrainingType"]')[0];
+                for(var i = e.options.length-1; i >0 ; i--){
+                    if (e[i].value != 'DGR') {
+                        e.remove(i);
+                    }
+                }
+            }
             $j( '.datePicker').css('position','fixed');
       });
     }
