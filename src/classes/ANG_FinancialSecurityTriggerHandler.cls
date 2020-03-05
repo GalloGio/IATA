@@ -97,7 +97,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		String accountsQuery = '' +
 			'SELECT Id, Top_Parent__c, ANG_isNewGenAgency__c, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
 			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
-			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c, ANG_isToUpdateRHC__c FROM Financial_Securities__r ORDER BY LastModifiedDate DESC) ' +
+			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c, ANG_isToUpdateRHC__c FROM Financial_Securities__r ORDER BY CreatedDate DESC) ' +
 			'FROM Account WHERE ( Id IN :accIdSet';
 
 		if(fetchFromParents){
@@ -120,9 +120,9 @@ public class ANG_FinancialSecurityTriggerHandler{
 		List<Financial_Security__c> fsLst = Trigger.isDelete ? triggerOld : triggerNew;
 
 		for(Financial_Security__c fs : fsLst){
-
+			Financial_Security__c oldFs;
 			if(Trigger.isUpdate){
-				Financial_Security__c oldFs = oldMap.get(fs.id);
+				oldFs = oldMap.get(fs.id);
 				if(fs.Amount__c == oldFs.Amount__c && fs.CurrencyIsoCode == oldFs.CurrencyIsoCode && fs.Security_Status__c == oldFs.Security_Status__c && fs.Account__c == oldFs.Account__c && fs.ANG_Minimum_Financial_Security__c == oldFs.ANG_Minimum_Financial_Security__c && fs.ANG_Financial_Security_Currency__c == oldFs.ANG_Financial_Security_Currency__c){
 					continue;
 				}
@@ -130,10 +130,9 @@ public class ANG_FinancialSecurityTriggerHandler{
 			accIdSet.add(fs.Account__c);
 			financialSecurityToProcessLst.add(fs);
 
-			if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert || (Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c || fs.Account__c != oldMap.get(fs.id).Account__c)))){
-				calculateMinFsLst.add(fs);
-			}
-
+			// Is it necessary to continue check the account of the min Financial Security
+			if(Trigger.isInsert || (Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c || fs.Security_Status__c != oldFs.Security_Status__c || fs.Account__c != oldFs.Account__c))) 
+				calculateMinFsLst.add(fs); //Validation in place PRB41975 - Min FS RHC object
 		}
 
 	}
@@ -242,23 +241,23 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 						System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] Calculate Min FS for all hierarchy');
 
-						Financial_Security__c lastModifiedFs = null;
+						Financial_Security__c lastCreatedFS = null;
 
 						//Finds the last modified financial security in status 'Active' or 'Close to Expiry Date'
-						//The list of financial securities per account are ordered by LastModifiedDate (DESC)
+						//The list of financial securities per account are ordered by CreatedDate (DESC)
 						//(see query from fetchAccountsInformation method)
 						for(Financial_Security__c lmFS : acct.Financial_Securities__r){
 							if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(lmFS.Security_Status__c) && lmFs.ANG_Minimum_Financial_Security__c != null){
-								lastModifiedFs = lmFs;
+								lastCreatedFS = lmFs;
 								break;
 							}
 						}
 
-						if(lastModifiedFs != NULL && lastModifiedFs.ANG_Financial_Security_Currency__c != NULL){
-							System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] lastModifiedFs: ' + lastModifiedFs);
+						if(lastCreatedFS != NULL && lastCreatedFS.ANG_Financial_Security_Currency__c != NULL){
+							System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] lastCreatedFS: ' + lastCreatedFS);
 							//Aggregates by head entity (parent) the Minimum Financial Security amount from the given financial security (on the map minFsAmountAggregatedByParent)
 							//Converts the Minimum Financial Security amount considering the RHC currency
-							processAggregatedAmountsByAccount(accId, minFsAmountAggregatedByParent, ANG_Risk_Helper.currencyConverter(lastModifiedFs.ANG_Financial_Security_Currency__c, lastModifiedFs.ANG_Minimum_Financial_Security__c, ANG_Risk_Helper.accCurMap.get(accId) != NULL ? ANG_Risk_Helper.accCurMap.get(accId) : lastModifiedFs.ANG_Financial_Security_Currency__c));
+							processAggregatedAmountsByAccount(accId, minFsAmountAggregatedByParent, ANG_Risk_Helper.currencyConverter(lastCreatedFS.ANG_Financial_Security_Currency__c, lastCreatedFS.ANG_Minimum_Financial_Security__c, ANG_Risk_Helper.accCurMap.get(accId) != NULL ? ANG_Risk_Helper.accCurMap.get(accId) : lastCreatedFS.ANG_Financial_Security_Currency__c));
 						}
 
 					}
@@ -311,11 +310,14 @@ public class ANG_FinancialSecurityTriggerHandler{
 				Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 				String rhcKey = accId + ANG_RHCHelper.RHC_INFO_STD_RT;
 				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmountAggregatedByParent.get(accId));
-			}
-			else if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) {
-				String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
-				decimal minFsAmount = ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c);
-				setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
+			}	
+			for(Financial_Security__c accountFS : acct.Financial_Securities__r){
+				if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(accountFS.Security_Status__c) && accountFS.ANG_Minimum_Financial_Security__c !=null && accountFS.ANG_Financial_Security_Currency__c != null) {
+					String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
+					decimal minFsAmount = ANG_Risk_Helper.currencyConverter(accountFS.ANG_Financial_Security_Currency__c, accountFS.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):accountFS.ANG_Financial_Security_Currency__c);
+					setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
+					break; //only considers the last created FS with Status - Active / Closed To Expire Date
+				}
 			}
 
 		}
