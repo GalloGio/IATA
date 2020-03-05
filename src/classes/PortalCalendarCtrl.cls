@@ -631,12 +631,4 @@ public with sharing class PortalCalendarCtrl {
 			this.isSelected = isSelectedAux;
 		}
 	}
-
-	@AuraEnabled
-	public static String goToOldPortalCalendar(){
-
-		return '/ISSP_OperationalCalendar';
-
-	}
-
 }
