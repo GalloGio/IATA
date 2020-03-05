@@ -14,7 +14,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	private Account currentGE;
+	@TestVisible private Account currentGE {get; set;}
 
 	private String oscarId{
 		get{
@@ -241,7 +241,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					'Standard Acquisition of MC Hierarchy Wrong BSP',
-					'Missing error.'
+					'The New parent has accreditation model Cash, therefore all the selected locations must be in the same BSP of the New parent.'
 				);
 
 			}

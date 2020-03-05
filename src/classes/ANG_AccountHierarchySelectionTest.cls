@@ -4,33 +4,33 @@ private class ANG_AccountHierarchySelectionTest {
 	private static void loadCredentials() {
 		EF_AttachmentListController.runningForEF = false;
 
-				Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-				creds.add(Amazon_Cred);
-				creds.add(GenericAttach);
-				creds.add(recycleBin);
-				insert creds;
+		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+		creds.add(Amazon_Cred);
+		creds.add(GenericAttach);
+		creds.add(recycleBin);
+		insert creds;
 
 
-				list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-						new AWSKey__c(
-								name = 'adevconf',
-								Key__c = 'asd',
-								Secret__c = 'asd',
-								IAS_configuration_name__c = 'asdas',
-								IAS_Access_Point__c = 'asd',
-								Bucket__c = 'asd',
-								AWS_ENDPOINT_URL__c = 'asd')
-				};
-				insert AWS_KEYs;
-		}
+		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+			new AWSKey__c(name = 'adevconf',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd')
+		};
+		insert AWS_KEYs;
+	}
 
 	@testSetup static void createData() {
 		// call data creating classes and other setup
 		// data created here must be queried in order
 		// to be accessed on test methods
+		Test.startTest();
 
 		IATA_ISO_Country__c ctry 	  = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		IATA_ISO_Country__c chinaCtry = new IATA_ISO_Country__c (Name='	China (People\'s Republic of)',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Enable_NewGen_Pilot__c = true);
@@ -193,6 +193,12 @@ private class ANG_AccountHierarchySelectionTest {
 							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
 							 TC_Major_Shareholding__c = false, TC_VMFR__c = true,
 							 TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
+		
+		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'Change~Hierarchy', TC_Location_type__c = false,
+			TC_Legal_status__c = false, TC_Location__c = false, TC_Accreditation_Type__c = false,
+			TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
+			TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+			TCA_Sanity_check__c = 'CHH', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'HCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
 		insert customsettings;
 
@@ -341,6 +347,7 @@ private class ANG_AccountHierarchySelectionTest {
 			AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1',
 			Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com',
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+		Test.stopTest();
 	}
 
 	@isTest
@@ -789,21 +796,6 @@ private class ANG_AccountHierarchySelectionTest {
 			Location_Class__c = GE2.Location_Class__c,
 			Location_Type__c = GE2.Location_Type__c,
 			SAAM_Case__c = oscarCase.Id,
-			/*Account_Name__c = 'Lisbon Travel Gods',
-			ISSP_AMS_Legal_Status__c = 'Association',
-			Short_Name__c = 'Lisbon Travel Gods',
-			TradeName__c = 'Lisbon Travel Gods',
-			Trade_Name__c = 'Lisbon Travel Gods',
-			ISSP_AMS_License_No__c = '111222333',
-			ISSP_AMS_VAT_Number_Input__c = '111222333',
-			Branch_Office_Email__c = 'ltg23@fefff2.com',
-			Website__c = 'wwww.asdasidsss12233.pt',
-			Branch_Office_Phone__c = '123456780',
-			Branch_Office_Phone_National__c = '123456780',
-			Branch_Office_FAX__c = '123456780',
-			Branch_Office_Fax_National__c = '123456780',
-			Abbreviated_name__c = 'Lisbon Travel Gods',
-			VAT_Number_2__c = '111222333',*/
 			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
 		insert stagingArea;
@@ -812,24 +804,11 @@ private class ANG_AccountHierarchySelectionTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		update oscar;
 
-		//finish preparing the data
-		system.debug('##ARD PT: ' + bspPT.id);
-		system.debug('##ARD ES: ' + bspES.id);
-		system.debug('##ARD DK: ' + bspDK.id);
-
 		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
 		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()){
 			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.AE ) i.selected = true;
 		}
 		controller.handleSelection();
-		system.debug('##ARD hesPerBSPs: ' + controller.hesPerBSPs);
-
-		system.debug('##ARD controller.showBSPPanel: ' + controller.showBSPPanel);
-
-
-		//just one, DK
-		//controller.hesPerBSPs.values().get(0).p.ParentId = AE4.id;
-		//system.debug('##ARD controller.hesPerBSPs.get(0).ParentId: ' + controller.hesPerBSPs.values().get(0).p.ParentId);
 
 		controller.save();
 		//aqui deve conter o erro
@@ -843,7 +822,230 @@ private class ANG_AccountHierarchySelectionTest {
 
 		AMS_OSCAR__c osc =  [SELECT HE_per_BSP_Mapping__c FROM AMS_OSCAR__C WHERE ID = :oscar.id];
 
-		system.debug('##ARD FINAL result to assert: ' + osc.HE_per_BSP_Mapping__c);
 		Test.stopTest();
+	}
+
+	@isTest
+	static void mcBeingAcuiredByStandard() {
+		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
+			Name = 'BSP-PT',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+		AMS_Settlement_System__c bspES = new AMS_Settlement_System__c(
+			Name = 'BSP-ES',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+		AMS_Settlement_System__c bspDK = new AMS_Settlement_System__c(
+			Name = 'BSP-DK',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+		insert new List<AMS_Settlement_System__c>{bspPT, bspES, bspDK};
+
+		IATA_ISO_Country__c ctryPT = new IATA_ISO_Country__c (Name='PT',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspPT.id);
+		IATA_ISO_Country__c ctryES = new IATA_ISO_Country__c (Name='ES',ISO_Code__c='ES', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspES.id);
+		IATA_ISO_Country__c ctryDK = new IATA_ISO_Country__c (Name='DK',ISO_Code__c='DK', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspDK.id);
+		
+		insert new List<IATA_ISO_Country__c>{ctryPT, ctryES, ctryDK};
+
+		IATA_ISO_State__c sttPT = new IATA_ISO_State__c(Name= 'Portugal', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctryPT.Id);
+		IATA_ISO_State__c sttES = new IATA_ISO_State__c(Name= 'Spain', ISO_Code__c = 'ES', IATA_ISO_Country__c = ctryES.Id);
+		IATA_ISO_State__c sttDK = new IATA_ISO_State__c(Name= 'Denmark', ISO_Code__c = 'DK', IATA_ISO_Country__c = ctryDK.Id);
+
+		insert new List<IATA_ISO_State__c>{sttPT, sttES, sttDK};
+
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+		Account GE1 = new Account(Name = 'Main GE1 PT Account',
+			Sector__c = 'Travel Agent',
+			IATACode__c = '12345678',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.GE,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			IATA_ISO_Country__c = ctryPT.Id,
+			ANG_IEP_HE_AccntNum__c = '1232132323',
+			ANG_IEP_Status__c = 'Suspended',
+			ANG_HE_CashCondition__c = true,
+			ANG_HE_RiskHistoryAssessment__c = 'Not Applicable',
+			ANG_HE_RiskStatus__c = 'Not Applicable',
+			RecordTypeId = accountAgencyRT);
+
+		insert GE1;
+
+		Account HE1 = new Account(IATA_ISO_Country__c = ctryES.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account HE1 GE1',
+			Short_Name__c = 'Account HE1 GE1',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.HE,
+			ParentId = GE1.Id,
+			Top_Parent__c = GE1.Id,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		Account HE2 = new Account(IATA_ISO_Country__c = ctryDK.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account HE2 GE1',
+			Short_Name__c = 'Account HE2 GE1',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.HE,
+			ParentId = GE1.Id,
+			Top_Parent__c = GE1.Id,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		Account newParentES = new Account(IATA_ISO_Country__c = ctryES.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account newParent',
+			Short_Name__c = 'Account newParent',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.HE,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		insert new List<Account>{HE1, HE2, newParentES};
+
+		Account AE1 = new Account(IATA_ISO_Country__c = ctryES.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account AE1 GE1',
+			Short_Name__c = 'Account AE1 GE1',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.AE,
+			ParentId = HE1.Id,
+			Top_Parent__c = GE1.Id,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		Account AE2 = new Account(IATA_ISO_Country__c = ctryES.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account AE2 GE1',
+			Short_Name__c = 'Account AE2 GE1',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.AE,
+			ParentId = HE1.Id,
+			Top_Parent__c = GE1.Id,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		insert new List<Account>{AE1, AE2};
+
+		AMS_Agencies_Hierarchy__c hierarchyGE1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy GE1', Main_Account__c = GE1.Id);
+		AMS_Agencies_Hierarchy__c hierarchyNewPrent = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy New Parent', Main_Account__c = newParentES.Id);
+		insert new List<AMS_Agencies_Hierarchy__c>{hierarchyGE1, hierarchyNewPrent};
+
+		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
+			Child_Account__c = HE1.Id ,
+			Parent_Account__c = GE1.Id,
+			Hierarchy__c = hierarchyGE1.Id);
+
+		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
+			Child_Account__c = HE2.Id ,
+			Parent_Account__c = GE1.Id,
+			Hierarchy__c = hierarchyGE1.Id);
+
+		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
+			Child_Account__c = AE1.Id ,
+			Parent_Account__c = GE1.Id,
+			Hierarchy__c = hierarchyGE1.Id);
+
+		AMS_Agencies_relationhip__c r4 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
+			Child_Account__c = AE2.Id ,
+			Parent_Account__c = GE1.Id,
+			Hierarchy__c = hierarchyGE1.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{r1, r2, r3, r4};
+		
+		Contact contact = new Contact(AccountId = GE1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = GE1.id,
+			New_parent__c = newParentES.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = GE1.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = GE1.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = HE1.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = HE1.IATA_ISO_Country__c,
+			Location_Class__c = HE1.Location_Class__c,
+			Location_Type__c = HE2.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()) {
+			if (i.acc.IATA_ISO_Country__c == ctryES.id) {
+				i.selected = true;
+			} else {
+				i.selected = false;
+				i.main = false;
+			}
+		}
+
+		controller.handleSelection();
+
+		controller.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		controller.oscar.New_parent__c = newParentES.Id;
+		controller.currentGE = GE1;
+
+		controller.FetchNewParent();
+
+		controller.save();
+
+		System.assertEquals(AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD, controller.oscar.Change_of_Hierarchy_Scenario__c, 'The scenario should be the acquisition of mc locations by a standard hierarchy');
+
+		Test.stopTest();
+
 	}
 }
