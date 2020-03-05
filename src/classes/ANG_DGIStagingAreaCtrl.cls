@@ -351,11 +351,11 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 		inputParams.put('NewFSAmount',stagingFs.Amount__c);
 		inputParams.put('SelectedCaseId',oscarCase.ParentId);
-		inputParams.put('SelectedCurrency',stagingFs.FS_Currency__c );
+		inputParams.put('SelectedCurrency',stagingFs.FS_Currency__c);
 		inputParams.put('FSToCloneId',currentFS.Id);
 		inputParams.put('ExpiryDate',stagingFs.Expiry_Date__c);
 		inputParams.put('UnlimitedValidity',false);
-		inputParams.put('ValidityStartDate', currentFS.Validity_Start_Date__c);
+		inputParams.put('ValidityStartDate', stagingFs.Validity_Start_Date__c);
 
 		Process.PluginRequest request = new Process.PluginRequest(inputParams);
 		Process.PluginResult result = plugin.invoke(request);
