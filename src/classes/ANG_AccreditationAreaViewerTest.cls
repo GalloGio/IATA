@@ -28,16 +28,17 @@ private class ANG_AccreditationAreaViewerTest {
 		account.ANG_HE_RiskStatus__c = 'Not Applicable';
 		account.RecordTypeId = accountAgencyRT;
 		account.Status__c = 'Approved';
-
+       	account.Accreditation_date__c = system.today().addMonths(-9); 
+       
 		insert account;
 
 		Contact co1 = new Contact(AccountId = account.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
 		insert co1;
 
 		List<Account> accountList = new List<Account>();
-		Account a1 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
-		Account a2 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345672',Name='Account AE2 H1',Short_Name__c='Account AE2 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
-		Account a3 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345673',Name='Account AE3 H1',Short_Name__c='Account AE3 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a1 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a2 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345672',Name='Account AE2 H1',Short_Name__c='Account AE2 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a3 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345673',Name='Account AE3 H1',Short_Name__c='Account AE3 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
 
 		accountList.add(a1);
 		accountList.add(a2);
@@ -478,7 +479,7 @@ private class ANG_AccreditationAreaViewerTest {
 		for (ANG_AnualRevalCaseCreationController.AccountWrapper a :annualRevalCaseCtrl.accountsToCreate){
 			flag = flag || a.account.Id == he.Id;
 		}
-		System.assert(!flag, 'Its expected that the account map does not contain the account for major changes oscar');
+		System.assert(flag, 'Its expected that the account map contains the account he for the filter criteria');
 
 		Test.stopTest();
 
