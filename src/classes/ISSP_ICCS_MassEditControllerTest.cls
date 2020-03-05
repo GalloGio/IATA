@@ -97,7 +97,6 @@ public class ISSP_ICCS_MassEditControllerTest {
 		User partnerUser = createPartnerUser('');
 
 		Test.startTest();
-
 		// Create page controller
 		ISSP_ICCS_ServiceController pageController = new ISSP_ICCS_ServiceController(partnerUser.Id);
 
@@ -115,60 +114,34 @@ public class ISSP_ICCS_MassEditControllerTest {
 		ISSP_ICCS_CycleMgmtController cycleMgmtController = new ISSP_ICCS_CycleMgmtController();
 		cycleMgmtController.pageController = pageController;
 
-		pageController.previousComponent = ISSP_ICCS_Utils.Page.CYCLE_MGMT;
-		pageController.currentComponent = ISSP_ICCS_Utils.Page.MASS_EDIT;
-
-		// Back to the Homepage
-		pageController.currentComponent = ISSP_ICCS_Utils.Page.HOMEPAGE;
-
-		System.assertEquals(pageController.currentComponent, ISSP_ICCS_Utils.Page.HOMEPAGE);
-		System.assert(pageController.componentControllersMap.get(pageController.previousComponent)!=null, 'pageController.componentControllersMap ' + pageController.componentControllersMap);
-
-
-		// Navigate to Service Management
-		pageController.navigateToServiceMgmt();
-
+		// select a cycle
 		List<String> adhocCyclesList = cycleMgmtController.adhocCyclesList;
-
 		System.assert(cycleMgmtController.adhocCyclesSize > 1);
-
 		System.assertEquals(cycleMgmtController.selectedAdhocCycle, '');
 		System.assertEquals(cycleMgmtController.adhocCycleParticipationTable, null);
-
 		cycleMgmtController.selectedAdhocCycle = adhocCyclesList[0];
-
-		ISSP_ICCS_Utils.ParticipationTable cycleParticipationTable = cycleMgmtController.adhocCycleParticipationTable;
-
-		System.assert(cycleParticipationTable.participationRows.size() > 0);
-
-		// select a participation
-		ISSP_ICCS_Utils.ParticipationRow cycleParticipationRow = cycleParticipationTable.participationRows[0];
-
-
-		// select a settlement instruction
-		ISSP_ICCS_Utils.SettlementInstructionRow cycleSettlementInstructionRow = cycleParticipationRow.settlementInstructionRows[0];
-
-		// clone cycle settlement instruction
-		cycleMgmtController.settlementInstructionIdParameter = cycleSettlementInstructionRow.settlementInstructionId;
-		cycleMgmtController.cycleIdParameter = cycleMgmtController.selectedAdhocCycle;
 
 		// Go to Mass Edit participation with no selected SIs
 		cycleMgmtController.massAdHocEditParticipation();
-		System.assertEquals(0, cycleMgmtController.selectedAdHocParticipationRow.size());
+		List<ISSP_ICCS_Utils.ParticipationRow> listParticipationRow = cycleMgmtController.selectedAdHocParticipationRow;
+		System.assertEquals(0, listParticipationRow.size());
 
 		// Go to Mass Edit participation with a selected SI
 		ISSP_ICCS_Utils.CurrencyRow currencyRow = cycleMgmtController.adhocCycleParticipationTable.CurrencyRows[0];
 		ISSP_ICCS_Utils.ParticipationRow participationRow = currencyRow.currencyParticipationRows[0];
 		participationRow.selected = true;
-		System.assertEquals(1, cycleMgmtController.selectedAdHocParticipationRow.size());
+		listParticipationRow = cycleMgmtController.selectedAdHocParticipationRow;
+		System.assertEquals(1, listParticipationRow.size());
 		cycleMgmtController.massAdHocEditParticipation();
 		cycleMgmtController.pageController.previousComponent = ISSP_ICCS_Utils.Page.CYCLE_MGMT;
 
-		//Create Mass Edit Page
+		pageController.previousComponent = ISSP_ICCS_Utils.Page.CYCLE_MGMT;
+		pageController.currentComponent = ISSP_ICCS_Utils.Page.MASS_EDIT;
 		ISSP_ICCS_MassEditController massEditController = new ISSP_ICCS_MassEditController();
-		massEditController.cleanController();
-		massEditController.resetController(cycleMgmtController.pageController);
 		massEditController.pageController = pageController;
+		
+		massEditController.listParticipation = listParticipationRow;
+
 		List<SelectOption> listOptions = massEditController.instructionLineTypes;
 		System.assertEquals(false, listOptions.isEmpty());
 
@@ -257,8 +230,6 @@ public class ISSP_ICCS_MassEditControllerTest {
 
 		//Create Mass Edit Page
 		ISSP_ICCS_MassEditController massEditController = new ISSP_ICCS_MassEditController();
-		massEditController.cleanController();
-		massEditController.resetController(cycleMgmtController.pageController);
 		massEditController.pageController = pageController;
 
 		// Select a currency

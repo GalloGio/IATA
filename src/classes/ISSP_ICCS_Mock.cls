@@ -2014,12 +2014,12 @@ public class ISSP_ICCS_Mock{
 	}
 
 	public static String getInstructionLineTypes(){
-		return 	'['+
-				'    {"Id": 1, "Code": "Fixed", "Description": "Fixed"},'+
-				'    {"Id": 2, "Code": "Balance", "Description": "Balance"},'+
-				'    {"Id": 3, "Code": "MonthlyThreshold", "Description": "Monthly Threshold"},'+
-				'    {"Id": 4, "Code": "Percentage", "Description": "Percentage"}'+
-				']';
+		return 
+			'[' +
+			'	{ "Id": 1, "Code": "Balance","Description": "Balance" },' +
+			'	{ "Id": 2, "Code": "Percentage","Description": "Percentage" },' +
+			'	{ "Id": 3, "Code": "Threshold","Description": "Threshold" }' +
+			']';
 	}
 
 	public static final String GET_REPORTS =
