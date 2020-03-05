@@ -327,7 +327,10 @@
     <fields>
         <fullName>Airline_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Airline__r.Airline_designator__c</formula>
+        <formula>IF(ISBLANK(Airline__r.Airline_designator__c),
+    Airline__r.Old_Airline_designator__c,
+    Airline__r.Airline_designator__c
+    )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Airline Code</label>
         <required>false</required>
