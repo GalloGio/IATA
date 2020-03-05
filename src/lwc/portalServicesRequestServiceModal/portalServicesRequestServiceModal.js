@@ -76,6 +76,9 @@ import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsReque
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
+const AE = 'AE';
+const MULTICOUNTRY = 'Multicountry';
+
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
     //icons
@@ -290,7 +293,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
                             this.userContactId = userOptions.User_ContactId;
                         }
-                        if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
+                        if (userOptions.Location_Type == AE && userOptions.ANG_Accreditation_Model__c == MULTICOUNTRY) {
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string3.link(link3));
+                        } else if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
                             let string3 = this.label.csp_RequestService_ContactSupport;
                             let link0 = window.location.toString().replace('/services', '');
                             let link3 = link0 + '/support-reach-us';
