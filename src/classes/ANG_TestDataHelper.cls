@@ -83,6 +83,11 @@ public class ANG_TestDataHelper
 		return acct;
 	}
 
+	public static void setAccountGenericAddress(Account acct) {
+		acct.BillingStreet = 'some street';
+		acct.BillingCity = 'some city';
+	}
+
 	public static void insertHierarchy(List<Account> accounts) {
 		if (accounts.size() <= 1)
 			return;
@@ -126,12 +131,18 @@ public class ANG_TestDataHelper
 		return cont;
 	}
 
+	public static ResultObjects insertOscarAndRelatedEntities(Account account, Id contactId, String oscarProcessType, Id oscarRecordType) {
+		return insertOscarAndRelatedEntities(account, contactId, oscarProcessType, oscarRecordType, null, null);
+	}
+
 	public static ResultObjects insertOscarAndRelatedEntities(Account account, Id contactId, String oscarProcessType, Id oscarRecordType, Id paxRecordType, String accreditationType) {
 		AMS_OSCAR__c oscar = insertOscar(account.Id, oscarProcessType, oscarRecordType);
 		Case oscarCase = insertOscarCase(oscar.Id, account.Id, contactId);
-		AMS_Pax_Accreditation_Form__c staging = insertPax(paxRecordType, account, oscarCase.Id, accreditationType);
+		AMS_Pax_Accreditation_Form__c staging = null;
+		if (paxRecordType != null)
+			staging = insertPax(paxRecordType, account, oscarCase.Id, accreditationType);
 
-		oscar.AMS_Online_Accreditation__c = staging.Id;
+		oscar.AMS_Online_Accreditation__c = staging == null ? null : staging.Id;
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		update oscar;
 
@@ -220,15 +231,52 @@ public class ANG_TestDataHelper
 		oscar.ANG_Type_Of_Change__c = typeOfChange;
 	}
 
-	public static void setOscarSanityCheckPassed(AMS_OSCAR__c oscar) {
+	public static void setOscarStepPassed(AMS_OSCAR__c oscar, String step) {
+		switch on step.toUpperCase() {
+			when 'STEP6' {
+				setOscarSanityCheckPassed_Step6(oscar);
+			}
+			when 'STEP30' {
+				setOscarProcessSuspensionPassed_Step30(oscar);
+			}
+			when 'STEP31' {
+				setOscarProcessTerminationPassed_Step31(oscar);
+			}
+			when else {
+				System.assert(false, 'Invalid step');
+			}
+		}
+	}
+
+	public static void setOscarSanityCheckPassed_Step6(AMS_OSCAR__c oscar) {
 		oscar.STEP6__c = AMS_Utils.PASSED;
-		oscar.Change_effective_as_of__c = System.today();
-		oscar.Is_PCI_compliant__c = 'Yes';
-		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		
+		if (isOscarVoluntaryRelinquishment(oscar)) {
+			oscar.Form_Effective_Date__c = Date.today();
+			oscar.Financial_Security_expiry_date__c = Date.today();
+		} else {
+			oscar.Change_effective_as_of__c = System.today();
+			oscar.Is_PCI_compliant__c = 'Yes';
+			oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		}
+	}
+
+	public static void setOscarProcessSuspensionPassed_Step30(AMS_OSCAR__c oscar) {
+		oscar.STEP30__c = AMS_Utils.PASSED;
+		oscar.Suspend_in_BSPLink_CASSLink__c = true;
+	}
+
+	public static void setOscarProcessTerminationPassed_Step31(AMS_OSCAR__c oscar) {
+		oscar.STEP31__c = AMS_Utils.PASSED;
+		//oscar.Release_FS_if_applicable__c = true;
 	}
 
 	public static void appendOscarHierarchyScenario(AMS_OSCAR__c oscar, String scenario) {
 		oscar.Change_of_Hierarchy_Scenario__c = (String.isNotBlank(oscar.Change_of_Hierarchy_Scenario__c) ? ';' : '') + scenario;
+	}
+
+	private static Boolean isOscarVoluntaryRelinquishment(AMS_OSCAR__c oscar) {
+		return oscar.RecordTypeId == AMS_Utils.RECTYPE_VOLUNTARYRELINQUISHMENT;
 	}
 
 	public class CountryInformation

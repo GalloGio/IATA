@@ -43,6 +43,9 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		 */
 		Account ac6 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000005');
 		Account ac7 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 HE FR', ac6.Id, ac6.Id, AMS_Utils.HE, fr, '10000006');
+		ANG_TestDataHelper.setAccountGenericAddress(ac7);
+		ac7.Check_Digit__c = '1';
+		update ac7;
 		
 		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac6, ac7 });
 		
@@ -207,13 +210,129 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
 		ANG_TestDataHelper.setOscarMainAccount(oscar, accountNewGe.Id);
 		ANG_TestDataHelper.setOscarTypeOfChange(oscar, AMS_Utils.ANG_HIERARCHY);
-		ANG_TestDataHelper.setOscarSanityCheckPassed(oscar);
+		ANG_TestDataHelper.setOscarSanityCheckPassed_Step6(oscar);
 		ANG_TestDataHelper.appendOscarHierarchyScenario(oscar, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE);
 		update oscar;
 		
 		Test.stopTest();
 		
 		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
+	}
+
+	@isTest
+	public static void testBatch_onGeLeftAlone_VoluntaryRelinquishment()
+	{
+		// flags
+		ANG_AgencyChangesHelper.isMigrationRunning = true; // don't validate the backup process
+
+		// entitites
+		Account accountHE = [SELECT Id, Name, IATA_ISO_Country__c, Iso_State__c, Location_Class__c, Location_Type__c
+							 FROM Account
+							 WHERE Name = 'MC Account 2 HE FR']; // the account being terminated
+		
+		Contact cont = ANG_TestDataHelper.insertContact(accountHE.Id);
+		ANG_TestDataHelper.ResultObjects objs = ANG_TestDataHelper.insertOscarAndRelatedEntities(accountHE, cont.Id, AMS_Utils.VOLRELINQUISH, AMS_Utils.RECTYPE_VOLUNTARYRELINQUISHMENT);
+		ANG_TestDataHelper.insertGenericAttachmentToOscar(objs.oscarCase.Id);
+		
+		Test.startTest();
+
+		// update oscar's Sanity Check
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarSanityCheckPassed_Step6(oscar);
+		ANG_TestDataHelper.appendOscarHierarchyScenario(oscar, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE);
+		update oscar;
+
+		// update oscar's Process Sustension
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessSuspensionPassed_Step30(oscar);
+		update oscar;
+
+		// update oscar's Process Termination to trigger the batch execution
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 2 GE PT'].Id;
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessTerminationPassed_Step31(oscar);
+		update oscar;
+		
+		Test.stopTest();
+		
+		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
+	}
+
+	@isTest
+	public static void testBatch_onGeLeftAlone_VoluntaryRelinquishment_inactive()
+	{
+		// flags
+		ANG_AgencyChangesHelper.isMigrationRunning = true; // don't validate the backup process
+
+		// entitites
+		Account accountHE = [SELECT Id, Name, IATA_ISO_Country__c, Iso_State__c, Location_Class__c, Location_Type__c
+							 FROM Account
+							 WHERE Name = 'MC Account 2 HE FR']; // the account being terminated
+		Account accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 2 GE PT'];
+		
+		Contact cont = ANG_TestDataHelper.insertContact(accountHE.Id);
+		ANG_TestDataHelper.ResultObjects objs = ANG_TestDataHelper.insertOscarAndRelatedEntities(accountHE, cont.Id, AMS_Utils.VOLRELINQUISH, AMS_Utils.RECTYPE_VOLUNTARYRELINQUISHMENT);
+		ANG_TestDataHelper.insertGenericAttachmentToOscar(objs.oscarCase.Id);
+		
+		Test.startTest();
+
+		// update oscar's Sanity Check
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarSanityCheckPassed_Step6(oscar);
+		ANG_TestDataHelper.appendOscarHierarchyScenario(oscar, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE);
+		update oscar;
+
+		// update oscar's Process Sustension
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessSuspensionPassed_Step30(oscar);
+		update oscar;
+
+		// update oscar's Process Termination to trigger the batch execution
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessTerminationPassed_Step31(oscar);
+		update oscar;
+
+		// need to run the batch 1 time for the GE account to create the parent oscar case
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE.Id;
+		simulateBatchRun(oscar.Id, accountGE.Id, true);
+		
+		// now on "stopTest" the batch will run for the child inactive HE account
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountHE.Id;
+		
+		Test.stopTest();
+		
+		// testing that it stays the same except on the relationships
+		// account information
+		List<Account> accts = [SELECT Id, ParentId, Top_Parent__c, ANG_Accreditation_Model__c, Location_Type__c
+							  FROM Account
+							  WHERE Name = 'MC Account 2 HE FR'];
+		System.assertEquals(1, accts.size());
+		Account acct = accts.get(0);
+
+		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, acct.ANG_Accreditation_Model__c);
+		System.assertEquals(null, acct.ParentId);
+		System.assertEquals(null, acct.Top_Parent__c);
+		System.assertEquals(AMS_Utils.HE, acct.Location_Type__c);
+
+		// relationship info
+		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Parent_Account__c, Hierarchy__c
+												  FROM AMS_Agencies_relationhip__c
+												  WHERE Child_Account__c = :acct.Id];
+		
+		System.assertEquals(0, rels.size()); // all relations removed
+
+		// oscar
+		List<AMS_OSCAR__c> oscars = [SELECT Id, Process__c, RecordTypeId, Step51__c, Parent_OSCAR__c, AMS_Online_Accreditation__c
+									 FROM AMS_OSCAR__c
+									 WHERE Account__c = :acct.Id];
+		System.assertEquals(1, oscars.size()); // only the original VR oscar is created to inactive accounts
+	}
+
+	private static void simulateBatchRun(Id oscarId, Id accountGE, Boolean processSingleBsp) {
+		ANG_SplitMcHierarchyIntoStandardBatch batch = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, processSingleBsp);
+		Database.QueryLocator q = batch.start(null);
+		batch.execute(null, new List<SObject> { q.iterator().next() });
+		batch.finish(null);
 	}
 
 	private static void verifyChangesOnSplit(String accountName, String locationType) {
@@ -225,7 +344,9 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		boolean isHe = isGe || locationType == AMS_Utils.HE || justBsp;
 
 		// general error on the batch
-		List<Technical_Logs__c> logs = [SELECT Id, Status__c FROM Technical_Logs__c WHERE Operation__c <> 'Rollback'];
+		List<Technical_Logs__c> logs = [SELECT Id, Status__c, Log__c FROM Technical_Logs__c WHERE Operation__c <> 'Rollback'];
+		for (Technical_Logs__c l : logs)
+			System.debug(LoggingLevel.ERROR, 'Found Technical log with: ' + l.Status__c + '@' + l.Log__c);
 		System.assertEquals(0, logs.size(), 'An error occurred on the Batch: ' + (!logs.isEmpty() ? logs.get(0).Status__c : ''));
 		
 		// account information
