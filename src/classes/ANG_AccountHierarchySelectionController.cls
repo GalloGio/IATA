@@ -14,7 +14,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	private Account currentGE;
+	@TestVisible private Account currentGE {get; set;}
 
 	private String oscarId{
 		get{
@@ -204,8 +204,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				);
 
 				errorMessages.put(
-					'Multicountry to Standard or Lite hierarchy',
-					'You cannot select a Standard or Lite hierarchy as the New Parent.'
+					'Multicountry to Lite hierarchy',
+					'You cannot select a Lite hierarchy as the New Parent.'
 				);
 
 				errorMessages.put(
@@ -236,6 +236,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Invalid Changes Combination',
 					'You cannot select the change of hierarchy in combination with any other agency change for a multicountry hierarchy.'
+				);
+
+				errorMessages.put(
+					'Standard Acquisition of MC Hierarchy Wrong BSP',
+					'The New parent has accreditation model Cash, therefore all the selected locations must be in the same BSP of the New parent.'
 				);
 
 			}
@@ -1149,10 +1154,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	private void runValidationChangeHierarchyforMulticountry(){
 
 		//TEST SCENARIO 1
-		//if(newParent.Location_Type__c != AMS_Utils.GE && (newParent.Top_Parent__r == null || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c != AMS_Utils.GE)))
-		if(newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY )
-			errorChecks.put('Multicountry to Standard or Lite hierarchy', true);
-
+		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+			errorChecks.put('Multicountry to Lite hierarchy', true);
+		}
 
 		//TEST SCENARIO 3
 		if(newParent.Location_Type__c == AMS_Utils.GE && diffDestination(oscar.New_parent__c)){
@@ -1179,6 +1183,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		//TEST SCENARIO 4
 		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 			errorChecks.put('Multicountry change hierarchy must select GE', true);
+
+		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+			for (HierarchyItem item: hierarchyValues) {
+				if ((item.selected || item.main) && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c) {
+					errorChecks.put('Standard Acquisition of MC Hierarchy Wrong BSP', true);
+					break;
+				}
+			}
+		}
 	}
 
 	private boolean isOnlyGeBspLeft(){
@@ -1194,7 +1207,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	private String fetchChangeOfHierarchyScenario(){
-
 		if(oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
 
 			if(newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
@@ -1209,10 +1221,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			}
 
+			if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
+				if (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+					return AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD;
+				}
+			}
 		}
 
 		return null;
-
 	}
 
 	// ***********************************
