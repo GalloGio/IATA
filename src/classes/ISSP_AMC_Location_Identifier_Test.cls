@@ -156,7 +156,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -172,11 +171,11 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = 'Submit';
+				Test.StartTest();
 				controller.saveParticipation();
 				controller.init();
+				Test.stopTest();
 			}
-
-			Test.stopTest();
 
 		}
 	}
