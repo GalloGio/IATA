@@ -20303,18 +20303,6 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject approval</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Reprocess case</fullName>
                 <default>false</default>
             </values>
