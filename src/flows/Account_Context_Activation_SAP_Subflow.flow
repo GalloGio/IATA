@@ -189,6 +189,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Record_Id__c</field>
+            <value>
+                <elementReference>AddressRoleBusinessContext.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>In Progress</stringValue>
