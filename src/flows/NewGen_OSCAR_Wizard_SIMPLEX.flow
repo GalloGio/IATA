@@ -1832,6 +1832,13 @@
                     <stringValue>HE</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>AccountToProcess.ANG_Accreditation_Model__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Multicountry</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>ProcessGDI</targetReference>
             </connector>
@@ -2238,7 +2245,10 @@
             <label>StagingAreaNotNeeded</label>
         </rules>
     </decisions>
-    <description>New Hierarchy Model NEWGEN-5751
+    <description>NEWGEN-4428 - Remove &quot;GDI Setup&quot; option for multicountry agents
+NEWGEN-6049 - Conversion from Cash to Multicountry is only possible if the country is Multicountry Enabled + validation on Hierarchy confirmation step
+NEWGEN-5841 - Add new Option: Conversion from Cash to Multicountry
+New Hierarchy Model NEWGEN-5751
 China Pilot Release - REVERTED (NEWGEN-5092)
 China Pilot Release
 NewGen - Sprint 12 - OPT IN OUT
@@ -2249,11 +2259,7 @@ Added NEWGEN-1443 Is PCI Compliant in the OSCAR for corrections
 NEWGEN-2153 - Fixed issue with Bank Account Changes
 NEWGEN-1963 - FOP
 
-8-April-2019 - Fixing connection between 2 and 3 box
-
-NEWGEN-5841 - Add new Option: Conversion from Cash to Multicountry
-
-NEWGEN-6049 - Conversion from Cash to Multicountry is only possible if country is Multicountry Enabled + validation on Hierarchy confirmation step</description>
+8-April-2019 - Fixing connection between 2 and 3 box</description>
     <dynamicChoiceSets>
         <name>RecordChoiceContact</name>
         <dataType>String</dataType>
