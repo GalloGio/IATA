@@ -225,8 +225,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(inactivateRiskEventLst != null && !inactivateRiskEventLst.isEmpty()){
 				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst, newParentId));
-			}	
-			
+			}
+
 			return hasUpserted;
 		}
 
@@ -303,8 +303,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
 			Boolean isMulticountry = 
-				oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
-				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+				(oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
+				oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) &&
+				!oscar.Change_of_Hierarchy_Scenario__c.contains(AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD);
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);
@@ -1386,6 +1387,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		Boolean switchRemittanceFrequency = false;
 		Boolean doesItContainAccreditationType = containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscarToProcess.ANG_Type_Of_Change__c);
 		Set<Id> accountsAffected = new Set<Id>();
+		String oldAccreditationModel = '';
 
 		System.debug('[ANG_AgencyChangesHelper] - doesItContainAccreditationType is set to ' + doesItContainAccreditationType);
 
@@ -1412,10 +1414,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.Account__c];
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
-
 				switchAccreditationModel = true;
 				newAccreditationModel = newHEaccount.ANG_Accreditation_Model__c;
-
+				oldAccreditationModel = oscarAccount.ANG_Accreditation_Model__c;
 			}
 
 			if(newHEaccount.Remittance_frequency__c != oscarAccount.Remittance_frequency__c){
@@ -1646,13 +1647,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}
 
-			if(newAccreditationModel ==  'Cash')
+			if(newAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH && oldAccreditationModel != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 				toUpsert = performCashTransformation(accountsAffected);
+			}
 
 			if(!toUpsert.isEmpty()){
-
 				upsert toUpsert;
-
 			}
 		}
 

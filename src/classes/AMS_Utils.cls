@@ -410,6 +410,7 @@ public without sharing class AMS_Utils {
 
 	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'STANDARD_ACQUIRED_BY_MULTICOUNTRY';
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
+	public static final String MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD = 'MC_LOCATIONS_ACQUIRED_BY_STANDARD';
 
 	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
 	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
