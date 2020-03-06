@@ -3648,6 +3648,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Case-Detail_</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_hasInvoicePaid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_hasInvoicePaid</shortDescription>
+        <value>Has the customer paid invoice?</value>
+    </labels>
+    <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6725,7 +6732,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6914,6 +6921,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Contact Name</shortDescription>
         <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
+        <categories>Percentage, AWWAgency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Control Total Percentage Owners And Subsidiaries</shortDescription>
+        <value>The total Percentage Held must not exceed 100%. Please change the Percentage and save again.</value>
     </labels>
     <labels>
         <fullName>Copyright</fullName>

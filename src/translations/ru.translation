@@ -2061,6 +2061,10 @@
         <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
+    </customLabels>
+    <customLabels>
         <label>Случаи</label>
         <name>CSP_Cases</name>
     </customLabels>
@@ -3733,6 +3737,10 @@
     <customLabels>
         <label>Имя контактного лица</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- Copyright --></label>
@@ -13509,7 +13517,7 @@
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Чтобы сообщить IATA об изменении реквизитов банковского счета, обращайтесь к нам</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>

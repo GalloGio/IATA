@@ -35,7 +35,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 		String query = 'SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Participant_Type__c,' +
 			'Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c,' +
 			'Contact__r.Email,Hidden_Account_Id__c, Local_Governance__c, Local_Governance__r.Group_Owner__c,' +
-			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name,' +
+			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Contact__r.Account.Name,' +
 			'Local_Governance__r.Group_Owner_Text__c, Local_Governance__r.AM_Under__r.Name, Representing__c,' +
 			'Local_Governance__r.AM_Under__r.Group_Owner__c, Local_Governance__r.AM_Under__r.Group_Owner__r.Name, Local_Governance__r.Country__c ' +
 			'FROM Participant__c ';
@@ -43,8 +43,6 @@ public with sharing class AWW_AccountGroupsCtrl {
 		query += 'WHERE (Representing__c IN :relatedAccounts OR Contact__r.AccountId IN :relatedAccounts) AND Local_Governance__r.Active__c = true ';
 		query += whereClause;
 		query += ' ORDER BY Local_Governance__r.AM_Under__r.Name, Local_Governance__r.Name, Participant_Type__c';
-
-		System.debug('query: ' +  query);
 
 		return Database.query(query);
 	}
@@ -63,7 +61,6 @@ public with sharing class AWW_AccountGroupsCtrl {
 
 		String whereClause = 'AND Local_Governance__r.Name IN (\'' + String.join(groupNames, '\',\'')+ '\')';
 		List<Participant__c> participants = getParticipants(whereClause, relatedAccounts);
-		System.debug('participants: ' + participants);
 		for(Participant__c p : participants) {
 			TopGroup mainGroup = currentMainGroups.get(p.Local_Governance__r.Name);
 			if(mainGroup == null) {
@@ -78,7 +75,8 @@ public with sharing class AWW_AccountGroupsCtrl {
 			String lastName = p.Contact__r.LastName;
 			String title = p.Contact__r.Title;
 			String email = p.Contact__r.Email;
-			Member m = new Member(null,role,salutation,firstName,lastName,title,email,p.Representing__c <> null);
+			String accountName = p.Contact__r.Account.Name;
+			Member m = new Member(null,role,salutation,firstName,lastName,title,email,accountName,p.Representing__c <> null);
 			mainGroup.members.add(m);
 		}
 	}
@@ -117,7 +115,8 @@ public with sharing class AWW_AccountGroupsCtrl {
 			String lastName = p.Contact__r.LastName;
 			String title = p.Contact__r.Title;
 			String email = p.Contact__r.Email;
-			Member m = new Member('member-'+index, role, salutation, firstName, lastName, title, email,  p.Representing__c <> null);
+			String accountName = p.Contact__r.Account.Name;
+			Member m = new Member('member-'+index, role, salutation, firstName, lastName, title, email, accountName, p.Representing__c <> null);
 			lg.childrens.add(m);
 			childRelations.get(lg.rowId).add(m.rowId);
 			index++;
@@ -165,7 +164,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 			this.rowId = rowId;
 			this.rowId_collapse = 'collapse_' + rowId;
 			this.rowId_expand = 'expand_' + rowId;
-			this.groupName = 'Under ' + groupName;
+			this.groupName = groupName;
 			this.printableGoupName = groupName;
 			this.ownerName = ownerName;
 			this.childrens = new List<LocalGroup>();
@@ -203,16 +202,18 @@ public with sharing class AWW_AccountGroupsCtrl {
 		@AuraEnabled public String salutation {get;set;}
 		@AuraEnabled public String firstName {get;set;}
 		@AuraEnabled public String lastName {get;set;}
+		@AuraEnabled public String accountName {get;set;}
 		@AuraEnabled public String title {get;set;}
 		@AuraEnabled public String email {get;set;}
 		@AuraEnabled public Boolean isRepresentative {get;set;}
 
-		public Member(String rowId, String role, String salutation, String firstName, String lastName, String title, String email, Boolean isRepresentative) {
+		public Member(String rowId, String role, String salutation, String firstName, String lastName, String title, String email, String accountName, Boolean isRepresentative) {
 			this.rowId = rowId;
 			this.role = role;
 			this.salutation = salutation;
 			this.firstName = firstName;
 			this.lastName = lastName;
+			this.accountName = accountName;
 			this.title = title;
 			this.email = email;
 			this.isRepresentative = isRepresentative;

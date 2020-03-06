@@ -412,10 +412,12 @@ public without sharing class portalIftpHistoryManagement {
 
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
-				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
+				// Employees deleted manually from Salesforce backend will not be counted
+				// String.isBlank(sEmpType) - Verification needed because those employees will not have all their history in IFTP-History
+				// Also Training Coordinatores that have no proficiency and no certifications will not be counted as well
+				if(String.isBlank(sEmpType) || (sEmpType.contains('ITP Training Coordinator') && ikey == '0' && !hasCert.contains(rec))){
 					continue;
 				}
-			}
 
 			if(mapResults.containsKey(ikey)){
 				Integer aux = ((Integer)mapResults.get(ikey));
@@ -425,6 +427,7 @@ public without sharing class portalIftpHistoryManagement {
 				mapResults.put(ikey,1);
 			}
 		}
+			}
 
 		List<ITPReportWrapper> resultList = new List<ITPReportWrapper>();
 
