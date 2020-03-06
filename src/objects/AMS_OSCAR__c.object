@@ -3475,6 +3475,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>MC_Hierarchy_Confirmation_Datetime__c</fullName>
+        <externalId>false</externalId>
+        <label>MC Hierarchy Confirmation Datetime</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>NOC_Deadline__c</fullName>
         <description>Used for Late/Absence of NOC</description>
         <externalId>false</externalId>
