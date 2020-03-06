@@ -39,7 +39,6 @@ import csp_SupportReachUs_IsEmergency from '@salesforce/label/c.csp_IsEmergency'
 import csp_SupportReachUs_btn_Support_Label from '@salesforce/label/c.csp_btn_Support_Label';
 import csp_SupportReachUs_Support_Label from '@salesforce/label/c.csp_Support_Label';
 import csp_SupportReachUs_Options_Label from '@salesforce/label/c.csp_Options_Label';
-import csp_SupportReachUs_Suggestion_label from '@salesforce/label/c.csp_Suggestion_label';
 import csp_SupportReachUs_Case_Panel_label from '@salesforce/label/c.csp_Case_Panel_label';
 import csp_SupportReachUs_Case_Panel_sub_label from '@salesforce/label/c.csp_Case_Panel_sub_label';
 import csp_SupportReachUs_Chat_Panel_label from '@salesforce/label/c.csp_Chat_Panel_label';
@@ -89,18 +88,17 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track isEmergency = false;
     @track isQuestion = true;
     @track isCompliment = false;
-    @track question_selected;
-    @track question_unselected;
-    @track concern_selected;
-    @track concern_unselected;
-    @track compliment_selected;
-    @track compliment_unselected;
+    @track question_selected = CSP_PortalPath + 'CSPortal/Images/Support/questionselected.png';
+    @track question_unselected = CSP_PortalPath + 'CSPortal/Images/Support/questionunselected.png';
+    @track concern_selected = CSP_PortalPath + 'CSPortal/Images/Support/concernselected.png';
+    @track concern_unselected = CSP_PortalPath + 'CSPortal/Images/Support/concernunselected.png';
+    @track compliment_selected = CSP_PortalPath + 'CSPortal/Images/Support/complimentselected.png';
+    @track compliment_unselected = CSP_PortalPath + 'CSPortal/Images/Support/complimentunselected.png';
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
 
     @track showRecentCasesList = true;
-    //@track suggestion;
 
     //global variables
     pageParams;
@@ -143,7 +141,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         csp_SupportReachUs_btn_Support_Label,
         csp_SupportReachUs_Support_Label,
         csp_SupportReachUs_Options_Label,
-        csp_SupportReachUs_Suggestion_label,
         csp_SupportReachUs_Case_Panel_label,
         csp_SupportReachUs_Case_Panel_sub_label,
         csp_SupportReachUs_Chat_Panel_label,
@@ -166,10 +163,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         CSP_L2_Requested_Modal_Complete,
         CSP_L2_Requested_Modal_Cancel
     }
-
-    //links for images
-    iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/Support/';
-    iconsExtension = '.svg';
 
     @track rendered = false;
 
@@ -202,14 +195,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         isAirlineUser().then(result => {
             this.showRecentCasesList = !result; //if airline user, hide case list
         });
-        //visual aspect for tiles
-        this.question_selected = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
-        this.question_unselected = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
-        this.concern_selected = this.iconsBaseLink + 'concern_selected' + this.iconsExtension;
-        this.concern_unselected = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
-        this.compliment_selected = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
-        this.compliment_unselected = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
-        //this.suggestion = this.iconsBaseLink + 'suggestion_unselected' + this.iconsExtension;
+
     }
 
     getContactLevelInfo(){
