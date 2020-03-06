@@ -4,19 +4,19 @@ private class clsFSRequestControllerTest{
 
 		static testMethod void testMyController() {  
 		
-				//Use the PageReference Apex class to instantiate a page  
-				PageReference pageRef = Page.FinancialSecurityRequest;  
+				//Use the PageReference Apex class to instantiate a page
+				PageReference pageRef = Page.FinancialSecurityRequest;
 				
-				//In this case, the Visualforce page named 'success' is the starting point of this test method.   
+				//In this case, the Visualforce page named 'success' is the starting point of this test method.
 				Test.setCurrentPage(pageRef);  
 				
-				//Instantiate and construct the controller class.     
-				clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();  
+				//Instantiate and construct the controller class.
+				clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();
 
 				
-						 
+						
 					
-				// Set some properties  
+				// Set some properties
 				date t = date.parse('12/27/2012');
 				EmailTemplate__c e = new EmailTemplate__c();
 				Insert e;
@@ -25,12 +25,12 @@ private class clsFSRequestControllerTest{
 				controller.CaseParameter.Deadline_Date__c = t;
 				controller.MassSendEmail();
 
-			 
-				 BatchNumber__c batch = new BatchNumber__c();
-				 insert batch;
-			 controller.CaseParameter.BatchNumber__c= batch.Id;
-			 
-			 
+			
+				BatchNumber__c batch = new BatchNumber__c();
+				insert batch;
+			controller.CaseParameter.BatchNumber__c= batch.Id;
+			
+			
 				
 				Apexpages.currentPage().getParameters().put('batchNumber',batch.Id);
 				controller.runSearch();
@@ -53,17 +53,17 @@ private class clsFSRequestControllerTest{
 				
 				Apexpages.currentPage().getParameters().put('batchNumber','%');
 				controller.runSearch();
-				controller.SelectAll();        
+				controller.SelectAll();
 				Apexpages.currentPage().getParameters().put('template',e.Id);
 				Apexpages.currentPage().getParameters().put('deadlineDate', '12/27/2012');
 				controller.CaseParameter.EmailTemplate__c = e.Id;
-				controller.CaseParameter.Deadline_Date__c = t ;  
-				controller.SelectAll();             
+				controller.CaseParameter.Deadline_Date__c = t ;
+				controller.SelectAll();
 				controller.MassSendEmail();
 				
 				
-			 // Boolean a = controller.FSLetterSent;
-			 // a = controller.FSValueMissing;
+			// Boolean a = controller.FSLetterSent;
+			// a = controller.FSValueMissing;
 				
 				controller.SelectAll();
 				controller.first();
@@ -80,16 +80,14 @@ private class clsFSRequestControllerTest{
 				Integer num4 = controller.currentPage;
 				controller.currentPage = num4;
 				
-				controller.updateNbrSelectedRecords();
-				
-				
+				controller.updateNbrSelectedRecords();				
 				
 				Boolean boo = controller.hasNext;
 				boo = controller.hasPrevious;
 				boo = controller.hasFirst;
 				boo = controller.hasLast;
 				
-				Integer nbPages = controller.pageNumber; 
+				Integer nbPages = controller.pageNumber;
 				Integer nbOFPages = controller.noOfPages;
 				
 				
@@ -99,23 +97,23 @@ private class clsFSRequestControllerTest{
 				
 				
 			Case ca = new Case();
-			 Insert ca;
-			 List<Case> cases = [Select c.Status,c.EmailTemplate__c, c.Deadline_Date__c From Case c Where c.Id = :  ca.Id];
+			Insert ca;
+			List<Case> cases = [Select c.Status,c.EmailTemplate__c, c.Deadline_Date__c From Case c Where c.Id = : ca.Id];
 						
 			
 				
-		 Test.startTest();        
+		Test.startTest();
 				clsFinancialSecurityRequestBatch cBatch = new clsFinancialSecurityRequestBatch();
 				cBatch.caseList = cases;
-				cBatch.emailTemplate = '' ;
-				cBatch.deadLineDate = controller.CaseParameter.Deadline_Date__c ;
-			 ID batchprocessid = Database.executeBatch(cBatch,5);
-		Test.stopTest();     
+				cBatch.emailTemplate = '';
+				cBatch.deadLineDate = controller.CaseParameter.Deadline_Date__c;
+			ID batchprocessid = Database.executeBatch(cBatch,5);
+		Test.stopTest();
 		
 		
-		} 
+		}
 
-			static testMethod void testTrackedEmails() {  
+			static testMethod void testTrackedEmails() {
 				
 				Account account1 = new Account();
 				account1.Name = 'Test account';
@@ -159,14 +157,14 @@ private class clsFSRequestControllerTest{
 				Signaturit_Events_WS__c ws = new Signaturit_Events_WS__c(name = 'test', events_url__c = 'http://test.com', oauth_url__c = '');
 		insert ws;
 				
-				//Use the PageReference Apex class to instantiate a page  
-				PageReference pageRef = Page.FinancialSecurityRequest;  
+				//Use the PageReference Apex class to instantiate a page
+				PageReference pageRef = Page.FinancialSecurityRequest;
 				
-				//In this case, the Visualforce page named 'success' is the starting point of this test method.   
-				Test.setCurrentPage(pageRef);  
+				//In this case, the Visualforce page named 'success' is the starting point of this test method.
+				Test.setCurrentPage(pageRef);
 				
-				//Instantiate and construct the controller class.     
-				clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();  
+				//Instantiate and construct the controller class.
+				clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();
 				
 				controller.CaseParameter.BatchNumber__c= batch.Id;
 				
@@ -237,7 +235,7 @@ private class clsFSRequestControllerTest{
 
 		Test.startTest();			
 
-			clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();  
+			clsFinancialSecurityRequestController controller = new clsFinancialSecurityRequestController();
 			controller.CaseParameter.BatchNumber__c = batch.Id;			
 			controller.CaseParameter.EmailTemplate__c =  e.Id;
 			controller.CaseParameter.Deadline_Date__c = System.today().addDays(40);

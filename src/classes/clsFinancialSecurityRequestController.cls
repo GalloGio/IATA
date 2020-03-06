@@ -19,24 +19,24 @@ public class clsFinancialSecurityRequestController {
 		public Integer noOfPages{get;set;}
 		public Boolean isNbrRecordsDisplayed { get; set; }
 
-	 // a property for the lookuptype
+	// a property for the lookuptype
 		public String GetEmailTemplateKeyPrefix {get;private set;}
 
-	 // init the controller and display some sample data when the page loads
+	// init the controller and display some sample data when the page loads
 		public clsFinancialSecurityRequestController () {
 				inPageSize = 10;
 				GetEmailTemplateKeyPrefix = EmailTemplate__c.SObjectType.getDescribe().getKeyPrefix();
 
 		}
 
-	 public List<cCase> Cases{
+	public List<cCase> Cases{
 				get {
-						 if (CasesCheckedList != null){
+						if (CasesCheckedList != null){
 										 for(cCase aCase : displayList){
 
 											if (CasesCheckedList.containsKey(aCase.c.ID))
 														aCase.selected = true;
-										 }
+										}
 							}
 						return displayList;
 				}
@@ -81,7 +81,7 @@ public class clsFinancialSecurityRequestController {
 						}
 
 					 refreshCheckMap();
-			 }
+			}
 			catch(Exception e){}
 					 return null;
 		}
@@ -101,7 +101,7 @@ public class clsFinancialSecurityRequestController {
 										CasesCheckedList.remove(aCase.c.Id);
 						}
 				}
-		 }
+		}
 
 		public PageReference MassSendEmail() {
 
@@ -112,13 +112,13 @@ public class clsFinancialSecurityRequestController {
 		public PageReference MassSendTrackedEmail() {
 		MassEmail(true);
 		return null;
-	}    
-  
+	}
+
 	public Boolean FSvalueMissing{ 
 	get 
 	{
 	
-	  Set <ID> selectedID = new Set<ID>();
+	Set <ID> selectedID = new Set<ID>();
 		 selectedID = CasesCheckedList.KeySet();
 
 				Double b;
@@ -135,7 +135,7 @@ public class clsFinancialSecurityRequestController {
 					 }
 
 				return false;
-			 }
+			}
 
 		set{}
 		}
@@ -145,16 +145,16 @@ public class clsFinancialSecurityRequestController {
 
 	Boolean isRequiredFieldsAreOK  = true;
 
-		 //validate required fields
-			 if (CaseParameter.EmailTemplate__c == null){
+		//validate required fields
+			if (CaseParameter.EmailTemplate__c == null){
 						ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Email Template is required'));
 						isRequiredFieldsAreOK = false;
 				}
-			 if (CaseParameter.Deadline_Date__c == null){
+			if (CaseParameter.Deadline_Date__c == null){
 						ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Deadline date is required'));
 						isRequiredFieldsAreOK = false;
 				}
-			 if (FSvalueMissing){
+			if (FSvalueMissing){
 					 ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Sending Emails for these cases is blocked. One or more case(s) have missing Financial Security Amount or Financial Security value.'));
 						isRequiredFieldsAreOK = false;
 				}
@@ -163,17 +163,17 @@ public class clsFinancialSecurityRequestController {
 			if (!isRequiredFieldsAreOK)
 			{
 				//  String extramsg = 'Please fill the required Fields' ;
-				 // ApexPages.addMessage(new ApexPages.message(ApexPages.severity.Error, extramsg));
+				// ApexPages.addMessage(new ApexPages.message(ApexPages.severity.Error, extramsg));
 			}
 
 			else{
 
 
 				//to make sure the back end and UI are in sync
-				 refreshCheckMap();
+				refreshCheckMap();
 
-				 Set <ID> selectedID = new Set<ID>();
-				 selectedID = casesCheckedList.KeySet();
+				Set <ID> selectedID = new Set<ID>();
+				selectedID = casesCheckedList.KeySet();
 
 					if (selectedID.size() == 0) {
 						ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'There are no selected cases.'));
@@ -183,31 +183,31 @@ public class clsFinancialSecurityRequestController {
 							List<Case> cases = [Select c.Status,c.FS_EmailTemplate__c, c.FS_Deadline_Date__c, c.ContactId From Case c Where c.Id IN :selectedID];
 
 							//case status is updated to “Financial Security requested”
-							 clsFinancialSecurityRequestBatch cBatch = new clsFinancialSecurityRequestBatch();
-							 cBatch.caseList = cases;
-							 //FS_EmailTemplate__c
-							 cBatch.trackedEmail = trackedEmail;
-							 cBatch.emailTemplate = caseParam.EmailTemplate__c ;
-							 cBatch.deadLineDate = caseParam.Deadline_Date__c ;
-							 ID batchprocessid = Database.executeBatch(cBatch,5);
+							clsFinancialSecurityRequestBatch cBatch = new clsFinancialSecurityRequestBatch();
+							cBatch.caseList = cases;
+							//FS_EmailTemplate__c
+							cBatch.trackedEmail = trackedEmail;
+							cBatch.emailTemplate = caseParam.EmailTemplate__c ;
+							cBatch.deadLineDate = caseParam.Deadline_Date__c ;
+							ID batchprocessid = Database.executeBatch(cBatch,5);
 
 							String extramsg = 'Financial Security Request is sent. Please note that the emails will take time to be recieved.' ;
 							ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, extramsg));
 				 }
-		 }
+		}
 	}
 
 
 
 
-	 public String sortDir {
-				get  { if (sortDir == null) {  sortDir = 'asc'; } return sortDir;  }
+	public String sortDir {
+				get { if (sortDir == null) {  sortDir = 'asc'; } return sortDir; }
 				set;
 		}
 
 	 // the current field to sort by. defaults to account Name
 		public String sortField {
-				get  { if (sortField == null) {sortField = 'account.Name'; } return sortField;  }
+				get { if (sortField == null) {sortField = 'account.Name'; } return sortField; }
 				set;
 		}
 
@@ -243,7 +243,7 @@ public class clsFinancialSecurityRequestController {
 		}
 
 
-		 // runs the actual query
+		// runs the actual query
 		public void runQuery() {
 
 				pageNumber = 0;
@@ -269,13 +269,13 @@ public class clsFinancialSecurityRequestController {
 
 
 						//initial display list first 10 items
-						 String extraQuery = '';
-						 Integer num = inPageSize ;
-						 if (num>AllCases.size())
+						String extraQuery = '';
+						Integer num = inPageSize ;
+						if (num>AllCases.size())
 								 num = AllCases.size();
 
-					 if (AllCases.size()>0)
-					 {
+					if (AllCases.size()>0)
+					{
 								extraQuery = ' and (';
 								for (Integer i = 0 ; i<num ; i++)
 								{
@@ -284,16 +284,16 @@ public class clsFinancialSecurityRequestController {
 
 										extraQuery += ' or Case.ID = \''+AllCases[i]+'\'';
 								}
-								 extraQuery +=  ' )';
-					 }
+								extraQuery +=  ' )';
+					}
 
 
 
 						String q = soql + extraQuery +' order by ' + sortField + ' ' + sortDir;
 						system.debug('Query to be executed::: ' + q );
 
-						 for (Case cont : Database.query(q)){
-							 displayList.add(new cCase(cont));
+						for (Case cont : Database.query(q)){
+							displayList.add(new cCase(cont));
 						}
 
 						totalNoOfRecs  = AllCases.size();
@@ -343,13 +343,13 @@ public class clsFinancialSecurityRequestController {
 		}
 
 
-		 public PageReference first(){
+		public PageReference first(){
 				pageNumber = 0;
 				queryCases();
 				return null;
 		}
 
-		 public PageReference last(){
+		public PageReference last(){
 				pageNumber = totalPage - 1;
 				queryCases();
 				return null;
@@ -371,8 +371,8 @@ public class clsFinancialSecurityRequestController {
 		}
 
 
-		 //triggered on next,prev, last and first actions
- private void queryCases()
+		//triggered on next,prev, last and first actions
+		private void queryCases()
 		{
 
 				refreshCheckMap();
@@ -383,13 +383,13 @@ public class clsFinancialSecurityRequestController {
 				System.debug('offset ' + offset );
 
 
-					 String extraQuery = '';
-					 if (AllCases.size()>0)
-					 {
+					String extraQuery = '';
+					if (AllCases.size()>0)
+					{
 								extraQuery = ' and (';
 								Integer k = offset+inPageSize;
 								if (k>AllCases.size())
-								 k = AllCases.size();
+								k = AllCases.size();
 
 								for (Integer i = offset ; i<k ; i++)
 								{
@@ -399,12 +399,12 @@ public class clsFinancialSecurityRequestController {
 										extraQuery += ' or Case.ID = \''+AllCases[i]+'\'';
 								}
 								extraQuery +=  ' )';
-					 }
+					}
 
-						 System.debug('Query is '+ soql + extraQuery +' order by ' + sortField + ' ' + sortDir);
+						System.debug('Query is '+ soql + extraQuery +' order by ' + sortField + ' ' + sortDir);
 
-						 for (Case cas : Database.query(soql + extraQuery +' order by ' + sortField + ' ' + sortDir )){
-							 displayList.add(new cCase(cas));
+						for (Case cas : Database.query(soql + extraQuery +' order by ' + sortField + ' ' + sortDir )){
+							displayList.add(new cCase(cas));
 						}
 
 		}
@@ -418,7 +418,7 @@ public class clsFinancialSecurityRequestController {
 						}
 		}
 
-	 public Integer nbrFoundRecords {
+	public Integer nbrFoundRecords {
 				get {
 						 return totalNoOfRecs;
 				}
@@ -436,13 +436,13 @@ public class clsFinancialSecurityRequestController {
 				}
 		}
 
-		 public Integer totalPage {
+		public Integer totalPage {
 				get {
 
 							Decimal d = totalNoOfRecs;
 							Decimal dd = d.divide(inPageSize, 2, System.RoundingMode.CEILING);
 
-						 Long i = dd.round(roundingMode.UP);
+						Long i = dd.round(roundingMode.UP);
 
 						 if (i==0)
 								 i++;
@@ -456,7 +456,7 @@ public class clsFinancialSecurityRequestController {
 		}
 
 
-public Case CaseParameter
+		public Case CaseParameter
 		{
 				get { return caseParam ; }
 				set;
@@ -467,12 +467,12 @@ public Case CaseParameter
 				public Case c {get; set;}
 				public boolean selected {get; set;}
 
-	   
+	
 		//This is the contructor method. When we create a new cContact object we pass a Contact that is set to the con property. We also set the selected value to false  
-		public cCase(Case ca) {  
-			c = ca;  
-			selected = false;           
-		}  
+		public cCase(Case ca) {
+			c = ca;
+			selected = false;
+		}
 	}	
 
 }

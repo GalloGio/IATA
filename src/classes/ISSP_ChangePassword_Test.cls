@@ -22,7 +22,7 @@ private class ISSP_ChangePassword_Test {
 		con.RecordTypeId = rtId;
 		insert con;
 
-	   	User newUser = new User(alias = 'dsfsdfds',
+		User newUser = new User(alias = 'dsfsdfds',
 								email = con.email,
 								emailencodingkey = 'UTF-8',
 								firstname = con.firstName,
@@ -135,7 +135,7 @@ private class ISSP_ChangePassword_Test {
 		IECUserManager.login(u.Username, 'testpassword', null);
 		
 		System.runAs(u) {
-			ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
+			ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
 			// Test 001: Leave all fields blank
 			pgCont.currentPassword = '';
 			pgCont.newPassword = '';
@@ -204,7 +204,7 @@ private class ISSP_ChangePassword_Test {
 		accRoleServicesList.add(accRoleServicesAirline);
 		insert accRoleServicesList;
 
-		 //Create Accounts Role
+		//Create Accounts Role
 		Id accRoleITP_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 		List<Account_Role__c> accRoleList = new List<Account_Role__c>();
@@ -220,7 +220,7 @@ private class ISSP_ChangePassword_Test {
 		accRoleServiceList.add(accRoleServiceITP);
 		insert accRoleServiceList;
 
- 		//Create Contact Roles
+		//Create Contact Roles
 		List<Contact_Roles__c> contactRolesList = new List<Contact_Roles__c>();
 		Contact_Roles__c contactRolesITPAdmin = new Contact_Roles__c(Name = 'ITP Administrator', Service__c = portalApp.Id);
 		Contact_Roles__c contactRolesITPCoord = new Contact_Roles__c(Name = 'ITP Training Coordinator', Service__c = portalApp.Id);
@@ -306,14 +306,14 @@ private class ISSP_ChangePassword_Test {
 		
 		System.runAs(thisUser) {
 			PageReference pageRef = Page.ISSP_First_Login;
-		 	Test.setCurrentPage(pageRef);
+			Test.setCurrentPage(pageRef);
 
-		 	String myUsername = Userinfo.getUsername();
-		 	string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
-		 	ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
+			String myUsername = Userinfo.getUsername();
+			string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
+			ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
 
-		 	ISSP_First_Login ctrl = new ISSP_First_Login();
-		 	Pagereference pr = Page.ISSP_Login;
+			ISSP_First_Login ctrl = new ISSP_First_Login();
+			Pagereference pr = Page.ISSP_Login;
 			
 			system.assertEquals('/apex/issp_changepassword',ctrl.DoNext().getUrl());
 
@@ -335,8 +335,8 @@ private class ISSP_ChangePassword_Test {
 		string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
 		ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
 
-	  	ISSP_First_Login ctrl = new ISSP_First_Login();
-	 	Pagereference pr = Page.ISSP_Login;
+		ISSP_First_Login ctrl = new ISSP_First_Login();
+		Pagereference pr = Page.ISSP_Login;
 
 	}
 
@@ -391,8 +391,8 @@ private class ISSP_ChangePassword_Test {
 		ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
 		insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
 
-		UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed', 
-													Operation = 'Activate', 
+		UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed',
+													Operation = 'Activate',
 													ApprovalStatus = 'Required',
 													SalesforceUserId = newUser.Id);
 		insert userProvisining;
@@ -439,7 +439,7 @@ private class ISSP_ChangePassword_Test {
 			ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
 			insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
 
-			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed', 
+			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed',
 													Operation = 'Activate', 
 													ApprovalStatus = 'Required',
 													SalesforceUserId = newUser.Id);
@@ -454,7 +454,7 @@ private class ISSP_ChangePassword_Test {
 
 			}
 
-			Id  permissionSetId = [SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User' LIMIT 1].Id;
+			Id permissionSetId = [SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User' LIMIT 1].Id;
 		 
 			List<PermissionSetAssignment> permissionSetAssignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :newUser.Id AND PermissionSetId =  :permissionSetId];
 			System.assert(!permissionSetAssignments.isEmpty());
@@ -469,7 +469,7 @@ private class ISSP_ChangePassword_Test {
 			ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
 			insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
 
-			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Failed', 
+			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Failed',
 													Operation = 'Activate', 
 													ApprovalStatus = 'Required',
 													SalesforceUserId = newUser.Id);

@@ -93,7 +93,7 @@ private class AcliSyncBatchTest {
 		Document doc = new Document();
 		doc.Name = AcliNewScheduler.ACLI_DOC_NAME;
 		doc.Body = Blob.ValueOf(c);
-		doc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
+		doc.FolderId = AcliNewScheduler.ACLI_FOLDER.Id;
 		insert doc;
 
 		String CRON_EXP = '0 0 0 15 3 ? 2022';

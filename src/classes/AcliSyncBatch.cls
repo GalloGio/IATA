@@ -52,46 +52,46 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
 		// Get corresponding accounts from SF into a map per SAP ID
 		list<String> lstAcctRecordTypes = new list<String>{'IATA_Airline', 'Standard_Account', 'Others', 'Operator'};
 		list<Account> lstSFaccounts = [SELECT Id,name,IATACode__c,Name_on_AOC__c, Airline_designator__c,ICAO_designator__c,billingStreet, billingCity,billingState, billingCountry,billingPostalCode,
-							   					Membership_SITA__c, Memmership_ARINC__c, IATA_Member__c, Memmership_ATA__c, Type_of__c, Account_code_secondary_flag__c, Airline_Prefix__c, IATA_ISO_Country__c, ACLI_Status__c,
-							   					IATA_ISO_Country__r.ISO_Code__c, Membership_status__c, ACLI_SAP_Id__c, MITA_Member__c, AOC_Expiry_Date__c, Legal_name__c, Area_of_Operation__c, Category__c, Sector__c, Type_of_Service__c,RecordTypeId, RecordType.DeveloperName, duplicate_flag_indicato__c
-						   					 FROM Account
-						   					 WHERE RecordType.DeveloperName IN :lstAcctRecordTypes
-						   					 AND ACLI_SAP_Id__c IN :mapAcliAccountPerSapId.keyset()];
+												Membership_SITA__c, Memmership_ARINC__c, IATA_Member__c, Memmership_ATA__c, Type_of__c, Account_code_secondary_flag__c, Airline_Prefix__c, IATA_ISO_Country__c, ACLI_Status__c,
+												IATA_ISO_Country__r.ISO_Code__c, Membership_status__c, ACLI_SAP_Id__c, MITA_Member__c, AOC_Expiry_Date__c, Legal_name__c, Area_of_Operation__c, Category__c, Sector__c, Type_of_Service__c,RecordTypeId, RecordType.DeveloperName, duplicate_flag_indicato__c
+											FROM Account
+											WHERE RecordType.DeveloperName IN :lstAcctRecordTypes
+											AND ACLI_SAP_Id__c IN :mapAcliAccountPerSapId.keyset()];
 
-   		list<Id> lstAccountIds = new list<Id>();
-   		map<String, Account> mapAccountsPerSapId = new map<String, Account>();
-   		for (Account a : lstSFaccounts) {
-   			// Currently several accounts can have the same ACLI Customer Number
-   			// If that is the case for a ACLI Customer Number, we will update the Account with Record Type Airline HQ
-   			// Check if we already retrieved an Airline HQ account with the same ACLI Customer Number
-   			Account acc = mapAccountsPerSapId.get(a.ACLI_SAP_Id__c);
-   			if(acc == null || acc.RecordType.DeveloperName != 'IATA_Airline'){
-   				mapAccountsPerSapId.put(a.ACLI_SAP_Id__c, a);
-   				lstAccountIds.add(a.Id);
-   			}
-   		}
+		list<Id> lstAccountIds = new list<Id>();
+		map<String, Account> mapAccountsPerSapId = new map<String, Account>();
+		for (Account a : lstSFaccounts) {
+			// Currently several accounts can have the same ACLI Customer Number
+			// If that is the case for a ACLI Customer Number, we will update the Account with Record Type Airline HQ
+			// Check if we already retrieved an Airline HQ account with the same ACLI Customer Number
+			Account acc = mapAccountsPerSapId.get(a.ACLI_SAP_Id__c);
+			if(acc == null || acc.RecordType.DeveloperName != 'IATA_Airline'){
+				mapAccountsPerSapId.put(a.ACLI_SAP_Id__c, a);
+				lstAccountIds.add(a.Id);
+			}
+		}
 
-   		// get related SAP Account records into a map per ACLI Customer Number
-   		map<String, SAP_Account__c> mapSapAccountsPerSapId = new map<String, SAP_Account__c>();
-   		list<SAP_Account__c> lstSapAccounts = [SELECT Id, Airline_Coding__c, SAP_ID__c, Account__c, Account__r.ACLI_SAP_Id__c FROM SAP_Account__c WHERE Account__c IN :lstAccountIds];
-   		for (SAP_Account__c sa : lstSapAccounts) {
-   			// only interested if the SAP ID on the record is the same as the SAP Id in the account, because that's the value from the ACLI file (the account was matched based on that)
-   			if (sa.SAP_ID__c == sa.Account__r.ACLI_SAP_Id__c) {
-   				if ( mapSapAccountsPerSapId.get(sa.SAP_ID__c) == null ) {
-   					mapSapAccountsPerSapId.put(sa.SAP_ID__c, sa);
-   				} else {
-   					// there is another account with the same ID, and this should not happen
-   					codingCasesLog += 'There is more than one account with the SAP ID "' + sa.SAP_ID__c + '\r\n';
-   				}
-   			}
-   		}
+		// get related SAP Account records into a map per ACLI Customer Number
+		map<String, SAP_Account__c> mapSapAccountsPerSapId = new map<String, SAP_Account__c>();
+		list<SAP_Account__c> lstSapAccounts = [SELECT Id, Airline_Coding__c, SAP_ID__c, Account__c, Account__r.ACLI_SAP_Id__c FROM SAP_Account__c WHERE Account__c IN :lstAccountIds];
+		for (SAP_Account__c sa : lstSapAccounts) {
+			// only interested if the SAP ID on the record is the same as the SAP Id in the account, because that's the value from the ACLI file (the account was matched based on that)
+			if (sa.SAP_ID__c == sa.Account__r.ACLI_SAP_Id__c) {
+				if ( mapSapAccountsPerSapId.get(sa.SAP_ID__c) == null ) {
+					mapSapAccountsPerSapId.put(sa.SAP_ID__c, sa);
+				} else {
+					// there is another account with the same ID, and this should not happen
+					codingCasesLog += 'There is more than one account with the SAP ID "' + sa.SAP_ID__c + '\r\n';
+				}
+			}
+		}
 
-   		// get related cases into a map per Account Id
-   		map<Id, list<Case>> mapCasesPerAccId = new map<Id, list<Case>>();
-   		list<Case> listUpdateCases = new list<Case>();
-   		list<Case> lstAirlineCodingCases = [SELECT Id, AccountId, Coding_Application_ID__c, Coding_Application_Reception_Date__c, Coding_Application_Status__c, Reason1__c
-   												FROM Case
-   												WHERE RecordType.DeveloperName = 'Airline_Coding_Application' AND isClosed = false AND AccountId IN :lstAccountIds];
+		// get related cases into a map per Account Id
+		map<Id, list<Case>> mapCasesPerAccId = new map<Id, list<Case>>();
+		list<Case> listUpdateCases = new list<Case>();
+		list<Case> lstAirlineCodingCases = [SELECT Id, AccountId, Coding_Application_ID__c, Coding_Application_Reception_Date__c, Coding_Application_Status__c, Reason1__c
+												FROM Case
+												WHERE RecordType.DeveloperName = 'Airline_Coding_Application' AND isClosed = false AND AccountId IN :lstAccountIds];
 		for (Case cs : lstAirlineCodingCases) {
 			list<Case> listCases = mapCasesPerAccId.get(cs.AccountId);
 			if (listCases == null) {
@@ -300,16 +300,16 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
 		
 		list<string> lstRecipients = new list<string>();
 		lstRecipients.add(userInfo.getUserEmail());
-		for (String tempStr : String.valueOf(UtilityCS__c.getInstance('AcliConfirmationEmailRecipients').Value__c).split(',')) {
+		for (String tempStr : String.valueOf(UtilityCS__c.getInstance('AcliConfirmationEmailRecipients').Value__c).split(',')){
 			lstRecipients.add(tempStr);
 		}
 		
 		email.setSubject('ACLI sync batch ' + datetime.now());
 		email.setToAddresses( lstRecipients );
-		email.setPlainTextBody( 'The ACLI synchronization batch has finished its execution. Please find attached the log files.' );
+		email.setPlainTextBody( 'The ACLI synchronization batch has finished its execution. Please find attached the log files.');
 		
 		// build backup, unmatched log and error log attachment
-		Messaging.EmailFileAttachment[] attachements = new Messaging.EmailFileAttachment[]{} ;
+		Messaging.EmailFileAttachment[] attachements = new Messaging.EmailFileAttachment[]{};
 		
 		
 		// account backup file
@@ -317,7 +317,7 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
 		// updated ACLI accounts
 		if (backUp != AcliAccount.firstLineCSV()) {
 			efa = new Messaging.EmailFileAttachment();
-			efa.setContentType('text/csv');   
+			efa.setContentType('text/csv');
 			efa.setFileName('BackUpSyncedAccounts_'+datetime.now()+'.csv');
 			efa.setBody(blob.valueOf(backUp));
 			attachements.add(efa);
@@ -327,7 +327,7 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
 		// new ACLI accounts
 		if (newAcliAccounts != AcliAccount.firstLineCSV()) {
 			efa = new Messaging.EmailFileAttachment();
-				efa.setContentType('text/csv');   
+				efa.setContentType('text/csv');
 				efa.setFileName('NewAcliAccounts_' + datetime.now() + '.csv');
 				efa.setBody(blob.valueOf(newAcliAccounts));
 			attachements.add(efa);

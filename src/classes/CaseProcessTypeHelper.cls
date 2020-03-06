@@ -1,15 +1,15 @@
 /*
- *  This class is an helper with methods to handle Case Process Type actions, like calculate the KPI when the case is closed
- *  or copy the Case process to OSCAR
- */
+*  This class is an helper with methods to handle Case Process Type actions, like calculate the KPI when the case is closed
+*  or copy the Case process to OSCAR
+*/
 public with sharing class CaseProcessTypeHelper {
 
 	//This variable maps the metadata per reason and case recordtype id
 	private static Map<Id,Map<String,Case_Process_Type__mdt>> mapRTsToReasons = null;
 
 	/*
-	 *  Method to load Case_Process_Type__mdt
-	 */
+	*  Method to load Case_Process_Type__mdt
+	*/
 	private static Map<Id,Map<String,Case_Process_Type__mdt>> getMapRTsToReasons() {
 		if(mapRTsToReasons == null) {
 			mapRTsToReasons = new Map<Id,Map<String,Case_Process_Type__mdt>>();
@@ -161,4 +161,4 @@ public with sharing class CaseProcessTypeHelper {
 		}
 	}
 
- }
+}
