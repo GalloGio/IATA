@@ -319,9 +319,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
-                Id parentAccountLeftAlone = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)
-                    ? changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c
-                    : null;
+				Id parentAccountLeftAlone = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)
+					? changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c
+					: null;
 
 				if(!validateTypeOfChange(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c))
 					return;
@@ -525,7 +525,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				}
 
-                if (parentAccountLeftAlone != null)
+				if (parentAccountLeftAlone != null)
 					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, parentAccountLeftAlone, true));
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
@@ -566,12 +566,12 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 					//If it is a multicountry hierarchy split => updates forms of payments (CC, CA, EP)
-                    if (isMulticountry && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT)) {
+					if (isMulticountry && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT)) {
 						ANG_MulticountryHelper.processAgenciesFormsOfPayment(hierarchyAccs.values(), changesContainer);
 					}
 
 					// if it is a ST to MC acquisition
-                    if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) {
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) {
 						// recalculate the FoP aligned with the GE
 						Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(newParent);
 						
@@ -1316,7 +1316,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 
-        Boolean isHierarchySplit = AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
+		Boolean isHierarchySplit = AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
 
 		if(isHierarchySplit){
 
