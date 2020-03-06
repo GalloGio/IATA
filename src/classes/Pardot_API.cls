@@ -13,13 +13,21 @@ public without sharing class Pardot_API {
 	}
 
 	public static String getAPIToken() {
-		String url = 'https://pi.pardot.com/api/login/version/'+pardotAPIVersion+'?email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
+		
+		Http h = new Http();
+		String sBody='email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
 
-		Map<String,String> header = new Map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
+		HttpRequest req = new HttpRequest();
+
+		req.setEndpoint('https://pi.pardot.com/api/login/version/'+pardotAPIVersion);
+		req.setMethod('POST');
+		req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		req.setBody(sBody);
 		try {
-			String resp = callout('POST', url, header);
+			HttpResponse res = h.send(req);
+			String responseBody = res.getBody();
 			// Get API_KEY from XML
-			return readNode(resp, 'api_key').getText();
+			return readNode(responseBody, 'api_key').getText();
 		} catch(Exception e) {
 			System.debug(loggingLevel.ERROR, '____ [cls Pardot_API - getAPIToken] e - ' + e);
 			return null;
