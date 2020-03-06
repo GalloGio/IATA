@@ -114,14 +114,14 @@ public with sharing class CaseProcessTypeHelper {
 		//WMO-564 - ACAMBAS: End
 	}
 
-    /*
-     *  Method that executes the recalculation OSCAR effective age when the case is closed
-     */
-    public static void processOSCAREffAge(List<Case> cases, Map<Id,Case> oldMap) {
-        Id oscarCommRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-        Set<String> reasons = getMapRTsToReasons().get(oscarCommRTId).keySet();
-        Date x1stDay = Date.newInstance(2019, 1, 1);
-        Map<Id,Case> mapOscarToCase = new Map<Id,Case>();
+	/*
+	 *  Method that executes the recalculation OSCAR effective age when the case is closed
+	 */
+	public static void processOSCAREffAge(List<Case> cases, Map<Id,Case> oldMap) {
+		Id oscarCommRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		Set<String> reasons = getMapRTsToReasons().get(oscarCommRTId).keySet();
+		Date x1stDay = Date.newInstance(2019, 1, 1);
+		Map<Id,Case> mapOscarToCase = new Map<Id,Case>();
 
 		for(Case cse : cases) {
 			Case oldRecord = oldMap.get(cse.Id);

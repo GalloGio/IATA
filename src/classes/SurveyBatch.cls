@@ -349,74 +349,74 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				AccountCountry = c.BSPCountry__c;
 			}
 
-      /****** Clicktools Workflow_AM_CX_.... *****/      
-      if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR_Communication') &&
-                /*2 aggregate the country for all the Clicktools AM_CX*/
-                /*3*/!c.Contact.Email.contains('@iata.org') &&
-                !c.Contact.Email.contains('@salesforce.com') &&
-                /*4*/c.IATA_Code__c != '953' && c.IATA_Code__c != '954' &&
-                /*5*/(c.Reason1__c == 'CHC – Change of Shareholding' || c.Reason1__c == 'CHL - Change of Location' || c.Reason1__c == 'CHN - Change of Name' ||
-                      c.Reason1__c == 'CHO / CHS – Change of Ownership / Legal Status' ||
-                      c.Reason1__c == 'New BR / IP' || c.Reason1__c == 'New HO' || c.Reason1__c == 'New SA / CHV – New Code')  &&
-                /*6*/ c.Status == 'Closed'  &&
-                /*7*/ (!c.Account.Name.contains('General Public') && !c.Account.Name.contains('Pubblico Italia')) &&
-                /*8*/ c.Contact.HasOptedOutOfEmail == false &&
-                /*9*/ String.isBlank(c.Contact.Instant_Survey_opt_out__c)
-                /*10*///c.Subject!=null && !c.Subject.contains('PROCOM-EDMC PROJECT')
-         ) {
-        system.debug(LoggingLevel.error, '################### Clicktools Workflow_AM_CX');
-        system.debug(LoggingLevel.error, '################### Region=-' + c.Region__c + '-');
-        system.debug(LoggingLevel.error, '################### BSPCountry__c=-' + c.BSPCountry__c + '-');
-        system.debug(LoggingLevel.error, '################### AccountCountry=-' + AccountCountry + '-');
+	  /****** Clicktools Workflow_AM_CX_.... *****/      
+	  if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR_Communication') &&
+				/*2 aggregate the country for all the Clicktools AM_CX*/
+				/*3*/!c.Contact.Email.contains('@iata.org') &&
+				!c.Contact.Email.contains('@salesforce.com') &&
+				/*4*/c.IATA_Code__c != '953' && c.IATA_Code__c != '954' &&
+				/*5*/(c.Reason1__c == 'CHC – Change of Shareholding' || c.Reason1__c == 'CHL - Change of Location' || c.Reason1__c == 'CHN - Change of Name' ||
+					  c.Reason1__c == 'CHO / CHS – Change of Ownership / Legal Status' ||
+					  c.Reason1__c == 'New BR / IP' || c.Reason1__c == 'New HO' || c.Reason1__c == 'New SA / CHV – New Code')  &&
+				/*6*/ c.Status == 'Closed'  &&
+				/*7*/ (!c.Account.Name.contains('General Public') && !c.Account.Name.contains('Pubblico Italia')) &&
+				/*8*/ c.Contact.HasOptedOutOfEmail == false &&
+				/*9*/ String.isBlank(c.Contact.Instant_Survey_opt_out__c)
+				/*10*///c.Subject!=null && !c.Subject.contains('PROCOM-EDMC PROJECT')
+		 ) {
+		system.debug(LoggingLevel.error, '################### Clicktools Workflow_AM_CX');
+		system.debug(LoggingLevel.error, '################### Region=-' + c.Region__c + '-');
+		system.debug(LoggingLevel.error, '################### BSPCountry__c=-' + c.BSPCountry__c + '-');
+		system.debug(LoggingLevel.error, '################### AccountCountry=-' + AccountCountry + '-');
 
 
-        integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
-        countersMap.put(c.Region__c, ++n);
+		integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
+		countersMap.put(c.Region__c, ++n);
 
-        //start of INC310891
-        List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
-        Boolean ignore;
-        for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
-          ignore = false;
-          if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
-            IATAcases ++;
-            IATAcaseslog += c.id + ', ';
-            ignore = true;
-            break;
-          }
-        }
-        if(ignore==true)
-          continue;
-        //end of INC310891
+		//start of INC310891
+		List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
+		Boolean ignore;
+		for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
+		  ignore = false;
+		  if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
+			IATAcases ++;
+			IATAcaseslog += c.id + ', ';
+			ignore = true;
+			break;
+		  }
+		}
+		if(ignore==true)
+		  continue;
+		//end of INC310891
 
-        // If the case is owned by some users the email should not start
+		// If the case is owned by some users the email should not start
    /*     if ((c.Owner.FirstName == 'Ángel' && c.Owner.LastName == 'Peña' ) ||
-            (c.Owner.FirstName == 'Alvaro' && c.Owner.LastName == 'Alonso' ) ||
-            (c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon' ) ||
-            (c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
-            (c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
-            (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
-            (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
-            (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
-            (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
-            (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
-            (c.Owner.FirstName == 'Victor Manuel' && c.Owner.LastName == 'Meana Solanas') ||
-            (c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
-            (c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
-            (c.Owner.FirstName == 'Taynara'&& c.Owner.LastName == 'Lorentz') ||
-            (c.Owner.FirstName == 'Marina'&& c.Owner.LastName == 'de Paula Loures') ||
-            (c.Owner.FirstName == 'José' && c.Owner.LastName == 'González-Cela de Cominges')) { //INC267186
-          IATAcases ++;
-          IATAcaseslog += c.id + ', ';
-          continue;
-        }*/
+			(c.Owner.FirstName == 'Alvaro' && c.Owner.LastName == 'Alonso' ) ||
+			(c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon' ) ||
+			(c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
+			(c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
+			(c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
+			(c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
+			(c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
+			(c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
+			(c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
+			(c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
+			(c.Owner.FirstName == 'Victor Manuel' && c.Owner.LastName == 'Meana Solanas') ||
+			(c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
+			(c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
+			(c.Owner.FirstName == 'Taynara'&& c.Owner.LastName == 'Lorentz') ||
+			(c.Owner.FirstName == 'Marina'&& c.Owner.LastName == 'de Paula Loures') ||
+			(c.Owner.FirstName == 'José' && c.Owner.LastName == 'González-Cela de Cominges')) { //INC267186
+		  IATAcases ++;
+		  IATAcaseslog += c.id + ', ';
+		  continue;
+		}*/
 
-    //system.debug(LoggingLevel.ERROR,'AccountCountry is... ' + AccountCountry);
+	//system.debug(LoggingLevel.ERROR,'AccountCountry is... ' + AccountCountry);
 
-    /*String myvariable;
-    myvariable = AccountCountry;
-    throw new transformationException( 'Messsage for Susanna ' + myvariable);*/
+	/*String myvariable;
+	myvariable = AccountCountry;
+	throw new transformationException( 'Messsage for Susanna ' + myvariable);*/
 
 				if (AccountCountry == 'People\'s Republic of China')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_ZH');
@@ -507,8 +507,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				}
 
 
-          /****** For Cases - Global Record Type******/
-      } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
+		  /****** For Cases - Global Record Type******/
+	  } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
 
 					template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
@@ -658,12 +658,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_FR_AUG17');
 
-        else if (
-          rolesCanSendSurveysTo3Regions.contains(RoleName) &&
-          c.Region__c == 'Europe' &&
-          (AccountCountry == 'Austria' || AccountCountry == 'Germany')
-        )
-          template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
+		else if (
+		  rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+		  c.Region__c == 'Europe' &&
+		  (AccountCountry == 'Austria' || AccountCountry == 'Germany')
+		)
+		  template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
 
 
 				else if (
@@ -942,12 +942,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				else*/
 						c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
-        lstCasesToUpdate.add(c);
-      }
-    }
-    system.debug(LoggingLevel.error, '################### lstCasesToUpdate.isEmpty() = ' + lstCasesToUpdate.isEmpty());
-    if (!lstCasesToUpdate.isEmpty()) {
-      Database.update(lstCasesToUpdate, false);
-    }
+		lstCasesToUpdate.add(c);
+	  }
+	}
+	system.debug(LoggingLevel.error, '################### lstCasesToUpdate.isEmpty() = ' + lstCasesToUpdate.isEmpty());
+	if (!lstCasesToUpdate.isEmpty()) {
+	  Database.update(lstCasesToUpdate, false);
+	}
   }  
   }

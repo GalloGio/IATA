@@ -111,15 +111,15 @@ public class clsFinancialSecurityRequestController {
 
 		public PageReference MassSendTrackedEmail() {
 		MassEmail(true);
-        return null;
-    }    
+		return null;
+	}    
   
-    public Boolean FSvalueMissing{ 
-    get 
-    {
-    
-      Set <ID> selectedID = new Set<ID>();
-         selectedID = CasesCheckedList.KeySet();
+	public Boolean FSvalueMissing{ 
+	get 
+	{
+	
+	  Set <ID> selectedID = new Set<ID>();
+		 selectedID = CasesCheckedList.KeySet();
 
 				Double b;
 				List<Case> cases = [Select C.ID, c.ContactId From Case c Where (c.Financial_Security_Amount__c = :b or c.Financial_Security_Currency__c = '') AND c.Id IN :selectedID];
@@ -467,12 +467,12 @@ public Case CaseParameter
 				public Case c {get; set;}
 				public boolean selected {get; set;}
 
-       
-        //This is the contructor method. When we create a new cContact object we pass a Contact that is set to the con property. We also set the selected value to false  
-        public cCase(Case ca) {  
-            c = ca;  
-            selected = false;           
-        }  
-    }	
+	   
+		//This is the contructor method. When we create a new cContact object we pass a Contact that is set to the con property. We also set the selected value to false  
+		public cCase(Case ca) {  
+			c = ca;  
+			selected = false;           
+		}  
+	}	
 
 }

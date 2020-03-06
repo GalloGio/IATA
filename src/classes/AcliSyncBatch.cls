@@ -296,63 +296,63 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
 	global void finish (Database.BatchableContext batchableContext){
 		// Create the confirmation email, with the logs attached
 		Integer i=0;
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        
-        list<string> lstRecipients = new list<string>();
-        lstRecipients.add(userInfo.getUserEmail());
-        for (String tempStr : String.valueOf(UtilityCS__c.getInstance('AcliConfirmationEmailRecipients').Value__c).split(',')) {
-        	lstRecipients.add(tempStr);
-        }
-        
-        email.setSubject('ACLI sync batch ' + datetime.now());
-        email.setToAddresses( lstRecipients );
-        email.setPlainTextBody( 'The ACLI synchronization batch has finished its execution. Please find attached the log files.' );
-        
-        // build backup, unmatched log and error log attachment
-        Messaging.EmailFileAttachment[] attachements = new Messaging.EmailFileAttachment[]{} ;
-    	
-        
-        // account backup file
-        Messaging.EmailFileAttachment efa;
-        // updated ACLI accounts
-        if (backUp != AcliAccount.firstLineCSV()) {
-        	efa = new Messaging.EmailFileAttachment();
-	        efa.setContentType('text/csv');   
-	        efa.setFileName('BackUpSyncedAccounts_'+datetime.now()+'.csv');
-	        efa.setBody(blob.valueOf(backUp));
-        	attachements.add(efa);
-        }
-        
-        
-        // new ACLI accounts
-        if (newAcliAccounts != AcliAccount.firstLineCSV()) {
-        	efa = new Messaging.EmailFileAttachment();
-		        efa.setContentType('text/csv');   
-		        efa.setFileName('NewAcliAccounts_' + datetime.now() + '.csv');
-		        efa.setBody(blob.valueOf(newAcliAccounts));
-        	attachements.add(efa);
-        }
-        
-        // error log
-        if (updateErrors != '') {
-        	efa = new Messaging.EmailFileAttachment();
-		        efa.setContentType('text/plain');
-		        efa.setFileName('ErrorLog_' + datetime.now() + '.txt');
-		        efa.setBody(blob.valueOf(updateErrors));
-        	attachements.add(efa);
-        }
-        
-        // coding cases log
-        if (codingCasesLog != '') {
-        	efa = new Messaging.EmailFileAttachment();
-		        efa.setContentType('text/plain');
-		        efa.setFileName('CodingCasesLog_' + datetime.now() + '.txt');
-		        efa.setBody(blob.valueOf(codingCasesLog));
-        	attachements.add(efa);
-        }
-        
-        // acli file inconsistencies log
-        if (acliFileInconsistencies != '') {
+		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+		
+		list<string> lstRecipients = new list<string>();
+		lstRecipients.add(userInfo.getUserEmail());
+		for (String tempStr : String.valueOf(UtilityCS__c.getInstance('AcliConfirmationEmailRecipients').Value__c).split(',')) {
+			lstRecipients.add(tempStr);
+		}
+		
+		email.setSubject('ACLI sync batch ' + datetime.now());
+		email.setToAddresses( lstRecipients );
+		email.setPlainTextBody( 'The ACLI synchronization batch has finished its execution. Please find attached the log files.' );
+		
+		// build backup, unmatched log and error log attachment
+		Messaging.EmailFileAttachment[] attachements = new Messaging.EmailFileAttachment[]{} ;
+		
+		
+		// account backup file
+		Messaging.EmailFileAttachment efa;
+		// updated ACLI accounts
+		if (backUp != AcliAccount.firstLineCSV()) {
+			efa = new Messaging.EmailFileAttachment();
+			efa.setContentType('text/csv');   
+			efa.setFileName('BackUpSyncedAccounts_'+datetime.now()+'.csv');
+			efa.setBody(blob.valueOf(backUp));
+			attachements.add(efa);
+		}
+		
+		
+		// new ACLI accounts
+		if (newAcliAccounts != AcliAccount.firstLineCSV()) {
+			efa = new Messaging.EmailFileAttachment();
+				efa.setContentType('text/csv');   
+				efa.setFileName('NewAcliAccounts_' + datetime.now() + '.csv');
+				efa.setBody(blob.valueOf(newAcliAccounts));
+			attachements.add(efa);
+		}
+		
+		// error log
+		if (updateErrors != '') {
+			efa = new Messaging.EmailFileAttachment();
+				efa.setContentType('text/plain');
+				efa.setFileName('ErrorLog_' + datetime.now() + '.txt');
+				efa.setBody(blob.valueOf(updateErrors));
+			attachements.add(efa);
+		}
+		
+		// coding cases log
+		if (codingCasesLog != '') {
+			efa = new Messaging.EmailFileAttachment();
+				efa.setContentType('text/plain');
+				efa.setFileName('CodingCasesLog_' + datetime.now() + '.txt');
+				efa.setBody(blob.valueOf(codingCasesLog));
+			attachements.add(efa);
+		}
+		
+		// acli file inconsistencies log
+		if (acliFileInconsistencies != '') {
 			acliFileInconsistencies = '"ACLI Customer Number","Name on AOC","Legal Name","Description of Error"\r\n' + acliFileInconsistencies;
 			efa = new Messaging.EmailFileAttachment();
 				efa.setContentType('text/csv');

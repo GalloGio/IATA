@@ -454,13 +454,13 @@ public with sharing class sendSingleTrackedEmailControllerTest {
 
 		controller.initPage();
 
-        controller.email.Subject__c = 'test error sending';
-        controller.email.Html_Body__c = 'test';
-        controller.email.TextBody__c = 'test';           
-        controller.selectedFrom = 'agencymanagement@iata.org';
-    
-        controller.sendTrackedEmail();
-        
-        Test.stopTest();
-    }
+		controller.email.Subject__c = 'test error sending';
+		controller.email.Html_Body__c = 'test';
+		controller.email.TextBody__c = 'test';           
+		controller.selectedFrom = 'agencymanagement@iata.org';
+	
+		controller.sendTrackedEmail();
+		
+		Test.stopTest();
+	}
 }
