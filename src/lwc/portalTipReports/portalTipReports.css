@@ -1,0 +1,19 @@
+.resp-container-full-screen {
+	position: relative;
+	overflow: hidden;
+	padding-top: 42.15%
+}
+
+.resp-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.spinnerContainer {
+    width: 100%;
+    height: 100%;
+}
