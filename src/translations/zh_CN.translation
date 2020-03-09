@@ -1985,6 +1985,10 @@
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>服务</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -2059,6 +2063,10 @@
     <customLabels>
         <label>案例详情</label>
         <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
         <label>案例</label>
@@ -3311,6 +3319,46 @@
     <customLabels>
         <label>服务访问</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
         <label>访问请求</label>

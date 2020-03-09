@@ -56,8 +56,8 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Requires_Level2_Registration__c</field>
-			</layoutItems>
-			<layoutItems>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GDPR_PrivacyStatement__c</field>
             </layoutItems>
