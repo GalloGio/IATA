@@ -10,7 +10,7 @@
                     <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
                         <!-- Sections nav bar -->
-                        <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium slds-scrollable_x">
 
                             <!--<div class="emptyGrayAreaSize"></div>-->
 
@@ -19,7 +19,7 @@
 
                                     <!-- Active tab -->
                                     <span if:true={tab.active} data-item={tab.id} onclick={reloadData}
-                                        class="slds-p-around_small text-bold selectedTab">
+                                        class="slds-p-around_small text-bold selectedTab itemTab">
                                         {tab.label}
                                     </span>
 

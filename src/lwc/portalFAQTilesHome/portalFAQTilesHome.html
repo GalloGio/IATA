@@ -12,19 +12,50 @@
                 <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
             </div>
             <div if:false={loading} class="slds-is-relative" style="overflow: hidden;">
-
-                <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-bottom_large">
-                    <template for:each={lstTiles} for:item="tile" for:index="index">
-                        <div key={tile.categoryName} class={tile.class}>
-                            <div class="background-white aroundLightGrayBorder cursorPointer heightInfo"
-                                onclick={handleTileButtonClick} data-item={tile.categoryName}>
-                                <img src={tile.imageURL} data-item={tile.categoryName} />
-                                <div class="text-xsmall text-black text-bold" data-item={tile.categoryName}>
-                                    {tile.categoryLabel}</div>
+                <div style="overflow: auto; max-width: 100vw;">
+                    <div style={sliderWidth} class="slds-grid slds-wrap slds-gutters_xx-small slds-p-bottom_large slds-grid_vertical-stretch slds-hide_medium">
+                        <template for:each={lstTiles} for:item="tile" for:index="index">
+                            <div key={tile.categoryName} class={tile.class}>
+                                <div class="background-white cursorPointer heightInfo aroundLightGrayBorder fullHeight"
+                                    onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                                    <img src={tile.imageURL} data-item={tile.categoryName} />
+                                    <div class="text-xsmall text-black text-bold" data-item={tile.categoryName}>
+                                        {tile.categoryLabel}</div>
+                                </div>
                             </div>
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                 </div>
+                <div class="slds-p-vertical_medium slds-hide_medium">
+                    <lightning-layout vertical-align="center" horizontal-align="center">
+                        <lightning-layout-item padding="horizontal-small">
+                            <a>
+                                <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft"
+                                    size="xx-small">
+                                </lightning-icon>
+                            </a>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="horizontal-small">
+                            <a>
+                                <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright"
+                                    size="xx-small">
+                                </lightning-icon>
+                            </a>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-bottom_large slds-grid_vertical-stretch slds-show_medium">
+                        <template for:each={lstTiles} for:item="tile" for:index="index">
+                            <div key={tile.categoryName} class={tile.class}>
+                                <div class="background-white cursorPointer heightInfo aroundLightGrayBorder fullHeight"
+                                    onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                                    <img src={tile.imageURL} data-item={tile.categoryName} />
+                                    <div class="text-xsmall text-black text-bold" data-item={tile.categoryName}>
+                                        {tile.categoryLabel}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
 
             </div>
         </span>

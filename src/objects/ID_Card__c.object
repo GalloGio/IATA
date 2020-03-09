@@ -1138,6 +1138,18 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IDCard_Key_Account__c</fullName>
+        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.IDCard_Key_Account__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</inlineHelpText>
+        <label>IDCard Key Account</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ID_Card_Application__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1216,6 +1228,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-key-account\&quot;:\&quot;&quot;+IF(IDCard_Key_Account__c, &quot;True&quot;, &quot;False&quot;) + &quot;\&quot;,&quot;+
 &quot;\&quot;agency-country-iso\&quot;:\&quot;&quot;+Agency_ISO_Country_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 

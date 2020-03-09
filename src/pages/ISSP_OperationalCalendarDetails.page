@@ -12,8 +12,7 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.buttons.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.bootstrap.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jszip.min.js')}"></script>
-<apex:includeScript value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.0.1.5.min.js')}"/>
-<!-- <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script> -->
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/vfs_fonts.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.html5.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
@@ -95,6 +94,7 @@
         defaultOperationType = "";
         defaultFrequency = "";
     }
+	
     var isMultiButtonVisible = {!IsMultiButtonVisible};
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     console.log(MAP_FREQUENCIES);
@@ -105,6 +105,44 @@
     console.log(defaultCountry);
     console.log(defaultFrequency);
     $(document).ready(function() {
+		pdfMake.fonts = {
+           'Roboto' : {
+              normal: 'Roboto-Regular.ttf',
+              bold: 'Roboto-Medium.ttf',
+              italics: 'Roboto-Italic.ttf',
+              bolditalics: 'Roboto-Italic.ttf'
+           },
+        
+           'mPlus1' : {
+              normal: 'MPLUS1p-Regular.ttf',
+              bold: 'MPLUS1p-Regular.ttf',
+              italics: 'MPLUS1p-Regular.ttf',
+              bolditalics: 'MPLUS1p-Regular.ttf'
+           },
+            
+           'NotoSansKR' : {
+              normal: 'NotoSansKR-Regular.otf',
+              bold: 'NotoSansKR-Regular.otf',
+              italics: 'NotoSansKR-Regular.otf',
+              bolditalics: 'NotoSansKR-Regular.otf'
+           },
+            
+           'Tajawal' : {
+              normal: 'Tajawal-Regular.ttf',
+              bold: 'Tajawal-Regular.ttf',
+              italics: 'Tajawal-Regular.ttf',
+              bolditalics: 'Tajawal-Regular.ttf'
+           },
+            
+           'Mitr' : {
+              normal: 'Mitr-Regular.ttf',
+              bold: 'Mitr-Regular.ttf',
+              italics: 'Mitr-Regular.ttf',
+              bolditalics: 'Mitr-Regular.ttf'
+           }
+        
+        }
+	
         initFilters();
         refreshDetails(false);
         
@@ -270,6 +308,9 @@
                         return data;
                     }
                 }
+			},
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNameCSV();}
@@ -291,6 +332,9 @@
                         return data;
                     }
                 }
+            },
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNamePDF();},
@@ -302,17 +346,54 @@
             }
         },
         orientation: "portrait",
+		
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
                 image: getLogo(nvl($("#typeFilter").val()))
             });
-            doc['header']=(function(page, pages) {
+            
+            var language = "{!UserLanguage}";
+            var headerFontSize = 9.5;
+            var contentEvenSize = 10;
+            var contentOddSize = 10;
+            var font = 'mPlus1';
+            
+            switch(language) {
+              case 'ko':
+                font = 'NotoSansKR';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'ar':
+                font = 'Tajawal';
+                headerFontSize = 12;
+            	contentEvenSize = 11;
+                contentOddSize = 11;
+                break;
+                    
+              case 'th':
+                font = 'Mitr';
+                headerFontSize = 8.5;
+            	contentEvenSize = 9;
+                contentOddSize = 9;
+                break;
+                    
+            }
+            
+            doc.defaultStyle.font = font;
+            doc.styles.tableHeader.fontSize = headerFontSize;
+            doc.styles.tableBodyEven.fontSize = contentEvenSize;
+            doc.styles.tableBodyOdd.fontSize = contentOddSize;
+
+            doc['header']=(function(page, pages) {                  
                 if (page>1) return {
                     columns: [
                         {
-                            margin: [ 80, 5],
+                            margin: [ 35, 5],
                             alignment: 'left',
                             image: getLogo(nvl($("#typeFilter").val())),
                             width: 40
@@ -320,7 +401,7 @@
                         {
                             margin: [ 0, 10],
                             alignment: 'center',
-                            fontSize: 16,
+                            fontSize: 12,
                             text: getExportFileNamePDF()
                         }
                     ]
@@ -631,11 +712,18 @@
         $.each(tableDef.headers, function (i, line) {
             if (line.bVisible) {
                 colTypes.push(line.sType);
-                if (firstVisibleCol==null) firstVisibleCol=i;
+				if (firstVisibleCol === null) firstVisibleCol = i;
+				if (line.sTitle === 'Billing To') billingToCol = i;
             }
         });
         //console.log(firstVisibleCol);
         
+		var tableOrderIndex = firstVisibleCol;
+		var typeFilter = $("#typeFilter :selected");
+		if (typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS") {
+			tableOrderIndex = billingToCol;
+		}
+
         $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
             $.each(node.cells, function (j, cell) {
@@ -654,7 +742,7 @@
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
-        table.order([ firstVisibleCol, 'asc']).draw();
+        table.order([ tableOrderIndex, 'asc']).draw();
         //PDF button depends on the operation type value
         addExportButtons();
         $(".buttons-csv").prop("disabled",tableDef.data.length==0);
@@ -804,6 +892,8 @@
         var countries = [];
         $("#right-opt-country-filter option").each(function() {countries.push($(this).val());});
 
+        var billingPeriod = $("#multiDownloadBillingPeriod").val();
+
         var hasBSP = false;
         $.each($("#right-opt-operation-filter option"), function(i,v) {
             hasBSP |= !v.value.includes('CASS');
@@ -817,20 +907,20 @@
 
         alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
 
-        startDownload(opt, operations, remittance, countries, "{!account.Id}", fileFormat);
+        startDownload(opt, operations, remittance, countries, "{!account.Id}", billingPeriod, fileFormat);
     }
 
     var generationCounter;
     var zipFile;
-    function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
+    function startDownload(opt, operations, remittance, countries, accountId, billingPeriod, fileFormat) {
         generationCounter = null;
         zipFile = null;
         $('#downloadBtn').attr("disabled", true);
         $("#loading-modal").modal("show");
-        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId);
+        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId + " billingPeriod " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
-            opt, operations, remittance, countries, accountId,
+            opt, operations, remittance, countries, accountId, billingPeriod,
             function(result, event) {
                 console.log(result);
                 if (event.status) {
@@ -859,7 +949,7 @@
                             if(fileFormat == 'pdf') {
                                 createPDFFile(folder, v.files); 
                             } else {
-                                createCSVFile(folder, v.files);
+                                createCSVFile(folder, v.files, billingPeriod);
                             }                            
                         }
                     });
@@ -879,7 +969,7 @@
         );
     }
 
-    function createCSVFile(folder, files) {
+    function createCSVFile(folder, files, billingPeriod) {
         var fileBody = '';
 
         $.each(files, function(index1, file) {
@@ -898,7 +988,7 @@
         });
 
         var dt = new Date();
-        var csvFileName = folder.root.substring(0, folder.root.length-1) + ' ' + dt.getFullYear();
+        var csvFileName = folder.root.substring(0, folder.root.length-1) + ' ' + billingPeriod;
         addCSVFileToFolder(folder, fileBody, csvFileName + ".csv");  
     }
 
@@ -1174,7 +1264,8 @@
                 </div>
                 <div class="col-sm-1"></div>
             </apex:outputPanel>
-            <div id="timezone-disclaimer">
+            <script>if ($("#typeFilter").val().includes('SIS')) $("#timezone-disclaimer").removeClass("hidden");</script>
+            <div id="timezone-disclaimer" class="hidden">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <div class="alert alert-info">{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}</div>
@@ -1261,6 +1352,18 @@
                                             size="8"
                                             required="true"
                                             identifier="country-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <label >{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
+                                        <select id="multiDownloadBillingPeriod" class="form-control required">
+                                            <option value="{!YEAR(TODAY()) -1}">{!YEAR(TODAY()) -1}</option>
+                                            <option selected="true" value="{!YEAR(TODAY())}">{!YEAR(TODAY())}</option>
+                                            <option value="{!YEAR(TODAY()) +1}">{!YEAR(TODAY()) +1}</option>
+                                        </select>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>

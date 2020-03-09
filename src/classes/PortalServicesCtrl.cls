@@ -33,6 +33,12 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 					' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
 					' AND ANG_Accre_Tp__c = true';
 
+	if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
+		//if contact is of type Agency we check the restriction by sector and category
+		query += ' AND (ANG_Restrict_by_Agency_Sector__c = \'' + con.account.Sector__c + '\' OR ANG_Restrict_by_Agency_Sector__c = null)' +
+		' AND (ANG_Restrict_by_Agency_Category__c INCLUDES (\''+con.account.Category__c+'\') OR ANG_Restrict_by_Agency_Category__c = null)';
+	}
+
 	portalApplicationList = Database.query(query);
 
 	// Second search based in Custom Metadata for all those remaining apps
@@ -146,14 +152,6 @@ public static String paymentLinkRedirect(){
 	}else{
 		return '';
 	}
-}
-
-/*
- * Method used to retrieve the old link when redirecting the users to the old Portals
- */
-@AuraEnabled
-public static String goToOldPortalService(String myurl){
-	return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, myurl);
 }
 
 private static Map<String,ISSPServiceListView__c> getMapSrevicesListViews() {
@@ -1547,7 +1545,8 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 				Portal_Application_Right__c par = new Portal_Application_Right__c(
 					Portal_Application__c = portalApplicationId,
 					Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
-					Is_Favorite__c = isFavorite
+					Is_Favorite__c = isFavorite,
+					Right__c = 'Access Granted'
 				);
 				insert par;
 				return true;
@@ -1567,7 +1566,8 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			Portal_Application_Right__c par = new Portal_Application_Right__c(
 				Portal_Application__c = portalApplicationId,
 				Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
-				Last_Visit_Date__c = Datetime.now()
+				Last_Visit_Date__c = Datetime.now(),
+				Right__c = 'Access Granted'
 			);
 			insert par;
 			return true;

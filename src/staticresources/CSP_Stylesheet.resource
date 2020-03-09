@@ -485,6 +485,20 @@ lightning-datatable .slds-th__action {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modalNarrowTopMargin {
+    position: fixed; /* Stay in place */ 
+    z-index: 2; /* Sit on top */
+    padding-top: 2vh; /* Location of the box */
+    padding-bottom: 2vh;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
 .customPopupInteriorHalfScreenCentered {
   background-color: #f7f8fa;
   width: 35%;
@@ -501,6 +515,15 @@ lightning-datatable .slds-th__action {
   box-shadow: 5px 5px 20px #808080;
   border-radius: 1px;
   border: solid 1px #e2e2e2;
+}
+
+.customPopupInteriorNinetyScreenCentered {
+    background-color: #f7f8fa;
+    width: 90%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -711,12 +734,21 @@ lightning-datatable .slds-th__action {
     min-height: 40px;
     height: 56px;
     width: 220px;
-    word-break: normal;
+    word-break: break-word; 
 }
 
 .containedButton-size {
     height: 56px;
+    width: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .containedButton-size,
+  .containedButtonAlt {
+    height: auto;
+    min-height: 56px;
     width: 100%;
+  }
 }
 
 .filterButton,
@@ -735,7 +767,7 @@ lightning-datatable .slds-th__action {
   color: #3333ff;
   min-height: 40px;
   width: 220px;
-  word-break: break-all;
+  word-break: break-word;
   border: none;
 }
 
@@ -743,6 +775,7 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeightDiv,
 .fullHeight,
 .fullHeight button,
 .fullHeight button:active,
@@ -756,7 +789,7 @@ lightning-datatable .slds-th__action {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px #1e32fa;
   	background-color: #ffffff;
@@ -774,7 +807,7 @@ lightning-datatable .slds-th__action {
 	-webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px rgba(0, 0, 0, 0.08);
   	background-color: #ffffff;
@@ -804,6 +837,7 @@ lightning-datatable .slds-th__action {
     border: none;
   font-weight: 500;
   font-size: 14px;
+  line-height: normal;
 }
 .blueCustomButtonLink button:hover {
 	color: #3333ff;
@@ -849,10 +883,6 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
-.slds-button__icon_right,
-.slds-button__icon--right {
-    margin-left: 0;
-}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1312,6 +1342,10 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
+/***** HP Recent Casses Table ******/
+.hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
+    border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
 
 /*       New Documents Button Overrides*/
 .newattlist .slds-cell-fixed,.newattlist .slds-has-button-menu{
@@ -1664,7 +1698,7 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
@@ -1683,10 +1717,14 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
     display: inline-block;
     min-height: 40px;
+}
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 /* Custom picklist Support Reach Us*/
@@ -1722,6 +1760,10 @@ lightning-datatable .slds-th__action {
 
 .slideIcon svg {
     fill: #e2e2e2;
+}
+
+.hideDocsIcon svg {
+  fill:white;
 }
 
 /* Footer select language styles */
@@ -2626,9 +2668,22 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 .remove_focus .slds-table [role="gridcell"]:focus, .remove_focus .slds-table [role="gridcell"].slds-has-focus{
 	box-shadow: unset;
 }
-.displayWrapText .slds-button_icon-bare {
+
+.displayCalendarIcon .slds-button_icon-bare {
   display: block;
 }
+
+.displayWrapText .slds-button_icon-bare {
+  display: none;
+}
+
+.displayWrapText tbody .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
 
 /* FM - added for error toast to work correctly on IFTP app*/
 .toastContainer .slds-button_icon-bare {

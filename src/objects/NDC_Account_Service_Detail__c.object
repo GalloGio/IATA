@@ -149,7 +149,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -2185,8 +2185,13 @@
     <label>NDC Account Service Detail</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>NDC_Airline_Profile__c</columns>
+        <columns>Contact_Email__c</columns>
+        <columns>Contact_Person__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>NDC-ARD-{000000}</displayFormat>

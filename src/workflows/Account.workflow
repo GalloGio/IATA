@@ -105,6 +105,14 @@
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -120,6 +128,14 @@
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>

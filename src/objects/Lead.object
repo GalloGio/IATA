@@ -341,6 +341,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>DSE__DS_DuplicateLeadListFields</fullName>
         <availableFields>
@@ -2120,9 +2121,19 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Airline Business Management</fullName>
+                    <default>false</default>
+                    <label>Airline Business Management</label>
+                </value>
+                <value>
                     <fullName>Airline Management and Business Development</fullName>
                     <default>false</default>
                     <label>Airline Management and Business Development</label>
+                </value>
+                <value>
+                    <fullName>Airline Operations and Quality</fullName>
+                    <default>false</default>
+                    <label>Airline Operations and Quality</label>
                 </value>
                 <value>
                     <fullName>Air Navigation Services</fullName>
@@ -2133,6 +2144,11 @@
                     <fullName>Airport Planning, Management and Operations</fullName>
                     <default>false</default>
                     <label>Airport Planning, Management and Operations</label>
+                </value>
+                <value>
+                    <fullName>Airport Planning, Operations and Management</fullName>
+                    <default>false</default>
+                    <label>Airport Planning, Operations and Management</label>
                 </value>
                 <value>
                     <fullName>Aviation Environment and Fuel</fullName>
@@ -2150,6 +2166,11 @@
                     <label>Aviation Security</label>
                 </value>
                 <value>
+                    <fullName>Cargo &amp; Logistics</fullName>
+                    <default>false</default>
+                    <label>Cargo &amp; Logistics</label>
+                </value>
+                <value>
                     <fullName>Cargo and Dangerous Goods Regulations</fullName>
                     <default>false</default>
                     <label>Cargo and Dangerous Goods Regulations</label>
@@ -2160,9 +2181,34 @@
                     <label>Civil Aviation</label>
                 </value>
                 <value>
+                    <fullName>Civil Aviation Authorities</fullName>
+                    <default>false</default>
+                    <label>Civil Aviation Authorities</label>
+                </value>
+                <value>
+                    <fullName>Dangerous Goods Regulations</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods Regulations</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
                     <fullName>Fares, Revenue Accounting and Control</fullName>
                     <default>false</default>
                     <label>Fares, Revenue Accounting and Control</label>
+                </value>
+                <value>
+                    <fullName>Fares and Ticketing</fullName>
+                    <default>false</default>
+                    <label>Fares and Ticketing</label>
+                </value>
+                <value>
+                    <fullName>Finance and Accounting</fullName>
+                    <default>false</default>
+                    <label>Finance and Accounting</label>
                 </value>
                 <value>
                     <fullName>Ground Operations</fullName>
@@ -2170,9 +2216,24 @@
                     <label>Ground Operations</label>
                 </value>
                 <value>
+                    <fullName>Law and Regulations</fullName>
+                    <default>false</default>
+                    <label>Law and Regulations</label>
+                </value>
+                <value>
+                    <fullName>Management and Leadership</fullName>
+                    <default>false</default>
+                    <label>Management and Leadership</label>
+                </value>
+                <value>
                     <fullName>Organization and Human Performance</fullName>
                     <default>false</default>
                     <label>Organization and Human Performance</label>
+                </value>
+                <value>
+                    <fullName>other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
                 </value>
                 <value>
                     <fullName>Quality, Audit and Airline Operations</fullName>
@@ -2183,6 +2244,16 @@
                     <fullName>Safety</fullName>
                     <default>false</default>
                     <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Sales &amp; Marketing</fullName>
+                    <default>false</default>
+                    <label>Sales &amp; Marketing</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
                 </value>
                 <value>
                     <fullName>Travel and Tourism</fullName>
@@ -3991,7 +4062,7 @@ albam@iata.org</description>
         <label>First Campaign</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -6044,6 +6115,15 @@ albam@iata.org</description>
         <language>en_US</language>
         <sharedTo>
             <role>IDOIndustrySolutions</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>In_house_Training_Lead</fullName>
+        <filterScope>Queue</filterScope>
+        <label>In-house Training</label>
+        <queue>In_house_Training</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -10430,11 +10510,23 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airline Business Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Management and Business Development</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airline Operations and Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Planning%2C Management and Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Planning%2C Operations and Management</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10450,6 +10542,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cargo %26 Logistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo and Dangerous Goods Regulations</fullName>
                 <default>false</default>
             </values>
@@ -10458,11 +10554,39 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Civil Aviation Authorities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fares and Ticketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fares%2C Revenue Accounting and Control</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Finance and Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law and Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management and Leadership</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10478,7 +10602,19 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Travel and Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
