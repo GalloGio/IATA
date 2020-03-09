@@ -62,6 +62,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	global void execute(Database.BatchableContext BC, List<SObject> scope) {
 		currentThreads++;
 
+		// bypass additional AccountTeamMember logic on the related Users
+		ANG_UserTriggerHandler.doNotRun = true;
+
 		System.SavePoint sp = Database.setSavepoint();
 
 		List<Account> accts = filterAccounts((List<Account>) scope);
