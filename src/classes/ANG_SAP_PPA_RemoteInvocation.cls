@@ -84,19 +84,20 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 		if(!mapRemoteInvocationArtifacts.isEmpty()){
 
-			List<Case> caseLst = 
+			Map<Id, Case> caseMap = new Map<Id, Case>(
 				[SELECT Id, OSCAR__r.Name, OSCAR__r.Invoice_number__c, OSCAR__r.Endorsement_Requested__c, 
 					OSCAR__r.Endorsement_requested_date__c, OSCAR__r.STEP47__c, OSCAR__r.STEP9__c, OSCAR__r.STEP49__c 
-				 FROM Case WHERE Id IN :mapRemoteInvocationArtifacts.keySet()];
+				 FROM Case WHERE Id IN :mapRemoteInvocationArtifacts.keySet()]);
 
 			Map<ID, AMS_OSCAR__c> mapCaseIdWithRemoteInternalID = new Map<ID, AMS_OSCAR__c>();
 
-			for(Case cse : caseLst){
+			for(Case cse : caseMap.values()){
 				AMS_OSCAR__c oscar = (AMS_OSCAR__c) cse.getSObject('OSCAR__r');
 				mapCaseIdWithRemoteInternalID.put(cse.Id, oscar);
 			}
 							
 			Remote_Invocation__c ri;
+			List<Case> casesToUpdate = new List<Case>();
 			List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
 
 			for(Remote_Invocation_Artefact__c remoteInovArt : mapRemoteInvocationArtifacts.values()){
@@ -104,8 +105,9 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 				ri = mapRemoteInvocations.get(remoteInovArt.Remote_Invocation__c);
 
 				//To prevent the 15 character ID - to ensure all the ID have 18 characters.
-				ID idToCompare = remoteInovArt.Internal_ID__c;
-				AMS_OSCAR__c osc = mapCaseIdWithRemoteInternalID.get(idToCompare);
+				Id caseIdToCompare = remoteInovArt.Internal_ID__c;
+				Case cse = caseMap.get(caseIdToCompare);
+				AMS_OSCAR__c osc = mapCaseIdWithRemoteInternalID.get(caseIdToCompare);
 
 				if(remoteInovArt.Payment_type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA && String.isBlank(remoteInovArt.External_Id__c)){
 					ri.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
@@ -118,6 +120,7 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 				osc.Payment_Type__c = remoteInovArt.Payment_type__c;
 				osc.Billing_Document_Number__c = remoteInovArt.External_Id__c;
+				cse.New_interaction__c = 'New Attachment';
 
 				//NEWGEN-5450-BugFix - Fill the Object_Id_Created__c with the value of the Internal_ID__c
 				remoteInovArt.Object_Id_Created__c = remoteInovArt.Internal_ID__c;
@@ -128,6 +131,7 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 				remoteInovArt.Status_Detail__c = '';
 				rmtInvocationArtListToUpdate.add(remoteInovArt);
 				oscarsToUpdate.add(osc);
+				casesToUpdate.add(cse);
 
 			}
 
@@ -135,6 +139,8 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 			//Update Oscar list
 			if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
+
+			if(!casesToUpdate.isEmpty()) update casesToUpdate;
 
 			//Update Remote Invocation Artefact Status
 			if(!rmtInvocationArtListToUpdate.isEmpty()) update rmtInvocationArtListToUpdate;
