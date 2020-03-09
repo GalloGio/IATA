@@ -111,6 +111,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	String region = con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 
 	String selectedCountryRegion;
+	String lang;
 
 	Set<String> newset = new Set<String>();
 	if(country != null && country != '') {
@@ -118,6 +119,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 		//Sets the region of either the Country selected from the picklist or the one from the user's account.
 		IATA_ISO_Country__c IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
 		selectedCountryRegion = IATA_ISO_country.Region__c;
+		lang = IATA_ISO_country.LVA_CountryLanguage__c;
 	}else{
 		selectedCountryRegion =  con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 	}
@@ -128,8 +130,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 						 FROM LiveAgentButtonSettings__c
 						 WHERE Sectors__c Like : sector
 						 AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
-									OR (Language__c =: country AND Region__c =: selectedCountryRegion))];
-
+									OR (Language__c =: lang AND Region__c =: selectedCountryRegion))];
 	}
 	else{
 		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
