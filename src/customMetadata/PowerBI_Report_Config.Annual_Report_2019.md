@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Group_Id_Prod__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">c2e01060-e914-4f2b-9484-d47b8581764b</value>
     </values>
     <values>
         <field>LastModifiedDate__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">7e04d9b9-0b86-45e9-8db5-6ffbd06c23f9</value>
     </values>
     <values>
         <field>Type__c</field>
