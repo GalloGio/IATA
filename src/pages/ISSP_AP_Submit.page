@@ -62,11 +62,7 @@
                             </p>
 
                             <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size=0}">
-                            Kindly note the bank mandate must be issued from your Company’s Head Office and signed by two Head Office senior officers, at least one of which must be:<br/>
-                            <ul style="display:lock;list-style-type: disc;">
-                                <li>Chief Financial Officer (CFO) or</li>
-                                <li>Head of Treasury or Cash Management Department</li>
-                            </ul>
+                                As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
                             </apex:outputPanel>
                             <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size>0}">
                                 <p>
@@ -93,18 +89,11 @@
                             <apex:outputPanel layout="block" rendered="{!ICCSJoiningPackageUrl!=null}">
                                 <apex:outputLink value="{!ICCSJoiningPackageUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningPackageName}</apex:outputLink>
                             </apex:outputPanel>
-                            Please download, complete and upload a scanned version of the documents mentioned. All documents should be uploaded together in a .zip folder
-                            Due diligence:
-                            <ul>
-                                <li>Form A &amp; K</li>
-                                <li>Other additional documents as explain in the Antimoney Laundering Instructions (AML) document </li>
-                            </ul>
                             Membership documents:
                             <ul>
                                 <li>ICCS agreement (signatory should be done by an authorized Head Office officer(s) of your company)</li>
-                                <li>FDS Authorized Signatories Package (and the supporting documents, mentioned in the Guide tab)</li>
-                                <li>At least one ICCS Bank Account Details</li>
-                                <li>ICCS Joining for all Countries, to activate this operation</li>
+                                <li>FDS Authorized Signatories Package (and the supporting documents, mentioned in the document)</li>
+                                <li>At least one ICCS Bank Account Details (must be in USD or EUR)</li>
                             </ul>
                             Once validated by us, you will be requested to send the originals to our office.
                         </p>
