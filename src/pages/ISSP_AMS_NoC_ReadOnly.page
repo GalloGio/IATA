@@ -151,7 +151,7 @@
                                     </apex:outputPanel>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel rendered="{!(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash')}">
+                                <apex:outputPanel rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', NOT(hqAccount.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC))}">
                                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">Assessment Contact</apex:outputPanel>
                                     <apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
                                         <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
