@@ -2226,7 +2226,7 @@ public class AMS_OSCARTriggerHandler {
 			return 'CHN - Change of Name';
 		if(typeOfChange.contains('VMFR'))
 			return 'VMFR Setup/Update';
-		if(typeOfChange.contains('Minor shareholding'))
+		if(typeOfChange.containsIgnoreCase('Minor shareholding'))
 			return 'MCH – Minor Change of Shareholding';
 		if(typeOfChange.contains('Hierarchy'))
 			return 'Change of Hierarchy';
