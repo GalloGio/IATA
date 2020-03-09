@@ -197,8 +197,10 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                 if ({!oscar.Process__c == NGCONVERSIONTOMULTICOUNTRY} && arrayContains(fieldValueToServer, "Passed")
                     && arrayContains(fieldsApiName, "STEP45__c"))
                 {
-                    if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
+                    if({!oscar.MC_Hierarchy_Confirmation_Datetime__c == null}) {
+                        alert('Please make sure that you review and Save the step to Confirm the hierarchy structure to ensure validations are enforced');
                         return 'false';
+                    }
                 }
 
                 if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD} && arrayContains(fieldValueToServer, "Passed")

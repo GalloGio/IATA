@@ -21,6 +21,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					, 'Step45__c'
 					, 'AMS_Online_Accreditation__c'
 					, 'Oscar_Communication_Case_Id__c'
+					, 'MC_Hierarchy_Confirmation_Datetime__c'
 				};
 			}
 			return oscarFields;
@@ -541,7 +542,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accreditationForm.Remittance_Frequency__c = account.Remittance_Frequency__c;
 					accreditationForm.ANG_Accreditation_type__c = account.ANG_Accreditation_Model__c;
 
-					update oscar;
 					update caseToUpdate;
 					update accreditationForm;
 				}
@@ -549,6 +549,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accreditationForm.Location_Type__c = account.Location_type__c;
 					update accreditationForm; //enforce the new location type
 				}
+
+				// Fill confirmation datetime
+				oscar.MC_Hierarchy_Confirmation_Datetime__c = Datetime.now();
+				update oscar;
 
 				List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
 
