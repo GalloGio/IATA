@@ -4,6 +4,9 @@
  */
 public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteInvocationINT {
 
+	@TestVisible
+	private static final String NEW_INTERACTION_ATTACHMENT = 'New Attachment';
+
 	Map<ID,Remote_Invocation__c> mapRemoteInvocations = new Map<ID,Remote_Invocation__c>();
 	Map<ID, Remote_Invocation_Artefact__c> mapRemoteInvocationArtifacts = new Map<ID, Remote_Invocation_Artefact__c>();
 	Set<String> remoteInvocationsWithoutArtifcts = new Set<String>();
@@ -120,7 +123,7 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 
 				osc.Payment_Type__c = remoteInovArt.Payment_type__c;
 				osc.Billing_Document_Number__c = remoteInovArt.External_Id__c;
-				cse.New_interaction__c = 'New Attachment';
+				cse.New_interaction__c = NEW_INTERACTION_ATTACHMENT;
 
 				//NEWGEN-5450-BugFix - Fill the Object_Id_Created__c with the value of the Internal_ID__c
 				remoteInovArt.Object_Id_Created__c = remoteInovArt.Internal_ID__c;
