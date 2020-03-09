@@ -29201,6 +29201,13 @@ Please add below all your company valid email domains, including different ones 
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Process_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Process_PASS</shortDescription>
+        <value>Thank you for creating your application for approval</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_GiveUsFeedback</fullName>
         <language>en_US</language>
         <protected>false</protected>
