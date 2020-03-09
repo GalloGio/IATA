@@ -17,7 +17,6 @@ private class CaseIFAPHandlerTest {
 	@testSetup static void setup(){
 
 		List<Contact> contactList = new List<Contact>();
-		List<Case> caseList = new List<Case>();
 		List<User> userList = new List<User>();
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
 
@@ -49,14 +48,6 @@ private class CaseIFAPHandlerTest {
 			insert contactList;
 
 			for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
-				caseList.add(new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP, Subject = 'IFAP', Status = 'Agent to be Notified', AccountId = acc.Id,
-									Origin = 'Agent Financial Review Notification', ContactId = contactList[i].Id, Financial_Review_Type__c = 'Annual',
-									IFAP_Financial_Year__c = '201'+i, Deadline_Date__c = date.today().addDays(31), IFAP_Area__c = 'A'));
-			}
-
-			insert caseList;
-
-			for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
 				userList.add(new User(Alias = 'alias', Email='standarduser@testorg.com', contactId = contactList[i].id,
 								  EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 								  LocaleSidKey='en_US', ProfileId = testProfile.Id, License_Cost_Center__c = 'ISF005CH01',
@@ -65,8 +56,6 @@ private class CaseIFAPHandlerTest {
 
 			insert userList;
 		}
-
-
 	}
 	@isTest
 	static void getContactInfoForUsersTest() {
@@ -89,13 +78,18 @@ private class CaseIFAPHandlerTest {
 		}
 
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
-		// Assert needs to be changed with correct responde from Mulesoft
-		System.assertEquals('The connection with Mulesoft was successfully', result[0]);
+
 		Test.stopTest();
+
+		System.assertEquals('The connection with Mulesoft was successfully', result[0]);
 	}
 
 	@isTest
 	static void getContactInfoForCaseTest() {
+
+		Id AccId = [SELECT Id from Account Limit 1].Id;
+		Id ContId = [SELECT Id from Contact Limit 1].Id;
+		List<Case> caseList = new List<Case>();
 
 		List<User> userList = new List<User>();
 		List<Case> cases = new List<Case>([SELECT Id FROM Case]);
@@ -111,19 +105,27 @@ private class CaseIFAPHandlerTest {
 
 		Test.startTest();
 
-		for(Case cs : cases){
-			listIds.add(cs.Id);
+		for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
+			caseList.add(new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP, Subject = 'IFAP', Status = 'Agent to be Notified', AccountId = accId,
+								  Origin = 'Agent Financial Review Notification', ContactId = contId, Financial_Review_Type__c = 'Annual',
+								  IFAP_Financial_Year__c = '201'+i, Deadline_Date__c = date.today().addDays(31), IFAP_Area__c = 'A'));
 		}
 
+		insert caseList;
+
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
-		// Assert needs to be changed with correct responde from Mulesoft
-		System.assertEquals(null, result[0]);
 		Test.stopTest();
+
+		System.assertEquals(null, result);
 	}
 
 
 	@isTest
 	static void getContactInfoForCaseErrorTest() {
+
+		Id AccId = [SELECT Id from Account Limit 1].Id;
+		Id ContId = [SELECT Id from Contact Limit 1].Id;
+		List<Case> caseList = new List<Case>();
 
 		List<User> userList = new List<User>();
 		List<Case> cases = new List<Case>([SELECT Id FROM Case]);
@@ -139,14 +141,19 @@ private class CaseIFAPHandlerTest {
 
 		Test.startTest();
 
-		for(Case cs : cases){
-			listIds.add(cs.Id);
+		for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
+			caseList.add(new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP, Subject = 'IFAP', Status = 'Agent to be Notified', AccountId = accId,
+								  Origin = 'Agent Financial Review Notification', ContactId = contId, Financial_Review_Type__c = 'Annual',
+								  IFAP_Financial_Year__c = '201'+i, Deadline_Date__c = date.today().addDays(31), IFAP_Area__c = 'A'));
 		}
 
+		insert caseList;
+
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
-		// Assert needs to be changed with correct responde from Mulesoft
-		System.assertEquals(null, result[0]);
+
 		Test.stopTest();
+
+		System.assertEquals(null, result[0]);
 	}
 
 	@isTest
@@ -170,8 +177,9 @@ private class CaseIFAPHandlerTest {
 		}
 
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
-		// Assert needs to be changed with correct responde from Mulesoft
-		System.assertEquals('The status code returned was not expected: 500 - Error connecting to GXA system api', result[0]);
+
 		Test.stopTest();
+
+		System.assertEquals('The status code returned was not expected: 500 - Error connecting to GXA system api', result[0]);
 	}
 }

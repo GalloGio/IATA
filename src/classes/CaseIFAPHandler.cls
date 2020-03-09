@@ -15,9 +15,9 @@ public class CaseIFAPHandler {
 
 	@InvocableMethod(label='User provisioning IFAP' description='User provisioning for Mulesoft when IFAP case is created.')
 	public static List<String> getContactInfo(List<Id> listIds) {
-
 		Set<Id> contactIds = new Set<Id>();
 		List<String> returnList = new List<String>();
+		List<Case> caseList = new List<Case>();
 
 		if(listIds != null && listIds.size() != 0){
 
@@ -32,7 +32,12 @@ public class CaseIFAPHandler {
 					isUser = true;
 				}
 				when 'Case'{
-					List<Case> caseList = new List<Case>([SELECT ContactId FROM Case WHERE Id =: listIds AND ContactId != null]);
+					// get information about Company and Case
+					caseList = new List<Case>([SELECT ContactId, Account.Name, Account.Global_ID__c, Account.Agent_Type_Code__c, Account.Airline_Code__c, Account.Status__c,
+										Account.BillingStreet, Account.BillingCity, Account.BillingState, Account.BillingPostalCode, Account.IATA_ISO_Country__r.Name,
+										Account.IATACode__c, IFAP_Country_ISO__c, Financial_Review_Type__c, CaseNumber
+								FROM Case
+								WHERE Id =: listIds AND ContactId != null]);
 
 					for(case cs : caseList){
 						contactIds.add(cs.ContactId);
@@ -48,7 +53,13 @@ public class CaseIFAPHandler {
 
 			if(contactIds.size() > 0){
 
-				returnList.add(buildJSON(contactIds));
+				if(isUser){
+					returnList = buildJSON(contactIds, null);
+				}
+				else{
+					returnList = buildJSON(contactIds, caseList);
+				}
+
 			}
 			else{
 
@@ -63,53 +74,130 @@ public class CaseIFAPHandler {
 		return returnList;
 	}
 
-	private static String buildJSON(Set<Id> contactIds){
+	private static List<String> buildJSON(Set<Id> contactIds, List<Case> caseList){
 
 		List<User> userList;
-		List<WrapperForJSON> wrapperList = new List<WrapperForJSON>();
+		List<WrapperUserForJSON> wrapperListUser = new List<WrapperUserForJSON>();
+		List<WrapperCompanyForJSON> wrapperListCompany = new List<WrapperCompanyForJSON>();
+		List<WrapperCaseForJSON> wrapperListCase = new List<WrapperCaseForJSON>();
+		List<WrapperUserRoleForJSON> wrapperListUserRole = new List<WrapperUserRoleForJSON>();
+		List<String> mulesoftResult = new List<String>();
 
 		if(contactIds.size() > 0){
-
+			// get information about Contact/User
 			userList = new List<User>([SELECT id, Contact.Name, Contact.Salutation, Contact.FirstName, Contact.LastName, Contact.MailingCity, Contact.MailingState, Contact.Email, Contact.Status__c,
-													Contact.Account.Global_ID__c, Contact.ID_Card_Preferred_Language__c, Contact.IATA_ISO_Billing_State__r.Name, Username
+													Contact.Account.Global_ID__c, Contact.Account.IATACode__c, Contact.ID_Card_Preferred_Language__c, Contact.IATA_ISO_Billing_State__r.Name, Username
 													FROM user WHERE ContactId IN :contactIds]);
+
+			if(caseList == null){
+
+				Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
+
+				caseList = new List<Case>([SELECT ContactId, Account.Name, Account.Global_ID__c, Account.Agent_Type_Code__c, Account.Airline_Code__c, Account.Status__c,
+										Account.BillingStreet, Account.BillingCity, Account.BillingState, Account.BillingPostalCode, Account.IATA_ISO_Country__r.Name,
+										Account.IATACode__c, IFAP_Country_ISO__c, Financial_Review_Type__c, CaseNumber
+								FROM Case
+								WHERE ContactId IN :contactIds AND RecordTypeId =: recordTypeId]);
+
+			}
 		}
 
 		if(userList.size() > 0){
 
 			for(User us : userList){
 
-				wrapperList.add(new WrapperForJSON(us));
+				wrapperListUser.add(new WrapperUserForJSON(us));
 				// remove if Mulesoft supports multiple requests in 1 JSON
 				break;
 			}
+		}
 
-			// serielize all the JSONs into a string
-			String stringToSend = JSON.serialize(wrapperList);
+		// only execute if the imput parameter is a case
+		if(caseList != null && caseList.size() > 0 && userList.size() > 0){
+			for(Case cs : caseList){
+				// for each case
+				wrapperListCompany.add(new WrapperCompanyForJSON(cs));
+				wrapperListCase.add(new WrapperCaseForJSON(cs));
+				wrapperListUserRole.add(new WrapperUserRoleForJSON(userList[0], cs));
+				// remove if Mulesoft supports multiple requests in 1 JSON
+				break;
+			}
+		}
 
-			String mulesoftResult;
-
-			if(isUser){
-				// remove substring if Mulesoft supports multiple requests in 1 JSON
-				mulesoftResult = sendJSON(stringToSend.substring(1, stringToSend.length()-1));
+		String stringToSend;
+		if(isUser){
+			// remove substring if Mulesoft supports multiple requests in 1 JSON
+			if(!wrapperListUser.isEmpty()){
+				// serielize all the JSONs into a string
+				stringToSend = JSON.serialize(wrapperListUser);
+				mulesoftResult.add(sendJSON(stringToSend.substring(1, stringToSend.length()-1),'users'));
+			}
+			else{
+				mulesoftResult.add('Unable to query information on Users');
+			}
+			if(!wrapperListCompany.isEmpty()){
+				// serielize all the JSONs into a string
+				stringToSend = JSON.serialize(wrapperListCompany);
+				mulesoftResult.add(sendJSON(stringToSend.substring(1, stringToSend.length()-1),'accounts'));
 			}
 			else {
-				// remove substring if Mulesoft supports multiple requests in 1 JSON
-				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1));
+				mulesoftResult.add('Unable to query information on Companies');
 			}
-
-
-			return mulesoftResult;
-
+			if(!wrapperListUserRole.isEmpty()){
+				// serielize all the JSONs into a string
+				stringToSend = JSON.serialize(wrapperListUserRole);
+				mulesoftResult.add(sendJSON(stringToSend.substring(1, stringToSend.length()-1),'roles'));
+			}
+			else {
+				mulesoftResult.add('Unable to query information on User Roles');
+			}
+			if(!wrapperListCase.isEmpty()){
+				// serielize all the JSONs into a string
+				stringToSend = JSON.serialize(wrapperListCase);
+				mulesoftResult.add(sendJSON(stringToSend.substring(1, stringToSend.length()-1),'cases'));
+			}
+			else {
+				mulesoftResult.add('Unable to query information on Cases');
+			}
 		}
-		else{
-			return 'Unable to query information to build the JSON message';
+		else {
+			// remove substring if Mulesoft supports multiple requests in 1 JSON
+			if(!wrapperListUser.isEmpty()){
+				stringToSend = JSON.serialize(wrapperListUser);
+				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'users');
+			}
+			else{
+				mulesoftResult.add('Unable to query information on Users');
+			}
+			if(!wrapperListCompany.isEmpty()){
+				stringToSend = JSON.serialize(wrapperListCompany);
+				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'accounts');
+			}
+			else {
+				mulesoftResult.add('Unable to query information on Companies');
+			}
+			if(!wrapperListUserRole.isEmpty()){
+				stringToSend = JSON.serialize(wrapperListUserRole);
+				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'roles');
+			}
+			else {
+				mulesoftResult.add('Unable to query information on User Roles');
+			}
+			if(!wrapperListCase.isEmpty()){
+				stringToSend = JSON.serialize(wrapperListCase);
+				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'cases');
+			}
+			else {
+				mulesoftResult.add('Unable to query information on Cases');
+			}
 		}
+
+
+		return mulesoftResult;
 	}
 
 	@future(callout=true)
-	private static void sendJSONFuture(String JSONString){
-
+	private static void sendJSONFuture(String JSONString, String endpoint){
 		Http http = new Http();
 		HttpRequest request = new HttpRequest();
 		String responseString;
@@ -117,7 +205,7 @@ public class CaseIFAPHandler {
 
 		request.setHeader('Content-Type', 'application/json;charset=UTF-8');
 		// endpoint, username and password defined in Mulesoft_GXA_Credentials
-		request.setEndpoint('callout:Mulesoft_GXA_Credentials/users');
+		request.setEndpoint('callout:Mulesoft_GXA_Credentials/' + endpoint);
 		request.setMethod('POST');
 
 		// Set the body as a JSON object
@@ -156,7 +244,7 @@ public class CaseIFAPHandler {
 		}
 	}
 
-	private static String sendJSON(String JSONString){
+	private static String sendJSON(String JSONString, String endpoint){
 
 		Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -165,7 +253,7 @@ public class CaseIFAPHandler {
 
 		request.setHeader('Content-Type', 'application/json;charset=UTF-8');
 		// endpoint, username and password defined in Mulesoft_GXA_Credentials
-		request.setEndpoint('callout:Mulesoft_GXA_Credentials/users');
+		request.setEndpoint('callout:Mulesoft_GXA_Credentials/' + endpoint);
 		request.setMethod('POST');
 
 		// Set the body as a JSON object
@@ -210,7 +298,11 @@ public class CaseIFAPHandler {
 		}
 	}
 
-	public class WrapperForJSON{
+	public static String protectNullValues(String field){
+		return (field != null) ? field : '';
+	}
+
+	public class WrapperUserForJSON{
 
 		public String firstName { get; set; }
 		public String lastName { get; set; }
@@ -224,7 +316,7 @@ public class CaseIFAPHandler {
 		public String contactStatus { get; set; }
 		public String salesForceUserEmailId { get; set; }
 
-		public WrapperForJSON(User user){
+		public WrapperUserForJSON(User user){
 
 			// Mulesoft doesn't accept null value
 			firstName = protectNullValues(user.Contact.FirstName);
@@ -234,14 +326,74 @@ public class CaseIFAPHandler {
 			city = protectNullValues(user.Contact.MailingCity);
 			state = protectNullValues(user.Contact.IATA_ISO_Billing_State__r.Name);
 			emailId = protectNullValues(user.Contact.Email);
-			salesForceClientNumber = protectNullValues(user.Contact.Account.Global_ID__c);
+			salesForceClientNumber = isUser ? protectNullValues(user.Contact.Account.IATACode__c) : protectNullValues(user.Contact.Account.Global_ID__c);
 			contactStatus = protectNullValues(user.Contact.Status__c);
 			preferredLanguage = protectNullValues(user.Contact.ID_Card_Preferred_Language__c).toLowerCase();
 			salesForceUserEmailId = protectNullValues(user.Username);
 		}
+	}
 
-		private String protectNullValues(String field){
-			return (field != null) ? field : '';
+	public class WrapperCompanyForJSON{
+
+		public String salesForceClientName {get;set;}
+		public String salesForceClientNumber {get;set;}
+		public String agentType {get;set;}
+		public String agentCode {get;set;}
+		public String clientStatus {get;set;}
+		public String street {get;set;}
+		public String city {get;set;}
+		public String zip {get;set;}
+		public String country {get;set;}
+
+		public WrapperCompanyForJSON(Case cs){
+
+			salesForceClientName = protectNullValues(cs.Account.Name);
+			salesForceClientNumber = isUser ? protectNullValues(cs.Account.Global_ID__c) : protectNullValues(cs.Account.IATACode__c);
+			agentType = isUser ? '' : protectNullValues(cs.Account.Agent_Type_Code__c);
+			agentCode = isUser ? '' : protectNullValues(cs.Account.IATACode__c);
+			clientStatus = protectNullValues('Active');
+			street = protectNullValues(cs.Account.BillingStreet);
+			city = protectNullValues(cs.Account.BillingCity);
+			zip = protectNullValues(cs.Account.BillingPostalCode);
+			country = protectNullValues(cs.Account.IATA_ISO_Country__r.Name);
+		}
+	}
+
+	public class WrapperCaseForJSON{
+
+		public String businessType {get;set;}
+		public String salesForceClientNumber {get;set;}
+		public String countryCode {get;set;}
+		public String paxCode {get;set;}
+		public String reviewType {get;set;}
+		public String salesforceCaseNumber {get;set;}
+
+		public WrapperCaseForJSON(Case cs){
+
+			businessType = isUser ? 'SF' : 'TA';
+			salesForceClientNumber = isUser ? protectNullValues(cs.Account.Global_ID__c) : protectNullValues(cs.Account.IATACode__c);
+			countryCode = isUser ? '' : protectNullValues(cs.IFAP_Country_ISO__c);
+			paxCode = isUser ? '' : protectNullValues(cs.Account.Agent_Type_Code__c);
+			reviewType = isUser ? '' : protectNullValues(cs.Financial_Review_Type__c);
+			salesforceCaseNumber = protectNullValues(cs.CaseNumber);
+		}
+	}
+
+	public class WrapperUserRoleForJSON{
+
+		public String salesForceUserEmailId {get;set;}
+		public String roleName {get;set;}
+		public String emailId {get;set;}
+		public String salesforceClientNumber {get;set;}
+		public String roleStatus {get;set;}
+
+		public WrapperUserRoleForJSON(User us, Case cs){
+
+			salesForceUserEmailId = protectNullValues(us.Username);
+			roleName = '';
+			emailId = protectNullValues(us.Contact.Email);
+			salesForceClientNumber = isUser ? protectNullValues(cs.Account.Global_ID__c) : protectNullValues(cs.Account.IATACode__c);
+			roleStatus = protectNullValues('Active');
 		}
 	}
 
