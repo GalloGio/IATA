@@ -120751,7 +120751,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <validationRules>
         <fullName>ACLI_Customer_Number_Editability</fullName>
         <active>true</active>
-        <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</description>
+        <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others. DO NOT MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
         <errorConditionFormula>AND(
 	ISCHANGED(ACLI_SAP_Id__c),
 	OR(
@@ -120891,7 +120891,7 @@ NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
         <active>true</active>
-        <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</description>
+        <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status. DO NOT MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
         <errorConditionFormula>AND(
 	NOT(ISNEW()),
 	OR(
@@ -120907,7 +120907,7 @@ NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_2</fullName>
         <active>true</active>
-        <description>Only airlines can be IATA members.</description>
+        <description>Only airlines can be IATA members. DO NOT MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
         <errorConditionFormula>AND(
 NOT(ISNEW()),
 OR(
@@ -120924,7 +120924,7 @@ NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
     <validationRules>
         <fullName>Airline_HQ_Read_Only_Fields</fullName>
         <active>true</active>
-        <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process</description>
+        <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process. DO NOT MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
         <errorConditionFormula>AND(
 	NOT(ISNEW()),
 	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
@@ -120961,7 +120961,7 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
     <validationRules>
         <fullName>Airline_HQ_Sector_Category</fullName>
         <active>true</active>
-        <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</description>
+        <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team. DO NOT MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
         <errorConditionFormula>AND(
 	NOT(ISNEW()),
 	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
@@ -121396,6 +121396,7 @@ ANG_IsNewGenAgency__c,
 NOT(Country_ISO_Code__c  = &apos;BR&apos;),
 
 IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;E&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 
@@ -121413,6 +121414,7 @@ ANG_IsNewGenAgency__c,
 Country_ISO_Code__c  = &apos;BR&apos;,
 
 IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;E&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) + 

@@ -1989,6 +1989,10 @@ la seguente procedura per completarlo :
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>Servizi</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -3320,6 +3324,46 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Accesso ai servizi</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
         <label>Accesso richiesto</label>
@@ -13525,7 +13569,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Per comunicare un&apos;eventuale modifica delle coordinate bancarie contattare IATA</label>
+        <label>Per comunicare un eventuale modifica delle coordinate bancarie contattare IATA</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
