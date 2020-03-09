@@ -956,20 +956,14 @@ public without sharing class ISSP_ICCS_Utils{
 		public Boolean selected {get;set;}
 		public Boolean isNotReceived {
 			get {
-				try {
-					return participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.NotReceived;
-				}catch (Exception e) {
-					return false;
-				}
+				return participation!=null && participation.cashflow!=null
+					&& participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.NotReceived;
 			}
 		}
 		public Boolean isPreassigned {
 			get {
-				try {
-					return participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.PreAssigned;
-				}catch (Exception e) {
-					return false;
-				}
+				return participation!=null && participation.cashflow!=null
+					&& participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.PreAssigned;
 			}
 		}
 
@@ -1000,29 +994,19 @@ public without sharing class ISSP_ICCS_Utils{
 
 			isFilteredOut = categoryFilteredOut || countryFilteredOut || currencyFilteredOut;
 
-			List<String> selectableItems = new List<String>{null, null, null};
+			List<String> selectableItems = new List<String>{'','',''};
 
-			if(!(countryFilteredOut || currencyFilteredOut)){
-				try {
+			If(participation != null && participation.cashflow != null) {
+				if(!(countryFilteredOut || currencyFilteredOut) && participation.cashflow.type!=null){
 					selectableItems[0] = participation.cashflow.type.code;
-				} catch (Exception e) {
-					selectableItems[0] = '';
 				}
-			}
-
-			if(!(categoryFilteredOut || currencyFilteredOut)){
-				try {
+	
+				if(!(categoryFilteredOut || currencyFilteredOut) && participation.cashflow.country!=null){
 					selectableItems[1] = participation.cashflow.country.name;
-				} catch (Exception e) {
-					selectableItems[1] = '';
 				}
-			}
-
-			if(!(categoryFilteredOut || countryFilteredOut)){
-				try {
+	
+				if(!(categoryFilteredOut || countryFilteredOut)){
 					selectableItems[2] = participation.cashflow.processingCurrency;
-				} catch (Exception e) {
-					selectableItems[2] = '';
 				}
 			}
 			return selectableItems;
