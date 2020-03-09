@@ -2852,6 +2852,33 @@ B. (for use only in jurisdictions where a tripartite agreement is required): EU 
         </valueSet>
     </fields>
     <fields>
+        <fullName>Form_of_payment_in_HOT_files__c</fullName>
+        <description>Used in ISSP_APCases to create new cases for EasyPay when the form of payment is HOT.
+This field identifies the type of HOT payment</description>
+        <externalId>false</externalId>
+        <label>Form of payment in HOT files</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CC</fullName>
+                    <default>false</default>
+                    <label>CC</label>
+                </value>
+                <value>
+                    <fullName>EP</fullName>
+                    <default>false</default>
+                    <label>EP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>GSSA_Address_Formula__c</fullName>
         <externalId>false</externalId>
         <formula>if(LEN(Case__r.Account.BillingStreet)&gt;0, Case__r.Account.BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
@@ -3117,6 +3144,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>OUT</fullName>
                     <default>false</default>
                     <label>Opt-Out</label>
+                </value>
+                <value>
+                    <fullName>HOT</fullName>
+                    <default>false</default>
+                    <label>HOT</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -4914,6 +4946,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -4953,6 +4996,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -6012,6 +6059,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Hot_files_delivery_format__c</picklist>
             <values>
                 <fullName>ASD %28applicable for China%29</fullName>
@@ -6028,6 +6086,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -7067,6 +7129,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -7106,6 +7179,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -8165,6 +8242,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -8196,6 +8284,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -9247,6 +9339,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -9286,6 +9389,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -10369,6 +10476,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -10400,6 +10518,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -11471,6 +11593,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -11502,6 +11635,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -12565,6 +12702,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -12604,6 +12752,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -13679,6 +13831,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -13718,6 +13881,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -14793,6 +14960,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -14832,6 +15010,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>

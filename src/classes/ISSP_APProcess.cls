@@ -162,6 +162,7 @@ global without sharing class ISSP_APProcess {
 	public Integer airlineOptInDays {get;set;}
 	public Integer airlineOptOutDays {get;set;}
 	public Boolean isoCountryEligible {get;set;} //Variable to define if the isoCountry is EasyPay Eligible (used in VF Page)
+	public List<SelectOption> HOTCountries {get;set;} //list of countries available for form of payment HOT
 	public Boolean showTermsConditionsPopup {get;set;}
 	//variable to store selected contact, if not null a popup should appear
 	public Id selectedContactId {get;set;}
@@ -620,8 +621,10 @@ global without sharing class ISSP_APProcess {
 		}
 		retrieveAccountToShowSections();
 
-		populateCountriesMap();
-		poupulateOptInOutOptions();
+		if (ApexPages.currentPage().getUrl().contains('ISSP_APCases')) {
+			populateCountriesMap();
+			poupulateOptInOutOptions();
+		}
 		set<String> setFileIds = retrieveMapAmazonFiles(newCase.Id).keySet();
 		listUploadedFileIds = String.join(new list<String>(setFileIds),';');
 	}
@@ -1508,6 +1511,7 @@ global without sharing class ISSP_APProcess {
 		optInOutOptions.add(new SelectOption('', '-Select-'));
 		optInOutOptions.add(new SelectOption('IN', 'Opt-In to IATA EasyPay'));
 		optInOutOptions.add(new SelectOption('OUT', 'Opt-Out from IATA EasyPay'));
+		optInOutOptions.add(new SelectOption('HOT', 'Form of payment in HOT files for IEP (CC or EP)'));
 	}
 
 	private void populateCountriesMap() {
@@ -1533,15 +1537,31 @@ global without sharing class ISSP_APProcess {
 				hasCountriesOut = true;
 			}
 		}
+
+		// get list countries for HOT selection
+		this.HOTCountries = new list<SelectOption>();
+		for ( IATA_ISO_Country__c country: [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ANG_Portal_Service__r.Name LIKE '%EasyPay%']) {
+			this.HOTCountries.add(new SelectOption(country.Id, country.Name));
+		}
 	}
 
 	public PageReference submitOptInOutServer() {
 		String optInOutParam = Apexpages.currentPage().getParameters().get('optInOutParam');
 		List<String> countriesParam = (List<String>) System.JSON.deserialize(Apexpages.currentPage().getParameters().get('countriesParam'), List<String>.class);
 		String effectiveDateParam = Apexpages.currentPage().getParameters().get('effectiveDateParam');
+		String typeHotPayment = Apexpages.currentPage().getParameters().get('hotTypePaymentParam');
 
 		Set<String> countryParam = new Set<String>(countriesParam);
-		String optInOutSubject = optInOutParam == 'OUT' ? 'Opt-Out' : 'Opt-In';
+		String subjectInfo = '';
+		if (optInOutParam == 'OUT') {
+			subjectInfo = 'Opt-Out';
+		} else if (optInOutParam == 'IN') {
+			subjectInfo = 'Opt-In';
+		} else if (optInOutParam == 'HOT') {
+			subjectInfo = 'HOT Payment';
+		} else {
+			return null;
+		}
 
 		retrieveHQAccountDetails(vHQAccountId);
 
@@ -1550,34 +1570,40 @@ global without sharing class ISSP_APProcess {
 		List<String> countryNames = new List<String>();
 		for (IATA_ISO_Country__c country: isoCountriesMap.values()) countryNames.add(country.Name);
 
-		Case optInOutParentCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-										   Description = String.join(countryNames, ', '),
-										   Status = 'For Review and Acceptance',
-										   CaseArea__c = 'Airline Change',
-										   Reason1__c = 'IATA Easy Pay',
-										   IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[0]).ISO_Code__c,
-										   Visible_on_ISS_Portal__c = true,
-										   IATAcode__c = con.Account.IATACode__c,
-										   BSPCountry__c = isoCountriesMap.get(countriesParam[0]).Name,
-										   Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
-										   Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
-																	con.Account.IATACode__c,
-																	isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, vHqAccountId),
-										   Origin = 'Portal',
-										   Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
-										   Provider__c = con.AccountId,
-										   Type_of_customer__c = 'Airline Passenger',
-										   Verification__c = 'BSP');
+		Case optInOutParentCase = new Case(
+			RecordTypeId = RECORD_TYPE_ID,
+			Description = String.join(countryNames, ', '),
+			Status = 'For Review and Acceptance',
+			CaseArea__c = 'Airline Change',
+			Reason1__c = 'IATA Easy Pay',
+			IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[0]).ISO_Code__c,
+			Visible_on_ISS_Portal__c = true,
+			IATAcode__c = con.Account.IATACode__c,
+			BSPCountry__c = isoCountriesMap.get(countriesParam[0]).Name,
+			Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
+			Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+			con.Account.IATACode__c,
+			isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, vHqAccountId),
+			Origin = 'Portal',
+			Subject = 'Airline Participation - IATA EasyPay ' + subjectInfo + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
+			Provider__c = con.AccountId,
+			Type_of_customer__c = 'Airline Passenger',
+			Verification__c = 'BSP');
 
 		insert optInOutParentCase;
 
 		List<String> splittedDate = effectiveDateParam.split('-');
-		Date parsedDate = Date.newInstance(Integer.valueOf(splittedDate[0]), Integer.valueOf(splittedDate[1]), Integer.valueOf(splittedDate[2]));
+		Date parsedDate = null;
+		if (splittedDate.size()==3) {
+			parsedDate = Date.newInstance(Integer.valueOf(splittedDate[0]), Integer.valueOf(splittedDate[1]), Integer.valueOf(splittedDate[2]));
+		}
 
-		AP_Process_Form__c processForm = new AP_Process_Form__c(Case__c = optInOutParentCase.Id,
-																IATA_EasyPay_Effective_Date__c = parsedDate,
-																IATA_EasyPay_Opt_In_Opt_Out__c = optInOutParam,
-																RecordTypeId = AMS_Utils.RECTYPE_IATAEASYPAY);
+		AP_Process_Form__c processForm = new AP_Process_Form__c(
+			Case__c = optInOutParentCase.Id,
+			IATA_EasyPay_Effective_Date__c = parsedDate,
+			IATA_EasyPay_Opt_In_Opt_Out__c = optInOutParam,
+			Form_of_payment_in_HOT_files__c = typeHotPayment,
+			RecordTypeId = AMS_Utils.RECTYPE_IATAEASYPAY);
 
 		insert processForm;
 
@@ -1586,25 +1612,26 @@ global without sharing class ISSP_APProcess {
 		if (countriesParam.size() > 1) {
 			List<Case> childCases = new List<Case>();
 			for (Integer i = 1; i < countriesParam.size(); i++) {
-				childCase = new Case(RecordTypeId = RECORD_TYPE_ID,
-									 Description = isoCountriesMap.get(countriesParam[i]).Name,
-									 Status = 'For Review and Acceptance',
-									 CaseArea__c = 'Airline Change',
-									 Reason1__c = 'IATA Easy Pay',
-									 ParentId = optInOutParentCase.Id,
-									 IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[i]).ISO_Code__c,
-									 IATAcode__c = con.Account.IATACode__c,
-									 Visible_on_ISS_Portal__c = false,
-									 BSPCountry__c = isoCountriesMap.get(countriesParam[i]).Name,
-									 Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
-									 Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
-																	con.Account.IATACode__c,
-																	isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
-									 Origin = 'Portal',
-									 Subject = 'Airline Participation - IATA EasyPay ' + optInOutSubject + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
-									 Provider__c = con.AccountId,
-									 Type_of_customer__c = 'Airline Passenger',
-									 Verification__c = 'BSP');
+				childCase = new Case(
+					RecordTypeId = RECORD_TYPE_ID,
+					Description = isoCountriesMap.get(countriesParam[i]).Name,
+					Status = 'For Review and Acceptance',
+					CaseArea__c = 'Airline Change',
+					Reason1__c = 'IATA Easy Pay',
+					ParentId = optInOutParentCase.Id,
+					IFAP_Country_ISO__c = isoCountriesMap.get(countriesParam[i]).ISO_Code__c,
+					IATAcode__c = con.Account.IATACode__c,
+					Visible_on_ISS_Portal__c = false,
+					BSPCountry__c = isoCountriesMap.get(countriesParam[i]).Name,
+					Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
+					Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+					con.Account.IATACode__c,
+					isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
+					Origin = 'Portal',
+					Subject = 'Airline Participation - IATA EasyPay ' + subjectInfo + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
+					Provider__c = con.AccountId,
+					Type_of_customer__c = 'Airline Passenger',
+					Verification__c = 'BSP');
 
 				childCases.add(childCase);
 			}
@@ -1701,20 +1728,25 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public void retrieveHQAccountDetails (Id hqId){
-		hqAccount = [
-			SELECT Id, Name, Name_on_AOC__c, BillingStreet, BillingCity, BillingState, BillingPostalCode,
-			BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
-			Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
-			Top_Parent__r.SIS_Status__c,Top_Parent__r.SIS_Sub_Status__c,
-			Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
-			BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
-			ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
-			SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,
-			(SELECT Id FROM Authorized_Signatories_Packages__r)
-			FROM Account
-			WHERE Id = :hqId
-			LIMIT 1
-		];
+		try {
+			
+			hqAccount = [
+				SELECT Id, Name, Name_on_AOC__c, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+				BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
+				Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
+				Top_Parent__r.SIS_Status__c,Top_Parent__r.SIS_Sub_Status__c,
+				Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
+				BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
+				ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
+				SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,
+				(SELECT Id FROM Authorized_Signatories_Packages__r)
+				FROM Account
+				WHERE Id = :hqId
+				LIMIT 1
+				];
+		} catch (Exception e) {
+			System.assert(false, 'hqId ' + hqId);
+		}
 
 		//Only want to display AL HQ details on the joining form, so need to get them if the user applying is from a Branch office
 		strParentMembershipStatus = hqAccount.Membership_status__c;
