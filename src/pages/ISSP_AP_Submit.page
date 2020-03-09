@@ -103,6 +103,15 @@
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
                     </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Participation Agreement and Terms of Use" columns="1" collapsible="false">
+                        <div class="aplabel" style="font-weight:bold;"> Please download the documents using the links below:</div>
+                        <div id="bankmandatelink_p2">
+                            <ul style="display:lock;list-style-type: disc;">
+                                <li><a href="{!passlink}" target="_blank">Link of participation agreement</a></li>
+                                <li><a href="{!passlink}" target="_blank">Link of Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </apex:pageBlockSection>
                     <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
                         <apex:outputText rendered="{!!isPassAirline}">
                             <div style="padding-bottom:10px">

@@ -854,7 +854,7 @@ public with sharing class AMS_XML_Generator {
 				setAgencyPaxKeys.add(ag.Id);
 			}else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') && ag.Location_Class__c!='L'){
 				setAgencyCargoKeys.add(ag.Id);
-			}else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') && ag.Location_Class__c=='L'){
+			}else if(ag.Sector__c.equalsIgnoreCase('Postal Service') && ag.Location_Class__c=='L'){
 				setAgencyCargoPassKeys.add(ag.Id);
 			}
 		}

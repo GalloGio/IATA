@@ -1364,15 +1364,15 @@ global without sharing class ISSP_APProcess {
 
 			passParam='&airline=PASS';
 			if(isStep3 && !managePASS){
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
+				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else if(managePASS && isStep1){
 				passParam=passParam+'&managePASS=true';
 				return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
 			}else if(managePASS && isStep3){
 				passParam=passParam+'&managePASS=true';
-				return new Pagereference('/ISSP_APProcess1?caseId='+newCase.Id+'&step=1'+passParam);
+				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else{
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
+				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 			}
 		}
 		if(countryRequirementFound) {
@@ -1481,6 +1481,7 @@ global without sharing class ISSP_APProcess {
 							caseWithAttachment=true;
 						}
 					}
+					newChildCase.ownerid = APQueue('Airline Participation - Head Office').Id;
 
 					if(!caseWithAttachment){
 						if(String.isEmpty(countryWithoutBankMandate)){

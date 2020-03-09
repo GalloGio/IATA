@@ -248,7 +248,11 @@ public class ISSP_AP_FieldLists {
 	'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
 	'Receive_HOT_files__c' 							=> '',
 	'PDF_Report_Delivery_Format__c' 				=> '',
-	'Receive_XLS_Reports__c' 						=> ''
+	'Receive_XLS_Reports__c' 						=> '',
+	'CASSLink_New_User_1_Salutation__c'				=> '',
+	'CASSLink_New_User_1_F_Name__c'					=> '',
+	'CASSLink_New_User_1_L_Name__c'					=> '',
+	'CASSLink_New_User_1_Email__c'					=> ''
 	};
 
 }

@@ -22498,7 +22498,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS BRANCH</shortDescription>
-        <value>PASS Agent – Branch Office</value>
+        <value>for a Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_PASS_HO</fullName>
@@ -22506,7 +22506,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS HO</shortDescription>
-        <value>PASS Agent – New Head Office</value>
+        <value>for a New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>

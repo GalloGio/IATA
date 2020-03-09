@@ -6993,11 +6993,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Postal Operator</label>
                 </value>
                 <value>
-                    <fullName>Postal Service</fullName>
-                    <default>false</default>
-                    <label>Postal Service</label>
-                </value>
-                <value>
                     <fullName>Processor</fullName>
                     <default>false</default>
                     <label>Processor</label>
@@ -7335,10 +7330,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Non-IATA Cargo Agent</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Postal Service</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <valueName>Academic/Research Body</valueName>
             </valueSettings>
@@ -7393,6 +7384,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>General Sales Agent</controllingFieldValue>
                 <valueName>GSSA Cargo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Postal Service</controllingFieldValue>
+                <valueName>Postal Operator</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -50405,10 +50400,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>TIDS Agent</fullName>
                 <default>false</default>
             </values>
@@ -56269,10 +56260,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Payment Provider</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63465,10 +63452,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Vendor</fullName>
                 <default>false</default>
             </values>
@@ -69620,10 +69603,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -91230,10 +91209,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Processor</fullName>
                 <default>false</default>
             </values>
@@ -106608,10 +106583,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Postal Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Processor</fullName>
                 <default>false</default>
             </values>
@@ -113203,10 +113174,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Payment Provider</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
