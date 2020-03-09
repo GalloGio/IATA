@@ -1261,6 +1261,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				return (possibleAccounts.size() > 1 && (p.Parentid == null || (possibleAccounts.containsKey(p.ParentId) && possibleAccounts.get(p.Parentid).Location_Type__c == AMS_Utils.AE)));
 		}
 
+		public String iataCode {
+			get {
+				if(possibleAccounts.containsKey(p.ParentId)){
+					return possibleAccounts.get(p.ParentId).IATACode__c;
+				}
+				return null;
+			} 
+			set;
+		}
+
 		public HEPerBSP(Id bspId, Id acctId){
 			this.bspId = bspId;
 			p = new Account();
