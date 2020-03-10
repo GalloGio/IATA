@@ -145,7 +145,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					'Top Location Type',
-					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid top Location type (HE).'
+					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid top Location type (HE for cash and cashless, GE for multicountry).'
 				);
 
 				errorMessages.put(
@@ -982,7 +982,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public boolean hasTopLocationType(Id acctId){
 
 
-		Account a = [Select Id, Location_Type__c from Account where Id = :acctId];
+		Account a = [Select Id, Location_Type__c, ANG_Accreditation_Model__c from Account where Id = :acctId];
 
 		/*
 		for(HierarchyItem item:hierarchyValues){
@@ -994,7 +994,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return false;
 		*/
 
-		return (a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE);
+		return ((a.Location_Type__c == AMS_Utils.HE && (a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASH || a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)) || a.Location_Type__c == AMS_Utils.GE);
 	}
 
 	public boolean isTerminatedAccount(Id acctId){
