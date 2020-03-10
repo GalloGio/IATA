@@ -5,8 +5,9 @@
  * 	- Passing the "Confirm conversion" step from the OSCAR "Conversion from Multicountry to Standard" 
  * 	- An OSCAR change in a multicountry hierarchy results in an invalid hierarchy that needs to be converted to standard 
  */
-global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable<SObject>, Database.Stateful {
+global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
 	private Id accountGE;
+	private Id oscarId;
 	private Boolean processSingleBsp;
 
 	private Integer currentThreads = 0;
@@ -17,8 +18,15 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 */
 	public static Id forceAccountForTesting = null;
 	
-	public ANG_SplitMcHierarchyIntoStandardBatch(Id accountGE, Boolean processSingleBsp) {
+	/**
+	 * Creates and splits a MC hierarchy into multiple ST hierarchies. If <i>processSingleBsp</i> is <i>true</i>, only the parent GE
+	 * 	BSP is considered.
+	 * @param accountGE The MC hierarchy parent GE account;
+	 * @param processSingleBsp When "false": normal MC split into ST; When "true": only consider the parent BSP.
+	 */
+	public ANG_SplitMcHierarchyIntoStandardBatch(Id oscarId, Id accountGE, Boolean processSingleBsp) {
 		this.accountGE = accountGE;
+		this.oscarId = oscarId;
 		this.processSingleBsp = processSingleBsp;
 	}
 	
@@ -42,34 +50,62 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			+ '     AND Location_Type__c IN :locations ' // 
 			+ (Test.isRunningTest() && forceAccountForTesting != null ? ' AND Id = :forceAccountForTesting ' : ''));
 	}
+		
+	public void execute(SchedulableContext sc) {
+		Set<String> setStatusBatch = new Set<String> { 'Processing', 'Preparing' };
+		if ([SELECT count() FROM AsyncApexJob WHERE JobType = 'BatchApex' AND Status IN :setStatusBatch] < 5)
+			Database.executeBatch(this, 1);
+		else
+			scheduleBatch(this);
+	}
 	
 	global void execute(Database.BatchableContext BC, List<SObject> scope) {
 		currentThreads++;
 
+		// bypass additional AccountTeamMember logic on the related Users
+		ANG_UserTriggerHandler.doNotRun = true;
+
 		System.SavePoint sp = Database.setSavepoint();
 
-		List<Account> accts = (List<Account>) scope;
+		List<Account> accts = filterAccounts((List<Account>) scope);
 
 		try {
 			updateAccountInformation(accts);
 			updateAccountHierarchy(accts);
-			Case c = getOscarCase(accountGE);
+			Case c = getOscarCase(accountGE, oscarId);
 			updateStagingArea(accts, c);
 			createConversionMcToStProcess(accts, c);
+
+			finishedThreads++;
 		} catch (Exception e) {
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - execute] Exception: ' + e.getMessage());
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - execute] Exception Stacktrace: ' + e.getStackTraceString());
 			Database.rollback(sp);
 			ANG_TechnicalLogHelper.commitTechnicalLogs(ANG_TechnicalLogHelper.createTechnicalLog('ANG_SplitMcHierarchyIntoStandardBatch - Changing hierarchy', e, JSON.serialize(scope)));
 		}
-
-		finishedThreads++;
 	}
 	
 	global void finish(Database.BatchableContext BC) {
 		String status = currentThreads == finishedThreads ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED : AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
-		AMS_OSCAR__c oscar = getOscarFromCase(getOscarCase(accountGE));
+		AMS_OSCAR__c oscar = getOscarFromCase(accountGE, getOscarCase(accountGE));
 		update new AMS_OSCAR__c(Id = oscar.Id, Child_OSCAR_Status__c = status);
+	}
+
+	private List<Account> filterAccounts(List<Account> accts) {
+		List<Account> accounts = new List<Account>();
+
+		for (Account acct : accts) {
+			// when processSingleBsp = false, include all
+			// when processSingleBsp = true, don't include accounts that are not child AE
+			// always include inactive accounts
+			if (!processSingleBsp || !isActiveAccount(acct) || acct.Id == accountGE
+				|| (acct.ParentId == accountGE && acct.Location_Type__c == AMS_Utils.AE)) {
+				accounts.add(acct);
+			}
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - filterAccounts] Filtered accounts: ' + accounts);
+		return accounts;
 	}
 
 	private Case getOscarCase(Id acct) {
@@ -80,6 +116,15 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 								AND reason1__c = 'Accreditation Type'
 								AND RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
 							ORDER BY CaseNumber DESC];
+		return cases.get(0);
+	}
+
+	private Case getOscarCase(Id acct, Id oscar) {
+		List<Case> cases = [SELECT Id, Subject, Origin, CaseNumber, RecordTypeId, CaseArea__c, Reason, Reason1__c, Visible_on_ISS_Portal__c,
+								Region__c, BSPCountry__c, AccountId, ContactId
+							FROM Case
+							WHERE Id = :[SELECT Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Id = :oscar].Oscar_Communication_Case_Id__c];
+		
 		return cases.get(0);
 	}
 	
@@ -158,12 +203,16 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Update the information on the stating area of the GE account.
 	 */
 	private void updateStagingArea(List<Account> accts, Case c) {
+		if (processSingleBsp)
+			return;
+		
 		for (Account acct : accts) {
 			if (acct.Id != accountGE)
 				continue;
 			
 			AMS_Pax_Accreditation_Form__c pax = getStagingAreaFromCase(c);
 			pax.Location_Type__c = AMS_Utils.HE;
+			pax.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 		
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - updateStagingArea] Updated pax: ' + pax);
 			update pax;
@@ -183,13 +232,13 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		Account geAccount = null;
 		
 		for (Account acct : accts) {
-			if (acct.Id == accountGE)
+			if (acct.Id == accountGE && !processSingleBsp) // GE is treated as HE if "processSingleBsp"
 				geAccount = acct;
 			else if (isActiveAccount(acct) && acct.Location_Type__c == AMS_Utils.HE)
 				allHe.add(acct);
 		}
 
-		AMS_OSCAR__c geOscar = getOscarFromCase(c);
+		AMS_OSCAR__c geOscar = processSingleBsp ? null : getOscarFromCase(accountGE, c);
 
 		List<Account> allGeAndHe = new List<Account>(allHe);
 		if (geAccount != null)
@@ -197,7 +246,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 		// create / update the entities
 		Map<Id, AMS_OSCAR__c> oscars = createOscar(allHe, geOscar);
-		oscars.put(accountGE, geOscar);
+		if (!processSingleBsp) // processSingleBsp: oscar created on "createOscar", that is, already on the map
+			oscars.put(accountGE, geOscar);
 
 		addAeAccountInformationToOscar(allGeAndHe, oscars);
 		Map<Id, Case> cases = createOscarCase(allHe, c, oscars);
@@ -205,10 +255,13 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		finalOscarUpdate(allHe, oscars, cases, paxs);
 	}
 
-	private AMS_OSCAR__c getOscarFromCase(Case c) {
+	private AMS_OSCAR__c getOscarFromCase(Id acct, Case c) {
+		if (c == null)
+			return null;
+		
 		List<AMS_OSCAR__c> oscars = [SELECT Id
 									 FROM AMS_OSCAR__c
-									 WHERE Account__c = :accountGE
+									 WHERE Account__c = :acct
 										 AND Oscar_Communication_Case_Id__c = :c.Id];
 		return oscars.get(0);
 	}
@@ -227,7 +280,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			AMS_OSCAR__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, acct.Id, fieldsToSetOnOscar);
 			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c> { oscar }, new Map<Id, Account> { acct.Id => acct });
 			oscar.Step51__c = AMS_Utils.NOT_APPLICABLE;
-			oscar.Parent_OSCAR__c = parentOscar.Id;
+			if (parentOscar != null)
+				oscar.Parent_OSCAR__c = parentOscar.Id;
 			oscarsToInsert.put(acct.Id, oscar);
 		}
 		
@@ -278,7 +332,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			Map<String, Object> fieldsToSetOnCase = new Map<String, Object>();
 			fieldsToSetOnCase.put('Oscar__c', oscar.Id);
 			fieldsToSetOnCase.put('ContactId', c.ContactId);
-			fieldsToSetOnCase.put('ParentId', c.Id);
+			if (!processSingleBsp)
+				fieldsToSetOnCase.put('ParentId', c.Id);
 			fieldsToSetOnCase.put('BSPCountry__c', acct.BillingCountry);
 			fieldsToSetOnCase.put('CaseArea__c', c.CaseArea__c);
 			fieldsToSetOnCase.put('ContactId', c.ContactId);
@@ -288,7 +343,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			fieldsToSetOnCase.put('Visible_on_ISS_Portal__c', c.Visible_on_ISS_Portal__c);
 			fieldsToSetOnCase.put('Origin', c.Origin);
 			
-			Case newCase = ANG_EntityCreator.createCase(c.RecordTypeId, acct.id, fieldsToSetOnCase);
+			Case newCase = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acct.id, fieldsToSetOnCase);
 			casesToInsert.put(acct.Id, newCase);
 		}
 		
@@ -346,5 +401,29 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		return String.isNotBlank(acct.Status__c) && acct.Status__c != AMS_Utils.ACC_S4_LISTED
 			&& acct.Status__c != AMS_Utils.ACC_S0_TERMINATED && acct.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED
 			&& acct.Status__c != AMS_Utils.ACC_S3_NOTINOPERATION;
+	}
+
+	public static void scheduleOrRun(ANG_SplitMcHierarchyIntoStandardBatch batch) {
+		if (System.isBatch())
+			scheduleBatch(batch);
+		else
+			Database.executeBatch(batch, 1);
+	}
+
+	public static void scheduleBatch(ANG_SplitMcHierarchyIntoStandardBatch batch) {
+		System.schedule('ScheduledJob ' + String.valueOf(Math.random()), nextScheduleDate(), batch);
+	}
+
+	public static String nextScheduleDate() {
+		Datetime now = Datetime.now().addSeconds(10);
+		
+		String hour = String.valueOf(now.hour());
+		String min = String.valueOf(now.minute());
+		String ss = String.valueOf(now.second());
+		String day = String.valueOf(now.day());
+		String month = String.valueOf(now.month());
+		String year = String.valueOf(now.year());
+
+		return ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
 	}
 }

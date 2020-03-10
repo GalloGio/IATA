@@ -2837,8 +2837,14 @@ public class AMS_OSCARTriggerHandler {
 				}
 			}
 
+			// Process Termination
 			if (oldOSCAR.STEP31__c != AMS_Utils.PASSED && updatedOSCAR.STEP31__c == AMS_Utils.PASSED) {
 				changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.TERMINATION, updatedOSCAR, getAccounts(accountsInvolved.get(updatedOSCAR.Id))));
+
+				if (AMS_Utils.pickListContains(updatedOSCAR.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)) {
+					Id parentAccountLeftAlone = getAccounts(accountsInvolved.get(updatedOSCAR.Id)).get(0).Top_Parent__c;
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(updatedOSCAR.Id, parentAccountLeftAlone, true));
+				}
 			}
 
 			if (oldOSCAR.STEP32__c != AMS_Utils.PASSED && updatedOSCAR.STEP32__c == AMS_Utils.PASSED) {
