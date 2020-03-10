@@ -219,7 +219,7 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 			age--;
 		}    
 
-		if( age < 18 ){
+		if( age < 13 ){
 			this.isBirthdateValid = false;
 		}
 
