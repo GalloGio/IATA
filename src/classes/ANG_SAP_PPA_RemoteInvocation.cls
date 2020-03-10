@@ -74,7 +74,9 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 		}
 
 		//Update Remote Invocation Artefact Status
-		if(!rmtInvocationArtListToUpdate.isEmpty()) update rmtInvocationArtListToUpdate;
+		if(!rmtInvocationArtListToUpdate.isEmpty()){
+			update rmtInvocationArtListToUpdate;
+		}
 	}
 
 
@@ -141,12 +143,18 @@ public without sharing class ANG_SAP_PPA_RemoteInvocation implements ANG_RemoteI
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_SAP_PPA_RemoteInvocation - doProcess] Before Update oscarsToUpdate: ' + oscarsToUpdate);
 
 			//Update Oscar list
-			if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
+			if(!oscarsToUpdate.isEmpty()){
+				update oscarsToUpdate;
+			}
 
-			if(!casesToUpdate.isEmpty()) update casesToUpdate;
+			if(!casesToUpdate.isEmpty()){
+				update casesToUpdate;
+			}
 
 			//Update Remote Invocation Artefact Status
-			if(!rmtInvocationArtListToUpdate.isEmpty()) update rmtInvocationArtListToUpdate;
+			if(!rmtInvocationArtListToUpdate.isEmpty()){
+				update rmtInvocationArtListToUpdate;
+			}
 		}
 	}
 }
