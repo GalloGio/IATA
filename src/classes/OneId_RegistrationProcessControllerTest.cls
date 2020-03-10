@@ -242,6 +242,59 @@ private class OneId_RegistrationProcessControllerTest {
 	}
 
 	@isTest
+	public static void testRegistration_II_a() {
+
+		// Prepare test data
+
+		ISSP_CS__c setting = new ISSP_CS__c();
+		setting.Name = 'DefaultNewAccountOwnerId';
+		setting.Value__c = UserInfo.getUserId();
+		insert setting;
+
+		ISSP_CS__c setting2 = new ISSP_CS__c();
+		setting2.Name = 'IdentityPortal';
+		setting2.Value__c = 'customer-portal-iata.force.com';
+		insert setting2;
+
+		Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+		ISSP_CS__c setting3 = new ISSP_CS__c();
+		setting3.Name = 'ISS_Portal_Agency_User';
+		setting3.Value__c = profileId;
+		insert setting3;
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+		insert country ;
+
+		IATA_ISO_STATE__C state = new IATA_ISO_STATE__c (Name='Guarda',
+														 ISO_Code__c='Pt',
+														 IATA_ISO_Country__c=country.Id,
+														 GeonameName__c='Portugal',
+														 GeonameAsciiName__c='Portugal',
+														 GeonameId__c='6115047');
+		 insert state;
+		 IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Guarda',
+														 IATA_ISO_State__c = state.ID,
+														 GeonameID__c = '6077243',
+														 GeonameAlternateNames__c = 'Guarda' );
+
+		Test.startTest();
+
+			PortalType portalType = PortalType.PowerPartner;
+			User userWithRole = null;
+			Boolean doInsert = true;
+
+			Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
+			Contact c2 = new Contact(firstname='firstname2', lastname = 'lastname2',Salutation = 'sig2', email='xpto2@lls.com');
+
+			OneId_RegistrationProcessController.registrationAux(new Account(Sector__c = 'General Public'), c, null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id), 'billingStateId' => String.valueOf(state.Id), 'shippingCityId' => String.valueOf(city.Id), 'shippingStateId' => String.valueOf(state.Id)});
+			OneId_RegistrationProcessController.registrationAux(new Account(Sector__c = 'General Public', IATA_ISO_Country__c = country.Id), c2, null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id), 'billingStateId' => String.valueOf(state.Id), 'shippingCityId' => String.valueOf(city.Id),'shippingStateId' => String.valueOf(state.Id)});																											 
+
+		Test.stopTest();
+
+	}
+
+	@isTest
 	public static void testRegistration_III() {
 
 		// Prepare test data
