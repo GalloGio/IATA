@@ -1001,7 +1001,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			ctrl.newCase.ownerId=userIcc.Id;
 			Test.stopTest();
 			ctrl.submitForm();
-			system.assert(ctrl.oscar.Status__c == AMS_Utils.CASE_STATUS_CLOSED, 'Case should be closed after all accounts be confirmed and submited.');
+			system.assertEquals(ctrl.oscar.Status__c, AMS_Utils.CASE_STATUS_CLOSED, 'Case should be closed after all accounts be confirmed and submited.');
 		}
 	}
 
