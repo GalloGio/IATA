@@ -9,6 +9,8 @@
 {!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
 We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity (RHC).
+<BR/>
+It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></b>.
 <BR/><BR/>
 <b>You can, at any time, decrease your used RHC amount by pre-paying  any outstanding BSP Cash sales before or on the remittance date.</b>
 <BR/><BR/>
@@ -19,8 +21,6 @@ If your agency has a direct debit in place for payments of BSP sales to IATA ple
 •	However, if you make advance payment between R-2 and R, such payments will be adjusted with your future direct debit amount. As an example, if your billing is 2,000 and your agency has made an advance payment of 500 by R-3 and another 400 on R-2, your revised upcoming direct debit amount will be 2,000-500 =1,500. Your future direct debit amount will be adjusted with the remaining 400.
 <BR/><BR/>
 We would like to inform you that in the event there is no reference to the IATA numeric code in the transfer, we will be applying the advance payment to the Head Entity.
-<BR/><BR/>
-It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.0000}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></b>.
 <BR/><BR/>
 <b>You can also, at any time, apply for an increase in you RHC amount.</b>
 <BR/><BR/>
