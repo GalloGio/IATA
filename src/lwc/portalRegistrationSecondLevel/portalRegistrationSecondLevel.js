@@ -160,8 +160,6 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
     account = {
         'name':'',
-        'phone':'',
-        'email':'',
         'website':'',
         'customerType':'',
         'customerTypeSector':'',

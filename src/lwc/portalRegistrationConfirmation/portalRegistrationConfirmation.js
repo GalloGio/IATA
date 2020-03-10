@@ -33,8 +33,6 @@ import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L2_PO_Box_Number from '@salesforce/label/c.CSP_L2_PO_Box_Number';
 import CSP_L2_Country from '@salesforce/label/c.CSP_L2_Country';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
-import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_State from '@salesforce/label/c.CSP_L2_State';
 import CSP_L2_City from '@salesforce/label/c.CSP_L2_City';
@@ -102,14 +100,12 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Country,
         CSP_L2_Details_Saved,
         CSP_L2_Details_Saved_Message,
-        CSP_L2_Email_Address,
         CSP_L2_Go_To_Homepage,
         CSP_L2_Go_To_Service,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
         CSP_L2_Personal_Details,
         CSP_L2_Personal_Details_Message,
-        CSP_L2_Phone_Number,
         CSP_L2_Postal_Code,
         CSP_L2_Is_PO_Box_Address,
         CSP_L2_State,
@@ -185,10 +181,10 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                         // 3. Country + separator
                         selectedAcc.push({ 'label': CSP_L2_Company_Location, 'value': country, 'addSeparator' : true });
 
-                        // 2. Sector
+                        // 4. Sector
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[1], 'value': this.searchResults.wrappedResults[i].fields[1], 'addSeparator' : false });
 
-                        // 3. Category + separator
+                        // 5. Category + separator
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[2], 'value': this.searchResults.wrappedResults[i].fields[2], 'addSeparator' : true });
 
                         for(let j = 4; j < this.searchResults.fieldLabels.length; j++){
@@ -298,8 +294,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
         let account = { 'sobjectType': 'Account' };
         account.Name = this.account.name;
-        account.Phone = this.account.phone;
-        account.Email__c = this.account.email;
         account.Website = this.account.website;
         account.Sector__c = this.account.customerTypeSector;
         account.Category__c = this.account.customerTypeCategory;
