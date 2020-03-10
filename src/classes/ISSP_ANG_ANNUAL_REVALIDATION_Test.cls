@@ -999,9 +999,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			ctrl.confirmDetails();
 			ctrl.newCase.Region__c = 'Europe';
 			ctrl.newCase.ownerId=userIcc.Id;
-			Test.stopTest();
+			Test.stopTest(); 
 			ctrl.submitForm();
-			system.assertEquals(ctrl.oscar.Status__c, AMS_Utils.CASE_STATUS_CLOSED, 'Case should be closed after all accounts be confirmed and submited.');
+			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c,  'Case should be closed after all accounts be confirmed and submited.');
 		}
 	}
 
