@@ -2,8 +2,6 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class PortalServicesCardContainer extends LightningElement {
 
-    @api imageUrl;
-
     @api
     get backgroundVariant() {
         return this.filteringObject;
