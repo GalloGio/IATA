@@ -35,7 +35,7 @@ import CSP_Registration_Description             from '@salesforce/label/c.CSP_Re
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
-import CSP_User_Creation						from '@salesforce/label/c.CSP_User_Creation';
+import CSP_User_Creation                        from '@salesforce/label/c.CSP_User_Creation';
 import CSP_Registration_Existing_User_Message   from '@salesforce/label/c.CSP_Registration_Existing_User_Message';
 import CSP_Privacy_Policy                       from '@salesforce/label/c.CSP_Privacy_Policy';
 import CSP_Check_Email                          from '@salesforce/label/c.CSP_Check_Email';
