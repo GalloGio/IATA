@@ -17,6 +17,7 @@ public with sharing class ISSP_Homepage {
 	public List<Portal_Applications__c> newAppsList {get;private set;}
 	public List<Portal_Application_Right__c> appsPendingApprovalsList{get;private set;}
 	public List<Notification__c> myNotificationsList{get;private set;}
+	public Boolean isCNSAgency {get; private set;}
 
 	//Survey variables
 	public String  SurveyLink {get; set;}
@@ -99,9 +100,11 @@ public with sharing class ISSP_Homepage {
 		con = [SELECT Id, Credit_Card_Payment_Link__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c,
 				Account.Top_Parent__c, AccountId,Account.Industry, Account.Accumulated_Irregularities__c, Account.Category__c,
 				Account.Status__c, Account.CNS_Agency__c, Account.Sector__c, Account.RecordTypeId, Account.Is_Branch_Abroad__c,
-				Account.Location_Type__c, Account.Location_Class__c, Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c
+				Account.Location_Type__c, Account.Location_Class__c, Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Account.IATA_ISO_Country__r.CNS_Country__c, Account.CNS_Account__c
 			FROM Contact
 			WHERE Id = :user.ContactId];
+		
+		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c && (con.Account.Location_Type__c == 'HO' || con.Account.Location_Type__c == 'BR');
 
 		userMap = new map<string,integer> {'Pending approvals'=>0,'Portal Users'=>0,'Portal Delegates Administrators'=>0,'Regional Administrator'=>0};
 		string topParentId = con.Account.Top_Parent__c==null?con.AccountId:con.Account.Top_Parent__c;

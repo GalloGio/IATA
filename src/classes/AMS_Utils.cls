@@ -245,11 +245,13 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
 	public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
 	public static final String CASE_REASON_NEW_HO = 'New HO';
+	public static final String CASE_REASON_NEW_COMMERCIAL_HO = 'New Commercial HO';
 	public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
 	public static final String CASE_REASON_AE_LITE = 'New AE lite';
 	public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
 
 	public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
+	public static final String CASE_REASON_BR_INDEPENDENT = 'New Independent BR';
 	public static final String CASE_REASON_BR_IP = 'New BR / IP';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
 	public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
@@ -358,8 +360,9 @@ public without sharing class AMS_Utils {
 	public static final String TYPE_PAX_AE_MULTICOUNTRY = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, AGENTTYPE_MULTICOUNTRY);
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 	public static final String TYPE_CNS_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_HO_COMMERCIAL = buildOfficeType(CASE_REASON_NEW_COMMERCIAL_HO, CATEGORY_CNS_ENDORSEMENT);
 	public static final String TYPE_CNS_BR = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_CNS_ENDORSEMENT);
-	public static final String TYPE_CNS_BR_INDEPEND = buildOfficeType(CASE_REASON_BR_ABROAD, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR_INDEPEND = buildOfficeType(CASE_REASON_BR_INDEPENDENT, CATEGORY_CNS_ENDORSEMENT);
 
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';

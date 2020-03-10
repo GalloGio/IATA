@@ -17868,6 +17868,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Yes</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMSCNS_Endorsement_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS endorsement HO</shortDescription>
+        <value>CNS endorsement HO</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_ACCR_Alert1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18125,6 +18133,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Business_Activities_Field_Label</shortDescription>
         <value>* Give details of the parent business activities of your firm (customs house broker, ocean freight forwarder, travel agent, etc.)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CASS_Commercial_Account_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CASS Commercial Account HO</shortDescription>
+        <value>CASS Commercial Account HO</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CASS_Contact</fullName>
@@ -20365,6 +20381,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>6. Trained Staff</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section6_Financial_Cargo</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section6_Financial_Cargo</shortDescription>
+        <value>6. Financial</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22012,6 +22036,16 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_TC_CNS_Only</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_CNS_Only</shortDescription>
+        <value>I understand that by signing this agreement the endorsed agent and authorized intermediary as identified by the above listed CNS/IATA no. has authorized the addition of a branch office located at the address shown above. Responsibilities for payment of international air waybills other financial and operational compliance’s to the CNS Cargo agency and authorized intermediary agreement and any governmental regulations (DOT,FAA) regarding the handling of International Air Cargo remains the responsibility of the principle office of the endorsed agent and authorized intermediary.
+&lt;br/&gt;&lt;hr&gt;
+I certify that the preceding statements are true and correct to the best of my knowledge and believe and that I am authorized by the firm identified in the foregoing to make these statements and to file this application.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_CASS</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22766,6 +22800,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Section 2.2</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Security_Contact</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Security Contact</shortDescription>
+        <value>Security Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Security_Contact_Message_Popup</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Security Contact Message Popup</shortDescription>
+        <value>Example message for Security Contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Select_AEs</fullName>
         <categories>ISSP, AMS, ANG</categories>
         <language>en_US</language>
@@ -22861,6 +22911,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Not sure which type of agency to apply for?&lt;br/&gt;Then please consult this</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_CNS_NEW_HO_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 CNS NEW HO BR</shortDescription>
+        <value>CNS Online Agency Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Change_Bank_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22939,6 +22997,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
         <value>Welcome to the online CNS Agency Endorsement application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</shortDescription>
+        <value>Welcome to the online CNS Agency Accreditation application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_New</fullName>

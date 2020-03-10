@@ -315,14 +315,6 @@
     function showNewContactDialog() {
         $j(function() {
             $j( '#cargoaddNewContactModal').modal('show');
-            if({!isCNSAgency}){
-                var e = document.querySelectorAll('[id$="TrainingType"]')[0];
-                for(var i = e.options.length-1; i >0 ; i--){
-                    if (e[i].value != 'DGR') {
-                        e.remove(i);
-                    }
-                }
-            }
             $j( '.datePicker').css('position','fixed');
       });
     }
@@ -331,6 +323,14 @@
         $j(function() {
             $j( '#addNewTrainedStaffModal').modal('show');
             $j( '.datePicker').css('position','fixed');
+            if({!isCNSAgency}){
+                var e = document.querySelectorAll('[id$="TrainingType"]')[0];
+                for(var i = e.options.length-1; i >0 ; i--){
+                    if (e[i].value != 'DGR') {
+                        e.remove(i);
+                    }
+                }
+            }
       });
     }
 
@@ -816,9 +816,10 @@
         <p><a href="#nav_three">{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels,$Label.ISSP_AMS_LeftNav_Section3_Cargo_Agency_New,$Label.ISSP_AMS_LeftNav_Section3_Cargo_Agency), $Label.ISSP_AMS_LeftNav_Section3_Cargo_Intermediary)}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_LeftNav_Section4_Cargo}</a></p>
         <p><a href="#nav_five">{!$Label.ISSP_AMS_LeftNav_Section5_Cargo}</a></p>
-        <p><a href="#nav_six">{!$Label.ISSP_AMS_LeftNav_Section6_Cargo}</a></p>
-        <p><a href="#nav_seven">{!$Label.ISSP_AMS_LeftNav_Section7_Cargo}</a></p>
-        <p><a href="#nav_eight">{!$Label.ISSP_AMS_LeftNav_Section8_Cargo}</a></p>
+        <p style="display:{!IF(newCase.Reason1__c!='New Commercial HO','','none')}"><a href="#nav_six">{!$Label.ISSP_AMS_LeftNav_Section6_Cargo}</a></p>
+        <p style="display:{!IF(newCase.Reason1__c!='New Commercial HO','','none')}"><a href="#nav_seven">{!$Label.ISSP_AMS_LeftNav_Section7_Cargo}</a></p>
+        <p style="display:{!IF(newCase.Reason1__c=='New Commercial HO','','none')}"><a href="#nav_seven">{!$Label.ISSP_AMS_LeftNav_Section6_Financial_Cargo}</a></p>
+        <p style="display:{!IF(newCase.Reason1__c!='New Commercial HO','','none')}"><a href="#nav_eight">{!$Label.ISSP_AMS_LeftNav_Section8_Cargo}</a></p>
     </div>
      
      <div class="panel-primary">
@@ -930,7 +931,7 @@
                 </apex:pageBlockSection>
                 
                     <apex:outputPanel id="legal_Status">
-                        <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}">  
+                        <apex:outputPanel rendered="{!AND(newForm.ISSP_AMS_Legal_Status__c == 'Corporation', NOT(isCNSAgency))}">  
                             <apex:actionRegion >
                                 <apex:pageBlockSection columns="1">
                                     <apex:pageBlockSectionItem labelStyle="width:30%">
@@ -966,11 +967,11 @@
                                 </apex:pageBlockSection>
                             </apex:outputPanel>
                         </apex:outputPanel>    
-                        <apex:pageBlockSectionItem rendered="{!NOT(isocountry.EACP_Country__c)}">
+                        <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Business_Activities_Field_Label}"/>                                                        
                             <apex:inputField value="{!newForm.ISSP_AMS_Business_Activities__c}" style="width:200px;{!IF(AND(isValError, newForm.ISSP_AMS_Business_Activities__c==null), 'border:2px red solid;', '')}"/>
                         </apex:pageBlockSectionItem>                   
-                        <apex:pageBlockSectionItem labelStyle="width:30%" rendered="{!NOT(isocountry.EACP_Country__c)}">
+                        <apex:pageBlockSectionItem labelStyle="width:30%" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Is_Applicant_Parent_Field_Label}"/>
                             <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Is_Applicant_Parent__c==null), 'border:2px red solid;', '')}" id="isApplicant" value="{!newForm.ISSP_AMS_Is_Applicant_Parent__c}" >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -978,7 +979,7 @@
                                 <apex:actionSupport event="onchange" reRender="names_addresses" />
                             </apex:selectRadio>
                         </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="names_addresses">
+                        <apex:outputPanel id="names_addresses" rendered="{!NOT(isCNSAgency)}">
                             <apex:outputPanel rendered="{!AND(newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes',NOT(isocountry.EACP_Country__c))}">
                                 <apex:pageBlockSection columns="1">
                                      <apex:pageBlockSectionItem labelStyle="width:30%">
@@ -1000,7 +1001,7 @@
                                 <apex:actionSupport event="onchange" oncomplete="toggleDangerousGoods(this.value)" reRender="section6"/>
                             </apex:selectRadio>
                         </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem rendered="{!NOT(isocountry.EACP_Country__c)}">
+                        <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Is_Make_Declarations_Field_Label}"/>
                             <apex:selectRadio style="width:100px" id="makedeclarations" value="{!newForm.ISSP_AMS_Is_Make_Declarations__c}" >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -1258,6 +1259,9 @@
                             </apex:column>
                             <apex:column value="{!agencycon.Authorised_signatory__c}" style="text-align:center">
                                 <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Authorised_Sig}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpAuthorisedSig}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
+                            </apex:column>
+                            <apex:column value="{!agencycon.Security_Contact__c}" style="text-align:center" rendered="{!isCNSAgency}">
+                                <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Security_Contact}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!$Label.ISSP_AMS_Security_Contact_Message_Popup}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
                             </apex:column>
                             <apex:column value="{!agencycon.Financial_Assessment_Contact__c}" style="text-align:center" rendered="{!amsOfficeType=='HO'}">
                                 <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Fin_Contact}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpFinContact}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
@@ -1868,7 +1872,7 @@
                     </apex:pageBlockSection>
                 
                 <span id="nav_six"></span>
-                <apex:pageBlockSection id="section6" columns="1" collapsible="false">
+                <apex:pageBlockSection id="section6" columns="1" collapsible="false" rendered="{!newCase.Reason1__c != 'New Commercial HO'}">
                     <apex:facet name="header">
                             <apex:outputpanel >
                                 {!$Label.ISSP_AMS_Step3_6_Trained_Staff_Members}    
@@ -1909,7 +1913,7 @@
                 <apex:pageBlockSection id="section7" columns="1" collapsible="false">
                     <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_Step3_7_Financial}
+                                {!IF(newCase.Reason1__c == 'New Commercial HO', $Label.ISSP_AMS_Step3_6_Financial, $Label.ISSP_AMS_Step3_7_Financial)}
                             </apex:outputpanel>
                         </apex:facet>
                     <apex:pageblocksectionitem rendered="{!NOT(isCNSAgency)}">
@@ -1974,8 +1978,8 @@
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
                 
-                <span id="nav_eight"></span>
-                <apex:pageBlockSection id="section8" columns="1" collapsible="false">
+                <span id="nav_eight" rendered="{!newCase.Reason1__c!='New Commercial HO'}"></span>
+                <apex:pageBlockSection id="section8" columns="1" collapsible="false" rendered="{!newCase.Reason1__c!='New Commercial HO'}">
                     <apex:facet name="header">
                             <apex:outputpanel >
                                 {!$Label.ISSP_AMS_Step3_8_Sales_Promotion}
@@ -2245,7 +2249,11 @@
                 </apex:pageBlockSectionItem>
                 <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
                     <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
-                    <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
+                    <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" /> 
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!isCNSAgency}">
+                    <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Security_Contact__c.Label}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Security_Contact__c}" />
                 </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
               <apex:pageBlockSection columns="1" rendered="{!NOT(isocountry.EACP_Country__c)}">

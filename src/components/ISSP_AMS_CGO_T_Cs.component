@@ -1,5 +1,5 @@
 <apex:component controller="ISSP_AMS_Accreditation">
-    
+    <apex:pageBlock rendered="{!AND(newCase.Reason1__c != 'New Independent BR', newCase.Reason1__c != 'New BR / IP')}">
     <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
     	<div class="aplabel">
        		<apex:outputText escape="false" value="I hereby certify that above mentioned Branch is fully owned and controlled by undersigned company and shall be subject to the applicable {!IF(newlabels,'IFACP','Cargo Agency')} Rules in&nbsp;{!amsCountryLabel}"/>     
@@ -9,7 +9,7 @@
     
     <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary',amsOfficeType=='HO',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
     	<div class="aplabel">
-       		<apex:outputText escape="false" value="I hereby certify that the foregoing statements, including statements made in any attachments hereto, are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in Section 1 to make these statements and file this document.}"/>                      
+       		<apex:outputText escape="false" value="I hereby certify that the foregoing statements, including statements made in any attachments hereto, are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in Section 1 to make these statements and file this document."/>                      
         </div>
    	</apex:pageBlockSection>
     
@@ -62,4 +62,12 @@ I hereby certify that the foregoing statements (including statements made in any
 identified in SECTION 2 to make these statements and file this document.
         </apex:pageBlockSection>
     
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!OR(newCase.Reason1__c == 'New Independent BR', newCase.Reason1__c == 'New BR / IP')}">
+        <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
+            <div class="aplabel">
+                <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC_CNS_Only}"/>     
+            </div>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
 </apex:component>

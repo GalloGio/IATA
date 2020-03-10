@@ -347,8 +347,8 @@
             <div class="container">
         
             <div style="padding-top:16px;">
-                <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
-                <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
+                <h3>{!IF(isCNSAgency, $Label.ISSP_AMS_Step0_CNS_NEW_HO_BR, if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA)))}</h3>
+                <apex:outputText value="{!IF(isCNSAgency, $Label.ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR, if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro)))}" escape="false"/>
             </div>
             <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
             <div class="loadingBox overlay"/> 
