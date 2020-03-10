@@ -212,6 +212,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
         getContactInfo()
             .then(result => {
                 this.contactInfo = result;
+                this.contactInfo.salutationNotSet = this.contactInfo.Salutation === '' || this.contactInfo.Salutation === null || this.contactInfo.Salutation === undefined;
                 this.contactFound = this.contactInfo != null;
 
                 if(!this.contactFound){

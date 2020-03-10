@@ -79,6 +79,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public class RegistrationParameters{
 		public string email{get;set;}
+		public string salutation{get;set;}
 		public string firstName{get;set;}
 		public string lastName{get;set;}
 		public string country{get;set;}
@@ -388,6 +389,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			RegistrationParameters params = new RegistrationParameters();
 			params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
+			params.salutation = (inputMap.get('salutation') != null) ? string.valueOf(inputMap.get('salutation')) : '';
 			params.firstName = (inputMap.get('firstName') != null) ? string.valueOf(inputMap.get('firstName')) : '';
 			params.lastName  = (inputMap.get('lastName') != null) ? string.valueOf(inputMap.get('lastName')) : '';
 			params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
@@ -775,6 +777,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			con.AccountId = params.accountId;
 			con.ISO_Country__c = params.country;
+			con.Salutation = params.salutation;
 			con.firstName = params.firstName;
 			con.lastName = params.lastName;
 			con.Phone = params.phone;

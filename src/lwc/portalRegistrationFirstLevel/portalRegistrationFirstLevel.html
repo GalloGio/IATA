@@ -83,6 +83,33 @@
                                             </lightning-layout-item>
                                         </template>
                                         <template if:true={displayContactForm}>
+                                            <!------------------------------------------      Salutation      ------------------------------------------- -->
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementContainer">
+                                                    <div class="formLabelContainer">
+                                                        <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
+                                                            {salutation.label}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                                    <lightning-combobox class="" placeholder=" "
+                                                                        name="salutationCbx" label="" required
+                                                                        variant="label-hidden"
+                                                                        value={registrationForm.salutation}
+                                                                        options={salutation.options}
+                                                                        onchange={handleSalutationChange}
+                                                                        message-when-value-missing=" ">
+                                                    </lightning-combobox>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementSpacer">
+                                                </div>
+                                            </lightning-layout-item>
                                             <!------------------------------------------      First Name      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
