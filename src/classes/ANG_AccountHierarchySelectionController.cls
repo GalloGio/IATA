@@ -988,7 +988,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return false;
 		*/
 
-		return ((a.Location_Type__c == AMS_Utils.HE && a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASH) || a.Location_Type__c == AMS_Utils.GE);
+		return ((a.Location_Type__c == AMS_Utils.HE && (a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASH || a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)) || a.Location_Type__c == AMS_Utils.GE);
 	}
 
 	public boolean isTerminatedAccount(Id acctId){
