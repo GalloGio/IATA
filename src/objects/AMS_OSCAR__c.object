@@ -1957,8 +1957,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>Change_of_Hierarchy_Scenario__c</fullName>
-        <description>Picklist used to identify aditional scenarios for change of hierarchies:
-- Single standard hierarchy being acquired by a multicountry one</description>
+        <description>Picklist used to identify aditional scenarios for change of hierarchies (for example: ST hierarchy acquired by MC)</description>
         <externalId>false</externalId>
         <label>Change of Hierarchy Scenario</label>
         <required>false</required>
