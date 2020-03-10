@@ -273,6 +273,7 @@ global without sharing class ISSP_APProcess {
 	public Boolean showPDFReportsEmail{get;set;}
 	public Boolean changePass{get;set;}
 	public String listUploadedFileIds{get;set;}
+	public String passLink{get;set;}
 
 	public ISSP_APProcess(){
 		//Set the Variables default values
