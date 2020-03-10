@@ -1987,6 +1987,10 @@
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>Servicios</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -2061,6 +2065,10 @@
     <customLabels>
         <label>Datos del caso</label>
         <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
         <label>Casos</label>
@@ -3316,6 +3324,46 @@
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Acceso solicitado</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3734,6 +3782,10 @@
     <customLabels>
         <label>Su nombre</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- Copyright --></label>
@@ -12779,7 +12831,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_IATA_Reg_Cargo_Agent</name>
     </customLabels>
     <customLabels>
-        <label>* Indique los GDS con los que ha firmado un contrato</label>
+        <label>Indique los GDS con los que ha firmado un contrato</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
@@ -13539,7 +13591,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Para notificar a IATA que ha cambiado de cuenta bancaria, póngase en contacto con nosotros.</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
@@ -16491,11 +16543,11 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_My_Contact_Action</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <label>Al realizar la confirmación, se le pedirá que proporcione a IATA una carta de recomendación de una compañía aérea miembro de IATA.</label>
         <name>ISSP_NDC_Transaction_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <label>Si no dispone de un contrato con el Sistema Global de Distribución (GDS), confirme que solo lleva a cabo transacciones de la NDC con las compañías aéreas.</label>
         <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>

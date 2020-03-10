@@ -94,6 +94,7 @@
         defaultOperationType = "";
         defaultFrequency = "";
     }
+	
     var isMultiButtonVisible = {!IsMultiButtonVisible};
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
     console.log(MAP_FREQUENCIES);
@@ -307,6 +308,9 @@
                         return data;
                     }
                 }
+			},
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNameCSV();}
@@ -328,6 +332,9 @@
                         return data;
                     }
                 }
+            },
+			modifier: {
+				order: 'original'
             }
         },
         title: function () { return getExportFileNamePDF();},
@@ -705,11 +712,18 @@
         $.each(tableDef.headers, function (i, line) {
             if (line.bVisible) {
                 colTypes.push(line.sType);
-                if (firstVisibleCol==null) firstVisibleCol=i;
+				if (firstVisibleCol === null) firstVisibleCol = i;
+				if (line.sTitle === 'Billing To') billingToCol = i;
             }
         });
         //console.log(firstVisibleCol);
         
+		var tableOrderIndex = firstVisibleCol;
+		var typeFilter = $("#typeFilter :selected");
+		if (typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS") {
+			tableOrderIndex = billingToCol;
+		}
+
         $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
             $.each(node.cells, function (j, cell) {
@@ -728,7 +742,7 @@
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
         });
-        table.order([ firstVisibleCol, 'asc']).draw();
+        table.order([ tableOrderIndex, 'asc']).draw();
         //PDF button depends on the operation type value
         addExportButtons();
         $(".buttons-csv").prop("disabled",tableDef.data.length==0);
@@ -878,6 +892,8 @@
         var countries = [];
         $("#right-opt-country-filter option").each(function() {countries.push($(this).val());});
 
+        var billingPeriod = $("#multiDownloadBillingPeriod").val();
+
         var hasBSP = false;
         $.each($("#right-opt-operation-filter option"), function(i,v) {
             hasBSP |= !v.value.includes('CASS');
@@ -891,20 +907,20 @@
 
         alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
 
-        startDownload(opt, operations, remittance, countries, "{!account.Id}", fileFormat);
+        startDownload(opt, operations, remittance, countries, "{!account.Id}", billingPeriod, fileFormat);
     }
 
     var generationCounter;
     var zipFile;
-    function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
+    function startDownload(opt, operations, remittance, countries, accountId, billingPeriod, fileFormat) {
         generationCounter = null;
         zipFile = null;
         $('#downloadBtn').attr("disabled", true);
         $("#loading-modal").modal("show");
-        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId);
+        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId + " billingPeriod " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
-            opt, operations, remittance, countries, accountId,
+            opt, operations, remittance, countries, accountId, billingPeriod,
             function(result, event) {
                 console.log(result);
                 if (event.status) {
@@ -933,7 +949,7 @@
                             if(fileFormat == 'pdf') {
                                 createPDFFile(folder, v.files); 
                             } else {
-                                createCSVFile(folder, v.files);
+                                createCSVFile(folder, v.files, billingPeriod);
                             }                            
                         }
                     });
@@ -953,7 +969,7 @@
         );
     }
 
-    function createCSVFile(folder, files) {
+    function createCSVFile(folder, files, billingPeriod) {
         var fileBody = '';
 
         $.each(files, function(index1, file) {
@@ -972,7 +988,7 @@
         });
 
         var dt = new Date();
-        var csvFileName = folder.root.substring(0, folder.root.length-1) + ' ' + dt.getFullYear();
+        var csvFileName = folder.root.substring(0, folder.root.length-1) + ' ' + billingPeriod;
         addCSVFileToFolder(folder, fileBody, csvFileName + ".csv");  
     }
 
@@ -1336,6 +1352,18 @@
                                             size="8"
                                             required="true"
                                             identifier="country-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <label >{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
+                                        <select id="multiDownloadBillingPeriod" class="form-control required">
+                                            <option value="{!YEAR(TODAY()) -1}">{!YEAR(TODAY()) -1}</option>
+                                            <option selected="true" value="{!YEAR(TODAY())}">{!YEAR(TODAY())}</option>
+                                            <option value="{!YEAR(TODAY()) +1}">{!YEAR(TODAY()) +1}</option>
+                                        </select>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
