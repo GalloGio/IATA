@@ -212,7 +212,7 @@
                                 <div class="aplabel"> {!$Label.ISSP_PASS_Terms_Conditions}</div>
                                 <div class="aplabel" style="font-weight:bold;">{!$Label.ISSP_PASS_Checklist}</div>
                                 <div id="bankmandatelink_p">
-                                    <u><a href="{!passlink}" target="_blank">Link of participation checklist</a></u>
+                                    <u><a href="{!passlink}" target="_blank">{!$Label.ISSP_PASS_Participation_Checklist}</a></u>
                                 </div>
                                     
 

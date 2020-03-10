@@ -32444,6 +32444,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Participation Agreement and Terms of Use</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Participation_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
+        <value>Link of participation checklist</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Terms_Conditions</fullName>
         <language>en_US</language>
         <protected>false</protected>
