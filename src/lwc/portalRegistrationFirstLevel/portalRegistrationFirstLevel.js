@@ -49,6 +49,10 @@ import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Tr
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
 import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
+import CSP_L2_Title								from '@salesforce/label/c.CSP_L2_Title';
+import ISSP_Registration_MR						from '@salesforce/label/c.ISSP_Registration_MR';
+import ISSP_Registration_MRS					from '@salesforce/label/c.ISSP_Registration_MRS';
+import ISSP_Registration_MS						from '@salesforce/label/c.ISSP_Registration_MS';
 
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
@@ -69,6 +73,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track config = {};
 	@track userInfo = {}
 	@track registrationForm = { "email" : "",
+								"salutation" : "",
 								"firstName" : "",
 								"lastName" : "",
 								"country" : "",
@@ -89,6 +94,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track languageOptions = [];
 	//@track phoneInitialized = false;
 	@track isSelfRegistrationDisabled = false;
+	@track salutation = { label : "", options : [], display : false };
 	@track sector = { label : "", options : [], display : false };
 	@track category = { label : "", options : [], display : false };
 	@track extraQuestion = { label : "", options : [], display : false };
@@ -120,7 +126,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		CSP_Troubleshooting_Info,
 		CSP_Troubleshooting,
 		CSP_Unexcepted_Error,
-		CSP_PortalPath
+		CSP_PortalPath,
+		CSP_L2_Title,
+		ISSP_Registration_MR,
+		ISSP_Registration_MRS,
+		ISSP_Registration_MS
 	}
 
 	get labels() {
@@ -209,6 +219,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 				return;
 			}
 		});
+
+		let salutationList = [];
+		salutationList.push({ label: '', value: '' });
+		salutationList.push({ label: this.labels.ISSP_Registration_MR, value: 'Mr.' });
+		salutationList.push({ label: this.labels.ISSP_Registration_MRS, value: 'Mrs.' });
+		salutationList.push({ label: this.labels.ISSP_Registration_MS, value: 'Ms.' });
+		this.salutation.options = salutationList;
+		this.salutation.label = this.labels.CSP_L2_Title;
 
 		Promise.all([
 			loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
@@ -726,6 +744,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		}
 
 		this.registrationForm = { "email" : email,
+								  "salutation" : "",
 								  "firstName" : "",
 								  "lastName" : "",
 								  "country" : "",
@@ -782,7 +801,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			}
 		}else{
 			if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
-				|| form.termsAndUsage != true || form.sector.length < 1){
+				|| form.termsAndUsage != true || form.sector.length < 1 || form.salutation.length < 1){
 					isValid = false;
 			}
 

@@ -26,7 +26,6 @@ import CSP_L2_Is_PO_Box_Address from '@salesforce/label/c.CSP_L2_Is_PO_Box_Addre
 import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
 
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
-import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
 import CSP_L2_Job_Function from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title from '@salesforce/label/c.CSP_L2_Job_Title';
 import CSP_L2_Back_to_Account_Selection from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
@@ -104,7 +103,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Company_Information,
         CSP_L2_Confirmation_Message,
         CSP_L2_Country,
-        CSP_L2_Date_of_Birth,
         CSP_L2_Details_Saved,
         CSP_L2_Details_Saved_Message,
         CSP_L2_Email_Address,

@@ -35,15 +35,15 @@
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
             <div class="fieldContainer">
-                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                    <div class="dataLabel">{labels.CSP_L2_Title}</div>
-                    <div class="dataValue itemValue">{contactInfo.Salutation}</div>
-                </lightning-layout-item>
+                <template if:true={contactInfo.salutationNotSet}>
+                	<lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                	    <div class="dataLabel">{labels.CSP_L2_Title}</div>
+                	    <div class="dataValue itemValue">{contactInfo.Salutation}</div>
+                	</lightning-layout-item>
 
-                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                    <div class="dataLabel">{labels.CSP_L2_Date_of_Birth}</div>
-                    <div class="dataValue itemValue">{contactInfo.Birthdate}</div>
-                </lightning-layout-item>
+                	<lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                	</lightning-layout-item>
+				</template>
 
                 <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
                     <div class="dataLabel">{labels.CSP_L2_Job_Function}</div>
