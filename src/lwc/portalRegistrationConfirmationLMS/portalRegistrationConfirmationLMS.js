@@ -64,6 +64,8 @@ import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_Verification
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
 	/* Images */
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+
+	// TO DO : find an image for error
 	errorIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
 
 	@api contactInfo;
@@ -80,9 +82,13 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	createdCityId;
 
+	// selectedAccount;
+	// @track selectedAccountSet = false;
+
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
+	//to be replaced by a custom label
 	successModalTitle = 'Verification Mail';
 	@track successModalMessage = '';
 	errorModalTitle = 'Error';
@@ -213,17 +219,49 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	submit(){
 		this.startLoading();
-		this.submitRegistration();
+
+		// Check first if we need to create a Geoname city
+		// if(this.localAddress.stateId !== '' && this.localAddress.cityId === ''){
+		// 	createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
+		// 	.then(result => {
+		// 		this.createdCityId = result;
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Error: ', JSON.parse(JSON.stringify(error)));
+		// 		this.openErrorModal = true;
+		// 		this.errorModalMessage = JSON.parse(JSON.stringify(error));
+		// 		this.stopLoading();
+		// 	})
+		// 	.finally(() => {
+		// 		this.submitRegistration();
+				
+		// 	});
+		// }else{
+			this.submitRegistration();
+		// }
+
+
+
+				// register({ registrationForm : JSON.stringify(this.registrationForm),
 	}
 
 
 	submitRegistration(){
-		var auxSearchValues = new Map();
+		let auxSearchValues = new Map();
+
+		console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
+		console.log('lmsCourseDecoded start: ');
+
+		let lmsCourseDecoded = '';
+
+		lmsCourseDecoded = decodeURIComponent(this.localContactInfo.lmsCourse);
+
+		console.log('lmsCourseDecoded: ',lmsCourseDecoded);
 
 		auxSearchValues = [
 			this.localContactInfo.Username,
 			this.localContactInfo.UserId,
-			this.localContactInfo.lmsCourse,
+			lmsCourseDecoded,
 			this.street,
 			this.zip,
 			this.localAddress.countryId,
@@ -236,6 +274,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localAddress.street2,
 			this.localContactInfo.existingTrainingId
 		];
+
+console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
+console.log('auxSearchValues: ',auxSearchValues);
 
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
@@ -351,6 +392,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	}
 
 	goToService(){
+console.log('entrei');
 		this.startLoading();
 		getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 			.then(serviceId => {
@@ -363,6 +405,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 					}
 					else{
 						this.stopLoading();
+						//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 						navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
 
 					}

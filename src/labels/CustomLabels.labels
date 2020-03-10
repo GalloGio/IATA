@@ -3387,13 +3387,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Account Domain Created</shortDescription>
         <value>Account Domain created</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_AddOrRemove_Recipients</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
         <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
-	</labels>
+    </labels>
     <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
@@ -5600,7 +5600,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PortalPath</shortDescription>
-        <value>/s/</value>
+        <value>/csportal/s/</value>
     </labels>
     <labels>
         <fullName>CSP_Portal_Administrators</fullName>
@@ -7982,14 +7982,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey</shortDescription>
-        <value>833d368df5c23296a4efe8a6fc2b9b1d</value>
+        <value>94179ceb1b1239e88913677edffe3fae</value>
     </labels>
     <labels>
         <fullName>Cybersource_AccessKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey_USD</shortDescription>
-        <value>b3d6f88098cf3f16980ccc5e21ea9c1d</value>
+        <value>5ccf2288a10b3c23b12d9e2cf895bbc0</value>
     </labels>
     <labels>
         <fullName>Cybersource_MerchantId</fullName>
@@ -8010,28 +8010,28 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_ProfileId</shortDescription>
-        <value>A4D3E4D4-2A22-4399-96FB-E24F71772A8A</value>
+        <value>0BE9F8A9-5959-4A46-94F9-8289041F21A5</value>
     </labels>
     <labels>
         <fullName>Cybersource_ProfileId_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_ProfileId_USD</shortDescription>
-        <value>D608BCC2-5835-41A4-A38E-5A9FCA8B3E93</value>
+        <value>4E75C0D2-1148-471F-AC0B-5ED13AF818F2</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey</shortDescription>
-        <value>d7807348d5e04536b84f24774d2ab31b60a44906574445fe8c048d459ab2bbe41607755b175d4f79a3fb3ca109d46dca46de71ff10694921b2ea4cab367dc2d29e2da2bcf1a74db6ba1257d53525135a8ef7fe311a3d44088785d9b12a621dc7210b25519e6246b18602c1c4c7d9a446468c91619ecb42049435c833e1a61499</value>
+        <value>4ca75e8a33d448eda0bf8e82610b05dd4ede753c9eb448c0af185aa4b9a97623a0ae49ae8dd84a03886b765255dbe70ed02915bb1c7b4cdf83f9abbab29b5fb90d63d18592aa4a86acc0254af21d1d26d00c04da8c0a4833914282bdc3944ef65a6e57cac3b147a9b79a71e899b0bf77a5a8ebd9cc7e48309f3216626b648a6f</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey_USD</shortDescription>
-        <value>a9ff049e793d4f5f9b7ee166e20761c9a9ed454028c14624a79ef2dfd4d7a0473bb6b7f1aa14410aba60ba86244273456098da4ed6ec4c7d857d14730e47ee61711ba93f815f43a480ed41330ad7f8b93e2e3943d160459dbeadf4c7637c145cae22317c5dbb480c909c7ad6e8439f38924dd228ed214d6d9c9345801223d274</value>
+        <value>40acdd997f4e4d0bbc955ddd369794457a3eabb25e1142958cd2b7971106f8fde990436568704ed5b88a2b0a117cee4145e70c097fed4eea8a2f6cee090672c2eea210a644c241d0969659c7041d59c7c0c3357f23f8492ab2c3415c6fbab24bdb7ca84a2f8049b6888b063acdebb2687e8a19b7f6b749e69a92d4b9f7248eeb</value>
     </labels>
     <labels>
         <fullName>Cybersource_SerialNumber</fullName>
@@ -12146,7 +12146,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Cybersourcelink</shortDescription>
-        <value>https://secureacceptance.cybersource.com/pay</value>
+        <value>https://testsecureacceptance.cybersource.com/pay</value>
     </labels>
     <labels>
         <fullName>IDCard_DOB</fullName>
@@ -16339,7 +16339,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
-        <value>Your company has already create a case to request the code. 
+        <value>Your company has already create a case to request the code.
 Click here to view the case number:</value>
     </labels>
     <labels>
@@ -16869,7 +16869,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</shortDescription>
-        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate. 
+        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate.
 A provisional assignment shall be valid for a non-renewable period of six (6) months, and is for internal use only.</value>
     </labels>
     <labels>
@@ -27647,7 +27647,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
+        <value>&quot;Note: The calendar for this market contains local de calendar for this market contains local specific dates that are not reflected in this application.ic dates that are not reflected in this application.
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
@@ -29386,7 +29386,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_PortalUrl</shortDescription>
-        <value>https://portal.iata.org/</value>
+        <value>https://preprod-customer-portal-iata.cs109.force.com/</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_PortalUrl_CNS</fullName>
@@ -36810,12 +36810,12 @@ Using the Join BSP/CASS service, you can directly manage the joining process onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1RT</shortDescription>
-        <value>CasesMENA 
-CasesAmericas 
-ExternalCasesIDFSglobal 
-Cases_China_North_Asia 
-CasesEurope 
-ComplaintIDFS 
+        <value>CasesMENA
+CasesAmericas
+ExternalCasesIDFSglobal
+Cases_China_North_Asia
+CasesEurope
+ComplaintIDFS
 InternalCasesEuropeSCE</value>
     </labels>
     <labels>
@@ -36823,14 +36823,14 @@ InternalCasesEuropeSCE</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1Reason</shortDescription>
-        <value>CHC – Change of Shareholding 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New HO 
-Financial RVW intermediaries 
-New HE lite 
-New HE standard 
-Accreditation Type 
+        <value>CHC – Change of Shareholding
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New HO
+Financial RVW intermediaries
+New HE lite
+New HE standard
+Accreditation Type
 New EAA - Application process for European Accredited Agent</value>
     </labels>
     <labels>
@@ -36838,16 +36838,16 @@ New EAA - Application process for European Accredited Agent</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI2</shortDescription>
-        <value>New BR / IP 
-CHL - Change of Location 
-New SA / CHV – New Code 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-CLO - Closure 
-New AE 
-FoP Management 
-New HE lite 
-Accreditation Type 
+        <value>New BR / IP
+CHL - Change of Location
+New SA / CHV – New Code
+Direct Debit Setup/Update
+VMFR Setup/Update
+CLO - Closure
+New AE
+FoP Management
+New HE lite
+Accreditation Type
 CHG – Data Maintenance</value>
     </labels>
     <labels>
@@ -41494,26 +41494,26 @@ Whether to use Paymentlink for your payments is either indicated on the IATA inv
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProcessEffAge</shortDescription>
-        <value>New HO 
-CHG – Data Maintenance 
-CLO - Closure 
-CHL - Change of Location 
-New BR Abroad 
-Termination 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New BR / IP 
-CHC – Change of Shareholding 
-New SA / CHV – New Code 
-GSA / MSO / Handling Agent 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-Reinstatement 
-AIMS Data Entry 
-CAD – Data Maintenance 
-Review 
-Review withdrawal 
-Minor Database Changes 
+        <value>New HO
+CHG – Data Maintenance
+CLO - Closure
+CHL - Change of Location
+New BR Abroad
+Termination
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New BR / IP
+CHC – Change of Shareholding
+New SA / CHV – New Code
+GSA / MSO / Handling Agent
+Direct Debit Setup/Update
+VMFR Setup/Update
+Reinstatement
+AIMS Data Entry
+CAD – Data Maintenance
+Review
+Review withdrawal
+Minor Database Changes
 Financial RVW intermediaries</value>
     </labels>
     <labels>
@@ -41816,7 +41816,7 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
-        <value>https://iata.my.salesforce.com</value>
+        <value>https://iata--preprod.cs109.my.salesforce.com</value>
     </labels>
     <labels>
         <fullName>SIDRA_Automated_Case_Message</fullName>
@@ -42325,18 +42325,18 @@ Through this service, you can directly access TIP Reports.</value>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
     </labels>
     <labels>
-        <fullName>Tab_Name</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Tab_Name</shortDescription>
-        <value>Tab Name</value>
-    </labels>
-    <labels>
         <fullName>Tab_Close</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Tab_Close</shortDescription>
         <value>Click To Close Tab</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>
@@ -43591,11 +43591,11 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
-        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. 
-        As a Portal Administrator you can either update your 
+        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account.
+        As a Portal Administrator you can either update your
         {0}
-        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
-        {1} 
+        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the
+        {1}
         page and ask them to open your EasyPay account.
         &lt;br/&gt;
         &lt;br/&gt;
@@ -44494,13 +44494,13 @@ SF Workflow Process</value>
 		<shortDescription>SelectAnOption</shortDescription>
 		<value>Select an option</value>
 	</labels>
-        <labels>
+    <labels>
         <fullName>CSP_LMS_Privacy_Policy</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP LMS Privacy Policy</shortDescription>
-        <value>I understand and agree to the &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/training/Pages/terms-conditions.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Training T&amp;Cs&lt;/a&gt;</value>
+        <value>I understand and agree to the &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/training-terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Training T&amp;Cs&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSL_L2_Got_It</fullName>
@@ -44574,7 +44574,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Personal Email</shortDescription>
-        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email to access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
+        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_IdAlready_LMS</fullName>
@@ -44858,14 +44858,14 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_Header_Title</shortDescription>
-        <value>Profile Completion &amp; Email Validation</value>
+        <value>Training Profile Completion &amp; Email Validation</value>
     </labels>
     <labels>
         <fullName>CSP_Age_Verification</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Age Verification</shortDescription>
-        <value>You must be over 18.</value>
+        <value>You must be over 13.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Business_Address_Information_LMS</fullName>
@@ -44937,7 +44937,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_Confirmation_Message_LMS</shortDescription>
-        <value>You&apos;re just one step from updating your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit.</value>
+        <value>You&#39;re just one step from completing your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Next_Confirmation_LMS</fullName>
@@ -44977,7 +44977,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Existing Contact</shortDescription>
-        <value>Another active user is already using the userID and username you entered. Please check that the username and userID you entered are correct.</value>
+        <value>Another active user is already using the userID and username you entered, but your First and Last name are not matching with the existing user. Please check that the First and Last name you provided are correct or please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_ExistTrainUser_LMS</fullName>
@@ -44985,7 +44985,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_ExistTrainUser_LMS</shortDescription>
-        <value>Another active user is already using the userID and username you entered. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience. 
+        <value>Another active user is already using the userID and username you entered. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.
         </value>
     </labels>
     <labels>
@@ -45002,7 +45002,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Is Personal Email</shortDescription>
-        <value>Do you already have an IATA Training username and userID following a previous interaction with IATA Training learning platforms? If so please let us know so we can update your training record with past and current courses.</value>
+        <value>Do you already have a IATA Training username?</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Note_F5_LMS</fullName>
@@ -45122,7 +45122,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing work Message</shortDescription>
-        <value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to this work email address, the user you are currently logged in with (associated with your personal email) will be merged with the existing user associated with your work email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
+        <value>The Personal email you have provided is already associated with an existing user. Please check that the personal email address you provided is correct. If so please click next. Once you confirm you have access to this personal email address, the user you are currently logged in with (associated with your work email) will be merged with the existing user associated with your personal email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>Contact_Email</fullName>
@@ -45202,7 +45202,7 @@ SF Workflow Process</value>
         <shortDescription>CSP_Verification_L3_Email_3_LMS</shortDescription>
         <value>Thank you for your interest in IATA</value>
     </labels>
-    <labels>
+        <labels>
         <fullName>CSP_L3_ExistTrainUserId_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -45210,4 +45210,20 @@ SF Workflow Process</value>
         <shortDescription>Profile Training section</shortDescription>
         <value>Another active user is already using the userID. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
     </labels>
+    <labels>
+		<fullName>CSP_First_Login_Desc_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP First Login Desc LMS</shortDescription>
+		<value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.</value>
+	</labels>
+    <labels>
+		<fullName>CSP_Complete_Profile_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Complete Profile LMS</shortDescription>
+		<value>Complete Your Training Profile</value>
+	</labels>
 </CustomLabels>

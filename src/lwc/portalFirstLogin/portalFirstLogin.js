@@ -19,72 +19,81 @@ import CSP_First_Login_Desc                  from '@salesforce/label/c.CSP_First
 import CSP_Skip                              from '@salesforce/label/c.CSP_Skip';
 import CSP_Complete_Profile                  from '@salesforce/label/c.CSP_Complete_Profile';
 import CSP_PortalPath                        from '@salesforce/label/c.CSP_PortalPath';
+import CSP_First_Login_Desc_LMS				 from '@salesforce/label/c.CSP_First_Login_Desc_LMS';
+import CSP_Complete_Profile_LMS				 from '@salesforce/label/c.CSP_Complete_Profile_LMS';
+
 
 export default class PortalFirstLogin extends LightningElement {
-    
-    /* ==============================================================================================================*/
-    /* Attributes
-    /* ==============================================================================================================*/
-    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
-    @track isLoading = false;
-    @track userName = "";
-    @track isFirstLevelUser;
+
+	/* ==============================================================================================================*/
+	/* Attributes
+	/* ==============================================================================================================*/
+	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
+	@track isLoading = false;
+	@track userName = "";
+	@track isFirstLevelUser;
+	@track isL3Registration = false;
 
 	@api registrationlevel; //FOR LMS L3
 
-    _labels = {
-        CSP_First_Login_Title,
-        CSP_First_Login_Desc,
-        CSP_Skip,
-        CSP_Complete_Profile,
-        CSP_PortalPath
-    }
+	_labels = {
+		CSP_First_Login_Title,
+		CSP_First_Login_Desc,
+		CSP_Skip,
+		CSP_Complete_Profile,
+		CSP_PortalPath,
+		CSP_First_Login_Desc_LMS,
+		CSP_Complete_Profile_LMS
+	}
 
-    get labels() {
-        return this._labels;
-    }
-    set labels(value) {
-        this._labels = value;
-    }
+	get labels() {
+		return this._labels;
+	}
+	set labels(value) {
+		this._labels = value;
+	}
 
-    connectedCallback(){
-        
-        console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
-        
-        getContactInfo()
-            .then(result => {
-                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
-            })
-            .catch((error) => {
-                console.log('Error: ', JSON.parse(JSON.stringify(error)));
-            });
-    }
+	connectedCallback(){
 
-    @wire(getRecord, { recordId: userId, fields: ['User.Name'] })
-    WireGetUserRecord(result) {
-        console.log('result: ', result);
-        if (result.data) {
-            let user = JSON.parse(JSON.stringify(result.data));
-            let userName = user.fields.Name.value;
-            this.userName = userName;
-        }
-    }
+		console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
 
-    handleCloseModal(){
-        console.log('closefirstloginpopup');
-        this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
-    }
-
-    handleAccept(){
-    	//Changes to accomodate LMS L3
 		if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
-			this.dispatchEvent(new CustomEvent('triggerthirdlevelregistrationlms'));
+			this.isL3Registration = true;
 		}
-        else if(this.isFirstLevelUser){
-            console.log('triggersecondlevelregistration');
-            this.dispatchEvent(new CustomEvent('triggersecondlevelregistration'));
-        }
-        
-    }
 
+		getContactInfo()
+			.then(result => {
+				this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+			});
+	}
+
+	@wire(getRecord, { recordId: userId, fields: ['User.Name'] })
+	WireGetUserRecord(result) {
+		console.log('result: ', result);
+		if (result.data) {
+			let user = JSON.parse(JSON.stringify(result.data));
+			let userName = user.fields.Name.value;
+			this.userName = userName;
+		}
+	}
+
+	handleCloseModal(){
+		console.log('closefirstloginpopup');
+		this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
+	}
+
+	handleAccept(){
+		//Changes to accomodate LMS L3
+
+		console.log('PortalFirstLogin - handleAccept this.registrationlevel - ', this.registrationlevel);
+		if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
+			console.log('triggerthirdlevelregistrationlms');
+			this.dispatchEvent(new CustomEvent('triggerthirdlevelregistrationlms'));
+		}else{
+			if(this.isFirstLevelUser){
+				console.log('triggersecondlevelregistration');
+				this.dispatchEvent(new CustomEvent('triggersecondlevelregistration'));
+			}
+		}
+	}
 }

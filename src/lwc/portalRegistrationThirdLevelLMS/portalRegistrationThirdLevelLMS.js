@@ -209,7 +209,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				if(pageParams !== undefined && pageParams.lmsCourse !== undefined ){
-					this.contactInfo.lmsCourse =  pageParams.lmsCourse.replace('%40_%40','%26');
+					this.contactInfo.lmsCourse =  pageParams.lmsCourse.replace(new RegExp('%40_%40','g'),'%26');
 				}
 
 				if(pageParams !== undefined && pageParams.RelayState !== undefined ){
@@ -330,8 +330,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
 						}
 						if(pageParams.lmsflow === 'flow5'){
-							boldStr ='<b>' + CSP_L3_Note_F5_LMS + '</b>';
-							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+							// boldStr ='<b>' + CSP_L3_Note_F5_LMS + '</b>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS ;
 						}
 						if(pageParams.lmsflow === 'flow6'){
 							boldStr =  CSP_L3_Note_F6_LMS;

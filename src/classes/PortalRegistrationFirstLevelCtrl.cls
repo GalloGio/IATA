@@ -1333,7 +1333,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
 			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
 
-		return acr;
 	}
 
 	public class AsyncDeactivateUser implements Queueable {
