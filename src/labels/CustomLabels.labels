@@ -32423,11 +32423,25 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>While completing your application, please refer to the Checklist for the details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Download_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Download_Documents</shortDescription>
+        <value>Please download the documents using the links below:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Participation_Agreement</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
         <value>Link of participation agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_AgreementTerms</shortDescription>
+        <value>Participation Agreement and Terms of Use</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Terms_Conditions</fullName>
