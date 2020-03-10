@@ -7,8 +7,7 @@ import CSP_L2_Company_Information_Message from '@salesforce/label/c.CSP_L2_Compa
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
 import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
 import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
-import CSP_L2_Legal_Name from '@salesforce/label/c.CSP_L2_Legal_Name';
-import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
+import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
 import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
@@ -37,8 +36,7 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         CSP_L2_Company_Information,
         ISSP_MyProfile_SECTOR,
         ISSP_MyProfile_CATEGORY,
-        CSP_L2_Legal_Name,
-        CSP_L2_Trade_Name,
+        CSP_L2_Company_Name,
         CSP_L2_Phone_Number,
         CSP_L2_Email_Address,
         CSP_L2_Website,

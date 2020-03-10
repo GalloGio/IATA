@@ -15,8 +15,7 @@ import jQuery                   from '@salesforce/resourceUrl/jQuery172';
 import CSP_L2_Create_New_Account            from '@salesforce/label/c.CSP_L2_Create_New_Account';
 import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
-import CSP_L2_Trade_Name                    from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Legal_Name                    from '@salesforce/label/c.CSP_L2_Legal_Name';
+import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Phone_Number                  from '@salesforce/label/c.CSP_L2_Phone_Number';
 import CSP_L2_Email_Address                 from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
@@ -67,8 +66,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
         CSP_L2_Company_Information,
-        CSP_L2_Trade_Name,
-        CSP_L2_Legal_Name,
+        CSP_L2_Company_Name,
         CSP_L2_Phone_Number,
         CSP_L2_Email_Address,
         CSP_L2_Website,
@@ -119,7 +117,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     checkCompletion(currentEmailValidity){
         var currentCompletionStatus = this.isAddressInformationButtonDisabled;
 
-        this.isAddressInformationButtonDisabled = this.localAccount.legalName === '' 
+        this.isAddressInformationButtonDisabled = this.localAccount.name === '' 
                                                     || this.localAccount.phone === ''
                                                     || !this.isCategorizationSearchable;
 

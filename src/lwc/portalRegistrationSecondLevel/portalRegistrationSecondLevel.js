@@ -159,8 +159,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     };
 
     account = {
-        'legalName':'',
-        'tradeName':'',
+        'name':'',
         'phone':'',
         'email':'',
         'website':'',

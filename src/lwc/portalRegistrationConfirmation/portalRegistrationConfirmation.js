@@ -9,8 +9,6 @@ import registrationWithExistingAccount      from '@salesforce/apex/PortalRegistr
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-import ISSP_CompanyName      from '@salesforce/label/c.ISSP_CompanyName';
-
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
 import CSP_L2_Personal_Details from '@salesforce/label/c.CSP_L2_Personal_Details';
@@ -34,8 +32,7 @@ import CSP_L2_Sector from '@salesforce/label/c.CSP_L2_Sector';
 import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L2_PO_Box_Number from '@salesforce/label/c.CSP_L2_PO_Box_Number';
 import CSP_L2_Country from '@salesforce/label/c.CSP_L2_Country';
-import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Legal_Name from '@salesforce/label/c.CSP_L2_Legal_Name';
+import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
 import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
@@ -110,7 +107,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Go_To_Service,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Legal_Name,
         CSP_L2_Personal_Details,
         CSP_L2_Personal_Details_Message,
         CSP_L2_Phone_Number,
@@ -121,9 +117,8 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_PO_Box_Number,
         CSP_L2_Submit,
         CSP_L2_Title,
-        CSP_L2_Trade_Name,
         CSP_L2_Website,
-        ISSP_CompanyName,
+        CSP_L2_Company_Name,
         CSP_L2_Category,
         CSP_L2_Sector,
         CSP_L2_Change_Categorization_Warning,
@@ -302,9 +297,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         // otherwise it should contain the account information
 
         let account = { 'sobjectType': 'Account' };
-        account.Name = this.account.legalName;
-        account.Legal_name__c = this.account.legalName;
-        account.TradeName__c = this.account.tradeName;
+        account.Name = this.account.name;
         account.Phone = this.account.phone;
         account.Email__c = this.account.email;
         account.Website = this.account.website;
