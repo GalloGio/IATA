@@ -32416,6 +32416,34 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>PASS</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Checklist</shortDescription>
+        <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
+        <value>Link of participation agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Conditions</shortDescription>
+        <value>By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
+        <value>Link of Terms of Use</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>

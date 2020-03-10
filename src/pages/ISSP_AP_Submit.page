@@ -107,8 +107,8 @@
                         <div class="aplabel" style="font-weight:bold;"> Please download the documents using the links below:</div>
                         <div id="bankmandatelink_p2">
                             <ul style="display:lock;list-style-type: disc;">
-                                <li><a href="{!passlink}" target="_blank">Link of participation agreement</a></li>
-                                <li><a href="{!passlink}" target="_blank">Link of Terms of Use</a></li>
+                                <li><a href="{!passlink}" target="_blank">{!$Label.ISSP_PASS_Participation_Agreement}</a></li>
+                                <li><a href="{!passlink}" target="_blank">{!$Label.ISSP_PASS_Terms_Use}</a></li>
                             </ul>
                         </div>
                     </apex:pageBlockSection>

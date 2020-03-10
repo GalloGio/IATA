@@ -209,8 +209,8 @@
                             <apex:outputText >
 
                                 <div class="aplabel"> This form must be fully completed and submitted on-line.</div>
-                                <div class="aplabel"> By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</div>
-                                <div class="aplabel" style="font-weight:bold;"> While completing your application, please refer to the Checklist for the details:</div>
+                                <div class="aplabel"> {!$Label.ISSP_PASS_Terms_Conditions}</div>
+                                <div class="aplabel" style="font-weight:bold;">{!$Label.ISSP_PASS_Checklist}</div>
                                 <div id="bankmandatelink_p">
                                     <u><a href="{!passlink}" target="_blank">Link of participation checklist</a></u>
                                 </div>
