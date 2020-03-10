@@ -2,7 +2,7 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 	//runs every month on first day at 4a.m.
 	public static String CRON_EXP = '0 0 4 1 * ?';
 
-   global void execute(SchedulableContext ctx) {
+	global void execute(SchedulableContext ctx) {
 
 		List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
 		List<String> toAddressesNoUsers = new List<String>();
@@ -28,18 +28,6 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 			else
 				toAddressesNoUsers.add(sManager.Email__c);
 		}
-					/*
-			if (sManager.Active__c && String.isNotBlank(sManager.User_Id__c)){
-				//EmailTemplate template = eTemplates.get(0);
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setTemplateId(eTemplates.get(0).Id);
-				mail.setTargetObjectId(sManager.User_Id__c);
-				mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
-				mail.saveAsActivity = false;
-				mails.add(mail);
-			}
-			else
-				toAddressesNoUsers.add(sManager.Email__c);*/
 
 		for(Id targetUser: toAddressesUsers) {
 			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
@@ -58,14 +46,13 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 			email.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
 			email.saveAsActivity = false;
 			mails.add(email);
-		}	
-		
+		}			
 
 		if(mails.isEmpty()){
-			 System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
-			 return;
+			System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
+			return;
 		}
 
 		Messaging.sendEmail(mails);
-   }
+	}
 }
