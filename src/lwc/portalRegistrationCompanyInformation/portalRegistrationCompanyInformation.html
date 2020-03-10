@@ -181,50 +181,28 @@
                     </template>
                 </template>
                 
-
-                <!------------------------------------------      Trade Name      -------------------------------------------->
+                <!------------------------------------------      Company Name      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
                     <div class="formLabelContainer">
                         <div class="text-xxsmall">
-                            {labels.CSP_L2_Trade_Name}
+                            {labels.CSP_L2_Company_Name}<abbr class="slds-required" title="required">*</abbr>
                         </div>
                     </div>
 
                     <div class="slds-form-element">
                         <div class="slds-form-element__control custTextInput custTextInputSmall">
                             <input 
-                                data-id="tradeName"
-                                name="tradeName"    
+                                data-id="name"
+                                name="name"    
                                 type="text"
                                 class="slds-input" 
                                 placeholder=" "
-                                value={localAccount.tradeName} 
+                                value={localAccount.name} 
                                 onkeyup={handleInputValueChange}/>
                         </div>
                     </div>
                 </lightning-layout-item>
 
-                <!------------------------------------------      Legal Name      -------------------------------------------->
-                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
-                    <div class="formLabelContainer">
-                        <div class="text-xxsmall">
-                            {labels.CSP_L2_Legal_Name}<abbr class="slds-required" title="required">*</abbr>
-                        </div>
-                    </div>
-
-                    <div class="slds-form-element">
-                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                            <input 
-                                data-id="legalName"
-                                name="legalName"    
-                                type="text"
-                                class="slds-input" 
-                                placeholder=" "
-                                value={localAccount.legalName} 
-                                onkeyup={handleInputValueChange}/>
-                        </div>
-                    </div>
-                </lightning-layout-item>
                 <!------------------------------------------      Phone      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
                     <div class="formLabelContainer">
