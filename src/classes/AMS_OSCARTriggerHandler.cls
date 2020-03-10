@@ -765,6 +765,8 @@ public class AMS_OSCARTriggerHandler {
 						updatedOSCAR.Endorsement_requested_date__c = Date.today();
 						updatedOSCAR.step49__c = AMS_Utils.PASSED;
 					}
+				} else if(updatedOSCAR.STEP9__c == AMS_Utils.FAILED){
+					updatedOSCAR.Proof_of_payment_received__c = Date.today();
 				}
 
 			}
