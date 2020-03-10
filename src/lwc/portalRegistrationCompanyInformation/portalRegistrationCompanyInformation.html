@@ -5,7 +5,6 @@
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
                 <div class="sectionTitle">{labels.CSP_L2_Create_New_Account}</div>
                 <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
-                <!--div class="sectionDescription">Your can easily create a company account in two steps.</div-->
             </lightning-layout-item>
 
             <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
@@ -70,9 +69,7 @@
                     <template if:true={atLeastTwoPicklists}>
                         <!------------------------------------------      if Other is selected      -------------------------------------------->
                         <template if:true={isOtherPicklistDisplayed}>
-                        <!--<lightning-layout-item size="12">-->
                             <div class="otherSectionContainer companyItem">
-                                <!--<lightning-layout-item size="6" class="leftItem">-->
                                 <div class="otherSection">  
                                     <div class="formLabelContainer">
                                         <div class="text-xxsmall">
@@ -92,8 +89,6 @@
                                             </lightning-combobox>
                                         </div>
                                     </div>
-                                <!--</lightning-layout-item>-->
-                                <!--</lightning-layout-item>-->
                                 </div>  
                             </div>
 
@@ -203,56 +198,6 @@
                     </div>
                 </lightning-layout-item>
 
-                <!------------------------------------------      Phone      -------------------------------------------->
-                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
-                    <div class="formLabelContainer">
-                        <div class="text-xxsmall">
-                            {labels.CSP_L2_Phone_Number}<abbr class="slds-required" title="required">*</abbr>
-                        </div>
-                    </div>
-
-                    <div class="slds-form-element">
-                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                            <input 
-                                data-id="phone"
-                                name="phone" 
-                                type="tel"
-                                class="phoneFormat slds-input phoneInput" 
-                                placeholder=" "
-                                value={localAccount.phone}
-                                onkeyup={handleInputValueChange}/>
-                        </div>
-                    </div>
-                </lightning-layout-item>
-
-                <!------------------------------------------      Email      -------------------------------------------->
-                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
-                    <div class="formLabelContainer">
-                        <div class="text-xxsmall">
-                            {labels.CSP_L2_Email_Address}
-                        </div>
-                    </div>
-
-                    <div data-id="emailDiv" class="slds-form-element">
-                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                            <input 
-                                data-id="email"
-                                name="email"
-                                type="text"
-                                class="slds-input"
-                                placeholder=" "
-                                value={localAccount.email}
-                                onkeyup={handleInputValueChange}/>
-                        </div>
-                        <div if:true={displayInvalidEmailMessage}>
-                            <div style="height:16px;">
-                                <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </lightning-layout-item>
-
                 <!------------------------------------------      Website      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
                     <div class="formLabelContainer">
@@ -275,9 +220,6 @@
                     </div>
                 </lightning-layout-item>
 
-                <!--<lightning-layout-item size="4">
-                    <span class="link_normal -Title slds-float_left" onclick={toAccountSelection} >{labels.CSP_L2_Back_to_Account_Selection}</span>
-                </lightning-layout-item>-->
                 <div class="buttonsContainer">
                     <lightning-layout-item size="6" class="backButtonWrapper">
                         <div class="text-xxsmall">

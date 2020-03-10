@@ -6,22 +6,14 @@ import RegistrationUtils            from 'c/registrationUtils';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
 
-import PhoneFormatter16         from '@salesforce/resourceUrl/PhoneFormatter16';
-import PhoneFormatter           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
-import PhoneFormatterS          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
-import jQuery                   from '@salesforce/resourceUrl/jQuery172';
-
 //custom labels
 import CSP_L2_Create_New_Account            from '@salesforce/label/c.CSP_L2_Create_New_Account';
 import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
-import CSP_L2_Phone_Number                  from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address                 from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Next_Address_Information      from '@salesforce/label/c.CSP_L2_Next_Address_Information';
-import CSP_Invalid_Email                    from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
@@ -57,22 +49,15 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
     @track isAddressInformationButtonDisabled;
 
-    @track isEmailValid = true;
-    @track displayInvalidEmailMessage = false;
-
-
     // labels
     _labels = {
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
         CSP_L2_Company_Information,
         CSP_L2_Company_Name,
-        CSP_L2_Phone_Number,
-        CSP_L2_Email_Address,
         CSP_L2_Website,
         CSP_L2_Back_to_Account_Selection,
         CSP_L2_Next_Address_Information,        
-        CSP_Invalid_Email,
         CSP_L2_Change_Categorization_Warning
     }
     get labels() {
@@ -82,47 +67,14 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         this._labels = value;
     }
 
-    checkEmailValidity(){
-        if(this.localAccount.email !== ''){
-            this.registrationUtilsJs.checkEmailIsValid(`${this.localAccount.email}`).then(result=> {
-                if(result == false){
-                    let currentEmailValidity = this.isEmailValid;
-                    this.isEmailValid = false;
-                    this.checkCompletion(currentEmailValidity);
-                }
-                else{
-                    let anonymousEmail = 'iata' + this.localAccount.email.substring(this.localAccount.email.indexOf('@'));
-                    this.registrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-                        if(result == 'true'){
-                            let currentEmailValidity = this.isEmailValid;
-                            this.isEmailValid = false;
-                            this.checkCompletion(currentEmailValidity);
-                        }
-                        else{
-                            let currentEmailValidity = this.isEmailValid;
-                            this.isEmailValid = true;
-                            this.checkCompletion(currentEmailValidity);
-                        }
-                    });
-                }
-            })
-        }
-        else{
-            let currentEmailValidity = this.isEmailValid;
-            this.isEmailValid = true;
-            this.checkCompletion(currentEmailValidity);
-        }
-    }
-
-    checkCompletion(currentEmailValidity){
+    checkCompletion(){
         var currentCompletionStatus = this.isAddressInformationButtonDisabled;
 
         this.isAddressInformationButtonDisabled = this.localAccount.name === '' 
-                                                    || this.localAccount.phone === ''
                                                     || !this.isCategorizationSearchable;
 
-        if(this.isAddressInformationButtonDisabled !== currentCompletionStatus || this.isEmailValid !== currentEmailValidity){
-            this.dispatchEvent(new CustomEvent('completionstatus',{detail : (!this.isAddressInformationButtonDisabled && this.isEmailValid)}));
+        if(this.isAddressInformationButtonDisabled !== currentCompletionStatus){
+            this.dispatchEvent(new CustomEvent('completionstatus',{detail : (!this.isAddressInformationButtonDisabled)}));
         }
     }
 
@@ -144,41 +96,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
         this.registrationUtilsJs = new RegistrationUtils();
 
-        Promise.all([
-            loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
-            loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css'),
-            loadScript(this, jQuery)
-        ]).then(function(){
-            this.jsLoaded = true;
-
-            this.registrationUtilsJs.getUserLocation().then(result=> {
-                this.userCountryCode = result.countryCode;
-                this._initializePhoneInput();
-            });
-
-        }.bind(this));
-
-        this.checkEmailValidity();
-
         this.dispatchEvent(new CustomEvent('scrolltotop'));
-    }
-
-@track userCountryCode;
-
-    async _initializePhoneInput(){
-        await(this.jsLoaded == true);
-        await(this.template.querySelector('[data-id="phone"]'));
-
-        var input = this.template.querySelector('[data-id="phone"]');
-        var countryCode = this.userCountryCode;
-
-        window.intlTelInput(input,{
-            initialCountry: countryCode,
-            preferredCountries: [countryCode],
-            placeholderNumberType : "FIXED_LINE"
-            //utilsScript: this.utilsPath,
-            /*autoPlaceholder : "aggressive"*/
-        });
     }
 
     setCustomerType(customerType){
@@ -284,18 +202,10 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     handleInputValueChange(event){
         var inputName = event.target.name;
         var inputValue = event.target.value;
+
         this.localAccount[inputName] = inputValue;
 
-        if(inputName === 'email'){
-            this.displayInvalidEmailMessage = false;
-            var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
-            emailDiv.classList.remove('slds-has-error');
-
-            this.checkEmailValidity();
-        }
-        else{
-            this.checkCompletion(this.isEmailValid);
-        }
+        this.checkCompletion();
     }
 
     // Navigation methods
@@ -303,21 +213,8 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
     }
 
-    @api
-    getEmailValidity(){
-        if(!this.isEmailValid){
-            this.displayInvalidEmailMessage = true;
-            var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
-            emailDiv.classList.add('slds-has-error');
-            return false;
-        }
-        return true;
-    }
-
     toAddressInformation(){
-        if(this.getEmailValidity()){
-            this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
-        }
+        this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
     }
 
     // @api methods
