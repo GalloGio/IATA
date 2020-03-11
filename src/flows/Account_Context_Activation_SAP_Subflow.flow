@@ -54,8 +54,8 @@
     <assignments>
         <name>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</name>
         <label>Wait for Integration Log to be updated by Mulesoft</label>
-        <locationX>1002</locationX>
-        <locationY>160</locationY>
+        <locationX>1222</locationX>
+        <locationY>157</locationY>
         <assignmentItems>
             <assignToReference>WaitForNextAction</assignToReference>
             <operator>Assign</operator>
@@ -175,10 +175,44 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
+        <name>Create_Integration_Log</name>
+        <label>Create Integration Log</label>
+        <locationX>865</locationX>
+        <locationY>51</locationY>
+        <connector>
+            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>RecordId__c</field>
+            <value>
+                <elementReference>AddressRoleBusinessContext.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Record_Id__c</field>
+            <value>
+                <elementReference>AddressRoleBusinessContext.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>object_type__c</field>
+            <value>
+                <stringValue>Address_Role_Business_Context__c</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Integration_Log__c</object>
+    </recordCreates>
+    <recordCreates>
         <name>Publish_Address_Role_Business_Context_Event</name>
         <label>Publish Address Role Business Context Event</label>
-        <locationX>856</locationX>
-        <locationY>50</locationY>
+        <locationX>1018</locationX>
+        <locationY>51</locationY>
         <connector>
             <targetReference>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</targetReference>
         </connector>
@@ -227,11 +261,11 @@
     <recordLookups>
         <name>Get_Record_Type_ARBC</name>
         <label>Get Record Type ARBC</label>
-        <locationX>715</locationX>
+        <locationX>721</locationX>
         <locationY>51</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+            <targetReference>Create_Integration_Log</targetReference>
         </connector>
         <filters>
             <field>Id</field>

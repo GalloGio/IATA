@@ -84,12 +84,45 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 		}
 
 		if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
+			createIntegrationLogs(mapToSend);
+
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
 				System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
 			} else {
 				PlatformEvents_Helper.publishEvents(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 			}
 		}
+	}
+
+	/**
+	 * Create Integration Log before event
+	 *
+	 * @param Map<Id,sObjects>
+	 */
+	 @TestVisible
+	private static void createIntegrationLogs(Map<Id, SObject> addressRoleBusinessContextById){
+		List<Integration_Log__c> integrationLogs = new List<Integration_Log__c>();
+		for(Address_Role_Business_Context__c addressRoleBusinessContext : (List<Address_Role_Business_Context__c>) addressRoleBusinessContextById.values()){
+			if(eventIsSentFromFlow(addressRoleBusinessContext) || eventIsSentFromBillingAddress(addressRoleBusinessContext)){
+				integrationLogs.add(new Integration_Log__c(
+						Object_Type__c = 'Address_Role_Business_Context__c',
+						Record_Id__c = addressRoleBusinessContext.Id,
+						RecordId__c = addressRoleBusinessContext.Id,
+						Status__c = 'In Progress'
+				));
+			}
+		}
+		if(integrationLogs.size() > 0){
+			insert integrationLogs;
+		}
+	}
+
+	private static Boolean eventIsSentFromFlow(Address_Role_Business_Context__c addressRoleBusinessContext){
+		return addressRoleBusinessContext.Address_Role__r.Role_Type__c == 'Business' && addressRoleBusinessContext.Account_Activation_Context_Status__c == 'Pending';
+	}
+
+	private static Boolean eventIsSentFromBillingAddress(Address_Role_Business_Context__c addressRoleBusinessContext){
+		return addressRoleBusinessContext.Address_Role__r.Role_Type__c == 'Billing';
 	}
 
 	/**
@@ -130,7 +163,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		Set<Id> ids = new Set<Id>();
 
-		String query = 'SELECT Id, RecordTypeId, RecordType.DeveloperName, Address_Role__c, Address_Role__r.Address__r.Account__c FROM Address_Role_Business_Context__c WHERE ';
+		String query = 'SELECT Id, RecordTypeId, RecordType.DeveloperName, Account_Activation_Context_Status__c, Address_Role__c, Address_Role__r.Role_Type__c, Address_Role__r.Address__r.Account__c FROM Address_Role_Business_Context__c WHERE ';
 
 		// Context is observed by the current where clause
 		switch on sObjects.get(0) {
