@@ -11,7 +11,7 @@ import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
 
 export default class PortalRegistrationAddressInformation extends LightningElement {
 
@@ -38,7 +38,7 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         CSP_L2_Website,
         CSP_L2_Business_Address_Information_Message,
         CSP_L2_Back_to_Company_Information,
-        CSP_L2_Next_Confirmation
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -52,12 +52,12 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }
 
-    toCompanyInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
     }
 
-    toConfirmation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'5'}));
+    next(){
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     setValidationStatus(event){

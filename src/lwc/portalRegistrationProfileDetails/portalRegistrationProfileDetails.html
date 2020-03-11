@@ -11,35 +11,36 @@
             </lightning-layout-item>
 
             <!------------------------------------------      Profile details      -------------------------------------------->
+
             <div class="profileContainer">
                 <template if:true={localContactInfo.salutationNotSet}>
-            		<!------------------------------------------      Salutation      -------------------------------------------->        
-                	<div class="profileItem">
-                    	<lightning-layout-item size="6">
-                        	<div class="formLabelContainer">
-                            	<div class="text-xxsmall">
+                    <!------------------------------------------      Salutation      -------------------------------------------->        
+                    <div class="profileItem">
+                        <lightning-layout-item size="6">
+                            <div class="formLabelContainer">
+                                <div class="text-xxsmall">
                                     {labels.CSP_L2_Title}<abbr class="slds-required" title="required">*</abbr>
-                            	</div>
-                        	</div>
-                    	</lightning-layout-item>
-                    	<lightning-layout-item size="12">
-                        	<div class="slds-form-element">
-                            	<div class="slds-form-element__control custTextInputSmall">
-                                	<lightning-combobox 
-                                    	options={salutationPicklistOptions} 
-                                    	value={localContactInfo.Salutation}
-                                    	variant="label-hidden"
-                                    	class="cursorPointerComboBox text-xxsmall"
-                                    	dropdown-alignment="auto" 
-                                    	onchange={changeSalutation}>
-                                	</lightning-combobox>
-                            	</div>
-                        	</div>
-                    	</lightning-layout-item>
-                	</div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control custTextInputSmall">
+                                    <lightning-combobox 
+                                        options={salutationPicklistOptions} 
+                                        value={localContactInfo.Salutation}
+                                        variant="label-hidden"
+                                        class="cursorPointerComboBox text-xxsmall"
+                                        dropdown-alignment="auto" 
+                                        onchange={changeSalutation}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </div>
 
-	                <div class="profileItem">
-	                </div>
+                    <div class="profileItem">
+                    </div>
                 </template>
 
                 <!------------------------------------------      Job Function      -------------------------------------------->
@@ -90,15 +91,31 @@
                     </lightning-layout-item>
                 </div>
             </div>
+
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
-        
-            <lightning-layout-item size="6" class="IEFixDisplay">
-            </lightning-layout-item>
-        
-            <lightning-layout-item size="6" class="nextBtn IEFixDisplay">
-                <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Account_Selection} disabled={isNextDisabled} variant="brand"  onclick={next}>
-                </lightning-button>
+
+            <div class="buttonsContainer">
+                <lightning-layout-item size="6" class="backButtonWrapper">
+                    <div class="text-xxsmall">
+                        <lightning-button variant="base"
+                            label={labels.CSP_L2_Back_to_Account_Selection}
+                            title={labels.CSP_L2_Back_to_Account_Selection}
+                            onclick={previous}
+                            class="blueCustomButtonLinkSmall"
+                            icon-name="utility:back"
+                            icon-position="left">
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="6" class="IEFixDisplay">
+                    <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Step} disabled={isNextDisabled} variant="brand" onclick={next}>
+                    </lightning-button>
+                </lightning-layout-item>
+            </div>
+
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
         </div>
     </lightning-layout>

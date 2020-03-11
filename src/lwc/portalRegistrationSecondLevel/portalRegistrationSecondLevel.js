@@ -1,7 +1,6 @@
 import { LightningElement, track, wire, api} from 'lwc';
 
 import getContactInfo                       from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-import saveContactInfo                      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.saveContactInfo';
 import getCustomerTypeFromSectorAndCategory from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypeFromSectorAndCategory';
 
 import { navigateToPage} from'c/navigationUtils';
@@ -35,102 +34,154 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
     @track openMessageModal = false;
 
-    // Banner logo and links getters
-    get step1Logo(){
-        if(this.step1Complete){
+
+    get accountSelectionLogo(){
+        // If account selection is complete, we display the check mark logo
+        if(this.step1Complete || (this.step2Complete && this.step3Complete)){
             return this.stepCheckedLogo;
         }
-        else{
-            return this.step1ActiveLogo;
-        }
+        // Otherwise, it means that we're in the Account Selection step and we display the "step 1" active logo
+        return this.step1ActiveLogo;
     }
 
-    get isStep1LogoChecked(){
-        return this.step1Logo === this.stepCheckedLogo;
-    }
-
-    get hasStep1Link(){
-        return this.currentStep !== 1;
-    }
-
-    get step2Logo(){
-        if(this.step2Complete){
-            return this.stepCheckedLogo;
-        }
-        if(this.step1Complete && this.step3Complete && this.step4Complete && this.currentStep !== 2){
-            return this.stepCheckedLogo;
-        }
-        if(this.currentStep === 1){
+    get additionalDetailsLogo(){
+        // If account selection is not complete, we can't reach the Additional Details step
+        // and we display the "step 2" inactive logo
+        if(!(this.step1Complete || (this.step2Complete && this.step3Complete))){
             return this.step2InactiveLogo;
         }
-        return this.step2ActiveLogo;
+
+        // If we are in step 1 (Account Search), 2 (Company Information) or 3 (Address Information), we can
+        // reach the Additional Details step and we display the "step 2" active logo
+        if(this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3){
+            return this.step2ActiveLogo;
+        }
+
+        // If we are in step 4 (Additional Details)
+        if(this.currentStep === 4){
+            // If the step is complete, we display the check mark logo
+            if(this.step4Complete){
+                return this.stepCheckedLogo;
+            }
+            // Otherwise, we display the "step 2" active logo
+            else{
+                return this.step2ActiveLogo;
+            }
+        }
+
+        // Last case: we are in the confirmation page, we display the check mark logo
+        return this.stepCheckedLogo;
     }
 
-    get isStep2LogoChecked(){
-        return this.step2Logo === this.stepCheckedLogo;
-    }
+    get confirmationLogo(){
+        // If account selection or additional information is not complete, we can't reach the Confirmation step
+        // and we display the "step 3" inactive logo
+        if(!(this.step1Complete || (this.step2Complete && this.step3Complete)) || !this.step4Complete){
+            return this.step3InactiveLogo;
+        }
 
-    get hasStep2Link(){
-        if(this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4){
-            return false;
-        }
-        if(this.currentStep === 5 || (this.currentStep === 1 && this.step1Complete)){
-            return true;
-        }
-        return false;
-    }
-
-    get step2Link(){
-        if(!this.hasStep2Link){
-            return this.currentPage;
-        }
-        if(this.step2Complete || !this.step3Complete){
-            return 2;
-        }
-        return 3;
-    }
-
-    get step3Logo(){
-        if(this.currentStep === 5){
+        // If we are in step 1 (Account Search), 2 (Company Information), 3 (Address Information) or 4 (Additional Details) we can
+        // reach the Confirmation step and we display the "step 3" active logo
+        if(this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4){
             return this.step3ActiveLogo;
         }
-        if(this.step1Complete && (this.step2Complete || (this.step3Complete && this.step4Complete))){
-            return this.stepCheckedLogo;
+
+        // Last case: we are in the confirmation page, we display the check mark logo
+        return this.stepCheckedLogo;
+    }
+
+    get accountSelectionTitleCssClass(){
+        var css = "itemTitle";
+        
+        if(this.isAccountSelectionReachable){
+            css += " itemClickable";
         }
-        return this.step3InactiveLogo;
+        
+        if(this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3){
+            css += " currentStep";
+        }
+
+        return css;
     }
 
-    get isStep3LogoChecked(){
-        return this.step3Logo === this.stepCheckedLogo;
+    get additionalDetailsTitleCssClass(){
+        var css = "itemTitle";
+        
+        if(this.isAdditionalDetailsReachable){
+            css += " itemClickable";
+        }
+        
+        if(this.currentStep === 4){
+            css += " currentStep";
+        }
+
+        return css;
     }
 
-    get hasStep3Link(){
-        return this.step3Logo === this.stepCheckedLogo;
+    get confirmationTitleCssClass(){
+        var css = "itemTitle";
+        
+        if(this.isConfirmationReachable){
+            css += " itemClickable";
+        }
+        
+        if(this.currentStep === 5){
+            css += " currentStep";
+        }
+
+        return css;
     }
 
-    goToProfileDetailsFromBanner(){
-        this.getCurrentStepData();
-        this.currentStep = 1;
+    get accountSelectionLogoCssClass(){
+        if(this.accountSelectionLogo === this.stepCheckedLogo){
+            return "checkedIcon";
+        }
+        else{
+            return "uncheckedIcon";
+        }
     }
 
-    goToAccountSelectionFromBanner(){
-        this.getCurrentStepData();
-        this.currentStep = this.step2Link;
+    get additionalDetailsLogoCssClass(){
+        if(this.additionalDetailsLogo === this.stepCheckedLogo){
+            return "checkedIcon";
+        }
+        else{
+            return "uncheckedIcon";
+        }
     }
 
-    goToConfirmationFromBanner(){
-        this.getCurrentStepData();
-        this.currentStep = 5;
+    get confirmationLogoCssClass(){
+        if(this.confirmationLogo === this.stepCheckedLogo){
+            return "checkedIcon";
+        }
+        else{
+            return "uncheckedIcon";
+        }
+    }
+
+    get isAccountSelectionReachable(){
+        // Account Selection step is reachable if the current step is Additional Details or Confirmation
+        return this.currentStep === 4 || this.currentStep === 5;
+    }
+
+    get isAdditionalDetailsReachable(){
+        // Additional Details step is reachable if it's not the current step and if the Account Selection step is complete
+        return this.currentStep !== 4 && (this.step1Complete || (this.step2Complete && this.step3Complete));
+    }
+
+    get isConfirmationReachable(){
+        // Confirmation step is reachable if it's not the current step if Account Selection and Additional Details steps are complete
+        return this.currentStep !== 5 && (this.step1Complete || (this.step2Complete && this.step3Complete)) && this.step4Complete;
     }
 
     /*
-        1 : Profile Details
-        2 : Account Selection
-        3 : Account Creation - Company Information
-        4 : Account Creation - Address Information
+        1 : Account Selection
+        2 : Account Creation - Company Information
+        3 : Account Creation - Address Information
+        4 : Profile Details
         5 : Confirmation
     */
-   @track currentStep = 1;
+   @track currentStep = 0;
 
    @track isLoading = false;
 
@@ -232,12 +283,14 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
                 if(this.contactInfo.Account.Sector__c === 'General Public'){
                     this.selectedCustomerType = '';
                     this.originalCustomerType = '';
+                    this.currentStep = 1;
                 }
                 else{
                     getCustomerTypeFromSectorAndCategory({sector : this.contactInfo.Account.Sector__c, category : this.contactInfo.Account.Category__c})
                     .then(result => {
                         this.selectedCustomerType = result;
                         this.originalCustomerType = result;
+                        this.currentStep = 1;
                     });
                 }
             });
@@ -281,14 +334,9 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
         this.step4Complete = event.detail;
     }
 
-    getCurrentStepData(){
-        // Profile Details
-        if(this.currentStep === 1){
-            var contactInfo = this.template.querySelector('c-portal-registration-profile-details').getContactInfo();
-            this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-        }
+    getCurrentStepData(futureStep){
         // Account Selection
-        else if(this.currentStep === 2){
+        if(this.currentStep === 1){
             var accountSelectionInfos = this.template.querySelector('c-portal-registration-account-selection').getAccountSelectionInfos();
 
             this.selectedCustomerType = accountSelectionInfos.get('customerType');
@@ -300,40 +348,93 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
             if(searchResults !== undefined){
                 this.searchResults = JSON.parse(JSON.stringify(searchResults));
             }
+            this.currentStep = futureStep;
         }
         // Company Information
-        else if(this.currentStep === 3){
+        else if(this.currentStep === 2){
             var companyInformation= this.template.querySelector('c-portal-registration-company-information').getCompanyInformation();
 
             this.account = JSON.parse(JSON.stringify(companyInformation));
             this.selectedCustomerType = companyInformation.customerType;    
+            this.currentStep = futureStep;
         }
         // Address Information
-        else if(this.currentStep === 4){
+        else if(this.currentStep === 3){
             var addressInformation = this.template.querySelector('c-portal-registration-address-information').getAddressInformation();
             this.address = JSON.parse(JSON.stringify(addressInformation));
+            this.currentStep = futureStep;
+        }
+        // Profile Details
+        else if(this.currentStep === 4){
+            var contactInfo = this.template.querySelector('c-portal-registration-profile-details').getContactInfo();
+            this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+            this.currentStep = futureStep;
+        }
+        // Confirmation
+        else if(this.currentStep === 5){
+            this.currentStep = futureStep;
         }
     }
 
-    goToStep(event){
-        var futureStep = parseInt(event.detail);
-        this.getCurrentStepData();
-        this.currentStep = futureStep;
+    goToAccountSelection(){
+        this.getCurrentStepData(1);
     }
 
-    get isProfileInformationStep(){
-        return this.currentStep === 1;
+    goToCompanyInformation(){
+        this.getCurrentStepData(2);
+    }
+
+    goToAddressInformation(){
+        this.getCurrentStepData(3);
+    }
+
+    goToProfileDetails(){
+        this.getCurrentStepData(4);
+    }
+
+    goToConfirmation(){
+        this.getCurrentStepData(5);
+    }
+
+    goBackFromProfileDetails(){
+        if(this.selectedAccountId !== '' && this.selectedAccountId !== null){
+            this.getCurrentStepData(1);
+        }
+        else{
+            this.getCurrentStepData(3);
+        }
+    }
+
+    goBackFromConfirmation(event){
+        var detail = event.detail;
+
+        if(detail === 'accountSelection'){
+            this.getCurrentStepData(1);
+        }
+        else if(detail === 'companyInformation'){
+            this.getCurrentStepData(2);
+        }
+        else if(detail === 'addressInformation'){
+            this.getCurrentStepData(3);
+        }
+        else if(detail === 'profileDetails'){
+            this.getCurrentStepData(4);
+        }
     }
 
     get isAccountSelectionStep(){
-        return this.currentStep === 2;
+        return this.currentStep === 1;
     }
 
     get isCompanyInformationStep(){
-        return this.currentStep === 3;
+        return this.currentStep === 2;
     }
 
     get isAddressInformationStep(){
+        return this.currentStep === 3;
+    }
+
+    get isProfileInformationStep(){
         return this.currentStep === 4;
     }
 
@@ -342,39 +443,24 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     }
 
     get isAccountStep(){
-        return this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4;
+        return this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3;
     }
 
-    openSaveAndClosePopup(){
-        this.setSaveAndClosePopup('same');
+    openClosePopup(){
+        this.landingPage = 'same';
+        this.openMessageModal = true;
     }
 
-    openSaveAndGoToHomePopup(){
-        this.setSaveAndClosePopup('homepage');
-    }
-
-    setSaveAndClosePopup(page){
-        this.startLoading();
-        if(this.isProfileInformationStep){
-            // retrieve profile details
-            var contactInfo = this.template.querySelector('c-portal-registration-profile-details').getContactInfo();
-            this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-        }
-
-        //save contact info
-        saveContactInfo({con : this.contactInfo})
-        .then(result => {
-            this.landingPage = page;
-            this.openMessageModal = true;
-            this.stopLoading();
-        });
+    openGoToHomePopup(){
+        this.landingPage = 'homepage';
+        this.openMessageModal = true;
     }
 
     cancel(){
         this.openMessageModal = false;
     }
 
-    saveAndClose(){
+    close(){
         this.openMessageModal = false;
         if(this.landingPage == 'same'){
             document.body.style.overflow = 'auto';

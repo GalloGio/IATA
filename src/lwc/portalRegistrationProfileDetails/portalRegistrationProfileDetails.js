@@ -6,12 +6,13 @@ import getContactJobFunctionValues      from '@salesforce/apex/OneId_Registratio
 import ISSP_Registration_MR             from '@salesforce/label/c.ISSP_Registration_MR';
 import ISSP_Registration_MRS            from '@salesforce/label/c.ISSP_Registration_MRS';
 import ISSP_Registration_MS             from '@salesforce/label/c.ISSP_Registration_MS';
+import CSP_L2_Back_to_Account_Selection from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Profile_Details_Message   from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 import CSP_L2_Profile_Details           from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Title                     from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Job_Function              from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title                 from '@salesforce/label/c.CSP_L2_Job_Title';
-import CSP_L2_Next_Account_Selection    from '@salesforce/label/c.CSP_L2_Next_Account_Selection';
+import CSP_L2_Next_Step                 from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationProfileDetails extends LightningElement {
@@ -30,12 +31,13 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         ISSP_Registration_MR,
         ISSP_Registration_MRS,
         ISSP_Registration_MS,
+        CSP_L2_Back_to_Account_Selection,
         CSP_L2_Profile_Details,
         CSP_L2_Profile_Details_Message,
         CSP_L2_Title,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Next_Account_Selection
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -131,8 +133,12 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         this.checkCompletion();
     }
 
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
+    }
+
     next(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     startLoading(){

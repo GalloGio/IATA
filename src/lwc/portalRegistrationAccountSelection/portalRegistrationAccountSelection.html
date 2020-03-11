@@ -296,18 +296,6 @@
             </div>
             <div class="btnsContainer">
                 <lightning-layout-item size="6" class="backButtonWrapper">
-                    <template if:false={searchPerformed}>
-                        <div class="text-xxsmall">
-                            <lightning-button variant="base"
-                                            label={labels.CSP_L2_Back_to_Profile_Details}
-                                            title={labels.CSP_L2_Back_to_Profile_Details}
-                                            onclick={previous}
-                                            class="blueCustomButtonLinkSmall"
-                                            icon-name="utility:back" 
-                                            icon-position="left">
-                            </lightning-button>
-                        </div>
-                    </template>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="6" class="nextBtn">
@@ -423,20 +411,10 @@
                         </lightning-layout-item>
                         <div class="btnsContainer">
                             <lightning-layout-item size="6" class="backButtonWrapper">
-                                <div class="text-xxsmall">
-                                    <lightning-button variant="base"
-                                                    label={labels.CSP_L2_Back_to_Profile_Details}
-                                                    title={labels.CSP_L2_Back_to_Profile_Details}
-                                                    onclick={previous}
-                                                    class="blueCustomButtonLinkSmall"
-                                                    icon-name="utility:back" 
-                                                    icon-position="left">
-                                    </lightning-button>
-                                </div>
                             </lightning-layout-item>
                                     
                             <lightning-layout-item size="6">
-                                <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Next_Confirmation} disabled={accountNotSelected} variant="brand" onclick={next}>
+                                <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Next_Step} disabled={accountNotSelected} variant="brand" onclick={next}>
                                 </lightning-button>
                             </lightning-layout-item>
                         </div>    
@@ -502,20 +480,10 @@
                         </lightning-layout-item>
                         <div class="btnsContainer">
                             <lightning-layout-item size="6" class="backButtonWrapper">
-                                <div class="text-xxsmall">
-                                    <lightning-button variant="base"
-                                                    label={labels.CSP_L2_Back_to_Profile_Details}
-                                                    title={labels.CSP_L2_Back_to_Profile_Details}
-                                                    onclick={previous}
-                                                    class="blueCustomButtonLinkSmall"
-                                                    icon-name="utility:back" 
-                                                    icon-position="left">                            
-                                    </lightning-button>
-                                </div>
                             </lightning-layout-item>
 
                             <lightning-layout-item size="6">
-                                <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={accountNotSelected} variant="brand" onclick={next}>
+                                <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Step} disabled={accountNotSelected} variant="brand" onclick={next}>
                                 </lightning-button>
                             </lightning-layout-item>
                         </div>
