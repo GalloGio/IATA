@@ -1988,6 +1988,10 @@
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>Layanan</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -2062,6 +2066,10 @@
     <customLabels>
         <label>Detail Kasus</label>
         <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
         <label>Kasus</label>
@@ -3317,6 +3325,46 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Akses Diminta</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3735,6 +3783,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Nama Kontak</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
     </customLabels>
     <customLabels>
         <label><!-- Copyright --></label>
@@ -13522,7 +13574,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_BANK_DETAILS_MC_BLOCK --></label>
+        <label>Untuk memberi tahu IATA mengenai perubahan data rekening bank, silakan hubungi kami.</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>

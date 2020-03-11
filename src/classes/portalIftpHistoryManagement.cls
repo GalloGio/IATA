@@ -27,19 +27,19 @@ public without sharing class portalIftpHistoryManagement {
 		list<Account_Contact_Role__C> accRoleList = [select id,Account_Role__r.account__r.Name, First_Name__c, Last_Name__c,Company_Code__c from Account_Contact_Role__C where id in :accContRlIdList];
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
 		for(Account_Contact_role__C acr:accRoleList){
-			
+
 			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
 			acr.Company_Code__c,
 			acr.Account_Role__r.account__r.Name,
 			acr.First_Name__C,
 			acr.Last_Name__c);
-			
+
 			IftpHistoryRecordsToBeInserted.add(ihrec);
-			
+
 		}
 
 		if(IftpHistoryRecordsToBeInserted.size() > 0){
-			
+
 			insert IftpHistoryRecordsToBeInserted;
 		}
 	}
@@ -174,7 +174,7 @@ public without sharing class portalIftpHistoryManagement {
 																WHERE ITP_Name__c = :itpName
 																AND CreatedDate < :checkDate
 																AND Event_Type__c in ('1','2')
-																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
+																ORDER BY Employee_Code__c, CreatedDate];
 
 		String currentEmp = '';
 		Set<String> workingEmp = new Set<String>();
@@ -237,7 +237,7 @@ public without sharing class portalIftpHistoryManagement {
 																AND CreatedDate < :checkDate
 																AND Event_Type__c in ('5','6')
 																AND Employee_Code__c IN :workingEmp
-																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
+																ORDER BY Employee_Code__c, CreatedDate];
 
 		currentEmp = '';
 		Map<String,Set<String>> mapProfEmp = new Map<String,Set<String>>();
@@ -412,10 +412,12 @@ public without sharing class portalIftpHistoryManagement {
 
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
-				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
+				// Employees deleted manually from Salesforce backend will not be counted
+				// String.isBlank(sEmpType) - Verification needed because those employees will not have all their history in IFTP-History
+				// Also Training Coordinatores that have no proficiency and no certifications will not be counted as well
+				if(String.isBlank(sEmpType) || (sEmpType.contains('ITP Training Coordinator') && ikey == '0' && !hasCert.contains(rec))){
 					continue;
 				}
-			}
 
 			if(mapResults.containsKey(ikey)){
 				Integer aux = ((Integer)mapResults.get(ikey));
@@ -425,6 +427,7 @@ public without sharing class portalIftpHistoryManagement {
 				mapResults.put(ikey,1);
 			}
 		}
+			}
 
 		List<ITPReportWrapper> resultList = new List<ITPReportWrapper>();
 
