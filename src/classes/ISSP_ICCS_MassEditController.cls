@@ -18,7 +18,9 @@ public class ISSP_ICCS_MassEditController extends ISSP_ICCS_ComponentController{
 		set {
 			currencyFilter = value;
 			// select participations for this currency only
-			this.listParticipation = this.mapCurrencyParticipations.get(currencyFilter);
+			if (this.settlementInstructionType==siCurrency) {
+				this.listParticipation = this.mapCurrencyParticipations.get(currencyFilter);
+			}
 		}
 	}
 
