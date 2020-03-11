@@ -176,6 +176,28 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Object_Type__c</fullName>
+        <description>The API name of the object that this log entry refers to.</description>
+        <externalId>false</externalId>
+        <label>Object Type</label>
+        <length>80</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Id__c</fullName>
+        <description>The Record ID of the record that this log entry refers to.</description>
+        <externalId>false</externalId>
+        <label>Record ID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>RecordId__c</fullName>
         <description>The Record ID of the record that this log entry refers to.</description>
         <externalId>false</externalId>
