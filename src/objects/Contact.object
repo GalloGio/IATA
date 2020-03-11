@@ -20709,6 +20709,12 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>No_Airport_Contact</fullName>
+        <active>true</active>
+        <errorConditionFormula>Account.RecordType.DeveloperName=&apos;Airport&apos;</errorConditionFormula>
+        <errorMessage>It is not possible to attach a contact to an Airport type Account</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>
