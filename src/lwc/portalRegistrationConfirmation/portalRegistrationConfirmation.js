@@ -11,11 +11,12 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
-import CSP_L2_Personal_Details from '@salesforce/label/c.CSP_L2_Personal_Details';
+import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
 import CSP_L2_Company_Account from '@salesforce/label/c.CSP_L2_Company_Account';
 import CSP_L2_Company_Account_Message from '@salesforce/label/c.CSP_L2_Company_Account_Message';
+import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
 import CSP_L2_Back_to_Business_Address_Information from '@salesforce/label/c.CSP_L2_Back_to_Business_Address_Information';
 import CSP_L2_Submit from '@salesforce/label/c.CSP_L2_Submit';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
@@ -89,6 +90,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     // label variables
     _labels = {
         CSP_L2_Back_to_Account_Selection,
+        CSP_L2_Back_to_Profile_Details,
         CSP_L2_Back_to_Business_Address_Information,
         CSP_L2_Back_to_Edit,
         CSP_L2_Business_Address_Information,
@@ -104,7 +106,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Go_To_Service,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Personal_Details,
+        CSP_L2_Profile_Details,
         CSP_L2_Personal_Details_Message,
         CSP_L2_Postal_Code,
         CSP_L2_Is_PO_Box_Address,
@@ -395,19 +397,23 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         navigateToPage(page);
     }
 
-    toProfileDetails(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'1'}));
-    }
-
     toAccountSelection(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'accountSelection' }));
     }
 
     toCompanyInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'companyInformation' }));
     }
 
     toAddressInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'addressInformation' }));
+    }
+
+    toDuplicateCheckTool() {
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'duplicateCheckTool' }));
+    }
+
+    toProfileDetails() {
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'profileDetails' }));
     }
 }

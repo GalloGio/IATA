@@ -13,7 +13,6 @@ import CSP_L2_Sector from '@salesforce/label/c.CSP_L2_Sector';
 import CSP_L2_Category from '@salesforce/label/c.CSP_L2_Category';
 import CSP_L2_IATA_Codes from '@salesforce/label/c.CSP_L2_IATA_Codes';
 import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
-import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
 import CSP_L2_Search from '@salesforce/label/c.CSP_L2_Search';
 import CSP_L2_Search_Results from '@salesforce/label/c.CSP_L2_Search_Results';
 import CSP_L2_Select from '@salesforce/label/c.CSP_L2_Select';
@@ -26,7 +25,7 @@ import CSP_L2_Did_Not_Find from '@salesforce/label/c.CSP_L2_Did_Not_Find';
 import CSP_L2_Did_Not_Find_Message from '@salesforce/label/c.CSP_L2_Did_Not_Find_Message';
 import CSP_L2_Create_Account_Message from '@salesforce/label/c.CSP_L2_Create_Account_Message';
 import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_Results';
 import CSP_L2_Required from '@salesforce/label/c.CSP_L2_Required';
@@ -153,7 +152,6 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         CSP_L2_Company_Name,
         CSP_L2_IATA_Codes,
         CSP_L2_Company_Location,
-        CSP_L2_Back_to_Profile_Details,
         CSP_L2_Search,
         CSP_L2_Search_Results,
         CSP_L2_Select_Company_Message,
@@ -162,7 +160,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         CSP_L2_Select,
         CSP_L2_Create_Account_Message,
         CSP_L2_Create_New_Account,
-        CSP_L2_Next_Confirmation,
+        CSP_L2_Next_Step,
         CSP_L2_Did_Not_Find,
         CSP_L2_Did_Not_Find_Message,
         CSP_L2_No_Matching_Results,
@@ -551,12 +549,8 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     /* Navigation methods */
-    previous(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'1'}));
-    }
-
     next(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'5'}));
+        this.dispatchEvent(new CustomEvent('nextselection'));
     }
 
     createAccount(){
@@ -575,7 +569,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
                 }
             }
 
-            this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+            this.dispatchEvent(new CustomEvent('nextcreation'));
         }
     }
 

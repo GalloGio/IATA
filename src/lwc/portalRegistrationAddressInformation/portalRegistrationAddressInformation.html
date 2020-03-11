@@ -102,7 +102,7 @@
                         <lightning-button variant="base"
                             label={labels.CSP_L2_Back_to_Company_Information}
                             title={labels.CSP_L2_Back_to_Company_Information}
-                            onclick={toCompanyInformation}
+                            onclick={previous}
                             class="blueCustomButtonLinkSmall"
                             icon-name="utility:back" 
                             icon-position="left">
@@ -111,7 +111,7 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="6" class="IEFixDisplay">
-                    <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={isConfirmationButtonDisabled} variant="brand" onclick={toConfirmation}>
+                    <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Step} disabled={isConfirmationButtonDisabled} variant="brand" onclick={next}>
                     </lightning-button>
                 </lightning-layout-item>
             </div>

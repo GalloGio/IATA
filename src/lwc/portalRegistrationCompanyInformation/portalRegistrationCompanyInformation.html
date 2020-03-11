@@ -226,7 +226,7 @@
                             <lightning-button variant="base"
                                 label={labels.CSP_L2_Back_to_Account_Selection}
                                 title={labels.CSP_L2_Back_to_Account_Selection}
-                                onclick={toAccountSelection}
+                                onclick={previous}
                                 class="blueCustomButtonLinkSmall"
                                 icon-name="utility:back" 
                                 icon-position="left">
@@ -235,7 +235,7 @@
                     </lightning-layout-item>
             
                     <lightning-layout-item size="6" class="IEFixDisplay">
-                        <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Address_Information} disabled={isAddressInformationButtonDisabled} variant="brand" onclick={toAddressInformation}>
+                        <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Step} disabled={isAddressInformationButtonDisabled} variant="brand" onclick={next}>
                         </lightning-button>
                     </lightning-layout-item>
                 </div>

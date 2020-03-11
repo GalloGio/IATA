@@ -4591,7 +4591,7 @@ Please click Next Step button to confirm that your address is correct</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Back_to_Profile_Details</shortDescription>
-        <value>Back to Profile Details</value>
+        <value>Back to Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Banner_Title</fullName>
@@ -4599,7 +4599,7 @@ Please click Next Step button to confirm that your address is correct</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Banner_Title</shortDescription>
-        <value>Profile Completion &amp; Account Selection</value>
+        <value>Account Selection &amp; Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Business_Address_Information</fullName>
@@ -4929,6 +4929,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_L2_Next_Confirmation</shortDescription>
         <value>Next Step / Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Step</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Step</shortDescription>
+        <value>Next Step</value>
     </labels>
     <labels>
         <fullName>CSP_L2_No</fullName>

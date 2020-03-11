@@ -13,7 +13,7 @@ import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Com
 import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
-import CSP_L2_Next_Address_Information      from '@salesforce/label/c.CSP_L2_Next_Address_Information';
+import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
@@ -57,7 +57,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         CSP_L2_Company_Name,
         CSP_L2_Website,
         CSP_L2_Back_to_Account_Selection,
-        CSP_L2_Next_Address_Information,        
+        CSP_L2_Next_Step,
         CSP_L2_Change_Categorization_Warning
     }
     get labels() {
@@ -209,12 +209,12 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     }
 
     // Navigation methods
-    toAccountSelection(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
     }
 
-    toAddressInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
+    next(){
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     // @api methods

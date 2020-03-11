@@ -35,17 +35,6 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static String saveContactInfo(Contact con){
-		try{
-			update con;
-			return 'success';
-		}
-		catch(Exception e){
-			return e.getMessage();
-		}
-	}
-
-	@AuraEnabled
 	public static List<PortalKnowledge__c> getL2Topics(){
 		List<PortalKnowledge__c> topics = [SELECT Id, DataTopicName__c
 										FROM PortalKnowledge__c
