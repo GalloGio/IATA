@@ -811,6 +811,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			oscar.OwnerId = AMS_Utils.getRegionalQueue(newCase);
 
+			if (String.isBlank(oscar.IATA_Codes_NOK__c)){
+				oscar.STEP6__c = AMS_Utils.PASSED;
+				oscar.Status__c = AMS_Utils.OSCAR_CLOSED;
+			}
+
 			upsert oscar;
 
 			Database.DMLOptions dmo = new Database.DMLOptions();
