@@ -237,8 +237,9 @@
 																			<apex:outputText value="{! IF(settlementInstructionRow.settlementInstruction.isApplied, 'Yes', 'No')}"/>
 																		</td>
 																		<td style="width : 50%; text-align : right; font-size : 10pt;">
-																			<apex:outputPanel rendered="{! participationRow.participation.noa != 'true'}">
-																				<apex:commandLink style="white-space:nowrap;" action="{! cloneCycleSettlementInstruction}" value="{! $Label.ICCS_Clone_SI_Link}" rendered="{! participationRow.participation.noa != 'true' && isSuperUser}" rerender="pageMainPanel" status="processActStatusId">
+																			<apex:outputPanel rendered="{! participationRow.participation.noa != 'true' && isSuperUser}">
+																				<apex:outputLink value="#" styleclass="not-active" disabled="true" rendered="{!currencyRow.numberCurrencySiRows > 0}">{! $Label.ICCS_Clone_SI_Link}</apex:outputLink>
+																				<apex:commandLink style="white-space:nowrap;" action="{! cloneCycleSettlementInstruction}" value="{! $Label.ICCS_Clone_SI_Link}" rendered="{!currencyRow.numberCurrencySiRows = 0}" rerender="pageMainPanel" status="processActStatusId">
 																					<apex:param name="settlementInstructionId" value="{! settlementInstructionRow.settlementInstructionId}" assignTo="{! settlementInstructionIdParameter}"/>
 																					<apex:param name="cycleId" value="{! selectedAdhocCycle}" assignTo="{! cycleIdParameter}"/>
 																				</apex:commandLink>
