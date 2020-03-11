@@ -6395,6 +6395,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Business_Geo_Coordinates__c</fullName>
+        <description>This is the Latitude and Longitude of where an Account is physically located.</description>
+        <displayLocationInDecimal>true</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Business Geo Coordinates</label>
+        <required>false</required>
+        <scale>8</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Location</type>
+    </fields>
+    <fields>
         <fullName>Business_PO_Box__c</fullName>
         <description>PO Box of the Account&apos;s Business Address</description>
         <externalId>false</externalId>
@@ -11501,6 +11513,42 @@ WSPN-Worldspan</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Hierarchy_Level__c</fullName>
+        <defaultValue>&quot;Single Location&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Hierarchy Level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Branch</fullName>
+                    <default>false</default>
+                    <label>Branch</label>
+                </value>
+                <value>
+                    <fullName>Single Location</fullName>
+                    <default>true</default>
+                    <label>Single Location</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Headquarter_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Lookup to the Account that is the Headquarters of this Account according to Dun &amp; Bradstreet.</description>
@@ -11526,6 +11574,19 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Holding_Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Holding Parent</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Branch</relationshipLabel>
+        <relationshipName>Holding_Parent</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Holds_FS_first_call_letter__c</fullName>
@@ -11623,6 +11684,7 @@ WSPN-Worldspan</inlineHelpText>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the Country of where an Account is physically located.</description>
         <externalId>false</externalId>
         <label>ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -11658,6 +11720,18 @@ WSPN-Worldspan</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Iso_Country_Name__c</fullName>
+        <description>Display the name of the IATA_Iso_Country__c lookup field. Used for flows.</description>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Iso Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IATA_Member__c</fullName>
@@ -14148,6 +14222,15 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         </valueSet>
     </fields>
     <fields>
+        <fullName>Is_PO_Box_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label> Is PO Box Address</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_parent_IATA_airline_member__c</fullName>
         <description>If the Parent field Airline Member exists and it&apos;s different from the record, return false. This is used on the Account trigger to set the IATA_Member__c field for the accounts.</description>
         <externalId>false</externalId>
@@ -16182,6 +16265,18 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>RecordTypeDeveloperName__c</fullName>
+        <description>Used for flow, avoid requesting record type table. It returns the record type developer name of the account.</description>
+        <externalId>false</externalId>
+        <formula>RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RecordTypeDeveloperName</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
@@ -19017,6 +19112,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Sold_To_Completed__c</fullName>
+        <description>Indicates when an account is created into SAP</description>
+        <externalId>false</externalId>
+        <label>Sold_To_Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Solicitation_Flag__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -20049,6 +20156,37 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Verification_Status__c</fullName>
+        <defaultValue>&quot;Unverified&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Verification Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Unverified</fullName>
+                    <default>true</default>
+                    <label>Unverified</label>
+                </value>
+                <value>
+                    <fullName>Partial</fullName>
+                    <default>false</default>
+                    <label>Partial</label>
+                </value>
+                <value>
+                    <fullName>Verified</fullName>
+                    <default>false</default>
+                    <label>Verified</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>WebStar_ID__c</fullName>
@@ -121191,6 +121329,28 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
         <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>EF_Branch_ParentAccount</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+ISPICKVAL(Hierarchy_Level__c,&apos;Domestic&apos;),
+ISPICKVAL(Hierarchy_Level__c,&apos;Branch&apos;)),
+ISBLANK( ParentId )
+)</errorConditionFormula>
+        <errorMessage>A branch or Domestic HQ account needs a Parent account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Branch_SameCountryWithParentAccount</fullName>
+        <active>false</active>
+        <description>A Branch Account needs the same country as its Parent Account</description>
+        <errorConditionFormula>AND(
+
+   ISPICKVAL( Hierarchy_Level__c, &apos;Branch&apos;),
+   (NOT( Parent.IATA_ISO_Country__c =  IATA_ISO_Country__c ))
+)</errorConditionFormula>
+        <errorMessage>A Branch Account needs the same country as its Parent Account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
         <active>false</active>
         <errorConditionFormula>AND(
@@ -121200,6 +121360,18 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_Herarchylevel_branch_for_Branch</fullName>
+        <active>true</active>
+        <description>The Herarchy level is &quot;branch&quot; for a Branch account</description>
+        <errorConditionFormula>AND(  !ISPICKVAL(  Hierarchy_Level__c  ,&quot;Branch&quot;),
+
+      RecordTypeDeveloperName__c = &apos;Branch&apos;
+
+)</errorConditionFormula>
+        <errorDisplayField>Hierarchy_Level__c</errorDisplayField>
+        <errorMessage>You need to change the Herarchy level to &quot;branch&quot; for a Branch account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>EF_MandatoryFields</fullName>
@@ -121231,6 +121403,156 @@ REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Location_ID__c</errorDisplayField>
         <errorMessage>SIS Location ID just accepts values Main, and numbers from 1 to 99</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Airport_IATACode</fullName>
+        <active>true</active>
+        <description>A verified Airport needs a IATA Code.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      RecordTypeDeveloperName__c = &apos;Airport&apos;,
+
+      ISBLANK( IATACode__c )
+
+)</errorConditionFormula>
+        <errorDisplayField>IATACode__c</errorDisplayField>
+        <errorMessage>A verified Airport needs a IATA Code.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_BusinessAddress</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if a Business address is created.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Airport&apos;,
+           RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      OR ( ISBLANK( IATA_ISO_Country__c ),
+           ISBLANK( Business_State_Name__c ),
+           ISBLANK( Business_City_Name__c ),
+           ISBLANK( Business_Postal_Code__c ),
+           AND ( ISBLANK( Business_Street__c ),
+                ISBLANK( Business_PO_Box__c )
+           )
+           
+      )
+
+)</errorConditionFormula>
+        <errorMessage>The &quot;Verified&quot; value is available if a Business address is created.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_LegalName</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a Legal Name (except Airport)</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      ISBLANK( Legal_name__c )
+
+)</errorConditionFormula>
+        <errorDisplayField>Legal_name__c</errorDisplayField>
+        <errorMessage>The account needs to have a Legal Name.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_BusiAddres</fullName>
+        <active>true</active>
+        <description>The &quot;Partial&quot; value is available if a Business address is created.</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Partial&quot;),
+
+      OR ( ISBLANK( IATA_ISO_Country__c ),
+           ISBLANK( Business_State_Name__c ),
+           ISBLANK( Business_City_Name__c ),
+           ISBLANK( Business_Postal_Code__c ),
+           AND ( ISBLANK( Business_Street__c ),
+                ISBLANK( Business_PO_Box__c )
+           )
+      )
+
+)</errorConditionFormula>
+        <errorMessage>The &quot;Partial&quot; value is available if a Business address is created.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Category</fullName>
+        <active>true</active>
+        <description>Partial verification status is allowed for Operator account only with a category of General aviation or Military only</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+(RecordTypeDeveloperName__c = &quot;Operator&quot;),
+AND(
+!( ISPICKVAL(Category__c,&apos;General Aviation&apos;)),
+!( ISPICKVAL(Category__c,&apos;Military&apos;))))</errorConditionFormula>
+        <errorMessage>Partial verification status is allowed for Operator account only with a category of General aviation or Military only</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Operator</fullName>
+        <active>true</active>
+        <description>Partial verification status is allowed for Operator account only</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+!(RecordTypeDeveloperName__c = &quot;Operator&quot;))</errorConditionFormula>
+        <errorMessage>Partial verification status is allowed for Operator account only</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Partial_Permission</fullName>
+        <active>true</active>
+        <description>You don’t have permission to edit Partially verified accounts</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
+ISCHANGED(Verification_Status__c),
+!$Permission.E_F_account_Partial_Verification
+)</errorConditionFormula>
+        <errorMessage>You don’t have permission to edit Partially verified accounts</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Permission</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is only available for E&amp;F accounts.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+ISCHANGED(Verification_Status__c),
+!$Permission.E_F_Account_Verification,
+
+OR(( RecordTypeDeveloperName__c = &quot;Airport&quot;),
+( RecordTypeDeveloperName__c = &quot;IATA_Airline&quot;),
+( RecordTypeDeveloperName__c = &quot;IATA_Airline_BR&quot;),
+( RecordTypeDeveloperName__c = &quot;Operator&quot;),
+( RecordTypeDeveloperName__c = &quot;Branch&quot;),
+( RecordTypeDeveloperName__c = &quot;Others&quot;)
+)
+)</errorConditionFormula>
+        <errorMessage>The &quot;Verified&quot; value is only available for accounts you have access to.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_VerificationStatus_Sector_Category</fullName>
+        <active>true</active>
+        <description>The &quot;Verified&quot; value is available if the E&amp;F account have a Sector and a Category. (Except Airport)</description>
+        <errorConditionFormula>AND(  ISPICKVAL( Verification_Status__c ,&quot;Verified&quot;),
+
+      OR ( RecordTypeDeveloperName__c = &apos;Branch&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline&apos;,
+           RecordTypeDeveloperName__c = &apos;IATA_Airline_BR&apos;,
+           RecordTypeDeveloperName__c = &apos;Operator&apos;,
+           RecordTypeDeveloperName__c = &apos;Others&apos;,
+           RecordTypeDeveloperName__c = &apos;Standard_Account&apos;
+      ),
+
+      ISBLANK( TEXT( Category__c ) )
+)</errorConditionFormula>
+        <errorDisplayField>Category__c</errorDisplayField>
+        <errorMessage>The account needs to have a Sector and a Category.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Edit_Head_office</fullName>
@@ -121616,6 +121938,26 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <url>http://www.azworldairports.com/indexes/p-apt.htm</url>
     </webLinks>
     <webLinks>
+        <fullName>Account_Context_Activation</fullName>
+        <availability>online</availability>
+        <description>used to launch the flow to send an account to other systems</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Account Context Activation</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/flow/Account_Context_Activation?AccountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Account_Map</fullName>
         <availability>online</availability>
         <description>Shows location of account in a map</description>
@@ -121655,6 +121997,25 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <scontrol>Account_archive</scontrol>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>Add_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Add Address</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/flow/FULL_CUSTOMER_CREATION?AccountId={!Account.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>BLND_FormFactoryAccountLink</fullName>

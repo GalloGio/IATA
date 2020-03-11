@@ -1,0 +1,16 @@
+<aura:component description="CustomInput" abstract="true">
+
+    <aura:attribute name="this" type="Object" default="{!this}"/>
+    <aura:attribute name="value" type="String" access="global"/>
+
+    <aura:attribute name="required" type="Boolean" default="false"/>
+    <aura:attribute name="readonly" type="Boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="validity" type="Map" default="{'valueMissing':false}"/>
+
+    <aura:method name="showHelpMessageIfInvalid"
+                 description="check if input is filled and valid">
+    </aura:method>
+
+    {!v.body}
+</aura:component>
