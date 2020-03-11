@@ -304,7 +304,7 @@ global without sharing class ISSP_APProcess {
 		showPDFReportsPreference=true;
 		showPDFReportsEmail=false;
 		changePass=false;
-		passlink='https://www.iata.org/pass';
+		passlink=Label.ISSP_PASS_IATAWebsite;
 
 		newForm = new AP_Process_Form__c();
 		newCase = new Case();

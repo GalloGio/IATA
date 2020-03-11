@@ -32430,6 +32430,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Please download the documents using the links below:</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_IATAWebsite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_IATAWebsite</shortDescription>
+        <value>https://www.iata.org/pass</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Participation_Agreement</fullName>
         <language>en_US</language>
         <protected>false</protected>
