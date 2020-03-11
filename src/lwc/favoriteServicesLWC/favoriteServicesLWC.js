@@ -124,6 +124,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
                         this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_x-small aroundLightGrayBorder';
+                        this.globaList[i][j][k].imageCSS += 'margin:1.5rem;';
                     }
                     if (this.globaList[i][j].length === 2) {
                         this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
