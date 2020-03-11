@@ -293,7 +293,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
                             this.userContactId = userOptions.User_ContactId;
                         }
-                        if (userOptions.Location_Type == AE && userOptions.ANG_Accreditation_Model__c == MULTICOUNTRY) {
+                        if (userOptions.Location_Type == AE && userOptions.Accreditation_model == MULTICOUNTRY) {
                             let string3 = this.label.csp_RequestService_ContactSupport;
                             let link0 = window.location.toString().replace('/services', '');
                             let link3 = link0 + '/support-reach-us';
