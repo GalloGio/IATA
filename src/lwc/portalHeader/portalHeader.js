@@ -209,14 +209,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
     logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
     servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
-    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.png';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    youAndIATA = CSP_PortalPath + 'CSPortal/Images/Icons/youiata-white.svg';
     profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
     profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
     arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
     notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
-    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.png';
-    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.png';
+    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.svg';
     mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
 
     //notifications
