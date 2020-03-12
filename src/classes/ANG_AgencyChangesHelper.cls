@@ -2577,7 +2577,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(!queriedOscar.Child_OSCARs__r.isEmpty()){
 				for(AMS_OSCAR__c childOscar : queriedOscar.Child_OSCARs__r){
-					if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && stepValues.contains((String) childOscar.get(stepToCheck))){
+					if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && !stepValues.contains((String) childOscar.get(stepToCheck))){
 						oscar.addError(errorMessage);
 						return false;
 					}
