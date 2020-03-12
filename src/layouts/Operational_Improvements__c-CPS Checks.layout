@@ -67,6 +67,10 @@
                 <field>OperationCPS__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Section_Code__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Internal_External__c</field>
             </layoutItems>
