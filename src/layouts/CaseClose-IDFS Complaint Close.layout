@@ -105,6 +105,10 @@
                 <behavior>Required</behavior>
                 <field>Root_Cause__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Area_of_Concern__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
