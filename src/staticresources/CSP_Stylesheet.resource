@@ -398,9 +398,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -419,9 +419,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -434,9 +434,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -448,9 +448,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 /* ############################################## */
 @media only screen and (max-device-width: 480px){
@@ -1319,9 +1319,29 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
-/***** HP Recent Casses Table ******/
+/***** HP Recent Cases Table ******/
 .hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
     border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
+.hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 1500px) {
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: hidden;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .cardBodyContentSmall {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    overflow-x: auto;
+  }
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: auto;
+  }
 }
 
 /*       New Documents Button Overrides*/
