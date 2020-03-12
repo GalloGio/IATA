@@ -1012,7 +1012,7 @@
             <targetReference>Get_Account_Record</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Start_background_E_F_Subflow</name>
         <label>Start background E&amp;F Subflow</label>
