@@ -36,7 +36,7 @@
     archives, les certificats de marchandises dangereuses fournies par votre
     société de <b>{!AMS_OSCAR__c.DGR_First_Name__c}
     {!AMS_OSCAR__c.DGR_Last_Name__c}, {!AMS_OSCAR__c.DGR_Position__c}</b>
-    prendront fin le <b>{!AMS_OSCAR__c.Change_effective_as_of__c}</b>.&nbsp; Par conséquent, veuillez envoyer des
+    prendront fin le <b>{!AMS_OSCAR__c.DGR_Expiry_Date__c}</b>.&nbsp; Par conséquent, veuillez envoyer des
     nouvelles copies, ou des mises à jour des certificats marchandises
     dangereuses, ou toute autre information indiquant que votre entreprise est
     conforme à nos exigences.<o:p></o:p></span></i></p>
@@ -45,7 +45,7 @@
     <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
     text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">Les certificats
     Web demandées ci-dessus doivent être envoyés à l'IATA <b>via notre Portail Service Client: <u>http://www.iata.org/cs</u></b>
-    au plus tard le <b>{!AMS_OSCAR__c.DGR_Expiry_Date__c}</b>.
+    au plus tard le <b>{!AMS_OSCAR__c.Change_effective_as_of__c}</b>.
     Prière de joindre une copie numérisée au cas <b>{!AMS_OSCAR__c.Name}</b> visible sur votre page d'accueil de notre
     site Web, sous la rubrique «Mes cas récents».<o:p></o:p></span></i></p>
     <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;
