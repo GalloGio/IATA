@@ -80,8 +80,7 @@ private class CaseIFAPHandlerTest {
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
 
 		Test.stopTest();
-
-		System.assertEquals('The connection with Mulesoft was successfully', result[0]);
+		System.assertEquals('The status code returned was not expected: 500 - Error connecting to GXA system api', result[0]);
 	}
 
 	@isTest
@@ -113,10 +112,14 @@ private class CaseIFAPHandlerTest {
 
 		insert caseList;
 
+		for(Case cs : caseList){
+			listIds.add(cs.Id);
+		}
+
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
 		Test.stopTest();
 
-		System.assertEquals(null, result);
+		System.assertEquals(0, result.size());
 	}
 
 
@@ -149,11 +152,15 @@ private class CaseIFAPHandlerTest {
 
 		insert caseList;
 
+		for(Case cs : caseList){
+			listIds.add(cs.Id);
+		}
+
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
 
 		Test.stopTest();
 
-		System.assertEquals(null, result[0]);
+		System.assertEquals(0, result.size());
 	}
 
 	@isTest
@@ -161,6 +168,14 @@ private class CaseIFAPHandlerTest {
 
 		List<User> users = new List<User>([SELECT Id FROM User WHERE Alias = 'alias']);
 		List<Id> listIds = new List<Id>();
+
+		Id AccId = [SELECT Id from Account Limit 1].Id;
+		Id ContId = [SELECT Id from Contact Limit 1].Id;
+		Case cs = new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP, Subject = 'IFAP', Status = 'Agent to be Notified', AccountId = accId,
+								  Origin = 'Agent Financial Review Notification', ContactId = contId, Financial_Review_Type__c = 'Annual',
+								  IFAP_Financial_Year__c = '2016', Deadline_Date__c = date.today().addDays(31), IFAP_Area__c = 'A');
+		insert cs;
+
 		String body = '{"apiStatus": {"transactionId": "ac26fd60-103c-11ea-8586-06e8b32e1e4c","api": "","code": "500","description": "Error connecting to GXA system api","title": "TARGET_SYSTEM_CONNECTIVITY"}}';
 
 		ISSP_AMC_MockHttp_Response_generator fakeResponse = new ISSP_AMC_MockHttp_Response_generator(500,
