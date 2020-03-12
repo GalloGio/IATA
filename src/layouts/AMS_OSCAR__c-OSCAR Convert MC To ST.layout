@@ -213,10 +213,6 @@
                 <behavior>Edit</behavior>
                 <field>Agreement_result__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Update_account_if_Key_multicountry__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
