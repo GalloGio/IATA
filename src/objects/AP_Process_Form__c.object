@@ -4074,6 +4074,37 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Type_of_Settlement__c</fullName>
+        <description>Please indicate which type of settlement do you want to use for this market?</description>
+        <externalId>false</externalId>
+        <label>Type of Settlement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Local Bank</fullName>
+                    <default>false</default>
+                    <label>A local bank account (account in the country and currency of the settlement)</label>
+                </value>
+                <value>
+                    <fullName>ICCS bank account</fullName>
+                    <default>false</default>
+                    <label>ICCS bank account (Cross border transfers)</label>
+                </value>
+                <value>
+                    <fullName>Settlement a la carte</fullName>
+                    <default>false</default>
+                    <label>Settlement a la carte (A percentage distribution between local bank account and ICCS bank account)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Type_of_participation_desired__c</fullName>
         <externalId>false</externalId>
         <label>Type of participation desired</label>
@@ -5295,6 +5326,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Airline joining CASS through a GSSA</fullName>
@@ -6354,6 +6400,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7478,6 +7539,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Airline joining CASS through a GSSA</fullName>
@@ -8560,6 +8636,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9684,6 +9775,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10813,6 +10919,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Full %28direct participant%29</fullName>
@@ -11926,6 +12047,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13047,6 +13183,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14180,6 +14331,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Airline joining CASS through a GSSA</fullName>
@@ -15305,6 +15471,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

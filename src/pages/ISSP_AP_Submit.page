@@ -33,18 +33,15 @@
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
-                        <apex:outputText >
-                            <div style="padding-bottom:10px">
-                                <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP / CASS proceedings can be settled. The bank account must either be:</div>
-                                <div style="margin:20px 20px">
-                                    <p>1- an ICCS account (for cross border transfers) </p>
-                                    <p>2- or a local bank account in the ISS country and currency of settlement. </p>
-                                </div>
-                                
-                            </div>
-                        </apex:outputText>
+                    <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Please indicate which type of settlement do you want to use for this market?" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Type_of_Settlement__c}" >
+                                <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
+                            </apex:inputField>
+                        </apex:pageBlockSectionItem>
 
+                        <!-- for local bank an ICCS bank accounts -->
                         <apex:pageBlockSectionItem rendered="{!showJoinICCSQuestion}">
                             <apex:outputLabel value="Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market" styleclass="ap-required"/>
                             <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" >
@@ -100,6 +97,18 @@
 
                         <apex:iframe scrolling="true" height="190px"
                             src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=false"/>
+                    </apex:pageBlockSection>
+
+                    <!-- for settlement a la carte and ICCS Member -->
+                    <apex:pageBlockSection title="Information required to use Settlement a la Carte in this market" columns="1" rendered="{!showSettlementALaCarte && AccountIsICCSMember}" collapsible="false">
+                        <p>
+                            Please download and complete the form in the link below. Once completed please uploaded using the box Settlement a la Carte format
+                            <apex:outputPanel layout="block" rendered="{!ICCSSettlementALaCarteUrl!=null}">
+                                <apex:outputLink value="{!ICCSSettlementALaCarteUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSSettlementALaCarteName}</apex:outputLink>
+                            </apex:outputPanel>
+                        </p>
+                        <apex:iframe scrolling="true" height="190px" rendered="{!ICCSSettlementALaCarteUrl!=null}"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName={!ICCSSettlementALaCarteName}&reqDescription=&reqIdentifier=ICCS_Settlement_alacarte&onlyOne=false"/>
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is Member -->

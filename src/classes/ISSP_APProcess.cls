@@ -678,7 +678,7 @@ global without sharing class ISSP_APProcess {
 			Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,
 			Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c,
 			ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c, Billing_Value_Confirmation__c, Legal_Archiving__c, Auto_billing__c,
-			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c
+			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Settlement__c
 			FROM AP_Process_Form__c
 			WHERE Case__c = :newCase.Id
 			LIMIT 1
@@ -1177,6 +1177,9 @@ global without sharing class ISSP_APProcess {
 			if (getShowJoinICCS()) {
 				//check ICCS_Join
 				listMandatoryFiles.add('ICCS_Join');
+			}
+			if (getShowSettlementALaCarte() && getAccountIsICCSMember()) {
+				listMandatoryFiles.add('ICCS_Settlement_alacarte');
 			}
 			if (getShowICCSJoinMarket()) {
 				//check ICCS_Join_market
@@ -2070,7 +2073,22 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show the field Airline_wish_to_join_ICCS__c
 	**/
 	public Boolean getShowJoinICCSQuestion() {
-		return (getShowBankMandateSection() && ICCSProductCountry!=null);
+		return (getShowBankMandateSection() && ICCSProductCountry!=null 
+			&& (newForm.Type_of_Settlement__c == 'Local Bank' || newForm.Type_of_Settlement__c == 'ICCS bank account'));
+	}
+
+	/**
+		Returns true if the Type of Settlement is 'Settlement a la carte'
+	**/
+	public Boolean getShowSettlementALaCarte() {
+		return (getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'Settlement a la carte');
+	}
+
+	public Boolean getAccountIsICCSMember() {
+		return this.hqaccount!=null
+			&& this.hqaccount.ICCS_Membership_Status__c!='Prospect'
+			&& this.hqaccount.ICCS_Membership_Status__c!='Active'
+			&& this.hqaccount.ICCS_Membership_Status__c!='Member';
 	}
 
 	/**
@@ -2084,11 +2102,8 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show ICCS Joining section
 	**/
 	public Boolean getShowJoinICCS() {
-		return this.newForm.Airline_wish_to_join_ICCS__c=='Yes'
-			&& this.hqaccount!=null
-			&& this.hqaccount.ICCS_Membership_Status__c!='Prospect'
-			&& this.hqaccount.ICCS_Membership_Status__c!='Active'
-			&& this.hqaccount.ICCS_Membership_Status__c!='Member';
+		return (this.newForm.Airline_wish_to_join_ICCS__c=='Yes' || getShowSettlementALaCarte())
+			&& getAccountIsICCSMember();
 	}
 
 	/**
@@ -2230,6 +2245,16 @@ global without sharing class ISSP_APProcess {
 	}
 	public String getICCSJoiningPackageName() {
 		return getDocumentName('ICCS_Joining_Package');
+	}
+
+	/**
+		Get the document for "Information required to use Settlement a la Carte in this market" section
+	**/
+	public String getICCSSettlementALaCarteUrl() {
+		return getDocumentUrl('ICCS_Settlement_a_la_carte');
+	}
+	public String getICCSSettlementALaCarteName() {
+		return getDocumentName('ICCS_Settlement_a_la_carte');
 	}
 
 	/**
