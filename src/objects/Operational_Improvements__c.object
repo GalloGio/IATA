@@ -1936,11 +1936,6 @@
                     <label>Papua New Guinea</label>
                 </value>
                 <value>
-                    <fullName>Papua Niugini</fullName>
-                    <default>false</default>
-                    <label>Papua Niugini</label>
-                </value>
-                <value>
                     <fullName>Paraguay</fullName>
                     <default>false</default>
                     <label>Paraguay</label>
@@ -2613,10 +2608,6 @@
             <valueSettings>
                 <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
                 <valueName>Papua New Guinea</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
-                <valueName>Papua Niugini</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Asia &amp; Pacific</controllingFieldValue>
@@ -5577,6 +5568,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
@@ -5607,7 +5600,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -5727,6 +5719,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
@@ -5757,7 +5751,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -5885,6 +5878,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Guatemala</controllingFieldValue>
                 <controllingFieldValue>Guyana</controllingFieldValue>
                 <controllingFieldValue>Haiti</controllingFieldValue>
+                <controllingFieldValue>Samoa</controllingFieldValue>
+                <controllingFieldValue>Tonga</controllingFieldValue>
                 <controllingFieldValue>Honduras</controllingFieldValue>
                 <controllingFieldValue>Hong Kong</controllingFieldValue>
                 <controllingFieldValue>Hungary</controllingFieldValue>
@@ -5917,7 +5912,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Macau</controllingFieldValue>
                 <controllingFieldValue>Papua New Guinea</controllingFieldValue>
                 <controllingFieldValue>Macedonia</controllingFieldValue>
-                <controllingFieldValue>Papua Niugini</controllingFieldValue>
                 <controllingFieldValue>Malawi</controllingFieldValue>
                 <controllingFieldValue>Malaysia</controllingFieldValue>
                 <controllingFieldValue>Mali</controllingFieldValue>
@@ -6774,11 +6768,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <label>DE_CAS_E_EUR_I</label>
                 </value>
                 <value>
-                    <fullName>DE_CAS_I_EUR_I</fullName>
-                    <default>false</default>
-                    <label>DE_CAS_I_EUR_I</label>
-                </value>
-                <value>
                     <fullName>DK_BSP_Y_DKK_I</fullName>
                     <default>false</default>
                     <label>DK_BSP_Y_DKK_I</label>
@@ -7119,11 +7108,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <label>KH_BSP_Y_USD_I</label>
                 </value>
                 <value>
-                    <fullName>KH_IEP_Y-USD_I</fullName>
-                    <default>false</default>
-                    <label>KH_IEP_Y-USD_I</label>
-                </value>
-                <value>
                     <fullName>KN_BSP_Y_XCD_I</fullName>
                     <default>false</default>
                     <label>KN_BSP_Y_XCD_I</label>
@@ -7387,16 +7371,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <fullName>NP_BSP_Y_USD_I</fullName>
                     <default>false</default>
                     <label>NP_BSP_Y_USD_I</label>
-                </value>
-                <value>
-                    <fullName>NP_IEP_NPR_I</fullName>
-                    <default>false</default>
-                    <label>NP_IEP_NPR_I</label>
-                </value>
-                <value>
-                    <fullName>NP_IEP_USD_I</fullName>
-                    <default>false</default>
-                    <label>NP_IEP_USD_I</label>
                 </value>
                 <value>
                     <fullName>NZ_BSP_Y_NZD_I</fullName>
@@ -8114,16 +8088,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <label>ZW_BSP_Y_ZWL_I</label>
                 </value>
                 <value>
-                    <fullName>TR_CAS_E_EUR_I</fullName>
-                    <default>false</default>
-                    <label>TR_CAS_E_EUR_I</label>
-                </value>
-                <value>
-                    <fullName>LV_BSP_Y_LVL_I</fullName>
-                    <default>false</default>
-                    <label>LV_BSP_Y_LVL_I</label>
-                </value>
-                <value>
                     <fullName>NL_CAS_I_EUR_I</fullName>
                     <default>false</default>
                     <label>NL_CAS_I_EUR_I</label>
@@ -8411,14 +8375,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <valueSettings>
                 <controllingFieldValue>Nepal</controllingFieldValue>
                 <valueName>NP_BSP_Y_USD_I</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Nepal</controllingFieldValue>
-                <valueName>NP_IEP_NPR_I</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Nepal</controllingFieldValue>
-                <valueName>NP_IEP_USD_I</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Nepal</controllingFieldValue>
@@ -8740,10 +8696,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cambodia</controllingFieldValue>
-                <valueName>KH_IEP_Y-USD_I</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Cambodia</controllingFieldValue>
                 <valueName>KH_IEP_Y_USD_I</valueName>
             </valueSettings>
             <valueSettings>
@@ -8987,10 +8939,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <valueName>TR_CAS_E_USD_I</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Turkey</controllingFieldValue>
-                <valueName>TR_CAS_E_EUR_I</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Turks &amp; Caicos</controllingFieldValue>
                 <valueName>TC_BSP_Y_USD_I</valueName>
             </valueSettings>
@@ -9221,10 +9169,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <valueSettings>
                 <controllingFieldValue>Germany</controllingFieldValue>
                 <valueName>DE_CAS_E_EUR_I</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Germany</controllingFieldValue>
-                <valueName>DE_CAS_I_EUR_I</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Ghana</controllingFieldValue>
@@ -9477,10 +9421,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <valueSettings>
                 <controllingFieldValue>Latvia</controllingFieldValue>
                 <valueName>LV_CAS_E_EUR_I</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Latvia</controllingFieldValue>
-                <valueName>LV_BSP_Y_LVL_I</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Lebanon</controllingFieldValue>
@@ -12057,10 +11997,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Papua Niugini</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paraguay</fullName>
                 <default>false</default>
             </values>
@@ -14119,10 +14055,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>DE_CAS_I_EUR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>DK_BSP_Y_DKK_I</fullName>
                 <default>false</default>
             </values>
@@ -14447,10 +14379,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>KH_IEP_Y-USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>KH_IEP_Y_USD_I</fullName>
                 <default>false</default>
             </values>
@@ -14532,10 +14460,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>LV_BSP_Y_EUR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LV_BSP_Y_LVL_I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14716,14 +14640,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>NP_BSP_Y_USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_NPR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_USD_I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15052,10 +14968,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>TR_BSP_Y_TRY_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TR_CAS_E_EUR_I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16647,10 +16559,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Papua New Guinea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Papua Niugini</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18671,10 +18579,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>DE_CAS_I_EUR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>DK_BSP_Y_DKK_I</fullName>
                 <default>false</default>
             </values>
@@ -18947,10 +18851,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>KH_IEP_Y-USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>KN_BSP_Y_XCD_I</fullName>
                 <default>false</default>
             </values>
@@ -19160,14 +19060,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>NP_BSP_Y_USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_NPR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_USD_I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20958,10 +20850,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Papua New Guinea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Papua Niugini</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22986,10 +22874,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>DE_CAS_I_EUR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>DK_BSP_Y_DKK_I</fullName>
                 <default>false</default>
             </values>
@@ -23262,10 +23146,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>KH_IEP_Y-USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>KN_BSP_Y_XCD_I</fullName>
                 <default>false</default>
             </values>
@@ -23475,14 +23355,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>NP_BSP_Y_USD_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_NPR_I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>NP_IEP_USD_I</fullName>
                 <default>false</default>
             </values>
             <values>
