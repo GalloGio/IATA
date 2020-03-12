@@ -49,7 +49,7 @@ global class SchdlIECCompileUsage implements Schedulable {
 		string minute = string.valueof(nextScheduleTime.minute());
 		string second = string.valueof(nextScheduleTime.second());
 
-		string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
+		string cronvalue = second + ' ' + minute + ' ' + hour + ' * * ?'; // * * ? - All days; All Months; No specific value
 		string jobName = 'SchdlIECCompileUsage ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
 		system.schedule(jobName, cronvalue , new SchdlIECCompileUsage());
 
