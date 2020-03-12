@@ -15652,6 +15652,18 @@ OR(
         <errorMessage>Desired Date to start in ICH can&apos;t be earlier than Desired Date to start in SIS</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Desired_Commencement_date_too_short</fullName>
+        <active>true</active>
+        <description>BSP cases for Minor changes must have a Desired commencement date in more than 3 months</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;BSP_Change&apos;,
+  ISPICKVAL(Case__r.Reason1__c,&apos;Minor database changes&apos;),
+  Desired_commencment_date__c &lt; ADDMONTHS(TODAY(),3)
+)</errorConditionFormula>
+        <errorDisplayField>Desired_commencment_date__c</errorDisplayField>
+        <errorMessage>select a date at least 3 months away from today.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Russia_Double_Tax_avoiding_Treaty</fullName>
         <active>true</active>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; RecordType.DeveloperName==&quot;BSP&quot; &amp;&amp; ISPICKVAL(Case__r.BSPCountry__c, &apos;Russian Federation&apos;) &amp;&amp; ISPICKVAL(BSP_Russia_Double_Tax_avoiding_Treaty__c, &apos;&apos;)</errorConditionFormula>

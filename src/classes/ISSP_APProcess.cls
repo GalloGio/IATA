@@ -480,6 +480,10 @@ global without sharing class ISSP_APProcess {
 						listMandatoryFiles.add('Additional_Information_BR1');
 						listMandatoryFiles.add('Additional_Information_BR2');
 					}
+					if (newForm.Type_of_Change_Requested__c!=null && newForm.Type_of_Change_Requested__c.contains('Voluntary Withdrawal')) {
+						if (isBSP) listMandatoryFiles.add('BSP_Voluntary_Withdrawal');
+						if (isCASS) listMandatoryFiles.add('CASS_Voluntary_Withdrawal');
+					}
 					if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
 						allfieldsfilled = false;
 					}
@@ -1862,6 +1866,7 @@ global without sharing class ISSP_APProcess {
 		options.add(new SelectOption('Change of Address','Change of Local Address'));
 		options.add(new SelectOption('Tax Number',' Tax Number'));
 		options.add(new SelectOption('Master Table', masterTableLabel));
+		options.add(new SelectOption('Voluntary Withdrawal', 'Voluntary Withdrawal'));
 
 		return options;
 	}
@@ -2217,6 +2222,26 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		return null;
+	}
+
+	/**
+		Get the document Voluntary Withdrawal for BSP, only for changes, 2nd step
+	**/
+	public String getBSPVoluntaryWithdrawalUrl() {
+		return getDocumentUrl('BSP_Voluntary_Withdrawal');
+	}
+	public String getBSPVoluntaryWithdrawalName() {
+		return getDocumentName('BSP_Voluntary_Withdrawal');
+	}
+
+	/**
+		Get the document Voluntary Withdrawal for CASS, only for changes, 2nd step
+	**/
+	public String getCASSVoluntaryWithdrawalUrl() {
+		return getDocumentUrl('CASS_Voluntary_Withdrawal');
+	}
+	public String getCASSVoluntaryWithdrawalName() {
+		return getDocumentName('CASS_Voluntary_Withdrawal');
 	}
 
 	/**

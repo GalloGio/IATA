@@ -14,11 +14,17 @@
 				} else {
     				document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
 				}
-            } else {
+            } else if(document.getElementById(myValue).value=='Master Table') {
             	if(document.getElementById(myValue).checked) {
     				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
 				} else {
     				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
+				}
+            } else if(document.getElementById(myValue).value=='Voluntary Withdrawal') {
+            	if(document.getElementById(myValue).checked) {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='block';
+				} else {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='none';
 				}
             }
         }
@@ -369,7 +375,30 @@
 
                     </apex:pageBlockSection>    
                 </apex:outputPanel>
-                    
+
+                <!-- Show when Type of change Voluntary Withdrawal is selected -->
+                <apex:outputPanel id="WithdrawalFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Voluntary Withdrawal'), '', 'display:none')}" >
+                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Voluntary Withdrawal Request {!strLoB} {!apcountry}">
+                        <tr><td colspan="4" class="aplabel">
+                            Please download and complete the form in the link below. Once completed please uploaded using the box.
+                        </td></tr>
+                        <apex:outputPanel layout="block" rendered="{!BSPVoluntaryWithdrawalUrl!=null}">
+                            <apex:outputLink value="{!BSPVoluntaryWithdrawalUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPVoluntaryWithdrawalName}</apex:outputLink>
+                        </apex:outputPanel>
+                        <apex:iframe scrolling="false" height="180px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=BSP Voluntary Withdrawal&reqDescription=&reqIdentifier=BSP_Voluntary_Withdrawal"/>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='CASS'}" columns="1" title="Voluntary Withdrawal Request {!strLoB} {!apcountry}">
+                        <tr><td colspan="4" class="aplabel">
+                            Please download and complete the form in the link below. Once completed please uploaded using the box.
+                        </td></tr>
+                        <apex:outputPanel layout="block" rendered="{!CASSVoluntaryWithdrawalUrl!=null}">
+                            <apex:outputLink value="{!CASSVoluntaryWithdrawalUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!CASSVoluntaryWithdrawalName}</apex:outputLink>
+                        </apex:outputPanel>
+                        <apex:iframe scrolling="false" height="180px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=CASS Voluntary Withdrawal&reqDescription=&reqIdentifier=CASS_Voluntary_Withdrawal"/>
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
             </div>     
          </apex:pageBlock>
           
