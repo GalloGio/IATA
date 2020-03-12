@@ -255,4 +255,31 @@ public class ISSP_AP_FieldLists {
 	'CASSLink_New_User_1_Email__c'					=> ''
 	};
 
+	public static final Map<String, String> passgssaMandatoryFields = new Map<String, String>{
+		'GSSA_Legal_Name__c'				=> '',
+		'GSSA_Code__c'						=> '',
+		'GSSA_HQ_Address__c'				=> '',
+		'GSSA_HQ_City__c'					=> '',
+		'GSSA_HQ_State__c'					=> '',
+		'GSSA_HQ_Post_Code__c'				=>'',
+		'GSSA_HQ_Country__c'				=>'',
+		'GSSA_VAT_Id__c'					=>'',
+		'GSSA_Contact_Salutation__c'		=>'',
+		'GSSA_Contact_F_Name__c'			=>'',
+		'GSSA_Contact_L_Name__c'			=>'',
+		'GSSA_Contact_JobTitle__c'			=>'',
+		'GSSA_Contact_Email__c'				=>'',
+		'GSSA_Contact_Phone__c'				=>'',
+		'GSSA_Contact_FAX__c'				=>'',
+		'CASSLink_Contact_Salutation__c' 	=>'',
+		'CASSLink_Contact_F_Name__c'		=>'',
+		'CASSLink_Contact_L_Name__c'		=>'',
+		'CASSLink_Contact_Job_Title__c'		=>'',
+		'CASSLink_Contact_Email__c'			=>'',
+		'CASSLink_Contact_Phone__c'			=>'',
+		'CASSLink_Contact_Fax__c'			=>'',
+		'CASS_Corrections_Email_1__c'		=>'',
+		'CASS_Corrections_Email_2__c'		=>''
+	};
+
 }

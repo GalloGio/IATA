@@ -707,6 +707,11 @@ global without sharing class ISSP_APProcess {
 						}
 					} else if(isPassAirline && strAreaType=='Airline Joining'){
 						if(!managePASS){
+
+							if(isPASSGSSA) {
+								ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
+							}
+
 							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet())
 							{
 								if (newForm.get(fldLabel)==null) {
@@ -791,7 +796,7 @@ global without sharing class ISSP_APProcess {
 		'CASSLink_New_User_2_L_Name__c, CASSLink_New_User_2_Email__c, CASSLink_New_User_2_System_Functions__c, CASSLink_Extra_New_Users__c, ICH_Currency_of_Clearance__c,' +
 		'ICH_Currency_of_Settlement__c, Airline_wish_to_join_ICCS__c, ANG_Enable_NewGen__c, Airline_Local_address_in_the_BSP_Country__c, Submitted_to_IATA__c,' +
 		'Type_of_Change_Requested__c, BSP_Country_VAT_Tax_number__c, Participate_in_any_Commission_Control__c, Online_carrier_in_the_BSP_country__c,' +
-		'Colombia_City_selection__c, Colombia_City_percentage__c,Type__c, Accept_terms_and_conditions__c, RecordTypeId, Case__c';
+		'Colombia_City_selection__c, Colombia_City_percentage__c,Type__c, Accept_terms_and_conditions__c, RecordTypeId, Case__c, PASSLink_Extra_New_Users__c';
 
 		if(!isPassAirline){
 			queryString +=
