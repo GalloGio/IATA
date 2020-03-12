@@ -20,6 +20,24 @@
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
+<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
+
+
+<style>
+    .iatabtn-main{
+
+        width: 165px;
+
+    }
+
+
+    .syncBtn.iatabtn-main{
+
+        background-color: #5cb85c;
+
+    }
+
+</style>
 
 <script>
     moment.locale("{!UserLanguage}");
@@ -535,8 +553,8 @@
     }
 </script>
 
+<c:ISSP_CustomNavigation />
 <div class="container">
-    <c:ISSP_CustomNavigation />
     
     <div class="row">
         <div class="col-sm-12">
@@ -564,13 +582,13 @@
             </div>
             <div class="col-sm-1"></div>
         </apex:outputPanel>
-    </apex:form >
+    </apex:form>
 
     <div id="rowCalendar" class="row">
         <div class="col-sm-2">
             <apex:form >
                 <apex:outputPanel layout="block" styleclass="form-group">
-                    <button id="syncCalendar" class="btn btn-success" type="button">
+                    <button id="syncCalendar" class="btn iatabtn-main syncBtn" type="button">
                         <span class="glyphicon glyphicon-calendar"></span>
                         {!$Label.ISSP_OperationalCalendar_Sync_Calendar}
                     </button>
@@ -608,7 +626,7 @@
                     </div>
                 </apex:outputPanel>
                 <div class="form-group">
-                    <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
+                    <button id="resetButton" class="btn iatabtn-main" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </div>
             </apex:form>
         </div>
@@ -616,6 +634,6 @@
             <div id='calendar'></div>
         </div>
     </div> 
-    <c:ISSP_CustomFooter />
 </div>
+<c:ISSP_CustomFooter />
 </apex:page>
