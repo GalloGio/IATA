@@ -41,7 +41,7 @@ public with sharing class SIDRACaseHelper {
 		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
 		List<String> reasonToBeProcessed = new List<String>{'Technical Default', 'Non-payment', 'Common Ownership'};
 
-		updateRelatedObjectsOnUpdate(getSidraCases(newCases.values()));
+		updateRelatedObjectsOnUpdate(newCases);
 
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
@@ -231,14 +231,15 @@ public with sharing class SIDRACaseHelper {
 	}
 
 	private static void updateRelatedObjectsOnUpdate(map<Id, Case> mapCases) {
-		if (mapCases.isEmpty())
+		Map<Id, Case> sidraCases = getSidraCases(mapCases.values());
+		if (sidraCases.isEmpty())
 			return;
 		
 		// find all related accounts with their related SIDRA Cases
-		Map<Id, Account> relatedAccountCases = getRelatedAccountAndCases(mapCases);
+		sidraCasesAccounts = getRelatedAccountAndCases(mapCases);
 		
-		for (Case thisCase : mapCases.values()) {
-			Account acc = relatedAccountCases.get(thisCase.AccountId);
+		for (Case thisCase : sidraCases.values()) {
+			Account acc = sidraCasesAccounts.get(thisCase.AccountId);
 			if (acc != null) {
 				// validate if there isn't more than 3 cases with "Bank Error" in the last 365 days
 				validateBankError(thisCase, acc);
