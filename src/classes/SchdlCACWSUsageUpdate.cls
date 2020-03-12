@@ -55,7 +55,7 @@ global class SchdlCACWSUsageUpdate implements Schedulable {
 		string minute = '10';
 		string second = '0';
 
-		string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
+		string cronvalue = second + ' ' + minute + ' ' + hour + ' * * ?'; // * * ? - All days; All Months; No specific value
 		string jobName = 'SchdlCACWSUsageUpdate ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
 		system.schedule(jobName, cronvalue , new SchdlCACWSUsageUpdate());
 
