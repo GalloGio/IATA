@@ -1,6 +1,7 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
     <script>
     	function toggleChangeFields(myValue) {
+            refreshTypeOfChangeSection()
             if(document.getElementById(myValue).value=='Change of Address') {
             	if(document.getElementById(myValue).checked) {
     				document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
@@ -20,7 +21,6 @@
     				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
 				}
             }
-            
         }
     
     function changePercentBox(myBox, myCheckBox, myPanel){
@@ -54,6 +54,7 @@
             isSIS="{!isSISMember}" />
         
         <apex:form id="APChangesForm" styleClass="inline">
+            <apex:actionFunction name="refreshTypeOfChangeSection" action="{!null}" rerender="TypeOfChangeSection" status="blockButtons"/>
             <apex:pageBlock id="changeblock" mode="edit">
             
                     <apex:pageBlockButtons location="bottom">
@@ -98,20 +99,19 @@
                         <div style="color:#a31717; font-weight:bold; margin:20px 0px 10px 0px;border: 0px !important;">Note: the fields marked in red and with a "*" are required before you can submit your application.<br/>However, you can save the incomplete draft application and come back later to fill all the required fields before submitting it to IATA.</div>
                     </apex:outputText>
                 </apex:pageBlockSection>
-                
-                <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection id="GeneralDetailsSection" columns="2">
                     <apex:facet name="header">
                             General Details - {!apcountry}
                     </apex:facet>
-                    <tr><td colspan="4" class="aplabel">
-                        {!IF(strChangeType='Minor database changes', 'Please indicate the effective date of the change.','This instruction is effective from and including the settlement date below, and for each settlement thereafter.')}
-                       </td></tr>
-                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="* Desired commencement date" style="color:#a31717; font-weight: bold !important;"/>
-                            <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
-                        </apex:pageBlockSectionItem>
-                        
+
+                    <tr><td colspan="4" class="aplabel {!IF(strChangeType!='Minor database changes','','hidden')}">
+                        This instruction is effective from and including the settlement date below, and for each settlement thereafter
+                    </td></tr>
+                    <apex:pageBlockSectionItem rendered="{!strChangeType!='Minor database changes'}">
+                        <apex:outputLabel value="Desired commencement date" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
+                    </apex:pageBlockSectionItem>
+
                     <tr><td colspan="4" class="aplabel">Contact person responsible for this {!strLoB} {!IF(strChangeType='Minor database changes','change request application','change of bank account details.')}</td></tr>
                      
                     <apex:pageBlockSectionItem >
@@ -141,11 +141,20 @@
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
                 <br/>
-                <apex:pageBlockSection columns="1" rendered="{!strChangeType='Minor database changes'}">
-                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" title="* Type of change requested" label="* Type of change requested"  style="width:80%;">
-          				<apex:selectOptions value="{!changeItems}"/>
-        			</apex:selectCheckboxes>
-                </apex:pageBlockSection>    
+
+                <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
+                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" label="* Type of change requested"  style="width:80%;">
+                        <apex:selectOptions value="{!changeItems}"/>
+                    </apex:selectCheckboxes>
+
+                    <tr><td colspan="4" class="aplabel {!IF(typeOfChangeRequested.size>0,'','hidden')}">
+                        Please indicate the effective date of the change.
+                    </td></tr>
+                    <apex:pageBlockSectionItem rendered="{!typeOfChangeRequested.size>0}">
+                        <apex:outputLabel value="Desired commencement date" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
 
                 <apex:outputPanel id="AddressFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Change of Address'), '', 'display:none')}" >
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="1" title="Change of local address in {!strLoB} {!apcountry}">
