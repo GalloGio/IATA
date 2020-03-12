@@ -440,6 +440,7 @@ public class IfapProcessTest {
 		response.responses[0].xml = null;
 		IfapProcessResultsBatch emptyXMLBatch = new IfapProcessResultsBatch(response);
 		Database.executeBatch(emptyXMLBatch);
+
 		Test.stopTest();
 
 		//Method call just to increase coverage
@@ -541,71 +542,6 @@ public class IfapProcessTest {
 
 	@isTest static void multicountryFinancialAssessmentResults50PointsTest(){
 		multicountryFinancialAssessmentResults(50, AMS_Utils.FA_RESULT_UNSATISFACTORY_UPDATE_FS);
-	}
-
-	@isTest
-	static void testSendEmail(){
-
-		loadTestCases();
-
-		// prepare json String
-		list<String> listJson = new list<String>();
-
-		Case c = [SELECT CaseNumber, AccountId FROM Case LIMIT 1];
-
-		String jsonCase =
-			'{'+
-			'"caseNumber": "'+c.CaseNumber+'",'+
-			'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
-			'"success":true'+
-			'}';
-		listJson.add(jsonCase);
-
-		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
-		
-		SalesforceSupportEmails__c sEmail = new SalesforceSupportEmails__c(
-			Name = 'test', 
-			Support_Email__c = 'test@test.com', 
-			Support_User_Id__c = UserInfo.getUserId());
-		insert sEmail;
-
-		Map<Id, String> errorMap = new Map<Id, String>();
-
-		String body = 'The IfapProcessResultsBatch job has finished\n' + 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
-		String finalstr = 'Id,Error,Errors-XML\n';
-		String subject = 'Ifap Process Results Batch Error List';
-
-		list<Messaging.SingleEmailMessage> emailList = new list<Messaging.SingleEmailMessage>();
-
-		Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
-			efa.setFileName('IfapProcessResultsBatchErrors_'+datetime.now()+'.csv');
-			efa.setBody(Blob.valueOf(finalstr));
-
-		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-			email.setSubject(subject);
-			email.setTargetObjectId(sEmail.Support_User_Id__c);
-			email.setPlainTextBody(body);
-			email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
-			email.setSaveAsActivity(false);
-			emailList.add(email);
-			
-		//Test the batch
-		Test.startTest();
-		IfapToolManager.PWCResponses response = IfapToolManager.processPWCResults();
-
-		IfapProcessResultsBatch batch = new IfapProcessResultsBatch(response);
-		Database.executeBatch(batch);
-
-		//Force xml to be null to increase coverage
-		response.responses[0].xml = null;
-		IfapProcessResultsBatch emptyXMLBatch = new IfapProcessResultsBatch(response);
-		Database.executeBatch(emptyXMLBatch);
-
-		//Send email
-		Messaging.SendEmailResult[] results = Messaging.sendEmail(emailList);
-		Test.stopTest();
-
-		System.assert(!emailList.isEmpty());
 	}
 
 }

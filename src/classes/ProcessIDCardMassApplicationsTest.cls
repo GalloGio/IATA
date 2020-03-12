@@ -1,6 +1,6 @@
 @isTest
 private class ProcessIDCardMassApplicationsTest {
-	
+
 	@testSetup
 	static void testSetup(){
 
@@ -435,58 +435,6 @@ private class ProcessIDCardMassApplicationsTest {
 
 				List<ID_Card_Application__c> iDCardAppList = [SELECT Id, Application_Status__c FROM ID_Card_Application__c];
 				System.assertNotEquals('Completed', iDCardAppList.get(0).Application_Status__c);
-	}
-
-	@isTest
-	static void testSendSFDevsAlertMessage(){
-		
-		Sobject anObject;
-
-		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-
-		List<User> userList = new List<User>();
-
-		User u = new User();
-		u.Alias = 'standt';
-		u.Email = 'standarduser@testorg.com';
-		u.EmailEncodingKey = 'UTF-8';
-		u.LastName = 'Testing';
-		u.LanguageLocaleKey = 'en_US';
-		u.LocaleSidKey = 'en_US';
-		u.ProfileId = testProfile.Id;
-		u.TimeZoneSidKey = 'America/Los_Angeles';
-		u.UserName = 'test.username@test.com';
-		u.License_Cost_Center__c = 'ISF005CH01';
-		u.IsActive = true;
-		u.Receive_Apex_emails__c = true;
-		userList.add(u);
-		
-		User u1 = new User();
-		u1.Alias = 'Test11';
-		u1.Email = 'test11@iata.org';
-		u1.EmailEncodingKey = 'UTF-8';
-		u1.LastName = 'Test11';
-		u1.LanguageLocaleKey = 'en_US';
-		u1.LocaleSidKey = 'en_US';
-		u1.ProfileId = '00e20000000h0gFAAQ';
-		u1.TimeZoneSidKey = 'Europe/Brussels';
-		u1.UserName = 'test.user11@test.com';
-		u1.License_Cost_Center__c = 'AAA000AA00';
-		u1.IsActive = true;
-		u1.Receive_Apex_emails__c = true;
-		userList.add(u1);
-
-		Test.startTest();
-
-		insert userList;
-
-		DevsTools.sendSFDevsAlertMessage('Title test', 'Message Test');
-		DevsTools.getClassName(anObject);
-		
-		Test.stopTest();
-
-		System.assert(!userList.isEmpty());
-
 	}
 
 }
