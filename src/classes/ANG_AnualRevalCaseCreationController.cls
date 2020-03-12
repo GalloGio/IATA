@@ -29,7 +29,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		AMS_Utils.OSCAR_REOPEN, 
 		AMS_Utils.OSCAR_PENDING_APPROVAL, 
 		AMS_Utils.OSCAR_PENDING_VALIDATION, 
-		AMS_Utils.OSCAR_OPEN_EDMC
+		AMS_Utils.OSCAR_OPEN_EDMC,
+		AMS_Utils.OSCAR_OPEN
 	};
 
 	public List<SelectOption> paginationSizeOptions{get;set;}
