@@ -131,6 +131,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track relatedAccounts;
 
     @track relatedContacts;
+	
+    get relatedAccountsShow(){
+        return (this.agentProfile && this.relatedAccounts.length); 
+    }
 
     //is the user a Level1 user? If he has not completed level 2 registration he is not
     @track Level1User = false;
