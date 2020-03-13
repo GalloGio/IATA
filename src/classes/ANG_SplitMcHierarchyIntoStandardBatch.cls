@@ -86,9 +86,17 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		String status = currentThreads == finishedThreads ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED : AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
 		AMS_OSCAR__c oscar = getOscarFromCase(accountGE, getOscarCase(accountGE));
-		update new AMS_OSCAR__c(Id = oscar.Id, Child_OSCAR_Status__c = status);
+
+		if(currentThreads == finishedThreads){
+			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
+		}
+		else {
+			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
+			oscar.STEP51__c = AMS_Utils.FAILED;
+		}
+
+		update oscar;
 	}
 
 	private List<Account> filterAccounts(List<Account> accts) {
