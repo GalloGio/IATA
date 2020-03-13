@@ -11,11 +11,19 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>LastModifiedDate__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Report_Id_Dev__c</field>
         <value xsi:type="xsd:string">1ac8f0dc-605b-4fe3-99c5-2e886d355b77</value>
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Type__c</field>
         <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
