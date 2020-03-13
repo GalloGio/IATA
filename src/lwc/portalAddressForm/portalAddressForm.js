@@ -1,9 +1,14 @@
 import { LightningElement,api,track } from 'lwc';
+import { loadStyle } from 'lightning/platformResourceLoader';
 
 /* APEX METHODS */
 import getISOCountries  from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getCountryStates from '@salesforce/apex/GCS_AccountCreation.getStates';
 import validateAddress  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.checkAddress';
+import getCSPortalPath  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
+
+/* STATIC RESOURCES */
+import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
 
 /* LABELS*/
 import CSP_L2_Country                   from '@salesforce/label/c.CSP_L2_Country';
@@ -26,16 +31,43 @@ import AMS_DQ_City_in_Another_State     from '@salesforce/label/c.AMS_DQ_City_in
 import AMS_DQ_Review_State_or_City      from '@salesforce/label/c.AMS_DQ_Review_State_or_City';
 
 export default class PortalAddressForm extends LightningElement {
-    /* Images */
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
-    arrowFirst = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first.png';
-    arrowFirstLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
-    arrowPrevious = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev.png';
-    arrowPreviousLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
-    arrowNext = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next.png';
-    arrowNextLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
-    arrowLast = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last.png';
-    arrowLastLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    @track portalPath = CSP_PortalPath;
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
+
+    get arrowFirst(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first.png';
+    }
+
+    get arrowFirstLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
+    }
+
+    get arrowPrevious(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev.png';
+    }
+
+    get arrowPreviousLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
+    }
+
+    get arrowNext(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next.png';
+    }
+
+    get arrowNextLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
+    }
+
+    get arrowLast(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last.png';
+    }
+
+    get arrowLastLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    }
 
     /* Passed address information */
     @api countryId;
@@ -137,6 +169,19 @@ export default class PortalAddressForm extends LightningElement {
     }
 
     connectedCallback(){
+        loadStyle(this, cspStylesheet)
+        .then(() => {
+            console.log('CSP Stylesheet loaded.');
+        });
+
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });    
+
         var address = JSON.parse(JSON.stringify(this.address));
         this.localAddress = address;
         this.generateResultsToDisplay(true);

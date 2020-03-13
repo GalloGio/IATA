@@ -1,11 +1,17 @@
 import { LightningElement, track, api} from 'lwc';
+import { loadStyle } from 'lightning/platformResourceLoader';
 
+/* APEX METHODS */
 import getISOCountries              from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import searchAccounts               from '@salesforce/apex/GCS_RegistrationController.searchAccounts';
+import getCSPortalPath              from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
 
-//custom labels
+/* STATIC RESOURCES */
+import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
+
+/* LABELS*/
 import CSP_L2_Account_Selection_Message from '@salesforce/label/c.CSP_L2_Account_Selection_Message';
 import CSP_L2_Account_Information from '@salesforce/label/c.CSP_L2_Account_Information';
 import CSP_L2_Account_Information_Message from '@salesforce/label/c.CSP_L2_Account_Information_Message';
@@ -34,22 +40,50 @@ import CSP_L2_Search_Message from '@salesforce/label/c.CSP_L2_Search_Message';
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
 export default class PortalRegistrationAccountSelection extends LightningElement {
-    /* Images */
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
-    arrowFirst = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first.png';
-    arrowFirstLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
-    arrowPrevious = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev.png';
-    arrowPreviousLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
-    arrowNext = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next.png';
-    arrowNextLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
-    arrowLast = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last.png';
-    arrowLastLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    @track portalPath = CSP_PortalPath;
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
+
+    get arrowFirst(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first.png';
+    }
+
+    get arrowFirstLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
+    }
+
+    get arrowPrevious(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev.png';
+    }
+
+    get arrowPreviousLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
+    }
+
+    get arrowNext(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next.png';
+    }
+
+    get arrowNextLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
+    }
+
+    get arrowLast(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last.png';
+    }
+
+    get arrowLastLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    }
 
     @api customerType;
     @api countryId;
     @api accountId;
     @api isTriggeredByRequest;
     @api searchResults;
+    @api isInternal;
 
     // categorization
     @track customerTypesList;
@@ -135,6 +169,15 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     // label variables
+    get nextButtonLabel(){
+        if(this.isInternal){
+            return 'Go to Selected Account';
+        }
+        else{
+            return CSP_L2_Next_Step;
+        }
+    }
+
     get searchResultsAboveLimitLink_1(){
         return CSP_L2_Search_Results_Above_Limit_Link_1 === '--empty--' ? '' : CSP_L2_Search_Results_Above_Limit_Link_1 + ' '; 
     }
@@ -187,6 +230,20 @@ export default class PortalRegistrationAccountSelection extends LightningElement
 
     connectedCallback() {
         this.startLoading();
+
+        loadStyle(this, cspStylesheet)
+        .then(() => {
+            console.log('CSP Stylesheet loaded.');
+        });
+
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });    
+
         //if(this.customerType === 'Student' || this.customerType === 'General_Public_Category'){
         if(this.customerType === ''){
             this.setCustomerType(null);
@@ -550,7 +607,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
 
     /* Navigation methods */
     next(){
-        this.dispatchEvent(new CustomEvent('nextselection'));
+        this.dispatchEvent(new CustomEvent('nextselection',{detail : this.selectedAccountId}));
     }
 
     createAccount(){

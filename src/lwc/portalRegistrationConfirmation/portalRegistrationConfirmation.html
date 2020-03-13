@@ -184,79 +184,94 @@
                 </div>
             </template>
 
-            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
-            </lightning-layout-item>
+            <template if:true={hasContactInfo}>
 
-            <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
-            </lightning-layout-item>
-
-            <!------------------------------------------      Personal Details      -------------------------------------------->
-            <div class="sectionHeaderContainer">
-                <lightning-layout-item size="6" class="IEFixDisplay">
-                    <div class="sectionTitle">{labels.CSP_L2_Profile_Details}</div>
-                    <div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
+                <!------------------------------------------      Personal Details      -------------------------------------------->
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
                 </lightning-layout-item>
 
-                <lightning-layout-item size="6" class="editButtonWrapper IEFixDisplay">
-                    <div class="text-xxsmall">
-                        <lightning-button variant="base"
-                            label={labels.CSP_L2_Back_to_Edit}
-                            title={labels.CSP_L2_Back_to_Edit}
-                            onclick={toProfileDetails}
-                            class="blueCustomButtonLinkSmall"
-                            icon-name="utility:forward" 
-                            icon-position="right">
-                        </lightning-button>
-                    </div>
-                </lightning-layout-item>
-            </div>
-            
-            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
-            </lightning-layout-item>
-            
-            <div class="fieldContainer">
-                <template if:true={contactInfo.salutationNotSet}>
-                	<lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                	    <div class="dataLabel">{labels.CSP_L2_Title}</div>
-                	    <div class="dataValue itemValue">{contactInfo.Salutation}</div>
-                	</lightning-layout-item>
-
-                	<lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                	</lightning-layout-item>
-				</template>
-
-                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                    <div class="dataLabel">{labels.CSP_L2_Job_Function}</div>
-                    <div class="dataValue itemValue">{contactInfo.Membership_Function__c}</div>
+                <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
                 </lightning-layout-item>
 
-                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                    <div class="dataLabel">{labels.CSP_L2_Job_Title}</div>
-                    <div class="dataValue itemValue">{contactInfo.Title}</div>
+                <div class="sectionHeaderContainer">
+                    <lightning-layout-item size="6" class="IEFixDisplay">
+                        <div class="sectionTitle">{labels.CSP_L2_Profile_Details}</div>
+                        <div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="editButtonWrapper IEFixDisplay">
+                        <div class="text-xxsmall">
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Edit}                       
+                                title={labels.CSP_L2_Back_to_Edit}
+                                onclick={toProfileDetails}
+                                class="blueCustomButtonLinkSmall"
+                                icon-name="utility:forward" 
+                                icon-position="right">
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </div>
+
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
                 </lightning-layout-item>
-            </div>
-                
+
+                <div class="fieldContainer">
+                    <template if:true={contactInfo.salutationNotSet}>
+                        <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                            <div class="dataLabel">{labels.CSP_L2_Title}</div>
+                            <div class="dataValue itemValue">{contactInfo.Salutation}</div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        </lightning-layout-item>
+                    </template>
+
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Job_Function}</div>
+                        <div class="dataValue itemValue">{contactInfo.Membership_Function__c}</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Job_Title}</div>
+                        <div class="dataValue itemValue">{contactInfo.Title}</div>
+                    </lightning-layout-item>
+                </div>
+            </template>
+
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
 
             <div class="buttonsContainer">
                 <lightning-layout-item size="6" class="backButtonWrapper">
                     <div class="text-xxsmall">
-                        <lightning-button variant="base"
-                            label={labels.CSP_L2_Back_to_Profile_Details}
-                            title={labels.CSP_L2_Back_to_Profile_Details}
-                            onclick={toProfileDetails}
-                            class="blueCustomButtonLinkSmall"
-                            icon-name="utility:back" 
-                            icon-position="left">
-                        </lightning-button>
+                        <template if:true={hasContactInfo}>
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Profile_Details}
+                                title={labels.CSP_L2_Back_to_Profile_Details}
+                                onclick={toProfileDetails}
+                                class="blueCustomButtonLinkSmall"
+                                icon-name="utility:back" 
+                                icon-position="left">
+                            </lightning-button>
+                        </template>
+                        <template if:false={hasContactInfo}>
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Business_Address_Information}
+                                title={labels.CSP_L2_Back_to_Business_Address_Information}
+                                onclick={toAddressInformation}
+                                class="blueCustomButtonLinkSmall"
+                                icon-name="utility:back" 
+                                icon-position="left">
+                            </lightning-button>
+                        </template>
                     </div>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="6" class="IEFixDisplay">
                     <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
                     </lightning-button>
-                </lightning-layout-item>
+                </lightning-layout-item>            
             </div>
 
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
