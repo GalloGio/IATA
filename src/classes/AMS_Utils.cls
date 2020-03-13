@@ -61,6 +61,7 @@ public without sharing class AMS_Utils {
 	public static final String OSCAR_PENDING_APPROVAL = 'Pending Approval';
 	public static final String OSCAR_PENDING_VALIDATION = 'Pending Validation';
 	public static final String OSCAR_OPEN_EDMC = 'Open - EDMC';
+	public static final String OSCAR_OPEN = 'Open';
 
 	public static final String BR = 'BR';
 	public static final String HO = 'HO';

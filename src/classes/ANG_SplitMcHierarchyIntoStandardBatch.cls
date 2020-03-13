@@ -86,9 +86,17 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		String status = currentThreads == finishedThreads ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED : AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
 		AMS_OSCAR__c oscar = getOscarFromCase(accountGE, getOscarCase(accountGE));
-		update new AMS_OSCAR__c(Id = oscar.Id, Child_OSCAR_Status__c = status);
+
+		if(currentThreads == finishedThreads){
+			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
+		}
+		else {
+			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
+			oscar.STEP51__c = AMS_Utils.FAILED;
+		}
+
+		update oscar;
 	}
 
 	private List<Account> filterAccounts(List<Account> accts) {
@@ -252,6 +260,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		addAeAccountInformationToOscar(allGeAndHe, oscars);
 		Map<Id, Case> cases = createOscarCase(allHe, c, oscars);
 		Map<Id, AMS_Pax_Accreditation_Form__c> paxs = createStagingArea(allHe, cases);
+		createOwners(allHe, paxs);
 		finalOscarUpdate(allHe, oscars, cases, paxs);
 	}
 
@@ -374,6 +383,77 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		if (!paxToInsert.isEmpty())
 			insert paxToInsert.values();
 		return paxToInsert;
+	}
+
+	private void createOwners(List<Account> accts, Map<Id, AMS_Pax_Accreditation_Form__c> paxs) {
+		List<AMS_Accreditation_Contact__c> ownersToInsert = new List<AMS_Accreditation_Contact__c>();
+
+		Map<Id, List<AMS_Account_Role__c>> owners = getAccountOwners(accts);
+
+		for (Account acct : accts) {
+			AMS_Pax_Accreditation_Form__c pax = paxs.get(acct.Id);
+			if (owners.get(acct.Id) == null)
+				continue;
+			
+			for (AMS_Account_Role__c o : owners.get(acct.Id)) {
+				AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c();
+				owner.AMS_Pax_Accreditation_Form__c = pax.Id;
+				owner.Agency_owner__c = true;
+				owner.Company__c = o.Owner_Account__c;
+				owner.Contact__c = o.Contact__c;
+				owner.Email__c = o.Contact_Email__c;
+				owner.Financial_Assessment_Contact__c = o.Financial_Assessment_Contact__c;
+				owner.Financial_interest__c = o.Percentage__c;
+				owner.First_name__c = o.Contact__c != null
+					? o.Contact__r.FirstName
+					: o.Person__c != null
+						? o.Person__r.First_Name__c
+						: '';
+				owner.Last_name__c = o.Contact__c != null
+					? o.Contact__r.LastName
+					: o.Person__c != null
+						? o.Person__r.Lastname__c
+						: o.Owner_Account__c == null
+							? o.Owner_Name__c
+							: '_';
+				owner.Legacy_External_Id__c = o.Legacy_External_ID__c;
+				owner.Name = o.Contact__c != null
+					? o.Contact__r.FirstName + ' ' + o.Contact__r.LastName
+					: o.Person__c != null
+						? o.Person__r.Name
+						: o.Owner_Account__c != null
+							? o.Owner_Account__r.Name
+							: o.Owner_Name__c;
+				owner.Person_AMS__c = o.Person__c;
+				owner.Phone__c = o.Contact_Phone__c;
+				owner.RecordTypeId = o.Owner_Account__c == null ? AMS_Utils.AccreditationContactPersonRT : AMS_Utils.AccreditationContactCompanyRT;
+				ownersToInsert.add(owner);
+			}
+		}
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createOwners] Created owner: ' + ownersToInsert);
+		if (!ownersToInsert.isEmpty())
+			insert ownersToInsert;
+	}
+
+	private Map<Id, List<AMS_Account_Role__c>> getAccountOwners(List<Account> accts) {
+		Map<Id, List<AMS_Account_Role__c>> owners = new Map<Id, List<AMS_Account_Role__c>>();
+
+		for (AMS_Account_Role__c owner : [SELECT Id, Account__c, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName,
+											  Contact__r.LastName, Contact_Email__c, Financial_Assessment_Contact__c, Percentage__c,
+											  Legacy_External_ID__c, Person__c, Person__r.First_Name__c, Person__r.Lastname__c,
+											  Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name,
+											  Contact_Phone__c, Owner_Name__c
+										  FROM AMS_Account_Role__c
+										  WHERE Account__c IN :accts
+											  AND active__c = true
+											  AND RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]) {
+			if (!owners.containsKey(owner.Account__c))
+				owners.put(owner.Account__c, new List<AMS_Account_Role__c>());
+			owners.get(owner.Account__c).add(owner);
+		}
+
+		return owners;
 	}
 	
 	/**
