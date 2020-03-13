@@ -178,7 +178,7 @@ public without sharing class ISSP_Financial_Institutions {
 				agencyRegion = userAcc.Region_formula__c;
 				countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT));
 				userCanRequestGDI = (!gdiAppRightDenied && !gdiAppRightGranted && !gdiAppRightRequested
-					&& userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+					&& (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT)
 					&& userAcc.Sector__c == AMS_Utils.SECTOR_PASSENGER
 					&& (AMS_Utils.ACTIVEAGENCYSTATUS.contains(userAcc.Status__c) || userAcc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 					&& (currentPortalUser.Contact.Financial_Assessment_Contact__c || currentPortalUser.Contact.User_Portal_Status__c == 'Approved Admin'));
