@@ -1,0 +1,13 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="label" type="String" />
+    <aura:attribute name="concatedValues" type="String" 
+        description="Semi-colon of the value colon the label. Example value1:label1;value2:label2;" />
+    <aura:attribute name="options" type="List" access="private" />
+    <aura:attribute name="value" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div>
+        <c:Picklist options="{!v.options}" value="{!v.value}" label="{!v.label}" />
+    </div>
+</aura:component>
