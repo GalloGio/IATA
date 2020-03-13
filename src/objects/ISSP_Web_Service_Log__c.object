@@ -505,7 +505,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>2/13/2020 12:00 AM,TODAY</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
