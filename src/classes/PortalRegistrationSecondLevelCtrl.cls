@@ -337,4 +337,20 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		insert psa;
 	}
 
+	@AuraEnabled
+	public static String getCSPortalPath(){
+		List<Network> networks = [select id, Name, UrlPathPrefix from Network where name ='CS Portal'];
+
+		if(networks.isEmpty()){
+			return '';
+		}
+
+		String s = Network.getLoginUrl(networks[0].Id);
+
+		Integer i = s.indexOf(networks[0].UrlPathPrefix);
+
+		s = s.substring(0, i-1) + Label.CSP_PortalPath;
+
+		return s;
+	}
 }

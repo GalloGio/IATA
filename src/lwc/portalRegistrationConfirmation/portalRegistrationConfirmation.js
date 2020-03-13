@@ -7,6 +7,7 @@ import createIsoCity                        from '@salesforce/apex/PortalRegistr
 import registrationWithNewAccount           from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithNewAccount';
 import registrationWithExistingAccount      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount';
 import createNewAccount from '@salesforce/apex/AccountCreationCtrl.createNewAccount';
+import getCSPortalPath from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -55,9 +56,16 @@ import CSP_L2_Go_Back from '@salesforce/label/c.CSP_L2_Go_Back';
 import CSP_L2_Contact_Support from '@salesforce/label/c.CSP_L2_Contact_Support';
 
 export default class PortalRegistrationConfirmation extends LightningElement {
+    @track portalPath = CSP_PortalPath;
+
     /* Images */
-    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    get successIcon(){
+        return this.portalPath + 'CSPortal/Images/Icons/youaresafe.png';
+    }
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
 
     @api trigger;
     @api isTriggeredByRequest;
@@ -142,6 +150,14 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     }
 
     connectedCallback(){
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });
+
 
         if(this.selectedAccountId){
             getAccountInfo({accountId : this.selectedAccountId})
