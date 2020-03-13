@@ -33,6 +33,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000004');
 		
 		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac1, ac2, ac3, ac4, ac5 });
+		ANG_TestDataHelper.insertAccountOwner(ac5.Id);
 
 		Contact cont = ANG_TestDataHelper.insertContact(ac1.Id);
 		ANG_TestDataHelper.insertOscarAndRelatedEntities(ac1, cont.Id, AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
@@ -443,6 +444,13 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 			System.assertEquals(1, paxs.size());
 			System.assertEquals(AMS_Utils.HE, paxs.get(0).Location_Type__c);
 			System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, paxs.get(0).ANG_Accreditation_type__c);
+			
+			// owners
+			List<AMS_Account_Role__c> owners = [SELECT Id FROM AMS_Account_Role__c WHERE Account__c = :acct.Id];
+			List<AMS_Accreditation_Contact__c> contacts = [SELECT Id
+														   FROM AMS_Accreditation_Contact__c
+														   WHERE AMS_Pax_Accreditation_Form__c = :paxs.get(0).Id];
+			System.assertEquals(owners.size(), contacts.size());
 		}
 	}
 }

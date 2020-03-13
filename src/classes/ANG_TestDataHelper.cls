@@ -131,6 +131,25 @@ public class ANG_TestDataHelper
 		return cont;
 	}
 
+	public static AMS_Account_Role__c insertAccountOwner(Id accountId) {
+		AMS_Account_Role__c owner = new AMS_Account_Role__c();
+		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		owner.Account__c = accountId;
+		owner.Duty__c = 'number 2';
+		owner.Employee_Name__c = 'name for ' + accountId;
+		owner.Hours__c = '6';
+		owner.IsManager__c = true;
+		owner.Percentage__c = 100;
+		owner.Position__c = 'G';
+		owner.Owner_Name__c = 'name for ' + accountId;
+		owner.Legacy_External_Id__c = 'some ext-id';
+		owner.Owner_Account__c = null;
+		owner.Contact__c = null;
+
+		insert owner;
+		return owner;
+	}
+
 	public static ResultObjects insertOscarAndRelatedEntities(Account account, Id contactId, String oscarProcessType, Id oscarRecordType) {
 		return insertOscarAndRelatedEntities(account, contactId, oscarProcessType, oscarRecordType, null, null);
 	}
