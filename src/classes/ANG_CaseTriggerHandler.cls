@@ -76,8 +76,8 @@ public class ANG_CaseTriggerHandler {
 					&& ifapStatus.contains(c.status))
 				)
 			){
-				//Skip updating the financial result on the account  considering the following scenario:
-				if(c.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL && c.Exception_Approved_on__c != null){
+				//Skip updating the financial result on the multicountry account considering the following scenario
+				if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(c.Financial_Review_Type__c) && c.Exception_Approved_on__c != null){
 					//A Financial Review is done on a multicountry key hierarchy and an exception is raised to evaluate
 					//if the consequences should be applied or not. If the exception is approved,
 					//it means that the consequences of the new Financial Assessment result
