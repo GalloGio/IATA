@@ -12,7 +12,7 @@
     <html> 
 		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 	    <body>
-			<div class="testeS">
+			<div>
 				<c:ISSP_Header ></c:ISSP_Header>
 				<c:ISSP_CustomNavigation />  
 	
