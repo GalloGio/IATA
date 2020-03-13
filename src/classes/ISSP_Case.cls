@@ -1569,7 +1569,9 @@ public without sharing class ISSP_Case {
 			if(emailCurrentAcc != ''){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
 					if(d2dca.Name == emailCurrentAcc){
-						setEmailPriority.add(d2dca.Email__c);
+						for(String email : d2dca.Email__c.split(';')){
+							setEmailPriority.add(email);
+						}
 					}
 				}
 			}
@@ -1653,26 +1655,36 @@ public without sharing class ISSP_Case {
 	public static void sendMassEmail(Id caseId, Id templateId) {
 		try {
 			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-			list<User> listUsers = [SELECT Id, ContactId
+			list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
 				FROM User
 				WHERE ContactId != null AND Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
 
-			List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
-			for(User user : listUsers) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setOrgWideEmailAddressId(orgAddress.Id);
-				mail.setTargetObjectId(user.ContactId);
-				mail.setWhatId(caseId);
-				mail.setUseSignature(false);
-				mail.setBccSender(false);
-				mail.setSaveAsActivity(false);
-				mail.setTemplateId(templateId);
-				listEmail.add(mail);
+			List<String> listUserEmails = new List<String>();
+			Id contactId = null;
+
+			for(User usr : listUsers.values()) {
+				if(usr.ContactId == null){
+					listUserEmails.add(usr.Email);
+				}
+				else{
+					listUserEmails.add(usr.Contact.email);
+				}
+				if(usr.ContactId != null && contactId == null){
+					contactId = usr.ContactId;
+				}
 			}
 
-			if (!listEmail.isEmpty()) {
-				Messaging.sendEmail(listEmail);
-			}
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgAddress.Id);
+			mail.setTargetObjectId(contactId);
+			mail.setToAddresses(listUserEmails);
+			mail.setWhatId(caseId);
+			mail.setUseSignature(false);
+			mail.setBccSender(false);
+			mail.setSaveAsActivity(false);
+			mail.setTemplateId(templateId);
+
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 
 		} catch (Exception e) {
 			System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
