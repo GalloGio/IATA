@@ -741,7 +741,11 @@
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
-                <fullName>CNS Endorsement</fullName>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1882,6 +1886,14 @@
         <label>Travel Agent</label>
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>

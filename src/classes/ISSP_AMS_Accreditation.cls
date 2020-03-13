@@ -206,15 +206,17 @@ public without sharing class ISSP_AMS_Accreditation {
 				if(isCNSAgency && newCase.Reason1__c != null) {
 					lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ';
 
-					if(newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
-						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_HO;
+					if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
+						lblCNSAgencyTitle += Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR;
+					} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT) {
+						lblCNSAgencyTitle += Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR;
+					} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+						lblCNSAgencyTitle += Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
+					}else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO) {
+						lblCNSAgencyTitle += Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
+					}else if (newCase.Reason1__c == 'TO DO') {
+						lblCNSAgencyTitle += 'TO DO';
 					}
-					else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
-						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_BR;	
-					}
-					else {
-						lblCNSAgencyTitle += Label.ISSP_AMS_NEW_INDEPENDENT_BR;
-					}	
 				}
 			}
 			return lblCNSAgencyTitle;
@@ -821,8 +823,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (!isMultiCountryNewAE && !isMCAccredited && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD
 					|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 					amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
-				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
-					amsOfficeType = 'Branch';
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT  || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
+					amsOfficeType = AMS_Utils.BR;
 				}
 
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
@@ -1144,8 +1146,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (!isMultiCountryNewAE && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD
 			|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 			amsOfficeType = AMS_Utils.HO;
-		} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
-			amsOfficeType = 'Branch';
+		} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
+			amsOfficeType = AMS_Utils.BR;
 		}
 
 		applyLanguage = newCase.Case_Language__c;
@@ -1753,6 +1755,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}else{
 						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
 						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
 					}
 				}else{
 					if (isocountry.EACP_Country__c) {
@@ -1850,11 +1853,11 @@ public without sharing class ISSP_AMS_Accreditation {
 				includedSummaryPage = 'ISSP_ANG_PAX_AE_ReadOnly';
 			}
 		} else if (sectorValue.StartsWith('Cargo_Agent')) {
-			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || newForm.Agent_Type__c == 'CNS Endorsement') {
+			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || newForm.Agent_Type__c == 'CNS Endorsement' || newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH || newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH || newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO || newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO || newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR) {
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO) {
 					includedPageName = 'ISSP_AMS_Cargo_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_ReadOnly';
-				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT) {
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL) {
 					includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
 				}
@@ -2370,7 +2373,21 @@ public without sharing class ISSP_AMS_Accreditation {
 		newForm.Operation_Type__c = sectorValue;
 		if (!isNoticeOfChange) {
 			if (amsLocationType != null) {
-				newForm.Agent_Type__c = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
+				if(isCNSAgency){
+					if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH) {
+						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH;
+					} else if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH) {
+						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH;
+					} else if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO) {
+						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO;
+					}else if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO) {
+						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO;
+					}else if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR) {
+						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR;
+					}
+				}else{
+					newForm.Agent_Type__c = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
+				}
 
 				if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH) {
 					newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
@@ -7301,7 +7318,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
 		Boolean errorFound = false;
 
-		if(isCNSAgency && con.Account.Location_Type__c == 'HO'){
+		if(isCNSAgency && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO)){
 			Boolean haveContact = false;
 			for(AMS_Accreditation_Contact__c acc: List_AgencyContacts){
 				if(acc.Security_Contact__c || acc.Authorised_signatory__c || acc.Portal_administrator__c || acc.Invoicing_Contact__c){

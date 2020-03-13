@@ -17873,7 +17873,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS CNS endorsement HO</shortDescription>
-        <value>CNS endorsement HO</value>
+        <value>CNS endorsement</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_ACCR_Alert1</fullName>
@@ -18140,7 +18140,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS CASS Commercial Account HO</shortDescription>
-        <value>CASS Commercial Account HO</value>
+        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CASS_Contact</fullName>
@@ -21255,6 +21255,14 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS Name of employer</shortDescription>
         <value>Name of employer:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_New_Commercial_Account_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS New Commercial Account BR</shortDescription>
+        <value>New Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_New_HO_details</fullName>
