@@ -314,7 +314,7 @@ private class ANG_StandardConversionsTest {
 
 		update oscar;
 
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(accountGE.Id, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, accountGE.Id, false);
 		Database.executeBatch(myBatchObject);
 
 		Test.stopTest();
