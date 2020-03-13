@@ -69,38 +69,75 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			notes = new Set<String>();
 
-			if(oscar.ANG_Type_Of_Change__c != null){
+			if (oscar.ANG_Type_Of_Change__c != null) {
 				notes.add('If you wish to correct any value on PCI status through this type of OSCAR, please note that those values will be applied to all accounts selected. The FoP will remain unchanged and no ebulletin message will be sent.');
-				if(tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
+				
+				if (tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS)
+					|| tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING)
+					|| tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) {
+					notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
+				}
+				
+				if (isMulticountry
+					&& (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+						|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)))
+					notes.add('Change of location type will swap the selected agencies.');
+				else if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+					|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
+					notes.add('Change of location type will swap the current agency with the current HE.');
+				
+				if (tocList.contains(AMS_Utils.ANG_LOCATION)) {
+					notes.add('Change of location can be applied only to a single agency.');
+				}
 
-				if(isMulticountry && (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))) notes.add('Change of location type will swap the selected agencies.');
-				else if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY) ) notes.add('Change of location type will swap the current agency with the current HE.');
+				if (tocList.contains(AMS_Utils.ANG_HIERARCHY)) {
+					notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE or GE of another hierarchy or one of the selected AE.');
+				}
 
-				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE or GE of another hierarchy or one of the selected AE.');
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null){
+				if (tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null) {
 					Boolean diffDestination = diffDestination(oscar.New_parent__c);
-					//NEWGEN-5008 - TEST SCENARIO 2/A AND 2/B
-					if(this.isMulticountry){
-						if(diffDestination){
-							notes.add('The selected agencies will be linked to the new parent: ' + newParent.Name + '('+ newParent.IATACode__c +')');
-
-							if(isOnlyGeBspLeft()){
+					// NEWGEN-5008 - TEST SCENARIO 2/A AND 2/B
+					if (this.isMulticountry) {
+						if (diffDestination) {
+							notes.add('The selected agencies will be linked to the new parent: ' + newParent.Name + '('
+								+ newParent.IATACode__c + ')');
+							
+							if (isOnlyGeBspLeft()) {
 								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 							}
-						}
-						else notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: '+ newParent.Name + '('+ newParent.IATACode__c +')');
-					}
-					else if(diffDestination) notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
-					else notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
-				}
-				if(isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to all agencies in the same BSP');
-				else if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
+						} else {
+							notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
 
-				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
-				if(tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)){ notes.add('The conversion to GoLite must be applied to the full hierarchy'); }
-				else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
-				else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }
+							notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: '
+								+ newParent.Name + '(' + newParent.IATACode__c + ')');
+						}
+					} else if (diffDestination) {
+						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: ' + newParent.Name
+							+ '(' + newParent.IATACode__c + ')' + '", therefore they will automatically get the Accreditation type "'
+							+ newParent.ANG_Accreditation_Model__c + '".');
+					} else {
+						notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '
+							+ newParent.Name + '(' + newParent.IATACode__c + ')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
+					}
+				}
+
+				if (isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR)) {
+					notes.add('VMFR must be applied to all agencies in the same BSP');
+				} else if (tocList.contains(AMS_Utils.ANG_VMFR)) {
+					notes.add('VMFR must be applied to the full hierarchy');
+				}
+
+				if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) {
+					notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
+				}
+
+				if (tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)) {
+					notes.add('The conversion to GoLite must be applied to the full hierarchy');
+				} else if (tocList.contains(AMS_Utils.CONVERTTOLEGACY)) {
+					notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy');
+				} else if (tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)) {
+					notes.add('The conversion to International must be applied to the full hierarchy');
+				}
 			}
 
 			return notes;
@@ -473,6 +510,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
+	private Boolean isSingleBSPSelected {
+		get {
+			return (isSingleBSPSelected == null) ? true : isSingleBSPSelected;
+		} 
+		set;
+	}
+
 	public String getOscarCaseSubQuery(){
 
 		String oscarCaseSubQuery = '';
@@ -639,7 +683,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
 		if(Test.isRunningTest()){
-			 oscar = (AMS_OSCAR__c) Database.query('SELECT ' + String.join(new List<String>(oscarFields), ', ') + ' FROM AMS_OSCAR__c WHERE Id = :oscarId');
+			oscar = (AMS_OSCAR__c) Database.query('SELECT ' + String.join(new List<String>(oscarFields), ', ') + ' FROM AMS_OSCAR__c WHERE Id = :oscarId');
 		}
 
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -653,7 +697,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		oscar.HE_per_BSP_Mapping__c = null;
-
 	}
 
 	// ***********************************
@@ -675,40 +718,72 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
-	@TestVisible private Boolean performValidations(){
-
+	@TestVisible 
+	private Boolean performValidations(){
 		//clear error checks
 		errorChecks = null;
 
-		System.debug('Performing validations on the hierarchyValues:'+hierarchyValues);
+		if (this.isMulticountry) { 
+			runMulticountryAgencyChangesValidations();
+		} else {
+			if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)) {
+				if (!isJustOneAgencySelected()) {
+					errorChecks.put(AMS_Utils.ANG_LOCATION_TYPE, true);
+				}
+	
+				if (hasTopLocationType(oscar.Account__c)) {
+					errorChecks.put('Location Type on TOP Agency', true);
+				}
+			}
 
-		if(this.isMulticountry){ runMulticountryAgencyChangesValidations(); }
-
-		if(tocList.contains(AMS_Utils.ANG_LOCATION) && !isJustOneAgencySelected()) errorChecks.put(AMS_Utils.ANG_LOCATION, true);
-
-		if(!this.isMulticountry && (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))){
-			if(!isJustOneAgencySelected()) errorChecks.put(AMS_Utils.ANG_LOCATION_TYPE, true);
-			if(hasTopLocationType(oscar.Account__c)) errorChecks.put('Location Type on TOP Agency', true);
+			if (tocList.contains(AMS_Utils.ANG_VMFR) && !isAllHierarchySelected()) {
+				errorChecks.put(AMS_Utils.ANG_VMFR, true);
+			}
 		}
 
-		if(!this.isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_VMFR, true);
+		if (tocList.contains(AMS_Utils.ANG_LOCATION) && !isJustOneAgencySelected()) {
+			errorChecks.put(AMS_Utils.ANG_LOCATION, true);
+		}
 
-		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
+		if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY) && !isAllHierarchySelected()) {
+			errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
+		}
 
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
 			if(oscar.New_parent__c == null){
 				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
 			}else{
-				if(isTerminatedAccount(oscar.New_parent__c)) errorChecks.put('Terminated Accounts', true);
-				if(!this.isMulticountry && isMovingTopLocationTypeAccount()  && !isAllHierarchySelected()) errorChecks.put('Orphan Accounts', true);
-				if(!this.isMulticountry && diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c)) errorChecks.put('Top Location Type', true);
-				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected()) errorChecks.put('Location Type Change Detected', true);
-				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
-				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
+				if (isTerminatedAccount(oscar.New_parent__c)) {
+					errorChecks.put('Terminated Accounts', true);
+				}
 
-				if(this.isMulticountry) runValidationChangeHierarchyforMulticountry();
+				if (diffDestination(oscar.New_parent__c)) {
+					if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) {
+						errorChecks.put('Mixed types of changes', true);
+					}
 
-				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
+					if (!isSingleDestinationHierarchy(oscar.New_parent__c)) {
+						errorChecks.put('Multiple Hierarchies', true);
+					}
+
+					if (!this.isMulticountry && !hasTopLocationType(oscar.New_parent__c)) {
+						errorChecks.put('Top Location Type', true);
+					}
+				} else {
+					if (isAllHierarchySelected()) {
+						errorChecks.put('Location Type Change Detected', true);
+					}
+
+					if (!newParentIncluded(oscar.New_parent__c)) {
+						errorChecks.put('Must include New Parent', true);
+					}
+				}
+
+				if (this.isMulticountry) {
+					runValidationChangeHierarchyforMulticountry();
+				} else if (isMovingTopLocationTypeAccount() && !isAllHierarchySelected()) {
+					errorChecks.put('Orphan Accounts', true);
+				}
 
 				if(newParent.Location_Type__c == AMS_Utils.GE){
 					//validate and store in OSCAR
@@ -725,7 +800,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					oscar.HE_per_BSP_Mapping__c = JSON.serialize(resultHEPerBSP);
 				}
 			}
-
 		}
 
 		Boolean pilotTypeOfChange = (tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL));
@@ -958,19 +1032,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public boolean isMovingTopLocationTypeAccount(){
-
 		for(HierarchyItem item:hierarchyValues){
 			if( (item.selected && item.isTopParent) || (item.main && item.isTopParent))
 				return true;
 		}
 
 		return false;
-
 	}
 
 
 	public boolean isAllHierarchySelected(){
-
 		for(HierarchyItem item:hierarchyValues){
 			if(!item.selected && !item.main)
 				return false;
@@ -980,46 +1051,30 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public boolean hasTopLocationType(Id acctId){
-
-
 		Account a = [Select Id, Location_Type__c, ANG_Accreditation_Model__c from Account where Id = :acctId];
-
-		/*
-		for(HierarchyItem item:hierarchyValues){
-			if(item.acc.Id == acctId && item.acc.Location_Type__c == AMS_Utils.HE)
-				return true;
-		}
-
-
-		return false;
-		*/
 
 		return ((a.Location_Type__c == AMS_Utils.HE && (a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASH || a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)) || a.Location_Type__c == AMS_Utils.GE);
 	}
 
 	public boolean isTerminatedAccount(Id acctId){
-
 		Account a = [Select Id, Status__c from Account where Id = :acctId];
 
 		return a.Status__c == 'Terminated';
-
 	}
 
 	public boolean isJustOneAgencySelected(){
-
 		Integer selected = 0;
 
 		for(HierarchyItem item:hierarchyValues){
-			if(item.selected || item.main)
+			if(item.selected || item.main) {
 				selected++;
-
+			}
 		}
 
 		return selected == 1;
 	}
 
 	public boolean diffDestination(Id newParent){
-
 		for(HierarchyItem item:hierarchyValues){
 			if(item.acc.Id == newParent)
 				return false;
@@ -1039,7 +1094,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public boolean isSingleDestinationHierarchy(Id accountId){
-
 		Set<Id> hierarchies = new Set<Id>();
 
 		List<AMS_Agencies_relationhip__c> rels = [Select Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c = :accountId];
@@ -1062,8 +1116,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	*
 	*/
 	private void runMulticountryAgencyChangesValidations(){
-
-		Boolean isSingleBSPSelected = true;
+		isSingleBSPSelected = true;
 		Boolean onlyTwoAgenciesSelected = false;
 		Boolean diffLocationTypesSelected = false;
 		Boolean allAgenciesFromSameBSPSelected = false;
@@ -1136,8 +1189,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			errorChecks.put('All agents from the same BSP not selected', true);
 		}
 
-		if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && !diffDestination(oscar.New_parent__c) && isSingleBSPSelected) errorChecks.put('All selected locations are in the same BSP', true);
-
 		//If a GE location is selected when performing a change of hierarchy the user has to select the entire hierarchy
 		//since it is not allowed to leave HE or AE accounts alone in the hierarchy
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && locationTypeSet.contains(AMS_Utils.GE) && selectedCount != hierarchySize){
@@ -1145,7 +1196,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 	}
-
 
 	/**
 	 * Run validation for Multicountry change of hiearchy
@@ -1159,30 +1209,29 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		//TEST SCENARIO 3
-		if(newParent.Location_Type__c == AMS_Utils.GE && diffDestination(oscar.New_parent__c)){
+		Set<ID> selectBSPGeHE = new Set<ID>();
+		Set<ID> notSelectBSPAE = new Set<ID>();
 
-			Set<ID> selectBSPGeHE = new Set<ID>();
-			Set<ID> notSelectBSPAE = new Set<ID>();
-
-			for(HierarchyItem item : hierarchyValues){
-
-				if((item.selected || item.main) && (item.acc.Location_Type__c == AMS_Utils.GE || item.acc.Location_Type__c == AMS_Utils.HE)){
-					selectBSPGeHE.add(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
-				}else if(!(item.selected || item.main) && item.acc.Location_Type__c == AMS_Utils.AE){
-					notSelectBSPAE.add(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
-				}
+		for (HierarchyItem item : hierarchyValues) {
+			
+			if ((item.selected || item.main)
+				&& (item.acc.Location_Type__c == AMS_Utils.GE || item.acc.Location_Type__c == AMS_Utils.HE)) {
+				selectBSPGeHE.add(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			} else if (!(item.selected || item.main) && item.acc.Location_Type__c == AMS_Utils.AE) {
+				notSelectBSPAE.add(item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
 			}
+		}
 
-			for(ID bsp : selectBSPGeHE){
-				if(notSelectBSPAE.contains(bsp)){
-					errorChecks.put('Multicountry AE account alone in a BSP', true);
-				}
+		for(ID bsp : selectBSPGeHE){
+			if(notSelectBSPAE.contains(bsp)){
+				errorChecks.put('Multicountry AE account alone in a BSP', true);
 			}
 		}
 
 		//TEST SCENARIO 4
-		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 			errorChecks.put('Multicountry change hierarchy must select GE', true);
+		}
 
 		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 			for (HierarchyItem item: hierarchyValues) {
@@ -1195,7 +1244,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	private boolean isOnlyGeBspLeft(){
-
 		for (HierarchyItem i : hierarchy.values()){
 			if(!i.selected && !i.main && i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == currentGE.IATA_ISO_Country__r.AMS_Settlement_System__c){
 				return true;
@@ -1203,11 +1251,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		return false;
-
 	}
 
 	private String fetchChangeOfHierarchyScenario(){
-		if(oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+		if(oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)) {
 
 			if(newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
 
@@ -1215,10 +1262,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					return AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
 				}
 
-				if(newParentIncluded(newParent.Id)){
-					return AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT;
+				if (newParentIncluded(newParent.Id)) {
+					if (isSingleBSPSelected && !isGESelected()) {
+						return AMS_Utils.MULTICOUNTRY_BSP_SPLIT;
+					} else {
+						return AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT;
+					}
 				}
-
 			}
 
 			if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
@@ -1229,6 +1279,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		return null;
+	}
+
+	private Boolean isGESelected() {
+		for (HierarchyItem i: hierarchy.values()) {
+			if ((i.selected || i.main) && i.acc.Location_Class__c == AMS_Utils.GE) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	// ***********************************

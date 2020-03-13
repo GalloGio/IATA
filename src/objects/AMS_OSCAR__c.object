@@ -1989,6 +1989,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>GE Account left as a standalone account</label>
                 </value>
+                <value>
+                    <fullName>MC_BSP_SPLIT</fullName>
+                    <default>false</default>
+                    <label>Locations of GoGlobal Hierarchy go to GoStandard on their own</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
@@ -13318,6 +13323,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Change_of_Hierarchy_Scenario__c</picklist>
             <values>
                 <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
                 <default>false</default>
             </values>
             <values>
