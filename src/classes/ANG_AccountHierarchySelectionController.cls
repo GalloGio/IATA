@@ -46,24 +46,19 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	private Set<String> accountFields{
-		//DO NOT include Id on this Set
-		get{
-			if(accountFields == null){
-				accountFields = new Set<String>();
-				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
-				for (String field : schemaFieldMapAccounts.keySet()){
-					accountFields.add(field);
-				}
-				accountFields.add('IATA_ISO_Country__r.name');
-				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__c');
-				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.name');
-			
-			}
-			return accountFields;
-		}
-		set;
-	}
+	// To avoid having a huge view state we opt to specify all the necessary fields
+	// instead of using the getDescribe call to list all the account fields
+	// Ideally should be fetched from a field set
+	private static final Set<String> accountFields = new Set<String> {
+		// DO NOT include Id on this Set
+		'Name', 'Location_Type__c', 'Location_Class__c', 'Is_Branch_Abroad__c', 'IATACode__c', 'Status__c', 'BillingCity',
+		'Category__c', 'IATA_ISO_Country__r.AMS_Settlement_System__c', 'IATA_ISO_Country__r.AMS_Settlement_System__r.Name',
+		'IATA_ISO_Country__r.Name', 'CNS_Agency__c', 'ANG_Accreditation_Model__c', 'Remittance_Frequency__c', 'Abbreviated_address__c',
+		'Abbreviated_name__c', 'Short_Name__c', 'TradeName__c', 'Solicitation_Flag__c', 'VAT_Number_2__c', 'Website', 'Email__c',
+		'Fax', 'Phone', 'Company_Type__c', 'License_Number__c', 'VAT_Number__c', 'Mobile__c', 'Operation__c', 'Iso_State__c',
+		'IATA_ISO_Country__c', 'BillingState', 'BillingPostalCode', 'BillingStreet', 'ShippingCity', 'ShippingCountry', 'IATA_ISO_Shipping_Country__c',
+		'IATA_ISO_Shipping_State__c', 'ShippingPostalCode', 'ShippingState', 'ShippingStreet'
+	};
 
 	private Set<String> notes{
 		get{
@@ -263,8 +258,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			if(processDetails == null){
 				processDetails = new Map<Id, AMS_Process_Detail__c>();
-				//DTULLO: Added check on recordtype
-				//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId]){
 				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId and recordtype.developername='Agency_Involved']){
 					processDetails.put(pd.Account__c, pd);
 				}
@@ -407,14 +400,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(r.Parent_Account__c);
 				}
 
-				/* Don't know exactly why this is here, but for future issues, we'll just leave it here commented.
-				if(oscar.New_parent__c != null)
-					accountIds.add(oscar.New_parent__c);
-				*/
-
 				integer nbrOfPendingCases = 0;
 
-				for(Account a : Database.query('SELECT '+String.join(accountFieldList, ',')+ getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',') + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
 					Boolean main = (a.Id == oscar.Account__c);
 					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
@@ -680,7 +668,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		//clear error checks
 		errorChecks = null;
 
-		System.debug('Performing validations on the hierarchyValues:'+hierarchyValues);
+		System.debug(LoggingLevel.FINE, 'Performing validations on the hierarchyValues:'+hierarchyValues);
 
 		if(this.isMulticountry){ runMulticountryAgencyChangesValidations(); }
 
@@ -741,13 +729,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(errorChecks.get(error)) errors.add(errorMessages.get(error));
 		}
 
-		ANG_AgencyChangesConfigHelper.ChangesConfig changesConfig = NULL;
+		ANG_AgencyChangesConfigHelper.ChangesConfig changesConfig = null;
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES){
 			changesConfig = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
 		}
 
-		Boolean validChangeCombination = (changesConfig != NULL || oscar.Process__c != AMS_Utils.NGCHANGES);
+		Boolean validChangeCombination = (changesConfig != null || oscar.Process__c != AMS_Utils.NGCHANGES);
 
 		//display error messages and stop execution by short-circuiting the if on the save method
 		if(errors.isEmpty() && validChangeCombination){
@@ -776,9 +764,23 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		try{
 
-			if(!processDetails.isEmpty()) delete processDetails.values();
-			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
-			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' OR (Parent.RecordType.Name = 'OSCAR Communication' and Parent.Reason1__c = 'Annual revalidation'))  ].Id;
+			if(!processDetails.isEmpty()){
+				delete processDetails.values();
+			}
+
+			if(!newProcessHierarchy.isEmpty()){
+				insert newProcessHierarchy;
+			}
+			
+			Id cId = [SELECT Id
+					  FROM Case
+					  WHERE Oscar__c = :oscarId
+						  AND RecordType.Name = 'OSCAR Communication'
+						  AND (ParentId = null
+							   OR Parent.RecordType.Name != 'OSCAR Communication'
+							   OR (Parent.RecordType.Name = 'OSCAR Communication'
+								   AND Parent.Reason1__c = 'Annual revalidation'))].Id;
+
 			update new Case(Id = cId, AccountId = oscar.Account__c);
 
 			if(oscar.Process__c == AMS_Utils.NGCORRECTION && oscarAcct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
@@ -844,7 +846,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 					HEPerBSP hePerBspItem = tempHesPerBSPs.get(currentBSP);
 
-					hePerBspItem.possibleAccounts.put(i.acc.Id, i.acc);
+					hePerBspItem.addPossibleAccount(i.acc);
 
 					if(hePerBspItem.p.ParentId == null){
 						hePerBspItem.p.parentid = i.acc.id;
@@ -857,7 +859,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			for(HEPerBSP oldItem : hesPerBSPs.values()){
 				HEPerBSP newItem = tempHesPerBSPs.get(oldItem.bspId);
-				if(newItem != null && newItem.possibleAccounts.containsKey(oldItem.p.Parentid) && newItem.possibleAccounts.get(newItem.p.parentId).Location_Type__c == AMS_Utils.AE){
+				if(newItem != null && newItem.possibleAccounts.containsKey(oldItem.p.Parentid) && newItem.possibleAccounts.get(newItem.p.parentId).locationType == AMS_Utils.AE){
 					newItem.p.parentId = oldItem.p.ParentId;
 				}
 			}
@@ -891,7 +893,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			newParentHierarchyBSPs = null;
 			newParentHierarchyBSPs.add(newParent.IATA_ISO_Country__r.AMS_Settlement_System__c);
 
-			if(newParent.ChildAccounts != NULL){
+			if(newParent.ChildAccounts != null){
 				for(Account acc : newParent.ChildAccounts){
 					newParentHierarchyBSPs.add(acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
 				}
@@ -979,22 +981,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return true;
 	}
 
-	public boolean hasTopLocationType(Id acctId){
+	public boolean hasTopLocationType(Id acctId) {
+		Account a = [SELECT Id, Location_Type__c, ANG_Accreditation_Model__c FROM Account WHERE Id = :acctId];
 
-
-		Account a = [Select Id, Location_Type__c, ANG_Accreditation_Model__c from Account where Id = :acctId];
-
-		/*
-		for(HierarchyItem item:hierarchyValues){
-			if(item.acc.Id == acctId && item.acc.Location_Type__c == AMS_Utils.HE)
-				return true;
-		}
-
-
-		return false;
-		*/
-
-		return ((a.Location_Type__c == AMS_Utils.HE && (a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASH || a.ANG_Accreditation_Model__c  == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)) || a.Location_Type__c == AMS_Utils.GE);
+		return ((a.Location_Type__c == AMS_Utils.HE
+			&& (a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH
+				|| a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS))
+			|| a.Location_Type__c == AMS_Utils.GE);
 	}
 
 	public boolean isTerminatedAccount(Id acctId){
@@ -1256,21 +1249,32 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
+	private class AccountMinifyWrapper {
+		public Id accountId;
+		public String iataCode;
+		public String locationType;
+		public AccountMinifyWrapper(Id acctId, String iataCode, String locationType){
+			this.accountId = acctId;
+			this.iataCode = iataCode;
+			this.locationType = locationType;
+		}
+	}
+
 	public class HEPerBSP {
 
 		public String name { get; set; }
 		public Id bspId { get; set; }
 		public String country { get; set; }
 		public Account p { get; set; }
-		public Map<ID, Account> possibleAccounts { get; set; }
+		public Map<ID, AccountMinifyWrapper> possibleAccounts { get; private set; }
 		public boolean needsUserToChoose() {
-				return (possibleAccounts.size() > 1 && (p.Parentid == null || (possibleAccounts.containsKey(p.ParentId) && possibleAccounts.get(p.Parentid).Location_Type__c == AMS_Utils.AE)));
+				return (possibleAccounts.size() > 1 && (p.Parentid == null || (possibleAccounts.containsKey(p.ParentId) && possibleAccounts.get(p.Parentid).locationType == AMS_Utils.AE)));
 		}
 
 		public String iataCode {
 			get {
 				if(possibleAccounts.containsKey(p.ParentId)){
-					return possibleAccounts.get(p.ParentId).IATACode__c;
+					return possibleAccounts.get(p.ParentId).iataCode;
 				}
 				return null;
 			} 
@@ -1281,16 +1285,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			this.bspId = bspId;
 			p = new Account();
 			p.parentid = acctId;
-			possibleAccounts = new Map<ID, Account>();
+			possibleAccounts = new Map<Id, AccountMinifyWrapper>();
 		}
 
 		public HEPerBSP(Id bspId, String name, String country){
 			this.bspId = bspId;
 			this.name = name;
 			this.country = country;
-			possibleAccounts = new Map<ID, Account>();
+			possibleAccounts = new Map<Id, AccountMinifyWrapper>();
 			p = new Account();
 
+		}
+
+		public void addPossibleAccount(Account acct){
+			possibleAccounts.put(acct.Id, new AccountMinifyWrapper(acct.Id, acct.IATACode__c, acct.Location_Type__c));
 		}
 
 	}
