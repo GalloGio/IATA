@@ -81,19 +81,15 @@
         
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
-        <!--</div>
-    </lightning-layout>-->
 
-    <c-portal-address-form 
-        country-id={countryId}
-        address={localAddress}
-        onsetvalidationstatus={setValidationStatus}
-        onstartloading={startLoading}
-        onstoploading={stopLoading}>
-    </c-portal-address-form>
+            <c-portal-address-form 
+                country-id={countryId}
+                address={localAddress}
+                onsetvalidationstatus={setValidationStatus}
+                onstartloading={startLoading}
+                onstoploading={stopLoading}>
+            </c-portal-address-form>
 
-    <!--<lightning-layout multiple-rows vertical-align="stretch">
-        <div class="IEFixDisplayContainer">-->
             <lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay">
             </lightning-layout-item>
             <div class="buttonsContainer">

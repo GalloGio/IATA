@@ -112,9 +112,11 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
                 }
 
                 this.checkCompletion();
+                this.stopLoading();
             })
             .catch((error) => {
                 console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.stopLoading();
             });
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }
