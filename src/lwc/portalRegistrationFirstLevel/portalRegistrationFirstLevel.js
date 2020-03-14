@@ -31,7 +31,7 @@ import PhoneFormatterS                          from '@salesforce/resourceUrl/In
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.Login';
 import CSP_Email                                from '@salesforce/label/c.CSP_Email';
-import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description'
+import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description';
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
@@ -543,8 +543,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSectorChange(event){
 
-		this.isLoading = true;
-
 		if(this.selectedCustomerType == event.target.value){
 			this._checkForMissingFields();
 			this.isLoading = false;
@@ -806,8 +804,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			}
 
 			if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
-				isValid = false;
-			}else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
 				isValid = false;
 			}
 
