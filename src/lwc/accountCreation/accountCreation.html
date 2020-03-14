@@ -1,11 +1,16 @@
 <template>
     <div class="registration-modal">
-        <div data-name="top" class="banner">
-        </div>
         <div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
             <span slot="pageBody">
                 <c-portal-custom-card-container>
                     <span slot="cardBody">
+                        <div data-name="top" class="slds-p-vertical_large mediumTitle text-bold text-small">
+                            <span></span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={cancel}>
+                                <lightning-icon icon-name="utility:close" size="small" class="cursorPointer"
+                                    onclick={cancel}></lightning-icon>
+                            </span>
+                        </div>
                         <div>
                             <template if:true={isAccountSelectionStep}>
                                 <c-portal-registration-account-selection
@@ -59,13 +64,6 @@
                                     onsecondlevelregistrationcompletedactiontwo={navigateToAccount}>
                                 </c-portal-registration-confirmation>
                             </template>
-                    
-                            <div class="buttonsWrapper">
-                                <div class="buttonContainer">
-                                    <lightning-button class="containedButton customBtn btnModal secondBtn" label="Cancel" variant="neutral"  onclick={cancel} >
-                                    </lightning-button>
-                                </div>
-                            </div>
                         </div>
                     </span>
                 </c-portal-custom-card-container>        
