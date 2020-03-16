@@ -938,14 +938,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				
 				//Flag the oscar in case we are facing a specific scenario for a change of hierarchy
 				//E.g. single standard hierarchy being acquired by a multicountry one
-				oscar.Change_of_Hierarchy_Scenario__c = fetchChangeOfHierarchyScenario();
-				
-				if (this.isMulticountry && diffDestination(oscar.New_parent__c) && isOnlyGeBspLeft()) {
-					oscar.Change_of_Hierarchy_Scenario__c = (String.isNotBlank(oscar.Change_of_Hierarchy_Scenario__c)
-						? oscar.Change_of_Hierarchy_Scenario__c + ';'
-						: '') + AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
-				}
-				
+				oscar.Change_of_Hierarchy_Scenario__c = appendGeLeftStandaloneOptTo(fetchChangeOfHierarchyScenario());
 				update oscar;
 
 				//must be after save, to pass validations on the details
@@ -1197,6 +1190,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		return false;
 
+	}
+
+	private String appendGeLeftStandaloneOptTo(String changeOfHierarchyScenario) {
+		if (this.isMulticountry && oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)
+			&& diffDestination(oscar.New_Parent__c) && isOnlyGeBspLeft()) {
+			return (String.isNotBlank(changeOfHierarchyScenario) ? 
+				changeOfHierarchyScenario + ';' : '') + 
+				AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
+		}
+		return changeOfHierarchyScenario;
 	}
 
 	private String fetchChangeOfHierarchyScenario(){

@@ -140,7 +140,11 @@ public class AMS_OSCARTriggerHandler {
 
 	public static Map<Id, AMS_OSCAR__c> queriedOscarsMap {
 		get {
-			if(queriedOscarsMap == null){
+			//Making sure that for test classes the query is always performed
+			//considering that there are test classes operating on multiple OSCARs
+			//Otherwise, this would require delegating the responsability
+			//of reseting this variable before every OSCAR operation to the developer
+			if(queriedOscarsMap == null || Test.isRunningTest()){
 				queriedOscarsMap = new Map<Id, AMS_OSCAR__c>(
 					[SELECT 
 						Id, 

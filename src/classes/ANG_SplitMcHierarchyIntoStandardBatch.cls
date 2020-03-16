@@ -131,8 +131,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		List<Case> cases = [SELECT Id, Subject, Origin, CaseNumber, RecordTypeId, CaseArea__c, Reason, Reason1__c, Visible_on_ISS_Portal__c,
 								Region__c, BSPCountry__c, AccountId, ContactId
 							FROM Case
-							WHERE Id = :[SELECT Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Id = :oscar].Oscar_Communication_Case_Id__c];
-		
+							WHERE OSCAR__c = :oscar];
+
 		return cases.get(0);
 	}
 	
