@@ -48,19 +48,15 @@ private class CaseIFAPHandlerTest {
 			insert contactList;
 
 			for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
-				userList.add(new User(Alias = 'alias', Email='standarduser@testorg.com', contactId = contactList[i].id,
-								  EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-								  LocaleSidKey='en_US', ProfileId = testProfile.Id, License_Cost_Center__c = 'ISF005CH01',
-								  TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com'));
-			}
 
-			insert userList;
+				userList.add(ISSP_ObjectFactory.createPortalUser(contactList[i]));
+			}
 		}
 	}
 	@isTest
 	static void getContactInfoForUsersTest() {
 
-		List<User> userList = new List<User>([SELECT Id FROM User WHERE Alias = 'alias']);
+		List<User> userList = new List<User>([SELECT Id FROM User WHERE Contact.LastName = 'TEST' LIMIT 1]);
 		List<String> listIds = new List<String>();
 		String body = '{"errors": [{"status": "400","title": "BAD_REQUEST","detail": "Error validating JSON. Error: - Invalid type Integer, expected String for state"}]}';
 
@@ -166,7 +162,7 @@ private class CaseIFAPHandlerTest {
 	@isTest
 	static void getContactInfoForUsersErrorTest() {
 
-		List<User> users = new List<User>([SELECT Id FROM User WHERE Alias = 'alias']);
+		List<User> users = new List<User>([SELECT Id FROM User WHERE Contact.LastName = 'TEST' LIMIT 1]);
 		List<Id> listIds = new List<Id>();
 
 		Id AccId = [SELECT Id from Account Limit 1].Id;

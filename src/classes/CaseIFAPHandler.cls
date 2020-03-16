@@ -23,8 +23,7 @@ public class CaseIFAPHandler {
 
 			switch on (String.valueOf(listIds[0].getSObjectType())) {
   				when 'User' {
-					List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id =: listIds AND ContactId != null]);
-
+					List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]);
 					for(User us : userList){
 						contactIds.add(us.ContactId);
 					}
@@ -164,34 +163,39 @@ public class CaseIFAPHandler {
 			}
 		}
 		else {
-			// remove substring if Mulesoft supports multiple requests in 1 JSON
-			if(!wrapperListUser.isEmpty()){
-				stringToSend = JSON.serialize(wrapperListUser);
-				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'users');
+			if(Test.isRunningTest() && (System.IsBatch() || System.isFuture())){
+				return mulesoftResult;
 			}
 			else{
-				mulesoftResult.add('Unable to query information on Users');
-			}
-			if(!wrapperListCompany.isEmpty()){
-				stringToSend = JSON.serialize(wrapperListCompany);
-				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'accounts');
-			}
-			else {
-				mulesoftResult.add('Unable to query information on Companies');
-			}
-			if(!wrapperListUserRole.isEmpty()){
-				stringToSend = JSON.serialize(wrapperListUserRole);
-				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'roles');
-			}
-			else {
-				mulesoftResult.add('Unable to query information on User Roles');
-			}
-			if(!wrapperListCase.isEmpty()){
-				stringToSend = JSON.serialize(wrapperListCase);
-				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'cases');
-			}
-			else {
-				mulesoftResult.add('Unable to query information on Cases');
+				// remove substring if Mulesoft supports multiple requests in 1 JSON
+				if(!wrapperListUser.isEmpty()){
+					stringToSend = JSON.serialize(wrapperListUser);
+					sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'users');
+				}
+				else{
+					mulesoftResult.add('Unable to query information on Users');
+				}
+				if(!wrapperListCompany.isEmpty()){
+					stringToSend = JSON.serialize(wrapperListCompany);
+					sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'accounts');
+				}
+				else {
+					mulesoftResult.add('Unable to query information on Companies');
+				}
+				if(!wrapperListUserRole.isEmpty()){
+					stringToSend = JSON.serialize(wrapperListUserRole);
+					sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'roles');
+				}
+				else {
+					mulesoftResult.add('Unable to query information on User Roles');
+				}
+				if(!wrapperListCase.isEmpty()){
+					stringToSend = JSON.serialize(wrapperListCase);
+					sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1),'cases');
+				}
+				else {
+					mulesoftResult.add('Unable to query information on Cases');
+				}
 			}
 		}
 
