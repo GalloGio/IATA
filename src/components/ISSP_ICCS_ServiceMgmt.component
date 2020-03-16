@@ -183,7 +183,12 @@
 		                                                </apex:column>
 		
 		                                                <apex:column headerValue="{! $Label.ICCS_Value_Label}">
-		                                                    <apex:outputText value="{!instructionLine.value}" rendered="{! instructionLine.type.code != 'Balance'}"/>
+															<apex:outputText value="{0, number, ##0.00}%" rendered="{! instructionLine.type.code = 'Percentage'}">
+																<apex:param value="{! instructionLine.value}"/>
+															</apex:outputText>
+															<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! instructionLine.type.code = 'Threshold'}">
+																<apex:param value="{! instructionLine.value}"/>
+															</apex:outputText>
 		                                                </apex:column>
 		
 		                                                <apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
