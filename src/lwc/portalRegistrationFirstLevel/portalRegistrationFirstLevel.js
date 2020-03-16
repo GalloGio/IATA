@@ -533,6 +533,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.phone = newPhoneValue;
     }
 
+	handleSalutationChange(event){
+		this.registrationForm.salutation = event.target.value;
+		this._checkForMissingFields();
+	}
+
 	handleTouChange(event){
 		var inputValue = event.target.checked;
 		this.registrationForm.termsAndUsage = inputValue;
