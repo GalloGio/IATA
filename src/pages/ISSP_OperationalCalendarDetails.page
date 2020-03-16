@@ -709,18 +709,18 @@
         var table = initTable(tableDef.headers);
         var colTypes = [];
         var firstVisibleCol = null;
+        var billingToCol = null;
         $.each(tableDef.headers, function (i, line) {
             if (line.bVisible) {
                 colTypes.push(line.sType);
-				if (firstVisibleCol === null) firstVisibleCol = i;
-				if (line.sTitle === 'Billing To') billingToCol = i;
+                if (firstVisibleCol === null) firstVisibleCol = i;
+                if (line.apiName === 'Last_Day__c') billingToCol = i;
             }
         });
-        //console.log(firstVisibleCol);
         
 		var tableOrderIndex = firstVisibleCol;
 		var typeFilter = $("#typeFilter :selected");
-		if (typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS") {
+		if (billingToCol !== undefined && billingToCol !== null && ( typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS" ) ) {
 			tableOrderIndex = billingToCol;
 		}
 
