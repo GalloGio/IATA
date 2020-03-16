@@ -1662,7 +1662,7 @@ public without sharing class ISSP_Case {
 			List<String> listUserEmails = new List<String>();
 			Id contactId = null;
 
-			for(User usr : listUsers.values()) {
+			for(User usr : listUsers) {
 				if(usr.ContactId == null){
 					listUserEmails.add(usr.Email);
 				}
