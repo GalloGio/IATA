@@ -45,12 +45,12 @@
                 <div class="slds-grid slds-wrap">
                     <!-- SEARCH -->
                     <div class="slds-col slds-size_5-of-7 slds-small-size_1-of-1 slds-medium-size_1-of-3">
-                        <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+                        <div class="aroundLightGrayBorder inputFilter borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall">
                             <img src={searchColored}>
                             <lightning-input name="contact-search" type="text" value={contactsFilteringObject.searchInput}
                                 placeholder={label.csp_Find_Contact}
                                 onchange={onchangeContactsSearchText}
-                                class="borderlessInput hideInputLabel grayInputBackground grayInputPlaceholder searchStyle">
+                                class="hideInputLabel grayInputPlaceholder">
                             </lightning-input>
                             <div if:true={showCross} class="searchBarIcon slds-m-right--large">
                                 <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
