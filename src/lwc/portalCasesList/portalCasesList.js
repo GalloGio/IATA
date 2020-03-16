@@ -89,6 +89,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     @track normalView = true; //stores if the user is viewing it's own cases
     @track adminView = false; //stores if the user is viewing company cases
     @track filtered = false;
+    @track showCross = false;
 
     @track paginationObject = {
         totalItems: 10,
@@ -254,6 +255,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = event.target.value;
+        this.showCross =  event.target.value.length > 0;
         this.filteringObject = filteringObjectAux;
     }
 
@@ -366,6 +368,11 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         filteringObjectAux.casesComponent.dateFromFilter = this.dateFromFiltersTemp;
         filteringObjectAux.casesComponent.dateToFilter = this.dateToFiltersTemp;
         this.filteringObject = filteringObjectAux;
+    }
+
+    removeTextSearch(){
+        this.showCross=false;
+        this.filteringObject.searchText=null;
     }
 
     getPickWithAllValue(picklist){
