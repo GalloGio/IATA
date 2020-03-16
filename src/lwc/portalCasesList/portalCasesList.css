@@ -31,6 +31,9 @@
     vertical-align: middle;
 }
 
+.rotateIcon {
+    transform: rotate(45deg);
+}
 .noPadding {
     padding: 0px;
 }
