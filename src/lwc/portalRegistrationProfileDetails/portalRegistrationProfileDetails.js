@@ -60,6 +60,8 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
 
 
     connectedCallback() {
+        this.startLoading();
+
         if (!String.prototype.padStart) {
             String.prototype.padStart = function padStart(targetLength,padString) {
                 targetLength = targetLength>>0; //truncate if number or convert non-number to 0;
@@ -110,9 +112,11 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
                 }
 
                 this.checkCompletion();
+                this.stopLoading();
             })
             .catch((error) => {
                 console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.stopLoading();
             });
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }

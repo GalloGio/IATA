@@ -5016,7 +5016,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Profile_Details</shortDescription>
-        <value>Profile Details</value>
+        <value>Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Profile_Details_Message</fullName>
