@@ -1,4 +1,4 @@
-<apex:component controller="ISSP_ICCS_SiEditController">
+<apex:component controller="ISSP_ICCS_MassEditController">
 	<apex:attribute name="pageCtrl"
 					type="ISSP_ICCS_ServiceController"
 					assignTo="{! pageController}"
@@ -8,6 +8,7 @@
 	<div class="panel-primary">
 		<div class="panel-body" id="body-enquiries">
 			<apex:form styleClass="form-horizontal">
+				<!-- Error display -->
 				<apex:outputPanel rendered="{! pageController.userMessage != null}">
 					<br/>
 					<div class="panel panel-default">
@@ -18,16 +19,44 @@
 						</div>
 					</div>
 				</apex:outputPanel>
-
-				<apex:pageBlock id="si_form">
+				<!-- Main table -->
+				<apex:pageBlock id="mass_form">
 					<div class="row margin-top-bottom no-mrgn">
 						<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
-							<div class="section-title-gray {! IF(settlementInstruction.type.code == siStandard, 'srvc', 'cycle')}">
+							<div class="section-title-gray cycle">
 								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
-								<apex:outputText value="{! siProcessTitle}" escape="false"/>
+								<apex:outputText value="{!$Label.ICCS_Mass_Edit_SI}" escape="false">
+									<apex:param value="{!settlementInstructionType}"/>
+								</apex:outputText>
 							</div>
 
-							<div class="bottom-box" style="text-align: justify;text-justify: inter-word;">
+							<!-- Currency selection, only for Currency SIs -->
+							<apex:outputPanel layout="block" style="text-align: left;" rendered="{!settlementInstructionType == siCurrency}">
+								<div class="pddg">
+									<apex:outputText value="{! $Label.ICCS_Create_Mass_Currency_Header}" escape="false"/>
+								</div>
+
+								<span class="select">
+									<div class="labelText">
+										<apex:outputText value="{!$Label.ICCS_Currency_Label}: "/>
+									</div>
+									<apex:outputText value="{! currencyFilter}" rendered="{! availableCurrenciesList.size == 2}"/>
+									<apex:selectList value="{! currencyFilter}" multiselect="false" size="1" rendered="{! availableCurrenciesList.size > 2}">
+										<apex:selectOptions value="{! availableCurrenciesList}"/>
+										<apex:actionSupport event="onchange" rerender="mass_form" status="processActStatusId"/>
+									</apex:selectList>
+									<apex:outputPanel rendered="{! availableCurrenciesList.size == 1}">
+										<div class="msg-pstn">
+											<apex:outputText value="{!$Label.ICCS_No_Currencies_Available}" escape="false"/>
+										</div>
+									</apex:outputPanel>
+								</span>
+							</apex:outputPanel>
+
+							<!-- Main panel to add Instructions -->
+							<!-- Only valid for AdHoc, or for Currency SIs when a currency was selected -->
+							<apex:outputPanel id="instructionSection" layout="block" styleclass="bottom-box" style="text-align: justify;text-justify: inter-word;"
+								rendered="{!OR(settlementInstructionType == siAdhoc, AND(settlementInstructionType == siCurrency, currencyFilter!=null))}">
 
 								<br/>
 
@@ -50,32 +79,9 @@
 								<br/>
 
 								<div class="panel-heading head_panel_green">
-									<apex:outputPanel rendered="{!settlementInstruction.type.code == siStandard}">
+									<apex:outputPanel>
 										<div class="panel-title-3">
-											<h3>
-												<apex:outputText value="{! settlementInstruction.participation.cashflow.name }" escape="false"/>
-												<apex:outputText value="{! ' ' + settlementInstruction.participation.cashflow.processingCurrency }" escape="false"/>
-											</h3>
-										</div>
-									</apex:outputPanel>
-									<apex:outputPanel rendered="{!settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture}">
-										<div class="panel-title-3">
-											<h3>
-												<apex:outputText value="{! settlementInstruction.participation.cashflow.name }" escape="false"/>
-												<apex:outputText value="{! ' ' + settlementInstruction.participation.cashflow.processingCurrency }" escape="false"/>
-												<apex:outputText value=" - Settlement Amount : " rendered="{! settlementInstruction.settlementAmount>0 }" />
-												<apex:outputText value="{0, number, ###,###,###,##0.00}" rendered="{! settlementInstruction.settlementAmount>0 }">
-													<apex:param value="{! settlementInstruction.settlementAmount}"/>
-												</apex:outputText>
-												<apex:outputText value="{! ' - ' + $Label.ICCS_Cycle_Label + ' ' + settlementInstruction.cycle.cycleId }" escape="false" rendered="{!settlementInstruction.type.code == siAdhoc || settlementInstruction.type.code == siFuture}"/>
-												<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned}" rendered="{! settlementInstruction.settlementAmount=0 && isPreassigned}"/>
-												<apex:outputText value="{! ' - ' + $Label.ICCS_Status_For_Preassigned_With_Amount}" rendered="{! settlementInstruction.settlementAmount>0 && isPreassigned}"/>
-											</h3>
-										</div>
-									</apex:outputPanel>
-									<apex:outputPanel rendered="{!settlementInstruction.type.code == siCurrency}">
-										<div class="panel-title-3">
-											<apex:repeat value="{! listCurrencyParticipations}" var="participationRow">
+											<apex:repeat value="{! listParticipation}" var="participationRow">
 												<h3>
 													<apex:outputText value="{! participationRow.participation.cashflow.name }" escape="false"/>
 													<apex:outputText value="{! ' ' + participationRow.participation.cashflow.processingCurrency }" escape="false"/>
@@ -95,19 +101,15 @@
 								</div>
 
 								<div class="pddg">
-									<apex:outputText value="{! $Label.ICCS_Si_Edit_Standard}" escape="false" rendered="{! settlementInstruction.type.code == siStandard}"/>
-									<apex:outputText value="{! $Label.ICCS_Si_Edit_Future}" escape="false" rendered="{! settlementInstruction.type.code == siFuture && settlementInstructionId != null}"/>
-									<apex:outputText value="{! $Label.ICCS_Si_Create_Future}" escape="false" rendered="{! settlementInstruction.type.code == siFuture && settlementInstructionId == null }"/>
-									<apex:outputText value="{! $Label.ICCS_Si_Create_Adhoc}" escape="false" rendered="{! settlementInstruction.type.code == siAdhoc}"/>
-									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency}" escape="false" rendered="{! settlementInstruction.type.code == siCurrency && settlementInstructionId == null}"/>
-									<apex:outputText value="{! $Label.ICCS_Si_Edit_Currency}" escape="false" rendered="{! settlementInstruction.type.code == siCurrency && settlementInstructionId != null}"/>
+									<apex:outputText value="{! $Label.ICCS_Si_Create_Adhoc}" escape="false" rendered="{! settlementInstructionType == siAdhoc}"/>
+									<apex:outputText value="{! $Label.ICCS_Si_Create_Currency}" escape="false" rendered="{! settlementInstructionType == siCurrency}"/>
 								</div>
 
-								<apex:pageBlockTable value="{! settlementInstruction.instructionLines}" var="instructionLine" id="instructionLineTable">
+								<apex:pageBlockTable value="{! listInstruction}" var="instructionLine" id="instructionLineTable">
 									<apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}">
 										<apex:selectList value="{! instructionLine.accountCode.id_string}" multiselect="false" size="1">
 											<apex:selectOptions value="{! bankAccountCodes}"/>
-											<apex:actionSupport event="onchange" rerender="si_form" status="processActStatusId"/>
+											<apex:actionSupport event="onchange" rerender="mass_form" status="processActStatusId"/>
 										</apex:selectList>
 									</apex:column>
 
@@ -122,13 +124,13 @@
 									<apex:column headerValue="{! $Label.ICCS_Instruction_Line_Type_Label}">
 										<apex:selectList value="{! instructionLine.type.id_string}" multiselect="false" size="1">
 											<apex:selectOptions value="{! instructionLineTypes}"/>
-											<apex:actionSupport event="onchange" rerender="si_form" status="processActStatusId"/>
+											<apex:actionSupport event="onchange" rerender="mass_form" status="processActStatusId"/>
 										</apex:selectList>
 									</apex:column>
 
 									<apex:column headerValue="{! $Label.ICCS_Value_Label}">
 										<apex:inputText value="{! instructionLine.valueString}" styleclass="formatted-input" rendered="{! instructionLine.type.id != balanceInstructionLineTypeId}">
-											<apex:actionSupport event="onchange" rerender="si_form"/>
+											<apex:actionSupport event="onchange" rerender="si_form" status="processActStatusId"/>
 										</apex:inputText>
 										<script>
 											$("input.formatted-input").each(function( index ) {formatInput(this,null);}); //format input when section is loaded
@@ -139,14 +141,14 @@
 									<apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
 										<apex:selectList value="{! instructionLine.order}" multiselect="false" size="1">
 											<apex:selectOptions value="{! orders}"/>
-											<apex:actionSupport event="onchange" action="{! updateInstructionLinesOrder}" rerender="si_form" status="processActStatusId">
+											<apex:actionSupport event="onchange" action="{! updateInstructionLinesOrder}" rerender="mass_form" status="processActStatusId">
 												<apex:param name="instructionLineOrder" value="{! instructionLine.order}" assignTo="{! instructionLineOrder}"/>
 											</apex:actionSupport>
 										</apex:selectList>
 									</apex:column>
 
 									<apex:column headerValue="{! $Label.ICCS_Action_Label}">
-										<apex:commandLink action="{! deleteInstructionLine}" value="Delete" reRender="si_form" status="processActStatusId">
+										<apex:commandLink action="{! deleteInstructionLine}" value="Delete" reRender="mass_form" status="processActStatusId">
 											<apex:param name="instructionLineOrder" value="{! instructionLine.order}" assignTo="{! instructionLineOrder}"/>
 										</apex:commandLink>
 									</apex:column>
@@ -157,14 +159,14 @@
 								<div class="btn">
 									<apex:commandButton action="{! addInstructionLine}" value="{! $Label.ICCS_Add_Instruction_Line_Label}" rerender="instructionLineTable" status="processActStatusId"/>
 								</div>
-							</div>
+							</apex:outputPanel>
 						</div>
 					</div>
 				</apex:pageBlock>
 
 				<br/>
 				<br/>
-
+				<!-- Page Buttons -->
 				<center>
 					<apex:pageBlock id="processFormPageblockId">
 						<div class="btn-2">
