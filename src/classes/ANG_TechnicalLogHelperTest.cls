@@ -10,7 +10,7 @@ public class ANG_TechnicalLogHelperTest {
 		List<Technical_Logs__c> logs = [SELECT Id, Operation__c, Status__c, Log__c FROM Technical_Logs__c];
 		System.assertEquals(1, logs.size());
 		System.assertEquals('Test', logs.get(0).Operation__c);
-		System.assertEquals('some exception ()', logs.get(0).Status__c); // exception message + stack track (non existing)
+		System.assert(logs.get(0).Status__c.contains('some exception'), 'Log status must contain "some exception"'); // exception message + stack track (non existing)
 		System.assertEquals('Log', logs.get(0).Log__c);
 	}
 

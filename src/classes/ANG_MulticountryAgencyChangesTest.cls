@@ -1284,7 +1284,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		//Check test scenario 1
 		ApexPages.Message[] pageMessagesScenario1 = ApexPages.getMessages();
 
-		System.assertEquals('You cannot select a Standard or Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
+		System.assertEquals('You cannot select a Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
 
 		//Test Scenario 3
 

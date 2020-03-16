@@ -378,9 +378,6 @@ private class ANG_StandardConversionsTest {
 		AMS_OSCARTriggerHandler.isRunningAgeCalculator = true;
 		update oscarLst;
 		AMS_OSCARTriggerHandler.isRunningAgeCalculator = false;
-
-		//Force to requery the oscar
-		AMS_OSCARTriggerHandler.queriedOscarsMap = null;
 		
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Change_effective_as_of__c = System.today();
