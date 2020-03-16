@@ -13,6 +13,10 @@
     margin-top: -1px;
 }
 
+.buttonGrid{
+    min-height:52px;
+}
+
 .noRecentCases {
     display: flex;
     flex-direction: column;
