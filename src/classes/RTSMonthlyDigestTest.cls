@@ -24,9 +24,11 @@ public class RTSMonthlyDigestTest {
 		insert rts;	
 
 		Test.startTest();
-			String jobId = System.schedule('testRTSMonthlyDigest', RTSMonthlyDigest.CRON_EXP, new RTSMonthlyDigest());
-			CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
-			System.assertEquals(null, rts.User_Id__c);
+		
+		String jobId = System.schedule('testRTSMonthlyDigest', RTSMonthlyDigest.CRON_EXP, new RTSMonthlyDigest());
+
 		Test.stopTest();
+
+		System.assertEquals(null, rts.User_Id__c);
 	}
 }

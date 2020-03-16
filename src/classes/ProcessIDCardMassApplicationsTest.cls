@@ -483,9 +483,11 @@ private class ProcessIDCardMassApplicationsTest {
 		DevsTools.sendSFDevsAlertMessage('Title test', 'Message Test');
 		DevsTools.getClassName(anObject);
 		
+		Integer invocations = Limits.getEmailInvocations();
+		
 		Test.stopTest();
 
-		System.assert(!userList.isEmpty());
+		System.assertEquals(1, invocations);
 
 	}
 

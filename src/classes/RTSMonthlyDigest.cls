@@ -46,7 +46,7 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 			email.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
 			email.saveAsActivity = false;
 			mails.add(email);
-		}			
+		}
 
 		if(mails.isEmpty()){
 			System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
