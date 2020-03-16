@@ -10,7 +10,10 @@ public class SIDRAOIActionPlansCtrlTest {
 		insert cse;
 
 		Operational_Improvements__c oi = new Operational_Improvements__c(
-			Related_Case_Number__c = cse.Id
+			Related_Case_Number__c = cse.Id,
+			Region__c = 'Europe',
+			Country__c = 'Albania',
+			Section_Code__c = 'AL_BSP_Y_EUR_I'
 		);
 		insert oi;
 

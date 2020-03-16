@@ -37,6 +37,10 @@
         <name>EF_CRM</name>
     </customApplications>
     <customApplications>
+        <label><!-- E&amp;F CRM Lightning --></label>
+        <name>EF_CRM_Lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- E&amp;F --></label>
         <name>E_F</name>
     </customApplications>
@@ -1535,6 +1539,14 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailBody --></label>
+        <name>AccountContextActivationEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailSubject --></label>
+        <name>AccountContextActivationEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
@@ -3758,6 +3770,18 @@ la seguente procedura per completarlo :
         <name>Company_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CompleteThisField --></label>
+        <name>CompleteThisField</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailBody --></label>
+        <name>ComplianceProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailSubject --></label>
+        <name>ComplianceProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ConfirmSendRecycleBin --></label>
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
@@ -4416,6 +4440,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- EBulletin More than 8 owners message --></label>
         <name>EBulletin_More_than_8_owners_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EFComplianceReview --></label>
+        <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
@@ -21764,6 +21792,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Salutation</name>
     </customLabels>
     <customLabels>
+        <label><!-- SapProcessEmailBody --></label>
+        <name>SapProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SapProcessEmailSubject --></label>
+        <name>SapProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
     </customLabels>
@@ -21794,6 +21830,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Select --></label>
         <name>Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SelectAnOption --></label>
+        <name>SelectAnOption</name>
     </customLabels>
     <customLabels>
         <label><!-- SelectRequiredMessage --></label>
@@ -21886,6 +21926,18 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Signaturit Endpoint --></label>
         <name>Signaturit_Endpoint</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessCaseSubject --></label>
+        <name>SisProcessCaseSubject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailBody --></label>
+        <name>SisProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailSubject --></label>
+        <name>SisProcessEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- SiteTitle --></label>
