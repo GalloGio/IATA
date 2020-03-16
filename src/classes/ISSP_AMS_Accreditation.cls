@@ -214,7 +214,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						lblCNSAgencyTitle += Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
 					}else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO) {
 						lblCNSAgencyTitle += Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
-					}else if (newCase.Reason1__c == 'TO DO') {
+					}else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL) {
 						lblCNSAgencyTitle += 'TO DO';
 					}
 				}

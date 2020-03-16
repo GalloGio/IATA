@@ -264,6 +264,16 @@ private class ISSP_HomepageTest {
 			String pendingApprovalsAppListview = ctrl.Pending_approvals_app_ListView;
 			String  SurveyLink = ctrl.SurveyLink;
 			String  SurveyName = ctrl.SurveyName;
+			
+			Case caseSIdra = new Case(
+				BSP_CASS__c = 'BSP',
+				RecordTypeid=RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA_Lite'),
+				Status = 'Open',
+				Origin = 'IATA Internal User',
+				Subject = 'subject');
+
+			insert caseSIdra;
+			ctrl.checkCookies(caseSIdra.Id);
 		}
 		Test.stopTest();
 
