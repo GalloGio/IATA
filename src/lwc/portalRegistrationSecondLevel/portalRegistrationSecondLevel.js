@@ -36,58 +36,46 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
 
     get accountSelectionLogo(){
-        // If account selection is complete, we display the check mark logo
+        // If the Account Selection step is complete, we display the check mark logo
         if(this.step1Complete || (this.step2Complete && this.step3Complete)){
             return this.stepCheckedLogo;
         }
         // Otherwise, it means that we're in the Account Selection step and we display the "step 1" active logo
-        return this.step1ActiveLogo;
+        else{
+            return this.step1ActiveLogo;
+        }
     }
 
     get additionalDetailsLogo(){
-        // If account selection is not complete, we can't reach the Additional Details step
-        // and we display the "step 2" inactive logo
-        if(!(this.step1Complete || (this.step2Complete && this.step3Complete))){
-            return this.step2InactiveLogo;
+        // If the Additional Details step is complete, we display the check mark logo
+        // (undependently of the current step)
+        if(this.step4Complete){
+            return this.stepCheckedLogo;
         }
-
-        // If we are in step 1 (Account Search), 2 (Company Information) or 3 (Address Information), we can
-        // reach the Additional Details step and we display the "step 2" active logo
-        if(this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3){
+        // If we are in step 4 (Additional Details)
+        else if(this.currentStep === 4){
             return this.step2ActiveLogo;
         }
-
-        // If we are in step 4 (Additional Details)
-        if(this.currentStep === 4){
-            // If the step is complete, we display the check mark logo
-            if(this.step4Complete){
-                return this.stepCheckedLogo;
-            }
-            // Otherwise, we display the "step 2" active logo
-            else{
-                return this.step2ActiveLogo;
-            }
+        // Otherwise we're in step 1, 2 or 3
+        // - if 1 is complete or 2 and 3 are complete, we can reach the Additional Details step
+        else if(this.step1Complete || (this.step2Complete && this.step3Complete)){
+            return this.step2ActiveLogo;
         }
-
-        // Last case: we are in the confirmation page, we display the check mark logo
-        return this.stepCheckedLogo;
+        // - otherwise, we can't reach the Additional Details step
+        else{
+            return this.step2InactiveLogo;
+        }
     }
 
     get confirmationLogo(){
-        // If account selection or additional information is not complete, we can't reach the Confirmation step
-        // and we display the "step 3" inactive logo
-        if(!(this.step1Complete || (this.step2Complete && this.step3Complete)) || !this.step4Complete){
-            return this.step3InactiveLogo;
-        }
-
-        // If we are in step 1 (Account Search), 2 (Company Information), 3 (Address Information) or 4 (Additional Details) we can
-        // reach the Confirmation step and we display the "step 3" active logo
-        if(this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4){
+        // If account selection and additional information are complete, we display the step 3 active logo
+        if((this.step1Complete || (this.step2Complete && this.step3Complete)) && this.step4Complete){
             return this.step3ActiveLogo;
         }
-
-        // Last case: we are in the confirmation page, we display the check mark logo
-        return this.stepCheckedLogo;
+        // otherwise, we display the step 3 inactive logo
+        else{
+            return this.step3InactiveLogo;
+        }
     }
 
     get accountSelectionTitleCssClass(){
@@ -226,8 +214,6 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
     // customer type variables
     originalCustomerType;
-    @track selectedMetadataCustomerType;
-    @track isCustomerTypeGeneralPublic;
 
     // label variables
     _labels = {
@@ -440,10 +426,6 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
     get isConfirmationStep(){
         return this.currentStep === 5;
-    }
-
-    get isAccountStep(){
-        return this.currentStep === 1 || this.currentStep === 2 || this.currentStep === 3;
     }
 
     openClosePopup(){
