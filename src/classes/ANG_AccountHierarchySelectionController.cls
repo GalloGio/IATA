@@ -72,15 +72,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					|| tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) {
 					notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
 				}
-				
+
 				if (isMulticountry
 					&& (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
-						|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)))
-					notes.add('Change of location type will swap the selected agencies.');
-				else if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
-					|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
-					notes.add('Change of location type will swap the current agency with the current HE.');
-				
+						|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))) {
+							notes.add('Change of location type will swap the selected agencies.');
+				} else if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+					|| tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)) {
+						notes.add('Change of location type will swap the current agency with the current HE.');
+					}
+
 				if (tocList.contains(AMS_Utils.ANG_LOCATION)) {
 					notes.add('Change of location can be applied only to a single agency.');
 				}
@@ -101,10 +102,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 							}
 						} else {
-							notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
-
-							notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: '
-								+ newParent.Name + '(' + newParent.IATACode__c + ')');
+							if (isSingleBSPSelected && !isGESelected()) {
+								notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
+							} else {
+								notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: ' + newParent.Name + '(' + newParent.IATACode__c + ')');
+							}
 						}
 					} else if (diffDestination) {
 						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: ' + newParent.Name
@@ -500,7 +502,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	private Boolean isSingleBSPSelected {
 		get {
-			return (isSingleBSPSelected == null) ? true : isSingleBSPSelected;
+			return (isSingleBSPSelected == null) ? checkSingleBSPSelected() : isSingleBSPSelected;
 		} 
 		set;
 	}
@@ -1115,13 +1117,28 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		return hierarchies.size() == 1;
 	}
 
+	private Boolean checkSingleBSPSelected() {
+		Id firstItemBSP = null;
+
+		for (HierarchyItem item : hierarchyValues) {
+			if (item.selected || item.main) {
+				if (firstItemBSP == null) {
+					firstItemBSP = item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
+				} else if (firstItemBSP != item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	* Runs several validations necessary for
 	* multicountry agency changes
 	*
 	*/
 	private void runMulticountryAgencyChangesValidations(){
-		isSingleBSPSelected = true;
 		Boolean onlyTwoAgenciesSelected = false;
 		Boolean diffLocationTypesSelected = false;
 		Boolean allAgenciesFromSameBSPSelected = false;
@@ -1148,10 +1165,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				//Assigns the BSP related to the first selected account
 				if(firstItemBSP == null){
 					firstItemBSP = item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
-				}
-				//If we found a selected account that has a different BSP than the one first found returns false
-				else if(firstItemBSP != item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c){
-					isSingleBSPSelected = false;
 				}
 
 				if (item.acc.Location_Type__c == AMS_Utils.HE)
