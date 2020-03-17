@@ -46120,6 +46120,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Training Validation Description</shortDescription>
         <value>IATA needs your Training Information to maintain your lifelong Training record with us. We also need your Training Information access directly to your Exams and Courses.</value>
     </labels>
+	<labels>
+		<fullName>CSP_L3_Zip_Mandatory_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Is Personal Email</shortDescription>
+		<value>Please input '0000' if your address has no postal code.</value>
+	</labels>    
     <labels>
         <fullName>CSP_Verification_L3_Email_PE_1_LMS</fullName>
         <categories>CS Portal</categories>
