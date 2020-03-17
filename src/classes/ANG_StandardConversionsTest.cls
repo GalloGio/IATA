@@ -243,6 +243,36 @@ private class ANG_StandardConversionsTest {
 
 		insert cont;
 
+		Id ownershipRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+
+		AMS_Account_Role__c ownerGE = new AMS_Account_Role__c();
+		ownerGE.RecordTypeId = ownershipRecTypeId;
+		ownerGE.Account__c = accountGE.Id;
+		ownerGE.Duty__c = 'GE Manager';
+		ownerGE.Employee_Name__c = 'Richard Vaughan';
+		ownerGE.Hours__c = '6';
+		ownerGE.IsManager__c = true;
+		ownerGE.Percentage__c = 100;
+		ownerGE.Position__c = 'G';
+		ownerGE.Owner_Name__c = 'Richard Vaughan';
+		ownerGE.Legacy_External_Id__c = 'EXT123456789';
+		ownerGE.Owner_Account__c = null;
+		ownerGE.Contact__c = cont.Id;
+		
+		AMS_Account_Role__c ownerHe = new AMS_Account_Role__c();
+		ownerHe.RecordTypeId = ownershipRecTypeId;
+		ownerHe.Account__c = accountUkHE.Id;
+		ownerHe.Duty__c = 'UK HE Manager';
+		ownerHe.Employee_Name__c = 'Richard Vaughan';
+		ownerHe.Hours__c = '6';
+		ownerHe.IsManager__c = true;
+		ownerHe.Percentage__c = 100;
+		ownerHe.Position__c = 'G';
+		ownerHe.Owner_Name__c = 'Richard Vaughan';
+		ownerHe.Owner_Account__c = accountUkHE.Id;
+
+		insert new List<AMS_Account_Role__c> { ownerGE, ownerHE };
+
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
@@ -494,7 +524,7 @@ private class ANG_StandardConversionsTest {
 				Top_Parent__c,
 				ANG_Accreditation_Model__c,
 				(SELECT Id FROM ChildAccounts),
-				(SELECT Id, Process__c, STEP6__c FROM OSCARs__r WHERE Process__c = :AMS_Utils.NGCONVERSIONMCTOST)
+				(SELECT Id, Process__c, STEP6__c, Oscar_Communication_Case_Id__c FROM OSCARs__r WHERE Process__c = :AMS_Utils.NGCONVERSIONMCTOST)
 			 FROM Account
 			 WHERE Name = 'Multicountry HE UK'
 			 LIMIT 1
@@ -508,11 +538,17 @@ private class ANG_StandardConversionsTest {
 
 		AMS_OSCAR__c oscar = acct.OSCARs__r.get(0);
 
+		AmazonFile__c aFile = new AmazonFile__c(
+			Full_Name_Unique__c =  oscar.Oscar_Communication_Case_Id__c + '/Attachment Required',
+			Case__c = oscar.Oscar_Communication_Case_Id__c
+		);
+
+		insert aFile;
+		
 		Test.startTest();
 
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Change_effective_as_of__c = System.today();
-
 		update oscar;
 
 		Test.stopTest();
