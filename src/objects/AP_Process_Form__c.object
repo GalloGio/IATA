@@ -4186,6 +4186,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <default>false</default>
                     <label>Airline joining CASS through a GSSA</label>
                 </value>
+                <value>
+                    <fullName>IFG</fullName>
+                    <default>false</default>
+                    <label>IFG (IATA Financial Gateway)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -6519,6 +6524,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Full %28direct participant%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
                 <default>false</default>
             </values>
             <values>
