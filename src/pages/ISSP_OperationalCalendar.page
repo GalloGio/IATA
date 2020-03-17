@@ -37,6 +37,10 @@
 
     }
 
+    .container a{
+        color: white !important;
+    } 
+
 </style>
 
 <script>
