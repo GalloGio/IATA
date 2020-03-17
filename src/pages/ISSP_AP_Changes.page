@@ -38,6 +38,12 @@
                 } else {
                     document.getElementById('{!$Component.APChangesForm.changeblock.CommissionFields}').style.display='none';
                 }
+            } else if(document.getElementById(myValue).value=='Stock Management') {
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.StockManagementFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.StockManagementFields}').style.display='none';
+                }
             }
         }
 
@@ -554,6 +560,16 @@
                         <apex:pageBlockSectionItem rendered="{!newForm.Pay_Commission_to_agents__c='Yes' && newForm.Pay_Standard_Commission__c='Yes'}">
                             <apex:outputLabel value="Standard Commission Rate (%)" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Commission_Rate__c}"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+                <!-- Show when Type of change Stock Management is selected -->
+                <apex:outputPanel id="StockManagementFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Stock Management'), '', 'display:none')}" >
+                    <apex:pageBlockSection collapsible="false" columns="1" title="Other Cargo Services">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel escape="false" value="<b>AWB Stock Management</b><br/>Are you interested in participating in the CASSLink stock Management system for distribution of AWB Serial Numbers?" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Participate_in_AWB_Stock_Management__c}"/>
                         </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
                 </apex:outputPanel>
