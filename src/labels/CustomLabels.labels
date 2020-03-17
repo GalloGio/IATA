@@ -2592,6 +2592,15 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
     </labels>
     <labels>
+        <fullName>ASD_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ASD Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. Air Service Desk (ASD) consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+ASD is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to ASD, without the need for separate login details.</value>
+    </labels>
+    <labels>
         <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
         <categories>IDCard</categories>
         <language>en_US</language>
@@ -2613,6 +2622,28 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>Account</shortDescription>
         <value>Account:</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailBody</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the Customer creation process for the Account {1} has been sucessfully completed.
+
+Best Regards,
+
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailSubject</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
+        <value>Customer creation process for Account {0}</value>
     </labels>
     <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
@@ -2911,6 +2942,33 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>BSPLink_Description</shortDescription>
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
+    </labels>
+    <labels>
+        <fullName>BSP_CASS_Ch_Bank_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP/CASS Ch Bank Service Description</shortDescription>
+        <value>Using the BSP/CASS Change of Bank Details service, you can modify the bank account details used for your airline&apos;s settlement online in a simple but safe and secure way.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>BSP_CASS_Ch_Request_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP/CASS Ch Request Service Description</shortDescription>
+        <value>You can use the BSP/CASS Change Request to modify your airline&apos;s BSP/CASS Participation details. These details include your airline&apos;s local address, the tax number or the Financial/Admin contact. You can also opt-in for IATA EasyPay. Directly online, this service simplifies processing the BSP/CASS changes to keep your data always up to date. 
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>BSPlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSPlink Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. BSPlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+BSPlink is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to BSPlink, without the need for separate login details.</value>
     </labels>
     <labels>
         <fullName>Bank_Transfer_Payment_terms</fullName>
@@ -3216,11 +3274,75 @@ Payment required on receipt of this Payment Advice
         <value>This service facilitates interaction and exchange of information between cargo intermediaries/ agents and airlines participating in IATA Cargo Accounts Settlement System (CASS).</value>
     </labels>
     <labels>
+        <fullName>CASSlink_Analytics_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Analytics Service Description</shortDescription>
+        <value>CASSlink Analytics enables you to subscribe to cargo market data from an origin country to any destination.
+
+It utilizes CASS data from CASSLink (the global CASS processing system) to provide route analysis information on four key indicators:
+• Total Shipments
+• Total Tonnage
+• Total Turnover (revenue)
+• Yield
+
+Information search on routes can include any combination of airport, city or country for both origin and destination, providing thousands of possible combinations. You can also include a &quot;weight break&quot; and to view turnover and yield without “other charges”.
+
+Gain a rare, increased advantage by knowing your business environment inside out. Master how your markets and routes are performing from the data intelligence.</value>
+    </labels>
+    <labels>
+        <fullName>CASSlink_Export_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Export Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
+        <fullName>CASSlink_Import_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Import Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
+        <fullName>CASSlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
         <fullName>CC</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CC</shortDescription>
         <value>CC</value>
+    </labels>
+    <labels>
+        <fullName>CNS_CASSlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS CASSlink Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CNS CASSlink consolidates the amounts owed by each agent and the amounts due to each airline in the United States. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CNS CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CNS CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
+        <fullName>CNS_End_Changes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS End Changes Service Description</shortDescription>
+        <value>Setting clear standards of professionalism and financial responsibility is one of the keystones of any industry performance and credibility. That is why since its creation in 1985, CNS has served the industry in the US as a key gatekeeper. We require a set of financial, operational and compliance standards before endorsing any individuals wanting to act as air cargo agents, forwarders or intermediaries.
+
+Through this online service, you can manage your endorsement process directly online.
+
+If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
@@ -3405,6 +3527,14 @@ Payment required on receipt of this Payment Advice
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Service_TIPReports</shortDescription>
+        <value>TIP Reports</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Services_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3546,6 +3676,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Case_Details</shortDescription>
         <value>Case-Detail_</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Case_hasInvoicePaid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_hasInvoicePaid</shortDescription>
+        <value>Has the customer paid invoice?</value>
     </labels>
     <labels>
         <fullName>CSP_Cases</fullName>
@@ -6022,6 +6159,86 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Service Access</value>
     </labels>
     <labels>
+        <fullName>CSP_Service_TIPReports_AmazonType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_AmazonType</shortDescription>
+        <value>Amazon File</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoAccess</shortDescription>
+        <value>You do not have access to TIP Reports service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoReports</shortDescription>
+        <value>There are no reports available.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_PBIType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_PBIType</shortDescription>
+        <value>Power BI</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextAction</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextAction</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileName</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileName</shortDescription>
+        <value>File Name/ Report Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileType</shortDescription>
+        <value>File Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextOpen</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextOpen</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextPostedDate</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextPostedDate</shortDescription>
+        <value>Posted Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_Title</shortDescription>
+        <value>Transparency in Payments (TIP) - Reports</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6625,7 +6842,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6764,6 +6981,35 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Company name</value>
     </labels>
     <labels>
+        <fullName>CompleteThisField</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CompleteThisField</shortDescription>
+        <value>Complete this field</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailBody</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailSubject</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
+        <value>Compliance Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>ConfirmSendRecycleBin</fullName>
         <categories>pop-up, modal, alert, confirm</categories>
         <language>en_US</language>
@@ -6816,6 +7062,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
+        <categories>Percentage, AWWAgency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Control Total Percentage Owners And Subsidiaries</shortDescription>
+        <value>The total Percentage Held must not exceed 100%. Please change the Percentage and save again.</value>
+    </labels>
+    <labels>
         <fullName>Copyright</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -6830,6 +7084,17 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Country</shortDescription>
         <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Country_Requirements_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Country Requirements Service Description</shortDescription>
+        <value>For any airline, joining a BSP/CASS operation opens up new business opportunities. 
+
+You can use the Country Requirements Service to find out more information about the local requirements per country or market for your airline to join a new BSP/CASS operation - even before you begin the BSP/CASS Joining procedure.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>Country_cannot_be_empty</fullName>
@@ -6922,7 +7187,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Other_Countries</shortDescription>
-        <value>All Other Countries</value>
+        <value>All Other Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_All_Others</fullName>
@@ -7430,7 +7695,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Select_Country</shortDescription>
-        <value>Select Country</value>
+        <value>Select Country / Territory</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Subject</fullName>
@@ -7507,7 +7772,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
-        <value>Watch List Countries</value>
+        <value>Watch List Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Watch_List_Country</fullName>
@@ -7774,6 +8039,17 @@ The databases, posted on a secure web-based platform, offer user-friendly interf
 &lt;a href=&quot;http://www.iata.org/services/finance/Pages/ttbs.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>Currency_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Currency Center Service Description</shortDescription>
+        <value>The IATA Currency Center is a new, dynamic and web-based information tool that provides currency information from an economic, financial markets and IATA perspective for different sets of countries. Detailed currency updates and analysis of IATA’s repatriation efforts are also available within the platform.
+
+The IATA Currency Center is updated in real-time with new information, ensuring the best support to our members in helping them managing their foreign exchange repatriation and the associated risks, in order to make informed decisions.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>Current_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7912,6 +8188,15 @@ Case description: {!Case.Description}
         <value>Date</value>
     </labels>
     <labels>
+        <fullName>Deduction_Notice_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Service Description</shortDescription>
+        <value>The Deduction Form service allows travel agents participating in BSP Israel to submit deduction requests.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>Del</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -7989,6 +8274,14 @@ Case description: {!Case.Description}
         <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
     </labels>
     <labels>
+        <fullName>EFComplianceReview</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EFComplianceReview</shortDescription>
+        <value>E&amp;F Compliance Review</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8008,6 +8301,15 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
         <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>E_Bulletin_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E-Bulletin Service Description</shortDescription>
+        <value>The online e-Bulletin service allows airlines to generate daily &amp; weekly reports for agency related changes. Through this service, you can activate automated email reports ensuring you always have the latest agency related information available.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
@@ -8278,6 +8580,15 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>Financial_Documents</shortDescription>
         <value>Financial Documents</value>
+    </labels>
+    <labels>
+        <fullName>Financial_Securities_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Securities Service Description</shortDescription>
+        <value>Using the Financial Securities service you can directly see the current financial security applicable for your agency.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>First_name</fullName>
@@ -8632,6 +8943,15 @@ You can choose one or more of the following topics:</value>
         <value>GADM Power User</value>
     </labels>
     <labels>
+        <fullName>GADM_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Service Description</shortDescription>
+        <value>The Global Aviation Data Management (GADM) program is a data management platform which integrates all sources of operational data received from various channels. 
+
+Techniques to improve aviation safety have moved beyond the analyses of isolated accidents, to data-driven analyses of trends and the interaction between the links in the air transport chain. This is what the GADM program is about. It offers a comprehensive, cross-database analysis, supporting a proactive data-driven approach for advanced trend analysis and predictive risk mitigation.</value>
+    </labels>
+    <labels>
         <fullName>GADM_Status_Change_Template_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8779,6 +9099,15 @@ You can choose one or more of the following topics:</value>
         <value>active GADM User role/s already reached!</value>
     </labels>
     <labels>
+        <fullName>GDI_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GDI Service Description</shortDescription>
+        <value>Global Default Insurance (GDI) is a new option for agents required to provide IATA with a Financial Security. Offered by Euler Hermes, a top credit-risk insurance provider, GDI consists of a global default insurance policy, held by IATA on behalf of Billing Settlement Plan (BSP) participating airlines. Agents can request coverage under this policy for the amount of financial security required by IATA.
+
+You can use this Portal service to obtain more information on GDI or request a quote.</value>
+    </labels>
+    <labels>
         <fullName>GeneralPublicLocation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8871,11 +9200,96 @@ You will receive an email with a copy of your quote or you can retrieve the quot
 Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
     </labels>
     <labels>
+        <fullName>IATA_Acr_Changes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Acr Changes Service Description</shortDescription>
+        <value>IATA accreditation greatly simplifies the business relationship between agents and airlines.
+
+As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry partner. You&apos;ll hold a unique IATA numeric code, opening opportunities to work with global airlines.
+
+Through this IATA Accreditation &amp; Changes service you can directly apply to become an IATA Accredited Agency
+
+If you are already IATA Accredited, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Airl_Location_Codes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Airl Location Codes Service Description</shortDescription>
+        <value>IATA Codes are an integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.
+
+You can use this service to request and manage all the different IATA Airlines and Location codes.
+
+IATA currently offers four different code types:
+• Airline Designator Codes
+• Accounting or Prefix Codes
+• Baggage Tag Issuer Code (BTIC)
+• Location Identifiers</value>
+    </labels>
+    <labels>
         <fullName>IATA_Alpha</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IATA Alpha/Numeric Code</shortDescription>
         <value>IATA Alpha/Numeric Code</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Certificates_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Certificates Service Description</shortDescription>
+        <value>As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry partner. A vital document for tenders, the IATA Certificate will help others recognize your agency as an IATA Accredited Agency, bringing more visibility and credibility to you.
+
+Through the IATA Certificates service, you can easily request a new Certificate for your agency.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_EasyPay_2C2P_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (2C2P) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
+    </labels>
+    <labels>
+        <fullName>IATA_EasyPay_EDENRED_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (EDENRED) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
+    </labels>
+    <labels>
+        <fullName>IATA_EasyPay_MSTS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (MSTS) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
     </labels>
     <labels>
         <fullName>IATA_GDPR_URL</fullName>
@@ -8891,6 +9305,15 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <protected>false</protected>
         <shortDescription>IATA GDPR White Logo</shortDescription>
         <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Store_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Store Service Description</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store. 
+
+Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>
@@ -9069,6 +9492,39 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <protected>false</protected>
         <shortDescription>ICCS Additional Codes Number</shortDescription>
         <value>Number of Additional codes to create</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Button_Help_Text</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Button Help Text</shortDescription>
+        <value>&lt;p&gt;&lt;strong&gt;Multi Countries Adhoc SI:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for a selection of countries and participations saving you the time of repeating the line change. The instruction will be applicable to each country/participation selected individually. You can make the selection of participations by first clicking “Expanding All”.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Adhoc SI by Currency:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for all the countries/participation with a same currency (sales currency) and based on the instruction lines can be cumulative. Participations have been regrouped by Currency to make it easier.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Creation_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_SI_by_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc SI by Currency</shortDescription>
+        <value>Adhoc SI by Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Selection_error</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Selection error</shortDescription>
+        <value>Please select one or more participations first in order to complete a multi countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Agreement_Label</fullName>
@@ -9282,12 +9738,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Client testimonial</value>
     </labels>
     <labels>
+        <fullName>ICCS_Clone_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Clone SI</shortDescription>
+        <value>Clone as {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Clone_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Clone SI Link</shortDescription>
         <value>Copy &amp; Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Collapse_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Collapse All</shortDescription>
+        <value>Collapse All</value>
     </labels>
     <labels>
         <fullName>ICCS_Comment_Label</fullName>
@@ -9330,12 +9802,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Create AdHoc SI</value>
     </labels>
     <labels>
+        <fullName>ICCS_Create_Currency_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Currency SI Link</shortDescription>
+        <value>Create Currency SI</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Create_Future_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Create Future SI Link</shortDescription>
         <value>Create Future AdHoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Create_Mass_Currency_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Mass Currency Header</shortDescription>
+        <value>Please, select a currency to apply the new Settlement Instruction</value>
     </labels>
     <labels>
         <fullName>ICCS_Created_Date_Label</fullName>
@@ -9360,6 +9848,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Currency Label</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_SI_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency SI created</shortDescription>
+        <value>Your Currency Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_CycleMgmt_AdHoc_Header</fullName>
@@ -9474,6 +9970,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>E&amp;F</value>
     </labels>
     <labels>
+        <fullName>ICCS_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Edit SI</shortDescription>
+        <value>Edit {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Edit_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9560,6 +10064,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username PROD</shortDescription>
         <value>7r48aodfie7aim0aqd153tckrn</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Expand_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Expand All</shortDescription>
+        <value>Expand All</value>
     </labels>
     <labels>
         <fullName>ICCS_Expected_Deadline</fullName>
@@ -9664,6 +10176,22 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Headquarter Branch</shortDescription>
         <value>Headquarter - Branch</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned</shortDescription>
+        <value>The amount notification hasn&apos;t been received yet.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
+        <value>The amount shown is not the final one, there are still amount notifications to be received.</value>
     </labels>
     <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
@@ -10043,6 +10571,14 @@ Has read only access over different features of the service.</value>
         <value>Fields marked with (*) are mandatory</value>
     </labels>
     <labels>
+        <fullName>ICCS_Mandatory_Instruction_Line</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Instruction Line</shortDescription>
+        <value>It is mandatory to have at least one instruction line</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Mandatory_Uploads_Message</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10057,6 +10593,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS Marked for Deletion Label</shortDescription>
         <value>Marked for Deletion</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mass_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mass Edit SI</shortDescription>
+        <value>Mass Edit {0} Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Membership_Status</fullName>
@@ -10089,6 +10633,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
         <value>ICCS Communications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Multi_Countries_Adhoc_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Multi Countries Adhoc SI</shortDescription>
+        <value>Multi Countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -10159,6 +10711,14 @@ Has read only access over different features of the service.</value>
 2. New set of Standard Settlement Instructions (download form)
 &lt;br/&gt;&lt;br/&gt;
 If you have any question, please submit them through the comments section after submitting your case.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Currencies_Available</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Currencies Available</shortDescription>
+        <value>No currencies available to create Currency SIs</value>
     </labels>
     <labels>
         <fullName>ICCS_No_Editable_Cycle_Message</fullName>
@@ -10651,6 +11211,22 @@ After verification, if all documents are compliant, you will receive a confirmat
         <value>Role</value>
     </labels>
     <labels>
+        <fullName>ICCS_SI_Successfully_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI Successfully Created</shortDescription>
+        <value>Your {0} Settlement Instruction was successfully created</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_SI_deleted</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI deleted</shortDescription>
+        <value>The Settlement Instruction has been successfully deleted</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Save_Action</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10760,27 +11336,17 @@ After verification, if all documents are compliant, you will receive a confirmat
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Service Description</shortDescription>
-        <value>Simplifying the business of international treasury
-&lt;br/&gt;
-&lt;br/&gt;
-The IATA Currency Clearance Service (ICCS) is an industry-developed cash management tool that assists your treasury to effectively centralize your international cash management operations.
-&lt;br/&gt;
-&lt;br/&gt;
-Thanks to ICCS, you can implement tailored solutions that allow you to outsource the reporting, receipt , conversion and repatriation of your international sales proceeds flowing from:
-&lt;br/&gt;
-- BSP’s (Billing and Settlement Plans)
-&lt;br/&gt;
-- CASSes (Cargo Account Settlement Systems)
-&lt;br/&gt;
-- GSA’s (General Sales Agents)
-&lt;br/&gt;
-- Credit Card Settlements
-&lt;br/&gt;
-- Direct Sales
-&lt;br/&gt;
-- Other
-&lt;br/&gt;&lt;br/&gt;
-Access our ICCS Service information page for more details on the service and how to become a Member.</value>
+        <value>IATA Currency Clearance Service (ICCS) is the global cash management service that enables airline Treasurers to centrally control and repatriate their world-wide sales funds. It is currently used by over 330 airlines of varying sizes and had a throughput in 2017 of $34.5 billion.
+
+You can directly access ICCS from the IATA Customer Portal through this service.
+
+Additional benefits of using ICCS:
+• Centralized control of global funds repatriation
+• Advanced access to receivables information allowing for more effective cash planning
+• Reduced time spent on international banking activities resulting in manpower savings
+• Accelerated repatriation of foreign sales funds resulting in improved working capital management and reduced foreign exchange risk
+• Decreased currency conversion costs gained from optimal foreign exchange rates
+• Reduced banking fees and transfer charges</value>
     </labels>
     <labels>
         <fullName>ICCS_Service_Management</fullName>
@@ -10805,6 +11371,14 @@ Access our ICCS Service information page for more details on the service and how
         <protected>false</protected>
         <shortDescription>ICCS Service Users Table Title</shortDescription>
         <value>ICCS Service Users</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Settlement_Instructions_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Settlement Instructions created</shortDescription>
+        <value>Your Settlement Instructions were successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_Show_Child_Codes</fullName>
@@ -10859,12 +11433,46 @@ The last line of the SI&apos;s must be &quot;Balance&quot;
 The sum of percentage cannot exceed 100%</value>
     </labels>
     <labels>
+        <fullName>ICCS_Si_Create_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for creating a Currency SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Currency_Warning</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency Warning</shortDescription>
+        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction. 
+
+Any change of instruction for a specific country line under a currency instruction will not be possible.</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Si_Create_Future</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Future</shortDescription>
         <value>Kindly keep in mind the following rules for creating a future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your Currency SI:
 &lt;br/&gt;
 The last line of the SI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
@@ -10901,6 +11509,38 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS Start Date Label</shortDescription>
         <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Subject_Label</fullName>
@@ -11068,6 +11708,13 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICE Portal Service</shortDescription>
         <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone’s calendar.</value>
+    </labels>
+    <labels>
+        <fullName>ICE_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE Service Description</shortDescription>
+        <value>Through the IATA Customer E-Statement service (ICE), you can directly confirm whether IATA has received your agency&apos;s payment. You can check the outstanding balances, and reconfirm the amounts corresponding to the latest periods. It&apos;s an intuitive, free and easy to use tool providing you tranquility when paying your BSP/CASS billings.</value>
     </labels>
     <labels>
         <fullName>ICH</fullName>
@@ -14922,6 +15569,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>IFAP_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFAP Service Description</shortDescription>
+        <value>IATA Accredited agencies submit on a regular basis financial documents to IATA. Through this service, you can fulfill all the financial assessment requirements directly online - including the upload of your financial documents. Easy to use and convenient for you!
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>IFAP_Submit_for_approval_message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14964,6 +15620,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Name</value>
     </labels>
     <labels>
+        <fullName>IFG_Production_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG Production Service Description</shortDescription>
+        <value>The IATA Financial Gateway (IFG) provides a consolidated and cost efficient solution for airlines and travel suppliers to optimize their different sales payment processes, irrespective of their distribution networks, business models or payment methods.</value>
+    </labels>
+    <labels>
         <fullName>IFG_Prov_Declined</fullName>
         <categories>IFG</categories>
         <language>en_US</language>
@@ -14996,6 +15659,13 @@ In order to upload your financial documents, please, login to Customer Portal on
 You have just received an email confirming your request.
 Regards,
 IFG Customer Services</value>
+    </labels>
+    <labels>
+        <fullName>IFTP_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFTP Service Description</shortDescription>
+        <value>The IATA Fueling Training Portal (IFTP) streamlines training activity for into-plane fueling (ITP) personnel by facilitating multiple airline recognition of standardized training for fueling each aircraft type.</value>
     </labels>
     <labels>
         <fullName>ISSP</fullName>
@@ -20404,7 +21074,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
-        <value>Country</value>
+        <value>Country / Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
@@ -20488,7 +21158,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Description</shortDescription>
-        <value>This service enables you to easily access information on active and terminated MSO Codes under your airline, request new MSO Codes and terminate/correct existing MSO Codes.</value>
+        <value>As an airline, you often operate sales locations (online, aiport, etc.) for which you require a Member Sales Office code (MSO). Through the MSO Management service you can conveniently manage your current MSO codes, instantly activate new locations or deactivate old ones.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
@@ -23703,7 +24373,15 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
-        <value>* Please indicate the GDS(s) with which you have signed a contract</value>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Short</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Indicate_GDSs_Short</shortDescription>
+        <value>Please indicate the GDS(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
@@ -24369,7 +25047,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
-        <value>Available Countries</value>
+        <value>Available Countries /Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
@@ -24397,14 +25075,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Countries</shortDescription>
-        <value>Countries</value>
+        <value>Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CountrySelection</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_CountrySelection</shortDescription>
-        <value>Country Selection</value>
+        <value>Country / Territory Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Country_SelectAll</fullName>
@@ -24676,7 +25354,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_SelectedCountries</shortDescription>
-        <value>Selected Countries</value>
+        <value>Selected Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Selection_Criteria</fullName>
@@ -25130,6 +25808,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
+        <value>In order to notify IATA of a change of bank account details please contact us</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -25335,7 +26021,9 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</shortDescription>
-        <value>This service enables you to look for Travel and Cargo Agents in the BSP/CASS your Airline is participating in. Simply type the IATA code in the search bar to view the main details and risk related information like the active forms of payment, risk history, their accreditation and risk status, etc.</value>
+        <value>An easy to use search option, the IATA Code Search gets you all the required information of a travel agency&apos;s standing directly on screen. Simply insert the IATA code of the agency and hit search. No need to create cases anymore!
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</fullName>
@@ -25793,7 +26481,11 @@ Separate legal entities cannot share the same Legal Name.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>RHC Information description</shortDescription>
-        <value>This service allows you to monitor your consumed Remittance Holding Capacity (RHC) at any time. It includes your authorized and available forms of payment as well as your Risk profile and History. The service will send you notifications when reaching specific percentages of consumed RHC in order to help you monitor and take action.</value>
+        <value>To promote safer selling, IATA introduces a Remittance Holding Capacity (RHC) for all agents with access to a Cash facility in the Billing Settlement Plan (BSP). The RHC sets a maximum threshold for agents’ outstanding Cash sales pending remittance via the BSP.
+
+You can monitor directly your agency&apos;s RHC through this service to ensure the ability to continue issuing tickets in the BSP.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_RHC_Risk_Event_Status</fullName>
@@ -30883,6 +31575,22 @@ this is the tiess topic help</value>
         <value>Action</value>
     </labels>
     <labels>
+        <fullName>ISSP_NDC_Transaction_Info</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDC_Transaction_Info</shortDescription>
+        <value>On confirming, you will be asked to provide IATA with one letter of recommendation from an IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Question</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
+        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NewCase</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -35834,6 +36542,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Please fill in your</value>
     </labels>
     <labels>
+        <fullName>Insurance_Providers_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insurance Providers Service Description</shortDescription>
+        <value>For travel agents who are required to provide IATA with a Financial Security, several options are available. Apart from providing a bank guarantee, you can also choose to use a Global Default Insurance (GDI), or a local Default Insurance Programs (called DIPs). 
+
+Through this Portal service of Insurance Providers, you can get an overview of the local insurance programs (DIPs) available to you in your market.</value>
+    </labels>
+    <labels>
         <fullName>Internal_and_external_emails_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -35935,6 +36652,17 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>Job title required</shortDescription>
         <value>Please fill in your job title.</value>
+    </labels>
+    <labels>
+        <fullName>Join_BSP_CASS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Join BSP/CASS Service Description</shortDescription>
+        <value>The Billing and Settlement Plan (BSP) and the Cargo Accounts Settlement System (CASS) are systems designed to facilitate and simplify the selling, reporting and remitting procedures of IATA Accredited agents, as well as improve financial control and cash flow for Airlines.
+
+Participation in a BSP is open to all airlines (IATA members and non-members) serving the country or area concerned.
+
+Using the Join BSP/CASS service, you can directly manage the joining process online - directly in the IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>KALE_SUPPORT_EMAIL</fullName>
@@ -37214,6 +37942,26 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Logout</shortDescription>
         <value>Logout</value>
+    </labels>
+    <labels>
+        <fullName>MIR_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MIR Service Description</shortDescription>
+        <value>This service enables you to access and download the Management Information Report.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>MITA_Agreements_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MITA Agreements Service Description</shortDescription>
+        <value>The IATA Multilateral Interline Traffic Agreements (MITA) is an agreement whereby passengers and cargo use a standard traffic document (i.e. passenger ticket or air waybill) to travel on various modes of transport involved in a routing in order to reach a final destination.
+
+One Multilateral Agreement concluded with another airline through IATA results in joining a partnership of the growing network of over 350 participating worldwide domestic and international airlines. You can easily manage your MITA Agreements directly within this service on the IATA Customer Portal.
+
+Participation in MITA is open to all IATA and non-IATA member airlines holding valid IATA assigned airline codes (airline designator, airline accounting and/or prefix code) and operating international and/or domestic scheduled air services.</value>
     </labels>
     <labels>
         <fullName>Make_All_Private</fullName>
@@ -40420,6 +41168,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Payment number</value>
     </labels>
     <labels>
+        <fullName>Paymentlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Paymentlink Service Description</shortDescription>
+        <value>Paymentlink is IATA&apos;s online credit card payment platform. As you purchase products &amp; services from IATA, you can use this service to pay easily and instantly. 
+Whether to use Paymentlink for your payments is either indicated on the IATA invoices, or confirmed to you by an IATA representative.</value>
+    </labels>
+    <labels>
         <fullName>Period</fullName>
         <categories>ICE Service</categories>
         <language>en_US</language>
@@ -40907,6 +41663,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Reset your password?</value>
     </labels>
     <labels>
+        <fullName>Resource_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Center Service Description</shortDescription>
+        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
+    </labels>
+    <labels>
         <fullName>Response_message</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -41011,6 +41774,28 @@ Remittance date: {4}
         <value>Salutation</value>
     </labels>
     <labels>
+        <fullName>SapProcessEmailBody</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailSubject</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailSubject</shortDescription>
+        <value>SAP Process - {0}</value>
+    </labels>
+    <labels>
         <fullName>Save</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -41084,6 +41869,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Select</shortDescription>
         <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>SelectAnOption</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAnOption</shortDescription>
+        <value>Select an option</value>
     </labels>
     <labels>
         <fullName>SelectRequiredMessage</fullName>
@@ -41263,6 +42055,35 @@ title,Title,Name</value>
         <value>https://api.signaturit.com/v3/</value>
     </labels>
     <labels>
+        <fullName>SisProcessCaseSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessCaseSubject</shortDescription>
+        <value>SIS E&amp;F customer creation</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailBody</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
+
+Best Regards
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailSubject</shortDescription>
+        <value>SIS Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>SiteTitle</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -41412,6 +42233,15 @@ title,Title,Name</value>
         <value>Data Privacy</value>
     </labels>
     <labels>
+        <fullName>TIP_Reports_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIP Reports Service Description</shortDescription>
+        <value>Transparency in Payments (TIP) is an industry initiative focused on providing airlines with increased transparency and control in the collection of their sales through the travel agency channel. At the same time, it will enable travel agents to take advantage of new forms of payment for the remittance of customer funds.
+
+Through this service, you can directly access TIP Reports.</value>
+    </labels>
+    <labels>
         <fullName>TSI_USA_Only</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41513,6 +42343,15 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Tracking Number</shortDescription>
         <value>Tracking Number</value>
+    </labels>
+    <labels>
+        <fullName>Training_Platform_LMS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Training Platform (LMS) Service Description</shortDescription>
+        <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more. 
+
+Upscale your skills by signing up for one of our training programs, directly online!</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>

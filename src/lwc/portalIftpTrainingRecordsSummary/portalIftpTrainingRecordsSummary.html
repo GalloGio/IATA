@@ -34,7 +34,7 @@
             <lightning-combobox name="proficiency" 
                                 label="Level" 
                                 value={proficiencyValue} 
-                                placeholder="Select Proficiency"
+                                placeholder="Select Level"
                                 options={proficiencyOptions} 
                                 onchange={handleChangeProficiency}
                                 class="slds-m-left_x-small slds-m-right_x-small" 
@@ -46,7 +46,8 @@
                                 placeholder="Select Aircraft Type" 
                                 options={aircraftTypeOptions} 
                                 onchange={handleChangeAircraftType} 
-                                class="slds-m-left_x-small slds-m-right_x-small" 
+                                class="slds-m-left_x-small slds-m-right_x-small"
+                                disabled={levelNotSelected} 
                                 required>
             </lightning-combobox>
             <br />

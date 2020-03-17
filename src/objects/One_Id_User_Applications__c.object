@@ -362,6 +362,24 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>CoPA</fullName>
+        <columns>NAME</columns>
+        <columns>Identity_User__c</columns>
+        <columns>Selected_Role__c</columns>
+        <columns>Provisioning_Status__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>User_App_State__c</columns>
+        <columns>User_Provisioning_Request__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>App_Name__c</field>
+            <operation>equals</operation>
+            <value>Charter of Professional Auditors (CoPA)</value>
+        </filters>
+        <label>CoPA</label>
+    </listViews>
     <nameField>
         <displayFormat>UA-{0000000}</displayFormat>
         <label>One Id User Applications Name</label>

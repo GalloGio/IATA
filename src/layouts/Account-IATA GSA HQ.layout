@@ -268,6 +268,10 @@
                 <behavior>Edit</behavior>
                 <field>SIS_Sub_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Give_SIS_Membership__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -398,6 +402,22 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Services_Rendered_Type__c</fields>
+        <fields>Services_Rendered_to_Airline__c</fields>
+        <fields>Services_Rendered_Status__c</fields>
+        <fields>ISO_Country_formula__c</fields>
+        <relatedList>Services_Rendered__c.Services_Rendered_By__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Services_Rendered_Type__c</fields>
+        <fields>Services_Rendered_By__c</fields>
+        <fields>Services_Rendered_Status__c</fields>
+        <fields>ISO_Country_formula__c</fields>
+        <relatedList>Services_Rendered__c.Services_Rendered_to_Airline__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

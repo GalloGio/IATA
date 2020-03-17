@@ -266,8 +266,12 @@
         <columns>Product__c</columns>
         <columns>NAME</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Number__c</field>
+            <operation>contains</operation>
+            <value>8232,8234</value>
+        </filters>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CDS_Subscriptions_View</fullName>

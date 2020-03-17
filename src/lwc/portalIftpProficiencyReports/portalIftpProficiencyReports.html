@@ -13,8 +13,8 @@
                 Search Criteria
             </div>             
            
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col slds-m-left_x-small">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
                     <lightning-combobox
                         name="ITP"
                         label="ITP"
@@ -24,12 +24,9 @@
                         onchange={handleChangeITP}>
                     </lightning-combobox>
                 </div>
-                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
-                    
-                </div>
-            </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small"></div>
+
+                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
                     <lightning-combobox
                         name="Month"
                         label="Month"
@@ -39,7 +36,7 @@
                         onchange={handleChangeMonth}>
                     </lightning-combobox>
                 </div>
-                <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
+                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
                     <lightning-combobox
                         name="YearCB"
                         label="Year"

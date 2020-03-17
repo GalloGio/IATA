@@ -291,7 +291,7 @@ public class ISSP_ICCS_SiEditControllerTest {
 			}
 		}
 
-		String s = siEditController.siStandard + siEditController.siAdhoc + siEditController.siFuture;
+		String s = siEditController.siStandard + siEditController.siAdhoc + siEditController.siFuture + siEditController.siCurrency;
 
 		siEditController.submit();
 
@@ -301,7 +301,7 @@ public class ISSP_ICCS_SiEditControllerTest {
 		cycleMgmtController.modifiedOnParameter = futureSettlementInstructionRow.settlementInstruction.modifiedOn;
 		cycleMgmtController.deleteSettlementInstruction();
 
-/*		// Change selected cycle
+		// Change selected cycle
 		cycleMgmtController.selectedFutureCycle = futureCyclesList[1];
 		cycleParticipationTable = cycleMgmtController.futureCycleParticipationTable;
 
@@ -315,7 +315,7 @@ public class ISSP_ICCS_SiEditControllerTest {
 		cycleMgmtController.resetController(cycleMgmtController.pageController);
 
 
-		List<ISSP_ICCS_CoreRest.Cycle> cycles = ISSP_ICCS_CoreRest.getCycles(pageController.participantId, new Set<ISSP_ICCS_CoreRest.CYCLE_STATUS> {ISSP_ICCS_CoreRest.CYCLE_STATUS.Created});
+		List<ISSP_ICCS_CoreRest.Cycle> cycles = cycleMgmtController.pageController.coreRest.getCycles(new Set<ISSP_ICCS_CoreRest.CYCLE_STATUS> {ISSP_ICCS_CoreRest.CYCLE_STATUS.Created});
 
 		System.assert(cycles != null && cycles.size() > 0);
 
@@ -327,7 +327,7 @@ public class ISSP_ICCS_SiEditControllerTest {
 		String endDate = cycles[0].endDate;
 		String comment = cycles[0].comment;
 
-		pageController.setMessage('toto', false);*/
+		pageController.setMessage('toto', false);
 		Test.stopTest();
 	}
 }

@@ -38,21 +38,73 @@ public without sharing class ISSP_ICCS_Utils{
 	public static final String SI_STANDARD = 'Standard';
 	public static final String SI_FUTURE = 'Future';
 	public static final String SI_ADHOC = 'AdHoc';
+	public static final String SI_CURRENCY = 'Currency';
+
+	public static final Integer INTEGRATION_ID = 4;
 
 	public static final String NONE = '-- None --';
 
 	// ICCS Document types
+	public static final String ICCS_DOCUMENT_USER_GUIDE = 'ICCS_User_Guide';
+	public static final String ICCS_DOCUMENT_NEW_ICCS = 'New_ICCS';
+	public static final String ICCS_DOCUMENT_ICCS_DESCRIPTION = 'ICCS_Description';
+	public static final String ICCS_DOCUMENT_ICCS_FAQ = 'ICCS_FAQs';
+	public static final String ICCS_DOCUMENT_ICCS_PRESENTATION_WEBINAR = 'ICCS_Presentation_Webinar';
 	public static final String ICCS_DOCUMENT_AML = 'AML';
-	public static final String ICCS_DOCUMENT_FORM_A = 'Form A';
-	public static final String ICCS_DOCUMENT_FORM_K = 'Form K';
+	public static final String ICCS_DOCUMENT_FORM_A = 'Form_A';
+	public static final String ICCS_DOCUMENT_FORM_K = 'Form_K';
 	public static final String ICCS_DOCUMENT_ASP = 'ASP';
-	public static final String ICCS_DOCUMENT_BANK_ACCOUNTS = 'Bank Accounts';
+	public static final String ICCS_DOCUMENT_BANK_ACCOUNTS = 'Bank_Accounts';
 	public static final String ICCS_DOCUMENT_DEACTIVATION = 'Deactivation';
-	public static final String ICCS_DOCUMENT_MEMBERSHIP = 'Membership Agreement';
-	public static final String ICCS_DOCUMENT_JOIN_PARTICIPATION = 'Join Participation';
-	public static final String ICCS_DOCUMENT_LEAVE_PARTICIPATION = 'Leave Participation';	/* CHECK WHY WE HAD AN AMAZON FILE WITH THE VALUE 'Stop Operation' */
-	public static final String ICCS_DOCUMENT_NOA_RELEASE = 'NoA Release';
-	public static final String ICCS_DOCUMENT_REVISED_INSTRUCTIONS = 'Revised Instructions';
+	public static final String ICCS_DOCUMENT_MEMBERSHIP = 'Membership_Agreement';
+	public static final String ICCS_DOCUMENT_JOIN_PARTICIPATION = 'ICCS_Join_Participation';
+	public static final String ICCS_DOCUMENT_LEAVE_PARTICIPATION = 'ICCS_Leave_Participation';
+	public static final String ICCS_DOCUMENT_NOA_RELEASE = 'NoA_Release';
+	public static final String ICCS_DOCUMENT_REVISED_INSTRUCTIONS = 'ICCS_Revised_Instructions';
+	public static final String ICCS_DOCUMENT_ICCS_COUNTRIES = 'ICCS_Countries';
+	public static final String ICCS_DOCUMENT_PRICING_POLICY_AGENTS = 'ICCS_Pricing_Policy_Agents';
+	public static final String ICCS_DOCUMENT_PRICING_POLICY_AIRLINES = 'ICCS_Pricing_Policy_Airlines';
+	public static final String ICCS_DOCUMENT_FX_POLICY_AGENTS = 'FX_Policy_Agents';
+	public static final String ICCS_DOCUMENT_FX_POLICY_AIRLINES = 'FX_Policy_Airlines';
+	public static final String ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AGENTS = 'ICCS_Registration_Documents_Agents';
+	public static final String ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AIRLINES = 'ICCS_Registration_Documents_Airlines';
+	public static final String ICCS_DOCUMENT_AML_REQUEST = 'ICCS_AML_Request';
+	public static final String ICCS_DOCUMENT_BANK_ACCOUNT_DETAILS = 'ICCS_Bank_Account_Details';
+	public static final String ICCS_DOCUMENT_FDS_AUTHORIZED_SIGNATORIES = 'ICCS_FDS_Authorized_Signatories_Package';
+	public static final String ICCS_DOCUMENT_MEMBERSHIP_AGREEMENT = 'ICCS_Membership_Agreement';
+	public static final String ICCS_DOCUMENT_SIGNATORY_AUTHORITY_CHANGE = 'ICCS_Signatory_Authority_Change';
+
+	public static final list<String> LIST_ICCS_DOCUMENTS = new list<String> {
+		ICCS_DOCUMENT_USER_GUIDE,
+		ICCS_DOCUMENT_NEW_ICCS,
+		ICCS_DOCUMENT_ICCS_DESCRIPTION,
+		ICCS_DOCUMENT_ICCS_FAQ,
+		ICCS_DOCUMENT_ICCS_PRESENTATION_WEBINAR,
+		ICCS_DOCUMENT_ICCS_COUNTRIES,
+		ICCS_DOCUMENT_AML,
+		ICCS_DOCUMENT_FORM_A,
+		ICCS_DOCUMENT_FORM_K,
+		ICCS_DOCUMENT_ASP,
+		ICCS_DOCUMENT_BANK_ACCOUNTS,
+		ICCS_DOCUMENT_DEACTIVATION,
+		ICCS_DOCUMENT_MEMBERSHIP,
+		ICCS_DOCUMENT_JOIN_PARTICIPATION,
+		ICCS_DOCUMENT_LEAVE_PARTICIPATION,
+		ICCS_DOCUMENT_NOA_RELEASE,
+		ICCS_DOCUMENT_REVISED_INSTRUCTIONS,
+		ICCS_DOCUMENT_ICCS_COUNTRIES,
+		ICCS_DOCUMENT_PRICING_POLICY_AGENTS,
+		ICCS_DOCUMENT_PRICING_POLICY_AIRLINES,
+		ICCS_DOCUMENT_FX_POLICY_AGENTS,
+		ICCS_DOCUMENT_FX_POLICY_AIRLINES,
+		ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AGENTS,
+		ICCS_DOCUMENT_REGISTRATION_DOCUMENTS_AIRLINES,
+		ICCS_DOCUMENT_AML_REQUEST,
+		ICCS_DOCUMENT_BANK_ACCOUNT_DETAILS,
+		ICCS_DOCUMENT_FDS_AUTHORIZED_SIGNATORIES,
+		ICCS_DOCUMENT_MEMBERSHIP_AGREEMENT,
+		ICCS_DOCUMENT_SIGNATORY_AUTHORITY_CHANGE
+	};
 
 	// Account record type Ids
 	public static final Id ACCOUNT_RECORD_TYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
@@ -119,6 +171,7 @@ public without sharing class ISSP_ICCS_Utils{
 		PROFILE,
 		CASE_PROCESSES,
 		SI_EDIT,
+		MASS_EDIT,
 		ACCESS_DENIED,
 		NONE
 	}
@@ -135,15 +188,16 @@ public without sharing class ISSP_ICCS_Utils{
 
 	// Map used to sort the settlement instructions
 	/* Check if this can be moved somewhere else */
-	public static Map<String, Integer> instructionTypeOrderMap = new Map<String, Integer>{SI_ADHOC => 1, SI_FUTURE => 2, SI_STANDARD => 3};
+	public static Map<String, Integer> instructionTypeOrderMap = new Map<String, Integer>{SI_ADHOC => 1, SI_FUTURE => 2, SI_STANDARD => 3, SI_CURRENCY => 4};
 
 	// Returns the ICCS Membership status of the top Account of a Contact
 	public static String getICCSMembershipStatus(String conId){
-		Contact c = [SELECT User_Portal_Status__c,
-					   Account.ICCS_Membership_Status__c,
-					   Account.Top_Parent__c,
-					   Account.Top_Parent__r.ICCS_Membership_Status__c
-				  FROM Contact WHERE Id = :conId limit 1];
+		Contact c = [
+			SELECT User_Portal_Status__c,
+			Account.ICCS_Membership_Status__c,
+			Account.Top_Parent__c,
+			Account.Top_Parent__r.ICCS_Membership_Status__c
+			FROM Contact WHERE Id = :conId limit 1];
 
 		if(c.Account.Top_Parent__c == null){
 			return c.Account.ICCS_Membership_Status__c;
@@ -362,6 +416,9 @@ public without sharing class ISSP_ICCS_Utils{
 		// List of participations
 		public List<ParticipationRow> participationRows {get;set;}
 
+		// List of CurrencyRows for Cycle table
+		public list<CurrencyRow> currencyRows {get;set;}
+
 		// Category map, Country map and Currency set retrieved from the list of participations
 		public Map<String, Integer> categoryMap;
 		public Map<String, String> countryMap;
@@ -441,10 +498,12 @@ public without sharing class ISSP_ICCS_Utils{
 			categoryMap = new Map<String, Integer>();
 			countryMap = new Map<String, String>();
 			currencySet = new Set<String>();
+			currencyRows = new List<CurrencyRow>();
 
 			/* STEP 2 : Retrieve the participations, create ParticipationRows and fill the categoryMap, the countryMap and the currencySet */
 
 			Map<Integer, ParticipationRow> participationRowsMap = new Map<Integer, ParticipationRow>();
+			map<String,CurrencyRow> currencyRowsMap = new map<String,CurrencyRow>();
 
 			// Retrieve the configuration cashflows with all the details. Use the code as the key instead of the id as the cashflow id in cycle participations is not the same
 			Map<String, ISSP_ICCS_CoreRest.Cashflow> detailedCashflowMap = new Map<String, ISSP_ICCS_CoreRest.Cashflow>();
@@ -490,23 +549,56 @@ public without sharing class ISSP_ICCS_Utils{
 					}
 				}
 			}
-			else{
+			else if(type == SI_ADHOC){
 				for(ISSP_ICCS_CoreRest.Participation participation : componentController.pageController.coreRest.getCycleParticipations(selectedCycle)){
 					// Filter to retrieve only the current participant's participations
 					if(participation.participant.code == componentController.pageController.participantId){
 						// Add a participationRow in the ParticipationRowsMap
-						participationRowsMap.put(participation.id, new ParticipationRow(this, participation.id));
+						ParticipationRow participationRow = new ParticipationRow(this, participation.id);
+						participationRowsMap.put(participation.id, participationRow);
 
 						// Retrieve the detailed version of the cashflow to fill the category map, the country map and the currency set
 						ISSP_ICCS_CoreRest.Cashflow cashflow = detailedCashflowMap.get(participation.cashflow.code);
 
+						// adding Adhoc cashflows with participations
 						if(cashflow != null && cashflow.type.code != null && cashflow.country.name != null && cashflow.processingCurrency != null){
 							categoryMap.put(cashflow.type.code, cashflow.type.id);
 							countryMap.put(cashflow.country.name, cashflow.country.iso3Code);
 							currencySet.add(cashflow.processingCurrency);
+							// add participation to currencyRowsMap
+							CurrencyRow currencyRow = currencyRowsMap.get(cashflow.processingCurrency);
+							if (currencyRow==null) {
+								currencyRow = new CurrencyRow(this, cashflow.processingCurrency);
+								currencyRowsMap.put(cashflow.processingCurrency, currencyRow);
+							}
+							currencyRow.currencyParticipationRows.add(participationRow);
 						}
 					}
 				}
+				// Adding preassigned participations
+				for(ISSP_ICCS_CoreRest.Participation participation : getPreassignedCycleParticipation(this.selectedCycle)){
+					ParticipationRow participationRow = participationRowsMap.get(participation.Id);
+
+					if (participationRow==null) {
+						// create fake participationRow
+						participationRow = new ParticipationRow(this, participation.Id);
+						participationRowsMap.put(participation.Id, participationRow);
+
+						// add participation to currencyRowsMap
+						String processingCurrency = participation.cashflow.processingCurrency;
+						CurrencyRow currencyRow = currencyRowsMap.get(processingCurrency);
+						if (currencyRow==null) {
+							currencyRow = new CurrencyRow(this, processingCurrency);
+							currencyRowsMap.put(processingCurrency, currencyRow);
+							currencySet.add(processingCurrency);
+						}
+						currencyRow.currencyParticipationRows.add(participationRow);
+					} else {
+						participationRow.participation.cashflow = participation.cashflow;
+					}
+				}
+				currencyRows = currencyRowsMap.values();
+				currencyRows.sort();
 			}
 
 			/* STEP 3 : Retrieve the Settlement Instructions and create the SettlementInstructionRows */
@@ -544,27 +636,36 @@ public without sharing class ISSP_ICCS_Utils{
 					}
 				}
 			}
-			else{
+			else if(type == SI_ADHOC){
 				for(ISSP_ICCS_CoreRest.SettlementInstruction settlementInstruction : componentController.pageController.coreRest.getCycleSettlementInstructions(selectedCycle)){
 					// Retrieve the participationRow
 					ParticipationRow participationRow = participationRowsMap.get(settlementInstruction.participation.id);
 
 					if(participationRow != null){
-						// Add a settlementInstructionRow in the participationRow
 						SettlementInstructionRow settlementInstructionRow = new SettlementInstructionRow(participationRow, settlementInstruction.id, false);
+						// Add a settlementInstructionRow in the participationRow
 						participationRow.settlementInstructionRows.add(settlementInstructionRow);
 						// Add it in the settlementInstructionRowsMap as well
 						settlementInstructionRowsMap.put(settlementInstruction.id, settlementInstructionRow);
+					}
+					// adding Currency cashflows without participations
+					if(settlementInstruction.type.code == SI_CURRENCY && currencyRowsMap.containsKey(settlementInstruction.CurrencyIso3Code)) {
+						CurrencyRow currencyRow = currencyRowsMap.get(settlementInstruction.CurrencyIso3Code);
+						participationRow = new ParticipationRow(this, settlementInstruction.participation.Id);
+						SettlementInstructionRow settlementInstructionRow = new SettlementInstructionRow(participationRow, settlementInstruction.Id, false);
+						currencyRow.currencySettlementInstructionRows.add(settlementInstructionRow);
 					}
 				}
 
 				// For AdHoc cycle participation table, the participations with settlement amount = 0 must be removed from the map
 				Map<Integer, ParticipationRow> filteredParticipationRowsMap = new Map<Integer, ParticipationRow>();
 				for(Integer participationId : participationRowsMap.keySet()){
-					if(participationRowsMap.get(participationId).numericSettlementAmount != 0){
-						filteredParticipationRowsMap.put(participationId, participationRowsMap.get(participationId));
+					ParticipationRow participationRow = participationRowsMap.get(participationId);
+					if(participationRow.numericSettlementAmount != 0){
+						filteredParticipationRowsMap.put(participationId, participationRow);
 					}
 				}
+
 				participationRowsMap = filteredParticipationRowsMap;
 			}
 
@@ -637,6 +738,14 @@ public without sharing class ISSP_ICCS_Utils{
 				selectableCurrencySet.add(selectableItems[2]);
 			}
 
+			for(CurrencyRow currencyRow : currencyRows){
+				List<set<String>> selectableItems = currencyRow.applyFilters();
+
+				selectableCategorySet.addAll(selectableItems[0]);
+				selectableCountrySet.addAll(selectableItems[1]);
+				selectableCurrencySet.addAll(selectableItems[2]);
+			}
+
 			// Remove the potential null value from the sets
 			selectableCategorySet.remove(null);
 			selectableCountrySet.remove(null);
@@ -676,11 +785,21 @@ public without sharing class ISSP_ICCS_Utils{
 
 			// Retrieve the list of participations from the core
 			List<ISSP_ICCS_CoreRest.Participation> participations;
+			participations = componentController.pageController.coreRest.getParticipations();
 			if(type == SI_ADHOC){
-				participations = componentController.pageController.coreRest.getCycleParticipations(selectedCycle);
-			}
-			else {
-				participations = componentController.pageController.coreRest.getParticipations();
+				map<Integer,ISSP_ICCS_CoreRest.Participation> mapIdParticipation = new map<Integer,ISSP_ICCS_CoreRest.Participation>();
+				for(ISSP_ICCS_CoreRest.Participation participation : componentController.pageController.coreRest.getCycleParticipations(selectedCycle)){
+					mapIdParticipation.put(participation.Id, participation);
+				}
+				for(ISSP_ICCS_CoreRest.Participation participation : getPreassignedCycleParticipation(this.selectedCycle)){
+					ISSP_ICCS_CoreRest.Participation foundParticipation = mapIdParticipation.get(participation.Id);
+					if (foundParticipation == null ) {
+						mapIdParticipation.put(participation.Id, participation);
+					} else {
+						foundParticipation.cashflow = participation.cashflow;
+					}
+				}
+				participations.addAll(mapIdParticipation.values());
 			}
 
 			// Retrieve the configuration cashflows with all the details to update the participations
@@ -739,8 +858,77 @@ public without sharing class ISSP_ICCS_Utils{
 
 			return settlementInstructionsMap;
 		}
+
+		// Get the list of Preassigned and Not notified cashflows but inside a Participation object
+		// ICCS is returning only the cashflow, so we have to create a fake Participation object with the provided Id
+		public list<ISSP_ICCS_CoreRest.Participation> getPreassignedCycleParticipation(String cycleId) {
+			list<ISSP_ICCS_CoreRest.Participation> listParticipation = new list<ISSP_ICCS_CoreRest.Participation>();
+			for(ISSP_ICCS_CoreRest.Cashflow cashflow : componentController.pageController.coreRest.getPreassignedAndNotReceivedCashflows(cycleId)){
+				// create fake participation
+				ISSP_ICCS_CoreRest.Participation participation = new ISSP_ICCS_CoreRest.Participation();
+				participation.id = cashflow.participationId;
+				participation.cashflow = cashflow;
+				listParticipation.add(participation);
+			}
+			return listParticipation;
+		}
 	}
 
+	public class CurrencyRow implements Comparable{
+		public ParticipationTable participationTable {get;set;}
+
+		public String currencyIsoCode {get;set;}
+
+		public List<ParticipationRow> currencyParticipationRows {get;set;}
+		public List<SettlementInstructionRow> currencySettlementInstructionRows {get;set;}
+		public Integer numberCurrencySiRows {get {return this.currencySettlementInstructionRows.size();}}
+		public Boolean displayCountries {get;set;}
+
+		/* Constructor */
+		public CurrencyRow(ParticipationTable participationTable, String currencyIsoCode){
+			this.participationTable = participationTable;
+			this.currencyIsoCode = currencyIsoCode;
+
+			this.currencyParticipationRows = new List<ParticipationRow>();
+			this.currencySettlementInstructionRows = new list<SettlementInstructionRow>();
+		}
+
+		public void showCountries(){
+			displayCountries = true;
+		}
+
+		public void hideCountries(){
+			displayCountries = false;
+		}
+
+		public Integer getCurrencyParticipationRowsCount() {
+			Integer count = 0;
+			for (ParticipationRow row: currencyParticipationRows) {
+				if (!row.isFilteredOut) count++;
+			}
+			return count;
+		}
+
+		public List<Set<String>> applyFilters(){
+			set<String> selectableCategorySet = new set<String>();
+			set<String> selectableCountrySet = new set<String>();
+			set<String> selectableCurrencySet = new set<String>();
+			for(ParticipationRow participationRow : currencyParticipationRows){
+				List<String> selectableItems = participationRow.applyFilters();
+				selectableCategorySet.add(selectableItems[0]);
+				selectableCountrySet.add(selectableItems[1]);
+				selectableCurrencySet.add(selectableItems[2]);
+			}
+			return new List<Set<String>>{selectableCategorySet, selectableCountrySet, selectableCurrencySet};
+		}
+
+		public Integer compareTo(Object compareTo) {
+			CurrencyRow compareToCurrencyRow = (CurrencyRow) compareTo;
+			if(this.currencyIsoCode < compareToCurrencyRow.currencyIsoCode){ return -1; }
+			if(this.currencyIsoCode > compareToCurrencyRow.currencyIsoCode){ return 1; }
+			return 0;
+		}
+	}
 
 	public class ParticipationRow implements Comparable{
 		public ParticipationTable participationTable {get;set;}
@@ -765,6 +953,19 @@ public without sharing class ISSP_ICCS_Utils{
 			}
 		}
 		public String settlementAmount {get{ return String.valueOf(numericSettlementAmount); }}
+		public Boolean selected {get;set;}
+		public Boolean isNotReceived {
+			get {
+				return participation!=null && participation.cashflow!=null
+					&& participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.NotReceived;
+			}
+		}
+		public Boolean isPreassigned {
+			get {
+				return participation!=null && participation.cashflow!=null
+					&& participation.cashflow.getCashflowStatus() == ISSP_ICCS_CoreRest.CASHFLOW_STATUS.PreAssigned;
+			}
+		}
 
 		/* Constructor */
 		public ParticipationRow(ParticipationTable participationTable, Integer participationId){
@@ -775,10 +976,10 @@ public without sharing class ISSP_ICCS_Utils{
 
 			settlementInstructionRows = new List<SettlementInstructionRow>();
 			displaySettlementInstructions = false;
+			selected = false;
 		}
 
 		public void showSettlementInstructions(){
-			settlementInstructionRows.sort();
 			displaySettlementInstructions = true;
 		}
 
@@ -793,18 +994,20 @@ public without sharing class ISSP_ICCS_Utils{
 
 			isFilteredOut = categoryFilteredOut || countryFilteredOut || currencyFilteredOut;
 
-			List<String> selectableItems = new List<String>{null, null, null};
+			List<String> selectableItems = new List<String>{'','',''};
 
-			if(!(countryFilteredOut || currencyFilteredOut)){
-				selectableItems[0] = participation.cashflow.type.code;
-			}
-
-			if(!(categoryFilteredOut || currencyFilteredOut)){
-				selectableItems[1] = participation.cashflow.country.name;
-			}
-
-			if(!(categoryFilteredOut || countryFilteredOut)){
-				selectableItems[2] = participation.cashflow.processingCurrency;
+			If(participation != null && participation.cashflow != null) {
+				if(!(countryFilteredOut || currencyFilteredOut) && participation.cashflow.type!=null){
+					selectableItems[0] = participation.cashflow.type.code;
+				}
+	
+				if(!(categoryFilteredOut || currencyFilteredOut) && participation.cashflow.country!=null){
+					selectableItems[1] = participation.cashflow.country.name;
+				}
+	
+				if(!(categoryFilteredOut || countryFilteredOut)){
+					selectableItems[2] = participation.cashflow.processingCurrency;
+				}
 			}
 			return selectableItems;
 		}
