@@ -213,13 +213,13 @@
                                     </lightning:buttonMenu>
                                 </div>
                             </td>
-                            <td class="{!'slds-col ' + if(greaterthan(issue.Name.length, 10),'','slds-hide')}"><c:AMP_LongText text="{!issue.Name}"/></td>
-                            <td class="{!'slds-col ' + if(lessthan(issue.Name.length, 11),'','slds-hide')}"><ui:outputText value="{!issue.Name}"/></td>
+                            <td class="{!'slds-col ' + if(greaterthan(issue.Name.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!issue.Name}"/></td>
+                            <td class="{!'slds-col ' + if((lessthan(issue.Name.length, 26) || !issue.Name),'','slds-hide')}"><ui:outputText value="{!issue.Name}"/></td>
                             <td><ui:outputText value="{!issue.Division__c}"/></td>
-                            <td class="{!'slds-col ' + if(greaterthan(issue.AM_Source_Text__c.length, 10),'','slds-hide')}"><c:AMP_LongText text="{!issue.AM_Source_Text__c}"/></td>
-                            <td class="{!'slds-col ' + if(lessthan(issue.AM_Source_Text__c.length, 11),'','slds-hide')}"><ui:outputText value="{!issue.AM_Source_Text__c}"/></td>
-                            <td class="{!'slds-col ' + if(greaterthan(issue.Details__c.length, 10),'','slds-hide')}"><c:AMP_LongText text="{!issue.Details__c}" /></td>
-                            <td class="{!'slds-col ' + if(lessthan(issue.Details__c.length, 11),'','slds-hide')}"><ui:outputText value="{!issue.Details__c}"/></td>
+                            <td class="{!'slds-col ' + if(greaterthan(issue.AM_Source_Text__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!issue.AM_Source_Text__c}"/></td>
+                            <td class="{!'slds-col ' + if((lessthan(issue.AM_Source_Text__c.length, 26) || !issue.AM_Source_Text__c),'','slds-hide')}"><ui:outputText value="{!issue.AM_Source_Text__c}"/></td>
+                            <td class="{!'slds-col ' + if(greaterthan(issue.Details__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!issue.Details__c}" /></td>
+                            <td class="{!'slds-col ' + if((lessthan(issue.Details__c.length, 26) || !issue.Details__c || issue.Details__c == null || issue.Details__c == ''),'','slds-hide')}"><ui:outputText value="{!issue.Details__c}"/></td>
                             <td><ui:outputText value="{!issue.AM_Level_of_importance__c}"/></td>
                             <td><ui:outputText value="{!issue.Status__c}"/></td>
                             <td><ui:outputCheckbox value="{!issue.AM_Global__c}"/></td>

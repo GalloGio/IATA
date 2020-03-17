@@ -46,17 +46,51 @@
                     </aura:set>
                 </lightning:card>
                 <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
-                    <lightning:datatable
-					    class="no-truncate"
-                        keyField="rowId"
-                        data="{!v.data}"
-                        columns="{!v.columns}"
-                        resizeColumnDisabled="true"
-                        hideCheckboxColumn="true"
-                        onrowaction="{!c.handleRowAction}"
-                        sortedBy="{!v.sortBy}"
-                        sortedDirection="{!v.sortDirection}"
-                        onsort="{!c.handleSort}"/>
+                    <div class="slds-card__body">
+
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+                            <thead>
+                                <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+                                    <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
+                                    <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
+                                    <th scope="col" class="wideColumn"><span class="slds-truncate">Division</span></th>
+                                    <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
+                                    <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
+                                    <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
+                                    <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
+                                    <th scope="col" class="wideColumn"><span class="slds-truncate">Comment</span></th>
+                                </tr>
+                            </thead>
+        
+                            <tbody>
+                                <aura:iteration items="{!v.data}" var="activity" indexVar="index">
+                                    <tr>
+                                        <td>
+                                            
+                                            <div class="{!'slds-col ' + if(v.haveUserAMPIssuesAndPriorities,'','slds-hide')}">
+                                                <lightning:buttonMenu alternativeText="Show more" onselect="{!c.handleRowAction}">
+                                                    <lightning:menuItem value="{!'show_milestones-'+activity.recordId}" label="Show Milestones" />
+                                                    <lightning:menuItem value="{!'edit_row-'+activity.recordId}" label="Edit" />
+                                                    <lightning:menuItem value="{!'delete_row-'+activity.recordId}" label="Delete"/>
+                                                </lightning:buttonMenu>
+                                            </div>
+                                        </td>
+                                        <td class="{!if(greaterthan(activity.objectiveName.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!activity.objectiveName}" /></td>
+                                        <td class="{!if((lessthan(activity.objectiveName.length, 26) || !activity.objectiveName),'','slds-hide')}"><ui:outputText value="{!activity.objectiveName}" /></td>
+                                        <td><ui:outputText value="{!activity.division}" /></td>
+                                        <td class="{!if(greaterthan(activity.description.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!activity.description}" /></td>
+                                        <td class="{!if((lessthan(activity.description.length, 26) || !activity.description),'','slds-hide')}"><ui:outputText value="{!activity.divdescriptionision}" /></td>
+                                        <td><ui:outputText value="{!activity.status}" /></td>
+                                        <td><ui:outputDate value="{!activity.endDate}" class="slds-truncate"/></td>
+                                        <td class="{!if(greaterthan(activity.issueName.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!activity.issueName}" /></td>
+                                        <td class="{!if((lessthan(activity.issueName.length, 26) || !activity.issueName),'','slds-hide')}"><ui:outputText value="{!activity.issueName}" /></td>
+                                        <td class="{!if(greaterthan(activity.comments.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!activity.comments}" /></td>
+                                        <td class="{!if((lessthan(activity.comments.length, 26) || !activity.comments),'','slds-hide')}"><ui:outputText value="{!activity.comments}" /></td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
