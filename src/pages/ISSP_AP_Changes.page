@@ -1,53 +1,82 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
     <script>
-    	function toggleChangeFields(myValue) {
+        function toggleChangeFields(myValue) {
             refreshTypeOfChangeSection()
             if(document.getElementById(myValue).value=='Change of Address') {
-            	if(document.getElementById(myValue).checked) {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
-				} else {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='none';
-				}
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='none';
+                }
             } else if(document.getElementById(myValue).value=='Tax Number') {
-            	if(document.getElementById(myValue).checked) {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='block';
-				} else {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
-				}
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
+                }
             } else if(document.getElementById(myValue).value=='Master Table') {
-            	if(document.getElementById(myValue).checked) {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
-				} else {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
-				}
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
+                }
             } else if(document.getElementById(myValue).value=='Voluntary Withdrawal') {
-            	if(document.getElementById(myValue).checked) {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='block';
-				} else {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='none';
-				}
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='none';
+                }
             } else if(document.getElementById(myValue).value=='Report Options') {
-            	if(document.getElementById(myValue).checked) {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='block';
-				} else {
-    				document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='none';
-				}
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='none';
+                }
+            } else if(document.getElementById(myValue).value=='Commission') {
+                if(document.getElementById(myValue).checked) {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.CommissionFields}').style.display='block';
+                } else {
+                    document.getElementById('{!$Component.APChangesForm.changeblock.CommissionFields}').style.display='none';
+                }
             }
         }
-    
-    function changePercentBox(myBox, myCheckBox, myPanel){
-        var thisBox = document.getElementById(myBox);
-        var thisCheckBox = document.getElementById(myCheckBox);
-        var thisPanel = document.getElementById(myPanel);
-        if (thisCheckBox.checked == true){
-            thisPanel.style.display='block';
+
+        function changePercentBox(myBox, myCheckBox, myPanel){
+            var thisBox = document.getElementById(myBox);
+            var thisCheckBox = document.getElementById(myCheckBox);
+            var thisPanel = document.getElementById(myPanel);
+            if (thisCheckBox.checked == true){
+                thisPanel.style.display='block';
+            }
+            else{
+                thisPanel.style.display='none';
+                thisBox.value = '';
+            }
         }
-        else{
-            thisPanel.style.display='none';
-            thisBox.value = '';
+
+        function findMakeRows() {
+            tables = document.getElementsByTagName('table');
+            for (i = 0; i < tables.length; i++) {
+                table = tables[i];
+                if (table.className == 'makeRows') {
+                    makeRows(table, 3);
+                }
+            }
         }
-    }
-    
+
+        function makeRows(table, columnCount) {
+            cells = table.rows[0].cells;
+            cellCount = cells.length;
+            rowCount = Math.ceil(cellCount / columnCount);
+            for (i = 0; i < rowCount; i++) {
+                table.insertRow(0);
+            }
+            for (i = 0; i < cellCount; i++) {
+                row = Math.floor(i / columnCount);
+                table.rows[row].appendChild(cells[i].cloneNode(true));
+            }
+            table.deleteRow(rowCount);
+        }
     </script>
      <style>
          label {margin-left:3px;font-size:12px;}
@@ -155,7 +184,7 @@
                 <br/>
 
                 <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
-                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" label="* Type of change requested"  style="width:80%;">
+                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" label="* Type of change requested" style="width:80%;" styleClass="makeRows">
                         <apex:selectOptions value="{!changeItems}"/>
                     </apex:selectCheckboxes>
 
@@ -166,6 +195,8 @@
                         <apex:outputLabel value="Desired commencement date" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
                     </apex:pageBlockSectionItem>
+
+                    <script>findMakeRows();</script>
                 </apex:pageBlockSection>
 
                 <apex:outputPanel id="AddressFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Change of Address'), '', 'display:none')}" >
@@ -502,7 +533,32 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
 
-            </div>     
+                <!-- Show when Type of change Commission is selected -->
+                <apex:outputPanel id="CommissionFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Commission'), '', 'display:none')}" >
+                    <apex:pageBlockSection collapsible="false" columns="2" title="Commission">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Does the Airline pay commission to Agents?" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Pay_Commission_to_agents__c}">
+                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="blockButtons"/>
+                            </apex:inputField>
+                        </apex:pageBlockSectionItem>
+                        <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+
+                        <apex:pageBlockSectionItem helpText="Standard Commission will be applied where AWB Billing record indicates a Commission is to be paid on the billing file uploaded in CASSlink."
+                            rendered="{!newForm.Pay_Commission_to_agents__c='Yes'}">
+                            <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Pay_Standard_Commission__c}">
+                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="blockButtons"/>
+                            </apex:inputField>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem rendered="{!newForm.Pay_Commission_to_agents__c='Yes' && newForm.Pay_Standard_Commission__c='Yes'}">
+                            <apex:outputLabel value="Standard Commission Rate (%)" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Commission_Rate__c}"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
+            </div>
          </apex:pageBlock>
           
         </apex:form>

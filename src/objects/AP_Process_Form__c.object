@@ -4079,6 +4079,16 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <default>false</default>
                     <label>Report Options</label>
                 </value>
+                <value>
+                    <fullName>Commission</fullName>
+                    <default>false</default>
+                    <label>Commission</label>
+                </value>
+                <value>
+                    <fullName>Stock Management</fullName>
+                    <default>false</default>
+                    <label>Stock Management</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
@@ -5358,11 +5368,19 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <default>false</default>
             </values>
             <values>
+                <fullName>Commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master Table</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7609,11 +7627,19 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <default>false</default>
             </values>
             <values>
+                <fullName>Commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Master Table</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
                 <default>false</default>
             </values>
             <values>
