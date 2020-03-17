@@ -429,7 +429,7 @@ public class ServiceRenderedCaseLogic {
 					// for these accounts, search for the airline HQ (might be the account itself)
 					map<Id, Account> mapHQAccountsPerId = new map<Id, Account>();
 					list<Account> lstTriggerAccountsAndParents = [SELECT Id, ParentId, RecordType.DeveloperName, Airline_BSP_Participations__c, Airline_CASS_Participations__c,
-																		 Parent.Airline_BSP_Participations__c, Parent.Airline_CASS_Participations__c, Parent.RecordType.DeveloperName
+																		 Parent.Airline_BSP_Participations__c, Parent.Airline_CASS_Participations__c, Parent.RecordType.DeveloperName, Airline_PASS_Participations__c
 																	FROM Account WHERE Id IN :setSRAccountIds];
 
 					for (Account a : lstTriggerAccountsAndParents) {

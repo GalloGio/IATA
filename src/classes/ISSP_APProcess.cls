@@ -1645,6 +1645,9 @@ global without sharing class ISSP_APProcess {
 				listMandatoryFiles.add('SignedSISISPAForm');
 			}
 		}
+		if(isPassAirline){
+			listMandatoryFiles.add('FormOfAuthorization');
+		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
 	}

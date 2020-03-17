@@ -15802,6 +15802,27 @@ J-Joint Vent</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>PASS_Member__c</fullName>
+        <description>Checkbox indicating if the Account is a PASS Member</description>
+        <externalId>false</externalId>
+        <formula>IF( Airline_PASS_Participations__c &gt; 0, True, False)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PASS Member</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PASS_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PASS Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PASS_Participant_formula__c</fullName>
         <description>Checkbox indicating if there are any PASS Participations related to the Account</description>
         <externalId>false</externalId>

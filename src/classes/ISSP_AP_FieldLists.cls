@@ -276,10 +276,7 @@ public class ISSP_AP_FieldLists {
 		'CASSLink_Contact_L_Name__c'		=>'',
 		'CASSLink_Contact_Job_Title__c'		=>'',
 		'CASSLink_Contact_Email__c'			=>'',
-		'CASSLink_Contact_Phone__c'			=>'',
-		'CASSLink_Contact_Fax__c'			=>'',
-		'CASS_Corrections_Email_1__c'		=>'',
-		'CASS_Corrections_Email_2__c'		=>''
+		'CASSLink_Contact_Phone__c'			=>''
 	};
 
 }
