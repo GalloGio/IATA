@@ -36,23 +36,22 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
 
     get accountSelectionLogo(){
-        // If the Account Selection step is complete, we display the check mark logo
-        if(this.step1Complete || (this.step2Complete && this.step3Complete)){
+        // If we are after the Account Selection step, we display the check mark logo
+        if(this.currentStep === 4 || this.currentStep === 5){
             return this.stepCheckedLogo;
         }
-        // Otherwise, it means that we're in the Account Selection step and we display the "step 1" active logo
+        // Otherwise, we display the step 1 active logo
         else{
             return this.step1ActiveLogo;
         }
     }
 
     get additionalDetailsLogo(){
-        // If the Additional Details step is complete, we display the check mark logo
-        // (undependently of the current step)
-        if(this.step4Complete){
+        // If we are in the Confirmation step, we display the check mark logo
+        if(this.currentStep === 5){
             return this.stepCheckedLogo;
         }
-        // If we are in step 4 (Additional Details)
+        // If we are in the Additional Details step, we display the step 2 active logo
         else if(this.currentStep === 4){
             return this.step2ActiveLogo;
         }
@@ -68,7 +67,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     }
 
     get confirmationLogo(){
-        // If account selection and additional information are complete, we display the step 3 active logo
+        // If the Account Selection and the Additional Information steps are complete, we display the step 3 active logo
         if((this.step1Complete || (this.step2Complete && this.step3Complete)) && this.step4Complete){
             return this.step3ActiveLogo;
         }
