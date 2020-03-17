@@ -1142,6 +1142,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		Boolean onlyTwoAgenciesSelected = false;
 		Boolean diffLocationTypesSelected = false;
 		Boolean allAgenciesFromSameBSPSelected = false;
+		isSingleBSPSelected = null;
 
 		Set<String> locationTypeSet = new Set<String>();
 
