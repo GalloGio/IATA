@@ -9,7 +9,7 @@
             <div class="slds-col_padded slds-size_1-of-3 slds-m-bottom_medium">
                 <div class="slds-media">
                     <div class="slds-media__figure">
-                        <lightning:icon iconName="standard:account" alternativeText="Agency"/>
+                        <img src="/resource/AMP_logo" />
                     </div>
                     <div class="slds-media__body">
                         <p class="slds-text-heading_label">Account</p>

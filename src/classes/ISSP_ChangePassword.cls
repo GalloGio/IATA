@@ -314,10 +314,6 @@ public without sharing class ISSP_ChangePassword {
 					}
 
 					accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-					if(userinfo.contact.user_portal_status__c =='Approved Admin'){
-						accContRoleToInsert.Contact_Role__c += ';ITP Administrator';
-					}
-
 					accContRoleToInsert.Details__c = '';
 					accContRoleToInsert.Contact__c = userInfo.ContactId;
 
