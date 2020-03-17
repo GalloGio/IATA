@@ -16,7 +16,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Account_name__c</field>
+                <field>Account_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
