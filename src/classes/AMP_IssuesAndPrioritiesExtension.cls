@@ -21,7 +21,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	// controller.
 	public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
 		if(!Test.isRunningTest())
-			stdController.addFields(new List<String>{'RecordType.DeveloperName'});
+			stdController.addFields(new List<String>{'RecordType.DeveloperName','Name'});
 
 		Account acc = (Account)stdController.getRecord();
 
