@@ -102,7 +102,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 							}
 						} else {
-							if (isSingleBSPSelected && !isGESelected()) {
+							if (isSingleBSPSelected && oscar.New_parent__r.Location_Type__c == AMS_Utils.HE && oscar.New_parent__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 								notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
 							} else {
 								notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: ' + newParent.Name + '(' + newParent.IATACode__c + ')');
@@ -1208,6 +1208,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			errorChecks.put('All agents from the same BSP not selected', true);
 		}
 
+		if (tocList.contains(AMS_Utils.ANG_HIERARCHY) && !diffDestination(oscar.New_parent__c)) {
+			if (oscar.New_parent__r.Location_Type__c == AMS_Utils.GE && isSingleBSPSelected) {
+				errorChecks.put('All selected locations are in the same BSP', true);
+			}
+
+			if (oscar.New_parent__r.Location_Type__c == AMS_Utils.HE && !isSingleBSPSelected) {
+				errorChecks.put('Agents must be in the same BSP', true);
+			}
+		}
+
 		//If a GE location is selected when performing a change of hierarchy the user has to select the entire hierarchy
 		//since it is not allowed to leave HE or AE accounts alone in the hierarchy
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && locationTypeSet.contains(AMS_Utils.GE) && selectedCount != hierarchySize){
@@ -1282,7 +1292,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 
 				if (newParentIncluded(newParent.Id)) {
-					if (isSingleBSPSelected && !isGESelected()) {
+					if (isSingleBSPSelected){
 						return AMS_Utils.MULTICOUNTRY_BSP_SPLIT;
 					} else {
 						return AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT;
@@ -1298,16 +1308,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		return null;
-	}
-
-	private Boolean isGESelected() {
-		for (HierarchyItem i: hierarchy.values()) {
-			if ((i.selected || i.main) && i.acc.Location_Class__c == AMS_Utils.GE) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	// ***********************************
