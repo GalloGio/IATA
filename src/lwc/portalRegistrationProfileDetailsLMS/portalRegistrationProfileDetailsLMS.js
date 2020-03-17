@@ -100,6 +100,9 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		//Initialize missing fields
 		this.localContactInfo.Additional_Email__c = this.localContactInfo.Additional_Email__c === undefined ? '' : this.localContactInfo.Additional_Email__c;
 
+		//Initialize value to use Later on the Email, Training info and confirmation form
+		this.localContactInfo.ExistingTrainingInfo = false;
+
 		if(!this.isIE){ 
 			this.classIE = '';
 			this.startIE = '<div class="IEFixDisplayContainer">';

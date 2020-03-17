@@ -184,48 +184,46 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 	}
 
 	connectedCallback() {
-console.log('TrainingValidation connectedCallback this.contactInfo: ', this.contactInfo);		
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-console.log('TrainingValidation connectedCallback this.localContactInfo: ', this.localContactInfo);
-		this.startLoading();
-		getLMSContactInfo({lms:'yas'})
-		.then(result2 => {
-			if(result2 !== undefined){
-				this.contactInfoLMS = result2;
 
-				this.localContactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
-				this.localContactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
-				// if(this.localContactInfo.lmsCourse !== ''){
-				// 	this.localContactInfo.lmsCourse = this.contactInfoLMS.Preferred_Course__c !== undefined ? this.contactInfoLMS.Preferred_Course__c : '';
-				// }
-			}else{
+		//If Training information already exist from existing user to Merge, can happen on Flows 4,6 and 7
+		if(this.localContactInfo.Username !== '' && this.localContactInfo.Username !== null && this.localContactInfo.Username !== undefined
+		&& this.localContactInfo.UserId !== '' && this.localContactInfo.UserId !== null && this.localContactInfo.UserId !== undefined ){
+			this.dispatchEvent(new CustomEvent('next'));
+		}else{
+
+			this.startLoading();
+			getLMSContactInfo({lms:'yas'})
+			.then(result2 => {
+				if(result2 !== undefined){
+					this.contactInfoLMS = result2;
+
+					this.localContactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
+					this.localContactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
+				}else{
+					this.localContactInfo.Username = '';
+					this.localContactInfo.UserId = '';
+				}
+
+				if(this.localContactInfo.Username !== '' && this.localContactInfo.Username !== null && this.localContactInfo.Username !== undefined
+					&& this.localContactInfo.UserId !== '' && this.localContactInfo.UserId !== null && this.localContactInfo.UserId !== undefined ){
+						
+					this.localContactInfo.ExistingTrainingInfo = true;
+					this.dispatchEvent(new CustomEvent('next'));
+				}
+				this.stopLoading();					
+			})
+			.catch((error) => {
+				this.stopLoading();
 				this.localContactInfo.Username = '';
 				this.localContactInfo.UserId = '';
-			}
-
-			if(this.localContactInfo.Username !== '' && this.localContactInfo.Username !== null && this.localContactInfo.Username !== undefined
-				&& this.localContactInfo.UserId !== '' && this.localContactInfo.UserId !== null && this.localContactInfo.UserId !== undefined ){
-					
-				if(this.localContactInfo.firstLogin){
-					this.dispatchEvent(new CustomEvent('next'));
-				}else{
-					this.haveTrainingUser = 'yes';
-					this.validated = true;
-				}
-			}
-			this.stopLoading();					
-		})
-		.catch((error) => {
-			this.stopLoading();
-			this.localContactInfo.Username = '';
-			this.localContactInfo.UserId = '';
-		
-			this.openMessageModalFlowRegister = true;
-			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-			console.log('Error2: ', error);
-		});
-
+			
+				this.openMessageModalFlowRegister = true;
+				this.message = CSP_L2_RegistrationFailed_LMS + error;
+				console.log('Error: ', JSON.parse(JSON.stringify(error)));
+				console.log('Error2: ', error);
+			});
+		}
 
 		
 
@@ -307,7 +305,6 @@ console.log('TrainingValidation connectedCallback this.localContactInfo: ', this
 	}
 
 	next(){
-console.log('entrei next');
 		if(this.haveTrainingUser === 'no'){
 			this.validated = true;
 			this.localContactInfo.existingTrainingId = '';
@@ -338,7 +335,6 @@ console.log('entrei next');
 			this.startLoading();
 			validateYasUserId({userId : this.localContactInfo.UserId, username: this.localContactInfo.Username, firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
 			.then(result => {
-			
 				if(result === 'not_existing'){
 
 					this.validated = true;
@@ -375,8 +371,6 @@ console.log('entrei next');
 	}
 
 	navigateToSupport() {
-        // navigateToPage(CSP_PortalPath + "support-reach-us?category=Training&topic=Self_study_courses&subtopic=Sign_Up_Join_ssc");
-
 		let params = {};
 		params.category = 'Training';
 		params.topic = 'Self_study_courses';

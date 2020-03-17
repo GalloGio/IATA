@@ -2638,6 +2638,28 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountContextActivationEmailBody</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the Customer creation process for the Account {1} has been sucessfully completed.
+
+Best Regards,
+
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailSubject</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
+        <value>Customer creation process for Account {0}</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7003,6 +7025,28 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Complete this field</value>
     </labels>
     <labels>
+        <fullName>ComplianceProcessEmailBody</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailSubject</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
+        <value>Compliance Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>ConfirmSendRecycleBin</fullName>
         <categories>pop-up, modal, alert, confirm</categories>
         <language>en_US</language>
@@ -8267,6 +8311,14 @@ This service is free of charge.</value>
         <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
     </labels>
     <labels>
+        <fullName>EFComplianceReview</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EFComplianceReview</shortDescription>
+        <value>E&amp;F Compliance Review</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9440,14 +9492,6 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <value>Action</value>
     </labels>
     <labels>
-        <fullName>ICCS_Action_Not_Allowed</fullName>
-        <categories>ISSP,ICCS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICCS Action Not Allowed</shortDescription>
-        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
-    </labels>
-    <labels>
         <fullName>ICCS_Actions_Label</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9531,14 +9575,6 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
     </labels>
     <labels>
-        <fullName>ICCS_Adhoc_SI_Created</fullName>
-        <categories>ISSP,ICCS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICCS Adhoc SI Created</shortDescription>
-        <value>Your Adhoc Settlement Instruction was successfully created</value>
-    </labels>
-    <labels>
         <fullName>ICCS_Adhoc_SI_by_Currency</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9553,14 +9589,6 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <protected>false</protected>
         <shortDescription>ICCS Adhoc Selection error</shortDescription>
         <value>Please select one or more participations first in order to complete a multi countries Adhoc SI</value>
-    </labels>
-    <labels>
-        <fullName>ICCS_Adhoc_Xreation_Not_Allowed</fullName>
-        <categories>ISSP,ICCS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
-        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Agreement_Label</fullName>
@@ -10043,7 +10071,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Password</shortDescription>
-        <value>11i2p12gadlffdnvjjrp98hlfo5is1g8plmcgve96s1vd657r7jl</value>
+        <value>plad6repmjo3kon1d1hbnc7i5a147hm7ulo927jpe8143g9sbsl</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Password_PROD</fullName>
@@ -10059,7 +10087,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Services URL</shortDescription>
-        <value>https://iccsqa-api.iata.org/api/v1</value>
+        <value>https://iccspprod-api.iata.org/api/v1</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Services_URL_PROD</fullName>
@@ -10075,7 +10103,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Token URL</shortDescription>
-        <value>https://iata-iccs-api-devqa.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
+        <value>https://iata-iccs-api-pprod.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Token_URL_PROD</fullName>
@@ -10091,7 +10119,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username</shortDescription>
-        <value>70fk4cegoaj7bm78fmmj2cutfe</value>
+        <value>6t8qea6oeu7t9kbrjlmchocopd</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Username_PROD</fullName>
@@ -10198,14 +10226,6 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>FORMS</value>
     </labels>
     <labels>
-        <fullName>ICCS_Future_SI_Created</fullName>
-        <categories>ISSP,ICCS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICCS Future SI Created</shortDescription>
-        <value>Your Future Settlement Instruction was successfully created</value>
-    </labels>
-    <labels>
         <fullName>ICCS_Generated_Reports_Table_Title</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10227,7 +10247,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS HelpText For Preassigned</shortDescription>
-        <value>ICCS HelpText For Preassigned</value>
+        <value>The amount notification hasn&apos;t been received yet.</value>
     </labels>
     <labels>
         <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
@@ -10235,7 +10255,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
-        <value>ICCS HelpText For Preassigned With Amount</value>
+        <value>The amount shown is not the final one, there are still amount notifications to be received.</value>
     </labels>
     <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
@@ -11545,14 +11565,6 @@ The sum of percentage cannot exceed 100%</value>
 The last line of the SSI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
 The sum of percentage cannot exceed 100%</value>
-    </labels>
-    <labels>
-        <fullName>ICCS_Standard_SI_Created</fullName>
-        <categories>ISSP,ICCS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ICCS Standard SI Created</shortDescription>
-        <value>Your Standard Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_Start_Date_Label</fullName>
@@ -22911,7 +22923,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS BRANCH</shortDescription>
-        <value>PASS Agent – Branch Office</value>
+        <value>for a Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_PASS_HO</fullName>
@@ -22919,7 +22931,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS HO</shortDescription>
-        <value>PASS Agent – New Head Office</value>
+        <value>for a New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
@@ -29614,6 +29626,13 @@ Please add below all your company valid email domains, including different ones 
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Process_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Process_PASS</shortDescription>
+        <value>Thank you for creating your application for approval</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_GiveUsFeedback</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32820,6 +32839,62 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agent</shortDescription>
         <value>PASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Checklist</shortDescription>
+        <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Download_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Download_Documents</shortDescription>
+        <value>Please download the documents using the links below:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_IATAWebsite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_IATAWebsite</shortDescription>
+        <value>https://www.iata.org/pass</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
+        <value>Link of participation agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_AgreementTerms</shortDescription>
+        <value>Participation Agreement and Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
+        <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Conditions</shortDescription>
+        <value>By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
+        <value>Link of Terms of Use</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -42313,6 +42388,28 @@ Remittance date: {4}
         <value>Salutation</value>
     </labels>
     <labels>
+        <fullName>SapProcessEmailBody</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailSubject</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailSubject</shortDescription>
+        <value>SAP Process - {0}</value>
+    </labels>
+    <labels>
         <fullName>Save</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -42386,6 +42483,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Select</shortDescription>
         <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>SelectAnOption</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAnOption</shortDescription>
+        <value>Select an option</value>
     </labels>
     <labels>
         <fullName>SelectRequiredMessage</fullName>
@@ -42563,6 +42667,35 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Signaturit Endpoint</shortDescription>
         <value>https://api.signaturit.com/v3/</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessCaseSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessCaseSubject</shortDescription>
+        <value>SIS E&amp;F customer creation</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailBody</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
+
+Best Regards
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailSubject</shortDescription>
+        <value>SIS Approval - {0}</value>
     </labels>
     <labels>
         <fullName>SiteTitle</fullName>
@@ -44387,6 +44520,614 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>##</value>
     </labels>
     <labels>
+        <fullName>icg_IATA_Validation_Programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg IATA Validation Programs</shortDescription>
+        <value>IATA Validation Programs</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA</shortDescription>
+        <value>About IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA text1</shortDescription>
+        <value>The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues.</value>
+    </labels>
+    <labels>
+        <fullName>icg_advanced_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg advanced search</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce</shortDescription>
+        <value>Air cargo and e-commerce, enabling global trade</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce	text1</shortDescription>
+        <value>The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability.</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_add_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn add location</shortDescription>
+        <value>ADD LOCATION</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_go_to_station_profile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn go to station profile</shortDescription>
+        <value>GO TO STATION PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_learn_more</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn learn more</shortDescription>
+        <value>LEARN MORE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_more_info</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn more info</shortDescription>
+        <value>WATCH VIDEO</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_register_now</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn register now</shortDescription>
+        <value>PRE-REGISTER NOW</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_show_certified_entities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn show certified entities</shortDescription>
+        <value>SHOW CERTIFIED ENTITIES</value>
+    </labels>
+    <labels>
+        <fullName>icg_cargo_handling_id</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg cargo handling id for demo</shortDescription>
+        <value>aDA9E00000000efWAA</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence</shortDescription>
+        <value>Certification of Excellence</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence description</shortDescription>
+        <value>Validate excellence beyond adherence to IATA standards. These certifications improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the &#39;best in class&#39; industry stakeholders</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification search</shortDescription>
+        <value>certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance</shortDescription>
+        <value>Certifications of Compliance</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance description</shortDescription>
+        <value>Validate companies&#39; compliance with IATA standards, guidelines and recommended practices for handling operations and environmental management.</value>
+    </labels>
+    <labels>
+        <fullName>icg_comming_soon</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg comming soon</shortDescription>
+        <value>Coming Soon</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_name_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company name search</shortDescription>
+        <value>company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg compare</shortDescription>
+        <value>COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station</shortDescription>
+        <value>Do you want to be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station text1</shortDescription>
+        <value>Attract new customers by creating a free profile on the IATA One Source. Stand out from your competitiors and highlight your facility&#39;s capacities and IATA certifications and accreditations.</value>
+    </labels>
+    <labels>
+        <fullName>icg_ecommerce_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg ecommerce video</shortDescription>
+        <value>https://www.youtube.com/embed/oimgyps8nEI</value>
+    </labels>
+    <labels>
+        <fullName>icg_find_your_aviation_business_partner</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg find your aviation business partner</shortDescription>
+        <value>Find your aviation business partner</value>
+    </labels>
+    <labels>
+        <fullName>icg_in_validation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in validation</shortDescription>
+        <value>in</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest</shortDescription>
+        <value>LATEST</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_validation_updates</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest validation updates</shortDescription>
+        <value>Latest Validation Updates</value>
+    </labels>
+    <labels>
+        <fullName>icg_location_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg location search</shortDescription>
+        <value>location</value>
+    </labels>
+    <labels>
+        <fullName>icg_login</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
+        <fullName>icg_main_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg main one source</shortDescription>
+        <value>ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines</shortDescription>
+        <value>Why</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines2</shortDescription>
+        <value>should you be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal</shortDescription>
+        <value>ONE Source lists aviation service stations for all company types along the transportation chain from Shippers, Freight Forwarders, Truckers, Cargo Handling Facilities, Ground Handlers to Airlines. Currently, you find all stations with existing CEIV, SFOC, IEnvA and United for Wildlife certifications.</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal2</shortDescription>
+        <value>Soon the registration will be opened to all stations regardless of whether they already have an IATA Certification. Ensure to pre-register now to be the first in line to list your stations on ONE Source.</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about IATA</shortDescription>
+        <value>ABOUT IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about one source</shortDescription>
+        <value>ABOUT ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_home</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu home</shortDescription>
+        <value>HOME</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu remote validations</shortDescription>
+        <value>REMOTE VALIDATIONS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_validation_programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu validation programs</shortDescription>
+        <value>VALIDATION PROGRAMS</value>
+    </labels>
+    <labels>
+        <fullName>icg_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg news</shortDescription>
+        <value>NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_pre_register</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pre-register</shortDescription>
+        <value>PRE-REGISTER</value>
+    </labels>
+    <labels>
+        <fullName>icg_received</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg received</shortDescription>
+        <value>received</value>
+    </labels>
+    <labels>
+        <fullName>icg_register</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg register</shortDescription>
+        <value>REGISTER</value>
+    </labels>
+    <labels>
+        <fullName>icg_registration_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg registration url</shortDescription>
+        <value>https://go.updates.iata.org/onesource</value>
+    </labels>
+     <labels>
+        <fullName>icg_resultpage_banner_text</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg resultpage banner text</shortDescription>
+        <value>Would you like to appear here?</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_banner_button</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg resultpage banner button</shortDescription>
+        <value>PRE-REGISTER TODAY</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_register_company</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_resultpage_register_company</shortDescription>
+        <value>Not finding what you&#39;re looking for?</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_register_company2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_resultpage_register_company2</shortDescription>
+        <value>PRE-REGISTER YOUR COMPANY</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_assistant</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search assistant</shortDescription>
+        <value>Search Assistant</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by</shortDescription>
+        <value>Search by</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by certification</shortDescription>
+        <value>Search by certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_company_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by company name</shortDescription>
+        <value>Search by company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by location</shortDescription>
+        <value>Search by location</value>
+    </labels>
+    <labels>
+        <fullName>icg_see_listed_companies</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg see listed companies</shortDescription>
+        <value>SEE LISTED COMPANIES</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home1</shortDescription>
+        <value>IATA Smart&amp;lt;br/&amp;gt;Facility&amp;lt;br/&amp;gt;Program</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home2</shortDescription>
+        <value>IATA&amp;lt;br/&amp;gt;Consulting:&amp;lt;br/&amp;gt;Unbiased&amp;lt;br/&amp;gt;and Neutral&amp;lt;br/&amp;gt;Assessments</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home3</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home3</shortDescription>
+        <value>IATA&amp;lt;br/&amp;gt;Training:&amp;lt;br/&amp;gt;Developing&amp;lt;br/&amp;gt;professionals&amp;lt;br/&amp;gt;for&amp;lt;br/&amp;gt;tomorrow&#39;s&amp;lt;br/&amp;gt;air transport&amp;lt;br/&amp;gt;industry</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home4</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home4</shortDescription>
+        <value>Access the&amp;lt;br/&amp;gt;full TACT&amp;lt;br/&amp;gt;rates&amp;lt;br/&amp;gt;database&amp;lt;br/&amp;gt;online</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation</shortDescription>
+        <value>Smart Facility Remote Validation</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text1</shortDescription>
+        <value>The Smart Facility Remote Validation assesses the equipment and infrastructure of a facility in a fast and easy way. You only need to fill an online questionnaire and upload the documents to confirm that the information is accurate.</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text2</shortDescription>
+        <value>The Remote Validation makes it easier for cargo handling facilities to improve or update their ICG profile quickly. It is an excellent way to bridge the gap towards an upcoming IATA audit.</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text3</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text3</shortDescription>
+        <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_to_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station to compare</shortDescription>
+        <value>STATIONS TO COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners</shortDescription>
+        <value>Who</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners2</shortDescription>
+        <value>is already in ONE Source?</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners_modal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners modal</shortDescription>
+        <value>ONE Source is the Industry Platform for validated aviation capability and infrastructure information. It makes it easier for your customers to find you by bringing the modern search platform experience into aviation services.</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners_modal2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners modal 2</shortDescription>
+        <value>ONE Source your one-stop-shop for IATA accreditation programs like CEIVs, SF Operational Capacity, IEnvA, United for Wildlife... ONE Source makes it easier for you to manage your IATA accreditations, including booking, maintenance of data, and renewals.</value>
+    </labels>
+    <labels>
+        <fullName>icg_type_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg type search</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what_is_the_IATA_One_Source</shortDescription>
+        <value>What is ONE Source?</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text1</shortDescription>
+        <value>IATA ONE Source is the industry platform for validated aviation capability and infrastructure information. Find the right business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications. The platform makes it easier for you to find the right services where you need them.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text2</shortDescription>
+        <value>ONE Source only lists information verified through the different IATA validation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_videoUrl</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
+        <value>https://www.youtube.com/embed/bufLeBGwRJA</value>
+    </labels>
+    <labels>
+        <fullName>icg_wizard_title_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg wizard title location</shortDescription>
+        <value>Are you looking for a specific</value>
+    </labels>
+    <labels>
         <fullName>idcard_replacementHeadText</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -44416,6 +45157,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>select role</shortDescription>
         <value>Select your role</value>
+    </labels>
+    <labels>
+        <fullName>issue_with_iata</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>issue with iata help text</shortDescription>
+        <value>Tick this box if the issue described by the account is related to an interaction with IATA</value>
     </labels>
     <labels>
         <fullName>label_custom_price</fullName>
@@ -44789,117 +45538,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
-	<labels>
-        <fullName>AccountContextActivationEmailBody</fullName>
-        <categories>Account Context Activation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AccountContextActivationEmailBody</shortDescription>
-        <value>Dear {0},
-
-Please note the Customer creation process for the Account {1} has been sucessfully completed.
-
-Best Regards,
-
-SF Workflow Process</value>
-    </labels>
     <labels>
-        <fullName>AccountContextActivationEmailSubject</fullName>
-        <categories>Account Context Activation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
-        <value>Customer creation process for Account {0}</value>
-    </labels>
-    <labels>
-        <fullName>ComplianceProcessEmailBody</fullName>
-        <categories>Account Context Activation Compliance</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ComplianceProcessEmailBody</shortDescription>
-        <value>Dear {0},
-
-The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
-
-Best regards
-
-Automated process from a new account activation</value>
-    </labels>
-    <labels>
-        <fullName>ComplianceProcessEmailSubject</fullName>
-        <categories>Account Context Activation Compliance</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
-        <value>Compliance Approval - {0}</value>
-    </labels>
-    <labels>
-        <fullName>EFComplianceReview</fullName>
-        <categories>Account Context Activation Compliance</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>EFComplianceReview</shortDescription>
-        <value>E&amp;F Compliance Review</value>
-    </labels>
-    <labels>
-        <fullName>SapProcessEmailBody</fullName>
-        <categories>Account Context Activation SAP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SapProcessEmailBody</shortDescription>
-        <value>Dear {0},
-
-The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
-
-Best regards
-
-Automated process from a new account activation</value>
-    </labels>
-    <labels>
-        <fullName>SapProcessEmailSubject</fullName>
-        <categories>Account Context Activation SAP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SapProcessEmailSubject</shortDescription>
-        <value>SAP Process - {0}</value>
-    </labels>
-    <labels>
-        <fullName>SisProcessCaseSubject</fullName>
-        <categories>Account Context Activation SIS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SisProcessCaseSubject</shortDescription>
-        <value>SIS E&amp;F customer creation</value>
-    </labels>
-    <labels>
-        <fullName>SisProcessEmailBody</fullName>
-        <categories>Account Context Activation SIS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SisProcessEmailBody</shortDescription>
-        <value>Dear {0},
-
-Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
-
-Best Regards
-SF Workflow Process</value>
-    </labels>
-    <labels>
-        <fullName>SisProcessEmailSubject</fullName>
-        <categories>Account Context Activation SIS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SisProcessEmailSubject</shortDescription>
-        <value>SIS Approval - {0}</value>
-    </labels>
-	<labels>
-		<fullName>SelectAnOption</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>SelectAnOption</shortDescription>
-		<value>Select an option</value>
-	</labels>
-        <labels>
         <fullName>CSP_LMS_Privacy_Policy</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -45027,7 +45666,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_VerificationToP2_LMS</shortDescription>
-        <value>. Please check your email and follow the instructions to complete your registration.</value>
+        <value>. Please check your email inbox (including the junk, clutter etc… folders) and follow the instructions to complete your Training registration.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_CompleteInformation_LMS</fullName>
@@ -45035,7 +45674,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Complete Information</shortDescription>
-        <value>Please complete the following:</value>
+        <value>Your new account will be created shortly.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_EmailInformation_LMS</fullName>
@@ -45051,7 +45690,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Existing Contact</shortDescription>
-        <value>The Personal email you have provided is already associated with an existing user working for another company [Existing_email]. Please check that the personal email address you provided is correct. If you are working for several companies at the same time, please contact us so we can ensure the integrity of your training record. If you do not have access to [Existing_email] please click next. Once you confirm you have access to this personal email address, your training record from your previous user will be migrated to the user you are currently logged in with. &lt;b&gt;From now on you will only be able to login with [Email] email address.&lt;/b&gt;</value>
+		<value>The personal email you have provided is already used with this login email [Existing_email]. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If [Email] is your current work email address, please click next so your training record can be merged. From then on you will only be able to login using [Email]. &lt;/li&gt;&lt;li&gt;If [Existing_email] is your current work email address, please login in with this email instead. &lt;/li&gt;&lt;li&gt;If you work for more than one organization and both work emails are relevant/valid, contact us so we can ensure the integrity of your training records with us. &lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_L3_ExistingUser_LMS</fullName>
@@ -45233,14 +45872,14 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingEmail_LMS</shortDescription>
-        <value>Existing IATA Training username (if any)</value>
+        <value>IATA Training Username (YAS)</value>
     </labels>
     <labels>
         <fullName>CSP_L_TrainingUser_LMS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingUser_LMS</shortDescription>
-        <value>Existing IATA Training User ID (if any)</value>
+        <value>IATA Training UserID (YAS)</value>
     </labels>
     <labels>
         <fullName>CSP_L_WorkPhone_LMS</fullName>
@@ -45407,7 +46046,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Is Personal Email</shortDescription>
-        <value>Do you already have an IATA Training username and userID following a previous interaction with IATA Training learning platforms? If so please let us know so we can update your training record with past and current courses.</value>
+        <value>Have you already been registered for an IATA Training course in the past (and you know your credentials) and would like to maintain your training record?</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Note_F5_LMS</fullName>
@@ -45463,7 +46102,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Training Information</shortDescription>
-        <value>Training Information</value>
+        <value>Your Training Account</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Training_Validation_LMS</fullName>
@@ -45471,7 +46110,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Training Validation</shortDescription>
-        <value>Training Validation</value>
+        <value>Welcome to IATA Training!</value>
     </labels>
     <labels>
         <fullName>CSP_L3_TrainValidationDescri_LMS</fullName>
@@ -45487,7 +46126,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_PE_1_LMS</shortDescription>
-        <value>We found an existing user with this personal email. If you are working for several companies at the same time, please contact us so we can ensure the integrity of your training record.&lt;br/&gt;&lt;br/&gt;</value>
+        <value>Many thanks for updating your profile.&lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_PE_2_LMS</fullName>
@@ -45495,7 +46134,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_PE_2_LMS</shortDescription>
-        <value>If you do not have access to [ExistingEmail] please click this &lt;b&gt;&lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;&lt;/b&gt; so your training record is migrated to your new user. &lt;b&gt;From then on you will only be able to login with [Email] email address.&lt;/b&gt;&lt;br/&gt;</value>
+        <value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt; in order to complete the merging of your previous Training profile (login email [ExistingEmail]) to your current one.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
@@ -45616,19 +46255,19 @@ SF Workflow Process</value>
         <value>Another active user is already using the userID. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
     </labels>
     <labels>
-		<fullName>CSP_First_Login_Desc_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP First Login Desc LMS</shortDescription>
-		<value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.</value>
-	</labels>
+        <fullName>CSP_First_Login_Desc_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Desc LMS</shortDescription>
+        <value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.</value>
+    </labels>
     <labels>
-		<fullName>CSP_Complete_Profile_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Complete Profile LMS</shortDescription>
-		<value>Complete Your Training Profile</value>
-	</labels>
+        <fullName>CSP_Complete_Profile_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Complete Profile LMS</shortDescription>
+        <value>Complete Your Training Profile</value>
+    </labels>
 </CustomLabels>

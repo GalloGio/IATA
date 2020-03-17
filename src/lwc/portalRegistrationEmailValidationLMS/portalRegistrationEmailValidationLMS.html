@@ -19,6 +19,34 @@
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
 
+			<!-- ----------------------------------------      Work Email info     ------------------------------------------ -->
+			<template if:false={reverseEmailVisibility}>
+				<div class="infoItemLine">
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								{labels.CSP_L3_WorkEmail_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input type="text" class="slds-input" placeholder=" " value={localContactInfo.Email}
+								readonly />
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>	
+
+
+			
+
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+
 			<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay"
 				size="12">
 			</lightning-layout-item>
@@ -95,6 +123,7 @@
 								<div class="text-xxsmall" if:true={reverseEmailVisibility}>
 									{labels.CSP_L3_WorkEmail_LMS}
 								</div>
+								<abbr class="slds-required" title="required">*</abbr>
 							</div>
 						</lightning-layout-item>
 						<lightning-layout-item size="12">
@@ -118,6 +147,7 @@
 								<div class="text-xxsmall">
 									<!-- {labels.CSP_L2_Company_Name} -->
 									{labels.CSP_L_PersonalEmail_LMS}
+									<abbr class="slds-required" title="required">*</abbr>
 								</div>
 							</div>
 						</lightning-layout-item>
@@ -191,7 +221,7 @@
 								</div>
 							</div>
 						</lightning-layout-item>
-						<lightning-layout-item size="12">
+						<!-- <lightning-layout-item size="12">
 							<div class="slds-form-element">
 								<div class="sectionDescription">
 									<br> {labels.CSP_L_PersonalEmail_LMS} : <b>{localContactInfo.Additional_Email__c}</b>
@@ -201,12 +231,12 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->
+									<! -- {labels.CSP_L2_Company_Name} - ->
 									<br>{labels.CSP_L3_StillWorkingP1_LMS} {userInfo.existingContactAccount},
 									{labels.CSP_L3_StillWorkingP2_LMS}
 								</div>
 							</div>
-						</lightning-layout-item>
+						</lightning-layout-item> -->
 						<!-- <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button> -->
 
 

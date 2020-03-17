@@ -1,10 +1,11 @@
 import { LightningElement, track, api} from 'lwc';
 
-import getContactInfo               from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-
+import getContactInfo               	from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
-import getParameters                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
-import completeRegistration                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
+import getParameters                	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
+import completeRegistration         	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
+import getPortalServiceId 				from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import verifyCompleteL3DataWithCourse 	from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
 
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
 
@@ -32,6 +33,8 @@ import CSP_L3_Header_Title                   from '@salesforce/label/c.CSP_L3_He
 import CSP_L3_Note_F5_LMS                   from '@salesforce/label/c.CSP_L3_Note_F5_LMS';
 import CSP_L3_Note_F6_LMS                   from '@salesforce/label/c.CSP_L3_Note_F6_LMS';
 import CSP_L3_Note_F7_LMS                   from '@salesforce/label/c.CSP_L3_Note_F7_LMS';
+import CSP_L2_Go_To_Service_LMS                   from '@salesforce/label/c.CSP_L2_Go_To_Service_LMS';
+
 
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
@@ -124,7 +127,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L3_Header_Title,
 		CSP_L3_Note_F5_LMS,
 		CSP_L3_Note_F6_LMS,
-		CSP_L3_Note_F7_LMS
+		CSP_L3_Note_F7_LMS,
+		CSP_L2_Go_To_Service_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -158,16 +162,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		
 		var pageParams = getParamsFromPage();
 
-		// console.log('PortalRegistrationThirdLevelLMS - connectedCallback - pageParams',pageParams);
 		// Retrieve Contact information
-		console.log('PortalRegistrationThirdLevelLMS - connectedCallback - Init');
-
 		getContactInfo()
 			.then(result => {
-				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - result: ',result);
 				this.contactInfo = JSON.parse(JSON.stringify(result));
-				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - Init 2');
-				console.log('PortalRegistrationThirdLevelLMS - connectedCallback - this.contactInfo: ',this.contactInfo);
 				this.contactFound = this.contactInfo != null;
 
 				if(!this.contactFound){
@@ -314,8 +312,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 						boldStr = boldStr.replace('[work_email]',this.contactInfo.Email);
 						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
 					}
-					this.button1Label= CSP_L3_HomePage_LMS;
-
+					this.button1Label= CSP_L2_Go_To_Service_LMS;
+					
 					this.openMessageModalFlowRegister = true;
 					this.isResLoading = true;
 
@@ -348,18 +346,31 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 						.then(result2 => {
 
 							if(result2.isSuccess == true){
-								if(pageParams.lmsflow === 'flow7'){
-									let msgF7 = CSP_L2_SucessUpdate_LMS.replace('[Email]',this.contactInfo.Email);
-									this.message = this.message + '<br><br>' + msgF7;
-								}else{
-									this.message = this.message + '<br><br><b>' + CSP_L2_SucessUpdate_LMS + '</b>';
-									this.message = this.message.replace('[Email]',this.contactInfo.Email);
-								}
+								//need to wait a few seconds while mulesoft creates the user in YAS, otherwise we can get an SSO error saying the user not existing
+								this.sleep(6000)
+								.then(() => { 
+								
+									if(pageParams.lmsflow === 'flow7'){
+										let msgF7 = CSP_L2_SucessUpdate_LMS.replace('[Email]',this.contactInfo.Email);
+										this.message = this.message + '<br><br>' + msgF7;
+									}else{
+										this.message = this.message + '<br><br><b>' + CSP_L2_SucessUpdate_LMS + '</b>';
+										this.message = this.message.replace('[Email]',this.contactInfo.Email);
+									}
+								
+									this.isResLoading = false;
+									var submitButton = this.template.querySelector('[data-id="submitButton"]');
+									submitButton.classList.remove('containedButtonDisabled');
+									submitButton.classList.add('containedButtonLogin');
+									submitButton.disabled = false;
+								})
+								
 							}
 							else{
+								this.isResLoading = false;
 								this.message = CSP_L2_Registration_Failed_LMS+'\n'+result2.message;
 							}
-							this.isResLoading = false;
+							
 						})
 						.catch(error => {
 							console.log('Error3: ', error);
@@ -430,7 +441,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
-console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
 		}
 
 		// Training Information
@@ -439,7 +449,6 @@ console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
 			flow = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
-console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);			
 		}
 		
 	}
@@ -473,14 +482,9 @@ console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);
 	}
 
 	fromAddressInformationToEmailInformation(){
-		console.log('fromAddressInformationToEmailInformation Next! ');
 		// retrieve profile details
-		// let contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
 		let addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
-		// this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.address = JSON.parse(JSON.stringify(addressInformation));
-		console.log('fromAddressInformationToEmailInformation this.contactInfo: ', this.contactInfo);
-		console.log('fromAddressInformationToEmailInformation this.address: ', this.address);
 		// go to next step
 		this.currentStep = 3;
 	}
@@ -495,7 +499,6 @@ console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);
 		
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.flow = flow;
-console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this.contactInfo);
 		this.currentStep = 4;
 	}
 
@@ -506,7 +509,6 @@ console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this
 	fromTrainingInformationToConfirmation(){
 		var contactInfo = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getContactInfo();
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.contactInfo);		
 		this.currentStep = 5;
 	}
 
@@ -539,7 +541,6 @@ console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.con
 	}
 
 	get isTrainingValidationStep(){
-console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);			
 		return this.currentStep === 4;
 	}
 	
@@ -588,6 +589,38 @@ console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);
 	secondLevelRegistrationCompletedAction2(){
 		this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
 	}
+
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	goToService(){
+		this.startLoading();
+		getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
+			.then(serviceId => {
+				verifyCompleteL3DataWithCourse({serviceId: serviceId})
+				.then(result => {					
+					if(result !== 'not_complete'){
+						window.open(result);
+						this.stopLoading();
+						navigateToPage(CSP_PortalPath,{});
+					}
+					else{
+						this.stopLoading();
+						navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+					}
+				})
+				.catch(error => {
+					this.stopLoading();
+					this.error = error;
+				});
+			})
+			.catch(error => {
+				this.stopLoading();
+				this.error = error;
+		});
+	}
+	
 
 		
 	browserType(){

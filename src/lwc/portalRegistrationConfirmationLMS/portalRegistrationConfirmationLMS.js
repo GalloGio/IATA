@@ -7,7 +7,7 @@ import createIsoCity                        from '@salesforce/apex/PortalRegistr
 import registration                         from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.registration';
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
 import getLMSTermAndConditionAcceptance		from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance';
-import verifyCompleteL3Data 				from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import verifyCompleteL3DataWithCourse		from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
 import getPortalServiceId 					from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { navigateToPage } from'c/navigationUtils';
@@ -60,6 +60,9 @@ import CSP_L2_Registration_Failed_LMS from '@salesforce/label/c.CSP_L2_Registrat
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
 import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
+import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS';
+import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
+
 
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
 	/* Images */
@@ -82,9 +85,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	createdCityId;
 
-	// selectedAccount;
-	// @track selectedAccountSet = false;
-
+	
+	@track trainingInfoVisibility = false;
+	
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
@@ -151,7 +154,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L2_Registration_Failed_LMS,
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_L2_VerificationToP1_LMS,
-		CSP_L2_VerificationToP2_LMS
+		CSP_L2_VerificationToP2_LMS,
+		CSP_L_TrainingEmail_LMS,
+		CSP_L_TrainingUser_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -169,6 +174,14 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.zip = this.localAddress.zip;
 		this.city = this.localAddress.cityName;
 		this.state = this.localAddress.stateName;
+
+		//if training info already exists we don't show, only when the user enter de data manually
+		if(!this.localContactInfo.ExistingTrainingInfo 
+			&& this.localContactInfo.Username !== '' && this.localContactInfo.Username !== null && this.localContactInfo.Username !== undefined
+			&& this.localContactInfo.UserId !== '' && this.localContactInfo.UserId !== null && this.localContactInfo.UserId !== undefined ){
+				
+			this.trainingInfoVisibility = true;
+		}
 
 		for(let i = 0; i < this.localAddress.addressSuggestions.length; i++){
 			if(this.localAddress.addressSuggestions[i].isSelected){
@@ -219,44 +232,16 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	submit(){
 		this.startLoading();
-
-		// Check first if we need to create a Geoname city
-		// if(this.localAddress.stateId !== '' && this.localAddress.cityId === ''){
-		// 	createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
-		// 	.then(result => {
-		// 		this.createdCityId = result;
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('Error: ', JSON.parse(JSON.stringify(error)));
-		// 		this.openErrorModal = true;
-		// 		this.errorModalMessage = JSON.parse(JSON.stringify(error));
-		// 		this.stopLoading();
-		// 	})
-		// 	.finally(() => {
-		// 		this.submitRegistration();
-				
-		// 	});
-		// }else{
-			this.submitRegistration();
-		// }
-
-
-
-				// register({ registrationForm : JSON.stringify(this.registrationForm),
+		this.submitRegistration();
 	}
 
 
 	submitRegistration(){
 		let auxSearchValues = new Map();
 
-		console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
-		console.log('lmsCourseDecoded start: ');
-
 		let lmsCourseDecoded = '';
 
 		lmsCourseDecoded = decodeURIComponent(this.localContactInfo.lmsCourse);
-
-		console.log('lmsCourseDecoded: ',lmsCourseDecoded);
 
 		auxSearchValues = [
 			this.localContactInfo.Username,
@@ -274,9 +259,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localAddress.street2,
 			this.localContactInfo.existingTrainingId
 		];
-
-console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
-console.log('auxSearchValues: ',auxSearchValues);
 
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
@@ -334,7 +316,7 @@ console.log('auxSearchValues: ',auxSearchValues);
 			.then(result => {
 				if(result.isSuccess == true){
 						this.openVerificationMailSuccessModal = true;
-						this.successModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c+CSP_L2_VerificationToP2_LMS;
+						this.successModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
 					}
 					else{
 						this.openErrorModal = true;
@@ -391,25 +373,30 @@ console.log('auxSearchValues: ',auxSearchValues);
 		return true;
 	}
 
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
 	goToService(){
-console.log('entrei');
 		this.startLoading();
 		getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 			.then(serviceId => {
-				verifyCompleteL3Data({serviceId: serviceId})
-				.then(result => {										
+				verifyCompleteL3DataWithCourse({serviceId: serviceId})
+				.then(result => {					
 					if(result !== 'not_complete'){
-						this.stopLoading();
-						window.open(result);
-						this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactionone'));
+						//need to wait a few seconds while mulesoft creates the user in YAS, otherwise we can get an SSO error saying the user not existing
+						this.closeSuccessModal();
+						this.sleep(6000)
+						.then(() => { 
+							window.open(result);
+							this.stopLoading();
+							this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactionone'));
+						})
 					}
 					else{
 						this.stopLoading();
-						//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 						navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-
 					}
-					this.toggleSpinner();
 				})
 				.catch(error => {
 					this.stopLoading();
