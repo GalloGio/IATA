@@ -196,16 +196,6 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>X_rate_CPS_checks_OI</fullName>
-        <description>This workflow is used to enter the yearly USD exchange rates that are used by CPS</description>
-        <field>Exchange_rate__c</field>
-        <formula>case(text(Currency__c),&quot;AED&quot;,3.6728,&quot;AFN&quot;,75.1,&quot;ALL&quot;,107.29,&quot;AMD&quot;,482.5,&quot;ANG&quot;,1.77,&quot;AOA&quot;,307.055,&quot;ARS&quot;,37.619,&quot;AUD&quot;,1.4176,&quot;AWG&quot;,1.78,&quot;AZN&quot;,1.693,&quot;BAM&quot;,1.7051,&quot;BBD&quot;,1.9801,&quot;BDT&quot;,83.13,&quot;BGN&quot;,1.7052,&quot;BHD&quot;,0.3767,&quot;BIF&quot;,1788.4,&quot;BMD&quot;,1,&quot;BND&quot;,1.3627,&quot;BOB&quot;,6.86,&quot;BRL&quot;,3.8804,&quot;BSD&quot;,1,&quot;BTN&quot;,69.79,&quot;BWP&quot;,10.6838,&quot;BYN&quot;,2.162,&quot;BZD&quot;,1.9982,&quot;CAD&quot;,1.2957,&quot;CDF&quot;,1622,&quot;CHF&quot;,0.9444,&quot;CLP&quot;,692.85,&quot;CNH&quot;,6.8344,&quot;CNY&quot;,6.8344,&quot;COP&quot;,3245,&quot;CRC&quot;,603.5,&quot;CUP&quot;,1,&quot;CVE&quot;,96.13,&quot;CZK&quot;,22.415,&quot;DJF&quot;,177.5,&quot;DKK&quot;,6.5107,&quot;DOP&quot;,50.2,&quot;DZD&quot;,118.1048,&quot;EGP&quot;,17.86,&quot;ETB&quot;,27.9203,&quot;EUR&quot;,0.8341,&quot;FJD&quot;,2.1079,&quot;FKP&quot;,0.7883,&quot;GBP&quot;,0.7836,&quot;GEL&quot;,2.66,&quot;GHS&quot;,4.82,&quot;GIP&quot;,0.7883,&quot;GMD&quot;,50.1,&quot;GNF&quot;,9080,&quot;GTQ&quot;,7.715,&quot;GYD&quot;,207.35,&quot;HKD&quot;,7.8315,&quot;HNL&quot;,24.2652,&quot;HRK&quot;,6.4601,&quot;HTG&quot;,76.8102,&quot;HUF&quot;,279.73,&quot;IDR&quot;,14375,&quot;ILS&quot;,3.7355,&quot;INR&quot;,69.56,&quot;IQD&quot;,1186.43,&quot;IRR&quot;,42000,&quot;ISK&quot;,116.02,&quot;JMD&quot;,126.5,&quot;JOD&quot;,0.7092,&quot;JPY&quot;,109.56,&quot;KES&quot;,101.8,&quot;KGS&quot;,69.7,&quot;KHR&quot;,3992.004,&quot;KMF&quot;,428.5,&quot;KPW&quot;,130,&quot;KRW&quot;,1113.3,&quot;KWD&quot;,0.3031,&quot;KYD&quot;,0.825,&quot;KZT&quot;,384.07,&quot;LAK&quot;,8542,&quot;LBP&quot;,1505.7,&quot;LKR&quot;,182.6,&quot;LRD&quot;,156.71,&quot;LSL&quot;,14.35,&quot;LYD&quot;,1.3875,&quot;MAD&quot;,9.5558,&quot;MDL&quot;,16.993,&quot;MKD&quot;,53.52,&quot;MMK&quot;,1540,&quot;MNT&quot;,2617,&quot;MOP&quot;,8.063,&quot;MRU&quot;,36.423,&quot;MUR&quot;,34.15,&quot;MVR&quot;,15.42,&quot;MWK&quot;,719.77,&quot;MXN&quot;,19.6403,&quot;MYR&quot;,4.13,&quot;MZN&quot;,61.35,&quot;NAD&quot;,14.346,&quot;NGN&quot;,364.44,&quot;NIO&quot;,32.4,&quot;NOK&quot;,8.6387,&quot;NPR&quot;,111.63,&quot;NZD&quot;,1.4879,&quot;OMR&quot;,0.3848,&quot;PAB&quot;,1,&quot;PEN&quot;,3.368,&quot;PGK&quot;,3.2841,&quot;PHP&quot;,52.47,&quot;PKR&quot;,138.6,&quot;PLN&quot;,3.7397,&quot;PYG&quot;,5948,&quot;QAR&quot;,3.6405,&quot;RON&quot;,4.0561,&quot;RSD&quot;,103.07,&quot;RUB&quot;,69.68,&quot;RWF&quot;,892.2429,&quot;SAR&quot;,3.7509,&quot;SBD&quot;,8.2919,&quot;SCR&quot;,13.55,&quot;SDG&quot;,47.4992,&quot;SEK&quot;,8.8524,&quot;SGD&quot;,1.3515,&quot;SHP&quot;,0.7849,&quot;SLL&quot;,8625,&quot;SOS&quot;,575,&quot;SRD&quot;,7.43,&quot;STN&quot;,21.45,&quot;SVC&quot;,8.7495,&quot;SYP&quot;,515,&quot;SZL&quot;,14.3235,&quot;THB&quot;,32.33,&quot;TND&quot;,2.9883,&quot;TOP&quot;,2.1725,&quot;TRY&quot;,5.2877,&quot;TTD&quot;,6.782,&quot;TWD&quot;,30.563,&quot;TZS&quot;,2295,&quot;UAH&quot;,27.7,&quot;UGX&quot;,3699.3,&quot;USD&quot;,1,&quot;UYU&quot;,32.4,&quot;UZS&quot;,8331.22,&quot;VES&quot;,636.5846,&quot;VND&quot;,23190,&quot;VUV&quot;,111.69,&quot;WST&quot;,2.5349,&quot;XAF&quot;,604,&quot;XCD&quot;,2.7,&quot;XOF&quot;,569.22,&quot;XPF&quot;,103.51,&quot;YER&quot;,249.95,&quot;ZAR&quot;,14.3473,&quot;ZMW&quot;,11.91,&quot;ZWD&quot;,378,0)</formula>
-        <name>X-rate CPS checks (OI)</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
     <rules>
         <fullName>Auto fill subject</fullName>
         <actions>
@@ -233,17 +223,6 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
             <operation>notEqual</operation>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>OI CPS checks x rate update</fullName>
-        <actions>
-            <name>X_rate_CPS_checks_OI</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>updates the x rate used by CPS when the CPS check object is created or the currency is changed.</description>
-        <formula>AND(RecordType.DeveloperName = &quot;CPS_Checks&quot;, OR( isblank(Exchange_rate__c), ischanged( Currency__c )))</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Reset approval date</fullName>

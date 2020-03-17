@@ -1,5 +1,45 @@
-@isTest(SeeAllData=true)
+@isTest
 public class ISSP_ICCS_ProcessParticipationCtrlTest {
+
+	@TestSetup
+	static void makeData(){
+		Amazon_Cred__c genericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		insert new List<Amazon_Cred__c>{genericAttach, recycleBin};
+
+		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+			new AWSKey__c(
+				name = 'adevconf',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd')
+		};
+		insert AWS_KEYs;
+
+		ISSP_Cs__c cs1 = new ISSP_Cs__c(Name='ISSP AMS ALLOWED AGENCY URL', Value__c='pdf');
+		ISSP_Cs__c cs2 = new ISSP_Cs__c(Name='ISSP AMS AMAZON S3 ALLOWED EXTS', Value__c='pdf');
+		ISSP_Cs__c cs3 = new ISSP_Cs__c(Name='ISSP AMS AMAZON S3 MAX FILE SIZE', Value__c='100');
+		insert new list<ISSP_CS__C>{cs1,cs2,cs3};
+
+		// Create a new ISO Country
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'Ecuador', ISO_Code__c = 'EC');
+		insert country;
+
+		// Create a new Product
+		Product2 p = new Product2(Name = 'CASS', Family = 'ICCS');
+		insert p;
+
+		// Create a new ICCS Product Country for this product
+		ICCS_Product_Country__c pct = new ICCS_Product_Country__c(Product__c = p.Id, Country__c = country.Id);
+		insert pct;
+
+		// Create a new ICCS Product Currency for this ICCS Product Country
+		ICCS_Product_Currency__c pcr = new ICCS_Product_Currency__c(CurrencyIsoCode = 'USD', ICCS_Product_Country__c = pct.Id, ICCS_Code__c = 'CASSEC1', Status__c = 'Active');
+		insert pcr;
+	}
 
 	private static User createPartnerUser(String serviceStatus){
 		// Create ICCS portal application if it doesn't exist
