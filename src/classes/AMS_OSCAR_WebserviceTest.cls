@@ -59,8 +59,9 @@ public class AMS_OSCAR_WebserviceTest {
 		oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 		oscarCase.AccountId = a5.Id;
 		oscarCase.ContactId = co2.Id;
+		oscarCase.reason1__c = 'Accreditation Type';
 		insert oscarCase;
-
+		update new AMS_OSCAR__c(Id = oscar6.Id, Oscar_Communication_Case_Id__c = oscarCase.Id);
 	}
 
 
