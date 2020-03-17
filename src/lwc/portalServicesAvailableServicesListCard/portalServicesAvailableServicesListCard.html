@@ -1,12 +1,12 @@
 <template>
 
-    <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="white">
-
-		<span slot="serviceImage">
-			<template if:true={hasIcon}>
-				<img class="slds-p-around_small serviceImageStyles" src={service.recordService.Application_icon_URL__c}/>
-			</template>
-		</span>
+    <c-portal-services-card-container background-variant="white">
+        
+        <div slot="serviceImage" class="fullHeight fullWidth customCardBorder">
+            <template if:true={hasIcon} class="fullHeight fullWidth">
+                <div class="fullHeight fullWidth cardImageProperties" style={service.recordService.imageCSS}>&nbsp;</div>
+            </template>
+        </div>
 
         <span slot="serviceName">{service.recordService.ServiceName__c}</span>
         <span slot="serviceDescription">
