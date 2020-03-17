@@ -1,52 +1,5 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
     <script>
-        function toggleChangeFields(myValue) {
-            refreshTypeOfChangeSection()
-            if(document.getElementById(myValue).value=='Change of Address') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Tax Number') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Master Table') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Voluntary Withdrawal') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Report Options') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Commission') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.CommissionFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.CommissionFields}').style.display='none';
-                }
-            } else if(document.getElementById(myValue).value=='Stock Management') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.StockManagementFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.StockManagementFields}').style.display='none';
-                }
-            }
-        }
-
         function changePercentBox(myBox, myCheckBox, myPanel){
             var thisBox = document.getElementById(myBox);
             var thisCheckBox = document.getElementById(myCheckBox);
@@ -101,7 +54,8 @@
             isSIS="{!isSISMember}" />
         
         <apex:form id="APChangesForm" styleClass="inline">
-            <apex:actionFunction name="refreshTypeOfChangeSection" action="{!null}" rerender="TypeOfChangeSection" status="blockButtons"/>
+            <apex:actionFunction name="refreshForm" action="{!null}" rerender="APChangesForm" status="WaitingStatus"/>
+            
             <apex:pageBlock id="changeblock" mode="edit">
             
                     <apex:pageBlockButtons location="bottom">
@@ -116,9 +70,9 @@
                             
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">  
-                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
-                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="WaitingStatus" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoBack}" status="WaitingStatus" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" status="WaitingStatus" value="Save Draft and Leave"/>                
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>      
@@ -190,14 +144,13 @@
                 <br/>
 
                 <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
-                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" label="* Type of change requested" style="width:80%;" styleClass="makeRows">
+                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" label="Type of change requested" onchange="refreshForm();" style="width:80%;" styleClass="makeRows">
                         <apex:selectOptions value="{!changeItems}"/>
                     </apex:selectCheckboxes>
 
-                    <tr><td colspan="4" class="aplabel {!IF(typeOfChangeRequested.size>0,'','hidden')}">
-                        Please indicate the effective date of the change.
-                    </td></tr>
-                    <apex:pageBlockSectionItem rendered="{!typeOfChangeRequested.size>0}">
+                    <apex:outputText value="Please indicate the effective date of the change." styleclass="aplabel" rendered="{!newForm.Type_of_Change_Requested__c!=''}"/>
+
+                    <apex:pageBlockSectionItem rendered="{!newForm.Type_of_Change_Requested__c!=''}">
                         <apex:outputLabel value="Desired commencement date" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
                     </apex:pageBlockSectionItem>
@@ -205,7 +158,7 @@
                     <script>findMakeRows();</script>
                 </apex:pageBlockSection>
 
-                <apex:outputPanel id="AddressFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Change of Address'), '', 'display:none')}" >
+                <apex:outputPanel id="AddressFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Change of Address')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="1" title="Change of local address in {!strLoB} {!apcountry}">
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         <apex:pageBlockSectionItem >
@@ -234,7 +187,7 @@
                     </apex:pageBlockSection>
                 	
                 </apex:outputPanel>
-                <apex:outputPanel id="TaxFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Tax Number'), '', 'display:none')}" >
+                <apex:outputPanel id="TaxFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Tax Number')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="1" title="Change of Tax details">
 						<apex:pageBlockSectionItem >
                         	<apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" />
@@ -366,7 +319,7 @@
                     
                 </apex:outputPanel>
                 
-                <apex:outputPanel id="MasterTableFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Master Table'), '', 'display:none')}" >
+                <apex:outputPanel id="MasterTableFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Master Table')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="2" title="Finance / Administration Contact Person & Title - {!strLoB}Link Master Table Change">
                 	 <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
@@ -420,7 +373,7 @@
                 </apex:outputPanel>
 
                 <!-- Show when Type of change Voluntary Withdrawal is selected -->
-                <apex:outputPanel id="WithdrawalFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Voluntary Withdrawal'), '', 'display:none')}" >
+                <apex:outputPanel id="WithdrawalFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Voluntary Withdrawal')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Voluntary Withdrawal Request {!strLoB} {!apcountry}">
                         <tr><td colspan="4" class="aplabel">
                             Please download and complete the form in the link below. Once completed please uploaded using the box.
@@ -444,7 +397,7 @@
                 </apex:outputPanel>
 
                 <!-- Show when Type of change Report Options is selected -->
-                <apex:outputPanel id="ReportOptionsFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options'), '', 'display:none')}" >
+                <apex:outputPanel id="ReportOptionsFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Report Options">
                         <tr><td colspan="4" class="aplabel">
                             Please download and complete the form in the link below. Once completed please uploaded using the box.
@@ -469,7 +422,7 @@
                                 <apex:selectOption itemValue="No" itemLabel="No"/>
                                 <apex:selectOption itemValue="Yes – Billing Period HOT" itemLabel="Yes – Billing Period HOT"/>
                                 <apex:selectOption itemValue="Yes – Remittance Period HOT" itemLabel="Yes – Remittance Period HOT"/>
-                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
@@ -481,7 +434,7 @@
                                 <apex:selectOption itemValue="Download only" itemLabel="Download only"/>
                                 <apex:selectOption itemValue="E-mail and download" itemLabel="E-mail and download"/>
                                 <apex:selectOption itemValue="Not Required" itemLabel="Not Required"/>
-                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
@@ -528,7 +481,7 @@
                         <apex:pageBlockSectionItem rendered="{!ExcelSelected}">
                             <apex:outputLabel value="Does your Airline wish to receive XLS reports?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Receive_XLS_Reports__c}">
-                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
 
@@ -540,12 +493,12 @@
                 </apex:outputPanel>
 
                 <!-- Show when Type of change Commission is selected -->
-                <apex:outputPanel id="CommissionFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Commission'), '', 'display:none')}" >
+                <apex:outputPanel id="CommissionFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Commission')=true}">
                     <apex:pageBlockSection collapsible="false" columns="2" title="Commission">
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel value="Does the Airline pay commission to Agents?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Pay_Commission_to_agents__c}">
-                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="blockButtons"/>
+                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="WaitingStatus"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
                         <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
@@ -554,7 +507,7 @@
                             rendered="{!newForm.Pay_Commission_to_agents__c='Yes'}">
                             <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Pay_Standard_Commission__c}">
-                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="blockButtons"/>
+                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="WaitingStatus"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
                         <apex:pageBlockSectionItem rendered="{!newForm.Pay_Commission_to_agents__c='Yes' && newForm.Pay_Standard_Commission__c='Yes'}">
@@ -565,7 +518,7 @@
                 </apex:outputPanel>
 
                 <!-- Show when Type of change Stock Management is selected -->
-                <apex:outputPanel id="StockManagementFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Stock Management'), '', 'display:none')}" >
+                <apex:outputPanel id="StockManagementFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Stock Management')=true}">
                     <apex:pageBlockSection collapsible="false" columns="1" title="Other Cargo Services">
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel escape="false" value="<b>AWB Stock Management</b><br/>Are you interested in participating in the CASSLink stock Management system for distribution of AWB Serial Numbers?" styleclass="ap-required"/>
