@@ -61,7 +61,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
 		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace('@@##', '+') : '';
 		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace('@@##', '+') : '';
-		
+				
 		result.userInfo = JSON.serialize(registrationParameters);
 
 
@@ -70,46 +70,24 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled
 	public static RegistrationResult registration(Contact con, List<String> extraValues){
+		
+		User loggedUser = CSP_Utils.getLoggedUser();
 
 		RegistrationResult result = new RegistrationResult();
 		Savepoint sp = Database.setSavepoint();
 
 		try{
 
-			// String sUsername = extraValues[0];
-			// String sUserId = extraValues[1];
-			// String sCourse = extraValues[2];
-			// String sStreet = extraValues[3];
-			// String sZipCode = extraValues[4];
-			// String sCountryId = extraValues[5];
-			// String sStateId = (extraValues[6] != null && extraValues[6] != '') ? extraValues[6] : extraValues[7];
-			// String sStateName = extraValues[7];
-			// String sCityId = extraValues[8];
-			// String sCity = extraValues[9];
-			// Boolean isPoBox = Boolean.valueOf(extraValues[10]);
-			// String serviceid = extraValues[11];
-			// String sStreet2 = extraValues[12];
-			// String existingTrainingId = extraValues[13];
 			RegistrationParamsWrapper regParam = new RegistrationParamsWrapper(extraValues);
-System.debug('regParam: ' + regParam);
+
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
-
-			// List<Address__c> listAddr = [SELECT City_Reference__c, City_Name__c, Country_Reference__c, Country__c,
-			// 								Id,PO_Box_Address__c,Postal_Code__c,State_Reference__c,State_Name__c,Street__c, Street2__c
-			// 							FROM Address__c
-			// 							WHERE Id = :con.Shipping_Address__c LIMIT 1];
-			// Address__c addr = new Address__c();
-
-			
 
 			//Update Contact
 			update con;
 
 			//Create Account Role if not existing
-			//TO DO FM: Change query to use Functional Role
 			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
 											FROM Account_Role__c 
 											WHERE Account__c = :con.AccountId 
@@ -132,7 +110,7 @@ System.debug('regParam: ' + regParam);
 			if(regParam.existingTrainingId != ''){
 				contIds.add(regParam.existingTrainingId);
 			}
-System.debug('contIds: ' + contIds);
+
 			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
 			//TO DO FM: Change query to use Functional Role
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
@@ -144,9 +122,6 @@ System.debug('contIds: ' + contIds);
 			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
-System.debug('acrNew: ' + acrNew);
-System.debug('acrOld: ' + acrOld);
-
 			for(Account_Contact_Role__c acrItem : listACR){
 				if(acrItem.Contact__c == con.Id){
 					acrNew = acrItem;
@@ -154,8 +129,7 @@ System.debug('acrOld: ' + acrOld);
 					acrOld = acrItem;
 				}
 			}
-System.debug('acrNew: ' + acrNew);
-System.debug('acrOld: ' + acrOld);
+
 			if(acrOld != null && acrOld.Id != null){
 				acr = acrOld;
 				acr.Account_Role__c = ar.Id;
@@ -176,7 +150,7 @@ System.debug('acrOld: ' + acrOld);
 
 				insert acr;
 			}
-System.debug('acr: ' + acrNew);
+
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
 				Contact toDeleteContact = new Contact(Id = regParam.existingTrainingId);
 				delete toDeleteContact;
@@ -194,7 +168,7 @@ System.debug('acr: ' + acrNew);
 				 ycd = listYCD[0];
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
-				if(regParam.sCourse != null && regParam.sCourse != ''){
+				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
 					ycd.Preferred_Course__c = regParam.sCourse;
 				}
 			}else{
@@ -202,7 +176,7 @@ System.debug('acr: ' + acrNew);
 				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
-				ycd.Preferred_Course__c = regParam.sCourse;
+				ycd.Preferred_Course__c = regParam.sCourse ;
 			}
 
 			//Check State
@@ -230,7 +204,7 @@ System.debug('acr: ' + acrNew);
 			ycd.Country_Reference__c = (regParam.sCountryId != null && regParam.sCountryId != '') ? regParam.sCountryId : null;
 			ycd.City_Reference__c = (regParam.sCityId != null && regParam.sCityId != '') ? regParam.sCityId : null;
 			ycd.City_Name__c = (regParam.sCity != null && regParam.sCity != '') ? regParam.sCity : null;
-			
+			ycd.OwnerId = loggedUser.Id;
 
 			if(listYCD.size() > 0){
 				update ycd;
@@ -294,12 +268,12 @@ System.debug('acr: ' + acrNew);
 	@AuraEnabled
 	public static RegistrationResult completeRegistration(String params){
 
+		User loggedUser = CSP_Utils.getLoggedUser();
+
 		RegistrationResult result = new RegistrationResult();
 
 		try{
 			UserInformationWrapper contactInfo = getDataToMail(params);
-
-			System.debug('completeRegistration - contactInfo: ' + contactInfo);
 
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
@@ -487,7 +461,8 @@ System.debug('acr: ' + acrNew);
 						
 						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
 						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
-						ycdOld.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
+						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
+						ycdOld.OwnerId = loggedUser.Id;
 						update ycdOld;
 
 						
@@ -495,8 +470,8 @@ System.debug('acr: ' + acrNew);
 						ycdNew.Account_Contact_Role__c = acrOld.Id;
 						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
 						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
-						ycdNew.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
-
+						ycdNew.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
+						ycdNew.OwnerId = loggedUser.Id;
 						update ycdNew; 
 					}
 
@@ -592,8 +567,8 @@ System.debug('acr: ' + acrNew);
 						ycd = listYCD[0];
 						ycd.Username__c = contactInfo.Username != ''? contactInfo.Username : ycd.Username__c;
 						ycd.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycd.UserId__c;
-						ycd.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycd.Preferred_Course__c;
-
+						ycd.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycd.Preferred_Course__c;
+						ycd.OwnerId = loggedUser.Id;
 						update ycd;
 					}
 
@@ -610,7 +585,7 @@ System.debug('acr: ' + acrNew);
 						conToInactivate.Additional_Email__c = '';
 					}
 
-					// conToInactivate.status__c = 'Inactive';
+					conToInactivate.status__c = 'Inactive';
 					update conToInactivate;
 
 					Set<String> conIdSet = new Set<String>();
@@ -674,7 +649,7 @@ System.debug('acr: ' + acrNew);
 			params.existingContactEmail = (inputMap.get('existingContactEmail') != null) ? string.valueOf(inputMap.get('existingContactEmail')) : '';
 			params.existingContactAccount = (inputMap.get('existingContactAccount') != null) ? string.valueOf(inputMap.get('existingContactAccount')) : '';
 			params.lms  = (inputMap.get('lms') != null) ? string.valueOf(inputMap.get('lms')) : '';
-			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
+			params.lmsCourse  = (inputMap.get('lmsCourse') != null && inputMap.get('lmsCourse') != 'undefined') ? string.valueOf(inputMap.get('lmsCourse')) : '';
 			params.hasExistingContact = (inputMap.get('hasExistingContact') != null) ? string.valueOf(inputMap.get('hasExistingContact')) : '';
 			params.hasExistingContactPersonalEmail = (inputMap.get('hasExistingContactPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingContactPersonalEmail')) : '';
 			params.hasExistingUser = (inputMap.get('hasExistingUser') != null) ? string.valueOf(inputMap.get('hasExistingUser')) : '';
@@ -857,7 +832,6 @@ System.debug('acr: ' + acrNew);
 
 	@AuraEnabled(cacheable=false)
 	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
-		
 		String sRes = '';
 		String fullName = firstname + lastname;
 		String fullNameReverse = lastname + firstname;
@@ -877,9 +851,6 @@ System.debug('acr: ' + acrNew);
 				LIMIT 1]);
 		
 		if(!existingYadLst.isEmpty() && existingYadLst.size() > 0){
-
-
-
 
 			Training_Contact_Role_Details__c existingTCRD = existingYadLst[0];
 

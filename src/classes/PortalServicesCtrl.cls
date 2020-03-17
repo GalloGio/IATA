@@ -1340,8 +1340,17 @@ public with sharing class PortalServicesCtrl {
 			}
 		}
 		
-			@AuraEnabled (cacheable=false)
+		@AuraEnabled (cacheable=false)
 		public static String verifyCompleteL3Data(String serviceId){
+			return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, false);
+		}
+
+		@AuraEnabled (cacheable=false)
+		public static String verifyCompleteL3DataWithCourse(String serviceId){
+			return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, true);
+		}
+
+		public static String verifyCompleteL3DataInternal(String serviceId, Boolean preferedCourse){
 	
 			Boolean requiredDataPopulated = true;
 			Boolean latestToSAccepted = true;
@@ -1363,8 +1372,7 @@ public with sharing class PortalServicesCtrl {
 					requiredDataPopulated = false;
 				}
 			}
-			System.debug('1 requiredDataPopulated: ' + requiredDataPopulated);
-
+	
 			List<Training_Contact_Role_Details__c> tcrdLst = [SELECT City_Name__c, Country_Reference__c, Id, Name, PO_Box_Address__c, Street__c, Preferred_Course__c
 													FROM Training_Contact_Role_Details__c
 													WHERE Account_Contact_Role__r.Contact__r.Id =: userAux.ContactId
@@ -1374,24 +1382,21 @@ public with sharing class PortalServicesCtrl {
 			if(!tcrdLst.isEmpty()){
 				tcrd = tcrdLst[0];
 			}
-
+	
 			for(String apiName: l3MandatoryFieldsTCRD){
 				if(tcrd.get(apiName) == null){
 					if(apiName == 'Street__c' || apiName == 'PO_Box_Address__c'){
 						if(tcrd.get('Street__c') == null && tcrd.get('PO_Box_Address__c') == null){
 							requiredDataPopulated = false;
-							System.debug('2 requiredDataPopulated: ' + requiredDataPopulated);
 							break;
 						}
 					}else{
 						requiredDataPopulated = false;
-						System.debug('3 requiredDataPopulated: ' + requiredDataPopulated);
-
 						break;
 					}
 				}
 			}
-
+	
 			//BUGFIX PI2019-801 - Added code from CoreJune
 			List<Term_and_Condition__c> tosList = [SELECT Id, (SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptances__r WHERE Is_Accepted__c = true AND Contact__c =: userAux.ContactId) FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
 	
@@ -1405,29 +1410,17 @@ public with sharing class PortalServicesCtrl {
 				}
 				
 			}
-			System.debug('4 requiredDataPopulated: ' + requiredDataPopulated);
-			System.debug('latestToSAccepted: ' + latestToSAccepted);
 	
 			String baseUrl = Site.getBaseSecureUrl();
 			String pathPrefix = Site.getPathPrefix().replace('/s', '');
 	
 			if(requiredDataPopulated && latestToSAccepted){
-				// String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-	
-	
+		
 				List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
-				// system.assert(!ami.isEmpty(), 'Connected app Yardstick does not exist.');
-	
-				// Training_Contact_Role_Details__c tcrd = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
-				// 												FROM Training_Contact_Role_Details__c
-				// 												WHERE Account_Contact_Role__r.Contact__c = :userAux.ContactId
-				// 												AND RecordTypeId = :RECTYPE_Trainee_YASContDet
-				// 												LIMIT 1];
-				
-				//https://preprod-customer-portal-iata.cs109.force.com/csportal/idp/login?app=0sp0Q0000008OTD&RelayState=
+		
 				if(ami != null && !ami.isEmpty()){
 					resURL = baseUrl + pathPrefix + ami[0].StartUrl;
-					if(tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
+					if(preferedCourse && tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
 						resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
 					}
 				}
@@ -1435,15 +1428,12 @@ public with sharing class PortalServicesCtrl {
 				resURL = 'not_complete';
 			}
 	
-			System.debug('resURL: ' + resURL);
-	
 			return resURL;
 		}
 	
 		@AuraEnabled(cacheable=false)
 		public static String getPortalServiceId(string serviceName){
 	
-			system.debug('serviceName: ' + serviceName);
 			List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
 			system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
 	

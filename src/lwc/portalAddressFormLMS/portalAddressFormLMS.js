@@ -19,6 +19,8 @@ import CSP_L2_Select                    from '@salesforce/label/c.CSP_L2_Select'
 import CSP_L2_No_Matching_Results       from '@salesforce/label/c.CSP_L2_No_Matching_Results';
 import CSP_L2_Address_Not_Found_Message from '@salesforce/label/c.CSP_L2_Address_Not_Found_Message';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
+import CSP_L3_Zip_Mandatory_LMS         from '@salesforce/label/c.CSP_L3_Zip_Mandatory_LMS';
+
 
 
 export default class PortalAddressFormLMS extends LightningElement {
@@ -84,10 +86,26 @@ export default class PortalAddressFormLMS extends LightningElement {
 	@track citiesListbox = false;
 
 	get isValidationButtonDisabled(){
-		return  this.localAddress.cityName === ''
-				|| this.localAddress.street.length < 3
-				|| (this.localAddress.stateName === '' && this.isStateRequired)
-				|| !this.localAddress.inputModified;
+	
+		let bRes = false;
+
+		if(this.localAddress.cityName === '' && !bRes){
+			bRes = true;
+		}
+		if((this.localAddress.street === '' || this.localAddress.street.length < 3) && !bRes){
+			bRes = true;
+		}
+		if(this.localAddress.stateName === ''  && this.isStateRequired && !bRes){
+			bRes = true;
+		}
+		if(this.localAddress.countryId === '' && !bRes){
+			bRes = true;
+		}
+		if(this.localAddress.zip === '' && !bRes){
+			bRes = true;
+		}
+
+		return bRes;
 	}
 
 	get hasSuggestions(){
@@ -108,7 +126,8 @@ export default class PortalAddressFormLMS extends LightningElement {
 		CSP_L2_Select_Address_Message,
 		CSP_L2_Select,
 		CSP_L2_No_Matching_Results,
-		CSP_L2_Address_Not_Found_Message
+		CSP_L2_Address_Not_Found_Message,
+		CSP_L3_Zip_Mandatory_LMS
 	}
 
 	get labels() {
@@ -174,8 +193,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 		let value = event.target.value;
 		let fieldname = event.target.dataset.fieldname;
 
-		this.localAddress.inputModified = true;
-
+		
 		switch(fieldname){
 			case 'IsPoBox':
 				this.localAddress.isPoBox = event.target.checked;
@@ -212,7 +230,9 @@ export default class PortalAddressFormLMS extends LightningElement {
 				break;
 		}
 
+		this.localAddress.inputModified = true;
 		this.setValidationStatus(this.localAddress.validationStatus);
+
 	}
 
 	/* Handle form changes */
@@ -449,12 +469,6 @@ export default class PortalAddressFormLMS extends LightningElement {
 		// - a suggested address is selected
 
 		let addressSelected = false;
-		for(var i = 0 ; i < this.localAddress.addressSuggestions.length; i++){
-			if(this.localAddress.addressSuggestions[i].isSelected){
-				addressSelected = true;
-				break;
-			}
-		}
 
 		let status = (this.localAddress.validationStatus !== 0 && !this.localAddress.inputModified)
 								|| addressSelected;
@@ -611,5 +625,10 @@ export default class PortalAddressFormLMS extends LightningElement {
 
 	stopLoading(){
 		this.dispatchEvent(new CustomEvent('stoploading'));
+	}
+
+	@api
+	getValidationButtonDisabled(){
+		return this.isValidationButtonDisabled;
 	}
 }

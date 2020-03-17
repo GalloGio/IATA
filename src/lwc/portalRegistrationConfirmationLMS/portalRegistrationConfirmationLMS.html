@@ -18,17 +18,6 @@
 				<div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
 			</lightning-layout-item>
 
-			<lightning-layout-item size="6" class="IEFixDisplay">
-				<div class="text-xxsmall">
-					<lightning-button variant="base" label={labels.CSP_L2_Back_to_Edit}
-						title={labels.CSP_L2_Back_to_Edit} onclick={toProfileDetails} class="blueCustomButtonLinkSmall"
-						icon-name="utility:forward" icon-position="right">
-					</lightning-button>
-				</div>
-			</lightning-layout-item>
-			<!--<lightning-layout-item size="6">
-				<div class="link_normal -Title slds-float_right" onclick={toProfileDetails}>{labels.CSP_L2_Back_to_Edit}</div>
-			</lightning-layout-item>-->
 			<div class="profileContainer">
 			
 
@@ -49,15 +38,12 @@
 				</lightning-layout-item>
 			</div>
 			
-
 			<lightning-layout-item padding="around-small" size="12">
 			</lightning-layout-item>
 
 			<div class="profileItem">
 				<lightning-layout-item size="12" class="leftItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
 					<div class="dataLabel">{labels.CSP_L3_LoginEmail_LMS}</div>
-
 					<div class="dataValue">{contactInfo.Email}</div>
 				</lightning-layout-item>
 			</div>
@@ -67,7 +53,6 @@
 
 			<div class="profileItem">
 				<lightning-layout-item size="12" class="rightItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
 					<div class="dataLabel">{labels.CSP_L3_PersonalEmail_LMS}</div>
 					<div class="dataValue">{contactInfo.Additional_Email__c}</div>
 				</lightning-layout-item>
@@ -75,31 +60,27 @@
 			<lightning-layout-item padding="around-small" size="12">
 			</lightning-layout-item>
 
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
-					<div class="dataLabel">{labels.CSP_L3_Username_LMS}</div>
-					<div class="dataValue">{contactInfo.Username}</div>
+			<template if:true={trainingInfoVisibility}>
+				<div class="profileItem"> 
+					<lightning-layout-item size="6" class="leftItem">
+						<div class="dataLabel">{labels.CSP_L_TrainingEmail_LMS}</div>
+						<div class="dataValue">{contactInfo.Username}</div>
+					</lightning-layout-item>
+				</div>
+
+				<div class="profileItem"> 
+					<lightning-layout-item size="6" class="rightItem">
+						<div class="dataLabel">{labels.CSP_L_TrainingUser_LMS}</div>
+						<div class="dataValue">{contactInfo.UserId}</div>
+					</lightning-layout-item>
+				</div>
+			
+				<lightning-layout-item padding="around-small" size="12">
 				</lightning-layout-item>
-			</div>
-
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
-					<div class="dataLabel">{labels.CSP_L3_UserId_LMS}</div>
-					<div class="dataValue">{contactInfo.UserId}</div>
-				</lightning-layout-item>
-			</div>
-
-			<lightning-layout-item padding="around-small" size="12">
-			</lightning-layout-item>
-
-			<lightning-layout-item padding="around-small" size="12">
-			</lightning-layout-item>
+			</template>
 
 			<div class="profileItem">
 				<lightning-layout-item size="6" class="leftItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
 					<div class="dataLabel">{labels.CSP_L3_Phone_LMS}</div>
 					<div class="dataValue">{contactInfo.Phone}</div>
 				</lightning-layout-item>
@@ -107,7 +88,6 @@
 
 			<div class="profileItem">
 				<lightning-layout-item size="6" class="rightItem">
-					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
 					<div class="dataLabel">{labels.CSP_L3_WorkPhone_LMS}</div>
 					<div class="dataValue">{contactInfo.OtherPhone}</div>
 				</lightning-layout-item>
@@ -117,26 +97,37 @@
 			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
             </lightning-layout-item>
 
-			<lightning-layout-item size="6" class="IEFixDisplay">
+			<lightning-layout-item size="12" class="IEFixDisplay">
 				<template if:true={displayToS}>
-						<div style="display: flex;justify-content: center;align-items: start;">
-							<div style="display: flex; align-items: center;justify-content: center;">
-								<div style="max-width:20px; padding-left:5px;">
-									<lightning-input type="checkbox" variant="label-hidden" checked={tos}
-										onchange={handleToSChange} class="registerCheckBox"></lightning-input>
-								</div>
-							</div>
-							<div class="text-small" style="margin-left:12px; width:100%;">
-								<lightning-formatted-rich-text value={labels.CSP_LMS_Privacy_Policy}
-									class="text-xsmall text-gray"></lightning-formatted-rich-text>
+					<div style="display: flex;justify-content: center;align-items: start;">
+						<div style="display: flex; align-items: center;justify-content: center;">
+							<div style="max-width:20px; padding-left:5px;">
+								<lightning-input type="checkbox" variant="label-hidden" checked={tos}
+									onchange={handleToSChange} class="registerCheckBox"></lightning-input>
 							</div>
 						</div>
+						<div class="text-small" style="margin-left:12px; width:100%;">
+							<lightning-formatted-rich-text value={labels.CSP_LMS_Privacy_Policy}
+								class="text-xsmall text-gray"></lightning-formatted-rich-text>
+						</div>
+					</div>
 				</template>
 			</lightning-layout-item>
 
+			<lightning-layout-item size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+
 			<lightning-layout-item size="6" class="IEFixDisplay">
-				<!--<lightning-button class="slds-float_right containedButton" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>-->
-				<lightning-button disabled data-id="submitButton" class="slds-float_right containedButtonDisabled"
+				<div class="text-xxsmall">
+					<lightning-button variant="base" label={labels.CSP_L2_Back_to_Edit}
+						title={labels.CSP_L2_Back_to_Edit} onclick={toProfileDetails} class="blueCustomButtonLinkSmall"
+						icon-name="utility:back" icon-position="left">
+					</lightning-button>
+				</div>
+			</lightning-layout-item>
+			
+			<lightning-layout-item size="6" class="IEFixDisplay">
+				<lightning-button disabled data-id="submitButton" class="slds-float_right containedButton customBtn"
 					label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
 				</lightning-button>
 				
@@ -149,7 +140,7 @@
 	</lightning-layout>
 
 
-	<template if:true={openSuccessModal}>
+	<template id="SuccessModal" if:true={openSuccessModal}>
 		<c-portal-registration-generic-modal icon={successIcon} title={labels.CSP_L2_Details_Saved}
 			message={labels.CSP_L2_Details_Saved_Message_LMS} button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
 			button2-label={labels.CSP_L2_Go_To_Service_LMS} onbuttononeaction={button1Action}

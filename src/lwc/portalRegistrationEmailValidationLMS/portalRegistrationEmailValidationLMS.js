@@ -93,10 +93,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track workEmailInput ='';
 
 	get blockConfirmation(){
-console.log('this.reverseEmailVisibility: ',this.reverseEmailVisibility);
-console.log('this.isReverseEmail: ',this.isReverseEmail);
 		let res = true;
-		console.log('res: ',res);
 
 		if(this.reverseEmailVisibility){
 			if(this.isReverseEmail !== undefined && this.isReverseEmail !== ''){
@@ -111,8 +108,7 @@ console.log('this.isReverseEmail: ',this.isReverseEmail);
 				res = false;
 			}
 		}
-		console.log('res: ',res);
-
+		
 		return res;
 
 	}
@@ -132,8 +128,6 @@ console.log('this.isReverseEmail: ',this.isReverseEmail);
 	}
 
 	get workEmailVisibility(){
-		console.log('this.isPersonalEmail: ', this.isPersonalEmail);
-		console.log('this.localContactInfo.Account.Is_General_Public_Account__c: ', this.localContactInfo.Account.Is_General_Public_Account__c);
 		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			return true;
 		}
@@ -191,7 +185,10 @@ console.log('this.isReverseEmail: ',this.isReverseEmail);
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-console.log('this.localContactInfo: ', this.localContactInfo);
+
+		//Clean in case of the user comes back and try to insert another option or email
+		this.localContactInfo.Username = '';
+		this.localContactInfo.UserId = '';
 
 		let pageParams = getParamsFromPage();// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lms !== undefined){
@@ -238,7 +235,12 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 
 	changeIsPersonalEmail(event) {
 		this.isPersonalEmail = event.target.value;
-		console.log('changeIsPersonalEmail this.isPersonalEmail: ', this.isPersonalEmail);
+		this.workEmailInput = '';
+		this.personalEmailInput = '';
+		this.existingPersonalUsernameVisibility = false;
+		this.existingUsernameVisibility = false;
+		this.existingUsernameNotMatchingF4Visibility = false;
+		this.existingUsernameNotMatchingF6Visibility = false;
 		this.inputModified = true;
 	}
 
@@ -276,9 +278,13 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 	}
 
 	next(){
-console.log('next this.localContactInfo: ', this.localContactInfo);
 
 		if(this.validated === true){
+			//set Training info in case of already existing information in order to ByPass Training form
+			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+			this.localContactInfo.ExistingTrainingInfo = true;
+
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
 
@@ -310,7 +316,7 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 						this.localContactInfo.Additional_Email__c = this.workEmailInput;
 						auxEmail = this.workEmailInput;
 					}
-					console.log('next this.localContactInfo 1: ', this.localContactInfo);
+					
 					if(auxEmail !== '' && this.validated === false){
 
 						if(this.isPersonalEmail === 'no' && this.personalEmailInput !== ''){
@@ -347,34 +353,25 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 
 											var userInfo = JSON.parse(JSON.stringify(result3));
 											this.userInfo = userInfo;
-
+														
 											if(userInfo.hasExistingContact == true){
 												if(userInfo.hasExistingUser == true){
 
 													if(this.flow === 'flow3'){
 														this.flow = 'flow4';
-														console.log('next this.localContactInfo flow4 1: ', this.localContactInfo);
+
 														//reverse email
 														this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
 														this.localContactInfo.Email = this.workEmailInput;
-														// console.log('next this.localContactInfo flow4 1: ', this.localContactInfo);
 														
 													}
 													if(this.flow === 'flow5'){
 														this.flow = 'flow6';
 													}
 
-													console.log('next validateFullName! ');
-													console.log('next userInfo.existingContactId: ', userInfo.existingContactId);
-													console.log('next this.localContactInfo.existingContactId: ', this.localContactInfo.existingContactId);
-													console.log('next this.localContactInfo.FirstName: ', this.localContactInfo.FirstName);
-													console.log('next this.localContactInfo.LastName: ', this.localContactInfo.LastName);
-
-
 													//validate the 60% on the name comparison
 													validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
 														.then(result4 => {
-															console.log('validateFullName result4: ', result4);
 															if(result4 === 'not_matching'){
 																this.isFullNameMatching = false;
 																if(this.flow === 'flow4'){
@@ -382,9 +379,6 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 																}else if(this.flow === 'flow6'){
 																	this.existingUsernameNotMatchingF6Visibility = true;
 																}
-																console.log('next this.existingUsernameVisibility: ', this.existingUsernameVisibility);
-																console.log('next this.existingUsernameNotMatchingF4Visibility: ', this.existingUsernameNotMatchingF4Visibility);
-																console.log('next this.existingUsernameNotMatchingF6Visibility: ', this.existingUsernameNotMatchingF6Visibility);
 															}else if(result4 === 'existing_user'){
 																this.isFullNameMatching = true;
 																this.existingUsernameVisibility = true;
@@ -397,7 +391,6 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 																this.localContactInfo.existingContactName = userInfo.existingContactName;
 																this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
-																console.log('validateFullName result4 - this.localContactInfo: ', this.localContactInfo);
 															}
 														})
 														.catch((error) => {
@@ -444,14 +437,11 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
 																this.messageFlow7 = CSP_L3_ExistingContact_LMS;
-			console.log('this.messageFlow7: ', this.messageFlow7);		
-			console.log('userInfo.existingContactEmail: ', userInfo.existingContactEmail);													
-			console.log('userInfo.Email: ', this.localContactInfo.Email);													
 																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 																this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
-			console.log('this.messageFlow7: ', this.messageFlow7);		
-			}
+																this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+															}
 														})
 														.catch((error) => {
 															this.stopLoading();
