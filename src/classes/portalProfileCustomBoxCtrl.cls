@@ -21,7 +21,7 @@ public without sharing class portalProfileCustomBoxCtrl {
 
 		List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
 										FROM Account
-									 WHERE (Id = :currentCon.AccountId OR Top_Parent__c = :currentCon.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account','Others')
+									 WHERE (Id = :currentCon.AccountId OR Top_Parent__c = :currentCon.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account','Others') AND Status__c <> 'Terminated'
 									 ORDER BY RecordType.DeveloperName, Location_Type__c, Site
 									 ];
 

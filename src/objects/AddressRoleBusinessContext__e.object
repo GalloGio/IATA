@@ -44,4 +44,5 @@
     </fields>
     <label>Address Role Business Context</label>
     <pluralLabel>Addresses Role Business Context</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
