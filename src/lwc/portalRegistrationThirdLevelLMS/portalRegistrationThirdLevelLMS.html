@@ -20,7 +20,7 @@
                                     <img src={step1Active} height="24" width="24">
                                 </template>
                                 <template if:false={isProfileInformationStep}>
-                                    <img src={stepValid} class="validIcon" height="50" width="50">
+                                    <img src={stepValid} height="24" width="24">
                                 </template>
                             </div>
                             <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
@@ -34,7 +34,7 @@
                                     <img src={step2Active} height="24" width="24">
                                 </template>
                                 <template if:true={isStep2Valid}>
-                                    <img src={stepValid} class="validIcon" height="50" width="50">
+                                    <img src={stepValid} height="24" width="24">
                                 </template>
                             </div>
                             <div class="itemTitle"><span>{labels.OneId_Contact_Association_Validation}</span></div>
@@ -182,7 +182,7 @@
                                             <div class="topLightGrayBorder buttonsWrapper">
         
                                                 <div class="buttonContainer100">
-                                                    <lightning-button class="containedButton customBtn btnModal" label={button1Label} variant="neutral"  onclick={button1Action} >
+                                                    <lightning-button disabled data-id="submitButton" class="containedButtonDisabled customBtn btnModal" label={button1Label} variant="neutral"  onclick={goToService} >
                                                     </lightning-button>
                                                 </div>
                                                 

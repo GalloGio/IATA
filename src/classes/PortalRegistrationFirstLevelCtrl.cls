@@ -113,22 +113,28 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		@AuraEnabled
 		public Id accountId{get;set;}
 
-		/*YAS info for matching contact based on additional email temporary*/
-		@AuraEnabled
-		public Boolean hasExistingContactPersonalEmail{get;set;}
-		@AuraEnabled
-		public Boolean hasExistingUserPersonalEmail{get;set;}
-		@AuraEnabled
-		public String existingContactId{get;set;}
-		@AuraEnabled
-		public String existingContactName{get;set;}
-		@AuraEnabled
-		public String existingContactEmail{get;set;}
-		@AuraEnabled
-		public String existingContactAccount{get;set;}
-		@AuraEnabled
-		public String existingContactUsername{get;set;}
-	}
+        	/*YAS info for matching contact based on additional email temporary*/
+        	@AuraEnabled
+        	public Boolean hasExistingContactPersonalEmail{get;set;}
+        	@AuraEnabled
+        	public Boolean hasExistingUserPersonalEmail{get;	set;}
+	        @AuraEnabled
+        	public String existingContactId{get;set;}
+	        @AuraEnabled
+	        public String existingContactName{get;set;}
+	        @AuraEnabled
+	        public String existingContactEmail{get;set;}
+	        @AuraEnabled
+	        public String existingContactAccount{get;set;}
+	        @AuraEnabled
+	        public String existingContactUsername{get;set;}
+
+	        //Training Info in case it exists
+	        @AuraEnabled
+	        public String existingContactTrainingUsername{get;set;}
+	        @AuraEnabled
+	        public String existingContactTrainingUserId{get;set;}
+	    }
 
 	@AuraEnabled(cacheable=true)
 	public static RegistrationConfig getConfig(){
@@ -153,20 +159,20 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public static Map<String,String> getContactLabels() {
 
-		List<SObjectField> contactFields = new List<Schema.SObjectField> {
-			Contact.FirstName,
-			Contact.LastName,
-			Contact.Email,
-			Contact.Salutation,
-			Contact.Title,
-			Contact.Phone,
-			Contact.MobilePhone,
-			Contact.Fax,
-			Contact.Preferred_Language__c,
-			Contact.Membership_Function__c,
-			Contact.ISO_country__c,
-			Contact.Country__c
-		};
+        List<SObjectField> contactFields = new List<Schema.SObjectField> {
+            Contact.FirstName,
+            Contact.LastName,
+            Contact.Email,
+            Contact.Salutation,
+            Contact.Title,
+            Contact.Phone,
+            Contact.MobilePhone,
+            Contact.Fax,
+            Contact.Preferred_Language__c,
+            Contact.Membership_Function__c,
+            Contact.ISO_country__c,
+            Contact.Country__c
+        };
 
 		Map<String,String> labels = new Map<String,String>();
 		for (SObjectField f : contactFields) {
@@ -317,7 +323,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userInfo.existingContactAccount = conList.get(0).Account.Name;
 			userInfo.existingContactUsername = userList.get(0).Username;
 		}
-		/******************END*******************/
+
+		if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
+			List<Training_Contact_Role_Details__c> contactTrainingInfo = returnExistingContactTrainingInfo(userInfo.existingContactId);
+			userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
+			userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
+		}
+        	/******************END*******************/
 
 		return userInfo;
 	}
@@ -341,6 +353,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		List<User> userList = new List<User>();
 		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR email = :email];
 		return userList;
+	}
+
+	public static List<Training_Contact_Role_Details__c> returnExistingContactTrainingInfo(Id contactId) {
+        	String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+	        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c
+								FROM Training_Contact_Role_Details__c
+								WHERE Account_Contact_Role__r.Contact__c = :contactId 
+								AND RecordTypeId = :RECTYPE_Trainee_YASContDet
+								LIMIT 1];
+
+	        return con;
 	}
 
 	public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
@@ -1340,7 +1363,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		Set<string> IdsToDeactivate;
 
-		AsyncDeactivateUser(Set<string> IdsToDeactivate){
+		public AsyncDeactivateUser(Set<string> IdsToDeactivate){
 			this.IdsToDeactivate = IdsToDeactivate;
 		}
 
