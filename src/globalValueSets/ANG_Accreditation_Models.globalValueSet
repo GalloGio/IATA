@@ -45,6 +45,11 @@
         <default>false</default>
         <label>CASS Commercial Account BR</label>
     </customValue>
+    <customValue>
+        <fullName>CNS Notice Of Change</fullName>
+        <default>false</default>
+        <label>CNS Notice Of Change</label>
+    </customValue>
     <masterLabel>Accreditation Models</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

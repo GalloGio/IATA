@@ -215,7 +215,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO) {
 						lblCNSAgencyTitle += Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
 					}else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL) {
-						lblCNSAgencyTitle += 'TO DO';
+						lblCNSAgencyTitle += Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR;
 					}
 				}
 			}
@@ -823,7 +823,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (!isMultiCountryNewAE && !isMCAccredited && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD
 					|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 					amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
-				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT  || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL  || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
 					amsOfficeType = AMS_Utils.BR;
 				}
 
@@ -874,6 +874,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
 				if (newForm.Agent_Type__c == null) {
 					newForm.Agent_Type__c = 'IATA Cargo Agent'; //Default Type of Agent to Cargo if case created internally - Open - EDMC - and online form not yet created
+				}
+
+				if(isNoticeOfChange && isCNSAgency){
+					newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_NOTICE_OF_CHANGES;
 				}
 
 				//AS - NoC V2.0 - ensure that the following var are set for the case with "Open - EDMC" status
@@ -1146,7 +1150,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (!isMultiCountryNewAE && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD
 			|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 			amsOfficeType = AMS_Utils.HO;
-		} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
+		} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
 			amsOfficeType = AMS_Utils.BR;
 		}
 
@@ -2384,7 +2388,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO;
 					}else if (amsLocationType == AMS_Utils.CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR) {
 						newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR;
-					}
+					} 
 				}else{
 					newForm.Agent_Type__c = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 				}
@@ -2402,6 +2406,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			} else {
 				newForm.Agent_Type__c = 'IATA Cargo Agent';
 			}
+		}
+		if(isNoticeOfChange && isCNSAgency){
+			newForm.Agent_Type__c = AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_NOTICE_OF_CHANGES;
 		}
 
 		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
@@ -4570,7 +4577,14 @@ public without sharing class ISSP_AMS_Accreditation {
 														AND RecordTypeId = :reqRecTypeId
 													GROUP BY Language__c
 													ORDER BY Language__c ASC];
-
+			if(isCNSAgency && amsOfficeType == 'BR'){
+				amsOfficeType = 'Branch';
+			}
+			if(isCNSAgency && isNoticeOfChange && con.Account.Location_Type__c == 'BR'){
+				amsOfficeType = 'Branch';
+			}else if(isCNSAgency && isNoticeOfChange && con.Account.Location_Type__c == 'HO'){
+				amsOfficeType = 'HO';
+			}
 			List<AMS_Accreditation_Requirement__c> auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
 																FROM AMS_Accreditation_Requirement__c
 																WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :iso AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector

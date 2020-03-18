@@ -21261,8 +21261,8 @@ For each section below either:&lt;br/&gt;
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP AMS New Commercial Account BR</shortDescription>
-        <value>New Commercial Account</value>
+        <shortDescription>ISSP AMS CASS Commercial Account BR</shortDescription>
+        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_New_HO_details</fullName>
@@ -22110,6 +22110,22 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>The transferor has informed the Transferee of the need to comply the IFACP Rules if the Transferee wishes to be entered on the IFACP List as a Registered Forwarder.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS</shortDescription>
+        <value>The Agent (Transferor-Seller) has informed the Transferee-Buyer of the need to comply with the standards of the corporation in order to enable the corporation to appoint the Transferee-Buyer on behalf of those airlines which have so authorized the corporation.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CNS2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS2</shortDescription>
+        <value>The undersigned Agent (Transferor-Seller) and Transferee-Buyer hereby agree that they are jointly and severally liable for any obligation to a CNS Member arising from the Agent’s (Transferor’s-Seller’s) Cargo Agency Agreement prior to the termination thereof or the date of receipt by the Corporation of this Notice, whichever is later.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_EACP</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22320,6 +22336,14 @@ I certify that the preceding statements are true and correct to the best of my k
         <protected>false</protected>
         <shortDescription>ISSP AMS Not Listed Msg</shortDescription>
         <value>As an Organisation whose shares are not listed, you are required to enter all shareholders&apos; details in the People and Company sections below.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Notify_Change_Legal_Details_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Notify_Change_Legal_Details_CNS</shortDescription>
+        <value>Notify CNS of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Number_of_Years_Traded_Field_Label</fullName>

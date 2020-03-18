@@ -253,7 +253,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
 	public static final String CASE_REASON_BR_INDEPENDENT = 'New Independent BR';
 	public static final String CASE_REASON_BR_IP = 'New BR / IP';
-	public static final String CASE_REASON_BR_COMERCIAL = 'TO DO';
+	public static final String CASE_REASON_BR_COMERCIAL = 'New Commercial BR';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
 	public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
 	public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
@@ -342,7 +342,7 @@ public without sharing class AMS_Utils {
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH = 'New Independent BR - CNS Endorsement';
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO = 'New HO - CNS Endorsement';
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO = 'New Commercial HO - CNS Endorsement';
-	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR = 'TO DO';
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR = 'New Commercial BR - CNS Endorsement';
 
 	//CNS new PROCESS AGENT Type requested
 	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'CNS Endorsement BR';
@@ -350,6 +350,7 @@ public without sharing class AMS_Utils {
 	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO = 'CNS Endorsement HO';
 	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO = 'CASS Commercial Account HO';
 	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR = 'CASS Commercial Account BR';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_NOTICE_OF_CHANGES = 'CNS Notice Of Change';
 
 	//officeTypes
 	public static final String TYPE_EACP_HO = buildOfficeType(CASE_REASON_NEW_HO, 'EACP Intermediary');

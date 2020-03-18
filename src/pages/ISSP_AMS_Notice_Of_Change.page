@@ -734,7 +734,7 @@
 				</apex:pageBlockSection>
 				
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
-					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
+					<apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.ISSP_AMS_NOC_Instructions_CNS, IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions))}"/>
 				</apex:pageBlockSection>
 				<apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
 					<span id="nav_one"></span>
@@ -918,9 +918,9 @@
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Legal_Details_are_correct__c.Label}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox html-data-group="agencyLegalDetails" value="{!newForm.Confirm_Legal_Details_are_correct__c}"/>
 						</apex:pageBlockSectionItem>
-							
+						
 						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Legal_Details_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label}" style="color:black;font-size:110%"/>
+							<apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label)}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="notifyLegalDetailsChange" html-data-group="agencyLegalDetails" html-data-controls="agencyLegalDetailsComponent" value="{!newForm.Notify_Change_Legal_Details__c}" onchange="removeMessage();"/>
 						</apex:pageBlockSectionItem>
 					
@@ -1001,7 +1001,7 @@
 							</apex:pageBlockSectionItem>
 						
 						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches'), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
+							<apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label)}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
 
@@ -1159,7 +1159,7 @@
                     <apex:outputPanel >
 						<apex:pageBlockSection columns="1">
 		                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" style="color:black;font-size:110%"/>
+								<apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label)}" style="color:black;font-size:110%"/>
 								<apex:inputCheckbox id="notifyOwnershipChange" html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!newForm.Notify_Change_Ownership__c}" onchange="removeMessage();"/>
 							</apex:pageBlockSectionItem>    
 						</apex:pageBlockSection>
