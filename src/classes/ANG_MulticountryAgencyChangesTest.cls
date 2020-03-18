@@ -1338,7 +1338,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		checkErrorMessage = false;
 		for(ApexPages.Message msg : ApexPages.getMessages()){
-			if(msg.getSummary().contains('You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'))
+			if(msg.getSummary().contains('You cannot choose an Account as a target for the destination hierarchy which does not have a valid top Location type (HE for cash and cashless, GE for multicountry).'))
 				checkErrorMessage = true;
 		}
 

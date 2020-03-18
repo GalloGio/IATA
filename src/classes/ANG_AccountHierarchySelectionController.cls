@@ -102,7 +102,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 							}
 						} else {
-							if (isSingleBSPSelected && oscar.New_parent__r.Location_Type__c == AMS_Utils.HE && oscar.New_parent__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+							if (isSingleBSPSelected) {
 								notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
 							} else {
 								notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: ' + newParent.Name + '(' + newParent.IATACode__c + ')');
@@ -245,11 +245,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Multicountry AE account alone in a BSP',
 					'You cannot leave an AE account alone in a BSP. Please choose all the accounts in that BSP or perform a change of Location Type.'
-				);
-
-				errorMessages.put(
-					'Multicountry change hierarchy must select GE',
-					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'
 				);
 
 				errorMessages.put(
@@ -756,7 +751,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 						errorChecks.put('Multiple Hierarchies', true);
 					}
 
-					if (!this.isMulticountry && !hasTopLocationType(oscar.New_parent__c)) {
+					if (!hasTopLocationType(oscar.New_parent__c)) {
 						errorChecks.put('Top Location Type', true);
 					}
 				} else {
@@ -1179,43 +1174,27 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		onlyTwoAgenciesSelected = (selectedCount == 2);
 		diffLocationTypesSelected = (locationTypeSet.size() > 1);
 
-		allAgenciesFromSameBSPSelected =
-			(firstItemBSP != null &&
-			bspCountMap.get(firstItemBSP) == selectedCount);
+		allAgenciesFromSameBSPSelected = (firstItemBSP != null && bspCountMap.get(firstItemBSP) == selectedCount);
 
 		if((tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) ||
 				tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) ||
 				tocList.contains(AMS_Utils.ANG_OWNERSHIP) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) ||
-			tocList.contains(AMS_Utils.ANG_TRADE_NAME) || tocList.contains(AMS_Utils.ANG_VMFR)) && !isSingleBSPSelected)
-		{
+			tocList.contains(AMS_Utils.ANG_TRADE_NAME) || tocList.contains(AMS_Utils.ANG_VMFR)) && !isSingleBSPSelected) {
 				errorChecks.put('Agents must be in the same BSP', true);
 		}
 
 		if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
-
 			if(!onlyTwoAgenciesSelected || !diffLocationTypesSelected){
 				errorChecks.put('Only two agents selected with different location types', true);
 			}
-
 		}
-		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
-		{
-			if (! isSingleBSPSelected && selectedHE == 1 && selectedAE == 1)
-				errorChecks.put('Different BSP selected', true);
+
+		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY) && !isSingleBSPSelected && selectedHE == 1 && selectedAE == 1) {
+			errorChecks.put('Different BSP selected', true);
 		}
 
 		if(tocList.contains(AMS_Utils.ANG_VMFR) && !allAgenciesFromSameBSPSelected){
 			errorChecks.put('All agents from the same BSP not selected', true);
-		}
-
-		if (tocList.contains(AMS_Utils.ANG_HIERARCHY) && !diffDestination(oscar.New_parent__c)) {
-			if (oscar.New_parent__r.Location_Type__c == AMS_Utils.GE && isSingleBSPSelected) {
-				errorChecks.put('All selected locations are in the same BSP', true);
-			}
-
-			if (oscar.New_parent__r.Location_Type__c == AMS_Utils.HE && !isSingleBSPSelected) {
-				errorChecks.put('Agents must be in the same BSP', true);
-			}
 		}
 
 		//If a GE location is selected when performing a change of hierarchy the user has to select the entire hierarchy
@@ -1223,7 +1202,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && locationTypeSet.contains(AMS_Utils.GE) && selectedCount != hierarchySize){
 			errorChecks.put('Multicountry GE selected performing change of hierarchy', true);
 		}
-
 	}
 
 	/**
@@ -1255,11 +1233,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(notSelectBSPAE.contains(bsp)){
 				errorChecks.put('Multicountry AE account alone in a BSP', true);
 			}
-		}
-
-		//TEST SCENARIO 4
-		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
-			errorChecks.put('Multicountry change hierarchy must select GE', true);
 		}
 
 		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH) {
