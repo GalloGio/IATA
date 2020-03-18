@@ -4,6 +4,25 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Participation Compliance</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Compliance</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_DDS_DataQuality_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -147,7 +166,7 @@ ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),
 or(
 ISPICKVAL(Reason1__c,&quot;General Information&quot;),
 ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),
-ISPICKVAL(Reason1__c,&quot;Closure / Cancellation &quot;),
+ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),
 ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
 ISPICKVAL(Reason1__c,&quot;Payment related query&quot;),
 ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
@@ -904,13 +923,13 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618</value>
+                <value>CA 999,SQ 618,LH 020,LH 220</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -929,7 +948,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Parent_account_IATAcode__c</field>
                 <operation>equals</operation>
-                <value>13310172,27313613</value>
+                <value>13310172,27313613,08309722,08332741,08332424,08332391,08332413,08333754,08309560,08313981,08325564,08342283,08336893,08331842,08331271,08331326,08331864,08331886,08332730,08336882,08337092,08337055,08337070,08337081,08337184</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.IATACode__c</field>
@@ -944,7 +963,17 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.IATACode__c</field>
                 <operation>equals</operation>
-                <value>13310172,27313613</value>
+                <value>13310172,27313613,08309722,08332741,08332424,08332391,08332413,08333754,08309560,08313981,08325564,08342283,08336893,08331842,08331271,08331326,08331864,08331886,08332730,08336882,08337092,08337055,08337070,08337081,08337184</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -3999,7 +4028,7 @@ Product__r.Product_Section__c = &quot;TRQ003&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Mira_Hmoud</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
@@ -4128,7 +4157,7 @@ Product__r.Product_Section__c = &quot;TRA006&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Adelia_Candido</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
@@ -5431,7 +5460,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>notEqual</operation>
-                <value>Complaint (IDFS ISS),IATA Financial Review</value>
+                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6487,7 +6516,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Airline_Coding_YMQ</assignedTo>
+            <assignedTo>L3_Airline_and_Location_Codes</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7 OR (8 AND 9 AND 10) OR (8 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
@@ -6916,7 +6945,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_MITA_YMQ</assignedTo>
+            <assignedTo>GCSMITABIETA</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5) OR 6</booleanFilter>
             <criteriaItems>
@@ -8120,7 +8149,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>chaziran@iata.org.prod</assignedTo>
+            <assignedTo>kalasha@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>

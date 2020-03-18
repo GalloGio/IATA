@@ -71,6 +71,11 @@
         <fields>NAME</fields>
         <relatedList>GADM_Account_Service_Detail__c.Account_Role_Service__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Airport_Details__c</fields>
+        <relatedList>Role_Address__c.Account_Role_Service__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

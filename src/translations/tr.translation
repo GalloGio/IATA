@@ -37,6 +37,10 @@
         <name>EF_CRM</name>
     </customApplications>
     <customApplications>
+        <label><!-- E&amp;F CRM Lightning --></label>
+        <name>EF_CRM_Lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- E&amp;F --></label>
         <name>E_F</name>
     </customApplications>
@@ -1521,6 +1525,10 @@
         <name>API_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- ASD Service Description --></label>
+        <name>ASD_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Acc_Fin_Mgmt_Agencies_Description --></label>
         <name>Acc_Fin_Mgmt_Agencies_Description</name>
     </customLabels>
@@ -1531,6 +1539,14 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailBody --></label>
+        <name>AccountContextActivationEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailSubject --></label>
+        <name>AccountContextActivationEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
@@ -1693,6 +1709,18 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP/CASS Ch Bank Service Description --></label>
+        <name>BSP_CASS_Ch_Bank_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP/CASS Ch Request Service Description --></label>
+        <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSPlink Service Description --></label>
+        <name>BSPlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Bank Transfer Payment terms --></label>
         <name>Bank_Transfer_Payment_terms</name>
     </customLabels>
@@ -1845,8 +1873,32 @@
         <name>CASSLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- CASSlink Analytics Service Description --></label>
+        <name>CASSlink_Analytics_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Export Service Description --></label>
+        <name>CASSlink_Export_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Import Service Description --></label>
+        <name>CASSlink_Import_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Service Description --></label>
+        <name>CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS CASSlink Service Description --></label>
+        <name>CNS_CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS End Changes Service Description --></label>
+        <name>CNS_End_Changes_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -1879,6 +1931,10 @@
     <customLabels>
         <label><!-- CSP Account Domain Created --></label>
         <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Add_All --></label>
@@ -1941,6 +1997,10 @@
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>Hizmetler</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -1959,10 +2019,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Çevrim içi satın alın</label>
@@ -2019,6 +2075,10 @@
     <customLabels>
         <label>Vaka Detayları</label>
         <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
         <label>Sorgular</label>
@@ -3273,6 +3333,46 @@
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Erişim İstendi</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3481,16 +3581,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Sizin İçin Seçilmiş Önemli Noktalar</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Burada çok çeşitli IATA Hizmetlerini, havacılık endüstrisi ile ilgili yayınları, ürünleri ve kaynakları keşfedebilirsiniz. İlgi alanlarınız ve faaliyet geçmişiniz göz önüne alınarak özel olarak hazırlanmıştır.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3661,12 +3753,28 @@
         <name>Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Company --></label>
         <name>Company</name>
     </customLabels>
     <customLabels>
         <label><!-- Company name --></label>
         <name>Company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CompleteThisField --></label>
+        <name>CompleteThisField</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailBody --></label>
+        <name>ComplianceProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailSubject --></label>
+        <name>ComplianceProcessEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- ConfirmSendRecycleBin --></label>
@@ -3697,12 +3805,20 @@
         <name>Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Copyright --></label>
         <name>Copyright</name>
     </customLabels>
     <customLabels>
         <label><!-- Country --></label>
         <name>Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Requirements Service Description --></label>
+        <name>Country_Requirements_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Country cannot be empty --></label>
@@ -4201,6 +4317,10 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
+        <label><!-- Currency Center Service Description --></label>
+        <name>Currency_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Mevcut şifre</label>
         <name>Current_password</name>
     </customLabels>
@@ -4273,6 +4393,10 @@
         <name>Date</name>
     </customLabels>
     <customLabels>
+        <label><!-- Deduction Notice Service Description --></label>
+        <name>Deduction_Notice_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Del --></label>
         <name>Del</name>
     </customLabels>
@@ -4313,6 +4437,10 @@
         <name>EBulletin_More_than_8_owners_message</name>
     </customLabels>
     <customLabels>
+        <label><!-- EFComplianceReview --></label>
+        <name>EFComplianceReview</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -4323,6 +4451,10 @@
     <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E-Bulletin Service Description --></label>
+        <name>E_Bulletin_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- E-mail to Case - IS Help Desk --></label>
@@ -4467,6 +4599,10 @@
     <customLabels>
         <label>Mali Belgeler</label>
         <name>Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Financial Securities Service Description --></label>
+        <name>Financial_Securities_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- First name --></label>
@@ -4669,6 +4805,10 @@
         <name>GADM_Power_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- GADM Service Description --></label>
+        <name>GADM_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- GADM Status Change Template Link --></label>
         <name>GADM_Status_Change_Template_Link</name>
     </customLabels>
@@ -4753,6 +4893,10 @@
         <name>GADM_active_users_reached</name>
     </customLabels>
     <customLabels>
+        <label><!-- GDI Service Description --></label>
+        <name>GDI_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Ülke</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
@@ -4801,8 +4945,32 @@
         <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Acr Changes Service Description --></label>
+        <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Airl Location Codes Service Description --></label>
+        <name>IATA_Airl_Location_Codes_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
         <name>IATA_Alpha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Certificates Service Description --></label>
+        <name>IATA_Certificates_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (2C2P) Service Description --></label>
+        <name>IATA_EasyPay_2C2P_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (EDENRED) Service Description --></label>
+        <name>IATA_EasyPay_EDENRED_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (MSTS) Service Description --></label>
+        <name>IATA_EasyPay_MSTS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA_GDPR_URL --></label>
@@ -4811,6 +4979,10 @@
     <customLabels>
         <label><!-- IATA GDPR White Logo --></label>
         <name>IATA_GDPR_White_Logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Store Service Description --></label>
+        <name>IATA_Store_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -4899,6 +5071,22 @@
     <customLabels>
         <label><!-- ICCS Additional Codes Number --></label>
         <name>ICCS_Additional_Codes_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Button Help Text --></label>
+        <name>ICCS_Adhoc_Button_Help_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Creation Not Allowed --></label>
+        <name>ICCS_Adhoc_Creation_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc SI by Currency --></label>
+        <name>ICCS_Adhoc_SI_by_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Selection error --></label>
+        <name>ICCS_Adhoc_Selection_error</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Agreement Label --></label>
@@ -5005,8 +5193,16 @@
         <name>ICCS_Client_Testimonial_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Clone SI --></label>
+        <name>ICCS_Clone_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Clone SI Link --></label>
         <name>ICCS_Clone_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Collapse All --></label>
+        <name>ICCS_Collapse_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Comment Label --></label>
@@ -5029,8 +5225,16 @@
         <name>ICCS_Create_Adhoc_SI_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Create Currency SI Link --></label>
+        <name>ICCS_Create_Currency_SI_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Create Future SI Link --></label>
         <name>ICCS_Create_Future_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Create Mass Currency Header --></label>
+        <name>ICCS_Create_Mass_Currency_Header</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Created Date Label --></label>
@@ -5043,6 +5247,10 @@
     <customLabels>
         <label><!-- ICCS Currency Label --></label>
         <name>ICCS_Currency_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Currency SI created --></label>
+        <name>ICCS_Currency_SI_created</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS CycleMgmt AdHoc Header --></label>
@@ -5101,6 +5309,10 @@
         <name>ICCS_EF_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Edit SI --></label>
+        <name>ICCS_Edit_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Edit SI Link --></label>
         <name>ICCS_Edit_SI_Link</name>
     </customLabels>
@@ -5143,6 +5355,10 @@
     <customLabels>
         <label><!-- ICCS Endpoint Username PROD --></label>
         <name>ICCS_Endpoint_Username_PROD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Expand All --></label>
+        <name>ICCS_Expand_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Expected Deadline --></label>
@@ -5195,6 +5411,14 @@
     <customLabels>
         <label><!-- ICCS Headquarter Branch --></label>
         <name>ICCS_Headquarter_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned --></label>
+        <name>ICCS_Helptext_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned With Amount --></label>
+        <name>ICCS_Helptext_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Hide Child Codes --></label>
@@ -5381,12 +5605,20 @@
         <name>ICCS_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Mandatory Instruction Line --></label>
+        <name>ICCS_Mandatory_Instruction_Line</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Mandatory Uploads Message --></label>
         <name>ICCS_Mandatory_Uploads_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Marked for Deletion Label --></label>
         <name>ICCS_Marked_for_Deletion_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Mass Edit SI --></label>
+        <name>ICCS_Mass_Edit_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Membership Status --></label>
@@ -5403,6 +5635,10 @@
     <customLabels>
         <label><!-- ICCS More About Link --></label>
         <name>ICCS_More_About_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Multi Countries Adhoc SI --></label>
+        <name>ICCS_Multi_Countries_Adhoc_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Multiple Signatories Change Message --></label>
@@ -5435,6 +5671,10 @@
     <customLabels>
         <label><!-- ICCS NoA Message --></label>
         <name>ICCS_NoA_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS No Currencies Available --></label>
+        <name>ICCS_No_Currencies_Available</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS No Editable Cycle Message --></label>
@@ -5669,6 +5909,14 @@
         <name>ICCS_Role_Label</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS SI Successfully Created --></label>
+        <name>ICCS_SI_Successfully_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS SI deleted --></label>
+        <name>ICCS_SI_deleted</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Save Action --></label>
         <name>ICCS_Save_Action</name>
     </customLabels>
@@ -5737,6 +5985,10 @@
         <name>ICCS_Service_Users_Table_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Settlement Instructions created --></label>
+        <name>ICCS_Settlement_Instructions_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Show Child Codes --></label>
         <name>ICCS_Show_Child_Codes</name>
     </customLabels>
@@ -5761,8 +6013,20 @@
         <name>ICCS_Si_Create_Adhoc</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Si Create Currency --></label>
+        <name>ICCS_Si_Create_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Create Currency Warning --></label>
+        <name>ICCS_Si_Create_Currency_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Si Create Future --></label>
         <name>ICCS_Si_Create_Future</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Edit Currency --></label>
+        <name>ICCS_Si_Edit_Currency</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Si Edit Future --></label>
@@ -5775,6 +6039,22 @@
     <customLabels>
         <label><!-- ICCS Start Date Label --></label>
         <name>ICCS_Start_Date_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received --></label>
+        <name>ICCS_Status_For_Not_Received</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received With Amount --></label>
+        <name>ICCS_Status_For_Not_Received_With_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned --></label>
+        <name>ICCS_Status_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned With Amount --></label>
+        <name>ICCS_Status_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Subject Label --></label>
@@ -5859,6 +6139,10 @@
     <customLabels>
         <label><!-- ICE Portal Service --></label>
         <name>ICE_Portal_Service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICE Service Description --></label>
+        <name>ICE_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ICH --></label>
@@ -7998,6 +8282,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>IFAP_Save</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP Service Description --></label>
+        <name>IFAP_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFAP Submit for approval message --></label>
         <name>IFAP_Submit_for_approval_message</name>
     </customLabels>
@@ -8022,6 +8310,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>IFAP_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFG Production Service Description --></label>
+        <name>IFG_Production_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFG_Prov_Declined --></label>
         <name>IFG_Prov_Declined</name>
     </customLabels>
@@ -8036,6 +8328,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label><!-- IFG_Thanks_for_request --></label>
         <name>IFG_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IFTP Service Description --></label>
+        <name>IFTP_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_My_Application --></label>
@@ -12642,6 +12938,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
         <name>ISSP_AMS_Step3_Multicountry_Location</name>
     </customLabels>
@@ -13394,6 +13694,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
+        <label>Banka hesabı bilgilerinizin değiştiğini IATA’ya bildirmek için lütfen bizimle iletişime geçin</label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -13654,7 +13958,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir&quot;</label>
+        <label>Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
@@ -13880,6 +14184,18 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label>Katılım formu</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
@@ -16323,6 +16639,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Eylem</label>
         <name>ISSP_My_Contact_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
     </customLabels>
     <customLabels>
         <label>Yeni Sorgu</label>
@@ -18879,6 +19203,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>InputRequiredMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Insurance Providers Service Description --></label>
+        <name>Insurance_Providers_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Internal and external emails error --></label>
         <name>Internal_and_external_emails_error</name>
     </customLabels>
@@ -18933,6 +19261,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- Job title required --></label>
         <name>Job_title_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Join BSP/CASS Service Description --></label>
+        <name>Join_BSP_CASS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
@@ -19547,6 +19879,14 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Logout</name>
     </customLabels>
     <customLabels>
+        <label><!-- MIR Service Description --></label>
+        <name>MIR_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MITA Agreements Service Description --></label>
+        <name>MITA_Agreements_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Make All Private --></label>
         <name>Make_All_Private</name>
     </customLabels>
@@ -20131,8 +20471,16 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;GSA kodu ve ülke kombinasyonunuz için şirket bulunamaması ihtimaline karşı lütfen doğru bilgileri girdiğinizden emin olun veya &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;sorun giderme kılavuzu&lt;/a&gt; bölümümüze başvurun.&quot;</label>
@@ -21242,6 +21590,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Payment_number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Paymentlink Service Description --></label>
+        <name>Paymentlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Period --></label>
         <name>Period</name>
     </customLabels>
@@ -21490,6 +21842,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>The attachments transfer operation completed with {0} success(es) and {1} error(s).
 
 &lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</label>
@@ -21544,6 +21900,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Salutation</name>
     </customLabels>
     <customLabels>
+        <label><!-- SapProcessEmailBody --></label>
+        <name>SapProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SapProcessEmailSubject --></label>
+        <name>SapProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
     </customLabels>
@@ -21574,6 +21938,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- Select --></label>
         <name>Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SelectAnOption --></label>
+        <name>SelectAnOption</name>
     </customLabels>
     <customLabels>
         <label><!-- SelectRequiredMessage --></label>
@@ -21668,6 +22036,18 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Signaturit_Endpoint</name>
     </customLabels>
     <customLabels>
+        <label><!-- SisProcessCaseSubject --></label>
+        <name>SisProcessCaseSubject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailBody --></label>
+        <name>SisProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailSubject --></label>
+        <name>SisProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SiteTitle --></label>
         <name>SiteTitle</name>
     </customLabels>
@@ -21748,8 +22128,20 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIP Reports Service Description --></label>
+        <name>TIP_Reports_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label>Görevler</label>
@@ -21794,6 +22186,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- Tracking Number --></label>
         <name>Tracking_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Training Platform (LMS) Service Description --></label>
+        <name>Training_Platform_LMS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -22866,6 +23262,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label><!-- Available Services --></label>

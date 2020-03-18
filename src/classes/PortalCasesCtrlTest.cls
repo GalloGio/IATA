@@ -433,4 +433,63 @@ private class PortalCasesCtrlTest {
 	}
 	Test.stopTest();
 }
+
+	@IsTest
+	static void testGetHideForClosedCases(){
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		Contact cont = [SELECT Id FROM Contact WHERE FirstName = 'John' LIMIT 1];
+		Account newAcc = [SELECT Id FROM Account LIMIT 1];
+		Case newCase = [SELECT Id FROM Case WHERE Subject = 'Case Test' LIMIT 1];
+		Case newCase1 = [SELECT Id FROM Case WHERE Subject = 'Case Test 1' LIMIT 1];
+		Case newCase3 = [SELECT Id, is_Portal_user_equal_case_contact__c FROM Case WHERE Subject = 'Bla' LIMIT 1];
+
+		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
+	
+			Test.startTest();
+			System.runAs(usr) {
+				Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
+										Origin = 'Portal', CaseArea__c = 'Accreditation',
+										E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+										RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+										Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+				insert newCase4;
+				
+				Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+				boolean expired = PortalCasesCtrl.getHideForClosedCases(newCase4.Id);
+				
+				System.assertEquals(expired,false);
+				Test.stopTest();
+		
+			}
+	}
+	
+	@IsTest
+	static void testSidraCase(){
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		Contact cont = [SELECT Id FROM Contact WHERE FirstName = 'John' LIMIT 1];
+		Account newAcc = [SELECT Id FROM Account LIMIT 1];
+
+		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+
+		Case newCase4 = new Case(Subject = 'Sidra test case', Region__c = 'Africa & Middle East',
+									Origin = 'Portal', CaseArea__c = 'Accreditation', BSP_CASS__c = 'BSP',
+									E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+									IATAcode__c = '98789344',
+									RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+		insert newCase4;
+
+		Test.startTest();
+
+		System.runAs(usr) {
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+			System.assertNotEquals(getCaseTest, null);
+		}
+		
+		PortalCasesCtrl.ReturnWrapper returnWrapperTest = new PortalCasesCtrl.ReturnWrapper(true, 'test', 'test');
+
+		Test.stopTest();
+	}
+
 }

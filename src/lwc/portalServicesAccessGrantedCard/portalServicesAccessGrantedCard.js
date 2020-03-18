@@ -3,8 +3,6 @@ import { LightningElement, api, track } from 'lwc';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
-import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
-import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -93,7 +91,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                     if (myUrl.startsWith('/')) {
                                 //open new tab with the redirection
                                 window.open(myUrl);
-                                this.toggleSpinner();
+                                this.toggleSpinner();       
                     } else {
                         if (appName === 'Payment Link' || appName === 'Paypal') {
                             paymentLinkRedirect()
@@ -108,30 +106,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                                     this.toggleSpinner();
                                 });
 
-                        } 
-                        else if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
-							getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
-								.then(serviceId => {
-									verifyCompleteL3Data({serviceId: recordId})
-									.then(result => {
-										if(result !== 'not_complete'){
-											window.open(myUrl);
-										}
-										else{
-											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-										}
-										this.toggleSpinner();
-									})
-									.catch(error => {
-										this.error = error;
-									});
-								})
-								.catch(error => {
-									this.error = error;
-							});
-
-						}
-                        else {
+                        } else {
                             if (!myUrl.startsWith('http')) {
                                 myUrl = window.location.protocol + '//' + myUrl;
                             }
@@ -147,7 +122,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
  
                     //open with the redirection
                     window.open(myUrl,"_self");
-                            this.toggleSpinner();
+                    this.toggleSpinner();
                         
 
                 }

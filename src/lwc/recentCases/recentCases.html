@@ -2,15 +2,13 @@
 
     <c-portal-custom-card-container special-card={specialCase}>
 
+        
         <span slot="cardTitle">
-            <span class={titleCss}> {title} </span>
-
-            <span if:true={specialCase} class="slds-text-align_center">
-                <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
-                <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
-            </span>
-
+            <div if:false={specialCase}>
+                <span class={titleCss}> {title} </span>
+            </div>
         </span>
+        
         <span slot="cardButton" if:true={showButton} class="slds-show_medium">
             <lightning-button
                 variant="neutral"
@@ -38,6 +36,13 @@
                     <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                 </div>
                 <div if:false={loading}>
+
+                    <div if:true={specialCase} class="slds-text-align_center">
+                        <h1 class={titleCss}> {title} </h1>
+                        <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
+                        <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
+                    </div>
+
                     <div if:true={dataRecords} class={tableClass}>
                         <lightning-datatable
                             key-field="Id"

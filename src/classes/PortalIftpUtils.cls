@@ -1,4 +1,12 @@
 public without sharing class PortalIftpUtils {
+	
+	//Recordtypes used in IFTP Context
+	//account contact role object - ITP Recordtype
+	Public Static Final String ACC_CONT_ROLE_RT_ITP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+	
+	Public Static Final String ACC_ROLE_RT_IFTP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+
+	Private Static Final Integer numberOfExpectedFieldsOnImportEmployeesCSVFile = 7;
 
 	@AuraEnabled
 	public static boolean isCommunity(){
@@ -18,7 +26,8 @@ public without sharing class PortalIftpUtils {
 													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
 													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
 												FROM Account_Contact_Role__c
-												WHERE  Contact__r.accountid = :accountId];
+												WHERE  Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP]; 
 		return emps;
 	}
 
@@ -43,18 +52,17 @@ public without sharing class PortalIftpUtils {
 			e.setMessage('You have been logged out. Please login again. ');
 			throw e;
 		}
-		Id accRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-
 		Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
 													Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
 												FROM Account_Role_Service__c
 												WHERE Account_Role__r.Account__c = :userAcc.contact.accountid
-												AND Account_Role__r.RecordTypeId  = :accRoleRecTypeId
+												AND Account_Role__r.RecordTypeId  = :ACC_ROLE_RT_IFTP
 												LIMIT 1];
 
 		List<Account_Contact_Role__c> lContactRole = [SELECT Id, Contact_Role__c, Contact_Roles__c, Contact_Roles__r.Name
 													FROM Account_Contact_Role__c
-													WHERE Contact__c = :userAcc.contactId];
+													WHERE Contact__c = :userAcc.contactId
+													AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		List<Role_Address__c> lRoleAddr = [SELECT Id, Address__c,
 												Address__r.City__c,
@@ -62,7 +70,8 @@ public without sharing class PortalIftpUtils {
 												Address__r.Description__c,
 												Primary__c
 											FROM Role_Address__c
-											WHERE Account_Contact_Role__r.Contact__c = :userAcc.contactId];
+											WHERE Account_Contact_Role__r.Contact__c = :userAcc.contactId
+											AND Account_Contact_Role__r.RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		Portal_Application_Right__c par = [SELECT Right__c, Portal_Application__r.Name
 											FROM Portal_Application_Right__c
@@ -192,7 +201,6 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=true)
 	public static List<Account_Contact_Role__c> getITPEmployees(Id accountId){
-
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -200,14 +208,14 @@ public without sharing class PortalIftpUtils {
 													TransferFlag__c,UniqueKey__c
 												FROM Account_Contact_Role__c
 												WHERE Status__c <> 'Inactive'
-												AND Contact__r.accountid = :accountId];
+												AND Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		return emps;
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<Account_Contact_Role__c> getITPEmployeesWithStationsInfo(Id accountId){
-
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -221,7 +229,8 @@ public without sharing class PortalIftpUtils {
 													FROM Role_Addresses__r)
 												FROM Account_Contact_Role__c
 												WHERE Status__c <> 'Inactive'
-												AND Contact__r.accountid = :accountId];
+												AND Contact__r.accountid = :accountId
+												AND RecordTypeId = :ACC_CONT_ROLE_RT_ITP];
 
 		return emps;
 	}
@@ -235,7 +244,6 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=true)
 	public static Airport_Detail__c getITPStationEmployees(Id accountId, Id addressId){
-
 		Airport_Detail__c station = [SELECT Id, City__c, Code__c, Description__c ,
 											(SELECT Account_Contact_Role__r.Account__c,
 													Account_Contact_Role__r.Company_Code__c,
@@ -244,7 +252,8 @@ public without sharing class PortalIftpUtils {
 													Account_Contact_Role__r.Last_Name__c
 											FROM Role_Addresses__r
 											WHERE Account_Contact_Role__r.Contact__r.accountid = :accountId
-											AND Account_Contact_Role__r.Status__c <> 'Inactive')
+											AND Account_Contact_Role__r.Status__c <> 'Inactive'
+											AND Account_Contact_Role__r.RecordTypeId = :ACC_CONT_ROLE_RT_ITP)
 									 FROM Airport_Detail__c
 									 WHERE Id = :addressId];
 		return station;
@@ -382,11 +391,10 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=true)
 	public static List<Account> getAllITP(){
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-
+		
 		List<Account_Role__c> accRoleCompanies = [SELECT Account__c
 													FROM Account_Role__c
-													WHERE RecordTypeId = :RECTYPE_ITP_AccRole
+													WHERE RecordTypeId = :ACC_ROLE_RT_IFTP
 													AND Account_Roles__r.Category__c = 'ITP'
 													AND Account_Roles__r.Sector__c = 'Airline Supplier'];
 
@@ -494,24 +502,25 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled (cacheable=false)
-	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave){
+	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave, String accountName){
 		InsertStationWrapper isw;
 		try{
-
 			List<Role_Address__c> stationsToInsert = new List<Role_Address__c>();
 
 			List<Airport_Detail__c> ITPStationsInDatabase = getITPStations(accountId);
+			Set<Id> airportIdsSet = new Set<Id>();
+			for(Airport_Detail__c ad: ITPStationsInDatabase){
+				airportIdsSet.add(ad.id);
+			}
 
 			for(Object rec : dataToSave){
 				Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
-				Boolean existsStation = false;
-				for(Airport_Detail__c addr: ITPStationsInDatabase){
-					if(addr.Id == auxStation.Address__c){
-						existsStation = true;
+				if(airportIdsSet.contains(auxStation.Address__c)){
 						isw = new InsertStationWrapper( 'Station has already been added.', true);
-					}
-				}
-				if(!existsStation){
+				} else{
+					String airportCode = auxStation.Name;
+					auxStation.Name = createRoleAddressName(accountName, airportCode);
+					System.debug('auxStation.Name - ' + auxStation.Name);
 					stationsToInsert.add(auxStation);
 				}
 			}
@@ -535,6 +544,20 @@ public without sharing class PortalIftpUtils {
 		}
 
 		return isw;
+	}
+
+	private static String createRoleAddressName(String accountName, String airportCode){
+		String name = '';
+		Integer strMaxSizeAccountName = 38;
+		Integer strMaxSizeAirportCode = 38;
+		if(accountName.length() < strMaxSizeAccountName){
+			strMaxSizeAccountName = accountName.length();
+		}
+		if(airportCode.length() < strMaxSizeAirportCode){
+			strMaxSizeAirportCode = airportCode.length();
+		}
+		name =  accountName.substring(0, strMaxSizeAccountName) + ' - ' + airportCode.substring(0, strMaxSizeAirportCode);
+		return name;
 	}
 
 	@AuraEnabled (cacheable=false)
@@ -600,7 +623,7 @@ public without sharing class PortalIftpUtils {
 					Airport_Detail__c addr = mAllAddr.get(code);
 					stationsToInsert.add(
 							new Role_Address__c( Address__c= addr.Id,
-													Name= ui.accountName + ' ' + addr.Description__c,
+													Name= createRoleAddressName(ui.accountName, addr.Code__c),
 													Account_Role_Service__c= ui.accountRoleSrv));
 
 					ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -657,8 +680,7 @@ public without sharing class PortalIftpUtils {
 
 		try{
 
-			String RECTYPE_ITP = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-
+		
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
 			List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
@@ -698,37 +720,30 @@ public without sharing class PortalIftpUtils {
 				}
 			}
 
-			List<String> allMessages;
 
 
-			Map<String, List<String>> mapEmployeeInfoByEmployeeCode = new Map<String, List<String>>();
+
+			Set<String> employeeInFileSet = new Set<String>();
+			Set<String> duplicatedEmployeeCodeSet = new Set<String>();
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
-				if(String.isNotBlank(clearString(csvRecordData[0])) && mapEmployeeInfoByEmployeeCode.containsKey(clearString(csvRecordData[0]))){
-						ImportResultsWrapper irw = new ImportResultsWrapper(
-							clearString(csvRecordData[0]),
-							clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
-							'Employee Code duplicated in import CSV file. ',
-							'Failed');
-						irw.firstName = clearString(csvRecordData[1]);
-						irw.lastName = clearString(csvRecordData[2]);
-						results.add(irw);
-
-						List<String> duplicatedRecord = mapEmployeeInfoByEmployeeCode.get(clearString(csvRecordData[0]));
-
-						ImportResultsWrapper irw2 = new ImportResultsWrapper(
-							clearString(duplicatedRecord[0]),
-							clearString(duplicatedRecord[1]) + ' ' + clearString(duplicatedRecord[2]),
-							'Employee Code duplicated in import CSV file. ',
-							'Failed');
-						irw2.firstName = clearString(duplicatedRecord[1]);
-						irw2.lastName = clearString(duplicatedRecord[2]);
-						results.add(irw2);
-						mapEmployeeInfoByEmployeeCode.remove(clearString(csvRecordData[0]));
-
-				} else {
+				if(csvRecordData.size() != numberOfExpectedFieldsOnImportEmployeesCSVFile){
+					ImportResultsWrapper irw = new ImportResultsWrapper(
+						clearString(csvRecordData[0]),
+						clearString(csvRecordData[1])+ ' ' + clearString(csvRecordData[2]),
+						'Error in source data. Please check data format and delimiters. ',
+						'Failed');
+					irw.firstName = clearString(csvRecordData[1]);
+					irw.lastName = clearString(csvRecordData[2]);
+					results.add(irw);
+					continue;
+				} else{
 					if(String.isNotBlank(clearString(csvRecordData[0]))){
-						mapEmployeeInfoByEmployeeCode.put(clearString(csvRecordData[0]), csvRecordData);
+						if( employeeInFileSet.contains(clearString(csvRecordData[0]))){
+							duplicatedEmployeeCodeSet.add(clearString(csvRecordData[0]));
+						} else{
+							employeeInFileSet.add(clearString(csvRecordData[0]));
+						}
 					}
 				}
 			}
@@ -744,9 +759,16 @@ public without sharing class PortalIftpUtils {
 
 			for(Integer i=1;i<csvFileLines.size();i++){
 				string[] csvRecordData = csvFileLines[i].split(',');
-				if(csvRecordData != null && csvRecordData.size() > 0){
+
+
+
+				if(csvRecordData != null && csvRecordData.size() == numberOfExpectedFieldsOnImportEmployeesCSVFile){
+
+					String aux = 'Failed: ';
+					List<String> allMessages = new List<String>();
+					boolean hasErrors=false;
 					// Save errors
-					allMessages = new List<String>();
+
 
 					//Employee Code,First Name,Last Name,Coordinator,Business Email
 					String companyCode = clearString(csvRecordData[0]);
@@ -771,70 +793,79 @@ public without sharing class PortalIftpUtils {
 						allMessages.add('Last Name is missing; ');
 					}
 
-					// stations: Removes double quotes from string
-					String stationsCodesString = clearString(csvRecordData[6]);
+					if(duplicatedEmployeeCodeSet.contains(companyCode)){
+						hasErrors=true;
+						aux = aux + 'Employee Code duplicated in import CSV file.';
+					} else{
 
-					if(String.isBlank(stationsCodesString)){
-						allMessages.add('No station associated; ');
-					} else {
-						if(allMessages.size() == 0){
-							// stations: Splits string into separated station codes
-							List<String> auxstationsCodes = new List<String>();
-							Set<String> stationsCodes = new Set<String>();
-							auxstationsCodes = stationsCodesString.split(';');
-							if(auxstationsCodes.size() > 0){
-								// stations: trim codes and remove duplicates
-								for(String code: auxstationsCodes){
-									stationsCodes.add(code.trim().toUpperCase());
-								}
-								// Check if ITP has station
-								Boolean addrInITPAddrs = false;
-								Boolean toBeMapped = true;
-								for(String code: stationsCodes){
-									addrInITPAddrs = false;
-									toBeMapped = true;
-									if(mUserAddr.containsKey(code)){
-										addrInITPAddrs = true;
+						// stations: Removes double quotes from string
+						String stationsCodesString = clearString(csvRecordData[6]);
+
+						if(String.isBlank(stationsCodesString)){
+							allMessages.add('No station associated; ');
+						} else {
+							if(allMessages.size() == 0){
+								// stations: Splits string into separated station codes
+								List<String> auxstationsCodes = new List<String>();
+								Set<String> stationsCodes = new Set<String>();
+								auxstationsCodes = stationsCodesString.split(';');
+								if(auxstationsCodes.size() > 0){
+									// stations: trim codes and remove duplicates
+									for(String code: auxstationsCodes){
+										stationsCodes.add(code.trim().toUpperCase());
 									}
-									if(!addrInITPAddrs){
-										Boolean exists = false;
-										if(mAllAddr.containsKey(code)){
-											exists = true;
+									// Check if ITP has station
+									Boolean addrInITPAddrs = false;
+									Boolean toBeMapped = true;
+									for(String code: stationsCodes){
+										addrInITPAddrs = false;
+										toBeMapped = true;
+										if(mUserAddr.containsKey(code)){
+											addrInITPAddrs = true;
 										}
+										if(!addrInITPAddrs){
+											Boolean exists = false;
+											if(mAllAddr.containsKey(code)){
+												exists = true;
+											}
 
-										if(exists){
-											allMessages.add(code + ' not a station of this ITP; ');
-										} else {
-											allMessages.add(code + ' is not a valid station code; ');
+											if(exists){
+												allMessages.add(code + ' not a station of this ITP; ');
+											} else {
+												allMessages.add(code + ' is not a valid station code; ');
 
+											}
+											toBeMapped = false;
 										}
-										toBeMapped = false;
 									}
-								}
-								if(toBeMapped){
-									mapEmployeeStationCodes.put(companyCode, stationsCodes);
+									if(toBeMapped){
+										mapEmployeeStationCodes.put(companyCode, stationsCodes);
+									}
 								}
 							}
 						}
+
 					}
 
-					if(allMessages.size() > 0){
-						String aux = 'Failed: ';
+					if(!hasErrors && allMessages.size() > 0){
+						hasErrors=true;
 						for(String s: allMessages){
 							aux = aux + s;
 						}
+					}
+					if(hasErrors){
+
 						ImportResultsWrapper irw = new ImportResultsWrapper(
 							companyCode,
 							firstName + ' ' + lastName,
 							aux,
 							'Failed');
+
 						irw.firstName = firstName;
 						irw.lastName = lastName;
-
 						results.add(irw);
-					}
+					}else{
 
-					if(allMessages.isEmpty() && mapEmployeeInfoByEmployeeCode.containsKey(companyCode)){
 						Contact cont = new Contact();
 						Account_Contact_Role__c accContRole = new Account_Contact_Role__c();
 
@@ -849,7 +880,7 @@ public without sharing class PortalIftpUtils {
 						accContRole.Company_Code__c = companyCode;
 						accContRole.Service_Rendered__c = 'IFTP';
 						accContRole.Status__c = 'Active';
-						accContRole.RecordTypeId = RECTYPE_ITP;
+						accContRole.RecordTypeId = ACC_CONT_ROLE_RT_ITP;
 						accContRole.Account_Role__c = ui.accountRole;
 						accContRole.Contact_Role__c = 'ITP Trainee';
 						accContRole.Details__c = details;
@@ -872,12 +903,7 @@ public without sharing class PortalIftpUtils {
 						} else{
 							contactsToInsert.add(cont);
 							accContRoleToInsert.add(accContRole);
-							isInsert = true;
-							ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																		accContRole.Company_Code__c,
-																		cont.FirstName,
-																		cont.LastName);
-							IftpHistoryStartWorkingItp.add(ihrec);
+							isInsert = true;						
 						}
 
 						ImportResultsWrapper irw = new ImportResultsWrapper(
@@ -1395,7 +1421,6 @@ public without sharing class PortalIftpUtils {
 				Case transferCase = new Case();
 				transferCase.recordtypeID = ProcessRTId;
 				transferCase.AccountId = ui.accountId;
-				transferCase.OwnerId = ownerId;
 				transferCase.Subject = subject;
 				transferCase.Description = description;
 				transferCase.ContactId = ui.contactId;
@@ -1405,7 +1430,14 @@ public without sharing class PortalIftpUtils {
 				transferCase.Reason1__c  = 'IFTP OJT File Validation';
 				transferCase.Region__c = ui.accountRegion;
 				transferCase.BSPCountry__c = ui.accountCountry;
+				
 				insert transferCase;
+				transferCase.OwnerId = ownerId;
+
+				Database.DMLOptions dlo = new Database.DMLOptions();
+				dlo.EmailHeader.triggerUserEmail = true;
+				Database.update(transferCase, dlo);
+
 
 				Attachment att = new Attachment();
 				att.ParentId = transferCase.Id;
@@ -1615,11 +1647,7 @@ public without sharing class PortalIftpUtils {
 			throw new AuraHandledException('This action is not applicable to this role address because it has no Contact Role Certification.');
 		}
 
-		try{
-
-			roleAddress.Proficiency_level__c = 'No';
-			update roleAddress;
-
+		try{	
 			IFTP_History__c iftpH = new IFTP_History__c();
 			iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
 			iftpH.ITP_Name__c = itpAcc.name;
@@ -1634,6 +1662,7 @@ public without sharing class PortalIftpUtils {
 			iftpH.Logged_User__c = 'IATA INTERNAL USER' ;
 
 			insert iftpH;
+			delete roleAddress;
 
 		}catch(Exception ex){
 			System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - removeProficiency] Exception - ' + ex );
@@ -1647,13 +1676,10 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=false)
 	public static String getRedirectURL(){
-
-		String baseUrl = Site.getBaseSecureUrl();
-		String pathPrefix = Site.getPathPrefix().replace('/s', '');
+   
 		List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Absorb' LIMIT 1];
 		system.assert(!ami.isEmpty(), 'Connected app Absorb does not exist.');
-
-		return baseUrl + pathPrefix + ami[0].StartUrl;
+		return  ami[0].StartUrl;
 
 	}
 	private static String clearString(String s){

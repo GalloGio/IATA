@@ -1203,13 +1203,13 @@ export default class PortalIftpManageEmployees extends LightningElement {
     handleExportToCsv(){
         let columns = JSON.parse(JSON.stringify(this.columnsSearchEmployees));
         let data = JSON.parse(JSON.stringify(this.ITPEmployeesWithStationsInfo));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "EmployeesSearchResults.csv");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "EmployeesSearchResults");
     }
 
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columnsSearchEmployees));
         let data = JSON.parse(JSON.stringify(this.ITPEmployeesWithStationsInfo));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults");
     }
 
     /*******************************************************************************
