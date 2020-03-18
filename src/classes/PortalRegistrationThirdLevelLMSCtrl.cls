@@ -15,8 +15,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	}
 
 	@AuraEnabled
-    public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
-        User loggedUser = CSP_Utils.getLoggedUser();
+	public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
+		User loggedUser = CSP_Utils.getLoggedUser();
 
 		String RECTYPE_lms = '';
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
@@ -27,25 +27,25 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
 
-		
-        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId,
+
+		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId,
 															City_Name__c, City_Reference__c,
 															State_Name__c, State_Reference__c,
 															State_Reference__r.iso_code__c, PO_Box_Address__c,
-															Country__c, Country_Reference__c, 
+															Country__c, Country_Reference__c,
 															Street__c, Street2__c,
 															Postal_Code__c
 														FROM Training_Contact_Role_Details__c
-														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
+														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId
 														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
 														LIMIT 1];
 
-        if(con.isEmpty()){
-            return null;
-        }
+		if(con.isEmpty()){
+			return null;
+		}
 
-        return con[0];
-    }
+		return con[0];
+	}
 
 	@AuraEnabled
 	public static returnWrapper getParameters(String urlExtension){
@@ -61,7 +61,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
 		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace('@@##', '+') : '';
 		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace('@@##', '+') : '';
-				
+
 		result.userInfo = JSON.serialize(registrationParameters);
 
 
@@ -70,7 +70,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled
 	public static RegistrationResult registration(Contact con, List<String> extraValues){
-		
+
 		User loggedUser = CSP_Utils.getLoggedUser();
 
 		RegistrationResult result = new RegistrationResult();
@@ -88,10 +88,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			update con;
 
 			//Create Account Role if not existing
-			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
-											FROM Account_Role__c 
-											WHERE Account__c = :con.AccountId 
-											AND Account_Role_Name__c = 'Training' 
+			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
+											FROM Account_Role__c
+											WHERE Account__c = :con.AccountId
+											AND Account_Role_Name__c = 'Training'
 											AND Functional_Role__c =  'Training' LIMIT 1];
 			Account_Role__c ar = new Account_Role__c();
 
@@ -112,7 +112,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
-			//TO DO FM: Change query to use Functional Role
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 													FROM Account_Contact_Role__c
 													WHERE Contact__c in :contIds
@@ -157,9 +156,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			//Create Yardstick Contact Role Detail
-			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c 
-																FROM Training_Contact_Role_Details__c 
-																WHERE Account_Contact_Role__c = :acr.Id 
+			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+																FROM Training_Contact_Role_Details__c
+																WHERE Account_Contact_Role__c = :acr.Id
 																AND RecordtypeId = :RECTYPE_Trainee_YASContDet
 																LIMIT 1];
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
@@ -176,7 +175,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
-				ycd.Preferred_Course__c = regParam.sCourse ;
+				ycd.Preferred_Course__c = regParam.sCourse;
 			}
 
 			//Check State
@@ -198,7 +197,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}else{
 				ycd.Street__c = (regParam.sStreet != null) ? regParam.sStreet : '';
 			}
-			
+
 			ycd.Street2__c = (regParam.sStreet2 != null) ? regParam.sStreet2 : '';
 			ycd.Postal_Code__c = (regParam.sZipCode != null && regParam.sZipCode != '') ? regParam.sZipCode : '00000';
 			ycd.Country_Reference__c = (regParam.sCountryId != null && regParam.sCountryId != '') ? regParam.sCountryId : null;
@@ -212,16 +211,16 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				insert ycd;
 			}
 
-    		//Create Portal Application Right
-    		Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+			//Create Portal Application Right
+			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 
-           	//Create ToS Acceptance
+		   	//Create ToS Acceptance
 			createToSAcceptance(pa.id, con.Id);
 
-			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c 
-															FROM Portal_Application_Right__c 
-															WHERE Contact__c = :con.Id 
-															AND Portal_Application__c = :pa.id 
+			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c
+															FROM Portal_Application_Right__c
+															WHERE Contact__c = :con.Id
+															AND Portal_Application__c = :pa.id
 															LIMIT 1];
 			Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c();
 
@@ -240,13 +239,13 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c
 										FROM Contact WHERE Id =: con.Id];
 
-			String loggedUserId = UserInfo.getUserId(); 
+			String loggedUserId = UserInfo.getUserId();
 
 			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
 
 			assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
-			
-			
+
+
 
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
@@ -305,7 +304,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				extraValues.add(contactInfo.serviceid);
 				extraValues.add(contactInfo.street2);
 				extraValues.add(contactInfo.existingTrainingId);
-				
+
 				return registration(con, extraValues);
 			}
 
@@ -350,7 +349,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 					conToInactivate.Additional_Email__c = '';
 				}
 
@@ -388,11 +386,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.Id);
 				contIds.add(con.Id);
-	
+
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
-					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -408,7 +405,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							acrOld = acr;
 						}
 					}
-	
+
 					Set<String> acrIds = new Set<String>();
 					acrIds.add(acrNew.Id);
 					acrIds.add(acrOld.Id);
@@ -431,7 +428,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					//Check if Training_Contact_Role_Details__c exist on the contact to keep
 					if(ycdOld != null){
-	
+
 						List<Contact_Role_Certification__c> listCRC = [SELECT Id,Training_Contact_Role_Detail__c
 																	FROM Contact_Role_Certification__c
 																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
@@ -446,7 +443,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						List<Course_Assignment__c> listCA = [SELECT Id,Training_Contact_Role_Detail__c
 																	FROM Course_Assignment__c
 																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
-						
+
 						if(listCA.size() > 0){
 							for(Course_Assignment__c ca : listCA){
 								ca.Training_Contact_Role_Detail__c = ycdOld.Id;
@@ -457,22 +454,22 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						if(ycdNew != null && ycdNew.Id != null){
 							delete ycdNew;
 						}
-						
-						
+
+
 						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
 						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
 						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
 						ycdOld.OwnerId = loggedUser.Id;
 						update ycdOld;
 
-						
+
 					}else{
 						ycdNew.Account_Contact_Role__c = acrOld.Id;
 						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
 						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
 						ycdNew.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
 						ycdNew.OwnerId = loggedUser.Id;
-						update ycdNew; 
+						update ycdNew;
 					}
 
 					//Delete Account Contact Role from the registering Contact
@@ -482,8 +479,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					// TODO - fix below.. find where method id now...
-					// PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
+					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -524,11 +520,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.existingContactId);
 				contIds.add(con.Id);
-		
+
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role to set it up to the new Contact
-					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -544,7 +539,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							acrOld = acr;
 						}
 					}
-	
+
 					if(acrNew != null && acrOld != null){
 						acrOld.Contact__c = con.Id;
 						acrOld.Account_Role__c = acrNew.Account_Role__c;
@@ -558,7 +553,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					//Create Yardstick Contact Role Detail
 					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
 																	FROM Training_Contact_Role_Details__c
-																	WHERE Account_Contact_Role__c = :acrOld.Id 
+																	WHERE Account_Contact_Role__c = :acrOld.Id
 																	AND RecordtypeId = :RECTYPE_Trainee_YASContDet
 																	LIMIT 1];
 					Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
@@ -581,17 +576,15 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 					conToInactivate.Email = conToInactivate.Email + '.inactive';
 					if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-						// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 						conToInactivate.Additional_Email__c = '';
 					}
 
-					conToInactivate.status__c = 'Inactive';
+					// conToInactivate.status__c = 'Inactive';
 					update conToInactivate;
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					// TODO - fix below.. find where method id now...
-					// PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
+					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -715,7 +708,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			UserInformationWrapper wUserInfo = getDataToMail(params);
 			String encodedData = generateEncoded(wUserInfo);
 			if(encodedData != ''){
-				sURL = sURL + '&'+encodedData; 
+				sURL = sURL + '&'+encodedData;
 			}
 
 			String sEmailTemplateName = 'CSP_Verification_L3_Email_LMS_VF';
@@ -758,12 +751,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					String sEmail_Confirmation_Body = '';
 					if(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail)){
-						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS + 
-													Label.CSP_Verification_L3_Email_PE_2_LMS;						
+						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
+													Label.CSP_Verification_L3_Email_PE_2_LMS;
 					}else{
-						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS + 
-													Label.CSP_Verification_L3_Email_UE_2_LMS + 
-													Label.CSP_Verification_L3_Email_UE_3_LMS;						
+						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
+													Label.CSP_Verification_L3_Email_UE_2_LMS +
+													Label.CSP_Verification_L3_Email_UE_3_LMS;
 					}
 
 
@@ -802,7 +795,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					plainBody = plainBody.replace('[URL]',sURL);
 					plainBody = plainBody.replace('[Email]',wUserInfo.Email);
 					plainBody = plainBody.replace('[ExistingEmail]',wUserInfo.existingContactEmail);
-					
+
 				}else{
 					plainBody = plainBody.replace('[CustomerName]', contactName).replace('[URL]',sURL);
 				}
@@ -832,6 +825,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled(cacheable=false)
 	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
+
 		String sRes = '';
 		String fullName = firstname + lastname;
 		String fullNameReverse = lastname + firstname;
@@ -842,14 +836,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		Integer roundThreshold = Math.round(threshold);
 
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-		
+
 		List<Training_Contact_Role_Details__c> existingYadLst = new List<Training_Contact_Role_Details__c>(
-			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname, 
-					Account_Contact_Role__r.contact__r.lastname 
+			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname,
+					Account_Contact_Role__r.contact__r.lastname
 				FROM Training_Contact_Role_Details__c
 				WHERE UserId__c = :userId
 				LIMIT 1]);
-		
+
 		if(!existingYadLst.isEmpty() && existingYadLst.size() > 0){
 
 			Training_Contact_Role_Details__c existingTCRD = existingYadLst[0];
@@ -861,12 +855,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
 				existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
-				//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences 
+				//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences
 				Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
 				Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
 
 				if(compareResult < 0 && compareResultReverse < 0){
-					sRes = 'not_matching';	
+					sRes = 'not_matching';
 				}else{
 
 					//check if have active user
@@ -876,7 +870,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					if(!existingUserLst.isEmpty()){
 						sRes = 'existing_user';
 					}else{
-						sRes = existingTCRD.Account_Contact_Role__r.contact__c;	
+						sRes = existingTCRD.Account_Contact_Role__r.contact__c;
 					}
 				}
 			}else{
@@ -890,7 +884,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled(cacheable=false)
 	public static String validateFullName(String existingContactId, String firstname, String lastname){
-		
+
 		String sRes = '';
 		String fullName = firstname + lastname;
 		String fullNameReverse = lastname + firstname;
@@ -901,9 +895,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		Integer roundThreshold = Math.round(threshold);
 
 		List<contact> existingContactLst = new List<contact>(
-			[SELECT Id, FirstName, LastName 
+			[SELECT Id, FirstName, LastName
 				FROM contact
-				WHERE Id = :existingContactId 
+				WHERE Id = :existingContactId
 				LIMIT 1]);
 
 		if(!existingContactLst.isEmpty()){
@@ -913,12 +907,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
 			existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
-			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences 
+			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences
 			Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
 			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
 
 			if(compareResult < 0 && compareResultReverse < 0){
-				sRes = 'not_matching';	
+				sRes = 'not_matching';
 			}else{
 				sRes = 'existing_user';
 			}
@@ -956,39 +950,39 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	}
 
 	@AuraEnabled
-    public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
-       
-	    if(serviceId == 'yas'){
+	public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
+
+		if(serviceId == 'yas'){
 			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 			serviceId = pa.Id;
 		}
-		
+
 		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =:serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
 		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
-		
-        //check if the tos has already been accepted
+
+		//check if the tos has already been accepted
 		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: contactId];
 
-        if(tosAccept.isEmpty()){
-            return false;
-        }
+		if(tosAccept.isEmpty()){
+			return false;
+		}
 
-        return tosAccept[0].Is_Accepted__c;
-    }
+		return tosAccept[0].Is_Accepted__c;
+	}
 
 	@future
-    private static void assignPermissionSet(Id yasId, Id userId){
-		
-		List<PermissionSetAssignment> listPSA = [SELECT Id FROM PermissionSetAssignment 
+	private static void assignPermissionSet(Id yasId, Id userId){
+
+		List<PermissionSetAssignment> listPSA = [SELECT Id FROM PermissionSetAssignment
 											WHERE PermissionSetId = :yasId
-											AND AssigneeId = :userId]; 
-			
+											AND AssigneeId = :userId];
+
 		if(listPSA.size() <= 0){
 			PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = yasId, AssigneeId = userId);
-        	insert psa;	
+			insert psa;
 		}
-    }
-	
+	}
+
 	public class UserInformationWrapper{
 		public string Email{get;set;}
 		public string Additional_Email{get;set;}
@@ -1069,7 +1063,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			this.sStreet2 = extraValues[12];
 			this.existingTrainingId = extraValues[13];
 		}
- 	
+
 	}
 
 }
