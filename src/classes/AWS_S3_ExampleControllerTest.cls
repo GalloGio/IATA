@@ -9,7 +9,7 @@ private class AWS_S3_ExampleControllerTest {
 
 	}
 
-	
+
 	@isTest
 	private static void test1() {
 
@@ -178,5 +178,5 @@ private class AWS_S3_ExampleControllerTest {
 		} catch (Exception ex) {
 		}
 	}
-	
+
 }

@@ -1,44 +1,44 @@
 @isTest
 private class FAResultsCtrlTest {
 
-    @isTest
-    static void runTest() {
+	@isTest
+	static void runTest() {
 
-        Case cse;
-        List<ENZ__FTPAttachment__c> testDocs;
-
-
-        ID IFAPcaseRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
-        Integer a = 1;
-        String results = 'results';
+		Case cse;
+		List<ENZ__FTPAttachment__c> testDocs;
 
 
-        Case case1 = new Case();
+		ID IFAPcaseRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+		Integer a = 1;
+		String results = 'results';
 
-        case1.CaseArea__c = 'TTBS';
-        //case1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
-        case1.Origin = 'Other';
-        case1.SuppliedEmail = 'paia@iata.org';
-        case1.SuppliedPhone = '12456987456';
-        case1.Type = 'TFC update';
-        case1.Description = 'Testing...';
-        case1.Priority = '3';
-        case1.Subject = 'TTBS Test Case';
-        insert case1;
 
-        Account t = new Account();
+		Case case1 = new Case();
 
-        ApexPages.StandardController tempCn  = new ApexPages.StandardController(t);
+		case1.CaseArea__c = 'TTBS';
+		//case1.Tax_Effective_Date__c = Date.valueOf('2011-08-29');
+		case1.Origin = 'Other';
+		case1.SuppliedEmail = 'paia@iata.org';
+		case1.SuppliedPhone = '12456987456';
+		case1.Type = 'TFC update';
+		case1.Description = 'Testing...';
+		case1.Priority = '3';
+		case1.Subject = 'TTBS Test Case';
+		insert case1;
 
-        ApexPages.StandardController controller   = new ApexPages.StandardController(case1);
+		Account t = new Account();
 
-        FAResultsCtrl fa = new FAResultsCtrl(controller) ;
+		ApexPages.StandardController tempCn  = new ApexPages.StandardController(t);
 
-        cse = fa.getCse();
-        testDocs = fa.getDocs();
+		ApexPages.StandardController controller   = new ApexPages.StandardController(case1);
 
-        fa.refreshDocs();
+		FAResultsCtrl fa = new FAResultsCtrl(controller) ;
 
-    }
+		cse = fa.getCse();
+		testDocs = fa.getDocs();
+
+		fa.refreshDocs();
+
+	}
 
 }

@@ -1,10 +1,10 @@
 /**
 
 		Project: eCommerce Enhancements
-	       File: IEC_Functionality_Test.cls
+				 File: IEC_Functionality_Test.cls
 	Description: Test class for Functionality Management through Custom Setting.
-	     Author: blue-infinity sa
-	    History: aosantos, 2017-07-04, Initial Release.
+			 Author: blue-infinity sa
+			History: aosantos, 2017-07-04, Initial Release.
 
 
 */

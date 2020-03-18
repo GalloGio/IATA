@@ -5,4 +5,7 @@
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
+    <queueSobject>
+        <sobjectType>IATA_Process_Orchestrator__c</sobjectType>
+    </queueSobject>
 </Queue>

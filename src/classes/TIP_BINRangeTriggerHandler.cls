@@ -1,5 +1,5 @@
 public class TIP_BINRangeTriggerHandler {
-	
+
 	public List<TIP_BIN_Range__c> triggerNew = (List<TIP_BIN_Range__c>) Trigger.new;
 	public List<TIP_BIN_Range__c> triggerOld = (List<TIP_BIN_Range__c>) Trigger.old;
 
@@ -8,35 +8,35 @@ public class TIP_BINRangeTriggerHandler {
 
 	class BINRangeWrapper implements Comparable {
 
-    	public TIP_BIN_Range__c biny;
-    
-    	public BINRangeWrapper(TIP_BIN_Range__c bin) {
-        	biny = bin;
-    	}
-    
-    	// Compare bin ranges based on the range and date.
-    	public Integer compareTo(Object compareTo) {
-        	// Cast argument to BinRangeWrapper
-        	BINRangeWrapper compareToBiny = (BINRangeWrapper)compareTo;
-        
-        	// The return value of 0 indicates that both elements are equal.
-        	Integer returnValue = 0;
-        	if (biny.TIP_Range_Start__c > compareToBiny.biny.TIP_Range_Start__c) {
-         	   // Set return value to a positive value.
-         	   returnValue = 1;
-        	} else if (biny.TIP_Range_Start__c < compareToBiny.biny.TIP_Range_Start__c) {
-           		// Set return value to a negative value.
-            	returnValue = -1;
-        	} else if (biny.TIP_Effective_From_Date__c < compareToBiny.biny.TIP_Effective_From_Date__c) {
-        		// Set return value to a negative value.
-        		returnValue = -1;
-        	} else if (biny.TIP_Effective_From_Date__c > compareToBiny.biny.TIP_Effective_From_Date__c) {
-        		// Set return value to a positive value.
-        		return 1;
-        	}
-        
-        	return returnValue;       
-    	}
+		public TIP_BIN_Range__c biny;
+
+		public BINRangeWrapper(TIP_BIN_Range__c bin) {
+			biny = bin;
+		}
+
+		// Compare bin ranges based on the range and date.
+		public Integer compareTo(Object compareTo) {
+			// Cast argument to BinRangeWrapper
+			BINRangeWrapper compareToBiny = (BINRangeWrapper)compareTo;
+
+			// The return value of 0 indicates that both elements are equal.
+			Integer returnValue = 0;
+			if (biny.TIP_Range_Start__c > compareToBiny.biny.TIP_Range_Start__c) {
+		 	   // Set return value to a positive value.
+		 	   returnValue = 1;
+			} else if (biny.TIP_Range_Start__c < compareToBiny.biny.TIP_Range_Start__c) {
+		   		// Set return value to a negative value.
+				returnValue = -1;
+			} else if (biny.TIP_Effective_From_Date__c < compareToBiny.biny.TIP_Effective_From_Date__c) {
+				// Set return value to a negative value.
+				returnValue = -1;
+			} else if (biny.TIP_Effective_From_Date__c > compareToBiny.biny.TIP_Effective_From_Date__c) {
+				// Set return value to a positive value.
+				return 1;
+			}
+
+			return returnValue;
+		}
 	}
 
 	public void onAfterInsert(){
@@ -57,11 +57,11 @@ public class TIP_BINRangeTriggerHandler {
 			notOverlappingRanges = triggerNew;
 		}
 
-		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Payment_Provider_Product__c,TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
-													FROM TIP_BIN_Range__c 
+		List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name, TIP_Range_Start__c, TIP_Payment_Provider_Product__c,TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c
+													FROM TIP_BIN_Range__c
 													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeid =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeid =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID)
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
-		
+
 		checkOverlapsWithExisting(notOverlappingRanges, existingBinRanges);
 	}
 
@@ -69,9 +69,9 @@ public class TIP_BINRangeTriggerHandler {
 		List<TIP_BIN_Range__c> updatedBins = new List<TIP_BIN_Range__c>();
 
 		for (TIP_BIN_Range__c b: triggerNew) {
-			if (b.TIP_Range_Start__c != oldMap.get(b.Id).TIP_Range_Start__c 
-				|| b.TIP_Range_End__c != oldMap.get(b.Id).TIP_Range_End__c 
-				|| b.TIP_Effective_From_Date__c != oldMap.get(b.Id).TIP_Effective_From_Date__c 
+			if (b.TIP_Range_Start__c != oldMap.get(b.Id).TIP_Range_Start__c
+				|| b.TIP_Range_End__c != oldMap.get(b.Id).TIP_Range_End__c
+				|| b.TIP_Effective_From_Date__c != oldMap.get(b.Id).TIP_Effective_From_Date__c
 				|| b.TIP_Effective_To_Date__c != oldMap.get(b.Id).TIP_Effective_To_Date__c) {
 				updatedBins.add(b);
 			}
@@ -92,8 +92,8 @@ public class TIP_BINRangeTriggerHandler {
 				updatedIds.add(b.Id);
 			}
 
-			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
-													FROM TIP_BIN_Range__c 
+			List<TIP_BIN_Range__c> existingBinRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c
+													FROM TIP_BIN_Range__c
 													WHERE (TIP_Status__c = 'ACTIVE' OR TIP_Status__c = 'IN_PROGRESS') AND (RecordTypeId =:TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID OR RecordTypeId =:TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID) AND Id NOT IN :updatedIds
 													ORDER BY TIP_Range_Start__c, TIP_Effective_From_Date__c];
 
@@ -168,11 +168,11 @@ public class TIP_BINRangeTriggerHandler {
 				if (i != j) {
 					Integer overlapCode = getOverlap(sortedBinRanges[i].biny, sortedBinRanges[j].biny);
 					if (overlapCode == 1) {
-						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c) 
+						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c)
 							sortedBinRanges[i].biny.addError('The following overlapping BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (overlapCode == 2) {
-						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c) 
+						if (sortedBinRanges[i].biny.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && sortedBinRanges[i].biny.TIP_Payment_Provider_Product__c == sortedBinRanges[j].biny.TIP_Payment_Provider_Product__c)
 							sortedBinRanges[i].biny.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + sortedBinRanges[j].biny.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ sortedBinRanges[j].biny.Name +'</a>', false);
 						break;
 					} else if (j == sortedBinRanges.size()-1 && overlapCode == 0) {
@@ -182,27 +182,27 @@ public class TIP_BINRangeTriggerHandler {
 			}
 		}
 
-		return notOverlappingRanges;		
+		return notOverlappingRanges;
 	}
 
 	private void checkOverlapsWithExisting(List<TIP_BIN_Range__c> newBinsToCheck, List<TIP_BIN_Range__c> existingBinsToCheck) {
 		for (TIP_BIN_Range__c bin: newBinsToCheck) {
-			
+
 			for (TIP_BIN_Range__c existingBin: existingBinsToCheck) {
 				if (bin.Id != existingBin.Id) {
 					Integer overlapCode = getOverlap(bin, existingBin);
 					if (overlapCode == 1) {
-						
+
 						if(bin.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && bin.TIP_Payment_Provider_Product__c == existingBin.TIP_Payment_Provider_Product__c) bin.addError('The following overlapping BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
-						
+
 						break;
 					} else if (overlapCode == 2) {
 						if(bin.recordtypeid != TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID && bin.TIP_Payment_Provider_Product__c == existingBin.TIP_Payment_Provider_Product__c) bin.addError('The following overlapping, open-ended BIN Range has been detected: <a href=\'/' + existingBin.Id + '?pv0={!TIP_BIN_Range__c.Id}\'>'+ existingBin.Name +'</a>', false);
-						
+
 						break;
 					}
 				}
-				
+
 			}
 		}
 	}
@@ -211,26 +211,26 @@ public class TIP_BINRangeTriggerHandler {
 		//Helper to determine if the two bin ranges overlap
 		//0 - No overlap
 		//1 - Overlap on Ranges and Dates
-		//2 - Overlap on Ranges and open-ended Dates 
+		//2 - Overlap on Ranges and open-ended Dates
 		if (bin1.TIP_Range_Start__c <= bin2.TIP_Range_End__c && bin1.TIP_Range_End__c >= bin2.TIP_Range_Start__c) {
-			if ((bin1.TIP_Effective_To_Date__c == null && bin2.TIP_Effective_To_Date__c == null) 
+			if ((bin1.TIP_Effective_To_Date__c == null && bin2.TIP_Effective_To_Date__c == null)
 				|| (bin1.TIP_Effective_To_Date__c == null && bin2.TIP_Effective_To_Date__c >= bin1.TIP_Effective_From_Date__c)
 				|| (bin2.TIP_Effective_To_Date__c == null && bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c)) {
 				return 2;
 			} else if (bin1.TIP_Effective_From_Date__c <= bin2.TIP_Effective_To_Date__c && bin1.TIP_Effective_To_Date__c >= bin2.TIP_Effective_From_Date__c) {
 				return 1;
-			}			
+			}
 		}
 		return 0;
 	}
 
 	private void generateBinConflits(){
-		List<BIN_Range_Conflict__c> binRangeConflits = new List<BIN_Range_Conflict__c>(); 
-		
+		List<BIN_Range_Conflict__c> binRangeConflits = new List<BIN_Range_Conflict__c>();
+
 		delete [SELECT ID FROM BIN_Range_Conflict__c where BIN_Range__c IN :newMap.keySet() OR BIN_Range_Conflict__c IN :newMap.keySet()];
 
-		List<TIP_BIN_Range__c> binRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c 
-											FROM TIP_BIN_RANGE__C 
+		List<TIP_BIN_Range__c> binRanges = [SELECT Id, Name,TIP_Payment_Provider_Product__c, TIP_Range_Start__c, TIP_Range_End__c, TIP_Effective_From_Date__c, TIP_Effective_To_Date__c
+											FROM TIP_BIN_RANGE__C
 											WHERE TIP_Status__c <> :TIP_Utils.BIN_RANGE_STATUS_DRAFT
 												AND ID NOT IN :newMap.keySet()];
 
@@ -260,7 +260,7 @@ public class TIP_BINRangeTriggerHandler {
 	private List<BIN_Range_Conflict__c> matchBinRangeConflictWithTwin(List<BIN_Range_Conflict__c> binRangeConflits){
 		for(Integer i = 0; i <binRangeConflits.size(); i++){
 			for(Integer j = i+1; j <binRangeConflits.size(); j++){
-				if(binRangeConflits[i].BIN_Range__c == binRangeConflits[j].BIN_Range_Conflict__c && 
+				if(binRangeConflits[i].BIN_Range__c == binRangeConflits[j].BIN_Range_Conflict__c &&
 					binRangeConflits[i].BIN_Range_Conflict__c == binRangeConflits[j].BIN_Range__c){
 
 					binRangeConflits[i].Twin_Conflict__c = binRangeConflits[j].id;

@@ -103,16 +103,27 @@
                 } else {
                     $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide');
                 }
-
+				
                 if(params.createNewInvitation){
-                    $A.util.addClass(cmp.find("emailExists"), 'slds-hide');
+                    $A.util.addClass(cmp.find("emailExists"), 'slds-hide'); 
+                    $A.util.addClass(cmp.find("contactIsAlreadyInvited"), 'slds-hide');
                     $A.util.removeClass(cmp.find("detail"), 'slds-hide');
                     cmp.set('v.sendNotification', false);
-                } else {
-                    $A.util.removeClass(cmp.find("emailExists"), 'slds-hide');
+                } else {                    
+                        $A.util.removeClass(cmp.find("emailExists"), 'slds-hide');
+                    	$A.util.addClass(cmp.find("contactIsAlreadyInvited"), 'slds-hide');
+                        $A.util.addClass(cmp.find("detail"), 'slds-hide');
+                        cmp.set('v.sendNotification', true);                 
+                    	cmp.set('v.showBack', true);
+                }
+                
+                if(params.contactIsAlreadyInvited){
+                    $A.util.addClass(cmp.find("emailExists"), 'slds-hide');
+                    $A.util.removeClass(cmp.find("contactIsAlreadyInvited"), 'slds-hide');
                     $A.util.addClass(cmp.find("detail"), 'slds-hide');
-                    cmp.set('v.sendNotification', true);
-                    cmp.set('v.showBack', true);
+                    let emailField = cmp.find('email');
+                    emailField.set('v.disabled', false);
+                   
                 }
 
                 helper.toggleSpinner(cmp);

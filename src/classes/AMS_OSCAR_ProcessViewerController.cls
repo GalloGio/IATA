@@ -433,7 +433,7 @@ public class AMS_OSCAR_ProcessViewerController {
 	/* Commented as per NEWGEN-3301
 	@TestVisible private boolean canBeDisplayed(String fieldName, String oscarProcess, String fieldValue){
 
-	   // if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
+		 // if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
 			return true;
 
 		if(!AMS_Utils.oscarNewGenProcesses.contains(oscarProcess))
@@ -486,7 +486,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		if(!cases.isEmpty())
 			return cases.get(0);
 
-	   return toReturn;
+		 return toReturn;
 
 	}
 
@@ -533,7 +533,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		if(!oscars.isEmpty())
 			return oscars.get(0);
 
-	   return toReturn;
+		 return toReturn;
 
 	}
 

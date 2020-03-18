@@ -2,13 +2,13 @@
  * A Sync batch that update information in Zuora if there is any changes made on either the Contact or IEC Address objects.
  * The batch takes a set of either Location Ids that has a link to both contact/address information required for the sync or Address IDs to pull all locations that has a link to that address
  *
- * Test Coverage: Provided in the class Location_Dom_Test 
+ * Test Coverage: Provided in the class Location_Dom_Test
  **/
 
 global class ContactAddressZSync_Batch implements Database.Batchable<sObject>, Database.AllowsCallouts {
 	// List of either IECAddress__c IDs or Location__c IDs
 	Set<Id> setSourceId;
-	
+
 	// Can either be a "Location" or "IECAddress" which dictates which filter to use in the query to initialize the batch
 	String sSource;
 
@@ -19,7 +19,7 @@ global class ContactAddressZSync_Batch implements Database.Batchable<sObject>, D
 		setSourceId = SourceIds;
 		sSource = Source;
 	}
-	
+
 	global Database.QueryLocator start(Database.BatchableContext BC){
 		return Database.getQueryLocator(
 			' SELECT Id, Contact__c, Account__c, Address__c, Type__c, Account_Contact_ID__c' +
@@ -34,10 +34,10 @@ global class ContactAddressZSync_Batch implements Database.Batchable<sObject>, D
 		);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<Location__c> scope) {
-   		//update information in Zuora if there is any changes made on either the Contact or IEC Address objects.
-   		ContactAddressZSync.contactAddressZuoraSync(scope, setSourceId, sSource);
+	 	global void execute(Database.BatchableContext BC, List<Location__c> scope) {
+	 		//update information in Zuora if there is any changes made on either the Contact or IEC Address objects.
+	 		ContactAddressZSync.contactAddressZuoraSync(scope, setSourceId, sSource);
 	}
-	
-	global void finish(Database.BatchableContext BC) {}	
+
+	global void finish(Database.BatchableContext BC) {}
 }

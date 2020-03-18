@@ -263,6 +263,10 @@
                 <behavior>Edit</behavior>
                 <field>GDS__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Agent__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

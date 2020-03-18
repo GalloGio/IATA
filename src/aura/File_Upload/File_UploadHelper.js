@@ -701,13 +701,7 @@
                     let uploadFile = response.getReturnValue();
 
                     if(! $A.util.isEmpty(uploadFile)) {
-                       let reader = new FileReader();
-                       reader.readAsArrayBuffer(file);
-                       reader.onload = function() {
-                           let arrayBuffer = reader.result;
-                           remoteFunctionPut(component, event, file, arrayBuffer, uploadFile);
-                       };
-
+                           remoteFunctionPut(component, event, file, uploadFile);
                     }else{
                         console.log('function uploadFile returned empty uploadFile');
                         let errors = component.get('v.uploadedErrors');
@@ -735,7 +729,7 @@
         }
 
 
-        function remoteFunctionPut(component, event, file, fileBody, uploadFile) {
+        function remoteFunctionPut(component, event, file, uploadFile) {
             let amazonFilePath = uploadFile.endpoint + uploadFile.bucketName + '/' + uploadFile.fullFileNameEncoded;
             let successes = component.get('v.successfullyUploaded');
             let errors = component.get('v.uploadedErrors');
@@ -788,7 +782,7 @@
             xhr.setRequestHeader("x-amz-meta-user", uploadFile.userId);
             xhr.setRequestHeader("x-amz-meta-actor", uploadFile.actorId);
             xhr.setRequestHeader("x-amz-meta-outsideperiod", uploadFile.isOnTime);
-            xhr.send(fileBody);
+            xhr.send(file);
 
         }
 

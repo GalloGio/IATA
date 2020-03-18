@@ -31,7 +31,7 @@ public class ISSP_ANG_CodeSearch {
 		Ams_Utils.ACC_S0_TERMINATED,
 		Ams_Utils.ACC_S5_CASHNOCOMMISSION,
 		Ams_Utils.ACC_S6_CASHWITHCOMMISSION
-    };
+		};
 
 	public ISSP_ANG_CodeSearch() {
 		this.riskStatusFilter = 'Active';
@@ -64,9 +64,9 @@ public class ISSP_ANG_CodeSearch {
 			// Get the seach string because it can have zeros on the left.
 			this.iataCodeStr = Apexpages.currentPage().getParameters().get('searchString');
 
-            if(this.iataCodeStr == null) {
-               this.iataCodeStr = '';
-            }
+						if(this.iataCodeStr == null) {
+							 this.iataCodeStr = '';
+						}
 		} catch(Exception e) {
 			this.iataCodeStr = '';
 		}
@@ -79,7 +79,6 @@ public class ISSP_ANG_CodeSearch {
 			this.activeError = true;
 			this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_INVALID;
 		} else {
-
 			if(len == 7 || len == 10) {
 				iataCodeStr += '_';
 			}
@@ -103,12 +102,13 @@ public class ISSP_ANG_CodeSearch {
 								ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 								Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
 								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c,
-								Field_Head_Office__c
-						   	FROM Account
-						  	WHERE (Sector__c = :sector AND Status__c IN :statusSet
-						    	AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-						    	AND IATACode__c LIKE :iataCodeStr)
-						    	OR Id = :this.airlineId]) {
+								Field_Head_Office__c, Category__c
+							FROM Account
+							WHERE (Sector__c = :sector
+								AND Status__c IN :statusSet
+								AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
+								AND IATACode__c LIKE :iataCodeStr)
+								OR Id = :this.airlineId]) {
 				if (a.Id == this.airlineId) {
 					airline = a;
 				} else {
@@ -116,12 +116,12 @@ public class ISSP_ANG_CodeSearch {
 				}
 			}
 
-			if(!agencies.isEmpty()) { 
+			if(!agencies.isEmpty()) {
 				Account reqAgency = agencies[0];
 
-				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c 
+				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c
 																				FROM IATA_Code_Search_Special_Countries__mdt
-                               													WHERE DeveloperName =:reqAgency.IATA_ISO_Country__r.Name LIMIT 1];
+															 													WHERE DeveloperName =:reqAgency.IATA_ISO_Country__r.Name LIMIT 1];
 
 				if(specialCountries.size() == 1){
 					isSpecialIATACodeSearchCountry = true;
@@ -134,9 +134,8 @@ public class ISSP_ANG_CodeSearch {
 					rhcAgencyInfo = rhcInfos[0];
 				}
 
-				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA) {
-
-					if(reqAgency.Location_Type__c == Ams_Utils.AE) {
+				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
+					if(reqAgency.Location_Type__c == Ams_Utils.AE || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
 						if(reqAgency.Location_Type__c == Ams_Utils.BR) {
@@ -151,15 +150,15 @@ public class ISSP_ANG_CodeSearch {
 					String aux = Label.ISSP_ANG_IATA_CODE_SEARCH_HE.replace('%IATA_CODE%', reqAgency.IATACode__c).replace('%CHILD_LOCATION%', auxReplacement);
 
 					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
-												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c,
-												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.BSP_Country_free_text__c, 
-												   ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c
+													 ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Category__c,
+													 Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
+													 ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c
 											FROM Account
-											WHERE Id = :reqAgency.Top_Parent__c]; 
+											WHERE Id = :reqAgency.Top_Parent__c];
 
 					String auxHoHe = Label.ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE;
 
-					if(parentAgency.Location_Type__c == Ams_Utils.HE) {
+					if((parentAgency.Location_Type__c == Ams_Utils.HE && parentAgency.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) || parentAgency.Location_Type__c == Ams_Utils.GE) {
 						auxReplacement = Label.ISSP_AMS_NoC_Head_Entity;
 						this.ho_he = auxHoHe.replace('HO / HE', Label.ISSP_AMS_NoC_Head_Entity);
 					} else {
@@ -177,9 +176,9 @@ public class ISSP_ANG_CodeSearch {
 
 				if (airline.Field_Head_Office__c == 'Branch') {
 					Account parentAirline = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
-												   ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c,
-												   Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, 
-												   ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c
+													 ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c,
+													 Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c,
+													 ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c
 											FROM Account
 											WHERE Id = :airline.Top_Parent__c];
 
@@ -197,8 +196,8 @@ public class ISSP_ANG_CodeSearch {
 				Boolean countryFound = false;
 
 				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c
-													   FROM Services_Rendered__c
-													   WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
+														 FROM Services_Rendered__c
+														 WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
 														AND Services_Rendered_Status__c = 'Active'
 													 	AND Services_Rendered_By__c = :airline.Id]) {
 					if (service.ISO_Country_Code__c == this.agency.IATA_ISO_Country__r.BSP_Country_free_text__c) {
@@ -208,15 +207,14 @@ public class ISSP_ANG_CodeSearch {
 				}
 
 				if (countryFound) {
-
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
 						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
-					} 
+					}
 
 					if (this.agency.Active_Guarantees__c != 0) {
 						this.financialSecurityExists = true;
-					} 
-						
+					}
+
 					riskStatus = this.agency.ANG_RiskStatus__c;
 
 					this.accreditationModel = AMS_Utils.officialAccreditationTypeMap.get(this.agency.ANG_Accreditation_Model__c);
@@ -240,23 +238,20 @@ public class ISSP_ANG_CodeSearch {
 					Datetime output = agency.Accreditation_date__c;
 					AccreditationDateFormated = output.format('dd-MMM-YYYY');
 				}
-				
 			} else {
 				this.activeError = true;
 				this.errorMessage = Label.ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND.replace('%TYPE%', auxReplacement);
 			}
 		}
 		return null;
-    }
+		}
 
-    public PageReference refreshRiskEventsTable() {
+		public PageReference refreshRiskEventsTable() {
+				riskEventsList = null;
+				return null;
+		}
 
-        riskEventsList = null;
-
-        return null;
-    }
-
-    public List<RiskEvent> getRiskEventsList() {
+		public List<RiskEvent> getRiskEventsList() {
 
 		riskEventsList = new List<RiskEvent>();
 
@@ -269,27 +264,30 @@ public class ISSP_ANG_CodeSearch {
 								'ANG_CaseId__r.CaseNumber,' +
 								'ANG_Expired__c,' +
 								'ANG_CaseId__r.Visible_on_ISS_Portal__c' +
-						  ' From ANG_Agency_Risk_Event__c' +
+							' From ANG_Agency_Risk_Event__c' +
 						 ' Where ANG_HE_AccountId__c = \'' + this.agency.id + '\'';
 
 		this.isAll = false;
 
 		if(this.riskStatusFilter == 'Active') {
-			soqlStr += ' And ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
+			soqlStr += 'AND ANG_Event_Status__c = \'Active\' AND ANG_Expired__c = false';
 		} else if(this.riskStatusFilter == 'Expired') {
-			soqlStr += ' And ANG_Expired__c = true';
+			soqlStr += 'AND ANG_Expired__c = true';
 		} else if(this.riskStatusFilter == 'Inactive') {
-			soqlStr += ' And ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
+			soqlStr += 'AND ANG_Event_Status__c in(\'Inactive_Withdrawn\', \'Inactive_Revoked\') AND ANG_Expired__c = false';
 		} else if(this.riskStatusFilter == 'All') {
 			this.isAll = true;
-			soqlStr += ' And ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
+			soqlStr += 'AND ANG_Event_Status__c  not in(\'Inactive_CHO\', \'Inactive_TER\',\'Inactive_Migrated\')';
 		}
+
+		riskEventsList = new List<RiskEvent>();
 
 		for(ANG_Agency_Risk_Event__c event : Database.query(soqlStr)) {
 			riskEventsList.add(new RiskEvent(event));
 		}
+
 		return riskEventsList;
-    }
+		}
 
 	public class RiskEvent {
 		public String description {get; set;}

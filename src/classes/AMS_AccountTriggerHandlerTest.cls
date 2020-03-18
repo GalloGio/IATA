@@ -34,7 +34,7 @@ private class AMS_AccountTriggerHandlerTest {
 			ParentId = acc1.Id,
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			REASON_FOR_CREATION__C = 'Created by customer'
-	   	);
+		 	);
 
 		Account acc4 = new Account(
 			Name = 'BR Account 4',

@@ -1,22 +1,22 @@
 /*
-    Class Name: ISSP_AMC_Apply_New_Code_Test
-    Related Classes: ISSP_AMC_Apply_New_Code
+	Class Name: ISSP_AMC_Apply_New_Code_Test
+	Related Classes: ISSP_AMC_Apply_New_Code
 
-    Copyright @Right IT Services
+	Copyright @Right IT Services
 
-    Purpose: Test class for ISSP_AMC_Apply_New_Code
+	Purpose: Test class for ISSP_AMC_Apply_New_Code
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    06-02-2018              INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         DAVID BENTO & TIAGO MENDES    06-02-2018              INITIAL DEVELOPMENT
 */
 @isTest
 public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a new participation form for the Baggage Tag Range Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testBaggageNoParticipation(){
 
@@ -29,7 +29,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
@@ -42,9 +42,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a used participation form for the Baggage Tag Range Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testBaggage(){
 
@@ -57,12 +57,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Baggage_Tag_Range'));
 					ISSP_AMC_Baggage_Tag_Range controller = new ISSP_AMC_Baggage_Tag_Range();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 					controller.selectedOperationType  = 'Baggage Tag Range Test';
 
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
@@ -76,9 +76,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Tries to request a Baggage Tag Range Code with a case already submitted.
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testBaggageCaseSubmitted(){
 
@@ -91,12 +91,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Baggage_Tag_Range'));
 					ISSP_AMC_Baggage_Tag_Range controller = new ISSP_AMC_Baggage_Tag_Range();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 					controller.selectedOperationType  = 'Baggage Tag Range Test';
 					Case parCase = [SELECT Status From Case WHERE Id= :controller.participation.case__c];
 					parCase.status = 'Submitted';
@@ -113,9 +113,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a new participation form for the Location Identifier Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testLocationNoParticipation(){
 
@@ -128,7 +128,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
@@ -141,9 +141,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a used participation form for the Location Identifier Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testLocation(){
 
@@ -156,12 +156,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Location_Identifier'));
 					ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 
 
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
@@ -175,9 +175,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Tries to request a Location Identifier Code with a case already submitted.
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testLocationCaseSubmitted(){
 
@@ -187,15 +187,15 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 
 
-		
+
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Location_Identifier'));
 					ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 					Case parCase = [SELECT Status From Case WHERE Id= :controller.participation.case__c];
 					parCase.status = 'Submitted';
 					upsert parCase;
@@ -207,14 +207,14 @@ public class ISSP_AMC_Apply_New_Code_Test {
 					Test.StopTest();
 				}
 			}
-		
+
 	}
 
 	/*
 		Purpose: Requests a new participation form for the Accouting or Prefix Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testAccountingPrefixNoParticipation(){
 
@@ -227,7 +227,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
@@ -240,9 +240,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a used participation form for the Accouting or Prefix Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testAccountingPrefix(){
 
@@ -255,7 +255,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Accounting_Or_Prefix_Code'));
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
@@ -274,9 +274,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Tries to request a Accounting or Prefix Code with a case already submitted.
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testAccountingPrefixCaseSubmitted(){
 
@@ -289,12 +289,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Accounting_Or_Prefix_Code'));
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 					Case parCase = [SELECT Status From Case WHERE Id= :controller.participation.case__c];
 					parCase.status = 'Submitted';
 					upsert parCase;
@@ -310,9 +310,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a new participation form for the Airline Designator Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testDesignatorsNoParticipation(){
 
@@ -325,7 +325,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
@@ -338,9 +338,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Requests a used participation form for the Airline Designator Code
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testDesignators(){
 
@@ -353,12 +353,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Airline_Designators'));
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 
 
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
@@ -372,9 +372,9 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 	/*
 		Purpose: Tries to request a Airline Designator Code with a case already submitted.
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testDesignatorsCaseSubmitted(){
 
@@ -387,12 +387,12 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Airline_Designators'));
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = 'Submit';
-					controller.saveParticipation();	
+					controller.saveParticipation();
 					Case parCase = [SELECT Status From Case WHERE Id= :controller.participation.case__c];
 					parCase.status = 'Submitted';
 					upsert parCase;
@@ -407,10 +407,10 @@ public class ISSP_AMC_Apply_New_Code_Test {
 	}
 
 	/*
-		Purpose: 
-		Parameters: 
+		Purpose:
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testPopUps(){
 
@@ -423,11 +423,11 @@ public class ISSP_AMC_Apply_New_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
-					
 
-					
+
+
 					ISSP_AMC_Apply_New_Code ctrl = new ISSP_AMC_Apply_New_Code();
 					ctrl.caseDesignatorApplicationId = ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
 					ctrl.caseAccountingOrPrefixApplicationId = ISSP_AMC_ParticipationFactory.createEmptyAccountingPrefixParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
@@ -450,7 +450,7 @@ public class ISSP_AMC_Apply_New_Code_Test {
 					ctrl.isBaggage = true;
 					ctrl.redirectToCase();
 					ctrl.redirectToParticipation();
-					
+
 					ctrl.closePopupDeleteSection();
 
 				}

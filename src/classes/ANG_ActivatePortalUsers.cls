@@ -1,5 +1,5 @@
 public class ANG_ActivatePortalUsers {
-	
+
 	public static void activate(list<Contact> listNews){
 		system.debug('ANG_ActivatePortalUsers activate insert');
 		if(AMS_Utils.runningContactInsertUpdateFromOSCAR)
@@ -17,7 +17,7 @@ public class ANG_ActivatePortalUsers {
 		On updates only activate the portal user if it's going from false to true
 	*/
 	public static void activateUsers(list<Contact> listNews, list<Contact> listOlds){
-		
+
 		system.debug('ANG_ActivatePortalUsers activateUsers');
 
 		List<Contact> contactsToActivatePortalUser = new List<Contact>();
@@ -32,7 +32,7 @@ public class ANG_ActivatePortalUsers {
 
 		system.debug('ANG_ActivatePortalUsers contactsToActivatePortalUser ' + contactsToActivatePortalUser);
 		ANG_ActivatePortalUsersBatch b = new ANG_ActivatePortalUsersBatch(contactsToActivatePortalUser);
-        database.executebatch(b,1);
+		database.executebatch(b,1);
 
 	}
 

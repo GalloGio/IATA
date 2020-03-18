@@ -8,8 +8,8 @@ public class ANG_ChangeCodesCreation implements Queueable {
 		aaccHistoryToProcess = aaccHistoryToProcessList;
 	}
 
-   	public void execute(QueueableContext context) {
-		
+	 	public void execute(QueueableContext context) {
+
 		insert changeCodesToInsert;
 
 		System.debug('____ [ANG_ChangeCodesCreation - execute] Change Codes inserted');

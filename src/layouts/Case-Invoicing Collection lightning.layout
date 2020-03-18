@@ -346,7 +346,23 @@
                 <height>200</height>
                 <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Emails</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>EmailMessagesView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

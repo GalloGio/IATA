@@ -1,14 +1,14 @@
 @isTest
-private class SFDC_ProductCatalog_Test 
+private class SFDC_ProductCatalog_Test
 {
-	
+
 	@isTest /*(SeeAllData=true)*/
-	static void test_GET() 
+	static void test_GET()
 	{
-		//-- Generate Products with Prices 
+		//-- Generate Products with Prices
 		List<Product2> products = TestDataGenerator.generateProductsWithPrice(10);
 
-		//-- Update Product Properties 
+		//-- Update Product Properties
 		Integer x =0;
 		for(Product2 prod : products)
 		{
@@ -21,7 +21,7 @@ private class SFDC_ProductCatalog_Test
 
 		update products;
 
-		//-- Call the service 
+		//-- Call the service
 		Date dt = Date.today().addDays(-1);
 		RestRequest req = new RestRequest();
 			req.httpMethod = 'GET';
@@ -32,10 +32,10 @@ private class SFDC_ProductCatalog_Test
 
 		RestContext.request = req;
 
-		RestResponse res = new RestResponse();	
+		RestResponse res = new RestResponse();
 
 		RestContext.response = res;
 
 		SFDC_ProductCatalog.ProductCatalog catalog = SFDC_ProductCatalog.getProducts();
-	}	
+	}
 }

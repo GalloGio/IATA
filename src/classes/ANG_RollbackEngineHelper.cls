@@ -26,7 +26,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 	public void executeAdhoc(){
 
-   		System.SavePoint sp;
+	 		System.SavePoint sp;
 
 		try{
 			sp = Database.setSavePoint();
@@ -411,8 +411,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 		// when there are no relations left, the hierarchies have to be deleted anyway
 		for (AMS_Agencies_Hierarchy__c hie : [SELECT Id
-											  FROM AMS_Agencies_Hierarchy__c
-											  WHERE Main_Account__c IN :accountsRelatedList])
+												FROM AMS_Agencies_Hierarchy__c
+												WHERE Main_Account__c IN :accountsRelatedList])
 		{
 			hierarchiesToDeleteIds.add(hie.Id);
 		}
@@ -516,10 +516,10 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		if(e ==null)
 			toReturnBody = 'The rollback process for Oscar Case '+oscarName+' has been completed.\n\n';
 		else {
-		   toReturnBody = 'There was an error with the rollback process regarding Oscar Case '+oscarName+'.\n\n';
-		   toReturnBody+= 'Message:'+e.getMessage()+'\n\n';
-		   toReturnBody+= 'Stacktrace:'+e.getStackTraceString()+'\n\n';
-		   toReturnBody+= 'Please contact app support for further assistance';
+			 toReturnBody = 'There was an error with the rollback process regarding Oscar Case '+oscarName+'.\n\n';
+			 toReturnBody+= 'Message:'+e.getMessage()+'\n\n';
+			 toReturnBody+= 'Stacktrace:'+e.getStackTraceString()+'\n\n';
+			 toReturnBody+= 'Please contact app support for further assistance';
 		}
 
 		mail.setPlainTextBody(toReturnBody);

@@ -292,11 +292,6 @@
         <label>TACT</label>
     </standardValue>
     <standardValue>
-        <fullName>TACT-Public</fullName>
-        <default>false</default>
-        <label>TACT-Public</label>
-    </standardValue>
-    <standardValue>
         <fullName>Taxes</fullName>
         <default>false</default>
         <label>Taxes</label>

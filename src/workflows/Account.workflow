@@ -105,6 +105,14 @@
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -120,6 +128,14 @@
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
@@ -451,9 +467,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>AccountIATAAirlineSetName</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
-        <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
+        <active>true</active>
+        <description>Set the name of an ACLI account (RT = Airline Headquarters OR RT = Agency WW HQ ) using its Trade Name or AOC Name</description>
+        <formula>AND (   OR(RecordType.DeveloperName = &apos;IATA_Airline&apos;, RecordType.DeveloperName = &apos;Agency_WW_HQ&apos;),   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

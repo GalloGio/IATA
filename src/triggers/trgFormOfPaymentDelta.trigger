@@ -13,7 +13,7 @@ trigger trgFormOfPaymentDelta on Authorized_Forms_Of_Payment__c (after insert, a
 
 			GSS_DeltaTriggerHelper.calculateDeltas('U', Trigger.Old, Trigger.New);
 
-			AuthorizedFormsOfPaymentTriggerHelper.updatesFormOfPaymentsFields(trigger.new, trigger.oldMap);	
+			AuthorizedFormsOfPaymentTriggerHelper.updatesFormOfPaymentsFields(trigger.new, trigger.oldMap);
 		}
 
 		if(trigger.isDelete){

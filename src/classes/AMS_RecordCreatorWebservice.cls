@@ -31,6 +31,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
+	private static Id mainRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
 	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
 
@@ -203,7 +204,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 		if(hierarchy == null){
 			System.debug('Did not find any hierarchy, creating new one.');
 
-			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c);
+			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c, RecordTypeId = mainRecTypeId);
 			insert hierarchy;
 		}
 
@@ -252,30 +253,30 @@ global without sharing class AMS_RecordCreatorWebservice {
 			// we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
 			if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
 
-			   existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
+				 existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
 
-			   if(existingRelations.isEmpty()){
+				 if(existingRelations.isEmpty()){
 
 					System.debug('Did not find any hierarchy, creating new one.');
 
-					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
 					insert hierarchy;
 
-			   }else{
+				 }else{
 
 				System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
 				hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
 
-			   }
+				 }
 
 
 			}else{
 
 					System.debug('Did not find any hierarchy, creating new one.');
 
-					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
 					insert hierarchy;
 			}
@@ -298,7 +299,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 		return true;
 
 	}
-
 	@TestVisible
 	private static String fetchOscarRecordType(String typeOfProcess){
 
@@ -543,10 +543,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 	private static void cloneContacts(List<AMS_Accreditation_Contact__c> contacts, Map<String,String> previousContactTypes){
 
-	   // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
+		 // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
 		List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
 
-	   for(AMS_Accreditation_Contact__c contact: contacts){
+		 for(AMS_Accreditation_Contact__c contact: contacts){
 
 			AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
 
@@ -558,9 +558,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 			toInsert.add(contactCloned);
 
-	   }
+		 }
 
-	   if(!toInsert.isEmpty())
+		 if(!toInsert.isEmpty())
 		insert toInsert;
 
 	}

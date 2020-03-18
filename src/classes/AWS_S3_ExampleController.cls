@@ -7,12 +7,12 @@ modification, are permitted provided that the following conditions
 are met:
 
 1. Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
+	 notice, this list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
-   documentation and/or other materials provided with the distribution.
+	 notice, this list of conditions and the following disclaimer in the
+	 documentation and/or other materials provided with the distribution.
 3. The name of the author may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
+	 derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR
 IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -28,10 +28,10 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /*
-   This Apex Class is used as a custom Visualforce controller and provides many examples of
-   how to use the Force Toolkit for Amazon Web Services (specifically the S3.cls apex class)
+	 This Apex Class is used as a custom Visualforce controller and provides many examples of
+	 how to use the Force Toolkit for Amazon Web Services (specifically the S3.cls apex class)
 
-   The AWS_S3_Examples.page Visualforce page uses this controller so please reference that Visualforce page code for more information.
+	 The AWS_S3_Examples.page Visualforce page uses this controller so please reference that Visualforce page code for more information.
 
 
 
@@ -70,7 +70,7 @@ public class AWS_S3_ExampleController {
 
 
 	/* Constructor
-	   Sets the AWS key and secret
+		 Sets the AWS key and secret
 	*/
 	public AWS_S3_ExampleController() {
 
@@ -79,10 +79,10 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   This method is called when the AWS_S3_Examples Visualforce page is loaded. It verifies that the AWS Keys can be found
-	   in the AWSKeys__c custom object by the specified name, as set in the string variable AWSCredentialsName.
+		 This method is called when the AWS_S3_Examples Visualforce page is loaded. It verifies that the AWS Keys can be found
+		 in the AWSKeys__c custom object by the specified name, as set in the string variable AWSCredentialsName.
 
-	   Any errors are added to the ApexPage and displayed in the Visualforce page.
+		 Any errors are added to the ApexPage and displayed in the Visualforce page.
 	*/
 	public PageReference constructor() {
 		try {
@@ -218,7 +218,7 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   Method to create a bucket on AWS S3
+		 Method to create a bucket on AWS S3
 
 	*/
 	public PageReference createBucket() {
@@ -249,7 +249,7 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   Method to delete a bucket on AWS S3
+		 Method to delete a bucket on AWS S3
 
 	*/
 	public PageReference deleteBucket() {
@@ -281,7 +281,7 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   Method to create an object on AWS S3
+		 Method to create an object on AWS S3
 
 	*/
 	public PageReference deleteObject() {
@@ -313,7 +313,7 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   Method to list a bucket on AWS S3
+		 Method to list a bucket on AWS S3
 
 	*/
 	public PageReference listBucket() {
@@ -365,8 +365,8 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	    This method uploads a file from the filesystem and puts it in S3.
-	    It also supports setting the Access Control policy.
+			This method uploads a file from the filesystem and puts it in S3.
+			It also supports setting the Access Control policy.
 	*/
 	public pageReference syncFilesystemDoc() {
 		try {
@@ -397,8 +397,8 @@ public class AWS_S3_ExampleController {
 	}
 
 	/*
-	    This method uploads a file from the Document object in Force.com and puts it in S3.
-	    It also supports setting the Access Control policy.
+			This method uploads a file from the Document object in Force.com and puts it in S3.
+			It also supports setting the Access Control policy.
 	*/
 	public pageReference syncForceDoc() {
 		try {
@@ -475,8 +475,8 @@ public class AWS_S3_ExampleController {
 
 
 	/*
-	   --------------------------------------------------------------------------------
-	   This section of Apex Code below are for the HTML FORM POST to upload a large file.
+		 --------------------------------------------------------------------------------
+		 This section of Apex Code below are for the HTML FORM POST to upload a large file.
 
 	*/
 
@@ -519,5 +519,5 @@ public class AWS_S3_ExampleController {
 		return macUrl;
 	}
 
-	
+
 }

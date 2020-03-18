@@ -1,0 +1,17 @@
+.THIS .bckColor{
+    background: inherit !important;
+}
+
+.THIS img {
+    max-height: 30px !important;
+    max-width: 30px !important;
+    margin: 0% !important;
+}
+
+.THIS .sortColumn {
+    cursor: pointer;
+}
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

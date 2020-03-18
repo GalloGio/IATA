@@ -1,6 +1,6 @@
 /**
 	This Controller is used by VF page to laod IATA Code ranges. it is based on
-	
+
 	DTULLO: 23/02/2016. Format of the file and column order must be as follow (with sample data). semi column as separator.
 		Country Code 				(AF)
 		Country Description 		(AFGHANISTAN)
@@ -16,7 +16,7 @@
 		MAX Area Code 				(3)
 		MAX Last four 				(6999)
 		MIN-MAX area code differ? 	(blank or DIFF)
-	
+
 */
 
 public class AMS_IataCodeRangesLoaderCtrl3{
@@ -30,16 +30,16 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 	public Map<String,String>  errorCountries					{get; set;}
 	public String aimsArea										{get; set;}
 
-	public Map<String, IATA_ISO_Country__c> countryMap = new Map<String, IATA_ISO_Country__c>();  
-	public Map<String, IATA_ISO_Country__c> countryMapPerId = new Map<String, IATA_ISO_Country__c>();  
-	public Map<String, IATA_ISO_State__c> statesMap = new Map<String, IATA_ISO_State__c>();  
-	
+	public Map<String, IATA_ISO_Country__c> countryMap = new Map<String, IATA_ISO_Country__c>();
+	public Map<String, IATA_ISO_Country__c> countryMapPerId = new Map<String, IATA_ISO_Country__c>();
+	public Map<String, IATA_ISO_State__c> statesMap = new Map<String, IATA_ISO_State__c>();
+
 	private static Integer INDEX_PREFIX			= 0;
 	private static Integer INDEX_AREA_CODE 		= 1;
 	private static Integer INDEX_AREA_CODE_MAX 	= 2;
 	private static Integer INDEX_COUNTRY 		= 3;
 	private static Integer INDEX_STATE 			= 4;
-	private static Integer INDEX_START_RANGES 	= 5;  
+	private static Integer INDEX_START_RANGES 	= 5;
 	private static Integer INDEX_END_RANGES 	= 6;
 	private static Integer INDEX_PROGRAM 		= 7;
 	private Map<String, AMS_Segment__c> programs = new Map<String,AMS_Segment__c>();
@@ -48,10 +48,10 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 	public AMS_IataCodeRangesLoaderCtrl3(){
 		ApexPages.Message infoMessage= new ApexPages.Message(ApexPages.severity.INFO,'Please load IATA Code CSV file');
 		ApexPages.addMessage(infoMessage);
-		
+
 		csvAsString = null;
 		aimsArea  ='1';
-		
+
 		//set the list of Country
 		for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries()){
 			countryMap.put(c.ISO_Code__c.toLowerCase().trim() ,c);
@@ -66,41 +66,41 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 		//DTULLO: 23/02/2016. Wrapped in a global if and addedd error message
 		if(csvFileBody!=null){
 			csvAsString = csvFileBody.toString();
-			
+
 			//DTULLO: 23/02/2016. Avoid to reach view state size limit
 			csvFileBody = null;
-			
+
 			parseLines();
-		
+
 			errorCountries.clear();
 			programs.clear();
 			newIataCodeRanges.clear();
 		}else{
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'[IATA CODE GENERATION] Please provide a valid file ');
 			ApexPages.addMessage(errorMessage);
-		}		
+		}
 		return null;
 	}
 
 	@TestVisible
 	private void parseLines(){
 		newProgramRanges = new Map<String,List<Code_Range__c>>();
-		newPrograms = new Map<String,AMS_Segment__c> ();    
+		newPrograms = new Map<String,AMS_Segment__c> ();
 		newIataCodeRanges = new Map<String,Code_Range__c>();
 		boolean HasError01 = false;
 		boolean HasError02 = false;
 		boolean HasError03 = false;
-		boolean HasError04 = false; 
+		boolean HasError04 = false;
 		errorCountries  = new Map<String,String>();
 		StringBuilder sb = new StringBuilder();
-		
+
 		for(AMS_Segment__c c:[select Name, Label__c from AMS_Segment__c where RecordTypeId = :programRT]){
 			newPrograms.put(c.Label__c.toLowerCase() ,c);
 			newProgramRanges.put(c.Label__c.toLowerCase(),new List<Code_Range__c>());
 		}
-		
+
 		try{
-			csvFileLines = csvAsString.split('\r\n'); 
+			csvFileLines = csvAsString.split('\r\n');
 
 			//define from Header name the coilums where to look after values
 			Integer[] colIndex = new Integer[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
@@ -108,7 +108,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			string[] csvRecordData = csvFileLines[0].split(';');
 			system.debug('[IATA CODE GENERATION] parsing line ' + csvRecordData);
 
-			colIndex [INDEX_STATE ] 		=  2; 
+			colIndex [INDEX_STATE ] 		=  2;
 			colIndex [INDEX_AREA_CODE]		=  9;
 			colIndex [INDEX_COUNTRY ]		=  0;
 			colIndex [INDEX_AREA_CODE_MAX]	= 11;
@@ -122,18 +122,18 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 				csvRecordData = csvFileLines[i].split(';');
 				system.debug('[IATA CODE GENERATION] parsing line '+csvRecordData);
 				try{
-					String countryName = csvRecordData[colIndex[INDEX_COUNTRY]].toLowerCase().trim(); 
-					String stateName = csvRecordData[colIndex[INDEX_STATE]].toLowerCase().trim(); 
+					String countryName = csvRecordData[colIndex[INDEX_COUNTRY]].toLowerCase().trim();
+					String stateName = csvRecordData[colIndex[INDEX_STATE]].toLowerCase().trim();
 					IATA_ISO_Country__c isoCountry = null;
 					IATA_ISO_State__c isoState=null;
 					if(countryMap.get(countryName )!=null){
 						isoCountry = countryMap.get(countryName);
 					}
-					
+
 					if(statesMap.get(stateName)!=null){
 						System.debug('[IATA CODE GENERATION] found State for Range country will be'+statesMap.get(stateName ).IATA_ISO_Country__c);
 						isoState= statesMap.get(stateName ) ;
-					}else 
+					}else
 						System.debug('[IATA CODE GENERATION] Failed to find a  state for value '+stateName);
 
 					if(isoCountry !=null){
@@ -146,12 +146,12 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 							AMS_Segment__c program = null ;
 
 							String rName = areaCode+'-'+countryCode+'-'+isoCountry.ISO_Code__c+'-['+minR+'-'+maxR+']';
-							
+
 							if(isoState!=null)
 								rName = areaCode+'-'+countryCode+'-'+isoCountry.ISO_Code__c+'-'+isoState.ISO_Code__c+'-['+minR+'-'+maxR+']';
-								
+
 							String  value = csvRecordData [colIndex [INDEX_PROGRAM]].toLowerCase().trim();
-							
+
 							if(programs.get(value)!=null){
 								program=programs.get(value);
 							}
@@ -160,7 +160,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 								//new PROGRAMS
 								program = newPrograms.get(value) ;
 								List<Code_Range__c> l = new List<Code_Range__c>();
-								
+
 								//create program and assign range to this one.
 								if(program==null){
 									program = new AMS_Segment__c(Label__c = csvRecordData [j], RecordTypeId=programRT);
@@ -172,16 +172,16 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 									l =  newProgramRanges.get(value);
 									system.debug('[IATA CODE GENERATION] program found  '+(program.Id ==null?'TOCREATE':'EXISTING'));
 								}
-								
+
 								Code_Range__c newRange = new Code_Range__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code') ,
-																		   Name =rName,
-																		   Area__c=Integer.valueOf(aimsArea) ,
-																		   Area_Code__c=j, 
-																		   IATA_ISO_Country__c=isoCountry.Id ,
-																		   Country_Code__c= countryCode  ,
-																		   Max_Range__c= maxR, 
-																		   Min_Range__c=minR );
-								
+																			 Name =rName,
+																			 Area__c=Integer.valueOf(aimsArea) ,
+																			 Area_Code__c=j,
+																			 IATA_ISO_Country__c=isoCountry.Id ,
+																			 Country_Code__c= countryCode  ,
+																			 Max_Range__c= maxR,
+																			 Min_Range__c=minR );
+
 								if(isoState!=null)
 									newRange.IATA_ISO_State__c = isoState.Id;
 
@@ -204,7 +204,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 					System.debug('[IATA CODE GENERATION] IATA CODE RANGE failed to be generated '+e.getStackTraceString());
 					sb.add('[IATA CODE GENERATION] IATA CODE RANGE failed to be generated '+e.getStackTraceString()+' on line '+i+'\r\n' );
 					HasError04 = true;
-				}  
+				}
 			}
 		}
 		catch (Exception e){
@@ -213,7 +213,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			sb.add('[IATA CODE GENERATION]Fatal System error '+e.getStackTraceString()+'\r\n' );
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'[IATA CODE GENERATION]  IATA CODE RANGE system error '+e.getStackTraceString());
 			ApexPages.addMessage(errorMessage);
-		}  
+		}
 
 		//clean DATA
 		List<Code_Range__c> crs = CodeRangeDAO.getAllCodeRanges();
@@ -225,7 +225,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			sb.add('[IATA CODE GENERATION]Already existing range : '+c.Name+'\r\n' );
 			HasError01 = true;
 		}
-		
+
 		if(HasError01){
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.WARNING,'[IATA CODE GENERATION] Some range were already existing  ');
 			ApexPages.addMessage(errorMessage);
@@ -235,7 +235,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			ApexPages.Message infoMessage = new ApexPages.Message(ApexPages.severity.INFO,'[IATA CODE GENERATION] some values were raising exceptions. See logs ');
 			ApexPages.addMessage(infoMessage );
 		}
-		
+
 		if(HasError03){
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'[IATA CODE GENERATION]Some countries name are not exisiting ISO country name. See logs ');
 			ApexPages.addMessage(errorMessage);
@@ -245,7 +245,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'[IATA CODE GENERATION] IATA CODE RANGE failed to be generated. See logs');
 			ApexPages.addMessage(errorMessage);
 		}
-		
+
 		if(HasError01 || HasError02 || HasError03 || HasError04){
 			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 			List<String> receivers = new List<String>();
@@ -253,17 +253,17 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 			//for(User u:[Select Id,Name,Email from User where Id=:userinfo.getuserId()])
 			//	receivers.add(u.Email);
 			receivers.add(UserInfo.GetUserEmail());
-			
+
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setSubject('[IATA CODE GENERATION] Loader Issue cause '+ HasError01 +' / '+ HasError02 +' / '+ HasError03 +' / '+ HasError04);
-			mail.setToAddresses(receivers) ;           
+			mail.setToAddresses(receivers) ;
 			mail.setPlainTextBody(sb.getStringValue());
 			emails.add( mail);
-			//Messaging.sendEmail(emails);    
-		}    
+			//Messaging.sendEmail(emails);
+		}
 
 		ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.INFO,'Systems has loaded '+newIataCodeRanges.size()+' ranges');
-		ApexPages.addMessage(errorMessage); 
+		ApexPages.addMessage(errorMessage);
 		for(String s:newIataCodeRanges.keySet()){
 			System.debug('[IATA CODE GENERATION] '+s);
 		}
@@ -279,7 +279,7 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 					p2Add.clear();
 				}
 				p2Add.add(r);
-			} 
+			}
 			upsert p2Add;
 
 			List<Code_Range__c > toAdd = new List<Code_Range__c >();
@@ -288,11 +288,11 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 					upsert toAdd  ;
 					toAdd.clear();
 				}
-				
+
 				toAdd.add(r);
-			} 
+			}
 			upsert toAdd  ;
-			
+
 			toAdd.clear();
 
 			for(String  v:newPrograms.keySet()){
@@ -305,13 +305,13 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 					toAdd.add(r);
 				}
 			}
-			
+
 			upsert toAdd  ;
 		}catch (Exception e){
 			ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.ERROR,'Systems failed to save record'+e.getMessage());
-			ApexPages.addMessage(errorMessage); 
+			ApexPages.addMessage(errorMessage);
 		}
-		
+
 		return null;
 	}
 }

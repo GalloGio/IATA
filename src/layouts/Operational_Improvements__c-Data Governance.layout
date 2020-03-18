@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>Status_update__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Section_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -284,6 +288,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Section_Code__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Action_Plan_Type__c</fields>

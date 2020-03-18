@@ -1,0 +1,41 @@
+<apex:page controller="ISSP_APProcess"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}">
+    
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
+            
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/main.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/main.min.js')}"></script>
+            <c:iss_ap_css />
+            <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+                
+            <c:ISSP_CustomNavigation />
+            <div class="container">
+                <div id="contentWrapper">
+                    
+                    <c:ISSP_WaitingStatus />
+                    <!-- ------------------------------- -->
+                    <!--STEP 3 Display BSP/CASS/ICH FORM -->
+                    <!-- ------------------------------- -->
+                    <apex:outputPanel rendered="{!isStep3}">
+                        <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP)}"/>     
+                        <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS)}"/>
+                        <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', OR(isBSP,isCASS))}"/>
+                        <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH)}"/>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
+    </html>
+    
+</apex:page>

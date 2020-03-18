@@ -26,7 +26,7 @@ public with sharing class AMS_AccountRoleCreator
 
 	public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
 
-	public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO', 'HE', 'AE'};
+	public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{AMS_Utils.HO, AMS_Utils.AO, AMS_Utils.HE, AMS_Utils.AE, AMS_Utils.GE};
 
 	public static boolean isAccountRoleCreationRunning = false;
 	public static Map<Id,Double> totalCoveredOwnershipByAccount = new Map<Id,Double>();
@@ -122,7 +122,7 @@ public with sharing class AMS_AccountRoleCreator
 		}
 
 		//get all the contacts from the affected accounts
-		Map<Id,Contact> allContactsFromAccount = new Map<Id,Contact>([SELECT FirstName, LastName, Title, AccountId, Account.Location_Class__c, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c, Designated_portal_admin__c, Invoicing_contact__c
+		Map<Id,Contact> allContactsFromAccount = new Map<Id,Contact>([SELECT FirstName, LastName, Title, AccountId, Account.Location_Class__c, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c, Designated_portal_admin__c, Invoicing_contact__c, OtherStreet, OtherCity, OtherPostalCode, OtherState, OtherCountry
 			FROM Contact
 			WHERE AccountId IN :accountIds OR Id IN :contactToGetIds]);
 
@@ -350,10 +350,10 @@ public with sharing class AMS_AccountRoleCreator
 		}
 
 		//clone the roles for the new BRs
-        for(Id brAcc : accountsToCloneOwnersFromHO){
-            List<AMS_Account_Role__c> accRolesList = oldRolesPerAccount.get(newChildWithParent.get(brAcc));
-            listClonesRoles.addAll(assignOwners(brAcc, accRolesList == null ? new List<AMS_Account_Role__c>() : accRolesList));
-        }
+		for(Id brAcc : accountsToCloneOwnersFromHO){
+			List<AMS_Account_Role__c> accRolesList = oldRolesPerAccount.get(newChildWithParent.get(brAcc));
+			listClonesRoles.addAll(assignOwners(brAcc, accRolesList == null ? new List<AMS_Account_Role__c>() : accRolesList));
+		}
 
 		//add a termination date to the previous roles
 		rolesToUpsert.putAll(updateRolesTerminationDate(rolesToUpsert, oldRolesPerAccount, accountsToChangeOwners, accountToCheckOwners, rolesToCorrect));

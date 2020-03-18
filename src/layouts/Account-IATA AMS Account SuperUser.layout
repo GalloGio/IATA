@@ -89,6 +89,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Airline_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>TradeName__c</field>
             </layoutItems>
             <layoutItems>
@@ -154,10 +158,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_PCI_compliant__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Airline_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -320,6 +320,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -493,6 +497,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GDS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Agent__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

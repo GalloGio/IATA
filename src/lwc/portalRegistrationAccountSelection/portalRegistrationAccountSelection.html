@@ -1,6 +1,11 @@
 <template>
     <lightning-layout multiple-rows vertical-align="stretch">
         <div  class="IEFixDisplayContainer">
+
+            <template if:true={isIATANAccount}>
+                <c-portal-registration-i-a-t-a-n-account-popup onclosepopup={close}></c-portal-registration-i-a-t-a-n-account-popup>
+            </template>
+
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
                 <div data-name="inputDiv" class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div>
             </lightning-layout-item>

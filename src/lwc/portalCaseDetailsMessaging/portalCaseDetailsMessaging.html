@@ -71,20 +71,22 @@
                     </div>
                 </div>
             </div>
-            <div class="customWhiteBackground topLightGrayBorder no-print">
-                <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
-                    <div class="slds-col slds-size_11-of-12">
-						<lightning-spinner alternative-text="Loading" size="small" if:true={loadingCom}></lightning-spinner>
-                        <textarea placeholder={label.CSP_CaseMessage_InputPlaceholder} class="slds-textarea textarea"
-                            onchange={handleInputChange} onkeyup={handleKeyUp}
-                            disabled={messageInputLoading}>{newMessage}</textarea>
-                    </div>
-                    <div class="slds-col slds-size_1-of-12 sendIcon">
-                        <lightning-icon class="darkBlueSendButton" if:true={showSendMessageButton}
-                            icon-name="utility:send" alternative-text="Send" onclick={sendNewMessageJS}>
-                        </lightning-icon>
-                        <lightning-icon class="lightBlueSendButton" if:false={showSendMessageButton}
-                            icon-name="utility:send" alternative-text="Send"></lightning-icon>
+            <div if:false={isCollection}>
+                <div class="customWhiteBackground topLightGrayBorder no-print" if:false={trackedIsExpired}>
+                    <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
+                        <div class="slds-col slds-size_11-of-12">
+                            <lightning-spinner alternative-text="Loading" size="small" if:true={loadingCom}></lightning-spinner>
+                            <textarea placeholder={label.CSP_CaseMessage_InputPlaceholder} class="slds-textarea textarea"
+                                onchange={handleInputChange} onkeyup={handleKeyUp}
+                                disabled={messageInputLoading}>{newMessage}</textarea>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12 sendIcon">
+                            <lightning-icon class="darkBlueSendButton" if:true={showSendMessageButton}
+                                icon-name="utility:send" alternative-text="Send" onclick={sendNewMessageJS}>
+                            </lightning-icon>
+                            <lightning-icon class="lightBlueSendButton" if:false={showSendMessageButton}
+                                icon-name="utility:send" alternative-text="Send"></lightning-icon>
+                        </div>
                     </div>
                 </div>
             </div>

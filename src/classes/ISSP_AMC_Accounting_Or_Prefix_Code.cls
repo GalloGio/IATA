@@ -25,10 +25,10 @@
 		public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); } }
 
 		public List <SelectOption> countryList {
-	        get { 
-	            return ISSP_AMC_DAO.countryList;
-	        	}
-	    }
+			get {
+				return ISSP_AMC_DAO.countryList;
+				}
+		}
 		public List <SelectOption> salutationList {
 			get {
 				if(salutationList == null){
@@ -85,7 +85,7 @@
 				participation.Accounting_Code_Airline_Prefix_Purpose__c = '';
 			}
 
-			
+
 		}
 
 
@@ -134,9 +134,9 @@
 					message = '<b>Warning!</b><br /><br />';
 				}
 				else if (severity == 'info'){
-	                PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
-	                pr.setRedirect(true);
-	                return pr;
+					PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
+					pr.setRedirect(true);
+					return pr;
 				}
 
 				for(Apexpages.Message msg : msgs){
@@ -153,28 +153,28 @@
 		public PageReference init(){
 			if(participation.Case__c != null && participation.Case__r.Status != ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 				PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
-                pr.setRedirect(true);
-                return pr;
+				pr.setRedirect(true);
+				return pr;
 			}
 			return null;
 		}
 
 		public String step { get; set; }
 		public Account accountRecord {get;set;}
-    	public Boolean isSISUser {get;set;}
+		public Boolean isSISUser {get;set;}
 
 
 		public ISSP_AMC_Accounting_Or_Prefix_Code() {
 			accountRecord = ISSP_AMC_DAO.getAccountInfo();
-	        if(accountRecord.SIS_Status__c == 'Active'){
-	            isSISUser = true;
-	        }
+			if(accountRecord.SIS_Status__c == 'Active'){
+				isSISUser = true;
+			}
 
 			displayMessage = false;
 			String participationId = Apexpages.currentPage().getParameters().get('participationId');
 			step = Apexpages.currentPage().getParameters().get('step');
 			appRequirementList = new List <ISSP_AMC_DAO.AplicationRequirements>();
-			
+
 			if(participationId == null){
 				participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM);
 			}
@@ -195,7 +195,7 @@
 				else if (participation.AOC_Ferry_Company__c){
 					selectedOperationType = 'Ferry';
 				}
-				
+
 				/*else if (participation.AOC_ULD__c){
 					selectedOperationType = 'ULD';
 				}*/
@@ -244,38 +244,38 @@
 					participation.AOC_Railway_Company__c = false;
 				}
 				when 'Ferry' {
-	                participation.AOC_Scheduled_Passenger__c = false;
-	                participation.AOC_Scheduled_Cargo__c = false;
-	                participation.AOC_Non_Scheduled_Passenger__c = false;
-	                participation.AOC_Non_Scheduled_Cargo__c = false;
+					participation.AOC_Scheduled_Passenger__c = false;
+					participation.AOC_Scheduled_Cargo__c = false;
+					participation.AOC_Non_Scheduled_Passenger__c = false;
+					participation.AOC_Non_Scheduled_Cargo__c = false;
 
-	                participation.AOC_CRS__c = false;
-	                //participation.AOC_ULD__c = false;
-	                participation.AOC_Bus_Company__c = false;
-	                participation.AOC_Railway_Company__c = false;
-	            }
-	            when 'Bus' {
-	                participation.AOC_Scheduled_Passenger__c = false;
-	                participation.AOC_Scheduled_Cargo__c = false;
-	                participation.AOC_Non_Scheduled_Passenger__c = false;
-	                participation.AOC_Non_Scheduled_Cargo__c = false;
+					participation.AOC_CRS__c = false;
+					//participation.AOC_ULD__c = false;
+					participation.AOC_Bus_Company__c = false;
+					participation.AOC_Railway_Company__c = false;
+				}
+				when 'Bus' {
+					participation.AOC_Scheduled_Passenger__c = false;
+					participation.AOC_Scheduled_Cargo__c = false;
+					participation.AOC_Non_Scheduled_Passenger__c = false;
+					participation.AOC_Non_Scheduled_Cargo__c = false;
 
-	                participation.AOC_Ferry_Company__c = false;
-	                participation.AOC_CRS__c = false;
-	                //participation.AOC_ULD__c = false;
-	                participation.AOC_Railway_Company__c = false;
-	            }
-	            when 'Railway' {
-	                participation.AOC_Scheduled_Passenger__c = false;
-	                participation.AOC_Scheduled_Cargo__c = false;
-	                participation.AOC_Non_Scheduled_Passenger__c = false;
-	                participation.AOC_Non_Scheduled_Cargo__c = false;
+					participation.AOC_Ferry_Company__c = false;
+					participation.AOC_CRS__c = false;
+					//participation.AOC_ULD__c = false;
+					participation.AOC_Railway_Company__c = false;
+				}
+				when 'Railway' {
+					participation.AOC_Scheduled_Passenger__c = false;
+					participation.AOC_Scheduled_Cargo__c = false;
+					participation.AOC_Non_Scheduled_Passenger__c = false;
+					participation.AOC_Non_Scheduled_Cargo__c = false;
 
-	                participation.AOC_Ferry_Company__c = false;
-	                participation.AOC_CRS__c = false;
-	                //participation.AOC_ULD__c = false;
-	                participation.AOC_Bus_Company__c = false;
-	            }
+					participation.AOC_Ferry_Company__c = false;
+					participation.AOC_CRS__c = false;
+					//participation.AOC_ULD__c = false;
+					participation.AOC_Bus_Company__c = false;
+				}
 			}
 
 			selectedOperationTypeForRequirements = new List <String>();
@@ -299,15 +299,15 @@
 				selectedOperationTypeForRequirements.add('\'CRS\'');
 			}
 			if(participation.AOC_Ferry_Company__c){
-	            selectedOperationTypeForRequirements.add('\'Ferry Company\'');
-	        }
-	        if(participation.AOC_Bus_Company__c){
-	            selectedOperationTypeForRequirements.add('\'Bus Company\'');
-	        }
+				selectedOperationTypeForRequirements.add('\'Ferry Company\'');
+			}
+			if(participation.AOC_Bus_Company__c){
+				selectedOperationTypeForRequirements.add('\'Bus Company\'');
+			}
 
-	        if(participation.AOC_Railway_Company__c){
-	            selectedOperationTypeForRequirements.add('\'Railway Company\'');
-	        }
+			if(participation.AOC_Railway_Company__c){
+				selectedOperationTypeForRequirements.add('\'Railway Company\'');
+			}
 			calculateApplicationRequirementsToShow();
 		}
 
@@ -340,7 +340,7 @@
 
 		public void CalculateWhichComponentsToShowWithCases(){
 			displayMessage = false;
-			step = '1'; 
+			step = '1';
 			CalculateWhichComponentsToShow();
 			if(participation.Case__c == null){
 				ISSP_AMC_DAO.saveForm(participation, appRequirementList, step,ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
@@ -353,7 +353,7 @@
 			}
 		}
 		public void CalculateWhichComponentsToShow(){
-			
+
 			ISSP_AMC_Authorized_Areas_Operation = false;
 			ISSP_AMC_PreviousIATACode = false;
 			ISSP_AMC_ICAOCode = false;
@@ -380,7 +380,7 @@
 			ISSP_AMC_Reciprocal_Two_Way = false;
 
 			calculateCheckboxes();
-			
+
 
 			if(componentByOperation != null){
 				for(String componentKey : componentByOperation.keySet()){
@@ -487,19 +487,19 @@
 					}
 					if(participation.AOC_Non_Scheduled_Cargo__c && componentKetItem.trim() == 'Non-Scheduled Cargo'){
 						isToShow = true;
-					} 
+					}
 					if(participation.AOC_CRS__c && componentKetItem.trim() == 'CRS'){
 						isToShow = true;
 					}
 					if(participation.AOC_Ferry_Company__c && componentKetItem.trim() == 'Ferry Company'){
-	                    isToShow = true;
-	                }	                
-	                if(participation.AOC_Bus_Company__c && componentKetItem.trim() == 'Bus Company'){
-	                    isToShow = true;
-	                }
-	                if(participation.AOC_Railway_Company__c && componentKetItem.trim() == 'Railway Company'){
-	                    isToShow = true;
-	                }
+						isToShow = true;
+					}
+					if(participation.AOC_Bus_Company__c && componentKetItem.trim() == 'Bus Company'){
+						isToShow = true;
+					}
+					if(participation.AOC_Railway_Company__c && componentKetItem.trim() == 'Railway Company'){
+						isToShow = true;
+					}
 					if(isToShow){
 						break;
 					}
@@ -510,32 +510,32 @@
 
 		/* STEP 3 */
 
-	    public List <ISSP_AMC_DAO.AplicationRequirements> appRequirementList { get; set; }
-	    public List <String> selectedOperationTypeForRequirements { get; set; }
+		public List <ISSP_AMC_DAO.AplicationRequirements> appRequirementList { get; set; }
+		public List <String> selectedOperationTypeForRequirements { get; set; }
 
-	    private void calculateApplicationRequirementsToShow(){
-	        //try{
+		private void calculateApplicationRequirementsToShow(){
+			//try{
 
-	            if(appRequirementList == null){
-	                appRequirementList = new List <ISSP_AMC_DAO.AplicationRequirements>();
-	            }
-	            if(componentByOperation == null){
-	                componentByOperation = new Map <String, String>();
-	            }
-	            if(selectedOperationTypeForRequirements == null){
-                	selectedOperationTypeForRequirements = new List <String>();
-            	}
-	            if(selectedOperationTypeForRequirements.isEmpty()){
-	                selectedOperationTypeForRequirements.add('\'NO_OPERATION_TYPE_WAS_CHOOSEN\'');
-	            }
-	            ISSP_AMC_DAO.calculateApplicationRequirementsToShow(appRequirementList, selectedOperationTypeForRequirements, componentByOperation, participation, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
+				if(appRequirementList == null){
+					appRequirementList = new List <ISSP_AMC_DAO.AplicationRequirements>();
+				}
+				if(componentByOperation == null){
+					componentByOperation = new Map <String, String>();
+				}
+				if(selectedOperationTypeForRequirements == null){
+					selectedOperationTypeForRequirements = new List <String>();
+				}
+				if(selectedOperationTypeForRequirements.isEmpty()){
+					selectedOperationTypeForRequirements.add('\'NO_OPERATION_TYPE_WAS_CHOOSEN\'');
+				}
+				ISSP_AMC_DAO.calculateApplicationRequirementsToShow(appRequirementList, selectedOperationTypeForRequirements, componentByOperation, participation, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
 
-	        for(Integer i = 0; i <appRequirementList.size();i++){
-                if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_TERMS_AND_CONDITIONS'){
-                    appRequirementList[i].isToShow = false;
-                }
-                
-            }    
-	    }
+			for(Integer i = 0; i <appRequirementList.size();i++){
+				if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_TERMS_AND_CONDITIONS'){
+					appRequirementList[i].isToShow = false;
+				}
+
+			}
+		}
 
 	}

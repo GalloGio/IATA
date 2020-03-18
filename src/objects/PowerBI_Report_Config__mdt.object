@@ -22,6 +22,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>LastModifiedDate__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>LastModifiedDate</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Report_Id_Dev__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
@@ -61,6 +69,11 @@
                     <fullName>Premium</fullName>
                     <default>false</default>
                     <label>Premium</label>
+                </value>
+                <value>
+                    <fullName>TIP_report</fullName>
+                    <default>false</default>
+                    <label>TIP report</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

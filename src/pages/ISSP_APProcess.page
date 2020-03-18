@@ -10,334 +10,135 @@
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
         <body>
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
             
-            <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-            <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-            
-            <style>
-                .pbBottomButtons .pbTitle {
-                	display: none;
-                	width: {!IF(isstep2,'90% !important','40% !important')};
-            	}
-            
-            .bPageBlock {
-                border-top-width : thin !important;
-            }
-            
-            ul li, ol li {
-                margin-left: inherit;
-                padding-left: inherit;
-            }
-            
-            #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
-            
-            .requiredText {display:none;}
-            
-            .errorMsg {color:#d74c3b}
-            
-            .progress-bar-off {
-                color: #6BBBEA;
-                font-weight:bold;
-                background-image:none !important;
-                background-color:transparent !important;
-                border-right:2px solid white;
-            } 
-	    .row {
-              display: flex;
-            }
-            .col {
-              flex: 1;
-            }
-            .doc-link {
-                color: #6BBBEA;
-                font-weight: bold;
-            }
-            .req {
-                border-left: 3px solid red;
-                padding: 0px 10px 0px 10px;
-            }
-            .center {
-              text-align: center;
-            }
-            .doc-border {
-                margin: 30px;
-                -webkit-box-shadow:0px 0px 12px 1px #808080 ;
-                -moz-box-shadow:0px 0px 12px 1px #808080 ;
-                box-shadow:0px 0px 12px 1px #808080 ;
-            }
-                       </style>
-                       <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/main.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/main.min.js')}"></script>
+            <c:iss_ap_css />
+            <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
                 
-                       <script>
-                       $(document).ready(function() {
-                           $(".cass-airlines-select").select2({width : "resolve"});
-                       
-                           $(".country-select").select2({width : "resolve"});
-                       
-                           $(".join-type-select").select2({width : "15%"});
-                       });
-                       
-                       $(function () {
-                           $('[data-toggle="tooltip"]').tooltip()
-                       })
-                       function updateGuideCounter() {
-                           ISSP_APProcess.updateGuideCounter("{!newCase.Id}",function(result, event) {});
-                       }
-                       </script>
             <c:ISSP_CustomNavigation />
             <div class="container">
                 <div id="contentWrapper">
                     
-                    
+                    <c:ISSP_WaitingStatus />
+
                     <!----------------------------------------->
                     <!-- STEP 1 -->
                     <!----------------------------------------->
                     <!--Online form to create an airline joining process-->
-                    <apex:outputPanel rendered="{!isStep1}">
-                        <div class="panel-primary">
-                            <div class="panel-heading head_panel_green">
-                                <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
-                            </div>
-                            <div class="panel-body" id="body-enquiries">
-                                
-                                <div class="progress iata-tabs">
-                                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">A</span> Participation Country &amp; Type
-                                </div>
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">B</span> Review Country Requirements
-                                </div>
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">C</span> BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor
-                                    database changes','Change Request','Bank details change'))}
-                                </div>
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">D</span> Submit to IATA
-                                </div>
-                            </div>
-			    <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
-                                    Any doubts? Please check out our&nbsp;
-                                    <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
-                                </apex:outputPanel>
-                                
-                                <apex:form styleClass="form-horizontal">
-                                    <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
-                                        <apex:param value="" assignTo="{!strOT}" name="strOT"/>
-                                    </apex:actionFunction>
-                                    <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
-                                        <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
-                                    </apex:actionFunction>
-                                    <apex:pageBlock mode="edit">
-                                       <apex:pageBlockButtons location="bottom" style="padding-left:100px">
-                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="Continue" />&nbsp;
-                                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
-                                            immediate="true" />
-                                    </apex:pageBlockButtons>
-                                        <apex:pageMessages ></apex:pageMessages>
-                                        <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
-                                        <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="jointype" class="col-sm-2 control-label">* Type of Participation</label>
-                                            <div class="col-sm-10">
-                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="refreshCountryList(this.value);" required="true" size="1">
+                    <apex:outputPanel styleclass="panel-primary" rendered="{!isStep1}">
+                        <div class="panel-heading head_panel_green">
+                            <h3 class="panel-title">{!app.ServiceName__c}</h3>
+                        </div>
+                        <div class="panel-body" id="body-enquiries">
+
+                            <c:ISSP_APProcess_Progress step="{!stepNumber}"
+                                operationType="{!strOperationType}"
+                                areaType="{!strAreaType}"
+                                changeType="{!strChangeType}"
+                                isSIS="{!isSISMember}" />
+                            <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+                                Any doubts? Please check out our&nbsp;
+                                <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+                            </apex:outputPanel>
+                            
+                            <apex:form id="step1-form" styleClass="form-horizontal">
+
+                                <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
+                                    <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
+                                </apex:actionFunction>
+                                <apex:pageBlock mode="edit">
+                                    <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="Continue" />&nbsp;
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
+                                        immediate="true" />
+                                </apex:pageBlockButtons>
+                                    <apex:pageMessages ></apex:pageMessages>
+                                    <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
+                                    <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="jointype" class="col-sm-2 control-label">* Type of Participation</label>
+                                        <div class="col-sm-10">
+                                            <apex:actionRegion >
+                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" required="true" size="1">
                                                     <apex:selectOptions value="{!APTypes}"/>
+                                                    <apex:actionSupport event="onchange" rerender="step1-form" status="WaitingStatus"/>
+                                                </apex:selectList>
+                                            </apex:actionRegion>
+                                        </div>
+                                    </div>
+
+                                    <apex:outputPanel id="optional-form-groups" >
+                                        <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
+                                            <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
+                                            <div class="col-sm-10">
+                                                <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="{!listOptionCountries!=null}" size="1">
+                                                    <apex:selectOptions value="{!listOptionCountries}"/>
                                                 </apex:selectList>
                                             </div>
                                         </div>
-                                        
-                                        <apex:outputPanel id="countryList">
-                                            <div class="form-group">
-                                                <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
-                                                <div class="col-sm-10">
-                                                    <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="true" size="1">
-                                                        <apex:selectOptions value="{!items}"/>
-                                                    </apex:selectList>
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                        
-                                        <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
-                                            <div class="form-group">
-                                                <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
-                                                <div class="col-sm-10">
-                                                    <apex:selectList styleClass="cass-airlines-select"  Label="Airline Concerned" id="airlineconcerned" value="{!cassairlineid}" required="true" size="1">
-                                                        <apex:selectOptions value="{!CassAirlines}"/>
-                                                    </apex:selectList>&nbsp;
-                                                    <apex:image value="/img/msg_icons/info16.png" title="Start typing Airline name, 2-letter designator code or IATA Code in the box to quickly locate the airline." html-data-placement="right" html-data-toggle="tooltip"/>
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                        
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-2 control-label">* Description</label>
+                                        <script>$('.country-select').select2({width : 'resolve'});</script>
+
+                                        <apex:outputPanel layout="block" styleclass="form-group" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
+                                            <label class="col-sm-2 control-label">* ICH Participation Type</label>
                                             <div class="col-sm-10">
-                                                <apex:inputField id="description" styleClass="form-control" value="{!newCase.Description}" required="true"/>
+                                                <apex:selectList styleClass="ich-type-select"  value="{!newCase.Classification_SIS__c}" onchange="refreshCASSAirlineList(this.value);" size="1">
+                                                    <apex:selectOptions value="{!listOptionICHParticipation}"/>
+                                                </apex:selectList>
                                             </div>
-                                        </div>    
-                                    </apex:pageBlock>
-                                </apex:form>
-                            </div>
-                        </div>
-                    </apex:outputPanel>
-                    <!----------------------------------------->
-                    <!--STEP 1 Check the created case details-->
-                   <!------------------------
-                    <apex:pageBlock rendered="{!AND(isStep1, NOT(isNewCase))}" title="Airline Joining information">
-                        <apex:form styleClass="form-inline">
-                            
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label>Case number</label>
-                                </div>
-                                <div class="col-md-3"><apex:outPutText value="{!newCase.CaseNumber}"/></div>
-                                <div class="col-md-1">
-                                    <label>Case area</label>
-                                </div>
-                                <div class="col-md-7"><apex:outputText value="{!newCase.CaseArea__c}"/></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label>Status</label>
-                                </div>
-                                <div class="col-md-3"><apex:outputText value="{!newCase.Status}"/></div>
-                                <div class="col-md-1">
-                                    <label>Case reason</label>
-                                </div>
-                                <div class="col-md-7"><apex:outPutText value="{!newCase.Reason1__c}"/></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label>Joining Country</label>
-                                </div>
-                                <div class="col-md-3"><apex:outputText value="{!newCase.Country_concerned_by_the_query__c}"/></div>
-                            </div>
-                            <div style="padding:20px;"/> 
-                            <center>
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep2}" value="Next" id="Next"/>
-                            </center>
-                        </apex:form>
-                    </apex:pageBlock>
-        ----------------->
-      
-                    <!------------------------------------------->
-                    <!--STEP 2 Display the country requirements-->
-                    <!----------------------------------------- -->
-                    <apex:outputText rendered="{!isStep2&&countryRequirementFound}">
-                        <div class="panel-primary">
-                            <div class="panel-heading head_panel_green">
-                                <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
-                            </div>
-                            <div class="panel-body" id="body-enquiries">
-                            <div class="progress iata-tabs">
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">A</span> Participation Country &amp; Type
-                                </div>
-                                <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">B</span> Review Country Requirements:{!strLoB}-{!apCountry}
-                                </div>
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">C</span> BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor
-                                    database changes','Change Request','Bank details change'))}
-                                </div>
-                                <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 25%;">
-                                    <span class="progress-tab-step">D</span> Submit to IATA
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <c:ISSP_AP_Country_Reqs_Modal />
-                            </div>
-                                <apex:form >
-                                    <center>
-                                        <apex:pageBlock mode="edit">
-                                           <apex:pageBlockButtons location="bottom">
-                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="Next" id="Next"
-                                            />&nbsp;
-                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!goToStep1}" value="Previous"
-                                                id="Previous" />
-                                        </apex:pageBlockButtons>                                        </apex:pageBlock>
-                                    </center>
-                                </apex:form>
-                                
-                            </div>   
-                        </div>
-                    </apex:outputText>
-                    
-                    <apex:pageBlock rendered="{!isStep2&&!countryRequirementFound}" title="Country requirements for {!apCountry} - {!strLOB}">
-                        <div class="apcontainer">
-                            <apex:outPutText >
-                                <div class="aplabel">
-                                    <br/><br/><br/>The {!strLOB} operation you have selected is not available in {!apCountry}. Please go back and choose another Operation or Country.<br/><br/><br/> 
-                                </div>
-                            </apex:outPutText>
-                            <apex:form >
-                                <center>
-                                    <apex:pageBlock >
-                                        <apex:commandButton styleclass="apbutton" action="{!goToStep1}" value="Previous" id="Previous"/>
-                                        <apex:commandButton styleclass="apbutton" action="{!goToStep3}" disabled="True" value="Next" id="Next"/>
-                                    </apex:pageBlock>
-                                </center>
+                                        </apex:outputPanel>
+                                        <script>$('.ich-type-select').select2({width : 'resolve'});</script>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
+                                        <div class="form-group">
+                                            <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
+                                            <div class="col-sm-10">
+                                                <apex:selectList styleClass="cass-airlines-select"  Label="Airline Concerned" id="airlineconcerned" value="{!cassairlineid}" required="true" size="1">
+                                                    <apex:selectOptions value="{!CassAirlines}"/>
+                                                </apex:selectList>&nbsp;
+                                                <apex:image value="/img/msg_icons/info16.png" title="Start typing Airline name, 2-letter designator code or IATA Code in the box to quickly locate the airline." html-data-placement="right" html-data-toggle="tooltip"/>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-2 control-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <apex:inputField id="description" styleClass="form-control" value="{!newCase.Description}"/>
+                                        </div>
+                                    </div>    
+
+                                    <apex:outputPanel id="ich-info" layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
+                                        <p><strong>ICH Participation Type descriptions:</strong></p>
+                                        <p style="font-style: italic;">
+                                            (The available options will be related to the type of your business)
+                                        </p>
+                                        <p>
+                                            <ul>
+                                                <li><strong>IATA Member Airline:</strong> An Airline who participates in the IATA Membership Service</li>
+                                                <li><strong>Non-IATA Member Airline:</strong> An Airline who does not participates in the IATA Membership Service</li>
+                                                <li><strong>Sponsored Airline:</strong> An Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                <li><strong>Sponsored Associates:</strong> A Non-Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                <li><strong>Associate Member:</strong> a Non-Airline who is providing services to Members of the IATA Clearing House</li>
+                                                <li><strong>Associate Member - Subsidiary:</strong> An Associate or an Airline who is providing services and who is a Subsidiary of an IATA Member Airline who is an active member of the IATA Clearing House</li>
+                                                <li><strong>Associate Member - Aggregator:</strong> An Aggregator Member is an Associate Member who participates in the IATA Clearing House and has Associate Subsidiaries participating under the responsibility of the parent organization</li>
+                                            </ul>
+                                        </p>
+                                    </apex:outputPanel>
+
+                                </apex:pageBlock>
                             </apex:form>
                         </div>
-                    </apex:pageBlock>
-                    
-                    <!----------------------------------->
-                    <!--STEP 3 Display BSP or CASS FORM-->
-                    <!----------------------------------->
-                    
-                    <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP, isStep3)}"/>     
-                    <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS, isStep3)}"/>
-                    <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', isStep3)}"/>
-                    
-                    <!--------------------->
-                    <!--STEP 4 Validation-->
-                    <!---------------------> 
-                    
-                    <apex:include pageName="ISSP_AP_Submit" rendered="{!isStep4}"/>
-                    
-                    
-                    <!----------------------------------------->
-                    <!--STEP 5 Check the created case details-->
-                    <!----------------------------------------->
-                    <apex:pageBlock rendered="{!isFinalStep}" mode="maindetail">
-                        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
-                            <h3>Thank you for submitting your Airline Participation {!IF(strAreaType=='Airline Joining', 'Joining application', 'Change request')}.</h3>
-                            <br/><br/>
-                            <div class="col-md-12 row">Your case number is <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!newCase.CaseNumber}</a>.</div>
-                            <br/><br/>
-                            <apex:outputPanel rendered="{!(strAreaType=='Airline Joining')}">
-                                <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                                You can also <a href="/ISSP_PDF_Form{!IF(isCASS,'_CASS','')}?caseId={!newCase.Id}&step=3" target="_new">download a PDF version</a> of the application you just submitted.
-                            </apex:outputPanel>
-                            <br/><br/>
-                            
-                            <br/>
-                            Please <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">access your case</a> directly if you wish to attach additional files to your application.
-                            <br/><br/>
-                            In addition you can follow all your cases with IATA in the <a href="/ISSP_CaseList" target="_blank">"My Cases"</a> area.
-                            <br/><br/><br/><br/>
-                            
-                            <a href="/ISSP_APCases?proc={!IF(strAreaType=='Airline Joining', '', IF(strChangeType=='Minor database changes','chg','bnk'))}&retURL=/ISSP_Homepage">
-                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002SzVg&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strAreaType=='Airline Joining'}"/>
-                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000361Bb&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strChangeType=='Bank Account Instructions'}"/>
-                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000361Dr&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strChangeType=='Minor database changes'}"/>
-                            </a>&nbsp;<b>Create new BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining application', IF(strChangeType=='Minor database changes', 'Change request', 'Bank Account details change'))}.</b>
-                            
-                        </div>
-                    </apex:pageBlock>
+                    </apex:outputPanel>
                 </div>
-                </div>
-        <c:ISSP_CustomFooter />
-    </body>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
     </html>
     
 </apex:page>

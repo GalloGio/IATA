@@ -3,14 +3,21 @@ import { LightningElement, track, wire, api } from 'lwc';
 import getRecentCases from '@salesforce/apex/PortalCasesCtrl.getRecentCases';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 
+
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
+//custom labels
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_RecentCases_Support from '@salesforce/label/c.CSP_RecentCases_Support';
 import CSP_RecentCases_HelpText from '@salesforce/label/c.CSP_RecentCases_HelpText';
 import CSP_RecentCases_HelpText2 from '@salesforce/label/c.CSP_RecentCases_HelpText2';
+import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
+import CSP_FAQReachUsBanner_Title from '@salesforce/label/c.CSP_FAQReachUsBanner_Title';
+import CSP_FAQReachUsBanner_Text from '@salesforce/label/c.CSP_FAQReachUsBanner_Text';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -20,9 +27,14 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_SeeAll,
         CSP_RecentCases_Support,
         CSP_RecentCases_HelpText,
-        CSP_RecentCases_HelpText2
+        CSP_RecentCases_HelpText2,
+        CSP_FAQReachUsBanner_ButtonText,
+        CSP_FAQReachUsBanner_Title,
+        CSP_FAQReachUsBanner_Text
     };
 
+    @track showButton = false;
+    @track supportReachUsURL;
     @track data;
     @track columns;
     @track loading = true;
@@ -50,6 +62,12 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @track rowHeight = "";
 
     connectedCallback() {
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            }})
+        .then(url => this.supportReachUsURL = url);
 
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
@@ -65,12 +83,12 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.title = this.label.CSP_RecentCases;
                 this.titleCss = "text-small";
                 this.cardBodyContent = "cardBodyContent";
-                this.rowHeight = "";
+                this.rowHeight = "hpRecentCasesTable";
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self',tooltip: {fieldName: 'CaseNumber'}} },
                     { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130 },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self',tooltip:{fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 150, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self',tooltip:{fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Country_concerned__c, fieldName: 'Country', type: 'text', initialWidth: 190 },
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             } else {
@@ -82,13 +100,37 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.rowHeight = "rowHeight";
                 this.columns = [
                     { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 120, cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             }
             
         });
+        
+        isAdmin().then(result1 => {
+            checkIfIsAirlineUser().then(result2=>{
+                this.showButton = (result1 && result2 && this.homePageLocal);
+            });
+        });
 
+    }
+	
+    redirectToSupport(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        let params = {};
+        if(this.category !== undefined && this.category !== null) {
+            params.category = this.category;
+        }
+        if(this.topic !== undefined && this.topic !== null) {
+            params.topic = this.topic;
+        }
+        if(this.subTopic !== undefined && this.subTopic !== null) {
+            params.subtopic = this.subTopic;
+        }
+        
+        navigateToPage(this.supportReachUsURL, params);
     }
 
     @wire(getRecentCases, { limitView: true, seeAll: false, specialCaseOption: '$specialCase' })

@@ -1,8 +1,8 @@
-/**  
- * Description: This class contains the controller for the Visualforce page (File Delivery - Delivery History) 
+/**
+ * Description: This class contains the controller for the Visualforce page (File Delivery - Delivery History)
  * Author: Samy Saied
  * Version: 1.0
- * History: 
+ * History:
  *  - 20160104-sl: change the GDP_File_Description__c.Frequency option from Bi-Monthly to Semi-Monthly
  */
 
@@ -22,13 +22,13 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				return '';
 		}
 	}
-	
+
 	public String sApplicationTitleUpperCase {
 		get {
 			return sApplicationTitle.toUpperCase();
 		}
 	}
-	
+
 	/**
 	 * Constructor Method
 	 **/
@@ -38,19 +38,19 @@ public without sharing class vfIECGSSHist extends IECPageController {
 			String sParamProductCode = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE);
 			sProductCode = IECUtil.DecodeDecryptParameter(sParamProductCode);
 
-			//Initilize subscription component        
+			//Initilize subscription component
 			ctrSubsInfo = new vfIECSubscriptionInfo();
 			ctrSubsInfo.loggedCustomer = loggedCustomer;
-	        ctrSubsInfo.sSelectedSubscriptionName = null;
+			ctrSubsInfo.sSelectedSubscriptionName = null;
 			ctrSubsInfo.sApplicationName = sProductCode;
-            
-            // check if Subscription Name was passed as a parameter
-            String sParamSubscriptionName = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_SUBSCRIPTION_NAME);
-            if (sParamSubscriptionName!=null && !String.isEmpty(sParamSubscriptionName))
-                ctrSubsInfo.sSelectedSubscriptionName = IECUtil.DecodeDecryptParameter(sParamSubscriptionName);
-            else
-                ctrSubsInfo.sSelectedSubscriptionName = null;
-        }
+
+			// check if Subscription Name was passed as a parameter
+			String sParamSubscriptionName = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_SUBSCRIPTION_NAME);
+			if (sParamSubscriptionName!=null && !String.isEmpty(sParamSubscriptionName))
+				ctrSubsInfo.sSelectedSubscriptionName = IECUtil.DecodeDecryptParameter(sParamSubscriptionName);
+			else
+				ctrSubsInfo.sSelectedSubscriptionName = null;
+		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage());
 		}
@@ -70,14 +70,14 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				validUserProfile();
 
 				// Make sure to validate user access to application subscription
-                ctrSubsInfo.validateSubscriptionAccess();         
+				ctrSubsInfo.validateSubscriptionAccess();
 
 				// if no access, redirect to the unauthorized page
-                if (!ctrSubsInfo.hasPageAccess)
-                    return Page.IECUnauthorized;
-                }
-                
-                //Query for the submission history list related to the current logged user and subscription
+				if (!ctrSubsInfo.hasPageAccess)
+					return Page.IECUnauthorized;
+				}
+
+				//Query for the submission history list related to the current logged user and subscription
 				lstSubmissionRecords = getSubmissionHistory();
 		}
 		catch (Exception ex) {
@@ -95,13 +95,13 @@ public without sharing class vfIECGSSHist extends IECPageController {
 			FROM GDP_File_Delivery__c
 			WHERE GSS_Subscription_Detail__r.Name = :ctrSubsInfo.sSubscriptionName
 			ORDER BY Delivery_Date__c DESC, File_Specification__r.Class__c];
-			
+
 		List<SubmissionRecord> lstSubHist = new List<SubmissionRecord>();
 		// Use two dates to determine if the submission record has changed or not
 		Date dPrev, dCurr;
 		// Use a counter to allow retrieval of the previously created submission
 		integer i = -1;
-		
+
 		// Create SubmissionRecord list to be used for the UI display
 		for (GDP_File_Delivery__c oDelivery : lstDelivery) {
 			dCurr = oDelivery.Delivery_Date__c;
@@ -114,28 +114,28 @@ public without sharing class vfIECGSSHist extends IECPageController {
 			lstSubHist.get(i).lstFiles.add(oDelivery);
 			dPrev = dCurr;
 		}
-		
+
 		// Build up the record label knowing the final size of the SubmissionRecord list
 		for (i = 0; i < lstSubHist.size(); i++) {
 			lstSubHist.get(i).RecordLabel = ctrSubsInfo.sSubscriptionName + '-' + String.valueOf(lstSubHist.size() - i).leftPad(3).replace(' ', '0');
-		}		
-		
+		}
+
 		return lstSubHist;
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Handles the selection of one submission record (by submissionID) and query for its details
 	public void selectSubmission() {
 		try {
 			if (iSelectedSubmissionID != null) {
-                submissionObj = lstSubmissionRecords.get(iSelectedSubmissionID);
+				submissionObj = lstSubmissionRecords.get(iSelectedSubmissionID);
 			}
 		}
 		catch(Exception ex) {
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	public class SubmissionRecord {
 		public Integer RecordID {get; set;}
 		public String RecordLabel {get; set;}
@@ -147,13 +147,13 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				return lstFiles.size();
 			}
 		}
-		
+
 		public String Frequency {
 			get {
 				return (lstFiles.size() > 0) ? lstFiles.get(0).File_Specification__r.Frequency__c : null;
 			}
 		}
-		
+
 		public Date ReportingFrom {
 			get {
 				if (Frequency == 'Daily') {
@@ -173,11 +173,11 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				else if (Frequency == 'Monthly') {
 					return Date.newInstance(DeliveryDate.year(), DeliveryDate.month(), 1).addMonths(-1);
 				}
-				
+
 				return null;
 			}
 		}
-		
+
 		public Date ReportingTo {
 			get {
 				if (Frequency == 'Daily') {
@@ -197,11 +197,11 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				else if (Frequency == 'Monthly') {
 					return Date.newInstance(DeliveryDate.year(), DeliveryDate.month(), 1).addDays(-1);
 				}
-				
+
 				return null;
 			}
 		}
-		
+
 		public String Status {
 			get {
 				Boolean bInProgress = false;
@@ -213,13 +213,13 @@ public without sharing class vfIECGSSHist extends IECPageController {
 				}
 				return bInProgress ? 'In Progress' : 'Completed';
 			}
-			
+
 		}
-		
+
 		public SubmissionRecord (Integer iRecordID, Date dDeliveryDate) {
 			RecordID = iRecordID;
 			DeliveryDate = dDeliveryDate;
-			lstFiles = new List<GDP_File_Delivery__c>(); 
-		}		
+			lstFiles = new List<GDP_File_Delivery__c>();
+		}
 	}
 }

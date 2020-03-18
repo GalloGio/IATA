@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api } from 'lwc';
 import getCaseMessages from '@salesforce/apex/PortalCasesCtrl.getCaseMessages';
 import submitNewMessage from '@salesforce/apex/DAL_WithoutSharing.submitNewMessage';
 
@@ -29,11 +29,22 @@ export default class PortalHomeCalendar extends LightningElement {
     @track newMessage = '';
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
-	@track loadingCom = false;
+    @track loadingCom = false;
+    @api isCollection;
 
     @track showCaseMessagingSection = true;
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
+
+    @track trackedIsExpired;
+
+    @api
+    get expired() {
+        return this.trackedIsExpired;
+    }
+    set expired(value) {
+        this.trackedIsExpired = value;
+    }
 
     connectedCallback() {
 

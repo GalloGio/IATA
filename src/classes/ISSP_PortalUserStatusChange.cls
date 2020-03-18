@@ -132,8 +132,8 @@ public with sharing class ISSP_PortalUserStatusChange {
 			if(con.Account.Top_Parent__c != null)
 				accIdSet.add(con.Account.Top_Parent__c);
 			list <Account> accList = [Select a.Top_Parent__c ,IATA_ISO_Country__c,IATA_ISO_Country__r.Name
-									   From Account a
-									   Where a.Top_Parent__c IN :accIdSet or Id=:con.AccountId];
+										 From Account a
+										 Where a.Top_Parent__c IN :accIdSet or Id=:con.AccountId];
 			for(Account acc : accList){
 				if(acc.IATA_ISO_Country__c != null){
 					countrysMap.put(acc.IATA_ISO_Country__r.Name,acc.IATA_ISO_Country__r.Name);
@@ -229,7 +229,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 		try{
 			action.processAction(contactId);
 		}catch(Exception e){
-		   return new map<String, String> { 'error' => e.getMessage() };
+			 return new map<String, String> { 'error' => e.getMessage() };
 		}
 		return new map<String, String> { 'status' => 'ok' };
 	}
@@ -252,7 +252,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 		try{
 			action.processAction(contactId);
 		}catch(Exception e){
-		   return new map<String, String> { 'error' => e.getMessage() };
+			 return new map<String, String> { 'error' => e.getMessage() };
 		}
 		return new map<String, String> { 'status' => 'ok' };
 	}
@@ -568,7 +568,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 			if (!teamMemberIdSet.isEmpty()){
 				delete [select Id from AccountTeamMember where UserId in:teamMemberIdSet and TeamMemberRole =:'Portal Administrator'];
 			}
-		   futureDisabelUser(conId);
+			 futureDisabelUser(conId);
 		}
 	}
 
@@ -576,13 +576,13 @@ public with sharing class ISSP_PortalUserStatusChange {
 	{
 		public void processAction(string conId)
 		{
-		   string userType = ISSP_Utilities.getContactTypeById(conId);
-		   system.debug('CreateNewUserWithCustomerProfile userType: ' + userType);
-		   string profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get(userType);
-		   system.debug('CreateNewUserWithCustomerProfile profileName: ' + profileName);
-		   string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-		   system.debug('CreateNewUserWithCustomerProfile profileId: ' + profileId);
-		   createNewUser(profileId,conId);
+			 string userType = ISSP_Utilities.getContactTypeById(conId);
+			 system.debug('CreateNewUserWithCustomerProfile userType: ' + userType);
+			 string profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get(userType);
+			 system.debug('CreateNewUserWithCustomerProfile profileName: ' + profileName);
+			 string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
+			 system.debug('CreateNewUserWithCustomerProfile profileId: ' + profileId);
+			 createNewUser(profileId,conId);
 		}
 	}
 
@@ -590,10 +590,10 @@ public with sharing class ISSP_PortalUserStatusChange {
 	{
 		public void processAction(string conId)
 		{
-		   string userType = ISSP_Utilities.getContactTypeById(conId);
-		   string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
-		   string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-		   createNewUser(profileId,conId);
+			 string userType = ISSP_Utilities.getContactTypeById(conId);
+			 string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
+			 string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
+			 createNewUser(profileId,conId);
 		}
 	}
 
@@ -601,9 +601,9 @@ public with sharing class ISSP_PortalUserStatusChange {
 	{
 		public void processAction(string conId)
 		{
-		   string profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Other');
-		   string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-		   createNewUser(profileId,conId);
+			 string profileName = ISSP_Constant.profilNameByUserTypeMap.get('User').get('Other');
+			 string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
+			 createNewUser(profileId,conId);
 		}
 	}
 
@@ -658,11 +658,11 @@ public with sharing class ISSP_PortalUserStatusChange {
 		}
 		if (!UserList.isEmpty()) {
 			Database.SaveResult[] results = Database.insert(UserList, false);
-		   list<Messaging.SingleEmailMessage> ml = new list<Messaging.SingleEmailMessage>();
+			 list<Messaging.SingleEmailMessage> ml = new list<Messaging.SingleEmailMessage>();
 			EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email'];
-		   if(communityName=='CNS'){ //
+			 if(communityName=='CNS'){ //
 				et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS'];
-		   }
+			 }
 
 			for(Database.SaveResult r:results){
 				system.debug('\n\n\n'+r.getErrors()+'\n\n\n');
@@ -775,7 +775,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 			update userList;
 	}
 
-	   public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
+		 public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setTemplateId(templateId);
 			mail.setTargetObjectId(userId);
@@ -785,7 +785,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 			}else{ mail.setReplyTo('noreply@iata.org'); mail.setSenderDisplayName('ISS Portal ');}
 
 			return mail;
-	   }
+		 }
 
 	 public static String runAction(Id conId, String currentEmail, String theAction, String newValue, String inactiveReason, List<String> firstCommunity){
 		ISSP_ContactList.avoidContactStatusTrigger = true;
@@ -1103,11 +1103,11 @@ public with sharing class ISSP_PortalUserStatusChange {
 	@AuraEnabled
 	public static ApexMessageHandling saveNewStatusAura(string community, string newValue, string contactId,string inactivationReason){
 
-	  system.debug('PF');
-	  system.debug(community);
-	  system.debug(newValue);
-	  system.debug(contactId);
-	  system.debug(inactivationReason);
+		system.debug('PF');
+		system.debug(community);
+		system.debug(newValue);
+		system.debug(contactId);
+		system.debug(inactivationReason);
 		List<String> firstCommunity = new List<String>();
 		List<String> errorMessages = new List<String>();
 		for (SelectOptionWrapper so : getAvalaibleCommunities()){

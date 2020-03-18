@@ -1,20 +1,20 @@
 /****************************************************************************************************
-    Created by CGI, Thai 2016-04-25
-        Test controller "IEC_UpdateAddressController"
+		Created by CGI, Thai 2016-04-25
+				Test controller "IEC_UpdateAddressController"
 ****************************************************************************************************/
 @isTest
 private class IEC_UpdateAddressControllerTest {
 
 
 /****************************************************************************************************
-    Created by CGI, Thai 2016-12-22
-        Test method "onPageLoad" and partially called methods from it
+		Created by CGI, Thai 2016-12-22
+				Test method "onPageLoad" and partially called methods from it
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void test_onPageLoad()
 {
 	//*** not logged
 	Test.setCurrentPage(Page.IEC_UpdateAddress);
-	IEC_UpdateAddressController ctrl = new IEC_UpdateAddressController(); 
+	IEC_UpdateAddressController ctrl = new IEC_UpdateAddressController();
 	System.assert(ctrl.onPageLoad() != null, 'Should return login page');
 
 	//*** create portal user and test data
@@ -24,10 +24,10 @@ private class IEC_UpdateAddressControllerTest {
 	User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 	Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 	Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='Billing Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-	                              , ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA'), IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																, ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA'), IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	update accPortal;
 
 	//*** logged
@@ -39,7 +39,7 @@ private class IEC_UpdateAddressControllerTest {
 			SAP_CustomerMaster_Mock.returnError = 'test';
 			SAP_CustomerMaster_Mock.returnOK = null;
 			Test.setCurrentPage(Page.IEC_UpdateAddress);
-			ctrl = new IEC_UpdateAddressController(); 
+			ctrl = new IEC_UpdateAddressController();
 			ctrl.onPageLoad();
 			system.assert(ctrl.stopProcess == true, 'Wrong value for missing partners');
 
@@ -50,7 +50,7 @@ private class IEC_UpdateAddressControllerTest {
 			mapLocation.get('sold').SAP_Id__c = 'sold';
 			update mapLocation.get('sold');
 			Test.setCurrentPage(Page.IEC_UpdateAddress);
-			ctrl = new IEC_UpdateAddressController(); 
+			ctrl = new IEC_UpdateAddressController();
 			ctrl.onPageLoad();
 			system.assert(ctrl.stopProcess == false, 'Wrong value for valid partners');
 		}
@@ -59,8 +59,8 @@ private class IEC_UpdateAddressControllerTest {
 
 
 /****************************************************************************************************
-    Created by CGI, Thai 2016-04-25
-        Test all methods related to Bill To
+		Created by CGI, Thai 2016-04-25
+				Test all methods related to Bill To
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void testBillToMethods() {
 	Integer i1, errCount, addressCount, locationCount;
@@ -73,10 +73,10 @@ private class IEC_UpdateAddressControllerTest {
 	User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 	Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 	Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='Billing Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-	                              , ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																, ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -179,8 +179,8 @@ private class IEC_UpdateAddressControllerTest {
 
 
 /****************************************************************************************************
-    Created by CGI, Thai 2016-04-25
-        Test all methods related to Bill To
+		Created by CGI, Thai 2016-04-25
+				Test all methods related to Bill To
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void testBillToMethods2() {
 	Integer i1, errCount, addressCount, locationCount;
@@ -193,10 +193,10 @@ private class IEC_UpdateAddressControllerTest {
 	User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 	Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 	Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='Billing Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-	                              , ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																, ShippingStreet='Shipping Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -250,8 +250,8 @@ private class IEC_UpdateAddressControllerTest {
 
 
 /****************************************************************************************************
-    Created by CGI, Thai 2016-04-25
-        Test all methods related to Ship To
+		Created by CGI, Thai 2016-04-25
+				Test all methods related to Ship To
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void testShipToMethods() {
 	Integer i1, errCount, addressCount, locationCount, locationCount2;
@@ -264,10 +264,10 @@ private class IEC_UpdateAddressControllerTest {
 	User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 	Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 	Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='Billing Street', BillingCity='City', BillingPostalCode='H0H0H0'
-	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-	                              , ShippingStreet='Shipping Street', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																, ShippingStreet='Shipping Street', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -386,8 +386,8 @@ private class IEC_UpdateAddressControllerTest {
 
 
 /****************************************************************************************************
-    Created by CGI, Thai 2016-04-25
-        Test all methods related to Ship To
+		Created by CGI, Thai 2016-04-25
+				Test all methods related to Ship To
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void testShipToMethods2() {
 	Integer i1, errCount, addressCount, locationCount, locationCount2;
@@ -400,10 +400,10 @@ private class IEC_UpdateAddressControllerTest {
 	User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 	Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 	Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='Billing Street', BillingCity='City', BillingPostalCode='H0H0H0'
-	                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-	                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-	                              , ShippingStreet='Shipping Street', ShippingCity='City', ShippingPostalCode='H0H0H0'
-	                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																, ShippingStreet='Shipping Street', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 	List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 	lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));

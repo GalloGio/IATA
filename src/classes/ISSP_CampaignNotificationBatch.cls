@@ -10,17 +10,17 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 	global static string notificationCampagneName = '';
 	//DTULLO 20160208. Added for DDS managemente
 	global boolean bIsDDS = false;
-	 
+
 	global Database.QueryLocator start(Database.BatchableContext BC){
 		return Database.getQueryLocator(query);
-    }
-    
-    global void execute(Database.BatchableContext BC, List<sObject> scope){
-    	notificationCampagneName = vNotificationCampagneName;
-    	set<Id> contactIdSet = new set<Id>();
+	}
 
-    	//DTULLO: Added for DDS
-    	set<Id> setAccntId = new set<Id>();
+	global void execute(Database.BatchableContext BC, List<sObject> scope){
+		notificationCampagneName = vNotificationCampagneName;
+		set<Id> contactIdSet = new set<Id>();
+
+		//DTULLO: Added for DDS
+		set<Id> setAccntId = new set<Id>();
 		for(CampaignMember cm : (list<CampaignMember>)scope){
 			if(cm.ContactId != null)
 			contactIdSet.add(cm.ContactId);
@@ -29,7 +29,7 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 
 		for(Contact con : contactList){
 			con.Notification_template__c = notificationId;
-			
+
 			//DTULLO 20160208. DDS
 			if(bIsDDS)
 				setAccntId.add(con.AccountId);
@@ -42,7 +42,7 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 		NewGenApp_Custom_Settings__c newgenCS = NewGenApp_Custom_Settings__c.getOrgDefaults();
 		if(newgenCS != null && newgenCS.Push_Notifications_State__c){
 			List<User> userList = [select Id, ContactId from user where ContactId in :contactIdSet];
-			
+
 			Notification_template__c template = [select Name, Id, Subject__c, Message__c from Notification_template__c where Name = :notificationId];
 
 			for(User user: userList){
@@ -63,19 +63,19 @@ global with sharing class ISSP_CampaignNotificationBatch implements Database.Bat
 					a.DDS_Last_Notification_Date__c = system.Today();
 					a.DDS_Status__c = 'No Reply';
 				}
-				
+
 				try{
 					list<Database.SaveResult> lsSR = database.update(lsAccnt, false);
 				}
 				catch(exception e){
-					
+
 				}
 			}
 		}
-    }
-	
+	}
+
 	global void finish(Database.BatchableContext BC){
 
-    }
-    
+	}
+
 }
