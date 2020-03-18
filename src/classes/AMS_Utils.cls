@@ -414,6 +414,7 @@ public without sharing class AMS_Utils {
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
 	public static final String MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD = 'MC_LOCATIONS_ACQUIRED_BY_ST';
 	public static final String MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE = 'GE_LEFT_ALONE';
+	public static final String MULTICOUNTRY_BSP_SPLIT = 'MC_BSP_SPLIT';
 
 	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
 	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
