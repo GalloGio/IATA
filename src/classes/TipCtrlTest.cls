@@ -192,14 +192,14 @@ public class TipCtrlTest {
 		}
 
 
-		PowerBiCtrl_2.OAuthResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TipReports');
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TipReports');
 			result = TipCtrl.getAccessToken(config);
 
 		}
@@ -228,14 +228,14 @@ public class TipCtrlTest {
 		}
 
 
-		PowerBiCtrl_2.OAuthResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TipReports');
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TipReports');
 			result = TipCtrl.getAccessToken(config);
 
 		}
@@ -264,14 +264,14 @@ public class TipCtrlTest {
 		}
 
 
-		PowerBiCtrl_2.OAuthResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TipReports');
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TipReports');
 			result = TipCtrl.getAccessToken(config);
 
 		}
@@ -304,14 +304,14 @@ public class TipCtrlTest {
 		}
 
 
-		PowerBiCtrl_2.OAuthResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl_2.getPowerBICredentials('TipReports');
+			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TipReports');
 			result = TipCtrl.getAccessToken(config);
 
 		}
@@ -358,7 +358,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.ReportDetailResult result = null;
+		PowerBiCtrl.ReportDetailResult result = null;
 
 		Test.startTest();
 
@@ -384,7 +384,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -408,7 +408,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -445,7 +445,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -481,7 +481,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -515,7 +515,7 @@ public class TipCtrlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
-		PowerBiCtrl_2.EmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 		Exception testException = null;
 
 		Test.startTest();
