@@ -283,13 +283,7 @@ public class AMS_ChangeCodesHelper {
 
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-		Boolean isNewGen = false;
-		if(oscar != null) {  
-			isNewGen = oscar.Is_NewGen__c;
-		}
-		else {
-			isNewGen = oscarAgency.ANG_IsNewGenAgency__c;
-		}
+		Boolean isNewGen = oscar != null ? oscar.Is_NewGen__c : oscarAgency.ANG_IsNewGenAgency__c;
 
 		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
 			Active__c = isActive
