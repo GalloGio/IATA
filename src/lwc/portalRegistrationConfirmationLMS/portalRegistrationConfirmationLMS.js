@@ -220,7 +220,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	}
 
-
 	startLoading(){
 		this.dispatchEvent(new CustomEvent('startloading'));
 	}
@@ -233,7 +232,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.startLoading();
 		this.submitRegistration();
 	}
-
 
 	submitRegistration(){
 		let auxSearchValues = new Map();
