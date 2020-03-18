@@ -91,7 +91,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
-	//to be replaced by a custom label
 	successModalTitle = 'Verification Mail';
 	@track successModalMessage = '';
 	errorModalTitle = 'Error';
