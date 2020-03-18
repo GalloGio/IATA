@@ -178,7 +178,7 @@
                         <apex:outputText rendered="{!apcountryisocode='RU'}">
                             <div style="margin-bottom:30px;line-height:16px">
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Is there is a ?Double Tax avoiding Treaty? between Russia and the Airline's country of Registration?&nbsp;</apex:outputLabel>
+                                <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Is there a &ldquo;Double Tax avoiding Treaty&rdquo; between Russia and the Airline's country of Registration?&nbsp;</apex:outputLabel>
                                 <apex:inputField value="{!newForm.BSP_Russia_Double_Tax_avoiding_Treaty__c}" label=""/>
                             </apex:pageBlockSectionItem>
                             <div style="margin-left:20px">
