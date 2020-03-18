@@ -326,8 +326,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
 			List<Training_Contact_Role_Details__c> contactTrainingInfo = returnExistingContactTrainingInfo(userInfo.existingContactId);
-			userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
-			userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
+			if(!contactTrainingInfo.isEmpty()){
+				userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
+				userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
+			}
 		}
 		/******************END*******************/
 
