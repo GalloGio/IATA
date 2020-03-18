@@ -19,7 +19,7 @@ private class AMS_ChangeCodesHelperTest {
 				Boolean isPax = true;
 
 				ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-				IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+				IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy', ANG_Enable_NewGen__c = true);
 				insert italy;
 
 
@@ -93,7 +93,7 @@ private class AMS_ChangeCodesHelperTest {
 		static testMethod void TestChangesCodesCreation() {
 
 
-				List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
+				List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account ];
 
 				if(accountLst.isEmpty())
 						System.assert(true,false);
@@ -182,6 +182,77 @@ private class AMS_ChangeCodesHelperTest {
 		Test.stopTest();
 
 		System.assertEquals('BOP - Cash - Credit Card: Authorized', formOfPayments);
+	}
+    
+    static testMethod void TestChangesCodesCreationNewGenContext() {
+
+
+				List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account ];
+
+				if(accountLst.isEmpty())
+						System.assert(true,false);
+
+		Test.startTest();
+
+				if(accountLst.isEmpty())
+						System.assert(true,false);
+
+				Account acc1 = accountLst.get(0);
+				Account acc2 = accountLst.get(0);
+            
+            Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+            Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = acc1.id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+            insert cashfop;
+            Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = acc1.id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+            insert creditCardfop;
+            Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = acc1.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+            insert bopMethod;
+            
+		AMS_OSCAR_JSON.ChangeCode changeCode1 = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_OSCAR_JSON.ChangeCode changeCode2 = new AMS_OSCAR_JSON.ChangeCode();
+
+		changeCode1.name = 'CTA';
+		changeCode1.reasonCode = 'Change data';
+		changeCode1.memoText = 'Minor Changes';//createMemoText(accountChanges);
+		changeCode1.reasonDesc  = 'Accredited-Meets Criteria.';
+		changeCode1.status  = null;
+
+		changeCode2.name = 'CAD';
+		changeCode2.reasonCode = 'Change data';
+		changeCode2.memoText = 'Minor Changes';//createMemoText(accountChanges);
+		changeCode2.reasonDesc  = 'Accredited-Meets Criteria.';
+		changeCode2.status  = null;
+
+		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name','new Value Name Case','old Value Name Case' );
+
+		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name2','new Value Name 2' ,'old Value Name 2' );
+		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name2','new Value Name Case 2','old Value Name Case 2' );
+
+		List <AMS_ChangeCodesHelper.ObjectChange> objChangeList = new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2};
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct2 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange3,objChange4});
+
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
+																							new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null},
+																							new List<Account> {acc1,acc2},
+																							false);
+
+
+				Test.stopTest();
+
+            for (Agency_Applied_Change_code__c i : [Select id, Forms_Of_Payment__c From Agency_Applied_Change_code__c Where Account__c = :acc1.Id]){
+                System.assertNotEquals('Not Applicable', i.Forms_Of_Payment__c, 'Form can not be Not Applicable on new gen context');
+            }
+				/*****************************/
+				/******** Assert Equals ******/
+				/*****************************/
+
+				//System.assertEquals();
+
+
 	}
 
 

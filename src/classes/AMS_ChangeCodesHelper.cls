@@ -283,6 +283,14 @@ public class AMS_ChangeCodesHelper {
 
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
+		Boolean isNewGen = false;
+		if(oscar != null) {  
+			isNewGen = oscar.Is_NewGen__c;
+		}
+		else {
+			isNewGen = oscarAgency.ANG_IsNewGenAgency__c;
+		}
+
 		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
 			Active__c = isActive
 			, Account__c = oscarAgency.Id
@@ -294,7 +302,7 @@ public class AMS_ChangeCodesHelper {
 			, Source__c = source
 			, CreatedDate_User__c = convertToHubEffectiveDate(system.today())
 			, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-			, Forms_Of_Payment__c = generateFOPString(fOPs, oscar!=null && oscar.Is_NewGen__c, changeCode.name)
+			, Forms_Of_Payment__c = generateFOPString(fOPs, isNewGen, changeCode.name)
 		);
 
 		System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
