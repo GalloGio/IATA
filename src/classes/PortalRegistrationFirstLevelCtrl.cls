@@ -113,28 +113,28 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		@AuraEnabled
 		public Id accountId{get;set;}
 
-        	/*YAS info for matching contact based on additional email temporary*/
-        	@AuraEnabled
-        	public Boolean hasExistingContactPersonalEmail{get;set;}
-        	@AuraEnabled
-        	public Boolean hasExistingUserPersonalEmail{get;	set;}
-	        @AuraEnabled
-        	public String existingContactId{get;set;}
-	        @AuraEnabled
-	        public String existingContactName{get;set;}
-	        @AuraEnabled
-	        public String existingContactEmail{get;set;}
-	        @AuraEnabled
-	        public String existingContactAccount{get;set;}
-	        @AuraEnabled
-	        public String existingContactUsername{get;set;}
+		/*YAS info for matching contact based on additional email temporary*/
+		@AuraEnabled
+		public Boolean hasExistingContactPersonalEmail{get;set;}
+		@AuraEnabled
+		public Boolean hasExistingUserPersonalEmail{get;set;}
+		@AuraEnabled
+		public String existingContactId{get;set;}
+		@AuraEnabled
+		public String existingContactName{get;set;}
+		@AuraEnabled
+		public String existingContactEmail{get;set;}
+		@AuraEnabled
+		public String existingContactAccount{get;set;}
+		@AuraEnabled
+		public String existingContactUsername{get;set;}
 
-	        //Training Info in case it exists
-	        @AuraEnabled
-	        public String existingContactTrainingUsername{get;set;}
-	        @AuraEnabled
-	        public String existingContactTrainingUserId{get;set;}
-	    }
+		//Training Info in case it exists
+		@AuraEnabled
+		public String existingContactTrainingUsername{get;set;}
+		@AuraEnabled
+		public String existingContactTrainingUserId{get;set;}
+	}
 
 	@AuraEnabled(cacheable=true)
 	public static RegistrationConfig getConfig(){
@@ -159,20 +159,20 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public static Map<String,String> getContactLabels() {
 
-        List<SObjectField> contactFields = new List<Schema.SObjectField> {
-            Contact.FirstName,
-            Contact.LastName,
-            Contact.Email,
-            Contact.Salutation,
-            Contact.Title,
-            Contact.Phone,
-            Contact.MobilePhone,
-            Contact.Fax,
-            Contact.Preferred_Language__c,
-            Contact.Membership_Function__c,
-            Contact.ISO_country__c,
-            Contact.Country__c
-        };
+		List<SObjectField> contactFields = new List<Schema.SObjectField> {
+			Contact.FirstName,
+			Contact.LastName,
+			Contact.Email,
+			Contact.Salutation,
+			Contact.Title,
+			Contact.Phone,
+			Contact.MobilePhone,
+			Contact.Fax,
+			Contact.Preferred_Language__c,
+			Contact.Membership_Function__c,
+			Contact.ISO_country__c,
+			Contact.Country__c
+		};
 
 		Map<String,String> labels = new Map<String,String>();
 		for (SObjectField f : contactFields) {
@@ -329,7 +329,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
 			userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
 		}
-        	/******************END*******************/
+		/******************END*******************/
 
 		return userInfo;
 	}
@@ -356,14 +356,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public static List<Training_Contact_Role_Details__c> returnExistingContactTrainingInfo(Id contactId) {
-        	String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-	        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c
-								FROM Training_Contact_Role_Details__c
-								WHERE Account_Contact_Role__r.Contact__c = :contactId 
-								AND RecordTypeId = :RECTYPE_Trainee_YASContDet
-								LIMIT 1];
+		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c
+														FROM Training_Contact_Role_Details__c
+														WHERE Account_Contact_Role__r.Contact__c = :contactId
+														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
+														LIMIT 1];
 
-	        return con;
+		return con;
 	}
 
 	public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
@@ -432,9 +432,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		if(params.existingContactName != null && params.existingContactName != ''){
 			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
-		}
-		else{
-		result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+		}else{
+			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
 		}
 
 		return result;
@@ -1129,7 +1128,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 
 			mail.setSaveAsActivity(false);
-			//mail.setPlainTextBody(plainBody);
 			listSingleEmailMessages.add(mail);
 
 			if(!Test.isRunningTest()) {
@@ -1268,10 +1266,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 
-		List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
-								FROM Account_Role__c 
-								WHERE Account__c = :con.AccountId 
-								AND Account_Role_Name__c = 'Training' 
+		List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
+								FROM Account_Role__c
+								WHERE Account__c = :con.AccountId
+								AND Account_Role_Name__c = 'Training'
 								AND Functional_Role__c =  'Training' LIMIT 1];
 
 		Account_Role__c ar = new Account_Role__c();
@@ -1316,7 +1314,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			acr.Contact__c = con.Id;
 
 			update acr;
-			
+
 			if(acrNew != null)
 				delete acrNew;
 
@@ -1333,8 +1331,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			insert acr;
 		}
 
-		if(existingTrainingId != ''){
-	   
+        if(existingTrainingId != ''){
+
 			//Inactivate the registering Contact
 			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 												AccountId,Email,Additional_Email__c,Phone,
@@ -1356,8 +1354,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		//deactivate user
 		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
 			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
-
-	}
+    }
 
 	public class AsyncDeactivateUser implements Queueable {
 
