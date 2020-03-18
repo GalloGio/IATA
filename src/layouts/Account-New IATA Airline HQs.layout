@@ -212,6 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>iiNet_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Member__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -605,6 +609,13 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
