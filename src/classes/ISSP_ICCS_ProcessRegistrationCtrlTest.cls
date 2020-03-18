@@ -1,5 +1,29 @@
-@isTest(SeeAllData=true)
+@isTest
 public class ISSP_ICCS_ProcessRegistrationCtrlTest {
+
+	@TestSetup
+	static void makeData(){
+		Amazon_Cred__c genericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		insert new List<Amazon_Cred__c>{genericAttach, recycleBin};
+
+		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+			new AWSKey__c(
+				name = 'adevconf',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd')
+		};
+		insert AWS_KEYs;
+
+		ISSP_Cs__c cs1 = new ISSP_Cs__c(Name='ISSP AMS ALLOWED AGENCY URL', Value__c='pdf');
+		ISSP_Cs__c cs2 = new ISSP_Cs__c(Name='ISSP AMS AMAZON S3 ALLOWED EXTS', Value__c='pdf');
+		ISSP_Cs__c cs3 = new ISSP_Cs__c(Name='ISSP AMS AMAZON S3 MAX FILE SIZE', Value__c='100');
+		insert new list<ISSP_CS__C>{cs1,cs2,cs3};
+	}
 
 	private static User createPartnerUser(String serviceStatus){
 		// Create ICCS portal application if it doesn't exist
@@ -140,7 +164,7 @@ public class ISSP_ICCS_ProcessRegistrationCtrlTest {
 
 	static testMethod void testRegistrationProcess() {
 
-		System.assertEquals(0, Limits.getDMLStatements());
+		System.assertEquals(3, Limits.getDMLStatements());
 
 		User partnerUser = createPartnerUser('');
 
@@ -456,8 +480,8 @@ public class ISSP_ICCS_ProcessRegistrationCtrlTest {
 		Test.stopTest();
 	}
 
-/*    static testmethod void testStraightRegistrationProcess(){
-		System.assertEquals(0, Limits.getDMLStatements());
+	static testmethod void testStraightRegistrationProcess(){
+		System.assertEquals(3, Limits.getDMLStatements());
 
 		User partnerUser = createPartnerUser('');
 
@@ -646,7 +670,7 @@ public class ISSP_ICCS_ProcessRegistrationCtrlTest {
 		caseProcessesController.closePage();
 
 		Test.stopTest();
-	}*/
+	}
 
 
 	static testMethod void testRegistrationProcess2() {

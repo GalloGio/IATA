@@ -88,8 +88,13 @@ if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
 	}
 }
 
-	//HK TR18-150 - Move all fields updates (workflows) on Account, Case and Contact to the trigger
-	if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
-		WorkflowHelper.performActions(WorkflowHelper.ACCOUNT_TYPE);
+  //HK TR18-150 - Move all fields updates (workflows) on Account, Case and Contact to the trigger
+  if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
+	WorkflowHelper.performActions(WorkflowHelper.ACCOUNT_TYPE); 
+  }
+
+  	AccountTriggerHandler accountTriggerHandler = new AccountTriggerHandler();
+	if (Trigger.isUpdate && Trigger.isAfter) {
+		accountTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
 	}
 }
