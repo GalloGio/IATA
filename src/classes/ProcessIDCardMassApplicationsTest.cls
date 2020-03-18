@@ -439,8 +439,6 @@ private class ProcessIDCardMassApplicationsTest {
 
 	@isTest
 	static void testSendSFDevsAlertMessage(){
-		
-		Sobject anObject;
 
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
 
@@ -481,8 +479,7 @@ private class ProcessIDCardMassApplicationsTest {
 		insert userList;
 
 		DevsTools.sendSFDevsAlertMessage('Title test', 'Message Test');
-		DevsTools.getClassName(anObject);
-		
+
 		Integer invocations = Limits.getEmailInvocations();
 		
 		Test.stopTest();
