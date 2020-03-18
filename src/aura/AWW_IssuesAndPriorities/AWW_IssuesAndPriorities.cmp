@@ -174,9 +174,9 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col" class="narrowColumn">
+                        <th scope="col">
                             <!-- <span class="slds-truncate">Issue with IATA</span> -->
-                                <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c"  click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
+                                <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c"  click="{!c.sortList}" class="slds-truncate" />
                                 <span class="slds-assistive-text">Sort Column</span>
                                 <div class="slds-icon_container" title="Sort Column">
                                     <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__c'}">
@@ -187,9 +187,9 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col" class="narrowColumn">
+                        <th scope="col" >
                             <!-- <span class="slds-truncate">Visible to all IATA</span> -->
-                                <ui:outputText value="Visible to all IATA" title="AM_Public__c"  click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
+                                <ui:outputText value="Visible to all IATA" title="AM_Public__c"  click="{!c.sortList}" class="slds-truncate" />
                                 <span class="slds-assistive-text">Sort Column</span>
                                 <div class="slds-icon_container" title="Sort Column">
                                     <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__c'}">
