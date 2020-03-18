@@ -1526,6 +1526,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				
 				if(newAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 					toUpsert = performCashTransformation(accountsAffected);
+				}
 
 				if(!toUpsert.isEmpty())
 					upsert toUpsert;
