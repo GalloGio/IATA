@@ -121,22 +121,7 @@
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
                     </apex:pageBlockSection>
 
-                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
-                        <apex:outputText rendered="{!apcountryisocode='IL'}">
-                            It is a legal requirement in {!strLOB} Israel that the participating Airline signs and submits the Antitrust Document.<br/>
-                            It is the Airline that signs the form, even it is being represented in the market by a GSA/GSSA.<br/>
-                            The document must show the Airline?s legal name, be dated, stamped, and sent to the following address:<br/><br/>
-                            <div style="padding-left:50px;padding-bottom:30px; font-weight:bold">
-                                IATA Israel<br/>
-                                Trade Tower Building, 8th Floor 25 Hamereed Street<br/>
-                                Tel Aviv, ISRAEL
-                            </div>
-                            <br/><br/>
-                            <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
-                            <br/><br/>
-                            Please click here to download the form(s):&nbsp;
-                        </apex:outputText>
-                        
+                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
                         <apex:outputText rendered="{!apcountryisocode='EC'}">
                             <div>
                             Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
