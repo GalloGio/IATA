@@ -186,7 +186,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
 
-		//Clean in case of the user comes back and try to insert another option or email
+		//Clean in case of the user comes back and try to insert another option or email!
 		this.localContactInfo.Username = '';
 		this.localContactInfo.UserId = '';
 
