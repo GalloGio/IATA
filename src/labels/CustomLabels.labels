@@ -3345,6 +3345,13 @@ Through this online service, you can manage your endorsement process directly on
 If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
+        <fullName>COVID_19_eComm_Home_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID-19 eComm Home Page</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
