@@ -26,6 +26,12 @@ export default class PortalServicesAccessGranted extends LightningElement {
                 if(results[i].isFavorite !== false){
                     favorites.push(results[i]);
                 }
+
+                if(results[i].recordService.Application_icon_URL__c !== undefined && results[i].recordService.Application_icon_URL__c !== ''){
+                    results[i].recordService.imageCSS = 'background: url(' + results[i].recordService.Application_icon_URL__c + ');';
+                }else{
+                    results[i].recordService.imageCSS = '';
+                }
             }
             this.lstFavoriteServicesGranted = favorites;
 
