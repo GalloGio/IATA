@@ -182,4 +182,20 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		Test.stopTest();
 	}
 
+	@isTest
+	static void testAuraMethods(){
+
+		Contact existingContact = [SELECT Id, Name, Email FROM Contact where Email = 'dontest@test.com'];
+		String serviceId = PortalServicesCtrl.getPortalServiceId('Training Platform (LMS)');
+
+		Test.startTest();
+
+		String sRes = PortalRegistrationThirdLevelLMSCtrl.validateFullName(existingContact.Id, '', 'donatelo');
+		system.assert(sRes  == 'not_matching');
+
+		Boolean bRes = PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance(serviceId , existingContact.Id);
+		system.assert(bRes  == false);
+
+		Test.stopTest();
+	}
 }
