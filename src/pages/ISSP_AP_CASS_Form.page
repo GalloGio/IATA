@@ -369,7 +369,7 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='IT'}">
-                        <apex:outputLabel value="* Italian Fiscal code" style="color:#a31717; font-weight: bold !important;"/>
+                        <apex:outputLabel value="Italian Fiscal code"/>
                         <apex:inputField value="{!newForm.Other_TAX_Identification__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     

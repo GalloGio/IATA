@@ -335,10 +335,14 @@
                             <apex:outputLabel value="Please specify other TAX Identification" />
                             <apex:inputField value="{!newForm.Other_TAX_Identification__c}" />
                         </apex:pageBlockSectionItem>
-                    
-                        <apex:pageBlockSectionItem rendered="{!OR(apcountryisocode='IT',apcountryisocode='CR')}">
-                            <!-- <apex:outputLabel value="{!CASE(apcountryisocode, 'IT', '* Italian Fiscal code', '* Please indicate your airline&apos;s Fiscal ID c?dula juridica')}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/> -->
-                            <apex:outputLabel value="{!CASE(apcountryisocode, 'IT', '* Italian Fiscal code', '* Please indicate your airline\'s Fiscal ID c?dula juridica')}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/>
+
+                        <apex:pageBlockSectionItem rendered="{!apcountryisocode='IT'}">
+                            <apex:outputLabel value="Italian Fiscal code" for="othertaxid"/>
+                            <apex:inputText id="othertaxid" value="{!newForm.Other_TAX_Identification__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!apcountryisocode='CR'}">
+                            <apex:outputLabel value="{!'* Please indicate your airline\'s Fiscal ID c?dula juridica'}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/>
                             <apex:inputText id="othertaxid" value="{!newForm.Other_TAX_Identification__c}" />
                         </apex:pageBlockSectionItem>
                         
