@@ -203,18 +203,23 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     }
                 }
 
-                if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD} && arrayContains(fieldValueToServer, "Passed")
-                    && arrayContains(fieldsApiName, "STEP51__c"))
-                {
-                    additionalServiceRequest = "executeMcToStSplitBatch";
-                    const message = '{!cannotProceedConversionToStandardMessage}';
+                if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD}) {
+                    if (arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP51__c")) {
+                        additionalServiceRequest = "executeMcToStSplitBatch";
+                        const message = '{!cannotProceedConversionToStandardMessage}';
 
-                    if(message){
-                        alert(message);
-                        return 'false';
+                        if(message){
+                            alert(message);
+                            return 'false';
+                        }
+
+                        if (! confirm("{!CONFIRM_MC_CONVERSION_MSG}")){
+                            return 'false';
+                        }
                     }
-
-                    if (! confirm("{!CONFIRM_MC_CONVERSION_MSG}")){
+                    
+                    if ({!oscar.STEP51__c != 'Passed'} && arrayContains(fieldValueToServer,"Authorize Approval")) {
+                        alert('The OSCAR can\'t be Approved if Confirm Conversion step is not Passed.');
                         return 'false';
                     }
                 }
