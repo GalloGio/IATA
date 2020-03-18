@@ -62,6 +62,7 @@
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" class="IEFixDisplay">
+                            <div class="dataValue">{account.vatNumber}</div>
                         </lightning-layout-item>
                     
                         <lightning-layout-item size="4" class="rightItem IEFixDisplay">
@@ -84,13 +85,14 @@
         <!--</div>
     </lightning-layout>-->
 
-    <c-portal-address-form 
-        country-id={countryId}
-        address={localAddress}
-        onsetvalidationstatus={setValidationStatus}
-        onstartloading={startLoading}
-        onstoploading={stopLoading}>
-    </c-portal-address-form>
+            <c-portal-address-form 
+                country-id={countryId}
+                address={localAddress}
+                disable-country=true
+                onsetvalidationstatus={setValidationStatus}
+                onstartloading={startLoading}
+                onstoploading={stopLoading}>
+            </c-portal-address-form>
 
     <!--<lightning-layout multiple-rows vertical-align="stretch">
         <div class="IEFixDisplayContainer">-->

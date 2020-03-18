@@ -195,6 +195,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
         'geonameWarning2':'',
         'addressSuggestions':[]
     };
+    @track countryModifiedInCompanyInformation = false;
 
     account = {
         'name':'',
@@ -203,7 +204,9 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
         'customerTypeSector':'',
         'customerTypeCategory':'',
         'sector':'',
-        'category':''
+        'category':'',
+        'vatLabel':'',
+        'vatNumber':''
     };
 
     @track contactInfo;
@@ -301,6 +304,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     @track step1Complete = false;
     @track step2Complete = false;
     @track step3Complete = false;
+    @track step3CompleteBackup = false;
     @track step4Complete = false;
 
     step1CompletionStatus(event){
@@ -309,10 +313,21 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
     step2CompletionStatus(event){
         this.step2Complete = event.detail;
+
+        // Retrieve the country Information
+        var addressInformation = this.template.querySelector('c-portal-registration-company-information').getAddressInformation();
+        let retrievedAddress = JSON.parse(JSON.stringify(addressInformation));
+
+        // Compare with the current country in the address variable
+        // if the country is different, we need to flag the step 3 as incomplete,
+        // but we're keeping track of the old value in the step3CompleteBackup variable
+        this.countryModifiedInCompanyInformation = retrievedAddress.countryId !== this.address.countryId;
+        this.step3Complete = this.step3CompleteBackup && !this.countryModifiedInCompanyInformation;
     }
 
     step3CompletionStatus(event){
         this.step3Complete = event.detail;
+        this.step3CompleteBackup = event.detail;
     }
 
     step4CompletionStatus(event){
@@ -341,6 +356,32 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
 
             this.account = JSON.parse(JSON.stringify(companyInformation));
             this.selectedCustomerType = companyInformation.customerType;    
+
+            var addressInformation = this.template.querySelector('c-portal-registration-company-information').getAddressInformation();
+            let retrievedAddress = JSON.parse(JSON.stringify(addressInformation));
+
+            // If country has been modified, the address information step becomes invalid
+            if(this.address.countryId !== retrievedAddress.countryId){
+                this.address.isPoBox = false;
+                this.address.countryId = retrievedAddress.countryId;
+                this.address.countryCode = retrievedAddress.countryCode;
+                this.address.countryName = retrievedAddress.countryName;
+                this.address.stateId = '';
+                this.address.stateName = '';
+                this.address.cityId = '';
+                this.address.cityName = '';
+                this.address.street = '';
+                this.address.zip = '';
+                this.address.validationStatus = 0;
+                this.address.checkPerformed = false;
+                this.address.inputModified = true;
+                this.address.geonameWarning1 = '';
+                this.address.geonameWarning2 = '';
+                this.address.addressSuggestions = [];
+            }
+
+
+
             this.currentStep = futureStep;
         }
         // Address Information

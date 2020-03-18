@@ -281,3 +281,7 @@
         padding-right: 2rem;
     }
   }
+  
+.helpText{
+    font-size: 12px !important;
+}

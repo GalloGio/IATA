@@ -3,6 +3,7 @@ import { LightningElement,track,api } from 'lwc';
 import { loadScript, loadStyle }    from 'lightning/platformResourceLoader';
 import RegistrationUtils            from 'c/registrationUtils';
 
+import getISOCountries              from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
 
@@ -11,6 +12,7 @@ import CSP_L2_Create_New_Account            from '@salesforce/label/c.CSP_L2_Cre
 import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
+import CSP_L2_Company_Location              from '@salesforce/label/c.CSP_L2_Company_Location';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
@@ -22,6 +24,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
     // inputs
     @api account;
+    @api address;
     @api originalCustomerType;
     @api customerType;
     @api countryId;
@@ -49,12 +52,18 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
     @track isAddressInformationButtonDisabled;
 
+    @track localAddress;
+    @track countryOptions;
+    countryData;
+    @track countryListSet = false;
+
     // labels
     _labels = {
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
         CSP_L2_Company_Information,
         CSP_L2_Company_Name,
+        CSP_L2_Company_Location,
         CSP_L2_Website,
         CSP_L2_Back_to_Account_Selection,
         CSP_L2_Next_Step,
@@ -67,18 +76,54 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         this._labels = value;
     }
 
-    checkCompletion(){
+    get vatLabel(){
+        if(this.countryData !== undefined){
+            this.localAccount.vatLabel = this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c;
+            return this.localAccount.vatLabel;
+        }
+        else{
+            this.localAccount.vatLabel = 'Tax Number';
+            return this.localAccount.vatLabel;
+        }
+    }
+
+    get vatHelpText(){
+        if(this.countryData !== undefined){
+            return this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c;
+        }
+        else{
+            return '';
+        }
+    }
+
+    get vatPlaceholder(){
+        if(this.countryData !== undefined){
+            return this.countryData.countryMap[this.localAddress.countryId].Tax_number_format__c;
+        }
+        else{
+            return ' ';
+        }
+    }
+
+    checkCompletion(dispatchAnyway){
         var currentCompletionStatus = this.isAddressInformationButtonDisabled;
 
         this.isAddressInformationButtonDisabled = this.localAccount.name === '' 
-                                                    || !this.isCategorizationSearchable;
+                                                    || !this.isCategorizationSearchable
+                                                    || this.localAddress.countryId === '';
 
-        if(this.isAddressInformationButtonDisabled !== currentCompletionStatus){
+        if(dispatchAnyway || this.isAddressInformationButtonDisabled !== currentCompletionStatus){
             this.dispatchEvent(new CustomEvent('completionstatus',{detail : (!this.isAddressInformationButtonDisabled)}));
         }
     }
 
     connectedCallback() {
+        this.localAddress = JSON.parse(JSON.stringify(this.address));
+
+        if(this.localAddress.countryId === ''){
+            this.localAddress.countryId = this.countryId;
+        }
+
         this.localAccount = JSON.parse(JSON.stringify(this.account));
 
         if(this.localAccount.customerType === ''){
@@ -96,7 +141,35 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
         this.registrationUtilsJs = new RegistrationUtils();
 
+        getISOCountries().then(result=>{
+            let countryList = JSON.parse(JSON.stringify(result.countryList));
+            let optionList = this.buildOptions(countryList,false);
+
+            this.countryData = result;
+            this.countryOptions = optionList;
+
+            if(this.localAddress.countryId !== undefined && this.localAddress.countryId.length > 0){
+                this.changeCountry(this.localAddress.countryId);
+            }
+            this.countryListSet = true;
+        });
+
         this.dispatchEvent(new CustomEvent('scrolltotop'));
+    }
+
+    /* Build option list */
+    buildOptions(dataList, includeEmpty){
+        let optionList = [];
+
+        if(includeEmpty){
+            optionList.push({ 'label': '', 'value': '' });
+        }
+
+        dataList.forEach(function (data) {
+            optionList.push({ 'label': data.Name, 'value': data.Id });
+        });
+
+        return optionList;
     }
 
     setCustomerType(customerType){
@@ -115,12 +188,12 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
                     if(this.isTriggeredByRequest){
                         this.isCategorizationModified = result.DeveloperName !== this.originalCustomerType && this.isCategorizationSearchable;
                     }
-                    this.checkCompletion();
+                    this.checkCompletion(false);
                 });
         }
         else{
             this.isCategorizationSearchable = false;
-            this.checkCompletion();
+            this.checkCompletion(false);
         }
 
         // Update customer type picklists
@@ -205,7 +278,24 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
         this.localAccount[inputName] = inputValue;
 
-        this.checkCompletion();
+        this.checkCompletion(false);
+    }
+
+    handleCountryChange(event){
+        let countryId = event.target.value;
+        this.changeCountry(countryId);
+    }
+
+    changeCountry(countryId){
+        let country = this.countryData.countryMap[countryId];
+
+        this.localAddress.countryId = country.Id;
+        this.localAddress.countryCode = country.ISO_Code__c;
+        this.localAddress.countryName = country.Name;
+
+        this.localAccount.vatNumber = '';
+
+        this.checkCompletion(true);
     }
 
     // Navigation methods
@@ -221,5 +311,10 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @api
     getCompanyInformation(){
         return this.localAccount;
+    }
+
+    @api
+    getAddressInformation(){
+        return this.localAddress;
     }
 }
