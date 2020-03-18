@@ -52,6 +52,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track renderConfirmation = false;
     @track searchText;
     @track _faqObject = {};
+    @track showCross=false;
     
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
@@ -322,6 +323,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     }
 
     onInputChange(event) {
+        this.showCross=event.target.value.length>0;
         if(event.target.value !== '') {
             this.searchText = event.target.value;
 
@@ -414,5 +416,10 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     
     closeModal() {
         this.renderConfirmation = !this.renderConfirmation;
+    }
+    removeTextSearch(){
+        this.showCross=false;
+        this.searchText='';
+        this.redirectionTo();
     }
 }
