@@ -242,21 +242,22 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     }
 
-    handleKeyUp(event) {
-        const isEnterKey = event.keyCode === 13;
-        if (isEnterKey) {
-            //search again
-            this.resetPagination();
-            this.searchWithNewFilters();
-        }
-    }
-
     handleInputChange(event) {
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = event.target.value;
         this.showCross =  event.target.value.length > 0;
         this.filteringObject = filteringObjectAux;
+
+
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            if(this.filteringObject.searchText.length > 3 || this.filteringObject.searchText.length==0) {
+                this.resetPagination();
+                this.searchWithNewFilters();
+            }
+        }, 1300, this);
     }
 
     changeToUserCasesTableView(){
@@ -373,6 +374,8 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     removeTextSearch(){
         this.showCross=false;
         this.filteringObject.searchText=null;
+        this.resetPagination();
+        this.searchWithNewFilters();
     }
 
     getPickWithAllValue(picklist){

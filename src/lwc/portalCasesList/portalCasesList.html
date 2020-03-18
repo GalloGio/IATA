@@ -1,13 +1,12 @@
 <template>
     <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-top_x-large">
         <!-- Search bar and buttons -->
-        <div class="slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_5-of-12">
+        <div class="slds-order--2 slds-medium-order--1 slds-text-align_right slds-p-horizontal_small slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_5-of-12 slds-p-vertical--xx-small ">
             <div class="aroundLightGrayBorder inputFilter borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall inputFilter">
                 <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
                     placeholder={label.CSP_SearchingOn}
                     class="hideInputLabel grayInputPlaceholder"
-                    onkeyup={handleKeyUp}
                     onchange={handleInputChange}
                     value={filteringObject.searchText}>
                 </lightning-input>
@@ -16,11 +15,11 @@
                 </div>
             </div>
         </div>
-        <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12">
+        <div class="slds-order--1 slds-medium-order--2  slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 ">
             <div class="slds-grid slds-wrap slds-grid_align-end slds-grid_vertical-stretch">
                 <div class="slds-text-align_right slds-p-horizontal_none slds-col slds-size_1-of-1 buttonGrid">
                     <div class="slds-grid slds-wrap slds-grid_align-end slds-grid_vertical-stretch slds-grid_vertical-align-end fullHeight slds-gutters_direct-medium">
-                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight">
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--11 slds-medium-order--1">
             <!-- FILTER -->
                             <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines fullHeight" onclick={openCasesFilterModal}>
                                 {label.CSP_Filtered}
@@ -31,13 +30,13 @@
                             </button>
                         </div>
         <!-- LIST VIEW -->
-                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight" if:true={viewNormalUserCasesTableViewButton}>    
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1" if:true={viewNormalUserCasesTableViewButton}>    
                             <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth twoLines fullHeight" onclick={changeToUserCasesTableView} ></lightning-button>
                         </div>
-                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight" if:true={viewAdminUserCasesTableViewButton}>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1" if:true={viewAdminUserCasesTableViewButton}>
                             <lightning-button label={label.CSP_CompanyCases} class="containedButton fullWidth twoLines fullHeight" onclick={changeToAdminCasesTableView}></lightning-button>
                         </div>
-                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight">
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1">
                             <lightning-button label="Reach Us" class="containedButton fullWidth twoLines fullHeight" onclick={openReachUs}></lightning-button>
                         </div>
                     </div>
