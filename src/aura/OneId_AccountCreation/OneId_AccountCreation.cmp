@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController" access="public">
 
 	<aura:attribute type="Account" name="account" required="true" />
 	<aura:attribute type="IATA_ISO_Country__c" name="country" required="true"/>

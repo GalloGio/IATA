@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
   <aura:attribute name="accountId" type="String" />
   <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 

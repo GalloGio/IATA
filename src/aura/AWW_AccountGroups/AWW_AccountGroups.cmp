@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountGroupsCtrl">
+<aura:component controller="AWW_AccountGroupsCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="gridColumns" type="List"/>
     <aura:attribute name="gridData" type="List"/>
