@@ -364,10 +364,20 @@ private class AMS_ChangeCodesHelperTest {
 
 		insert changeCodeList;
 
-		List<ISSP_CS__c> isspcs = new List<ISSP_CS__c>();
-		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Airline Profil', Value__c = '00ew0000001QRzE'));
-		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Agency Profile', Value__c = '00ew0000001QRzC,00ew0000001QoBp'));
-		insert isspcs;
+		List<String> listAirlineId = new List<String>();
+		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
+			listAirlineId.add(profile.Id);
+		}
+
+		List<String> listAgencyId = new List<String>();
+		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
+			listAgencyId.add(profile.Id);
+		}
+
+		List<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
+		listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+		listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
+		insert listCs;
 
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
