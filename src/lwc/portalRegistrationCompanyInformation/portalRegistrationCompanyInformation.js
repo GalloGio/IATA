@@ -13,6 +13,7 @@ import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Com
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Company_Location              from '@salesforce/label/c.CSP_L2_Company_Location';
+import CSP_L2_VAT_Number                    from '@salesforce/label/c.CSP_L2_VAT_Number';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
@@ -77,27 +78,35 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     }
 
     get vatLabel(){
-        if(this.countryData !== undefined){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c !== undefined){
             this.localAccount.vatLabel = this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c;
-            return this.localAccount.vatLabel;
         }
         else{
-            this.localAccount.vatLabel = 'Tax Number';
-            return this.localAccount.vatLabel;
+            this.localAccount.vatLabel = CSP_L2_VAT_Number;
         }
+        return this.localAccount.vatLabel;
     }
 
     get vatHelpText(){
-        if(this.countryData !== undefined){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c !== undefined){
             return this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c;
         }
         else{
-            return '';
+            return undefined;
+        }
+    }
+
+    get vatClass(){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c !== undefined){
+            return 'vatItem IEFixDisplay';
+        }
+        else{
+            return 'companyItem IEFixDisplay';
         }
     }
 
     get vatPlaceholder(){
-        if(this.countryData !== undefined){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_format__c !== undefined){
             return this.countryData.countryMap[this.localAddress.countryId].Tax_number_format__c;
         }
         else{

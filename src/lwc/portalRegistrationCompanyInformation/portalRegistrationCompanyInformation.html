@@ -1,5 +1,5 @@
 <template>
-<div>
+    <div>
     <lightning-layout multiple-rows vertical-align="stretch">
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
@@ -16,6 +16,8 @@
 
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
+            
+
             
                 <!------------------------------------------      Customer Type      -------------------------------------------->
                 <template if:true={customerTypesList}>
@@ -224,13 +226,10 @@
                 </lightning-layout-item>
 
                 <!------------------------------------------      VAT Number      -------------------------------------------->
-                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                <lightning-layout-item size="12" class={vatClass}>
                     <div class="formLabelContainer">
                         <div class="text-xxsmall">
                             {vatLabel} <!--lightning-icon icon-name="utility:help" size="xx-small" class="helpIcon" alternative-text={vatHelpText} title={vatHelpText}></lightning-icon-->
-                        </div>
-                        <div class="text-xxsmall helpText">
-                            {vatHelpText}
                         </div>
                     </div>
 
@@ -246,7 +245,12 @@
                                 onkeyup={handleInputValueChange}/>
                         </div>
                     </div>
-                </lightning-layout-item>
+                    <template if:true={vatHelpText}>
+                        <div class="text-xxsmall helpText">
+                            {vatHelpText}
+                        </div>
+                    </template>
+            </lightning-layout-item>
 
                 <!------------------------------------------      Website      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
