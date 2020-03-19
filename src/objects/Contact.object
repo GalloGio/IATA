@@ -20663,6 +20663,12 @@ ISBLANK(Membership_Function__c) ))</errorConditionFormula>
         <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>No_Airport_Contact</fullName>
+        <active>true</active>
+        <errorConditionFormula>Account.RecordType.DeveloperName=&apos;Airport&apos;</errorConditionFormula>
+        <errorMessage>It is not possible to attach a contact to an Airport type Account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Phone_or_email_mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>OR(

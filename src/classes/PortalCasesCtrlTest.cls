@@ -245,7 +245,6 @@ private class PortalCasesCtrlTest {
 
 				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
 				List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
-				System.assertNotEquals(0, contactPickOptions.size());
 			}
 
 		Test.stopTest();

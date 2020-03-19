@@ -324,7 +324,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_2_myRule_1_4679060097</elementReference>
+                    <elementReference>formula_2_myRule_1_3047795600</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -355,7 +355,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_3_myRule_1_1312756201</elementReference>
+                    <elementReference>formula_3_myRule_1_2655058893</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -386,7 +386,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_4_myRule_1_9326067189</elementReference>
+                    <elementReference>formula_4_myRule_1_4992634650</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -472,7 +472,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_13_myRule_12_6017371133</elementReference>
+                    <elementReference>formula_13_myRule_12_2590932566</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -558,7 +558,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_16_myRule_15_3346787714</elementReference>
+                    <elementReference>formula_16_myRule_15_9731704896</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -589,7 +589,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_17_myRule_15_7511242286</elementReference>
+                    <elementReference>formula_17_myRule_15_7528509259</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -675,7 +675,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_20_myRule_19_8535717355</elementReference>
+                    <elementReference>formula_20_myRule_19_4484254161</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -706,7 +706,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_21_myRule_19_9719083776</elementReference>
+                    <elementReference>formula_21_myRule_19_3655557794</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -737,7 +737,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_22_myRule_19_9723564789</elementReference>
+                    <elementReference>formula_22_myRule_19_8732112036</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -768,7 +768,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_23_myRule_19_5642068302</elementReference>
+                    <elementReference>formula_23_myRule_19_3140254339</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -799,7 +799,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_24_myRule_19_7395237631</elementReference>
+                    <elementReference>formula_24_myRule_19_0206018107</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -885,7 +885,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_27_myRule_26_0619828711</elementReference>
+                    <elementReference>formula_27_myRule_26_5819825205</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -916,7 +916,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_28_myRule_26_0429865645</elementReference>
+                    <elementReference>formula_28_myRule_26_0381367721</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -971,7 +971,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_31_myRule_30_3972360682</elementReference>
+                    <elementReference>formula_31_myRule_30_2430460918</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1002,7 +1002,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_32_myRule_30_6904368242</elementReference>
+                    <elementReference>formula_32_myRule_30_0365231375</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1119,7 +1119,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_35_myRule_34_9862523118</elementReference>
+                    <elementReference>formula_35_myRule_34_4953497117</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1529,7 +1529,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_7_myRule_6_5987770290</elementReference>
+                    <elementReference>formula_7_myRule_6_8742575820</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1615,7 +1615,7 @@
                 <leftValueReference>myVariable_current.Areas_of_Interest__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>formula_10_myRule_9_4789553197</elementReference>
+                    <elementReference>formula_10_myRule_9_8741987912</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1632,7 +1632,7 @@
                 <stringValue>&apos;Cargo &amp; Logistics&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_10_myRule_9_4789553197</name>
+        <name>formula_10_myRule_9_8741987912</name>
         <dataType>String</dataType>
         <expression>&apos;Cargo &amp; Logistics&apos;</expression>
     </formulas>
@@ -1643,7 +1643,7 @@
                 <stringValue>&apos;Management and Leadership&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_13_myRule_12_6017371133</name>
+        <name>formula_13_myRule_12_2590932566</name>
         <dataType>String</dataType>
         <expression>&apos;Management and Leadership&apos;</expression>
     </formulas>
@@ -1654,7 +1654,7 @@
                 <stringValue>&apos;Airline Operations and Quality&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_16_myRule_15_3346787714</name>
+        <name>formula_16_myRule_15_9731704896</name>
         <dataType>String</dataType>
         <expression>&apos;Airline Operations and Quality&apos;</expression>
     </formulas>
@@ -1665,7 +1665,7 @@
                 <stringValue>&apos;Safety&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_17_myRule_15_7511242286</name>
+        <name>formula_17_myRule_15_7528509259</name>
         <dataType>String</dataType>
         <expression>&apos;Safety&apos;</expression>
     </formulas>
@@ -1676,7 +1676,7 @@
                 <stringValue>&apos;Airline Business Management&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_20_myRule_19_8535717355</name>
+        <name>formula_20_myRule_19_4484254161</name>
         <dataType>String</dataType>
         <expression>&apos;Airline Business Management&apos;</expression>
     </formulas>
@@ -1687,7 +1687,7 @@
                 <stringValue>&apos;Law and Regulations&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_21_myRule_19_9719083776</name>
+        <name>formula_21_myRule_19_3655557794</name>
         <dataType>String</dataType>
         <expression>&apos;Law and Regulations&apos;</expression>
     </formulas>
@@ -1698,7 +1698,7 @@
                 <stringValue>&apos;Environment&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_22_myRule_19_9723564789</name>
+        <name>formula_22_myRule_19_8732112036</name>
         <dataType>String</dataType>
         <expression>&apos;Environment&apos;</expression>
     </formulas>
@@ -1709,7 +1709,7 @@
                 <stringValue>&apos;Sales &amp; Marketing&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_23_myRule_19_5642068302</name>
+        <name>formula_23_myRule_19_3140254339</name>
         <dataType>String</dataType>
         <expression>&apos;Sales &amp; Marketing&apos;</expression>
     </formulas>
@@ -1720,7 +1720,7 @@
                 <stringValue>&apos;Finance and Accounting&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_24_myRule_19_7395237631</name>
+        <name>formula_24_myRule_19_0206018107</name>
         <dataType>String</dataType>
         <expression>&apos;Finance and Accounting&apos;</expression>
     </formulas>
@@ -1731,7 +1731,7 @@
                 <stringValue>&apos;Air Navigation Services&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_27_myRule_26_0619828711</name>
+        <name>formula_27_myRule_26_5819825205</name>
         <dataType>String</dataType>
         <expression>&apos;Air Navigation Services&apos;</expression>
     </formulas>
@@ -1742,7 +1742,7 @@
                 <stringValue>&apos;Civil Aviation Authorities&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_28_myRule_26_0429865645</name>
+        <name>formula_28_myRule_26_0381367721</name>
         <dataType>String</dataType>
         <expression>&apos;Civil Aviation Authorities&apos;</expression>
     </formulas>
@@ -1753,7 +1753,7 @@
                 <stringValue>&apos;Airport Planning, Operations and Management&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_4679060097</name>
+        <name>formula_2_myRule_1_3047795600</name>
         <dataType>String</dataType>
         <expression>&apos;Airport Planning, Operations and Management&apos;</expression>
     </formulas>
@@ -1764,7 +1764,7 @@
                 <stringValue>&apos;Travel and Tourism&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_31_myRule_30_3972360682</name>
+        <name>formula_31_myRule_30_2430460918</name>
         <dataType>String</dataType>
         <expression>&apos;Travel and Tourism&apos;</expression>
     </formulas>
@@ -1775,7 +1775,7 @@
                 <stringValue>&apos;Fares and Ticketing&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_32_myRule_30_6904368242</name>
+        <name>formula_32_myRule_30_0365231375</name>
         <dataType>String</dataType>
         <expression>&apos;Fares and Ticketing&apos;</expression>
     </formulas>
@@ -1786,7 +1786,7 @@
                 <stringValue>&apos;Security&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_35_myRule_34_9862523118</name>
+        <name>formula_35_myRule_34_4953497117</name>
         <dataType>String</dataType>
         <expression>&apos;Security&apos;</expression>
     </formulas>
@@ -1797,7 +1797,7 @@
                 <stringValue>&apos;Ground Operations&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_1312756201</name>
+        <name>formula_3_myRule_1_2655058893</name>
         <dataType>String</dataType>
         <expression>&apos;Ground Operations&apos;</expression>
     </formulas>
@@ -1808,7 +1808,7 @@
                 <stringValue>&apos;other&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_1_9326067189</name>
+        <name>formula_4_myRule_1_4992634650</name>
         <dataType>String</dataType>
         <expression>&apos;other&apos;</expression>
     </formulas>
@@ -1819,11 +1819,11 @@
                 <stringValue>&apos;Dangerous Goods Regulations&apos;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_6_5987770290</name>
+        <name>formula_7_myRule_6_8742575820</name>
         <dataType>String</dataType>
         <expression>&apos;Dangerous Goods Regulations&apos;</expression>
     </formulas>
-    <interviewLabel>Marketing_Leads_after_insert-20_InterviewLabel</interviewLabel>
+    <interviewLabel>Marketing_Leads_after_insert-18_InterviewLabel</interviewLabel>
     <label>Marketing Leads after insert</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1911,7 +1911,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Email (B)</stringValue>
+                    <stringValue>Email (A)</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -1926,7 +1926,7 @@
                     <stringValue>String</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Email_B__c</field>
+            <field>Email_A__c</field>
             <value>
                 <stringValue>training.performance@iata.org</stringValue>
             </value>
