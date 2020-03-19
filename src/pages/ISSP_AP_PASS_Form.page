@@ -640,7 +640,9 @@
                             <tr class="aplabel">
                                 <td colspan="2">If more than 2 new PASS administrators need to be created, please provide details.</td>
                             </tr>
-                            <apex:inputField label="Extra new PASS administrators" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%"/>
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_PASS_Help_Admin}" 
+                                        html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            <apex:inputField label="Extra new PASS administrators" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="First Name, Last Name, Email;"/>
                             <apex:outputText >
                                 <div class="aplabel">Recommendation: Each Airline/GSSA should have one or two PASS Administrators.</div>
                             </apex:outputText>
@@ -650,10 +652,11 @@
                             <tr class="aplabel">
                                 <td colspan="2">If it's necessary to create PASS Users, please provide details.</td>
                             </tr>
-                            <apex:inputField label="New PASS Users" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%"/>
-                            <apex:outputText >
-                                <div class="aplabel">Recommendation: Each Airline/GSSA should have one or two PASS Users.</div>
-                            </apex:outputText>
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_PASS_Help_User}" 
+                                        html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                <apex:inputField label="New PASS Users" value="{!newForm.PASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="First Name, Last Name, Email;">
+                                </apex:inputField>
+
                         </apex:pageBlockSection>
                     </div>
                 </apex:pageBlock>
@@ -663,6 +666,12 @@
     </div>
 
     <Script>
+        $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+                //comment the following line out to see page move on click
+                $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
+              })
+
         function setFocusOnLoad() {}
     </Script>
 </apex:page>

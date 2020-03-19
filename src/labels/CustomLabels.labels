@@ -32455,6 +32455,20 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <value>Please download the documents using the links below:</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Help_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help Admin</shortDescription>
+        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&#39;s other PASS users.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help User</shortDescription>
+        <value>With access to different functions and permissions, as granted and authorized by the company&#39;s PASS Administrator.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_IATAWebsite</fullName>
         <language>en_US</language>
         <protected>false</protected>
