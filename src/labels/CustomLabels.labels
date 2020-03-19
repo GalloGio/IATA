@@ -3345,6 +3345,13 @@ Through this online service, you can manage your endorsement process directly on
 If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
+        <fullName>COVID_19_eComm_Home_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID-19 eComm Home Page</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -10183,7 +10190,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS HelpText For Preassigned</shortDescription>
-        <value>The amount notification hasn&apos;t been received yet.</value>
+        <value>*The amount notification hasn&apos;t been received yet.</value>
     </labels>
     <labels>
         <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
@@ -10191,7 +10198,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
-        <value>The amount shown is not the final one, there are still amount notifications to be received.</value>
+        <value>**The amount shown is not the final one, there are still amount notifications to be received.</value>
     </labels>
     <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
