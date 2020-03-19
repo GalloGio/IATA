@@ -95,7 +95,7 @@ public class ANG_SAP_PPA_RemoteInvocation_Test {
 
 		//Check External_ID be copied to oscar field Billing_Document_Number__c
 		System.assertEquals(artifact.External_ID__c, updatedCase.oscar__r.Billing_Document_Number__c);
-		System.assertEquals(ANG_SAP_PPA_RemoteInvocation.NEW_INTERACTION_ATTACHMENT, updatedCase.New_interaction__c);
+		System.assertEquals(AMS_Utils.NEW_INTERACTION_ATTACHMENT, updatedCase.New_interaction__c);
 
 		updatedRmtInvArt = [SELECT Payment_type__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
 

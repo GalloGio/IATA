@@ -93,11 +93,11 @@ global without sharing class ANG_CreateCaseDetails {
 		private String caseId;
 
 		private final Map<String,String> paymentStatusMap = new Map<String,String>{
-			'Fully paid' => 'Paid',
-			'Not paid' => 'Outstanding',
-			'Paid' => 'Paid',
-			'Outstanding' => 'Outstanding',
-			'N/A' => 'N/A'
+			AMS_Utils.INVOICE_STATUS_FULLY_PAID => AMS_Utils.INVOICE_STATUS_PAID,
+			AMS_Utils.INVOICE_STATUS_NOT_PAID => AMS_Utils.INVOICE_STATUS_OUTSTANDING,
+			AMS_Utils.INVOICE_STATUS_PAID => AMS_Utils.INVOICE_STATUS_PAID,
+			AMS_Utils.INVOICE_STATUS_OUTSTANDING => AMS_Utils.INVOICE_STATUS_OUTSTANDING,
+			AMS_Utils.INVOICE_STATUS_NA => AMS_Utils.INVOICE_STATUS_NA
 		};
 
 		public CasePaymentStatus(RestRequest req, String caseId){

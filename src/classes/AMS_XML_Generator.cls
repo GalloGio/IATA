@@ -228,26 +228,26 @@ public with sharing class AMS_XML_Generator {
 			String caseId       = changeCodeCaseNumber.get(ag.Id);
 
 			//If it's a GDI/GDN change code and have an opportunity for the specific oscar
-			if(isGDIorGDN && curOpp != NULL){
+			if(isGDIorGDN && curOpp != null){
 
-				if(caseId != NULL){
+				if(caseId != null){
 					getElementNode(liNode, 'CaseId', caseId);
 				}
 
 				Date offerDate = curOpp.Offer_exchange_rate_date__c;
 
-				if(offerDate != NULL){
+				if(offerDate != null){
 					Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
 					getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
 				}
 
-				if(curOpp.GDI_Offer_Id__c != NULL){
+				if(curOpp.GDI_Offer_Id__c != null){
 					getElementNode(liNode, 'offerId', curOpp.GDI_Offer_Id__c);
 				}
 
 			}
 			//Otherwise only send the case id if the account is new gen
-			else if(!isGDIorGDN && ag.Account__r.ANG_IsNewGenAgency__c && caseId != NULL){
+			else if(!isGDIorGDN && ag.Account__r.ANG_IsNewGenAgency__c && caseId != null){
 				getElementNode(liNode, 'CaseId', caseId);
 			}
 			/* NEWGEN-5164 END */
