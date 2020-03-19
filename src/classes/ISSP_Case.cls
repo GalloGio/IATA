@@ -1653,42 +1653,38 @@ public without sharing class ISSP_Case {
 	}
 
 	public static void sendMassEmail(Id caseId, Id templateId) {
-		try {
-			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-			list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
-				FROM User
-				WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
 
-			List<String> listUserEmails = new List<String>();
-			Id contactId = null;
+		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+		list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
+			FROM User
+			WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
 
-			for(User usr : listUsers) {
-				if(usr.ContactId == null){
-					listUserEmails.add(usr.Email);
-				}
-				else{
-					listUserEmails.add(usr.Contact.email);
-				}
-				if(usr.ContactId != null && contactId == null){
-					contactId = usr.ContactId;
-				}
+		List<String> listUserEmails = new List<String>();
+		Id contactId = null;
+
+		for(User usr : listUsers) {
+			if(usr.ContactId == null){
+				listUserEmails.add(usr.Email);
 			}
-
-			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			mail.setOrgWideEmailAddressId(orgAddress.Id);
-			mail.setTargetObjectId(contactId);
-			mail.setToAddresses(listUserEmails);
-			mail.setWhatId(caseId);
-			mail.setUseSignature(false);
-			mail.setBccSender(false);
-			mail.setSaveAsActivity(false);
-			mail.setTemplateId(templateId);
-
-			Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-
-		} catch (Exception e) {
-			System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
+			else{
+				listUserEmails.add(usr.Contact.email);
+			}
+			if(usr.ContactId != null && contactId == null){
+				contactId = usr.ContactId;
+			}
 		}
+
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		mail.setOrgWideEmailAddressId(orgAddress.Id);
+		mail.setTargetObjectId(contactId);
+		mail.setToAddresses(listUserEmails);
+		mail.setWhatId(caseId);
+		mail.setUseSignature(false);
+		mail.setBccSender(false);
+		mail.setSaveAsActivity(false);
+		mail.setTemplateId(templateId);
+
+		Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 	}
 
 	/**
