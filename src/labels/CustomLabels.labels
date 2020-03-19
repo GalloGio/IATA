@@ -11773,6 +11773,13 @@ The sum of percentage cannot exceed 100%</value>
         <value>For verification purposes, IATA may request for additional documents from applicants. False declaration will lead to cancellation and blacklisting of ID Card application.</value>
     </labels>
     <labels>
+        <fullName>IDCard_Covid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Covid</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
         <fullName>IDCARD_VFEmailTemplate_Footer</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -36525,6 +36532,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>IfapSubmissionOfDocsOK</shortDescription>
         <value>Submission of the documents successfully completed!</value>
+    </labels>
+    <labels>
+        <fullName>Important_Delivery_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Important_Delivery_Information</shortDescription>
+        <value>IMPORTANT DELIVERY INFORMATION:</value>
     </labels>
     <labels>
         <fullName>Industry_Activities</fullName>
