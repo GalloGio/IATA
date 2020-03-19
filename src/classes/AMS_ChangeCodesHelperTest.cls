@@ -40,7 +40,20 @@ private class AMS_ChangeCodesHelperTest {
 
 				insert HO2;
 
+				List<String> listAirlineId = new List<String>();
+				for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
+					listAirlineId.add(profile.Id);
+				}
 
+				List<String> listAgencyId = new List<String>();
+				for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
+					listAgencyId.add(profile.Id);
+				}
+
+				List<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
+				listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
+				listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
+				insert listCs;
 
 		}
 
@@ -364,21 +377,6 @@ private class AMS_ChangeCodesHelperTest {
 
 		insert changeCodeList;
 
-		List<String> listAirlineId = new List<String>();
-		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
-			listAirlineId.add(profile.Id);
-		}
-
-		List<String> listAgencyId = new List<String>();
-		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']) {
-			listAgencyId.add(profile.Id);
-		}
-
-		List<ISSP_CS__c> listCs = new list<ISSP_CS__c>();
-		listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Airline Profil',Value__c=String.join(listAirlineId,',')));
-		listCs.add(new ISSP_CS__c(Name='ISS OperationalCalendar Agency Profile',Value__c=String.join(listAgencyId,',')));
-		insert listCs;
-
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
 
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
@@ -388,6 +386,8 @@ private class AMS_ChangeCodesHelperTest {
 		authorizations.add(new Agency_Authorization__c(Account__c = rhcInfo.ANG_AccountId__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
+		
+		Test.startTest();
 
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,
@@ -399,5 +399,7 @@ private class AMS_ChangeCodesHelperTest {
 		insert ara;
 
 		System.assertEquals(1,[SELECT ID, Forms_Of_Payment__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Forms_Of_Payment__c != 'Not Applicable'].Size());
+	
+		Test.stopTest();
 	}
 }
