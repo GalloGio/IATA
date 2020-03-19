@@ -221,6 +221,7 @@ public with sharing class AMS_AccreditationContactHelper
 		con.Authorized_Signatory__c = ac.Authorised_signatory__c;
 		con.Designated_Portal_Admin__c = ac.Portal_administrator__c;
 		con.Invoicing_Contact__c = ac.Invoicing_Contact__c;
+		con.CNS_Contact__c = ac.CNS_Contact__c;
 		if (ac.AddressStreet__c != null) con.OtherStreet =  ac.AddressStreet__c;
 		if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
 		if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
