@@ -366,7 +366,7 @@ Test.startTest();
 	} //*** end of "test_Order_Header2"
 
 
-	@isTest(SeeAllData = true)
+	@isTest
 	static void test_Order_Items()
 	{
 		//-- Generate Test Data
@@ -405,6 +405,8 @@ Test.startTest();
 		sfOrder.ShippingCountryCode__c = 'CA';
 		update sfOrder;
 
+		Test.startTest();   //*** to bypass nb of queries
+
 		//Goto order Page
 		ApexPages.StandardController ctrl = new ApexPages.StandardController(sfOrder);
 		Order_Ext ext = new Order_Ext(ctrl);
@@ -431,8 +433,6 @@ Test.startTest();
 		ext.addSelectedProducts();
 
 		ext.selectMore();
-
-		Test.startTest();   //*** to bypass nb of queries
 
 		ApexPages.currentPage().getParameters().put('orderItemId',sfOrderItem.Id);
 		ext.resendOrderItemLink();
