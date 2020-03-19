@@ -184,7 +184,8 @@ private class AMS_ChangeCodesHelperTest {
 		System.assertEquals('BOP - Cash - Credit Card: Authorized', formOfPayments);
 	}
 	
-	static testMethod void testChangesCodesCreationNewGenContext() {
+	@isTest
+	public static void testChangesCodesCreationNewGenContext() {
 
 		List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account ];
 
@@ -238,8 +239,10 @@ private class AMS_ChangeCodesHelperTest {
 		}
 	}
 
-	static testmethod void checkChangeCodeForRHCAlert(){
+	@isTest
+	public static void checkChangeCodeForRHCAlert(){
 
+		//Mixed DML Operation without this System.runA
 		System.runAs(new User(Id = UserInfo.getUserId())){
 			insert new EmailTemplate(
 				isActive = true,
@@ -266,7 +269,7 @@ private class AMS_ChangeCodesHelperTest {
 		insert iss;
 
 		// Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id);
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id, ANG_Enable_NewGen__c = true);
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 		insert new List<IATA_ISO_Country__c>{country, defCountry};
 
@@ -281,15 +284,6 @@ private class AMS_ChangeCodesHelperTest {
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency')
 		);
 		insert a;
-
-		Agency_Applied_Change_code__c agencyAppliedCC = new Agency_Applied_Change_code__c(
-			Account__c = a.Id,
-			Reason_Code__c = '11',
-			Reason_Description__c = 'CODE ASSIGNED',
-			Bulletin_Information__c = 'test test test',
-			Active__c = true
-			);
-		insert agencyAppliedCC;
 
 		// create a reception case
 		Case c = new Case(
@@ -394,17 +388,6 @@ private class AMS_ChangeCodesHelperTest {
 
 		insert ara;
 
-		Agency_Authorization__c aa = [SELECT ID, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA'];
-		
 		System.assertEquals(1,[SELECT ID, Forms_Of_Payment__c from Agency_Applied_Change_code__c where Account__c = :rhcInfo.ANG_AccountId__c and Forms_Of_Payment__c != 'Not Applicable'].Size());
-
-		ara = new ANG_Risk_Alert__c(
-			ANG_RHC_Information__c = rhcInfo.Id,
-			ANG_Account__c = rhcInfo.ANG_AccountId__c,
-			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN,
-			ANG_Threshold_Level__c = '100%'
-			);
-
-		insert ara;
 	}
 }
