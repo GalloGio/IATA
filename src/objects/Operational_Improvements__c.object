@@ -12073,10 +12073,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Saudi Arabia</fullName>
                 <default>false</default>
             </values>
