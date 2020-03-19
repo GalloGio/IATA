@@ -151,7 +151,7 @@ public without sharing class ISSP_Financial_Institutions {
 				agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
 				agencyCategory = existingGDIPortalAppRight.Contact__r.Account.Category__c;
 				agencyIsGdi = existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c;
-				countryIsGDIEnabled = (agencyIsGdi && gdiPortalAppAgentCategory != null && gdiPortalAppAgentCategory.CONTAINS(agencyCategory));
+				countryIsGDIEnabled = (agencyIsGdi && ((gdiPortalAppAgentCategory != null && gdiPortalAppAgentCategory.CONTAINS(agencyCategory)) || (gdiPortalAppAgentCategory == null && agencyCategory == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || agencyCategory == AMS_Utils.CATEGORY_DOMESTIC_AGENT)));
 
 				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
 					gdiAppRightDenied = true;
