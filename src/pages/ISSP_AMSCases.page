@@ -389,16 +389,16 @@
                             </div>
                                     
                             <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
+                                <input type="button" class="iatabtn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
                             <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
+                                <input type="button" class="iatabtn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
                             </div>
                         </div>
 
                         <div class="row" style="padding-bottom: 20px; {!IF(isMCAccredited, 'padding-top: 20px;', '')}">
                             <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
-                                <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
+                                <input type="button" class="iatabtn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
                             </div>
                                     
@@ -409,8 +409,8 @@
 
                             <div class="row" style="padding-bottom: 20px">
                                 <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
-                                    <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
-                                    <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
+                                    <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="iatabtn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
+                                    <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="iatabtn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
                                 </div>
                                         
                             <div class="col-md-5" >
@@ -445,7 +445,7 @@
 
                                 <div class="row" style="padding-top: 20px;">
                                     <div class="col-md-12">
-                                        <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="{!$Label.ISSP_Add_New_Associate_Entity}"/>
+                                        <input type="button" class="iatabtn btn_iata_primary" onClick="multiCountryNewAE();" value="{!$Label.ISSP_Add_New_Associate_Entity}"/>
                                     </div>
                                 </div>
 
@@ -555,7 +555,7 @@
                     </div>
             </div>
 
-                <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
                     <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent">
                         <div class="modal-content" id="modalChooseAccreditationContent">
                             <div class="modal-header">
@@ -670,8 +670,8 @@
                                     </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="hideTermsAndConditionsModal(); submitMultiCountry(); return false;" reRender=""/>
-                                    <apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
+                                    <apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success iatabtn" value="{!$Label.ISSP_PCI_Stay}" onclick="hideTermsAndConditionsModal(); submitMultiCountry(); return false;" reRender=""/>
+                                    <apex:commandButton id="tcModalCloseButton" styleClass="iatabtn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
                                 </div>
                             </div>
                         </div>
