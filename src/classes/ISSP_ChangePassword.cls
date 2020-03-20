@@ -256,9 +256,6 @@ public without sharing class ISSP_ChangePassword {
 		}
 	}
 
-	/**
-		IFTP
-	*/
 	public void setIFTPUser(){
 
 		try{
@@ -343,96 +340,5 @@ public without sharing class ISSP_ChangePassword {
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
 		insert psa;
 	}
-	public static void increaseCodeCoverage(){
-		Integer i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-		i = 0;
-	}
+	
 }
