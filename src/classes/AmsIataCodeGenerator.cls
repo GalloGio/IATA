@@ -824,14 +824,14 @@ global class AmsIataCodeGenerator{
 	public static Map<String, String> constructProgramCategoryMap()
 	{
 		//PASS- Added new location class "L" in the Account picklist field related to the PASS process. The old Category value for the Location value L was "Non-IATA Locations", but now it was changed to "Postal Service"
-		Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Postal Service', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
+		Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Postal Operator', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
 		return pcMap;
 	}
 
 	public static Map<String, String> constructProgramSectorMap()
 	{
 		//PASS- Added new location class "L" in the Account picklist field related to the PASS process
-		Map<String,String> psMap = new Map<String,String>{'A' => 'Travel Agent', 'C' => 'Cargo Agent', 'D' => 'Travel Agent', 'I'=> 'Cargo Agent', 'K' => 'Travel Agent', 'L' => 'Cargo Agent', 'M' => 'Travel Agent', 'P' => 'Travel Agent', 'Q' => 'Cargo Agent', 'R' => 'Cargo Agent', 'T' => 'Travel Agent', 'X' => 'Travel Agent'};
+		Map<String,String> psMap = new Map<String,String>{'A' => 'Travel Agent', 'C' => 'Cargo Agent', 'D' => 'Travel Agent', 'I'=> 'Cargo Agent', 'K' => 'Travel Agent', 'L' => 'Postal Service', 'M' => 'Travel Agent', 'P' => 'Travel Agent', 'Q' => 'Cargo Agent', 'R' => 'Cargo Agent', 'T' => 'Travel Agent', 'X' => 'Travel Agent'};
 
 		return psMap;
 	}

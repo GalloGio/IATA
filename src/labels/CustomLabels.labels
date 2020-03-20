@@ -22886,7 +22886,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS BRANCH</shortDescription>
-        <value>PASS Agent – Branch Office</value>
+        <value>for a Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_PASS_HO</fullName>
@@ -22894,7 +22894,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION PAX PASS HO</shortDescription>
-        <value>PASS Agent – New Head Office</value>
+        <value>for a New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
@@ -29589,6 +29589,13 @@ Please add below all your company valid email domains, including different ones 
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Process_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Process_PASS</shortDescription>
+        <value>Thank you for creating your application for approval</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_GiveUsFeedback</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32795,6 +32802,94 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agent</shortDescription>
         <value>PASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Agreement</shortDescription>
+        <value>IATA currently does not hold any valid PASS agreement. All participants must sign this agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
+Agreements must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+&lt;br/&gt;
+&lt;br/&gt;
+Please download, complete and upload the PASS agreement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_BankMandate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS BankMandate</shortDescription>
+        <value>The participant needs to provide a Bank Account Mandate to IATA, so that the PASS proceedings can be settled. Please upload Bank Account Mandate of the local bank account and in the ISS country and currency of settlement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Checklist</shortDescription>
+        <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Download_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Download_Documents</shortDescription>
+        <value>Please download the documents using the links below:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help Admin</shortDescription>
+        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&#39;s other PASS users.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help User</shortDescription>
+        <value>With access to different functions and permissions, as granted and authorized by the company&#39;s PASS Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_IATAWebsite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_IATAWebsite</shortDescription>
+        <value>https://www.iata.org/pass</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
+        <value>Link of participation agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_AgreementTerms</shortDescription>
+        <value>Participation Agreement and Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
+        <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Conditions</shortDescription>
+        <value>By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
+        <value>Link of Terms of Use</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>

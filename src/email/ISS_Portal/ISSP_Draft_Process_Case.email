@@ -3,7 +3,7 @@
         CASE(relatedTo.CaseArea__c,
             'Accreditation Process',
                 CASE(relatedTo.Reason1__c,
-                    'New HO',IF(relatedTo.Account.Category__c='Postal Service',$Label.ISSP_AMS_Email_HO_PASS_Subject,$Label.ISSP_AMS_Email_HO_Subject),
+                    'New HO',IF(relatedTo.Account.Sector__c='Postal Service',$Label.ISSP_AMS_Email_HO_PASS_Subject,$Label.ISSP_AMS_Email_HO_Subject),
                     'New HE standard', $Label.ISSP_ANG_Email_HE_Cash_Subject,
                     'New HE lite', $Label.ISSP_ANG_Email_HE_Cashless_Subject,
                     'New AE', $Label.ISSP_ANG_Email_AE_Subject,
@@ -49,7 +49,7 @@
                     relatedTo.Reason1__c=='New BR Abroad',
                     relatedTo.Reason1__c=='New HE Multicountry'
                 ),
-                IF((relatedTo.Reason1__c=='New HO'|| relatedTo.Reason1__c=='New BR') && relatedTo.Account.Category__c='Postal Service',$Label.ISSP_AMS_PASS_Email_Description,relatedTo.Description),
+                IF((relatedTo.Reason1__c=='New HO'|| relatedTo.Reason1__c=='New BR') && relatedTo.Account.Sector__c='Postal Service',$Label.ISSP_AMS_PASS_Email_Description,relatedTo.Description),
                 $Label.ISSP_Email_Draft_Change_Process
             ),
         'Airline Joining',
@@ -78,7 +78,7 @@
 <br/><br/>
     {!CASE(relatedTo.CaseArea__c,
         'Accreditation Process',
-        IF(relatedTo.Account.Category__c='Postal Service',$Label.ISSP_Email_Draft_PASS_Process,$Label.ISSP_Email_Draft_Process2)
+        IF(relatedTo.Account.Sector__c='Postal Service',$Label.ISSP_Email_Draft_PASS_Process,$Label.ISSP_Email_Draft_Process2)
             ,
         'Transparency in Payments (TIP)',
             'You can access any ongoing Transparency in Payments (TIP) applications by clicking the link below and logging into the portal with your email address:',
@@ -105,7 +105,7 @@
 {!IF(relatedTo.CaseArea__c=='Accreditation Process',
     IF(relatedTo.CNSCase__c,
         'Agency Endorsement & Changes',
-        IF(relatedTo.Account.Category__c='Postal Service','Ongoing Applications','Agency Accreditation & Changes')
+        IF(relatedTo.Account.Sector__c='Postal Service','Ongoing Applications','Agency Accreditation & Changes')
     ),
     IF(relatedTo.Reason1__c=='SIS Client',
         'Join SIS',

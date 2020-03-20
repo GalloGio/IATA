@@ -966,6 +966,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
     <fields>
         <fullName>CASSLink_Extra_New_Users__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>For PASS, create this users with Job Title PASS Admin</inlineHelpText>
         <label>CASSLink Extra New Users</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
@@ -3629,6 +3630,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PASSLink_Extra_New_Users__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>On Contacts creation, please put PASS User as the Job Title</inlineHelpText>
+        <label>PASSLink Extra New Users</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>PDF_File_Recipient_Email_1__c</fullName>

@@ -273,6 +273,7 @@ global without sharing class ISSP_APProcess {
 	public Boolean showPDFReportsEmail{get;set;}
 	public Boolean changePass{get;set;}
 	public String listUploadedFileIds{get;set;}
+	public String passLink{get;set;}
 
 	public ISSP_APProcess(){
 		//Set the Variables default values
@@ -303,6 +304,7 @@ global without sharing class ISSP_APProcess {
 		showPDFReportsPreference=true;
 		showPDFReportsEmail=false;
 		changePass=false;
+		passlink=Label.ISSP_PASS_IATAWebsite;
 
 		newForm = new AP_Process_Form__c();
 		newCase = new Case();
@@ -446,7 +448,12 @@ global without sharing class ISSP_APProcess {
 				vHQAccountId = newCase.Account_Concerned__r.Top_Parent__c;
 			}
 
-			retrieveHQAccountDetails(vHQAccountId);
+
+			if(isPassAirline && isGSSAUser){
+				retrieveHQAccountDetails(con.AccountId);
+			}else{
+				retrieveHQAccountDetails(vHQAccountId);
+			}
 
 			if (isGSSAUser){  //For GSSA display Airline details
 				strGSSAName = newCase.Account.Name;
@@ -700,6 +707,11 @@ global without sharing class ISSP_APProcess {
 						}
 					} else if(isPassAirline && strAreaType=='Airline Joining'){
 						if(!managePASS){
+
+							if(isPASSGSSA) {
+								ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
+							}
+
 							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet())
 							{
 								if (newForm.get(fldLabel)==null) {
@@ -770,54 +782,61 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public void retrieveAPProcessForm(){
-		List <AP_Process_Form__c> newForms = [
-			SELECT Id, Case__c, Type__c, Type_of_participation_desired__c, Airline_Local_address_in_the_BSP_Country__c,
-			Desired_commencment_date__c, Accept_terms_and_conditions__c, Accept_payment_Cards_for_BSP_ticket__c , Airline__c,
-			Airline_HO__c, Airline_trade_name__c, American_Express_Merchant_Number__c, American_Express_Name_of_Acquirer__c,
-			BSP_Country_VAT_Tax_number__c, BSPLink_ASD_China_Contact_Email__c, BSPLink_ASD_China_Contact__c, BSPLink_ASD_China_Contact_L_Name__c,
-			BSPLink_ASD_China_Contact_Phone__c, BSPLink_access_level_requested__c, BSP_Local_address__c, BSP_Local_City__c, BSP_Local_Zip_Code__c,
-			Card_brand_accepted_for_BSP_ticket__c, Contact_Resp_Email__c, Contact_Resp_F_Name__c, Contact_Resp_L_Name__c,
-			Contact_Resp_Phone__c, Diners_Merchant_Number__c, Fin_Adm_Contact_Address__c, Fin_Adm_Contact_City__c, Fin_Adm_Contact_Country__c,
-			Fin_Adm_Contact_Email__c, Fin_Adm_Contact_F_Name__c, Fin_Adm_Contact_Job_Title__c, Fin_Adm_Contact_L_Name__c, Fin_Adm_Contact_Phone__c,
-			Fin_Adm_Contact__c, Fin_Adm_Contact_Zip_Code__c, Flights_operated_in_the_BSP_country__c, Hot_files_delivery_format__c, IINET_account_number__c,
-			Join_BSP_ECCB__c, Master_Card_Merchant_Number__c, Master_Card_Name_of_Acquirer__c, Online_carrier_in_the_BSP_country__c, Other_Card_brand_accepted_for_BSP_ticket__c,
-			Participate_in_any_Commission_Control__c, Participate_in_any_Remit_scheme__c, Receive_HOT_files__c,Receive_PDF_Reports__c,
-			VAT_Tax_number_in_your_home_country__c, Visa_merchant_number__c, Visa_Name_of_Acquirer_or_Processor__c, Diners_Name_of_Acquirer__c,
-			Airline_wish_to_join_ICCS__c, Contact_Resp_Job_Title__c, Contact_Resp_Salutation__c, ETSP_Contractor_Name__c, ETSP_Contact_Address__c, ETSP_Contact_F_Name__c,
-			ETSP_Contact_Job_Title__c, ETSP_Contact_L_Name__c, ETSP_Contact_Salutation__c, ETSP_Contact_Email__c, ETSP_Contact_Fax__c, ETSP_Contact_Phone__c,
-			CASS_Operation__c, Airline_Invoice_Address__c, CASSLink_Contact_Email__c, CASSLink_Contact_Fax__c, CASSLink_Contact_F_Name__c, CASSLink_Contact_Job_Title__c,
-			CASSLink_Contact_L_Name__c, CASSLink_Contact_Phone__c, CASSLink_Contact_Salutation__c,CASS_Ad_Hoc_Bulletins_Email_1__c,CASS_Ad_Hoc_Bulletins_Email_2__c,
-			CASS_Corrections_Email_1__c, CASS_Corrections_Email_2__c, CASS_Corrections_Email_3__c, CASS_Corrections_Email_4__c, CASS_Defaults_Email_1__c, CASS_Defaults_Email_2__c,
-			Airline_Billing_Data_File_Type__c, Billing_File_Emrgcy_Contact_Email__c, Billing_File_Emrgcy_Contact_F_Name__c, Billing_File_Emrgcy_Contact_Job_Title__c,
-			Billing_File_Emrgcy_Contact_L_Name__c, Billing_File_Emrgcy_Contact_Salutation__c, HOT_File_Recipient_Email_1__c, HOT_File_Recipient_Email_2__c,
-			HOT_File_Recipient_Email_3__c, HOT_File_Recipient_Email_4__c, Receive_XLS_Reports__c, PDF_Report_Delivery_Format__c, PDF_File_Recipient_Email_1__c, PDF_File_Recipient_Email_2__c,
-			PDF_File_Recipient_Email_3__c, PDF_File_Recipient_Email_4__c, CASSLink_Extra_Existing_Users__c, CASSLink_User_1_System_Functions__c, CASSLink_User_2_System_Functions__c,
-			CASSLink_User_3_System_Functions__c, CASSLink_Username_1__c, CASSLink_Username_2__c, CASSLink_Username_3__c, CASSLink_New_User_1_Salutation__c, CASSLink_New_User_2_Salutation__c,
-			CASSLink_New_User_3_Salutation__c, CASSLink_New_User_1_F_Name__c, CASSLink_New_User_2_F_Name__c, CASSLink_New_User_3_F_Name__c, CASSLink_New_User_1_L_Name__c,
-			CASSLink_New_User_2_L_Name__c, CASSLink_New_User_3_L_Name__c, CASSLink_New_User_1_Email__c, CASSLink_New_User_2_Email__c, CASSLink_New_User_3_Email__c,
-			CASSLink_New_User_1_System_Functions__c, CASSLink_New_User_2_System_Functions__c, CASSLink_New_User_3_System_Functions__c, CASSLink_Extra_New_Users__c,
-			Pay_Commission_to_agents__c, Commission_Rate__c, Pay_Standard_Commission__c, Receive_Cargo_BI_statistics__c, Participate_in_AWB_Stock_Management__c,
-			GSSA_Legal_Name__c,GSSA_Contact_Salutation__c,GSSA_Address__c,GSSA_Code__c,GSSA_Contact_Email__c,GSSA_Contact_FAX__c,GSSA_Contact_F_Name__c,GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Phone__c,
-			Submitted_to_IATA__c,AP_BR_Address_CNP__c,AP_BR_Address_To_Insert__c,AP_BR_BankBeneficiary_Account_Holder__c,Clave_Bancaria_Unificada_CBU__c,Other_TAX_Identification__c,Cyprus_Turkey_based_Airline__c,Airline_s_Fiscal_Status__c,
-			Company_Registration_number__c, Name_of_business_comm_assoc__c, Capital_amount_of_the_business__c,Local_CC_Settlement_Scheme__c,Airline_Registered_under_other_name__c,
-			CASS_PH_Bilateral_Agreement__c,CASS_PH_Preferred_Billing_Currency__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,Airline_Intra_Europe_Flights__c,BSP_UA_LocalReg_Number_EDRPOU__c,BSP_UA_BankCode_MFO__c,Ecuador_Legal_Forms_requirements__c,
-			BSP_Russia_Double_Tax_avoiding_Treaty__c, Colombia_City_selection__c, Colombia_City_percentage__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c,
-			Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,
-			ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c, Type_of_Change_Requested__c,
-			Legal_Name_of_account__c,Legal_Name_of_company__c,Company_address__c,Company_city__c,Company_State__c,Postal_code__c,Company_Country__c,TAX_VAT_Registration_Number__c,
-			Contact_Email__c,Contact_First_Name__c,Contact_Last_Name__c,Contact_Title__c,Contact_number__c,
-			Super_User_Salutation__c,Super_User_First_Name__c,Super_User_Phone_Number__c,Super_User_Last_Name__c,Super_User_Mobile_Number__c,Super_User_Email_Address__c,Super_User_Fax_Number__c,
-			Is_AA_Member__c,Digital_Signature_application__c,Billing_Value_Determination__c,Digital_Signature_verification__c,
-			Do_you_have_an_iiNET_account__c,Is_your_company_joining_the_Clearing_Hou__c,Do_you_want_to_add_Bank_Details__c,Is_company_subject_to_EU_laws__c,
-			Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,
-			Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,
-			Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c,
-			ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c, Billing_Value_Confirmation__c, Legal_Archiving__c, Auto_billing__c,
-			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c,GSSA_VAT_Id__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,Accept_Online_Corrections__c
-			FROM AP_Process_Form__c
-			WHERE Case__c = :newCase.Id
-			LIMIT 1
-		];
+		String queryString = 'SELECT Desired_commencment_date__c, Contact_Resp_Salutation__c, Contact_Resp_F_Name__c, Contact_Resp_L_Name__c,' +
+		'Contact_Resp_Email__c, Contact_Resp_Job_Title__c, Contact_Resp_Phone__c, VAT_Tax_number_in_your_home_country__c, CASSLink_Contact_Salutation__c,' +
+		'CASSLink_Contact_F_Name__c, CASSLink_Contact_L_Name__c, CASSLink_Contact_Job_Title__c, CASSLink_Contact_Email__c, CASSLink_Contact_Phone__c,' +
+		'CASSLink_Contact_Fax__c, CASS_Corrections_Email_1__c, CASS_Corrections_Email_2__c, GSSA_Legal_Name__c, GSSA_Code__c, GSSA_HQ_Address__c,' +
+		'GSSA_HQ_City__c, GSSA_HQ_State__c, GSSA_HQ_Post_Code__c, GSSA_HQ_Country__c, GSSA_VAT_Id__c, GSSA_Contact_Salutation__c, GSSA_Contact_F_Name__c, GSSA_Contact_L_Name__c,' +
+		'GSSA_Contact_JobTitle__c, GSSA_Contact_Email__c, GSSA_Contact_Phone__c, GSSA_Contact_FAX__c, Billing_File_Emrgcy_Contact_Salutation__c,' +
+		'Billing_File_Emrgcy_Contact_F_Name__c, Billing_File_Emrgcy_Contact_L_Name__c, Billing_File_Emrgcy_Contact_Job_Title__c, Billing_File_Emrgcy_Contact_Email__c,' +
+		'Receive_HOT_files__c, Hot_files_delivery_format__c, HOT_File_Recipient_Email_1__c, HOT_File_Recipient_Email_2__c, HOT_File_Recipient_Email_3__c,' +
+		'HOT_File_Recipient_Email_4__c, Receive_PDF_Reports__c, PDF_Report_Delivery_Format__c, PDF_File_Recipient_Email_1__c, PDF_File_Recipient_Email_2__c,' +
+		'PDF_File_Recipient_Email_3__c, Receive_XLS_Reports__c, Accept_Online_Corrections__c, CASSLink_New_User_1_Salutation__c, CASSLink_New_User_1_F_Name__c,' +
+		'CASSLink_New_User_1_L_Name__c, CASSLink_New_User_1_Email__c, CASSLink_New_User_1_System_Functions__c, CASSLink_New_User_2_Salutation__c, CASSLink_New_User_2_F_Name__c,' +
+		'CASSLink_New_User_2_L_Name__c, CASSLink_New_User_2_Email__c, CASSLink_New_User_2_System_Functions__c, CASSLink_Extra_New_Users__c, ICH_Currency_of_Clearance__c,' +
+		'ICH_Currency_of_Settlement__c, Airline_wish_to_join_ICCS__c, ANG_Enable_NewGen__c, Airline_Local_address_in_the_BSP_Country__c, Submitted_to_IATA__c,' +
+		'Type_of_Change_Requested__c, BSP_Country_VAT_Tax_number__c, Participate_in_any_Commission_Control__c, Online_carrier_in_the_BSP_country__c,' +
+		'Colombia_City_selection__c, Colombia_City_percentage__c,Type__c, Accept_terms_and_conditions__c, RecordTypeId, Case__c, PASSLink_Extra_New_Users__c';
+
+		if(!isPassAirline){
+			queryString +=
+			', Id, Type_of_participation_desired__c, Accept_payment_Cards_for_BSP_ticket__c , Airline__c,' +
+			'Airline_HO__c, Airline_trade_name__c, American_Express_Merchant_Number__c, American_Express_Name_of_Acquirer__c,' +
+			'BSPLink_ASD_China_Contact_Email__c, BSPLink_ASD_China_Contact__c, BSPLink_ASD_China_Contact_L_Name__c,' +
+			'BSPLink_ASD_China_Contact_Phone__c, BSPLink_access_level_requested__c, BSP_Local_address__c, BSP_Local_City__c, BSP_Local_Zip_Code__c,' +
+			'Card_brand_accepted_for_BSP_ticket__c, Diners_Merchant_Number__c, Fin_Adm_Contact_Address__c, Fin_Adm_Contact_City__c, Fin_Adm_Contact_Country__c,' +
+			'Fin_Adm_Contact_Email__c, Fin_Adm_Contact_F_Name__c, Fin_Adm_Contact_Job_Title__c, Fin_Adm_Contact_L_Name__c, Fin_Adm_Contact_Phone__c,' +
+			'Fin_Adm_Contact__c, Fin_Adm_Contact_Zip_Code__c, Flights_operated_in_the_BSP_country__c, IINET_account_number__c, Join_BSP_ECCB__c,' +
+			'Master_Card_Merchant_Number__c, Master_Card_Name_of_Acquirer__c, Other_Card_brand_accepted_for_BSP_ticket__c, Participate_in_any_Remit_scheme__c,' +
+			'Visa_merchant_number__c, Visa_Name_of_Acquirer_or_Processor__c, Diners_Name_of_Acquirer__c, ETSP_Contractor_Name__c, ETSP_Contact_Address__c, ETSP_Contact_F_Name__c,' +
+			'ETSP_Contact_Job_Title__c, ETSP_Contact_L_Name__c, ETSP_Contact_Salutation__c, ETSP_Contact_Email__c, ETSP_Contact_Fax__c, ETSP_Contact_Phone__c,' +
+			'CASS_Operation__c, Airline_Invoice_Address__c, CASS_Ad_Hoc_Bulletins_Email_1__c,CASS_Ad_Hoc_Bulletins_Email_2__c, CASS_Corrections_Email_3__c, CASS_Corrections_Email_4__c,' +
+			'CASS_Defaults_Email_1__c, CASS_Defaults_Email_2__c, Airline_Billing_Data_File_Type__c, PDF_File_Recipient_Email_4__c, CASSLink_Extra_Existing_Users__c, CASSLink_User_1_System_Functions__c,' +
+			'CASSLink_User_2_System_Functions__c, CASSLink_User_3_System_Functions__c, CASSLink_Username_1__c, CASSLink_Username_2__c, CASSLink_Username_3__c,' +
+			'CASSLink_New_User_3_Salutation__c, CASSLink_New_User_3_F_Name__c, CASSLink_New_User_3_L_Name__c, CASSLink_New_User_3_Email__c, CASSLink_New_User_3_System_Functions__c,' +
+			'Pay_Commission_to_agents__c, Commission_Rate__c, Pay_Standard_Commission__c, Receive_Cargo_BI_statistics__c, Participate_in_AWB_Stock_Management__c,' +
+			'GSSA_Address__c,' +
+			'AP_BR_Address_CNP__c,AP_BR_Address_To_Insert__c,AP_BR_BankBeneficiary_Account_Holder__c,Clave_Bancaria_Unificada_CBU__c,Other_TAX_Identification__c,Cyprus_Turkey_based_Airline__c,Airline_s_Fiscal_Status__c,' +
+			'Company_Registration_number__c, Name_of_business_comm_assoc__c, Capital_amount_of_the_business__c,Local_CC_Settlement_Scheme__c,Airline_Registered_under_other_name__c,' +
+			'CASS_PH_Bilateral_Agreement__c,CASS_PH_Preferred_Billing_Currency__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,Airline_Intra_Europe_Flights__c,BSP_UA_LocalReg_Number_EDRPOU__c,BSP_UA_BankCode_MFO__c,Ecuador_Legal_Forms_requirements__c,' +
+			'BSP_Russia_Double_Tax_avoiding_Treaty__c, Name_Appearing_in_VAT__c, Colombia_Type_of_Contributor__c, Territory_Percentage__c, Canada_Has_Principal_Office__c,' +
+			'Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c, GSSA_Legal_Name_Formula__c, GSSA_Address_Formula__c, Case__r.AccountId,' +
+			'ANG_Airline_accepts_EasyPay_tr_in_BSP__c,Minimum_Commission_Rate__c, Maximum_Commission_Rate__c, Default_Commission_Rate__c,' +
+			'Legal_Name_of_account__c,Legal_Name_of_company__c,Company_address__c,Company_city__c,Company_State__c,Postal_code__c,Company_Country__c,TAX_VAT_Registration_Number__c,' +
+			'Contact_Email__c,Contact_First_Name__c,Contact_Last_Name__c,Contact_Title__c,Contact_number__c, Super_User_Salutation__c,Super_User_First_Name__c,' +
+			'Super_User_Phone_Number__c,Super_User_Last_Name__c,Super_User_Mobile_Number__c,Super_User_Email_Address__c,Super_User_Fax_Number__c,' +
+			'Is_AA_Member__c,Digital_Signature_application__c,Billing_Value_Determination__c,Digital_Signature_verification__c, Do_you_have_an_iiNET_account__c,' +
+			'Is_your_company_joining_the_Clearing_Hou__c,Do_you_want_to_add_Bank_Details__c,Is_company_subject_to_EU_laws__c, Data_Exporting_Organization_Name__c,' +
+			'Data_Exporting_Organization_Address__c,Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c, Data_Exporter_Name__c,' +
+			'Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,' +
+			'Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c, Billing_Value_Confirmation__c,' +
+			'Legal_Archiving__c, Auto_billing__c, Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c';
+		}
+
+		queryString += ' FROM AP_Process_Form__c WHERE Case__c=\'' + newCase.Id + '\' LIMIT 1';
+
+		List<AP_Process_Form__c> newForms = Database.query(queryString);
+
 		if (newForms.size()>0)
 		{
 			newForm = newForms[0];
@@ -1364,15 +1383,15 @@ global without sharing class ISSP_APProcess {
 
 			passParam='&airline=PASS';
 			if(isStep3 && !managePASS){
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
+				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else if(managePASS && isStep1){
 				passParam=passParam+'&managePASS=true';
 				return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
 			}else if(managePASS && isStep3){
 				passParam=passParam+'&managePASS=true';
-				return new Pagereference('/ISSP_APProcess1?caseId='+newCase.Id+'&step=1'+passParam);
+				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else{
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
+				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 			}
 		}
 		if(countryRequirementFound) {
@@ -1481,6 +1500,7 @@ global without sharing class ISSP_APProcess {
 							caseWithAttachment=true;
 						}
 					}
+					newChildCase.ownerid = APQueue('Airline Participation - Head Office').Id;
 
 					if(!caseWithAttachment){
 						if(String.isEmpty(countryWithoutBankMandate)){
@@ -1624,6 +1644,9 @@ global without sharing class ISSP_APProcess {
 			if (!getIsSISMember() && getShowISPAForm()) {
 				listMandatoryFiles.add('SignedSISISPAForm');
 			}
+		}
+		if(isPassAirline){
+			listMandatoryFiles.add('FormOfAuthorization');
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
