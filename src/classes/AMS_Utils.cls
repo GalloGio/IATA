@@ -409,7 +409,10 @@ public without sharing class AMS_Utils {
 
 	public static final String OPPORTUNITY_CLOSED_WON = 'Closed Won';
 	public static final String OPPORTUNITY_CLOSED_LOST = 'Closed Lost';
-	
+	public static final String OPPORTUNITY_LINEITEM_SECURITY_STATUS_DRAFT = 'Draft';
+
+	public static final String NEW_INTERACTION_ATTACHMENT = 'New Attachment';
+
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static String ENCRYPTION_KEY {
