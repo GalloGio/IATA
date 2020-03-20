@@ -68,6 +68,16 @@ public without sharing class IsraelDisputesCreateNewCaseCtrl {
 
 	}
 
+	//Checks if the account is a Branch Account (Location type is AE or BR) or not
+	@AuraEnabled
+	public static string isBranch(){
+		User u = [SELECT id, Contact.Account.Location_Type__c, Contact.Account.Site FROM User where id =: UserInfo.getUserId()];
+		if (u.Contact.Account.Location_Type__c == 'BR' || u.Contact.Account.Location_Type__c == 'AE') 
+			return u.Contact.Account.Site;
+		else 
+			return '';
+	}
+
 	//Inserts the Case
 	@AuraEnabled
 	public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
