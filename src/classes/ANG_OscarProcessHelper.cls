@@ -889,7 +889,7 @@ global class ANG_OscarProcessHelper {
 				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
 					accountIdsChanged.add(aaObject.AccountId);
 
-				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account where Id in :accountIdsChanged]);
 
 				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
 
