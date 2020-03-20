@@ -72,6 +72,8 @@ export default class PortalAddressForm extends LightningElement {
     /* Passed address information */
     @api countryId;
     @api address;
+    @api disableCountry;
+    @api internalUser;
 
     /* Local address information
 
@@ -108,15 +110,21 @@ export default class PortalAddressForm extends LightningElement {
 
     // flags
     @track provinceAndCitiesEnabled;
-//TEMP    @track isStateRequired;
-//TEMP    @track isZipRequired;
+
+    get isCountryDisabled(){
+        if(this.disableCountry){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     get isStateRequired(){
         return this.provinceAndCitiesEnabled;
     }
 
     get displayStateComboBox(){
-//TEMP        return this.provinceAndCitiesEnabled || this.isStateRequired;
         return this.provinceAndCitiesEnabled;
     }
 
@@ -135,7 +143,6 @@ export default class PortalAddressForm extends LightningElement {
 
     /* labels */
     _labels = {
-        CSP_L2_Country,
         CSP_L2_Is_PO_Box_Address,
         CSP_L2_State,
         CSP_L2_City,
@@ -158,9 +165,20 @@ export default class PortalAddressForm extends LightningElement {
         this._labels = value;
     }
 
+    // labels depending on the origin (internal vs portal)
+    countryLabel;
+
     performingSearch = false;
     
     renderedCallback(){
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.countryLabel = CSP_L2_Country;
+        }
+        else{
+            this.countryLabel = CSP_L2_Country;
+        }
+
         if(this.performingSearch){
             let scrollobjective = this.template.querySelector('[data-name="searchDiv"]');
             scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
@@ -274,13 +292,9 @@ export default class PortalAddressForm extends LightningElement {
         this.localAddress.countryCode = country.ISO_Code__c;
         this.localAddress.countryName = country.Name;
 
-//TEMP        if(country === undefined || (country.Region_Province_and_Cities_Enabled__c === false && country.State_Province_Mandatory__c)){
         if(country === undefined || country.Region_Province_and_Cities_Enabled__c === false ){
             this.stateOptions = [];
             this.provinceAndCitiesEnabled = false;
-//TEMP            this.isStateRequired = false;
-//TEMP            this.isZipRequired = false;
-            // maybe we need to reset the state and all other fields
 
             let state = '';
             if(!clearInputs){
@@ -516,9 +530,6 @@ export default class PortalAddressForm extends LightningElement {
                 this.performingSearch = true;
                 return;
             }
-
-            //TO DO : DATA Quality Feedback (check validateRequiredFields method in OneId_ISSP_AccountCreationController.js)
-            // mayb this needs to be (also) done after the call to address doctor, based on the address selected
         }
 
         this.search();

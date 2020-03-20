@@ -24,7 +24,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_Country}<abbr class="slds-required" title="required">*</abbr>
+                        {countryLabel}<abbr class="slds-required" title="required">*</abbr>
                     </div>
                 </div>
                     
@@ -32,6 +32,7 @@
                     <div class="slds-form-element__control custTextInputSmall">
                         <lightning-combobox 
                             class="cursorPointerComboBox text-xxsmall"
+                            disabled={isCountryDisabled}
                             value={localAddress.countryId}
                             variant="label-hidden"
                             options={countryOptions}

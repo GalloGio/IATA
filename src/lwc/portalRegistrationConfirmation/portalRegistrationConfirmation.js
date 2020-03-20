@@ -74,6 +74,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     @api address;
     @api searchResults;
     @api selectedAccountId;
+    @api internalUser;
 
     selectedAccount;
 
@@ -145,11 +146,31 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         this._labels = value;
     }
 
+    // labels depending on the origin (internal vs portal)
+    confirmationMessage;
+    companyInformation;
+    companyName;
+    countryLabel;
+
     get hasContactInfo(){
         return this.contactInfo !== undefined;
     }
 
     connectedCallback(){
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.confirmationMessage = 'Please check the summary below before submitting.';
+            this.companyInformation = 'Account Information';
+            this.companyName = 'Account Name';
+            this.countryLabel = CSP_L2_Country;
+        }
+        else{
+            this.confirmationMessage = CSP_L2_Confirmation_Message;
+            this.companyInformation = CSP_L2_Company_Information;
+            this.companyName = CSP_L2_Company_Name;
+            this.countryLabel = CSP_L2_Country;
+        }
+
         getCSPortalPath().then(result=>{
             let path = JSON.parse(JSON.stringify(result));
 
@@ -432,8 +453,8 @@ export default class PortalRegistrationConfirmation extends LightningElement {
             }
         }
         else{
-            this.successModalTitle = 'Hurray!';
-            this.successModalMessage = 'Account created succesfully';
+            this.successModalTitle = undefined;
+            this.successModalMessage = 'Account created succesfully!';
             this.successModalButton1Label = '';
             this.successModalButton2Label = 'Go to Account';
         }

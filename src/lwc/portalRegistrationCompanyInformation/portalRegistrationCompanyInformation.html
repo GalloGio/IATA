@@ -4,14 +4,16 @@
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
                 <div class="sectionTitle">{labels.CSP_L2_Create_New_Account}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                <template if:false={internalUser}>
+                	<div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                </template>
             </lightning-layout-item>
 
             <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
             </lightning-layout-item>
         
             <lightning-layout-item size="12" class="IEFixDisplay">
-                <div class="sectionSubTitle">{labels.CSP_L2_Company_Information}</div>
+                <div class="sectionSubTitle">{companyInformation}</div>
             </lightning-layout-item>
 
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
@@ -180,7 +182,7 @@
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
                     <div class="formLabelContainer">
                         <div class="text-xxsmall">
-                            {labels.CSP_L2_Company_Name}<abbr class="slds-required" title="required">*</abbr>
+                            {companyName}<abbr class="slds-required" title="required">*</abbr>
                         </div>
                     </div>
 
@@ -197,6 +199,58 @@
                         </div>
                     </div>
                 </lightning-layout-item>
+
+                <!------------------------------------------      Country      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {countryLabel}<abbr class="slds-required" title="required">*</abbr>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInputSmall">
+                            <template if:true={countryListSet}>
+                                <lightning-combobox 
+                                    class="cursorPointerComboBox text-xxsmall"
+                                    value={localAddress.countryId}
+                                    variant="label-hidden"
+                                    options={countryOptions}
+                                    data-fieldname="Country"
+                                    dropdown-alignment="auto"
+                                    onchange={handleCountryChange}>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <!------------------------------------------      VAT Number      -------------------------------------------->
+                <lightning-layout-item size="12" class={vatClass}>
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {vatLabel} <!--lightning-icon icon-name="utility:help" size="xx-small" class="helpIcon" alternative-text={vatHelpText} title={vatHelpText}></lightning-icon-->
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="vatNumber"
+                                name="vatNumber"
+                                type="text"
+                                class="slds-input"
+                                placeholder={vatPlaceholder}
+                                value={localAccount.vatNumber}
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                    <template if:true={vatHelpText}>
+                        <div class="text-xxsmall helpText">
+                            {vatHelpText}
+                        </div>
+                    </template>
+            </lightning-layout-item>
 
                 <!------------------------------------------      Website      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">
@@ -224,8 +278,8 @@
                     <lightning-layout-item size="6" class="backButtonWrapper">
                         <div class="text-xxsmall">
                             <lightning-button variant="base"
-                                label={labels.CSP_L2_Back_to_Account_Selection}
-                                title={labels.CSP_L2_Back_to_Account_Selection}
+                                label={backToAccountSelection}
+                                title={backToAccountSelection}
                                 onclick={previous}
                                 class="blueCustomButtonLinkSmall"
                                 icon-name="utility:back" 
