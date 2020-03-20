@@ -425,4 +425,63 @@ private class ANG_RiskForecastPropertiesControllerTest {
 		System.assertEquals(riskForecastPropertiesCtrl.newRiskStatus, 'C', 'Risk status must be: C');
 	}
 
+	@isTest
+	static void testForecastFromChildAccount() {
+		Account acct = [SELECT Id, Name, IATACode__c, Iso_State__c, Location_Type__c, Location_Class__c, IATA_ISO_Country__c
+						FROM Account
+						WHERE Location_Type__c = :AMS_Utils.HE];
+
+		Contact cont = new Contact(AccountId = acct.id, Firstname = 'Richard', Lastname = 'Vaughan', Phone = '666123456', MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com', Financial_Assessment_Contact__c = false);
+		insert cont;
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acct.Id, Process__c = AMS_Utils.NGCHANGES, RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
+			Status__c = 'Open', STEP10__c = 'Passed');
+		insert oscar;
+
+		Case oscarCase = new Case();
+		oscarCase.Oscar__c = oscar.Id;
+		oscarCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+		oscarCase.AccountId = acct.Id;
+		oscarCase.ContactId = cont.Id;
+		insert oscarCase;
+
+		AMS_Pax_Accreditation_Form__c staging = new AMS_Pax_Accreditation_Form__c();
+		staging.RecordTypeId = AMS_Utils.RECTYPE_NEWGEN_CHANGES_PAX;
+		staging.Account_Name__c = acct.Name;
+		staging.ISSP_AMS_Legal_Status__c = 'Association';
+		staging.Branch_Office_Country__c = acct.IATA_ISO_Country__c;
+		staging.Branch_Office_Street_name_number__c = 'sdfsdf';
+		staging.Branch_Office_City__c = 'sdfsdfdf';
+		staging.IATA_ISO_State__c = acct.Iso_State__c;
+		staging.Branch_Office_Email__c = 'sdfsdfgdg@f3434.com';
+		staging.Branch_Office_Phone__c = '123123123';
+		staging.ISSP_AMS_Premises_located_at_airport__c = 'No';
+		staging.Abbreviated_name__c = 'Multicountry ';
+		staging.Abbreviated_Address__c = 'sdfsdf';
+		staging.Remittance_frequency__c = 'M';
+		staging.Solicitation_Flag__c = false;
+		staging.Location_Class__c = acct.Location_Class__c;
+		staging.Location_Type__c = acct.Location_Type__c;
+		staging.SAAM_Case__c = oscarCase.Id;
+		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
+		insert staging;
+
+		oscar.AMS_Online_Accreditation__c = staging.Id;
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+		update oscar;
+
+		Test.startTest();
+		ANG_RiskForecastPropertiesController riskForecastPropertiesCtrl = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
+		riskForecastPropertiesCtrl.getriskOption();
+		riskForecastPropertiesCtrl.riskOpt = ANG_RiskForecastPropertiesController.NOT_APPLICABLE;
+		riskForecastPropertiesCtrl.forecast();
+		Test.stopTest();
+		
+		// According to the configuration record for the combination: Satisfactory - No Action + Passed
+		System.assertEquals(riskForecastPropertiesCtrl.newRiskStatus, 'C', 'Risk status must be: C');
+	}
+
 }
