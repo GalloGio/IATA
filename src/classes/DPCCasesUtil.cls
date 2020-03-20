@@ -516,7 +516,7 @@ public without sharing class DPCCasesUtil {
 
 		//find all portal users for the related accounts in the incoming cases
 		if(!listAccountId.isEmpty()) {
-			for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
+			for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId, Contact.IsEmailBounced
 					FROM User
 					WHERE isActive = true
 					AND Contact.AccountId IN :listAccountId
@@ -625,7 +625,7 @@ public without sharing class DPCCasesUtil {
 		List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
 		if (listUsers!=null) {
 			for(User user : listUsers) {
-				if (user.ContactId!=null) {
+				if (user.ContactId!=null && !user.Contact.IsEmailBounced & !user.Contact.Email.endsWithIgnoreCase('.inactive')) {
 					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					mail.setOrgWideEmailAddressId(getNoReplyAddressId());
 					mail.setTargetObjectId(user.ContactId);

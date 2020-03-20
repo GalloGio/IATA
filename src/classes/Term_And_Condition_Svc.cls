@@ -88,6 +88,7 @@ public with sharing class Term_And_Condition_Svc
 
 		//-- Customers by Attachment
 		Map<Id, List<Id>> customersByAttachment = new Map<Id, List<Id>>(); // ATTACH_ID => LIST_CONTACT_ID
+		Set<Id> contactIdsForEmail = new Set<Id>();
 
 		if(contactsByTerm != null && contactsByTerm.size() > 0)
 		{
@@ -105,6 +106,7 @@ public with sharing class Term_And_Condition_Svc
 						? 	new Set<Id>(customersByAttachment.get(attachments[0].Id))
 						:	new Set<Id>();
 					tmp.addAll(contactsId);
+					contactIdsForEmail.addAll(contactsId);
 
 					customersByAttachment.put(attachments[0].Id, new List<Id>(tmp));
 				}
@@ -112,6 +114,8 @@ public with sharing class Term_And_Condition_Svc
 
 			if(!customersByAttachment.isEmpty())
 			{
+				Map<Id,Contact> cons = new Map<Id,Contact>([SELECT Id FROM Contact WHERE Id IN: contactIdsForEmail AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')]);
+				
 				Id templateId = (Id) Utility.getTextSetting('TPL_TnC_CHANGED');
 				List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 				Map<Id, Attachment> attachmentById = new Map<Id, Attachment>([SELECT Id, Name, Body FROM Attachment WHERE Id IN :customersByAttachment.keySet()]);
@@ -126,6 +130,7 @@ public with sharing class Term_And_Condition_Svc
 
 					for(ID contactId : customersByAttachment.get(attachId))
 					{
+						if(!cons.containsKey(contactId)) continue;
 						Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 							email.setTemplateId(templateId);
 							email.setFileAttachments(new List<Messaging.EmailFileAttachment>{eAttachment});
