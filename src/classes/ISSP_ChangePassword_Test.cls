@@ -38,9 +38,14 @@ private class ISSP_ChangePassword_Test {
 								IsActive = true);
 		insert newUser;
 
+		ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
+		ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');
+		insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
+
 	}
 
-	static testMethod void myUnitTest_2() {
+	@isTest	
+	static void myUnitTest_2() {
 		ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
 		insert issc;
 		Test.startTest();
@@ -78,7 +83,8 @@ private class ISSP_ChangePassword_Test {
 		Test.stopTest();
 	}
 	
-	static testMethod void myUnitTest_3() {
+	@isTest
+	static void myUnitTest_3() {
 		ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
 		insert issc;
 		Test.startTest();
@@ -161,7 +167,8 @@ private class ISSP_ChangePassword_Test {
 		Test.stopTest();
 	}
 
-	static testMethod void myUnitTest_4() {
+	@isTest
+	static void myUnitTest_4() {
 		ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
 		insert issc;
 		Test.startTest();
@@ -292,7 +299,8 @@ private class ISSP_ChangePassword_Test {
 		Test.stopTest();
 	}
 
-	static testMethod void loginPage_ISSP() {
+	@isTest
+	static void loginPage_ISSP() {
 
 		ISSP_CS__c cs = new ISSP_CS__c();
 		cs.Name = 'ipinfo_token';
@@ -320,7 +328,8 @@ private class ISSP_ChangePassword_Test {
 		}
 	}
 
-	static testMethod void loginPage_ISSP_2() {
+	@isTest
+	static void loginPage_ISSP_2() {
 
 		ISSP_CS__c cs = new ISSP_CS__c();
 		cs.Name = 'ipinfo_token';
@@ -340,7 +349,8 @@ private class ISSP_ChangePassword_Test {
 
 	}
 
-	static testMethod void loginPage_ISSP_3() {
+	@isTest
+	static void loginPage_ISSP_3() {
 		ISSP_CS__c cs = new ISSP_CS__c();
 		cs.Name = 'ipinfo_token';
 		cs.Value__c = 'test';
@@ -350,7 +360,8 @@ private class ISSP_ChangePassword_Test {
 		ISSP_First_Login.updateUsers(UserInfo.getUserId());
 	}
 
-	static testMethod void fredTests() {
+	@isTest
+	static void fredTests() {
 		ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
 		insert issc;
 		Test.startTest();
@@ -383,7 +394,8 @@ private class ISSP_ChangePassword_Test {
 		Test.stopTest();
 	}
 
-	static testMethod void CheckProvisioningTestIF(){
+	@isTest
+	static void CheckProvisioningTestIF(){
 
 		User newUser = [SELECT Id, Email FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
 
@@ -413,86 +425,79 @@ private class ISSP_ChangePassword_Test {
 
 	}
 
-			static testMethod void ChangePasswordServiceName(){
+	@isTest
+	static void ChangePasswordServiceName(){
 			
+		Test.startTest();
+		PageReference pgRef = Page.ISSP_ChangePassword;
+		pgRef.getParameters().put('serviceName','testServiceName');
+		pgRef.getParameters().put('OneId','testOneId');
+		Test.setCurrentPageReference(pgRef); 
+
+		ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
+		pageCP.changePassword();
+		Test.stopTest();
+
+	}
+
+	@isTest
+	static void checkProvisioningTestElse(){	
+
+		User newUser = [SELECT Id FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
+
+		UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed',
+												Operation = 'Activate', 
+												ApprovalStatus = 'Required',
+												SalesforceUserId = newUser.Id);
+
+		insert userProvisining;
+
+		System.runAs(newUser){
 			Test.startTest();
-			PageReference pgRef = Page.ISSP_ChangePassword;
-			pgRef.getParameters().put('serviceName','testServiceName');
-			pgRef.getParameters().put('OneId','testOneId');
-			Test.setCurrentPageReference(pgRef); 
-
-			ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
-			ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');
-			insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
-
 			ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
-			pageCP.changePassword();
+			pageCP.getCheckProvisioning();
 			Test.stopTest();
 
 		}
+		
+		List<PermissionSetAssignment> permissionSetAssignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :newUser.Id AND PermissionSetId IN (SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User') LIMIT 1];
+		System.assert(!permissionSetAssignments.isEmpty());
 
-		static testMethod void checkProvisioningTestElse(){	
+	}
 
-			User newUser = [SELECT Id FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
+	@isTest	
+	static void CheckProvisioningTestElseIf(){
 
-			ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
-			ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
-			insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
+		User newUser = [SELECT Id FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
 
-			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Completed',
-													Operation = 'Activate', 
-													ApprovalStatus = 'Required',
-													SalesforceUserId = newUser.Id);
+		ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
+		ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
+		insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
 
-			insert userProvisining;
+		UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Failed',
+												Operation = 'Activate', 
+												ApprovalStatus = 'Required',
+												SalesforceUserId = newUser.Id);
 
-			System.runAs(newUser){
-				Test.startTest();
-				ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
-				pageCP.getCheckProvisioning();
-				Test.stopTest();
+		insert userProvisining;
 
-			}
-
-			Id permissionSetId = [SELECT Id FROM PermissionSet WHERE Name='FRED_Primary_User' LIMIT 1].Id;
-		 
-			List<PermissionSetAssignment> permissionSetAssignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :newUser.Id AND PermissionSetId =  :permissionSetId];
-			System.assert(!permissionSetAssignments.isEmpty());
+		System.runAs(newUser){
+			Test.startTest();
+			ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
+			pageCP.getCheckProvisioning();
+			Test.stopTest();
 
 		}
+	
+		List<Apexpages.Message> msgs = ApexPages.getMessages();
+		boolean b = false;
 
-		static testMethod void CheckProvisioningTestElseIf(){
-
-			User newUser = [SELECT Id FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
-
-			ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
-			ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
-			insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
-
-			UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Failed',
-													Operation = 'Activate', 
-													ApprovalStatus = 'Required',
-													SalesforceUserId = newUser.Id);
-
-			insert userProvisining;
-
-			System.runAs(newUser){
-				Test.startTest();
-				ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
-				pageCP.getCheckProvisioning();
-				Test.stopTest();
-
-			}
-		
-			List<Apexpages.Message> msgs = ApexPages.getMessages();
-			boolean b = false;
-
-			for(Apexpages.Message msg:msgs){
-				if (msg.getDetail().contains('provisioning error contact admin')) b = true;
-			}
-
-			System.assert(b);	
-		
+		for(Apexpages.Message msg:msgs){
+			if (msg.getDetail().contains('provisioning error contact admin')) b = true;
 		}
+
+		System.assert(b);	
+	
+	}
 
 }
