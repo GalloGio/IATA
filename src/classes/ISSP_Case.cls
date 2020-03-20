@@ -1595,7 +1595,7 @@ public without sharing class ISSP_Case {
 			List<User> lsUsersPriority =
 				[SELECT Id, Name, Email, AccountId, Contact.AccountId
 				 FROM User
-				 WHERE Email IN :setEmailPriority];
+				 WHERE Email IN :setEmailPriority AND isActive = true];
 
 			for(User user : lsUsersPriority) {
 				CaseTeamMember teammember = new CaseTeamMember(
