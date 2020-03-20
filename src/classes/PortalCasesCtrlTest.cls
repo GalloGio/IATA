@@ -239,12 +239,13 @@ private class PortalCasesCtrlTest {
 		Test.startTest();
 			System.runAs(usr) {
 
-				createOscar('Test','Test','Draft',usr.ContactId,'OSCAR_Communication');
+				createOscar('CHG – Data Maintenance','Test','Draft',usr.ContactId,'OSCAR_Communication');
 				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
 				portFilterWrapper.searchText = 'Bla';
 
 				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
 				List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
+				System.assertNotEquals(0, contactPickOptions.size());
 			}
 
 		Test.stopTest();
