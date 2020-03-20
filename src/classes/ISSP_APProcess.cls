@@ -18,6 +18,8 @@ global without sharing class ISSP_APProcess {
 	public static final String ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY = 'Associate Member - Subsidiary'; //4
 	public static final String ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR = 'Associate Member - Aggregator'; //3
 
+	public static final Set<String> SET_VALID_ICCS_STATUS = new Set<String>{'Prospect','Active','Member'};
+
 	private static final map<String,set<String>> ICH_FORM_ASSIGNATION = new map<String,set<String>>{
 		'AIRLINE|CARGO ONLY' => new set<String>{
 			ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_SPONSORED_AIRLINE,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY},
@@ -1178,7 +1180,7 @@ global without sharing class ISSP_APProcess {
 				//check ICCS_Join
 				listMandatoryFiles.add('ICCS_Join');
 			}
-			if (getShowSettlementALaCarte() && getAccountIsICCSMember()) {
+			if (getShowSettlementALaCarte()) {
 				listMandatoryFiles.add('ICCS_Settlement_alacarte');
 			}
 			if (getShowICCSJoinMarket()) {
@@ -2084,11 +2086,11 @@ global without sharing class ISSP_APProcess {
 		return (getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'Settlement a la carte');
 	}
 
+	/**
+		Returns true if the related account is an ICCS Member
+	**/
 	public Boolean getAccountIsICCSMember() {
-		return this.hqaccount!=null
-			&& this.hqaccount.ICCS_Membership_Status__c!='Prospect'
-			&& this.hqaccount.ICCS_Membership_Status__c!='Active'
-			&& this.hqaccount.ICCS_Membership_Status__c!='Member';
+		return this.hqaccount!=null && SET_VALID_ICCS_STATUS.contains(this.hqaccount.ICCS_Membership_Status__c);
 	}
 
 	/**
@@ -2103,7 +2105,7 @@ global without sharing class ISSP_APProcess {
 	**/
 	public Boolean getShowJoinICCS() {
 		return (this.newForm.Airline_wish_to_join_ICCS__c=='Yes' || getShowSettlementALaCarte())
-			&& getAccountIsICCSMember();
+			&& !getAccountIsICCSMember();
 	}
 
 	/**

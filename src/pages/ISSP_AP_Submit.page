@@ -35,7 +35,7 @@
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Please indicate which type of settlement do you want to use for this market?" styleclass="ap-required"/>
+                            <apex:outputLabel value="Please indicate which type of settlement you want to use for this market" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Type_of_Settlement__c}" >
                                 <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
                             </apex:inputField>
@@ -100,7 +100,7 @@
                     </apex:pageBlockSection>
 
                     <!-- for settlement a la carte and ICCS Member -->
-                    <apex:pageBlockSection title="Information required to use Settlement a la Carte in this market" columns="1" rendered="{!showSettlementALaCarte && AccountIsICCSMember}" collapsible="false">
+                    <apex:pageBlockSection title="Information required to use Settlement a la Carte in this market" columns="1" rendered="{!showSettlementALaCarte}" collapsible="false">
                         <p>
                             Please download and complete the form in the link below. Once completed please uploaded using the box Settlement a la Carte format
                             <apex:outputPanel layout="block" rendered="{!ICCSSettlementALaCarteUrl!=null}">
