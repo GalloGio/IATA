@@ -31,6 +31,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
+	private static Id mainRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
 	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
 
@@ -203,7 +204,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 		if(hierarchy == null){
 			System.debug('Did not find any hierarchy, creating new one.');
 
-			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c);
+			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c, RecordTypeId = mainRecTypeId);
 			insert hierarchy;
 		}
 
@@ -258,7 +259,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 					System.debug('Did not find any hierarchy, creating new one.');
 
-					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
 					insert hierarchy;
 
@@ -275,7 +276,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 					System.debug('Did not find any hierarchy, creating new one.');
 
-					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
 					insert hierarchy;
 			}
@@ -298,7 +299,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 		return true;
 
 	}
-
 	@TestVisible
 	private static String fetchOscarRecordType(String typeOfProcess){
 
@@ -704,68 +704,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 		List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
 		AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
-		// for now we shouldn't sent any notification.
-		//sendNotification(accountId,accountChanges);
 
-	}
-
-	public static void testsendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
-		sendNotification(accountId, accountChanges );
-	}
-
-	private static void sendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
-
-		String name = '';
-		String userEmail = '';
-		String alias = '';
-
-		Account acct = [SELECT Id, OwnerId, Name from Account where Id = :accountId];
-
-		if(acct == null)
-			throw new CalloutException('Account could not be found.');
-
-		List<User> usrLst = [select Id, Alias, FirstName, LastName, Email from USER where Id = :acct.OwnerId];
-
-		if(!usrLst.isEmpty()){
-			name = usrLst.get(0).FirstName + ' ' + usrLst.get(0).LastName;
-			userEmail = usrLst.get(0).Email;
-		}
-
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-		EmailTemplate et = [Select Id, Subject, Body, HtmlValue from EmailTemplate where Name = 'AMS Minor Changes Notification'];
-		String subject = et.Subject;
-		String plainBody = et.Body;
-		String htmlBody = et.HtmlValue;
-
-		String memoText = createMemoText(accountChanges);
-
-		String accountURL = System.URL.getSalesforceBaseURL().toExternalForm() + '/' + acct.Id;
-
-		plainBody = plainBody.replace('#USERFULLNAME',name);
-		plainBody = plainBody.replace('#ACCOUNTNAME',acct.Name);
-		plainBody = plainBody.replace('#ACCOUNTCHANGES', memoText);
-
-		memoText = memoText.replaceAll('\r\n', '<br>');
-
-		htmlBody = htmlBody.replace('#USERFULLNAME',name);
-		htmlBody = htmlBody.replace('#ACCOUNTNAME',acct.Name);
-		htmlBody = htmlBody.replace('#ACCOUNTCHANGES', memoText);
-		htmlBody = htmlBody.replace('#HTMLPAGE', accountURL);
-
-		mail.setHtmlBody(htmlBody);
-		mail.setPlainTextBody(plainBody);
-		mail.subject = ' IATA - AMS Minor Changes Notification';
-
-		// set users
-		List<String> emails = new List<String>{userEmail};
-		mail.setToAddresses(emails);
-
-		List<String> emailsCC = new List<String>{'goncalvesd@iata.org'};
-		mail.setCcAddresses(emailsCC);
-
-		// Sends the email
-		Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 	}
 
 	public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
