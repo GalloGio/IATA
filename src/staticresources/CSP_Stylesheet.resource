@@ -2141,6 +2141,30 @@ visibility: hidden;
     display: inline-block;
 }
 
+.outlinedButtonBorderBlue button, 
+.outlinedButtonBorderBlue button:hover,
+.outlinedButtonBorderBlue button:focus,
+.outlinedButtonBorderBlue button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 40px;
+    word-break: break-word;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+    display: inline-block;
+}
+
 .languageSelection .slds-combobox_container input[role="textbox"]{
     border:none;
     background-color: transparent;
@@ -2613,6 +2637,15 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     border: none;
 	height: 56px;
     width: 100%;
+}
+
+
+.requestedService, .requestedService button{
+    color: #999999;
+}
+
+.requestedService button lightning-primitive-icon{
+    display:none;
 }
 
 /*#################################*/
