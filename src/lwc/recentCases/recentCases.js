@@ -42,7 +42,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     ];
     @track casesListUrl;
 
-    @track homePageLocal = true;
+    @track homePageLocal = false;
     @api
     get homePage() {
         return this.homePageLocal;
@@ -110,7 +110,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     }
 
     get showReachUs(){
-        return this.homePageLocal && !('$this.specialCase'=='false');
+        return this.homePageLocal && !this.loading;
     }
 	
     redirectToSupport(event) {
