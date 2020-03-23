@@ -276,12 +276,14 @@ public with sharing class ISSP_PortalUserStatusChange {
 
 		try{
 
-			User user = [select Id from User where ContactId =:contactId];
+			User user = [SELECT Id, ContactId, Contact.IsEmailBounced, Contact.Email FROM User WHERE ContactId =:contactId];
 			ISSP_Registration.password =  ISSP_Registration.generatePassword();
 			system.setPassword(user.Id, ISSP_Registration.password);
-			if(CommunityName=='CNS'){
-				ISSP_Registration.sendCNSEmail(user.Id,contactId);
-			}else{ ISSP_Registration.sendEmail(user.Id,contactId);            }
+			if(user.ContactId != null && !user.Contact.IsEmailBounced && String.isNotBlank(user.Contact.Email) && !user.Contact.Email.endsWithIgnoreCase('.inactive')) {
+				if(CommunityName=='CNS'){
+					ISSP_Registration.sendCNSEmail(user.Id,contactId);
+				}else{ ISSP_Registration.sendEmail(user.Id,contactId);}
+			}
 
 		}catch(Exception e){  }
 
