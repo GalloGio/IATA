@@ -144,9 +144,12 @@
                 <br/>
 
                 <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
-                    <apex:selectCheckboxes value="{!typeOfChangeRequested}" label="Type of change requested" onchange="refreshForm();" style="width:80%;" styleClass="makeRows">
-                        <apex:selectOptions value="{!changeItems}"/>
-                    </apex:selectCheckboxes>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Type of change requested" styleclass="ap-required"/>
+                        <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="refreshForm();" style="width:80%;" styleClass="makeRows">
+                            <apex:selectOptions value="{!changeItems}"/>
+                        </apex:selectCheckboxes>
+                    </apex:pageBlockSectionItem>
 
                     <apex:outputText value="Please indicate the effective date of the change." styleclass="aplabel" rendered="{!newForm.Type_of_Change_Requested__c!=''}"/>
 
@@ -400,7 +403,7 @@
                 <apex:outputPanel id="ReportOptionsFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options')=true}">
                     <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Report Options">
                         <tr><td colspan="4" class="aplabel">
-                            Please download and complete the form in the link below. Once completed please uploaded using the box.
+                            Please select at least one of the options below to be modified:
                         </td></tr>
 
                         <apex:pageBlockSectionItem >
@@ -432,8 +435,8 @@
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
                                 <apex:selectOption itemValue="" itemLabel="--None--"/>
                                 <apex:selectOption itemValue="Download only" itemLabel="Download only"/>
-                                <apex:selectOption itemValue="E-mail and download" itemLabel="E-mail and download"/>
-                                <apex:selectOption itemValue="Not Required" itemLabel="Not Required"/>
+                                <apex:selectOption itemValue="E-mail and Download" itemLabel="E-mail and Download"/>
+                                <apex:selectOption itemValue="Not required" itemLabel="Not required"/>
                                 <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
@@ -444,8 +447,8 @@
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
                                 <apex:selectOption itemValue="" itemLabel="--None--"/>
                                 <apex:selectOption itemValue="Download only" itemLabel="Download only"/>
-                                <apex:selectOption itemValue="E-mail and download" itemLabel="E-mail and download"/>
-                                <apex:selectOption itemValue="Not Required" itemLabel="Not Required"/>
+                                <apex:selectOption itemValue="E-mail and Download" itemLabel="E-mail and Download"/>
+                                <apex:selectOption itemValue="Not required" itemLabel="Not required"/>
                                 <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
@@ -458,8 +461,8 @@
                         <apex:outputText value="Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base."
                             rendered="{!PDFFilesNotRequired}"/>
 
-                        <apex:variable var="HOTFilesEmails" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='E-mail and download'}" />
-                        <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will be not possible to complete your change."
+                        <apex:variable var="HOTFilesEmails" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='E-mail and Download'}" />
+                        <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change."
                             rendered="{!HOTFilesEmails}"/>
                         <apex:pageBlockSectionItem rendered="{!HOTFilesEmails}">
                             <apex:outputLabel value="Email 1" styleclass="ap-required"/>
@@ -471,7 +474,6 @@
 
                         <apex:outputText value="Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only."
                             rendered="{!HOTFilesEmails}"/>
-                        <apex:pageBlockSectionItem rendered="{!HOTFilesEmails}">
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_1__c}" label="Email To Remove 1" rendered="{!HOTFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_2__c}" label="Email To Remove 2" rendered="{!HOTFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_3__c}" label="Email To Remove 3" rendered="{!HOTFilesEmails}"/>

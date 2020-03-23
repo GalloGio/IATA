@@ -559,13 +559,46 @@ global without sharing class ISSP_APProcess {
 							}
 						}
 					} else if(strAreaType=='Airline Change' && strChangeType=='Minor database changes') {
-						if(newForm.Type_of_Change_Requested__c != null) {
-							if(newForm.Type_of_Change_Requested__c.contains('Master')) { //Need to include MasterTable mandatory fields
+						//if there is any selection in Change request then some fields become mandatory
+						if(String.isNotBlank(newForm.Type_of_Change_Requested__c)) {
+							//MasterTable mandatory fields
+							if(newForm.Type_of_Change_Requested__c.contains('Master')) {
 								Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
-									for(String tmp : masterTableMandatoryFields.keySet()) {
-										ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
+								for(String tmp : masterTableMandatoryFields.keySet()) {
+									ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
+								}
+							}
+							//Report Options mandatory fields
+							if(newForm.Type_of_Change_Requested__c.contains('Report Options')) {
+								ISSP_AP_fieldLists.changeMandatoryFields.put('Type_of_Report_Options__c', 'Type_of_Report_Options__c');
+								if (newForm.Type_of_Report_Options__c=='HOT') {
+									ISSP_AP_fieldLists.changeMandatoryFields.put('Receive_HOT_files__c', 'Receive_HOT_files__c');
+									if ( newForm.Receive_HOT_files__c=='Yes – Billing Period HOT' || newForm.Receive_HOT_files__c == 'Yes – Remittance Period HOT') {
+										ISSP_AP_fieldLists.changeMandatoryFields.put('Hot_files_delivery_format__c', 'Hot_files_delivery_format__c');
+										if (newForm.Hot_files_delivery_format__c=='E-mail and download') {
+											ISSP_AP_fieldLists.changeMandatoryFields.put('HOT_File_Recipient_Email_1__c', 'HOT_File_Recipient_Email_1__c');
+										}
 									}
-							  }
+								} else if (newForm.Type_of_Report_Options__c=='PDF') {
+									ISSP_AP_fieldLists.changeMandatoryFields.put('Hot_files_delivery_format__c', 'Hot_files_delivery_format__c');
+								} else if (newForm.Type_of_Report_Options__c=='Excel') {
+									ISSP_AP_fieldLists.changeMandatoryFields.put('Receive_XLS_Reports__c', 'Receive_XLS_Reports__c');
+								}
+							}
+							//Commission mandatory fields
+							if(newForm.Type_of_Change_Requested__c.contains('Commission')) {
+								ISSP_AP_fieldLists.changeMandatoryFields.put('Pay_Commission_to_agents__c', 'Pay_Commission_to_agents__c');
+								if (newForm.Pay_Commission_to_agents__c=='Yes') {
+									ISSP_AP_fieldLists.changeMandatoryFields.put('Pay_Standard_Commission__c', 'Pay_Standard_Commission__c');
+									if (newForm.Pay_Standard_Commission__c=='Yes') {
+										ISSP_AP_fieldLists.changeMandatoryFields.put('Commission_Rate__c', 'Commission_Rate__c');
+									}
+								}
+							}
+							//Stock Management mandatory fields
+							if(newForm.Type_of_Change_Requested__c.contains('Stock Management')) {
+								ISSP_AP_fieldLists.changeMandatoryFields.put('Participate_in_AWB_Stock_Management__c', 'Participate_in_AWB_Stock_Management__c');
+							}
 						}
 						for (String fldLabel : ISSP_AP_fieldLists.changeMandatoryFields.keySet()) {
 							System.Debug('Change FldLabel: '+ fldLabel);
@@ -668,7 +701,8 @@ global without sharing class ISSP_APProcess {
 			Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,
 			Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c,
 			ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c, Billing_Value_Confirmation__c, Legal_Archiving__c, Auto_billing__c,
-			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Settlement__c, Type_of_Report_Options__c
+			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Settlement__c, Type_of_Report_Options__c,
+			HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c, HOT_File_Recipient_Remove_Email_4__c
 			FROM AP_Process_Form__c
 			WHERE Case__c = :newCase.Id
 			LIMIT 1

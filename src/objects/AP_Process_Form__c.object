@@ -3068,6 +3068,50 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_1__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_2__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_3__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_4__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Hot_files_delivery_format__c</fullName>
         <description>Delivery format</description>
         <externalId>false</externalId>
@@ -15880,6 +15924,70 @@ OR(
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp;  Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
         <errorDisplayField>Accept_terms_and_conditions__c</errorDisplayField>
         <errorMessage>Please accept the Terms and Conditions before submitting the Joining Application to IATA.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email1</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_1__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_1__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email2</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_2__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_2__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email3</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_3__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email4</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_4__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_4__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Derired_Date_to_start_ICH_Lower_than_SIS</fullName>
