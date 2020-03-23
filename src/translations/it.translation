@@ -2078,7 +2078,7 @@ la seguente procedura per completarlo :
     </customLabels>
     <customLabels>
         <label>Cerca Casi</label>
-        <name>CSP_Change_Email</name>
+        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>Modifica dell&apos;email</label>
