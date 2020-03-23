@@ -117,7 +117,7 @@ public with sharing class PortalServicesCtrl {
 		List<Portal_Application_Right__c> nonFavorites = new List<Portal_Application_Right__c>();
 		Set<Id> portalApplicationIdSet = new Set<Id>();
 		for(Portal_Application_Right__c par : lstPortalApplicationsRights){
-			if(par.Is_Favorite__c){
+			if(par.Is_Favorite__c && par.Right__c == 'Access Granted'){
 				listToReturn.add(par);
 			}
 			else{
