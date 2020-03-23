@@ -430,27 +430,11 @@ global without sharing class ISSP_APProcess {
 				getCityData();//TF
 				newForm.Submitted_to_IATA__c = FALSE;
 
-				// TF - Type of Change Requested
-				typeOfChangeRequested = new List<String>();
-				if (newForm.Type_of_Change_Requested__c != null){
-					for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-						typeOfChangeRequested.add(thisValue);
-					}
-				}
-
 			}else if(stepNumber == '4'){
 				system.debug('STEP 4 - 1');
 				isStep4 = true;
 				system.debug('STEP 4 - 2');
 				newForm.Submitted_to_IATA__c = FALSE;
-
-				// TF - Type of Change Requested
-				typeOfChangeRequested = new List<String>();
-				if (newForm.Type_of_Change_Requested__c != null){
-					for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-						typeOfChangeRequested.add(thisValue);
-					}
-				}
 
 				//TF
 				String nameString = apcountryisocode + '-' + strLOB + '%';
@@ -684,7 +668,7 @@ global without sharing class ISSP_APProcess {
 			Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,Data_Exporting_Organization_Email__c,EU_Data_Privacy_Laws__c,
 			Desired_date_to_start_in_ICH__c,Desired_date_to_start_in_SIS__c,Is_publicly_traded_company__c,Stock_Exchange_Name__c,
 			ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c, Billing_Value_Confirmation__c, Legal_Archiving__c, Auto_billing__c,
-			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Settlement__c
+			Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Settlement__c, Type_of_Report_Options__c
 			FROM AP_Process_Form__c
 			WHERE Case__c = :newCase.Id
 			LIMIT 1
@@ -960,15 +944,6 @@ global without sharing class ISSP_APProcess {
 
 	public void saveBSPForm(){
 		getLob(newCase.Verification__c);
-		// TF - Type of Change Requested
-		String typeOfChangeRequestedString = '';
-		if (typeOfChangeRequested!=null) {
-			for (String thisValue : typeOfChangeRequested){
-				typeOfChangeRequestedString = typeOfChangeRequestedString + thisValue + ';';
-			}
-
-		}
-		newForm.Type_of_Change_Requested__c = typeOfChangeRequestedString;
 
 		//TF
 		if (cityList != null){
@@ -1861,17 +1836,30 @@ global without sharing class ISSP_APProcess {
 
 	public List<SelectOption> getChangeItems() {
 		List<SelectOption> options = new List<SelectOption>();
-		String masterTableLabel = strLoB + 'Link Master Table';
-
-		options.add(new SelectOption('Change of Address','Change of Local Address'));
-		options.add(new SelectOption('Tax Number',' Tax Number'));
-		options.add(new SelectOption('Master Table', masterTableLabel));
-		options.add(new SelectOption('Voluntary Withdrawal', 'Voluntary Withdrawal'));
-
+		for( Schema.PicklistEntry pickListVal : AP_Process_Form__c.Type_of_Change_Requested__c.getDescribe().getPicklistValues()){
+			String label = pickListVal.getLabel();
+			String value = pickListVal.getValue();
+			if (value == 'Master Table') label = strLoB + 'Link Master Table';
+			options.add(new SelectOption(value, label));
+		}
 		return options;
 	}
 
-	public List <String> typeOfChangeRequested {get; set;}
+	public List <String> typeOfChangeRequested {
+		get{
+			List<String> listTypes = new List<String>();
+			if (newForm.Type_of_Change_Requested__c != null){
+				for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
+					listTypes.add(thisValue);
+				}
+			}
+			return listTypes;
+		}
+		set{
+			typeOfChangeRequested = value==null? new list<String>(): value;
+			newForm.Type_of_Change_Requested__c = String.join(typeOfChangeRequested,';');
+		}
+	}
 
 	private void getLob(String strLine) {
 	 //Verify if it's a BSP or a CASS Form

@@ -26,6 +26,12 @@
 				} else {
     				document.getElementById('{!$Component.APChangesForm.changeblock.WithdrawalFields}').style.display='none';
 				}
+            } else if(document.getElementById(myValue).value=='Report Options') {
+            	if(document.getElementById(myValue).checked) {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='block';
+				} else {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.ReportOptionsFields}').style.display='none';
+				}
             }
         }
     
@@ -399,6 +405,103 @@
                             src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=CASS Voluntary Withdrawal&reqDescription=&reqIdentifier=CASS_Voluntary_Withdrawal"/>
                     </apex:pageBlockSection>
                 </apex:outputPanel>
+
+                <!-- Show when Type of change Report Options is selected -->
+                <apex:outputPanel id="ReportOptionsFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options'), '', 'display:none')}" >
+                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Report Options">
+                        <tr><td colspan="4" class="aplabel">
+                            Please download and complete the form in the link below. Once completed please uploaded using the box.
+                        </td></tr>
+
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Select an option" styleclass="ap-required"/>
+                            <apex:selectList value="{!newForm.Type_of_Report_Options__c}" size="1">
+                                <apex:selectOption itemValue="" itemLabel="--None--"/>
+                                <apex:selectOption itemValue="HOT" itemLabel="HOT"/>
+                                <apex:selectOption itemValue="PDF" itemLabel="PDF"/>
+                                <apex:selectOption itemValue="Excel" itemLabel="Excel"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:variable var="HOTselected" value="{!newForm.Type_of_Report_Options__c='HOT'}"/>
+                        <apex:pageBlockSectionItem rendered="{!HOTselected}">
+                            <apex:outputLabel value="Does your airline wish to receive HOT files?" styleclass="ap-required"/>
+                            <apex:selectList value="{!newForm.Receive_HOT_files__c}" size="1">
+                                <apex:selectOption itemValue="" itemLabel="--None--"/>
+                                <apex:selectOption itemValue="No" itemLabel="No"/>
+                                <apex:selectOption itemValue="Yes – Billing Period HOT" itemLabel="Yes – Billing Period HOT"/>
+                                <apex:selectOption itemValue="Yes – Remittance Period HOT" itemLabel="Yes – Remittance Period HOT"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:variable var="receiveHOTFiles" value="{!HOTselected && OR(newForm.Receive_HOT_files__c='Yes – Billing Period HOT',newForm.Receive_HOT_files__c='Yes – Remittance Period HOT')}" />
+                        <apex:pageBlockSectionItem rendered="{! receiveHOTFiles}">
+                            <apex:outputLabel value="HOT file receipt preference" styleclass="ap-required"/>
+                            <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
+                                <apex:selectOption itemValue="" itemLabel="--None--"/>
+                                <apex:selectOption itemValue="Download only" itemLabel="Download only"/>
+                                <apex:selectOption itemValue="E-mail and download" itemLabel="E-mail and download"/>
+                                <apex:selectOption itemValue="Not Required" itemLabel="Not Required"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:variable var="PDFSelected" value="{!newForm.Type_of_Report_Options__c='PDF'}" />
+                        <apex:pageBlockSectionItem rendered="{! PDFSelected}">
+                            <apex:outputLabel value="PDF file receipt preference" styleclass="ap-required"/>
+                            <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
+                                <apex:selectOption itemValue="" itemLabel="--None--"/>
+                                <apex:selectOption itemValue="Download only" itemLabel="Download only"/>
+                                <apex:selectOption itemValue="E-mail and download" itemLabel="E-mail and download"/>
+                                <apex:selectOption itemValue="Not Required" itemLabel="Not Required"/>
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="WaitingStatus"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:variable var="HOTFilesNotRequired" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='Not Required'}" />
+                        <apex:outputText value="Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base."
+                            rendered="{!HOTFilesNotRequired}"/>
+
+                        <apex:variable var="PDFFilesNotRequired" value="{!PDFSelected && newForm.Hot_files_delivery_format__c='Not Required'}" />
+                        <apex:outputText value="Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base."
+                            rendered="{!PDFFilesNotRequired}"/>
+
+                        <apex:variable var="HOTFilesEmails" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='E-mail and download'}" />
+                        <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will be not possible to complete your change."
+                            rendered="{!HOTFilesEmails}"/>
+                        <apex:pageBlockSectionItem rendered="{!HOTFilesEmails}">
+                            <apex:outputLabel value="Email 1" styleclass="ap-required"/>
+                            <apex:inputField value="{!newform.HOT_File_Recipient_Email_1__c}"/>
+                        </apex:pageBlockSectionItem>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_2__c}" label="Email 2" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_3__c}" label="Email 3" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_4__c}" label="Email 4" rendered="{!HOTFilesEmails}"/>
+
+                        <apex:outputText value="Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only."
+                            rendered="{!HOTFilesEmails}"/>
+                        <apex:pageBlockSectionItem rendered="{!HOTFilesEmails}">
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_1__c}" label="Email To Remove 1" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_2__c}" label="Email To Remove 2" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_3__c}" label="Email To Remove 3" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_4__c}" label="Email To Remove 4" rendered="{!HOTFilesEmails}"/>
+
+                        <apex:variable var="ExcelSelected" value="{!newForm.Type_of_Report_Options__c='Excel'}"/>
+                        <apex:pageBlockSectionItem rendered="{!ExcelSelected}">
+                            <apex:outputLabel value="Does your Airline wish to receive XLS reports?" styleclass="ap-required"/>
+                            <apex:inputField value="{!newForm.Receive_XLS_Reports__c}">
+                                <apex:actionSupport event="onchange" rerender="ReportOptionsFields" status="blockButtons"/>
+                            </apex:inputField>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:variable var="ExcelSelectedYes" value="{!ExcelSelected && newForm.Receive_XLS_Reports__c='Yes'}" />
+                        <apex:outputText value="Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library."
+                            rendered="{!ExcelSelectedYes}"/>
+
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+
             </div>     
          </apex:pageBlock>
           

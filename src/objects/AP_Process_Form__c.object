@@ -4057,7 +4057,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <value>
                     <fullName>Change of Address</fullName>
                     <default>false</default>
-                    <label>Change of Address</label>
+                    <label>Change of Local Address</label>
                 </value>
                 <value>
                     <fullName>Tax Number</fullName>
@@ -4065,13 +4065,54 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <label>Tax Number</label>
                 </value>
                 <value>
-                    <fullName>BSPLink Master Table</fullName>
+                    <fullName>Master Table</fullName>
                     <default>false</default>
-                    <label>BSPLink Master Table</label>
+                    <label>Link Master Table</label>
+                </value>
+                <value>
+                    <fullName>Voluntary Withdrawal</fullName>
+                    <default>false</default>
+                    <label>Voluntary Withdrawal</label>
+                </value>
+                <value>
+                    <fullName>Report Options</fullName>
+                    <default>false</default>
+                    <label>Report Options</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Type_of_Report_Options__c</fullName>
+        <description>Only used when one of the selected values in &apos;Type_of_Change_Requested__c&apos; is &apos;Report Options&apos;</description>
+        <externalId>false</externalId>
+        <label>Type of Report Options</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HOT</fullName>
+                    <default>false</default>
+                    <label>HOT</label>
+                </value>
+                <value>
+                    <fullName>PDF</fullName>
+                    <default>false</default>
+                    <label>PDF</label>
+                </value>
+                <value>
+                    <fullName>Excel</fullName>
+                    <default>false</default>
+                    <label>Excel</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_of_Settlement__c</fullName>
@@ -5313,15 +5354,38 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Withdrawal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6400,6 +6464,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7526,15 +7605,38 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Withdrawal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8636,6 +8738,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9766,15 +9883,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10906,15 +11038,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12038,15 +12185,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13174,15 +13336,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14318,15 +14495,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15462,15 +15654,30 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
