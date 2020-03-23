@@ -63,14 +63,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         if (this.searchText !== '') {
             params.searchText = this.filteringObject.searchText;
         }
-
-        this[NavigationMixin.GenerateUrl]({
-            type: "comm__namedPage",
-            attributes: {
-                pageName: "advanced-search"
-            }
-        })
-            .then(url => navigateToPage(url, params));
+        navigateToPage(CSP_PortalPath+'advanced-search', params);
     }
 
     @api advancedSearch = false;
@@ -293,7 +286,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             searchProfiles = new Promise((resolve, reject) => {
                 portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Profiles' })
                     .then(results => {
-                        if (results && results.recordsString && results.recordsString !== '') {
+                        if (results && results.recordsString && results.recordsString !== '' && results.totalItemCount>0) {
                             let allProfileResultsUnparsed = [];
                             let allProfileResultsParsed = [];
                             allProfileResultsUnparsed = JSON.parse(results.recordsString);
@@ -504,13 +497,6 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 thePage = 'my-profile';
             }
         }
-
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: thePage
-            }
-        })
-            .then(url => navigateToPage(url, params));
+        navigateToPage(CSP_PortalPath+thePage, params);
     }
 }

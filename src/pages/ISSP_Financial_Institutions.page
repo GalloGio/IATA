@@ -3,6 +3,12 @@
         <c:ISSP_Header />
         <body>
             <style>
+                .headerRow{
+                    background-color: #1E32FA !important;
+                    color: white !important;
+                    font-size: 12px !important;
+                }
+                
                 .table > tbody > tr > td, 
                 .table > tbody > tr > th, 
                 .table > tfoot > tr > td, 
