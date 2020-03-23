@@ -2076,6 +2076,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Pencarian Kasus</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>Ganti e-mail</label>
         <name>CSP_Change_Email</name>
     </customLabels>

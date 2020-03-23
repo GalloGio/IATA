@@ -2076,6 +2076,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>ケースを検索</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>メールを変更する</label>
         <name>CSP_Change_Email</name>
     </customLabels>

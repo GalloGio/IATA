@@ -2075,6 +2075,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Tìm kiếm các trường hợp</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>Thay đổi e-mail</label>
         <name>CSP_Change_Email</name>
     </customLabels>

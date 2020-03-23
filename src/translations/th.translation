@@ -2073,6 +2073,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>ค้นหากรณี</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>เปลี่ยนอีเมล</label>
         <name>CSP_Change_Email</name>
     </customLabels>

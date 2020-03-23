@@ -2073,6 +2073,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Поиск по кейсам</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>Изменить электронную почту</label>
         <name>CSP_Change_Email</name>
     </customLabels>
