@@ -715,7 +715,7 @@ global class ANG_OscarProcessHelper {
 
 		try {
 
-			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 									(SELECT Id, Reason_Code__c, Reason_Description__c
 									 FROM Agencies_Applied_Change_codes__r
 									 WHERE Active__c = true)
@@ -750,7 +750,7 @@ global class ANG_OscarProcessHelper {
 	//ACAMBAS - NEWGEN-4822 - Start
 	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
 
-		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 												(SELECT Id, Reason_Code__c, Reason_Description__c
 									 			 FROM Agencies_Applied_Change_codes__r
 									 			 WHERE Active__c = true)
