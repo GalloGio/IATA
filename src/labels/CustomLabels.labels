@@ -21914,7 +21914,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepA</shortDescription>
-        <value>A. Select Type of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Type of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_StepB_message</fullName>
@@ -21930,7 +21930,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepC</shortDescription>
-        <value>C. Details of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Details of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Summary_Current_Ownership</fullName>
