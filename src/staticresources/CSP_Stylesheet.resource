@@ -132,6 +132,14 @@ body {
     font-size: 16px;
 }
 
+.searchInputContainer{
+    box-shadow: none;
+    border-color: lightgray;
+    border-radius: 0px;
+    height: 52px;
+    background: white;
+}
+
 /* creates a triangle for the card title */
 .triangleRight {
     width: 20px;

@@ -2076,6 +2076,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Recherche de cas</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>Changer le courriel</label>
         <name>CSP_Change_Email</name>
     </customLabels>
