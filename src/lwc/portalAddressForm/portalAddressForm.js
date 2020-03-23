@@ -119,15 +119,6 @@ export default class PortalAddressForm extends LightningElement {
         }
     }
 
-    get isCountryDisabled(){
-        if(this.disableCountry){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     get isStateRequired(){
         return this.provinceAndCitiesEnabled;
     }
