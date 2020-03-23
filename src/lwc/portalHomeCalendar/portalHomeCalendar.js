@@ -195,14 +195,21 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     updateEventClassName(data) {
+        let lstEventDots = [];
         if (data.lstWeeks) {
             data.lstWeeks.forEach(w => {
                 if (w.lstDays) {
                     w.lstDays.forEach(d => {
+                        lstEventDots=[];
                         if (d.lstEvents) {
                             d.lstEvents.forEach(e => {
                                 e.className = `eventDot ${e.className}`;
+                                //place the string until the character '-'
+                                let eventTitle = e.title ? e.title.substr(0,e.title.indexOf('-')) : '';
+                                lstEventDots.push({className : e.className, title: eventTitle});
                             });
+                            //creates a single set of occurances
+                            d.singleLstEvents = [...new Set(lstEventDots)]; 
                         }                        
                     });
                 }
