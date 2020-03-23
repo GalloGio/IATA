@@ -1,4 +1,4 @@
-trigger attachmentTrigger on Attachment (before insert, before update, before delete) {
+trigger attachmentTrigger on Attachment (before insert, before update, before delete, after insert) {
 	if(Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 		List<Id> lsParentIds = new List<Id>();
 		for(Attachment t : Trigger.new) {
@@ -22,5 +22,31 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 		for(Attachment t : Trigger.old) {
 			if(mpLGM.containsKey(t.ParentId) && !mpLGM.get(t.ParentId).Local_GoverNance__r.Active__c) t.addError('cannot modify for inactive groups');
 		}
+	}
+	
+	if(Trigger.isAfter && Trigger.isInsert) {  
+		Savepoint sp = Database.setSavepoint();
+		List<Case> caseList = new List<Case>();
+		List<Id> atts = new List<Id>();
+		
+		for(Attachment t : Trigger.new) {
+			atts.add(t.ParentId);
+		}
+
+		caseList = [select id,Status from Case where id IN: atts AND Status = 'Closed'];
+
+		try{   
+			if(caseList.size() > 0){
+				for(case c: caseList){
+					c.Status = 'Reopen';
+				} 
+
+				update caseList;
+			}
+		}
+		catch(Exception ex){
+			Database.rollback(sp);
+		}	
+
 	}
 }
