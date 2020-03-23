@@ -54,25 +54,27 @@
 	                                <div class="divider-home"/>
 	
 	                                <br/>
-	
-	                                <div class="bold-txt">
-	                                    <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
-	                                </div>
-	                                <br/>
-	                                <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-	                                <div class="down-btn">
-	                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
-	                                        <div class="ic-pstn">
-	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-	                                            <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-	                                        </div>
-	                                    </a>
-	                                </div>
-	                                &nbsp;
-	                                <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-	                                <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-	                                    <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
-	                                </apex:outputText>
+
+									<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id != null}">
+										<div class="bold-txt">
+											<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+										</div>
+										<br/>
+										<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+										<div class="down-btn">
+											<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+												<div class="ic-pstn">
+													<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+													<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+												</div>
+											</a>
+										</div>
+										&nbsp;
+										<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+										<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+											<apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+										</apex:outputText>
+									</apex:outputPanel>
 	                            </div>
 	                        </div>
 	                    </apex:outputPanel>
@@ -111,24 +113,26 @@
 	
 	                                        <br/>
 	
-	                                        <div class="bold-txt">
-	                                            <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
-	                                        </div>
-	                                        <br/>
-	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-	                                        <div class="down-btn">
-	                                            <div class="ic-pstn">
-	                                                <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
-	                                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-	                                                    <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-	                                                </a>
-	                                            </div>
-	                                        </div>
-	                                        &nbsp;
-	                                        <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-	                                        <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-	                                            <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
-	                                        </apex:outputText>
+											<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id != null}">
+												<div class="bold-txt">
+													<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+												</div>
+												<br/>
+												<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+												<div class="down-btn">
+													<div class="ic-pstn">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+															<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+															<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+														</a>
+													</div>
+												</div>
+												&nbsp;
+												<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+												<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+													<apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+												</apex:outputText>
+											</apex:outputPanel>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -221,25 +225,28 @@
 	
 	                                            <div class="divider-home"/>
 	                                                
-	                                            <br/>
-	                                            <div class="bold-txt">
-	                                                <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
-	                                            </div>
-	                                            <br/>
-	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-	                                            <div class="down-btn">
-	                                                <div class="ic-pstn">
-	                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
-	                                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-	                                                        <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-	                                                    </a>
-	                                                </div>
-	                                            </div>
-	                                            &nbsp;
-	                                            <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-	                                            <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-	                                                <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
-	                                            </apex:outputText>
+												<br/>
+
+												<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id != null}">
+													<div class="bold-txt">
+														<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+													</div>
+													<br/>
+													<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+													<div class="down-btn">
+														<div class="ic-pstn">
+															<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+																<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+																<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+															</a>
+														</div>
+													</div>
+													&nbsp;
+													<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+													<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+														<apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+													</apex:outputText>
+												</apex:outputPanel>
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -347,25 +354,27 @@
 	                                        <div class="divider-home"/>
 	                                            
 	                                        <br/>
-	
-	                                        <div class="bold-txt">
-	                                            <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
-	                                        </div>
-	                                        <br/>
-	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-	                                        <div class="down-btn">
-	                                            <div class="ic-pstn">
-	                                                <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
-	                                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-	                                                    <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-	                                                </a>
-	                                            </div>
-	                                        </div>
-	                                        &nbsp;
-	                                        <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-	                                        <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-	                                            <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
-	                                        </apex:outputText>
+
+											<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id != null}">
+												<div class="bold-txt">
+													<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+												</div>
+												<br/>
+												<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+												<div class="down-btn">
+													<div class="ic-pstn">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+															<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+															<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+														</a>
+													</div>
+												</div>
+												&nbsp;
+												<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+												<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+													<apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+												</apex:outputText>
+											</apex:outputPanel>
 	                                    </div>
 	                                </div>
 	            
@@ -507,9 +516,11 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['New_ICCS'].Id}" target="_blank">
-                                                        <apex:outputText value="{! $Label.ICCS_More_About_Link}"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['New_ICCS'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['New_ICCS'].Id}" target="_blank">
+															<apex:outputText value="{! $Label.ICCS_More_About_Link}"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
                                                     <a href="https://portal.iata.org/faq/articles/en_US/FAQ/What-are-the-steps-to-joining-ICCS-1432212713560/?l=en_US&fs=RelatedArticle" target="_blank">
@@ -583,39 +594,53 @@
                                             <br/>
                                             <ul style="padding-left: 14px;">
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Description'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Description'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Description'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Description'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Description'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FAQs'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FAQs'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_FAQs'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FAQs'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FAQs'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Countries'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Countries'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Countries'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Countries'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Countries'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                             </ul>
                                         </td>
@@ -625,54 +650,68 @@
                                             <br/>
                                             <ul style="padding-left: 14px;">
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
+                                                </li>
+
+                                                <li>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['Form_K'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['Form_K'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['Form_K'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['Form_A'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['Form_A'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['Form_K'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['Form_K'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                                 <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Name}" escape="false"/>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Name}" escape="false"/>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
-                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
-                                                    </a>
+													<apex:outputPanel rendered="{! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id != null}">
+														<a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
+															<apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
+														</a>
+													</apex:outputPanel>
                                                 </li>
                                             </ul>
                                         </td>
