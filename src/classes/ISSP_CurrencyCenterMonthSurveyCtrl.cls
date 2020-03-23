@@ -331,7 +331,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public void buildCountriesMap() {
 
 		//get all countries from country profile object
-		countriesProfileList = [SELECT ID, Name, Currency__c, Currency_Exchange_Rate__c, IATA_ISO_Country__r.Name FROM Country_Profile__c ORDER BY Name ASC];
+		countriesProfileList = [SELECT ID, Name, Currency__c, Currency_Exchange_Rate__c, Country_Name__r.Name FROM Country_Profile__c ORDER BY Name ASC];
 
 		//inicialize the map of countries
 		countriesProfileMap = new Map<String, Country_Profile__c>();
@@ -424,7 +424,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 			//get exchange rate for report type
 			if(!countryCurrency.equals('USD')) {
-				String selectedISOCountryName = countriesProfileMap.get(selectedCountrySurvey).IATA_ISO_Country__r.Name;
+				String selectedISOCountryName = countriesProfileMap.get(selectedCountrySurvey).Country_Name__r.Name;
 				if((!iataIsoCountryMap.get(selectedISOCountryName).CurrencyIsoCode.equals('USD') && iataIsoCountryMap.get(selectedISOCountryName).CurrencyIsoCode.equals(countryCurrency)) || !countriesProfileMap.get(selectedCountrySurvey).Currency__c.equals('USD')) {
 					wccsObjectMap.get(selectedCountrySurvey).typeReportMap.get(key).Average_Exchange_Rate__c = countriesProfileMap.get(selectedCountrySurvey).Currency_Exchange_Rate__c;
 				}
