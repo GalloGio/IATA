@@ -36,7 +36,7 @@
                     <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                         <thead>
                             <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                                <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate"></span></th><!--Actions-->
+                                <th scope="col" class="actionColumn"><span class="slds-truncate"></span></th><!--Actions-->
                                 <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Milestone</span></th>
                                 <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Responsible</span></th>
                                 <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Involved</span></th>
