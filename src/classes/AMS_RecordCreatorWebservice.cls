@@ -704,8 +704,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 		List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
 		AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
-		// for now we shouldn't sent any notification.
-		//sendNotification(accountId,accountChanges);
 
 	}
 

@@ -262,7 +262,9 @@
                                                         </apex:repeat>
                                                     </div>
                                                 </div>
-                                                <p>{!$Label.Home_Page_New_Release_Msg}</p>
+                                                <p><b>IMPORTANT DELIVERY INFORMATION:</b><br/>
+                                                {!$Label.COVID_19_eComm_Home_Page}</p>
+                                                <!--<p>{!$Label.Home_Page_New_Release_Msg}</p> To be recovered when indicated my business-->
                                             </div>
                                         </section>
                                     </div>
