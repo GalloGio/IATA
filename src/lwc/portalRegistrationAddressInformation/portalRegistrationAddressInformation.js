@@ -8,7 +8,6 @@ import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Infor
 import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
 import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
-import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
@@ -49,7 +48,6 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
     // labels depending on the origin (internal vs portal)
     companyInformation;
     companyName;
-    countryLabel;
     businessAddressInformationMessage;
     backToCompanyInformation;
 
@@ -60,14 +58,12 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         if(this.internalUser){
             this.companyInformation = 'Account Information';
             this.companyName = 'Account Name';
-            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
             this.businessAddressInformationMessage = 'Please provide the business address of the account\'s contact\'s work location.';
             this.backToCompanyInformation = 'Back to Account Information';
         }
         else{
             this.companyInformation = CSP_L2_Company_Information;            
             this.companyName = CSP_L2_Company_Name;
-            this.countryLabel = CSP_L2_Company_Location;
             this.businessAddressInformationMessage = CSP_L2_Business_Address_Information_Message;
             this.backToCompanyInformation = CSP_L2_Back_to_Company_Information;
         }
