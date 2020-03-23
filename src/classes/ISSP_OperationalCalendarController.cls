@@ -838,6 +838,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		public list<list<String>> data;
 	}
 	public class HeaderDef {
+		public String apiName;
 		public String sTitle;
 		public String sType;
 		public Boolean bVisible;
@@ -846,6 +847,11 @@ global without sharing class ISSP_OperationalCalendarController {
 			this.sType = sType;
 			this.bVisible  = bVisible ;
 		}
+		public HeaderDef(String apiName, String sTitle, String sType, Boolean bVisible) {
+			this(sTitle, sType, bVisible);
+			this.apiName = apiName;
+		}
+
 	}
 
 	/**
@@ -863,8 +869,9 @@ global without sharing class ISSP_OperationalCalendarController {
 		for(Schema.FieldSetMember f : fieldset.getFields()) {
 			String stype = String.ValueOf(f.getType()).toLowerCase();
 			stype = f.getFieldPath()=='Country__c'? 'string': stype;
-			String headerLabel = f.getLabel();
-			table.headers.add(new HeaderDef(headerLabel,stype,true));
+			String headerLabel = f.getFieldPath()=='frequency_code__c'? 'Remittance Frequency': f.getLabel();
+			String fieldName = f.getFieldPath();
+			table.headers.add(new HeaderDef(fieldName,headerLabel,stype,true));
 		}
 		//data
 		table.data = new list<list<String>>();

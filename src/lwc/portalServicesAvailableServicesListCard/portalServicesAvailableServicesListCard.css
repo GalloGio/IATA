@@ -54,3 +54,13 @@
 .breakWord{
   word-break: break-word;
 }
+
+.customCardBorder{
+  padding: 2rem;
+}
+
+@media screen and (max-width: 769px) {
+  .customCardBorder {
+    padding: 0.75rem;
+  }
+}

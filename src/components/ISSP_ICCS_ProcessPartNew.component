@@ -166,45 +166,49 @@
 
                     <div class="table-form">
 
-						<div class="bold-txt">
-							<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
-						</div>
-						<br/>
-						<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-						<div class="down-btn">
-							<div class="ic-pstn">
-								<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
-									<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-									<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-								</a>
+						<apex:outputPanel rendered="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id != null}">
+							<div class="bold-txt">
+								<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
 							</div>
-						</div>
-						&nbsp;
-						<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-						<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-							<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].LastModifiedDate}" />
-						</apex:outputText>
+							<br/>
+							<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+							<div class="down-btn">
+								<div class="ic-pstn">
+									<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
+										<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+										<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+									</a>
+								</div>
+							</div>
+							&nbsp;
+							<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+							<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+								<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Join_Participation'].LastModifiedDate}" />
+							</apex:outputText>
+						</apex:outputPanel>
 
                         <br/><br/><br/>
 
-						<div class="bold-txt">
-							<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
-						</div>
-						<br/>
-						<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
-						<div class="down-btn">
-							<div class="ic-pstn">
-                            	<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
-									<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
-									<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
-								</a>
+						<apex:outputPanel rendered="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id != null}">
+							<div class="bold-txt">
+								<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
 							</div>
-						</div>
-						&nbsp;
-						<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
-						<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
-							<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].LastModifiedDate}" />
-						</apex:outputText>
+							<br/>
+							<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+							<div class="down-btn">
+								<div class="ic-pstn">
+									<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
+										<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+										<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+									</a>
+								</div>
+							</div>
+							&nbsp;
+							<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+							<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+								<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].LastModifiedDate}" />
+							</apex:outputText>
+						</apex:outputPanel>
 
 						<div class="divider-4"/>
 
