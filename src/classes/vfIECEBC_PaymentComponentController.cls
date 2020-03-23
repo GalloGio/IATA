@@ -81,7 +81,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		showBankTransferText=false;
 		showICHText=false;
 		editMode = false;
-		if (vfIECEBC.pref!=null)    ebcPreference = vfIECEBC.pref;
+		if (vfIECEBC.pref!=null)	ebcPreference = vfIECEBC.pref;
 
 		rereadBillingAccount(); // refetch BillingAccount, to get updated eBroadcast_Payment related fields
 		getAddressDetail(); // get oBillingLocation, oBillingAddress, oOriginalBillingAddress
@@ -1309,10 +1309,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				System.debug('listSubscribeRequests >>>'+listSubscribeRequests);
 				// not in test method
 
-				listSubscribeResults =
-						(!Test.isRunningTest()
-												? IECZuoraHelper.zApiInstance.zsubscribe(listSubscribeRequests)
-						 : new List<Zuora.zApi.SubscribeResult>{IECEBC_TestUtility.createComplexSubscriptionResult(true)});
+				listSubscribeResults = 
+					(!Test.isRunningTest()
+								? IECZuoraHelper.zApiInstance.zsubscribe(listSubscribeRequests)
+					: new List<Zuora.zApi.SubscribeResult>{createComplexSubscriptionResult()});
 				if (IsPreview){
 					TaxAmount=savedTaxAmount;
 					subTotalAmount=savedsubTotalAmount;
@@ -1560,4 +1560,26 @@ public static List<Terms_and_Conditions__c> getCurrentTermsAndConditionForProduc
 		return pr;
 	}
 
+	//moved away from test utility class. Used in test mode only
+	private static Zuora.zApi.SubscribeResult createComplexSubscriptionResult() {
+		Zuora.zApi.SubscribeResult res = new Zuora.zApi.SubscribeResult();
+		
+			res.Success = true;
+			res.AccountNumber = 'A-0987654321';
+			res.SubscriptionNumber = 'S-0987654321';
+			res.InvoiceNumber = 'I-0987654321';
+			List<Zuora.zObject> lstInvoiceDatas = new List<Zuora.zObject>();
+			Zuora.zObject oInvoiceData = new Zuora.zObject('InvoiceData');
+			
+			Zuora.zObject oInvoice = new Zuora.zObject('Invoice');
+			oInvoice.setValue('AmountWithoutTax', 25.0);
+			oInvoice.setValue('TaxAmount', 0.2);
+			oInvoice.setValue('Amount', 25.2);
+			
+			oInvoiceData.setValue('Invoice', oInvoice);
+			lstInvoiceDatas.add(oInvoiceData);
+			res.InvoiceDatas = lstInvoiceDatas;
+		
+		return res;
+	}
 } // end of class vfIECEBC_PaymentComponentController
