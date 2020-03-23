@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>{0} 거리는 필수입니다. {1} 거리 입력란을 작성하십시오.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -6534,6 +6538,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_Course2 --></label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -19191,6 +19199,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>문서가 성공적으로 전송되었습니다.</label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>
