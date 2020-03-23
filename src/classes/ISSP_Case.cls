@@ -1569,7 +1569,9 @@ public without sharing class ISSP_Case {
 			if(emailCurrentAcc != ''){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
 					if(d2dca.Name == emailCurrentAcc){
-						setEmailPriority.add(d2dca.Email__c);
+						for(String email : d2dca.Email__c.split(';')){
+							setEmailPriority.add(email);
+						}
 					}
 				}
 			}
@@ -1593,7 +1595,7 @@ public without sharing class ISSP_Case {
 			List<User> lsUsersPriority =
 				[SELECT Id, Name, Email, AccountId, Contact.AccountId
 				 FROM User
-				 WHERE Email IN :setEmailPriority];
+				 WHERE Email IN :setEmailPriority AND isActive = true];
 
 			for(User user : lsUsersPriority) {
 				CaseTeamMember teammember = new CaseTeamMember(
@@ -1651,35 +1653,38 @@ public without sharing class ISSP_Case {
 	}
 
 	public static void sendMassEmail(Id caseId, Id templateId) {
-		try {
-			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-			list<User> listUsers = [SELECT Id, ContactId
-				FROM User
-				WHERE ContactId != null AND Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
-				AND Contact.isEmailBounced = false 
-				AND (NOT Contact.Email LIKE '%.inactive')
-				AND isActive = true];
 
-			List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
-			for(User user : listUsers) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setOrgWideEmailAddressId(orgAddress.Id);
-				mail.setTargetObjectId(user.ContactId);
-				mail.setWhatId(caseId);
-				mail.setUseSignature(false);
-				mail.setBccSender(false);
-				mail.setSaveAsActivity(false);
-				mail.setTemplateId(templateId);
-				listEmail.add(mail);
+		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+		list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
+			FROM User
+			WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
+
+		List<String> listUserEmails = new List<String>();
+		Id contactId = null;
+
+		for(User usr : listUsers) {
+			if(usr.ContactId == null){
+				listUserEmails.add(usr.Email);
 			}
-
-			if (!listEmail.isEmpty()) {
-				Messaging.sendEmail(listEmail);
+			else{
+				listUserEmails.add(usr.Contact.email);
 			}
-
-		} catch (Exception e) {
-			System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
+			if(usr.ContactId != null && contactId == null){
+				contactId = usr.ContactId;
+			}
 		}
+
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		mail.setOrgWideEmailAddressId(orgAddress.Id);
+		mail.setTargetObjectId(contactId);
+		mail.setToAddresses(listUserEmails);
+		mail.setWhatId(caseId);
+		mail.setUseSignature(false);
+		mail.setBccSender(false);
+		mail.setSaveAsActivity(false);
+		mail.setTemplateId(templateId);
+
+		Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 	}
 
 	/**
