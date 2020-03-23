@@ -157,7 +157,8 @@ public class AMS_ChangeCodesHelper {
 		Map<Id,List<Agency_Authorization__c>> fOPs = null;
 
 		//if(AMS_Utils.isNewGenProcess)
-		if((oscars != null && !oscars.isEmpty() && oscars[0] != null) ? oscars[0].Is_NewGen__c : oscarAgencies[0].ANG_IsNewGenAgency__c)
+		Boolean isNewGen = (oscars != null && !oscars.isEmpty() && oscars[0] != null) ? oscars[0].Is_NewGen__c : oscarAgencies[0].ANG_IsNewGenAgency__c;
+		if(isNewGen)
 			fOPs = fetchFormsOfPayment(accountIds);
 
 		ObjectChangesStruct objectChangesByChangeCode = null;
