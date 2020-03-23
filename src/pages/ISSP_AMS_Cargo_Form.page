@@ -1033,7 +1033,11 @@
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
                         </apex:pageblocksectionitem>
-                        <apex:outputfield value="{!hqAccount.TradeName__c}" />
+                        <apex:pageblocksectionitem rendered="{!isCNSAgency}">
+                            <apex:outputlabel value="{!$Label.ISSP_Trade_Name_DBA}" />
+                            <apex:inputfield value="{!hqAccount.TradeName__c}" style="border-style: hidden;" html-disabled="true"/>
+                        </apex:pageblocksectionitem>
+                        <apex:outputfield value="{!hqAccount.TradeName__c}" style="border-style: hidden;" rendered="{!NOT(IsCNSAgency)}" html-disabled="true"/>
                         <apex:outputtext value="{0}
                             <br />{1}<br />{2}" escape="false" label="{!$Label.ISSP_AMS_Billing_Address_Field_Label}">
                             <apex:param value="{!hqAccount.BillingStreet}" />
@@ -1059,11 +1063,7 @@
                             <apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}" />
                             <apex:inputfield value="{!newForm.Account_Name__c}" />
                         </apex:pageblocksectionitem>
-                        <apex:pageblocksectionitem rendered="{!isCNSAgency}">
-                            <apex:outputlabel value="{!$Label.ISSP_Trade_Name_DBA}" />
-                            <apex:inputfield value="{!newForm.Trade_Name__c}" />
-                        </apex:pageblocksectionitem>
-                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!AND(OR(isTerminatedAgent, isNewHOforAccredAgent), NOT(IsCNSAgency))}"/>
+                    <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"/>
                     <apex:pageBlockSectionItem >
                        
                         <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),

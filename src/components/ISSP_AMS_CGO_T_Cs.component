@@ -1,5 +1,5 @@
 <apex:component controller="ISSP_AMS_Accreditation">
-    <apex:pageBlock rendered="{!AND(newCase.Reason1__c != 'New Independent BR', newCase.Reason1__c != 'New BR / IP')}">
+    <apex:pageBlock rendered="{!AND(newCase.Reason1__c != 'New Independent BR', newCase.Reason1__c != 'New BR / IP', newCase.Reason1__c != 'New Commercial BR')}">
     <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
     	<div class="aplabel">
        		<apex:outputText escape="false" value="I hereby certify that above mentioned Branch is fully owned and controlled by undersigned company and shall be subject to the applicable {!IF(newlabels,'IFACP','Cargo Agency')} Rules in&nbsp;{!amsCountryLabel}"/>     
@@ -63,7 +63,7 @@ identified in SECTION 2 to make these statements and file this document.
         </apex:pageBlockSection>
     
     </apex:pageBlock>
-    <apex:pageBlock rendered="{!OR(newCase.Reason1__c == 'New Independent BR', newCase.Reason1__c == 'New BR / IP')}">
+    <apex:pageBlock rendered="{!OR(newCase.Reason1__c == 'New Independent BR', newCase.Reason1__c == 'New BR / IP', newCase.Reason1__c == 'New Commercial BR')}">
         <apex:pageBlockSection rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch',$CurrentPage.parameters.mode!='pdf')}" title="{!$Label.ISSP_TC_Accept}" columns="1">
             <div class="aplabel">
                 <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC_CNS_Only}"/>     
