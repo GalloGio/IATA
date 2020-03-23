@@ -218,7 +218,7 @@ public class ANG_RHCAlertTriggerHandler{
 			Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
 
 			Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
-			for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
+			for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND ( NOT Email LIKE '%.inactive' ) AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
 
 				Id accId;
 				if(legacyAccounts.contains(c.AccountId)) accId = c.AccountId;
@@ -865,7 +865,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 			//Set To Address
 			for(Contact con : listContacts){
-				if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM && con.IsEmailBounced == false){
+				if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM && con.IsEmailBounced == false && con.Email != null && !con.Email.endsWithIgnoreCase('.inactive')){
 					toAddresses.add(String.valueOf(con.email));
 					targetObjectId = con.Id;
 					System.debug('::: toAddresses : ' + toAddresses);
@@ -930,7 +930,7 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
-		for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
+		for(User u : [SELECT Id, Email FROM User WHERE Email IN :toAddresses AND Contact.isEmailBounced = false AND isActive = true]) {
 			toAddressesUsers.add(u.Id);
 			toAddresses.remove(u.Email);
 		}

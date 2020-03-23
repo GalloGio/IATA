@@ -73,44 +73,37 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		set;
 	}
 
-	public List<ISSP_ICCS_Utils.ParticipationRow> cycleParticipationRows {
+	public List<ISSP_ICCS_Utils.CurrencyRow> AdhocCurrencyRows {
 		get{
-			if(isCycleParticipationTableExpanded && adhocCycleParticipationTable != null){
-				return adhocCycleParticipationTable.participationRows;
+			if (adhocCycleParticipationTable==null) {
+				return new List<ISSP_ICCS_Utils.CurrencyRow>();
 			}
-			else{
-				List<ISSP_ICCS_Utils.ParticipationRow> rowsList = new List<ISSP_ICCS_Utils.ParticipationRow>();
+			if (isCycleCurrencyTableExpanded) {
+				return adhocCycleParticipationTable.CurrencyRows;
+			}
+			List<ISSP_ICCS_Utils.CurrencyRow> rowsList = new List<ISSP_ICCS_Utils.CurrencyRow>();
 
-				Integer i = 0;
+			for(ISSP_ICCS_Utils.CurrencyRow currencyRow : adhocCycleParticipationTable.CurrencyRows){
+				rowsList.add(currencyRow);
 
-				for(ISSP_ICCS_Utils.ParticipationRow participationRow : adhocCycleParticipationTable.participationRows){
-					if(!participationRow.isFilteredOut){
-						rowsList.add(participationRow);
-						i++;
-
-						if(i == ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS){
-							break;
-						}
-					}
+				if(rowsList.size() == ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS){
+					break;
 				}
+			}
 
-				return rowsList;
+			return rowsList;
+		}
+	}
+
+	public Boolean isCycleCurrencyTableExpandable {
+		get{
+			try {
+				return adhocCycleParticipationTable.CurrencyRows.size() > ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS;
+			} catch (Exception e) {
+				return false;
 			}
 		}
 	}
-
-	public Boolean isCycleParticipationTableExpandable {
-		get{
-			return adhocCycleParticipationTable.participationRows.size() > ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS;
-		}
-	}
-
-	public Boolean isCycleParticipationTableExpanded {get;set;}
-
-
-
-
-
 
 	/* FUTURE participation table */
 
@@ -216,8 +209,23 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		}
 	}
 
-	public Boolean isFutureParticipationTableExpanded {get;set;}
+	// Selected participations in Ad-Hoc list
+	public List<ISSP_ICCS_Utils.ParticipationRow> selectedAdHocParticipationRow {
+		get{
+			List<ISSP_ICCS_Utils.ParticipationRow> listParticipationRow = new List<ISSP_ICCS_Utils.ParticipationRow>();
+			for (ISSP_ICCS_Utils.CurrencyRow currencyRow: adhocCycleParticipationTable.CurrencyRows) {
+				for (ISSP_ICCS_Utils.ParticipationRow participationRow: currencyRow.currencyParticipationRows) {
+					if (participationRow.selected) {
+						listParticipationRow.add(participationRow);
+					}
+				}
+			}
+			return listParticipationRow;
+		}
+	}
 
+	public Boolean isFutureParticipationTableExpanded {get;set;}
+	public Boolean isCycleCurrencyTableExpanded {get;set;}
 
 
 	// Indicates if the tables structure have to be kept next time the component is displayed
@@ -232,6 +240,8 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 	public Integer settlementInstructionIdParameter {get;set;}
 	public String settlementInstructionTypeParameter {get;set;}
 	public String modifiedOnParameter {get;set;}
+	public String currencyCodeParameter {get;set;}
+	public Boolean isPreassignedParameter {get;set;}
 
 
 	/* CONSTRUCTOR */
@@ -250,7 +260,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		futureRequiresDataReset = futureRequiresDataReset == null ? false : futureRequiresDataReset;
 
 		isFutureParticipationTableExpanded = isFutureParticipationTableExpanded == null ? false : isFutureParticipationTableExpanded;
-		isCycleParticipationTableExpanded = isCycleParticipationTableExpanded == null ? false : isCycleParticipationTableExpanded;
+		isCycleCurrencyTableExpanded = isCycleCurrencyTableExpanded == null ? false : isCycleCurrencyTableExpanded;
 
 
 		if(selectedAdhocCycle == null){
@@ -318,12 +328,24 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		modifiedOnParameter = null;
 	}
 
-	public void expandCollapseCycleParticipationTable(){
-		isCycleParticipationTableExpanded = !isCycleParticipationTableExpanded;
+	public void expandCollapseCycleCurrencyTable(){
+		isCycleCurrencyTableExpanded = !isCycleCurrencyTableExpanded;
 	}
 
 	public void expandCollapseFutureParticipationTable(){
 		isFutureParticipationTableExpanded = !isFutureParticipationTableExpanded;
+	}
+
+	public void expandAllCycleCurrencyTable(){
+		for (ISSP_ICCS_Utils.CurrencyRow currencyRow: AdhocCurrencyRows) {
+			currencyRow.displayCountries = true;
+		}
+	}
+
+	public void collapseAllCycleCurrencyTable(){
+		for (ISSP_ICCS_Utils.CurrencyRow currencyRow: AdhocCurrencyRows) {
+			currencyRow.displayCountries = false;
+		}
 	}
 
 	// Dedicated to Future SIs only
@@ -336,11 +358,34 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		pageController.navigateToSiEdit();
 	}
 
+	// Dedicated to Currency SIs only
+	public void cloneCurrencySettlementInstruction(){
+		settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_CURRENCY;
+
+		pageController.navigateToSiEdit();
+	}
+
 	// Dedicated to AdHoc SIs only
 	public void cloneCycleSettlementInstruction(){
 		settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_ADHOC;
 
 		pageController.navigateToSiEdit();
+	}
+
+	// Go to Mass Edit Participation for Ad-hoc
+	public void massAdHocEditParticipation(){
+		if (selectedAdHocParticipationRow.isEmpty()) {
+			pageController.setMessage(Label.ICCS_Adhoc_Selection_error, false);
+		} else {
+			settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_ADHOC;
+			pageController.navigateToMassEdit();
+		}
+	}
+
+	// Go to Mass Edit Participation for Currency
+	public void massCurrencyEditParticipation(){
+		settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_CURRENCY;
+		pageController.navigateToMassEdit();
 	}
 
 	// Dedicated to Future SIs only
@@ -358,7 +403,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			settlementInstructionIdParameter = null;
 			modifiedOnParameter = null;
 
-			pageController.setMessage('The Settlement Instruction has been successfully deleted.', true);
+			pageController.setMessage(Label.ICCS_SI_deleted, true);
 		}
 		catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 			pageController.setMessage(e.getMessage(), false);
