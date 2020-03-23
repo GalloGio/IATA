@@ -638,23 +638,23 @@
 
                         <apex:pageBlockSection columns="1">
                             <tr class="aplabel">
-                                <td colspan="2">If more than 2 new PASS administrators need to be created, please provide details.</td>
+                                <td colspan="2">{!$Label.ISSP_PASS_Administrators}</td>
                             </tr>
                             <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_PASS_Help_Admin}" 
                                         html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:inputField label="Extra new PASS administrators" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="First Name, Last Name, Email;"/>
+                            <apex:inputField label="{!$Label.ISSP_PASS_New_Admins}" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="{!$Label.ISSP_PASS_TextAreas}"/>
                             <apex:outputText >
-                                <div class="aplabel">Recommendation: Each Airline/GSSA should have one or two PASS Administrators.</div>
+                                <div class="aplabel">{!$Label.ISSP_PASS_Administrators_Rec}</div>
                             </apex:outputText>
                         </apex:pageBlockSection>
 
                         <apex:pageBlockSection columns="1">
                             <tr class="aplabel">
-                                <td colspan="2">If it's necessary to create PASS Users, please provide details.</td>
+                                <td colspan="2">{!$Label.ISSP_PASS_Users}</td>
                             </tr>
                             <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_PASS_Help_User}" 
                                         html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                                <apex:inputField label="New PASS Users" value="{!newForm.PASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="First Name, Last Name, Email;">
+                                <apex:inputField label="{!$Label.ISSP_PASS_NewUsers}" value="{!newForm.PASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="{!$Label.ISSP_PASS_TextAreas}">
                                 </apex:inputField>
 
                         </apex:pageBlockSection>
