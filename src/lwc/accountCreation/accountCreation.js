@@ -86,14 +86,24 @@ export default class AccountCreation extends NavigationMixin(LightningElement) {
             console.log('CSP Stylesheet loaded.');
         });
 
+        this.accountHomePageRef = {
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'Account',
+                actionName: 'home'
+            }
+        };
+        this[NavigationMixin.GenerateUrl](this.accountHomePageRef)
+            .then(url => this.url = url);
+
         let pageParams = getParamsFromPage();
         if(pageParams !== undefined){
             if(pageParams.retURL !== undefined){
                 this.retUrl = decodeURIComponent(pageParams.retURL);
             }
         }
-		this.currentStep = 1;
-	}
+        this.currentStep = 1;
+    }
 
     scrollToTop(){
         let scrollobjective = this.template.querySelector('[data-name="top"]');
@@ -223,8 +233,8 @@ export default class AccountCreation extends NavigationMixin(LightningElement) {
 
 			// classic
 			if(result === 'Theme1' || result === 'Theme2' || result === 'Theme3'){
-				let fullPathClassic = baseURL +  '/' + this.accountId;
-				window.location.href = fullPathClassic;
+                let fullPathClassic = baseURL +  '/' + this.accountId;
+                window.location.href = fullPathClassic;
 			}
 			// lightning
 			else {
@@ -249,7 +259,7 @@ export default class AccountCreation extends NavigationMixin(LightningElement) {
                 let baseURL = window.location.origin;
                 window.location.href = baseURL + this.retUrl;
 			} else {
-				window.history.go(-1);
+                this[NavigationMixin.Navigate](this.accountHomePageRef);
 			}
 		});
 	}
