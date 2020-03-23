@@ -11787,13 +11787,6 @@ The sum of percentage cannot exceed 100%</value>
         <value>For verification purposes, IATA may request for additional documents from applicants. False declaration will lead to cancellation and blacklisting of ID Card application.</value>
     </labels>
     <labels>
-        <fullName>IDCard_Covid</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_Covid</shortDescription>
-        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
-    </labels>
-    <labels>
         <fullName>IDCARD_VFEmailTemplate_Footer</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12443,6 +12436,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Course2</shortDescription>
         <value>Course 2:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Covid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Covid</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
