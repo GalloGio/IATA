@@ -32,6 +32,7 @@
                     <div class="slds-form-element__control custTextInputSmall">
                         <lightning-combobox 
                             class="cursorPointerComboBox text-xxsmall"
+                            disabled={isCountryDisabled}
                             value={localAddress.countryId}
                             variant="label-hidden"
                             options={countryOptions}

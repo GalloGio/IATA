@@ -1,5 +1,5 @@
 <template>
-<div>
+    <div>
     <lightning-layout multiple-rows vertical-align="stretch">
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
@@ -16,6 +16,8 @@
 
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
+            
+
             
                 <!------------------------------------------      Customer Type      -------------------------------------------->
                 <template if:true={customerTypesList}>
@@ -197,6 +199,58 @@
                         </div>
                     </div>
                 </lightning-layout-item>
+
+                <!------------------------------------------      Country      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Company_Location}<abbr class="slds-required" title="required">*</abbr>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInputSmall">
+                            <template if:true={countryListSet}>
+                                <lightning-combobox 
+                                    class="cursorPointerComboBox text-xxsmall"
+                                    value={localAddress.countryId}
+                                    variant="label-hidden"
+                                    options={countryOptions}
+                                    data-fieldname="Country"
+                                    dropdown-alignment="auto"
+                                    onchange={handleCountryChange}>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <!------------------------------------------      VAT Number      -------------------------------------------->
+                <lightning-layout-item size="12" class={vatClass}>
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {vatLabel} <!--lightning-icon icon-name="utility:help" size="xx-small" class="helpIcon" alternative-text={vatHelpText} title={vatHelpText}></lightning-icon-->
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="vatNumber"
+                                name="vatNumber"
+                                type="text"
+                                class="slds-input"
+                                placeholder={vatPlaceholder}
+                                value={localAccount.vatNumber}
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                    <template if:true={vatHelpText}>
+                        <div class="text-xxsmall helpText">
+                            {vatHelpText}
+                        </div>
+                    </template>
+            </lightning-layout-item>
 
                 <!------------------------------------------      Website      -------------------------------------------->
                 <lightning-layout-item size="12" class="companyItem IEFixDisplay">

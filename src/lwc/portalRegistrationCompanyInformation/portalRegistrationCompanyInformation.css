@@ -248,6 +248,10 @@
     margin-bottom: 50px;
 }
 
+.vatItem{
+    margin-bottom: 46px;
+}
+
 .warningMessage{
     margin-bottom: 40px;
     position: relative;
@@ -281,3 +285,7 @@
         padding-right: 2rem;
     }
   }
+  
+.helpText{
+    font-size: 12px !important;
+}

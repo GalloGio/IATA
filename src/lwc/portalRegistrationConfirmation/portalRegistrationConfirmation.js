@@ -297,6 +297,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
         let account = { 'sobjectType': 'Account' };
         account.Name = this.account.name;
+        account.VAT_Number__c = this.account.vatNumber;
         account.Website = this.account.website;
         account.Sector__c = this.account.customerTypeSector;
         account.Category__c = this.account.customerTypeCategory;

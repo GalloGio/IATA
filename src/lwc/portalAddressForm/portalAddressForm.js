@@ -72,6 +72,7 @@ export default class PortalAddressForm extends LightningElement {
     /* Passed address information */
     @api countryId;
     @api address;
+    @api disableCountry;
 
     /* Local address information
 
@@ -110,6 +111,15 @@ export default class PortalAddressForm extends LightningElement {
     @track provinceAndCitiesEnabled;
 //TEMP    @track isStateRequired;
 //TEMP    @track isZipRequired;
+
+    get isCountryDisabled(){
+        if(this.disableCountry){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     get isStateRequired(){
         return this.provinceAndCitiesEnabled;
