@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>Улица {0} является обязательной к заполнению. Пожалуйста, заполните поле улицы {1}.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -6529,6 +6533,10 @@
     <customLabels>
         <label><!-- IDCard_Course2 --></label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -19203,6 +19211,10 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label>Загрузка документов успешно завершена!</label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>
