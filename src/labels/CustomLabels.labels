@@ -5227,6 +5227,14 @@ You can easily create a company account in two steps</value>
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_VAT_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VAT_Number</shortDescription>
+        <value>VAT Number</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Website</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
