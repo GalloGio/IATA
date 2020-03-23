@@ -29,7 +29,6 @@
                         </lightning-layout-item>
                     
                         <lightning-layout-item size="4" class="rightItem IEFixDisplay">
-                            <div class="dataLabel">{companyName}</div>
                         </lightning-layout-item>
                         
                         
@@ -42,7 +41,6 @@
                         </lightning-layout-item>
                     
                         <lightning-layout-item size="4" class="rightItem IEFixDisplay">
-                            <div class="dataValue">{account.name}</div>
                         </lightning-layout-item>
                             
                         <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
@@ -51,7 +49,7 @@
 
                         <!------------------------------------------      Company Information Row 2    -------------------------------------------->
                         <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataLabel">{countryLabel}</div>
+                            <div class="dataLabel">{companyName}</div>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" class="IEFixDisplay">
@@ -62,7 +60,7 @@
                         </lightning-layout-item>        
                         
                         <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataValue">{address.countryName}</div>
+                            <div class="dataValue">{account.name}</div>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" class="IEFixDisplay">
@@ -90,7 +88,6 @@
                 country-id={countryId}
                 address={localAddress}
                 disable-country=true
-                internal-user={internalUser}
                 onsetvalidationstatus={setValidationStatus}
                 onstartloading={startLoading}
                 onstoploading={stopLoading}>

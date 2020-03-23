@@ -73,7 +73,6 @@ export default class PortalAddressForm extends LightningElement {
     @api countryId;
     @api address;
     @api disableCountry;
-    @api internalUser;
 
     /* Local address information
 
@@ -144,6 +143,7 @@ export default class PortalAddressForm extends LightningElement {
     /* labels */
     _labels = {
         CSP_L2_Is_PO_Box_Address,
+        CSP_L2_Country,
         CSP_L2_State,
         CSP_L2_City,
         CSP_L2_Postal_Code,
@@ -165,20 +165,9 @@ export default class PortalAddressForm extends LightningElement {
         this._labels = value;
     }
 
-    // labels depending on the origin (internal vs portal)
-    countryLabel;
-
     performingSearch = false;
     
     renderedCallback(){
-        // define labels depending on the origin (internal vs portal)
-        if(this.internalUser){
-            this.countryLabel = CSP_L2_Country;
-        }
-        else{
-            this.countryLabel = CSP_L2_Country;
-        }
-
         if(this.performingSearch){
             let scrollobjective = this.template.querySelector('[data-name="searchDiv"]');
             scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
@@ -694,7 +683,6 @@ export default class PortalAddressForm extends LightningElement {
     get isLastPage(){
         return this.currentPage === this.numberOfPages;
     }
-
 
     unshiftSelectedAddress(){
         let suggestions = this.localAddress.addressSuggestions;
