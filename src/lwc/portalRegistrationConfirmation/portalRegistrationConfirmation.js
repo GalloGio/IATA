@@ -444,13 +444,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                 this.successModalButton1Label = CSP_L2_Go_To_Homepage;
                 this.successModalButton2Label = CSP_L2_Go_To_Topic;
             }
-
-            // Override success modal parameters if new account was created
-            if(this.caseId !== ''){
-                this.successModalTitle = CSP_L2_Details_New_Account_Title;
-                this.successModalMessage = CSP_L2_Details_New_Account_Message_1 + ' ' + this.caseNumber + '.<br/><br/>' + CSP_L2_Details_New_Account_Message_2;
-                this.successModalButton1Label = CSP_L2_Add_Attachments;
-            }
         }
         else{
             this.successModalTitle = undefined;
