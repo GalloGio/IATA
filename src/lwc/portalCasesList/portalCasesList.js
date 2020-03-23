@@ -28,6 +28,7 @@ import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
 import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
+import CSP_CaseSearchPlaceholder from '@salesforce/label/c.CSP_CaseSearchPlaceholder';
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track label = {
@@ -45,6 +46,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_DateTo,
         CSP_RemoveAllFilters,
         CSP_FAQReachUsBanner_ButtonText,
+        CSP_CaseSearchPlaceholder,
         CSP_Apply
     };
 
