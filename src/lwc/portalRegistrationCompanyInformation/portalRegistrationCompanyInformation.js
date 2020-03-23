@@ -102,7 +102,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         if(this.internalUser){
             this.companyInformation = 'Account Information';
             this.companyName = 'Account Name';
-            this.countryLabel = CSP_L2_Company_Location;
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
             this.backToAccountSelection = 'Back to Account Info';
         }
         else{

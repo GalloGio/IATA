@@ -60,8 +60,8 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         if(this.internalUser){
             this.companyInformation = 'Account Information';
             this.companyName = 'Account Name';
-            this.countryLabel = CSP_L2_Company_Location;
-            this.businessAddressInformationMessage = 'Please provide the business address of the Worldwide HQ of this account.';
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
+            this.businessAddressInformationMessage = 'Please provide the business address of the account\'s contact\'s work location.';
             this.backToCompanyInformation = 'Back to Account Information';
         }
         else{

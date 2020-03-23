@@ -1,4 +1,5 @@
 import { LightningElement, track, api  } from 'lwc';
+import { getParamsFromPage }    from 'c/navigationUtils';
 import { NavigationMixin } from 'lightning/navigation';
 import { loadStyle } from 'lightning/platformResourceLoader';
 

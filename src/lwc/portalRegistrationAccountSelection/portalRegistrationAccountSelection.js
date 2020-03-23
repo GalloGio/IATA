@@ -247,10 +247,10 @@ export default class PortalRegistrationAccountSelection extends LightningElement
 
         // labels depending on the origin (internal vs portal)
         if(this.internalUser){
-            this.accountSelectionMessage = 'The account you are searching for may already exist in Salesforce, so please check it first before creating a new one.';
+            this.accountSelectionMessage = 'The account you are trying to create may already exist in Salesforce. Therefore, please search for it first using the form below.';
             this.accountInformation = 'Account Info';
             this.accountInformationMessage = 'Fill out the information below to find the account you are searching for.';
-            this.countryLabel = CSP_L2_Company_Location;
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
             this.accountLabel = 'Account Name';
             this.selectResultMessage = 'Select your account from the list.';
             this.nextButtonLabel = 'Go to Selected Account';
