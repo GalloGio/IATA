@@ -30,6 +30,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @api customerType;
     @api countryId;
     @api isTriggeredByRequest;
+    @api internalUser;
 
     // customer type
     @track customerTypesList;
@@ -62,11 +63,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     _labels = {
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
-        CSP_L2_Company_Information,
-        CSP_L2_Company_Name,
-        CSP_L2_Company_Location,
         CSP_L2_Website,
-        CSP_L2_Back_to_Account_Selection,
         CSP_L2_Next_Step,
         CSP_L2_Change_Categorization_Warning
     }
@@ -76,6 +73,12 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     set labels(value) {
         this._labels = value;
     }
+
+    // labels depending on the origin (internal vs portal)
+    companyInformation;
+    companyName;
+    countryLabel;
+    backToAccountSelection;
 
     get vatLabel(){
         if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c !== undefined){
@@ -147,6 +150,20 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         }
 
         this.fakeCategoryPicklist = [];
+
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.companyInformation = 'Account Information';
+            this.companyName = 'Account Name';
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
+            this.backToAccountSelection = 'Back to Account Info';
+        }
+        else{
+            this.companyInformation = CSP_L2_Company_Information;            
+            this.companyName = CSP_L2_Company_Name;
+            this.countryLabel = CSP_L2_Company_Location;
+            this.backToAccountSelection = CSP_L2_Back_to_Account_Selection;
+        }
 
         this.registrationUtilsJs = new RegistrationUtils();
 

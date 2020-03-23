@@ -15,7 +15,7 @@
                             <template if:true={isAccountSelectionStep}>
                                 <c-portal-registration-account-selection
                                     origin='Salesforce Platform'
-                                    is-internal=true
+                                    internal-user=true
                                     customer-type={selectedCustomerType}
                                     country-id={selectedCountryId}
                                     account-id={selectedAccountId}
@@ -30,7 +30,9 @@
                             </template>
                             <template if:true={isCompanyInformationStep}>
                                 <c-portal-registration-company-information
+                                    internal-user=true
                                     account={account}
+                                    address={address}
                                     country-id={selectedCountryId}
                                     customer-type={selectedCustomerType}
                                     onprevious={goToAccountSelection}
@@ -41,6 +43,7 @@
                             </template>
                             <template if:true={isAddressInformationStep}>
                                 <c-portal-registration-address-information
+                                    internal-user=true
                                     account={account}
                                     address={address}
                                     country-id={selectedCountryId}
@@ -54,6 +57,7 @@
                             </template>
                             <template if:true={isConfirmationStep}>
                                 <c-portal-registration-confirmation
+                                    internal-user=true
                                     address={address}
                                     account={account}
                                     country-id={selectedCountryId}
@@ -80,18 +84,3 @@
         </div>
     </div>
 </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

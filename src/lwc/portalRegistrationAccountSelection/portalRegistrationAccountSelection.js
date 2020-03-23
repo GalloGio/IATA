@@ -83,7 +83,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     @api accountId;
     @api isTriggeredByRequest;
     @api searchResults;
-    @api isInternal;
+    @api internalUser;
 
     // categorization
     @track customerTypesList;
@@ -169,15 +169,6 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     // label variables
-    get nextButtonLabel(){
-        if(this.isInternal){
-            return 'Go to Selected Account';
-        }
-        else{
-            return CSP_L2_Next_Step;
-        }
-    }
-
     get searchResultsAboveLimitLink_1(){
         return CSP_L2_Search_Results_Above_Limit_Link_1 === '--empty--' ? '' : CSP_L2_Search_Results_Above_Limit_Link_1 + ' '; 
     }
@@ -187,23 +178,16 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     _labels = {
-        CSP_L2_Account_Selection_Message,
-        CSP_L2_Account_Information,
-        CSP_L2_Account_Information_Message,
         CSP_L2_Sector,
         CSP_L2_Category,
-        CSP_L2_Company_Name,
         CSP_L2_IATA_Codes,
-        CSP_L2_Company_Location,
         CSP_L2_Search,
         CSP_L2_Search_Results,
-        CSP_L2_Select_Company_Message,
         CSP_L2_Search_Results_Above_Limit,
         CSP_L2_Search_Results_Above_Limit_Link,
         CSP_L2_Select,
         CSP_L2_Create_Account_Message,
         CSP_L2_Create_New_Account,
-        CSP_L2_Next_Step,
         CSP_L2_Did_Not_Find,
         CSP_L2_Did_Not_Find_Message,
         CSP_L2_No_Matching_Results,
@@ -217,6 +201,15 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     set labels(value) {
         this._labels = value;
     }
+    
+    // other labels
+    accountSelectionMessage;
+    accountInformation;
+    accountInformationMessage;
+    countryLabel;
+    accountLabel;
+    selectResultMessage;
+    nextButtonLabel;
     
     performingSearch = false;
     
@@ -250,6 +243,26 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         }
         else{
             this.setCustomerType(this.customerType);
+        }
+
+        // labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.accountSelectionMessage = 'The account you are trying to create may already exist in Salesforce. Therefore, please search for it first using the form below.';
+            this.accountInformation = 'Account Info';
+            this.accountInformationMessage = 'Fill out the information below to find the account you are searching for.';
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
+            this.accountLabel = 'Account Name';
+            this.selectResultMessage = 'Select your account from the list.';
+            this.nextButtonLabel = 'Go to Selected Account';
+        }
+        else{
+            this.accountSelectionMessage = CSP_L2_Account_Selection_Message;
+            this.accountInformation = CSP_L2_Account_Information;
+            this.accountInformationMessage = CSP_L2_Account_Information_Message;
+            this.countryLabel = CSP_L2_Company_Location;
+            this.accountLabel = CSP_L2_Company_Name;
+            this.selectResultMessage = CSP_L2_Select_Company_Message;
+            this.nextButtonLabel = CSP_L2_Next_Step;
         }
 
         this.fakeCategoryPicklist = [];

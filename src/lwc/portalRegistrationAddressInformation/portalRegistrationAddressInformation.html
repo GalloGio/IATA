@@ -3,14 +3,16 @@
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
                 <div class="sectionTitle">{labels.CSP_L2_Create_New_Account}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                <template if:false={internalUser}>
+                	<div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                </template>
             </lightning-layout-item>
 
             <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
             </lightning-layout-item>
 
             <lightning-layout-item size="12" class="IEFixDisplay">
-                <div class="sectionSubTitle">{labels.CSP_L2_Company_Information}</div>
+                <div class="sectionSubTitle">{companyInformation}</div>
             </lightning-layout-item>
 
 
@@ -47,7 +49,7 @@
 
                         <!------------------------------------------      Company Information Row 2    -------------------------------------------->
                         <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataLabel">{labels.CSP_L2_Company_Name}</div>
+                            <div class="dataLabel">{companyName}</div>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" class="IEFixDisplay">
@@ -78,7 +80,7 @@
             <!------------------------------------------      Address Form      -------------------------------------------->
             <lightning-layout-item size="12" class="IEFixDisplay">
                 <div class="sectionSubTitle">{labels.CSP_L2_Business_Address_Information}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div>
+                <div class="sectionDescription">{businessAddressInformationMessage}</div>
             </lightning-layout-item>
         
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
@@ -103,8 +105,8 @@
                 <lightning-layout-item size="6" class="backButtonWrapper">
                     <div class="text-xxsmall">
                         <lightning-button variant="base"
-                            label={labels.CSP_L2_Back_to_Company_Information}
-                            title={labels.CSP_L2_Back_to_Company_Information}
+                            label={backToCompanyInformation}
+                            title={backToCompanyInformation}
                             onclick={previous}
                             class="blueCustomButtonLinkSmall"
                             icon-name="utility:back" 

@@ -7,15 +7,15 @@
             </template>
 
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
-                <div data-name="inputDiv" class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div>
+                <div data-name="inputDiv" class="sectionDescription">{accountSelectionMessage}</div>
             </lightning-layout-item>
                 
             <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
             </lightning-layout-item>
 
             <lightning-layout-item size="12" class="IEFixDisplay">
-                <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div>
+                <div class="sectionTitle">{accountInformation}</div>
+                <div class="sectionDescription">{accountInformationMessage}</div>
             </lightning-layout-item>
 
             <lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
@@ -209,7 +209,7 @@
                         <lightning-layout-item size="12">
                             <div class="formLabelContainer">
                                 <div class="text-xxsmall">
-                                    {labels.CSP_L2_Company_Location}<abbr class="slds-required" title={labels.CSP_L2_Required}>*</abbr>
+                                    {countryLabel}<abbr class="slds-required" title={labels.CSP_L2_Required}>*</abbr>
                                 </div>
                             </div>
                         </lightning-layout-item>
@@ -253,7 +253,7 @@
                     <lightning-layout-item size="12">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
-                                {labels.CSP_L2_Company_Name}
+                                {accountLabel}
                             </div>
                         </div>
                     </lightning-layout-item>
@@ -318,7 +318,7 @@
                     <template if:true={accountFounds}>
                         <lightning-layout-item size="12" class="slds-p-around_medium customWhiteBackground slds-clearfix searchTitleContainer">
                             <div class="SearchResultsTitle">{labels.CSP_L2_Search_Results} (<template if:true={tooManyResults}>+</template>{localSearchResults.wrappedResults.length})</div>
-                            <div class="SearchResultsDescription">{labels.CSP_L2_Select_Company_Message}</div>
+                            <div class="SearchResultsDescription">{selectResultMessage}</div>
                             <template if:true={tooManyResults}>
                                 <div class="SearchResultsDescription marginTop">{labels.CSP_L2_Search_Results_Above_Limit}</div>
                                 <div class="SearchResultsDescription">
@@ -427,7 +427,9 @@
 
                         <lightning-layout-item size="12">
                             <div class="textAlignCenter text-xxsmall">{labels.CSP_L2_Did_Not_Find}</div>
-                            <div class="textAlignCenter text-xxsmall">{labels.CSP_L2_Did_Not_Find_Message}</div>
+                            <template if:false={internalUser}>
+                            	<div class="textAlignCenter text-xxsmall">{labels.CSP_L2_Did_Not_Find_Message}</div>
+                            </template>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="12">
@@ -460,11 +462,13 @@
                             </div>
                         </lightning-layout-item>
 
-                        <lightning-layout-item size="12" class="noResultsDescription">
-                            <div class="textAlignCenter NoResultLabel">
-                                <div class="NoResultDescription">{labels.CSP_L2_Did_Not_Find_Message}</div>
-                            </div>
-                        </lightning-layout-item>
+                        <template if:false={internalUser}>
+                            <lightning-layout-item size="12" class="noResultsDescription">
+                                <div class="textAlignCenter NoResultLabel">
+                                    <div class="NoResultDescription">{labels.CSP_L2_Did_Not_Find_Message}</div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
                             
                         <lightning-layout-item size="12" class="noResultsBtn">
                             <div class="textAlignCenter createBtnWrapper">

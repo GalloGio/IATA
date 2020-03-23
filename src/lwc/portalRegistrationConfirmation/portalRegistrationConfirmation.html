@@ -2,7 +2,7 @@
     <lightning-layout multiple-rows vertical-align="stretch">
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
-                <div class="stepText">{labels.CSP_L2_Confirmation_Message}</div>
+                <div class="stepText">{confirmationMessage}</div>
             </lightning-layout-item>
 
             <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
@@ -56,23 +56,25 @@
             </template>
 
             <template if:false={isExistingAccountSelected}>
-                <div class="sectionHeaderContainer">
+                <template if:false={internalUser}>
+                    <div class="sectionHeaderContainer">
+                        <lightning-layout-item size="6" class="IEFixDisplay">
+                            <div class="sectionTitle">{labels.CSP_L2_Company_Account}</div>
+                        </lightning-layout-item>
+                    </div>
                     <lightning-layout-item size="6" class="IEFixDisplay">
-                        <div class="sectionTitle">{labels.CSP_L2_Company_Account}</div>
+                        <div class="sectionDescription">{labels.CSP_L2_Company_Account_Message}</div>
                     </lightning-layout-item>
-                </div>
-                <lightning-layout-item size="6" class="IEFixDisplay">
-                    <div class="sectionDescription">{labels.CSP_L2_Company_Account_Message}</div>
-                </lightning-layout-item>
 
-                <lightning-layout-item size="6" class="IEFixDisplay">
-                </lightning-layout-item>
+                    <lightning-layout-item size="6" class="IEFixDisplay">
+                    </lightning-layout-item>
 
-                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
-                </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                    </lightning-layout-item>                    
+                </template>
                 
                 <lightning-layout-item size="6" class="IEFixDisplay">
-                    <div class="sectionSubTitle">1. {labels.CSP_L2_Company_Information}</div>
+                    <div class="sectionSubTitle">1. {companyInformation}</div>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
@@ -103,7 +105,7 @@
                     </lightning-layout-item>
                 
                     <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                        <div class="dataLabel">{labels.CSP_L2_Company_Name}</div>
+                        <div class="dataLabel">{companyName}</div>
                         <div class="dataValue itemValue">{account.name}</div>
                     </lightning-layout-item>
                     
@@ -112,7 +114,7 @@
                         <div class="dataValue itemValue">{account.vatNumber}</div>
                     </lightning-layout-item>
                     
-                    <lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
                         <div class="dataLabel">{labels.CSP_L2_Website}</div>
                         <div class="dataValue itemValue">{account.website}</div>
                     </lightning-layout-item>
@@ -158,7 +160,7 @@
 
                 <div class="fieldContainer">
                         <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
-                        <div class="dataLabel">{labels.CSP_L2_Country}</div>
+                        <div class="dataLabel">{countryLabel}</div>
                         <div class="dataValue itemValue">{address.countryName}</div>
                     </lightning-layout-item>
                     
