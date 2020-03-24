@@ -17,7 +17,6 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 	}
 	global  void execute(Database.BatchableContext BC,List<SObject> scope){
 	  for(SObject cronJob : scope){
-		System.debug('#3 deleteScheduleDashboards::: '+scope);
 		System.abortJOb(cronJob.Id);
 	  }
 

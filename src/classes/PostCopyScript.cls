@@ -109,11 +109,10 @@ global class PostCopyScript implements SandboxPostCopy {
 	}
 
 	/**
-	 * This method deletes all Schedule Dashboards":
+	 * This method deletes all Schedule Dashboards":s
 	*/
 	@TestVisible
 	private void deleteScheduleDashboards(){
-		System.debug('#1 deleteScheduleDashboards');
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
 		Database.executeBatch(deleteScheduleDashboards,10);
 	}
@@ -134,23 +133,8 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void updateNamedCredentials(){
-		System.debug('#1 updateNamedCredentials');
-		List<MetadataService.NamedCredential> namedCredentialList = new List<MetadataService.NamedCredential>();
-		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
-			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
-			namedCredential.fullName = nc.DeveloperName;
-			namedCredential.label = nc.MasterLabel;
-			namedCredential.endpoint = nc.endpoint + '/test';
-			namedCredential.principalType = nc.PrincipalType;
-			namedCredential.protocol = 'NoAuthentication';
-
-			namedCredentialList.add(namedCredential);
-		}
-		System.debug('#2 updateNamedCredentials');
-		if(!namedCredentialList.isEmpty()){
-			System.debug('#3 updateNamedCredentials');
-			createService().updateMetadata(namedCredentialList);
-		}
+		updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
+		Database.executeBatch(updateNamedCredentials,10);
 	}
 
 	/**
