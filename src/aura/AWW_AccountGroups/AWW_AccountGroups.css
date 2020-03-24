@@ -37,3 +37,10 @@
 .THIS lightning-primitive-header-actions {
     display: none;
 }
+
+.THIS .no-truncate{
+    max-width: 100%;
+    overflow: initial; 
+    text-overflow: initial; 
+    white-space: normal;
+}

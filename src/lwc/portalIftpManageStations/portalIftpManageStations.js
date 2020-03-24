@@ -597,7 +597,6 @@ export default class PortalIftpManageStations extends LightningElement {
         let auxUserInfo = JSON.parse(JSON.stringify(this.userInfo));
         let addressId = '';
         let roleAddressName = '';
-
         let exists = false;
 
         Object.keys(auxStationOptions).forEach(function (el) {
@@ -606,15 +605,16 @@ export default class PortalIftpManageStations extends LightningElement {
                 exists = true;
             }          
         });  
-
         if(!exists){
             addressId = auxData[0].Id;
-            roleAddressName = auxUserInfo.accountName + ' - ' + auxData[0].Code__c;
+            
+            roleAddressName = auxData[0].Code__c;
+            
             dataToSave.push({ Address__c: addressId, Name: roleAddressName, Account_Role_Service__c: auxUserInfo.accountRoleSrv});
         }
 
         this.loadingNew = true;
-        insertStation({accountId: auxUserInfo.accountId, dataToSave: dataToSave })
+        insertStation({accountId: auxUserInfo.accountId, dataToSave: dataToSave, accountName: auxUserInfo.accountName})
         .then(results => {
             let variant;
             let mode;

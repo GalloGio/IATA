@@ -178,6 +178,13 @@
         <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_Select_From_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Select From List</shortDescription>
+        <value>If possible select your city from the suggestion list</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Street_Compulsory</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2624,6 +2631,28 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountContextActivationEmailBody</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the Customer creation process for the Account {1} has been sucessfully completed.
+
+Best Regards,
+
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailSubject</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
+        <value>Customer creation process for Account {0}</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3323,6 +3352,13 @@ Through this online service, you can manage your endorsement process directly on
 If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
+        <fullName>COVID_19_eComm_Home_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID-19 eComm Home Page</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3505,6 +3541,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Service_TIPReports</shortDescription>
+        <value>TIP Reports</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Services_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3646,6 +3690,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Case_Details</shortDescription>
         <value>Case-Detail_</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Case_hasInvoicePaid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_hasInvoicePaid</shortDescription>
+        <value>Has the customer paid invoice?</value>
     </labels>
     <labels>
         <fullName>CSP_Cases</fullName>
@@ -6122,6 +6173,86 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Service Access</value>
     </labels>
     <labels>
+        <fullName>CSP_Service_TIPReports_AmazonType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_AmazonType</shortDescription>
+        <value>Amazon File</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoAccess</shortDescription>
+        <value>You do not have access to TIP Reports service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoReports</shortDescription>
+        <value>There are no reports available.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_PBIType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_PBIType</shortDescription>
+        <value>Power BI</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextAction</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextAction</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileName</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileName</shortDescription>
+        <value>File Name/ Report Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileType</shortDescription>
+        <value>File Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextOpen</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextOpen</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextPostedDate</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextPostedDate</shortDescription>
+        <value>Posted Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_Title</shortDescription>
+        <value>Transparency in Payments (TIP) - Reports</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6725,7 +6856,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6864,6 +6995,35 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Company name</value>
     </labels>
     <labels>
+        <fullName>CompleteThisField</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CompleteThisField</shortDescription>
+        <value>Complete this field</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailBody</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailSubject</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
+        <value>Compliance Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>ConfirmSendRecycleBin</fullName>
         <categories>pop-up, modal, alert, confirm</categories>
         <language>en_US</language>
@@ -6914,6 +7074,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Contact Name</shortDescription>
         <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
+        <categories>Percentage, AWWAgency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Control Total Percentage Owners And Subsidiaries</shortDescription>
+        <value>The total Percentage Held must not exceed 100%. Please change the Percentage and save again.</value>
     </labels>
     <labels>
         <fullName>Copyright</fullName>
@@ -8118,6 +8286,14 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>EBulletin More than 8 owners message</shortDescription>
         <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
+    </labels>
+    <labels>
+        <fullName>EFComplianceReview</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EFComplianceReview</shortDescription>
+        <value>E&amp;F Compliance Review</value>
     </labels>
     <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
@@ -9332,6 +9508,39 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <value>Number of Additional codes to create</value>
     </labels>
     <labels>
+        <fullName>ICCS_Adhoc_Button_Help_Text</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Button Help Text</shortDescription>
+        <value>&lt;p&gt;&lt;strong&gt;Multi Countries Adhoc SI:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for a selection of countries and participations saving you the time of repeating the line change. The instruction will be applicable to each country/participation selected individually. You can make the selection of participations by first clicking “Expanding All”.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Adhoc SI by Currency:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for all the countries/participation with a same currency (sales currency) and based on the instruction lines can be cumulative. Participations have been regrouped by Currency to make it easier.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Creation_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_SI_by_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc SI by Currency</shortDescription>
+        <value>Adhoc SI by Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Selection_error</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Selection error</shortDescription>
+        <value>Please select one or more participations first in order to complete a multi countries Adhoc SI</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Agreement_Label</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9543,12 +9752,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Client testimonial</value>
     </labels>
     <labels>
+        <fullName>ICCS_Clone_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Clone SI</shortDescription>
+        <value>Clone as {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Clone_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Clone SI Link</shortDescription>
         <value>Copy &amp; Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Collapse_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Collapse All</shortDescription>
+        <value>Collapse All</value>
     </labels>
     <labels>
         <fullName>ICCS_Comment_Label</fullName>
@@ -9591,12 +9816,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Create AdHoc SI</value>
     </labels>
     <labels>
+        <fullName>ICCS_Create_Currency_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Currency SI Link</shortDescription>
+        <value>Create Currency SI</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Create_Future_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Create Future SI Link</shortDescription>
         <value>Create Future AdHoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Create_Mass_Currency_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Mass Currency Header</shortDescription>
+        <value>Please, select a currency to apply the new Settlement Instruction</value>
     </labels>
     <labels>
         <fullName>ICCS_Created_Date_Label</fullName>
@@ -9621,6 +9862,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Currency Label</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_SI_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency SI created</shortDescription>
+        <value>Your Currency Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_CycleMgmt_AdHoc_Header</fullName>
@@ -9735,6 +9984,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>E&amp;F</value>
     </labels>
     <labels>
+        <fullName>ICCS_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Edit SI</shortDescription>
+        <value>Edit {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Edit_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9821,6 +10078,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username PROD</shortDescription>
         <value>7r48aodfie7aim0aqd153tckrn</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Expand_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Expand All</shortDescription>
+        <value>Expand All</value>
     </labels>
     <labels>
         <fullName>ICCS_Expected_Deadline</fullName>
@@ -9925,6 +10190,22 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Headquarter Branch</shortDescription>
         <value>Headquarter - Branch</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned</shortDescription>
+        <value>*The amount notification hasn&apos;t been received yet.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
+        <value>**The amount shown is not the final one, there are still amount notifications to be received.</value>
     </labels>
     <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
@@ -10304,6 +10585,14 @@ Has read only access over different features of the service.</value>
         <value>Fields marked with (*) are mandatory</value>
     </labels>
     <labels>
+        <fullName>ICCS_Mandatory_Instruction_Line</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Instruction Line</shortDescription>
+        <value>It is mandatory to have at least one instruction line</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Mandatory_Uploads_Message</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10318,6 +10607,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS Marked for Deletion Label</shortDescription>
         <value>Marked for Deletion</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mass_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mass Edit SI</shortDescription>
+        <value>Mass Edit {0} Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Membership_Status</fullName>
@@ -10350,6 +10647,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
         <value>ICCS Communications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Multi_Countries_Adhoc_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Multi Countries Adhoc SI</shortDescription>
+        <value>Multi Countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -10420,6 +10725,14 @@ Has read only access over different features of the service.</value>
 2. New set of Standard Settlement Instructions (download form)
 &lt;br/&gt;&lt;br/&gt;
 If you have any question, please submit them through the comments section after submitting your case.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Currencies_Available</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Currencies Available</shortDescription>
+        <value>No currencies available to create Currency SIs</value>
     </labels>
     <labels>
         <fullName>ICCS_No_Editable_Cycle_Message</fullName>
@@ -10912,6 +11225,22 @@ After verification, if all documents are compliant, you will receive a confirmat
         <value>Role</value>
     </labels>
     <labels>
+        <fullName>ICCS_SI_Successfully_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI Successfully Created</shortDescription>
+        <value>Your {0} Settlement Instruction was successfully created</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_SI_deleted</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI deleted</shortDescription>
+        <value>The Settlement Instruction has been successfully deleted</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Save_Action</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11058,6 +11387,14 @@ Additional benefits of using ICCS:
         <value>ICCS Service Users</value>
     </labels>
     <labels>
+        <fullName>ICCS_Settlement_Instructions_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Settlement Instructions created</shortDescription>
+        <value>Your Settlement Instructions were successfully created</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Show_Child_Codes</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11110,12 +11447,46 @@ The last line of the SI&apos;s must be &quot;Balance&quot;
 The sum of percentage cannot exceed 100%</value>
     </labels>
     <labels>
+        <fullName>ICCS_Si_Create_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for creating a Currency SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Currency_Warning</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency Warning</shortDescription>
+        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction. 
+
+Any change of instruction for a specific country line under a currency instruction will not be possible.</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Si_Create_Future</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Future</shortDescription>
         <value>Kindly keep in mind the following rules for creating a future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your Currency SI:
 &lt;br/&gt;
 The last line of the SI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
@@ -11152,6 +11523,38 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS Start Date Label</shortDescription>
         <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Subject_Label</fullName>
@@ -12033,6 +12436,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Course2</shortDescription>
         <value>Course 2:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Covid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Covid</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
@@ -36138,6 +36548,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Submission of the documents successfully completed!</value>
     </labels>
     <labels>
+        <fullName>Important_Delivery_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Important_Delivery_Information</shortDescription>
+        <value>IMPORTANT DELIVERY INFORMATION:</value>
+    </labels>
+    <labels>
         <fullName>Industry_Activities</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41385,6 +41802,28 @@ Remittance date: {4}
         <value>Salutation</value>
     </labels>
     <labels>
+        <fullName>SapProcessEmailBody</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailSubject</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailSubject</shortDescription>
+        <value>SAP Process - {0}</value>
+    </labels>
+    <labels>
         <fullName>Save</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -41458,6 +41897,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Select</shortDescription>
         <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>SelectAnOption</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAnOption</shortDescription>
+        <value>Select an option</value>
     </labels>
     <labels>
         <fullName>SelectRequiredMessage</fullName>
@@ -41635,6 +42081,35 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Signaturit Endpoint</shortDescription>
         <value>https://api.signaturit.com/v3/</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessCaseSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessCaseSubject</shortDescription>
+        <value>SIS E&amp;F customer creation</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailBody</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
+
+Best Regards
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailSubject</shortDescription>
+        <value>SIS Approval - {0}</value>
     </labels>
     <labels>
         <fullName>SiteTitle</fullName>

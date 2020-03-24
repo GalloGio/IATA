@@ -166,6 +166,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account_Name__c</fullName>
+        <description>It returns the name account associated to the account role. Used in flows.</description>
         <externalId>false</externalId>
         <formula>HYPERLINK(&apos;/&apos;+Account_Role__r.Account__c, Account_Role__r.Account__r.Name, &apos;_self&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -230,6 +231,31 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Account__c</fullName>
+        <description>Used for flow, to get records</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.AccountId</formula>
+        <label>Contact&apos;s Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_And_Functional_Role__c</fullName>
+        <description>Concatenation of the contact firstname and functional role of the account role, it is used to display a secondary field when the user is looking for a contact role in a lookup field.</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName &amp;&quot; &quot;&amp;  Contact__r.LastName &amp;&quot; - &quot;&amp;  TEXT( Account_Role__r.Functional_Role__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact and Functional role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Name__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.LastName +&apos;, &apos;+ Contact__r.FirstName</formula>
@@ -270,11 +296,13 @@
                 <value>
                     <fullName>ITP Administrator</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>ITP Administrator</label>
                 </value>
                 <value>
                     <fullName>ITP Master</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>ITP Master</label>
                 </value>
                 <value>
@@ -356,6 +384,20 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>Business context this detailed role will be related to</description>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Global_ID__c</fullName>
@@ -570,6 +612,13 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Integration_Status__c</picklist>
             <values>
                 <fullName>Error</fullName>
@@ -616,6 +665,13 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -669,19 +725,18 @@
         <picklistValues>
             <picklist>Contact_Role__c</picklist>
             <values>
-                <fullName>ITP Administrator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ITP Master</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ITP Trainee</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ITP Training Coordinator</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -744,6 +799,13 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Integration_Status__c</picklist>
             <values>
                 <fullName>Error</fullName>
@@ -790,6 +852,13 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
