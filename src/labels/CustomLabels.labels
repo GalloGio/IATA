@@ -21181,6 +21181,23 @@ For each section below either:&lt;br/&gt;
 &lt;/div&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_Instructions_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Instructions CNS</shortDescription>
+        <value>&lt;div&gt;
+For each section below either:&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirm that the Agency Details are correct&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Notify CNS of the Change and update your Agency Details&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Instructions_New</fullName>
         <language>en_US</language>
         <protected>false</protected>
