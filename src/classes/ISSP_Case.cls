@@ -1590,7 +1590,7 @@ public without sharing class ISSP_Case {
 		}
 
 		if(JSONcontactSelected != null && JSONcontactSelected != ''){
-			setEmailPriority.add(JSONcontactSelected.split(','));
+			setEmailPriority.addAll(JSONcontactSelected.split(','));
 		}
 
 		if(!setEmailPriority.isEmpty()){
