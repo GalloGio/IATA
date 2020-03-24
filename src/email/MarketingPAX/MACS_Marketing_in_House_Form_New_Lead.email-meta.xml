@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Customer auto-response for in-House form new lead</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATA_Logo_2019</letterhead>
+    <name>MACS - Marketing - in-House Form New Lead</name>
+    <style>freeForm</style>
+    <subject>IATA In-House training request received</subject>
+    <textOnly>Dear customer,
+
+We have received your enquiry about in-house training as follows:
+
+
+Size of the group: {!Lead.Size_of_the_group__c}
+First name: {!Lead.FirstName}
+Last name: {!Lead.LastName}
+Job title: {!Lead.Title}
+Company: {!Lead.Company}
+Country: {!Lead.Country}
+Phone: {!Lead.Phone}
+Email: {!Lead.Email}
+Subject area: {!Lead.Areas_of_Interest__c}
+Course name: {!Lead.Course_title__c}
+Training dates: {!Lead.Training_Dates_Month__c}
+Message: {!Lead.Message__c}
+
+
+One of our sales representative will contact you shortly.
+
+Best regards,
+IATA Training
+
+Americas: +1 305 779 9848
+Asia Pacific: +65 6499 2361
+China and North Asia: +86 108 571 9250 or +86 139 1098 4914
+Europe, Russia and CIS: +41 22 770 2565 or +41 79 735 1062
+Middle East, Africa: +962 (6)580 4232 or +962 (6)580 4200 ext.1217 or 1332
+South Asia and India: +91 124 497 7111</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
