@@ -313,15 +313,17 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     }
 
     changeCountry(countryId){
-        let country = this.countryData.countryMap[countryId];
+        if(countryId !== this.localAddress.countryId){
+            let country = this.countryData.countryMap[countryId];
 
-        this.localAddress.countryId = country.Id;
-        this.localAddress.countryCode = country.ISO_Code__c;
-        this.localAddress.countryName = country.Name;
-
-        this.localAccount.vatNumber = '';
-
-        this.checkCompletion(true);
+            this.localAddress.countryId = country.Id;
+            this.localAddress.countryCode = country.ISO_Code__c;
+            this.localAddress.countryName = country.Name;
+    
+            this.localAccount.vatNumber = '';
+    
+            this.checkCompletion(true);
+        }
     }
 
     // Navigation methods
