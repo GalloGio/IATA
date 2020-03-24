@@ -104,7 +104,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			List<LocalGovernance_Meeting__c> lms = [SELECT Name,Meeting_Responsible__c FROM LocalGovernance_Meeting__c];
 			system.assertEquals(1,lms.size());
-			system.assertEquals(ctrl.lm.Name, lms[0].Name);
+			system.assert(lms[0].Name.startsWith(ctrl.lm.Name));
 			system.assertEquals(ctrl.lm.Meeting_Responsible__c, lms[0].Meeting_Responsible__c);
 
 
@@ -140,7 +140,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			lms = [SELECT Name,Meeting_Responsible__c FROM LocalGovernance_Meeting__c];
 			system.assertEquals(1,lms.size());
-			system.assertEquals(ctrl.lm.Name, lms[0].Name);
+			system.assert(lms[0].Name.startsWith(ctrl.lm.Name));
 			system.assertEquals(ctrl.lm.Meeting_Responsible__c, lms[0].Meeting_Responsible__c);
 
 

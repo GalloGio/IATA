@@ -10,8 +10,9 @@ public class NewLocalGroupMeetingCtrl {
 													'Date_Legal_Requested_to_Sign_Off_Minutes__c','Date_Legal_Signed_Off_the_Minutes__c',
 													'Date_Legal_REJECTED_the_minutes__c','Comments__c', 'Local_Governance__c',
 													'Reason_for_Rejection_Agenda__c','Legal_Remarks_Agenda__c','Other__c',
-													'Comments_checklist__c','Reason_for_Rejection_Minutes__c','Proposal_to_Conference__c',
-													'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c'};
+													'Reason_for_Rejection_Minutes__c','Proposal_to_Conference__c',
+													'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c',
+													'Legal_Remarks_Minutes__c'};
 
 		if(!Test.isRunningTest()) ctrl.addFields(fieldNames);
 		lm = (LocalGovernance_Meeting__c) ctrl.getRecord();
@@ -27,12 +28,12 @@ public class NewLocalGroupMeetingCtrl {
 													Local_Governance_Participant__r.Title__c, Participant_Contact__c, Participant_Contact__r.Name, Participant_Contact__r.AccountId,
 													Participant_Contact__r.Account.RecordTypeId, Participant_Contact__r.Account.ParentId, Participant_Contact__r.Account.Top_Parent__c,
 													Local_Governance_Meeting__c
-											   FROM Meeting_Participant__c
-											   WHERE Local_Governance_Meeting__c = :lm.ID AND Local_Governance_Participant__c <> NULL
-											   LIMIT 1000]){
+											FROM Meeting_Participant__c
+											WHERE Local_Governance_Meeting__c = :lm.ID AND Local_Governance_Participant__c <> NULL
+											LIMIT 1000]){
 				atts.add(new AttendeeWrapper(mp, true));
 				usedParts.add(mp.Local_Governance_Participant__c);
-		   }
+			}
 
 		}
 
@@ -43,10 +44,10 @@ public class NewLocalGroupMeetingCtrl {
 								FROM Participant__c
 								WHERE Local_Governance__c = :lm.Local_Governance__c AND ID NOT IN :usedParts]){
 			Meeting_Participant__c mp = new Meeting_Participant__c(Local_Governance_Meeting__c = lm.Id,
-																   Local_Governance_Participant__c = p.Id,
-																   Local_Governance_Participant__r = p,
-																   Participant_Contact__c = p.Contact__c,
-																   Participant_Contact__r = p.Contact__r);
+																	Local_Governance_Participant__c = p.Id,
+																	Local_Governance_Participant__r = p,
+																	Participant_Contact__c = p.Contact__c,
+																	Participant_Contact__r = p.Contact__r);
 			atts.add(new AttendeeWrapper(mp, false));
 		}
 
@@ -54,16 +55,16 @@ public class NewLocalGroupMeetingCtrl {
 
 	}
 
-
-
 	public PageReference MySave(){
 		system.SavePoint sp = Database.SetSavepoint();
 		// Phase 1: I save the Local Meeting
 		try{
 			database.upsert(lm);
 		}catch(DMLException e){
-			system.debug(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting: '+e.getMessage()));
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting: '+e.getMessage()));
+			//write all error messages except those from Validation Rules with a field error message
+			if (e.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION') && e.getMessage().endsWith('[]')) {
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, cleanMessage(e.getMessage())));
+			}
 			return null;
 		}
 
@@ -85,19 +86,14 @@ public class NewLocalGroupMeetingCtrl {
 				else if(!aw.sel && !String.isBlank(aw.att.Id))
 					attsToDelete.add(aw.att);
 			}
-			system.debug('CTRL - attsToUpsert:'+attsToUpsert.size()+' - attsToDelete:'+attsToDelete.size());
 
 			database.upsert(attsToUpsert);
 			database.delete(attsToDelete);
 
-			system.debug('CTRL - UPSERT and DELETE are OK!');
-
-			//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'salvato correttamente! - attsToUpsert:'+attsToUpsert.size()+' - attsToDelete:'+attsToDelete.size()));
-			//return null;
 			return new PageReference('/'+lm.id);
 
 		}catch(DMLException e){
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting attendees: '+e.getMessage()));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,cleanMessage(e.getMessage())));
 		}
 		Database.rollBack(sp);
 		return null;
@@ -120,6 +116,12 @@ public class NewLocalGroupMeetingCtrl {
 				return -1;
 			return 0;
 		}
+	}
+
+	public String cleanMessage(String message) {
+		message = message.replaceFirst('.*FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
+		message = message.removeEnd(': []');
+		return message;
 	}
 
 }
