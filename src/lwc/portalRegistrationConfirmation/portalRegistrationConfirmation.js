@@ -6,8 +6,8 @@ import getAccountInfo                       from '@salesforce/apex/PortalRegistr
 import createIsoCity                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.createIsoCity';
 import registrationWithNewAccount           from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithNewAccount';
 import registrationWithExistingAccount      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount';
-import createNewAccount from '@salesforce/apex/AccountCreationCtrl.createNewAccount';
-import getCSPortalPath from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
+import createNewAccount                     from '@salesforce/apex/AccountCreationCtrl.createNewAccount';
+import getCSPortalPath                      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -255,7 +255,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     }
 
     get isExistingAccountSelected(){
-        return this.selectedAccountId !== '';
+        return this.selectedAccountId !== '' && this.selectedAccountId !== undefined;
     }
 
     startLoading(){
@@ -268,7 +268,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
     submit(){
         // The user selected an existing account
-        if(this.selectedAccountId != ''){
+        if(this.selectedAccountId !== '' && this.selectedAccountId !== undefined){
             this.startLoading();
 
             let account = { 'sobjectType': 'Account' };
@@ -322,6 +322,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         account.Website = this.account.website;
         account.Sector__c = this.account.customerTypeSector;
         account.Category__c = this.account.customerTypeCategory;
+        account.Reason_for_creation__c = 'Created by customer';
 
         // business address
 
@@ -444,13 +445,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                 this.successModalMessage = CSP_L2_Details_Saved_Topic_Message;
                 this.successModalButton1Label = CSP_L2_Go_To_Homepage;
                 this.successModalButton2Label = CSP_L2_Go_To_Topic;
-            }
-
-            // Override success modal parameters if new account was created
-            if(this.caseId !== ''){
-                this.successModalTitle = CSP_L2_Details_New_Account_Title;
-                this.successModalMessage = CSP_L2_Details_New_Account_Message_1 + ' ' + this.caseNumber + '.<br/><br/>' + CSP_L2_Details_New_Account_Message_2;
-                this.successModalButton1Label = CSP_L2_Add_Attachments;
             }
         }
         else{
