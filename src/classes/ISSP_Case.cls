@@ -1548,20 +1548,20 @@ public without sharing class ISSP_Case {
 		Account concerned
 	**/
 	public void addListCCOthersToDPC(String stringEmails) {
+
+		//On DPC case creation with Priority, automatically add additional recipients
+		Set<String> setEmailPriority = new Set<String>();
+
 		// filter input emails
-		Set<String> setEmail = new Set<String>();
 		for(String s : stringEmails.split(',')) {
 			String email = s.trim();
 			if (!String.isBlank(email)) {
-				setEmail.add(email);
+				setEmailPriority.add(email);
 			}
 		}
 		User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
 		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
 		Set<String> lsNewEmails = new Set<String>();
-
-		//On DPC case creation with Priority, automatically add additional recipients
-		Set<String> setEmailPriority = new Set<String>();
 
 		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
 
@@ -1569,8 +1569,10 @@ public without sharing class ISSP_Case {
 			if(emailCurrentAcc != ''){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
 					if(d2dca.Name == emailCurrentAcc){
-						for(String email : d2dca.Email__c.split(';')){
-							setEmailPriority.add(email);
+						for(String email : d2dca.Email__c.split(',')){
+							if(!String.isBlank(email)){
+								setEmailPriority.add(email);
+							}
 						}
 					}
 				}
@@ -1588,7 +1590,7 @@ public without sharing class ISSP_Case {
 		}
 
 		if(JSONcontactSelected != null && JSONcontactSelected != ''){
-			setEmailPriority.add(JSONcontactSelected.removeEnd(','));
+			setEmailPriority.add(JSONcontactSelected.split(','));
 		}
 
 		if(!setEmailPriority.isEmpty()){
@@ -1604,16 +1606,16 @@ public without sharing class ISSP_Case {
 					TeamRoleId = PARTNER_USER_ROLE);
 				lsCaseTeamMembers.add(teammember);
 				lsNewEmails.add(user.Email);
-				setEmail.remove(user.Email);
+				setEmailPriority.remove(user.Email);
 			}
 		}
 
 		// Find the contacts for the emails not found
-		if (!setEmail.isEmpty()) {
+		if (!setEmailPriority.isEmpty()) {
 			list<Contact> listContact = [
 				SELECT Id,Email
 				FROM Contact
-				WHERE Email IN :setEmail
+				WHERE Email IN :setEmailPriority
 				AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
 				AND Status__c = 'Active'
 				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)
@@ -1657,7 +1659,15 @@ public without sharing class ISSP_Case {
 		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 		list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
 			FROM User
-			WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
+			WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')
+			AND isActive = true];
+
+		List<Contact> contactsList = [SELECT Id, Email
+			FROM Contact
+			WHERE Id in (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
+			AND Status__c = 'Active'];
 
 		List<String> listUserEmails = new List<String>();
 		Id contactId = null;
@@ -1672,6 +1682,10 @@ public without sharing class ISSP_Case {
 			if(usr.ContactId != null && contactId == null){
 				contactId = usr.ContactId;
 			}
+		}
+
+		for(Contact cnt : contactsList){
+			listUserEmails.add(cnt.Email);
 		}
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

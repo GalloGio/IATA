@@ -7,9 +7,9 @@
         <fullName>Email__c</fullName>
         <description>List of recipient emails</description>
         <externalId>false</externalId>
-        <inlineHelpText>The emails must be separeted by semi-colon &quot;;&quot;</inlineHelpText>
+        <inlineHelpText>The emails must be separeted by colon &quot;,&quot;</inlineHelpText>
         <label>Email</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
