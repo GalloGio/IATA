@@ -206,13 +206,10 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-		String[] toAddress = new List<String>{'goncalvesd@iata.org'};
-
 		String subject = 'Conversion Report for ' + country;
 		email.setSaveAsActivity(false);
 		email.setTargetObjectId(UserInfo.getUserId());
 		email.setSubject(subject);
-		email.setToAddresses(toAddress);
 		email.setPlainTextBody('Conversion Report for '  + country + ' in attachment. \n\n\n ' + errorsFound);
 
 		email.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttachment});

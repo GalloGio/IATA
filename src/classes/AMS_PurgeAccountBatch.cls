@@ -81,50 +81,50 @@ global class AMS_PurgeAccountBatch implements Database.Batchable<sObject>,  Data
 
 		//Send an email to the User after your batch completes
 			 if(!errorMap.isEmpty()){
-						AsyncApexJob a = [SELECT id, ApexClassId,
-											 JobItemsProcessed, TotalJobItems,
-											 NumberOfErrors, CreatedById
-											 FROM AsyncApexJob
-											 WHERE id = :BC.getJobId()];
-						String body = 'Your batch job '
-						 + 'Purge IATA Codes '
-						 + 'has finished for Accounts. \n'
-						 + 'There were '
-						 + errorMap.size()
-						 + ' errors. Please find the error list attached to the Email. You should expect the GDP purge email process shortly after if any error occurr.';
+				AsyncApexJob a = [SELECT id, ApexClassId,
+										JobItemsProcessed, TotalJobItems,
+										NumberOfErrors, CreatedById
+										FROM AsyncApexJob
+										WHERE id = :BC.getJobId()];
+				String body = 'Your batch job '
+					+ 'Purge IATA Codes '
+					+ 'has finished for Accounts. \n'
+					+ 'There were '
+					+ errorMap.size()
+					+ ' errors. Please find the error list attached to the Email. You should expect the GDP purge email process shortly after if any error occurr.';
 
-						// Creating the CSV file
-						String finalstr = 'Id, Name, Error \n';
-						String subject = 'Account - Apex Batch Error List';
-						String attName = 'Account Errors.csv';
-						for(Id id  : errorMap.keySet()){
-								string err = errorMap.get(id);
-								Account acct = (Account) IdToSObjectMap.get(id);
-								string recordString = '"'+id+'","'+acct.Name+'","'+err+'"\n';
-								finalstr = finalstr +recordString;
-						}
-
-						// Define the email
-						Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-
-						// Create the email attachment
-						Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
-						efa.setFileName(attName);
-						efa.setBody(Blob.valueOf(finalstr));
-
-						// Sets the paramaters of the email
-						email.setSubject( subject );
-						email.setTargetObjectId(a.CreatedById);
-			email.setSaveAsActivity(false);
-						email.setPlainTextBody( body );
-						email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
-
- 			if(!Test.isRunningTest()) {
-
- 				Messaging.SendEmailResult [] r =
-								Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-			}
+				// Creating the CSV file
+				String finalstr = 'Id, Name, Error \n';
+				String subject = 'Account - Apex Batch Error List';
+				String attName = 'Account Errors.csv';
+				for(Id id  : errorMap.keySet()){
+						string err = errorMap.get(id);
+						Account acct = (Account) IdToSObjectMap.get(id);
+						string recordString = '"'+id+'","'+acct.Name+'","'+err+'"\n';
+						finalstr = finalstr +recordString;
 				}
+
+				// Define the email
+				Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+
+				// Create the email attachment
+				Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+				efa.setFileName(attName);
+				efa.setBody(Blob.valueOf(finalstr));
+
+				// Sets the paramaters of the email
+				email.setSubject( subject );
+				email.setTargetObjectId(a.CreatedById);
+				email.setSaveAsActivity(false);
+				email.setPlainTextBody(body);
+				email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
+
+				if(!Test.isRunningTest()) {
+
+					Messaging.SendEmailResult [] r =
+									Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+				}
+			}
 	}
 
 	public static String transformIATACodeintoPurged(String iataCode){

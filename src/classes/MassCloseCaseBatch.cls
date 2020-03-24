@@ -34,7 +34,6 @@ public class MassCloseCaseBatch implements Database.Batchable<sObject>, Database
 					logfile += (firstmessage ? '' : ', ') + e.getMessage();
 					if(firstmessage)	firstmessage = false;
 				}
-				//logs.put(scope[i].id,errmess);
 				logfile += '"\r\n';
 			}
 			

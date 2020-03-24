@@ -18,12 +18,8 @@ public without sharing class AirlineInputHandler {
 		list<Messaging.SingleEmailMessage> lstNotificationEmails = new list<Messaging.SingleEmailMessage>();
 
 		EmailTemplate template;
-
-		try {
-			template = [SELECT Id, Body, Subject FROM EmailTemplate WHERE DeveloperName = 'New_Case_Comment_APEX'];
-		} catch (Exception e) {
-			system.debug('ERROR: Email template for case comment notifications not found!');
-		}
+	
+		template = [SELECT Id, Body, Subject FROM EmailTemplate WHERE DeveloperName = 'New_Case_Comment_APEX'];
 
 		list<Id> lstAccountIds = new list<Id>();
 		list<Id> lstCaseIds = new list<Id>();
@@ -72,11 +68,6 @@ public without sharing class AirlineInputHandler {
 			insert lstCommentsToInsert;
 			if (template != null ) {
 				Messaging.SendEmailResult [] r = Messaging.sendEmail(lstNotificationEmails, false);
-
-				/*system.debug('r size: ' + r.size());
-				for(integer i=0; i<r.size(); i++){
-				   system.debug('Send email result ' + i + ': ' + r[i].isSuccess() + '; Errors: ' + (r[i].getErrors().isEmpty() ? 'no errors' : r[i].getErrors()[0].getMessage()));
-				}*/
 			}
 		}
 	}

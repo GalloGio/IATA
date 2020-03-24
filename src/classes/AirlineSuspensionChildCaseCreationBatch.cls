@@ -423,9 +423,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 		mail.setSaveAsActivity(false);
 		mail.setTargetObjectId(a.CreatedById);
 		mail.setSubject('Airline Suspension child cases ' + (isCloseChildCases ? 'closing' : 'creation') + ' status: ' + a.Status);
-		mail.setPlainTextBody (mailbody);
-
-		system.debug('ErrorLog: ' + errorLog);
+		mail.setPlainTextBody(mailbody);
 
 		// check if there were errors logged, and attach them in a file
 		if(errorLog != ''){

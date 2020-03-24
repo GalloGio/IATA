@@ -31,11 +31,10 @@ public with sharing class DevsTools {
 	*
 	*/
 	public static void sendSFDevsAlertMessage(String title, String message){
-		try{
+
 			if(receivers.size()==0){
 				receivers = [SELECT Id, Email, ProfileId FROM User WHERE IsActive = true AND Receive_Apex_emails__c = true];
 			}
-
 			if(receivers.size()>0){
 				List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 				for(User u: receivers) {
@@ -46,13 +45,7 @@ public with sharing class DevsTools {
 					mail.setSaveAsActivity(false);
 					emails.add(mail);
 				}
-				Messaging.sendEmail(emails);
-				
-			}else {
-				system.debug('no user with request SELECT Email, ProfileId FROM User where IsActive = true and Receive_Apex_emails__c = true');
+				Messaging.sendEmail(emails);				
 			}
-		}catch(Exception  e){
-				system.debug('Failed to send email to webdev'+e.getMessage());
-		}
 	}
 }

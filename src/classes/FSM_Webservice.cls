@@ -111,8 +111,6 @@ global without sharing class FSM_Webservice {
 					em.setSubject(sEmailSubject);
 					em.setHtmlBody(htmlEmailBody);
 
-						system.debug('EMAIL IS ' + em.getToAddresses());
-
 						if(t.Attachments.size()>0){
 
 							List<Attachment> listAtt = [Select Name, Body, ContentType From Attachment where parentId = :t.Id];

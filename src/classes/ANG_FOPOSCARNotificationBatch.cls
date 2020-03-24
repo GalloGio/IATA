@@ -152,8 +152,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 			if (!mails.isEmpty()){					
 				Messaging.sendEmail(mails);
 			}
-
-			System.debug(+errorMsg);
 		}
 
 	}
