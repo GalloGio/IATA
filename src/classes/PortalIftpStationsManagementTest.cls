@@ -176,7 +176,7 @@ public class PortalIftpStationsManagementTest {
 		List<Role_Address__c> toDelete = new List<Role_Address__c>();
 		toDelete.add(roleAddressITP);
 
-		PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(u1.Contact.AccountId, toDelete);
+		PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(u1.Contact.AccountId, toDelete, 'ITP Account');
 		System.assert(insertStationRes.succeeded);
 
 
