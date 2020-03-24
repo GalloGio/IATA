@@ -2,30 +2,30 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 
 	/* PROCESS TYPE SPECIFIC VARIABLES */
 
-    public ISSP_ICCS_ProcessDeactivationController thisCtrl {get{return this;}}
+	public ISSP_ICCS_ProcessDeactivationController thisCtrl {get{return this;}}
 
-    public String description {get;set;}
+	public String description {get;set;}
 
-    public String reason {get;set;}
+	public String reason {get;set;}
 
-    public List<SelectOption> reasonsList {
-        get{
-            if(reasonsList == null){
-                reasonsList = new List<SelectOption>();
-                reasonsList.add(new SelectOption(ISSP_ICCS_Utils.NONE,ISSP_ICCS_Utils.NONE));
-                reasonsList.add(new SelectOption('Closing BSP/CASS','Closing BSP/CASS'));
-                reasonsList.add(new SelectOption('Switching to Local Bank Account','Switching to Local Bank Account'));
-                reasonsList.add(new SelectOption('Other - Please Specify','Other - Please Specify'));
-            }
-            return reasonsList;
-        }
-        set;
-    }
+	public List<SelectOption> reasonsList {
+		get{
+			if(reasonsList == null){
+				reasonsList = new List<SelectOption>();
+				reasonsList.add(new SelectOption(ISSP_ICCS_Utils.NONE,ISSP_ICCS_Utils.NONE));
+				reasonsList.add(new SelectOption('Closing BSP/CASS','Closing BSP/CASS'));
+				reasonsList.add(new SelectOption('Switching to Local Bank Account','Switching to Local Bank Account'));
+				reasonsList.add(new SelectOption('Other - Please Specify','Other - Please Specify'));
+			}
+			return reasonsList;
+		}
+		set;
+	}
 
 
-    /* CONSTRUCTOR */
+	/* CONSTRUCTOR */
 
-    public ISSP_ICCS_ProcessDeactivationController(){}
+	public ISSP_ICCS_ProcessDeactivationController(){}
 
 
 	public override ISSP_ICCS_Utils.CaseProcessType getCaseProcessType(){
@@ -37,13 +37,13 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 	}
 
 	public override Map<Integer, ISSP_ICCS_CaseProcessesController.Step> getSteps(){
-        return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
-            1 => new ISSP_ICCS_CaseProcessesController.Step('A. Fill BLAH BLAH BLA', 100, 100)};
+		return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
+			1 => new ISSP_ICCS_CaseProcessesController.Step('A. Fill BLAH BLAH BLA', 100, 100)};
 	}
 
 	public override List<String> getCaseProcessDocuments(){
-	    return new List<String>{
-        	ISSP_ICCS_Utils.ICCS_DOCUMENT_DEACTIVATION};
+		return new List<String>{
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_DEACTIVATION};
 	}
 
 	public override Map<String, ISSP_ICCS_CaseProcessController.TypedDocument> getCaseProcessTypedDocumentMap(){
@@ -51,10 +51,10 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 			ISSP_ICCS_Utils.ICCS_DOCUMENT_DEACTIVATION => new ISSP_ICCS_CaseProcessController.TypedDocument(this, ISSP_ICCS_Utils.ICCS_DOCUMENT_DEACTIVATION, true)
 		};
 	}
-   
-    public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){
+
+	public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){
 		System.debug('ISSP_ICCS_ProcessDeactivationController.resetController(ISSP_ICCS_ServiceController pageController) **** increment : ' + ++ISSP_ICCS_ServiceController.increment);
-    }
+	}
 
 	public override void cleanController(){
 		System.debug('ISSP_ICCS_ProcessDeactivationController Constructor **** increment : ' + ++ISSP_ICCS_ServiceController.increment);
@@ -79,22 +79,22 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 	}
 
 	public override Case retrieveCase(Id caseId){
-		return [select	
-					Id, 
-					CaseNumber, 
-					Subject, 
+		return [select
+					Id,
+					CaseNumber,
+					Subject,
 					Status,
 					Account.Name,
 					IATA_Code__c,
-					Contact.Name, 
-					Contact.Email, 
-					Contact.Phone, 
-					Expected_Deadline__c, 
+					Contact.Name,
+					Contact.Email,
+					Contact.Phone,
+					Expected_Deadline__c,
 					Origin,
 					CaseArea__c,
 					Reason1__c,
 					Description
-				from Case 
+				from Case
 				where Id =: caseId];
 	}
 
@@ -111,27 +111,27 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 		}
 	}
 
-    public override Boolean validateStep(){
-        Boolean stepInvalid = false;
+	public override Boolean validateStep(){
+		Boolean stepInvalid = false;
 
-        Boolean reasonInvalid = reason == null || reason == ISSP_ICCS_Utils.NONE;
-        caseProcessesController.displayMessages.put('reason', reasonInvalid);
-        
-        Boolean descriptionInvalid = reason == 'Other - Please Specify' && (description == null || description == '');
-        caseProcessesController.displayMessages.put('description', descriptionInvalid);
-        
-        stepInvalid = reasonInvalid || descriptionInvalid;
-       
-        Boolean isInvalid;
-       
-        for(String docType : typedDocumentsMap.keySet()){
-            isInvalid = !typedDocumentsMap.get(docType).documentExists && typedDocumentsMap.get(docType).isMandatory;
-            caseProcessesController.displayMessages.put(docType, isInvalid);
-            stepInvalid |= isInvalid;
-        }
-        
-        return !stepInvalid;
-    }
+		Boolean reasonInvalid = reason == null || reason == ISSP_ICCS_Utils.NONE;
+		caseProcessesController.displayMessages.put('reason', reasonInvalid);
+
+		Boolean descriptionInvalid = reason == 'Other - Please Specify' && (description == null || description == '');
+		caseProcessesController.displayMessages.put('description', descriptionInvalid);
+
+		stepInvalid = reasonInvalid || descriptionInvalid;
+
+		Boolean isInvalid;
+
+		for(String docType : typedDocumentsMap.keySet()){
+			isInvalid = !typedDocumentsMap.get(docType).documentExists && typedDocumentsMap.get(docType).isMandatory;
+			caseProcessesController.displayMessages.put(docType, isInvalid);
+			stepInvalid |= isInvalid;
+		}
+
+		return !stepInvalid;
+	}
 
 	public override void setCaseFieldValues(){
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
@@ -139,12 +139,12 @@ public class ISSP_ICCS_ProcessDeactivationController extends ISSP_ICCS_CaseProce
 		if(reason == 'Other - Please Specify'){
 			caseProcessesController.cse.Description = description;
 		}
-        
-        caseProcessesController.cse.Reason1__c = reason == ISSP_ICCS_Utils.NONE ? null : reason;
+
+		caseProcessesController.cse.Reason1__c = reason == ISSP_ICCS_Utils.NONE ? null : reason;
 	}
-	
+
 	public override void fillAdditionalMessages(){
-        caseProcessesController.displayMessages.put('reason', false);
-        caseProcessesController.displayMessages.put('description', false);
+		caseProcessesController.displayMessages.put('reason', false);
+		caseProcessesController.displayMessages.put('description', false);
 	}
 }

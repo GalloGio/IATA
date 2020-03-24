@@ -1,16 +1,16 @@
 @isTest
 private class AMS_AddressTriggerHandlerTest {
-	
+
 	@testSetup static void setup(){
-	
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
-        insert isoc;
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
-        Account acc2 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test2 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345679', AIMS_ID__c = '12345679', Source_System__c = 'AIMS2');
-        Account acc3 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test2 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345670', AIMS_ID__c = '12345670', Source_System__c = 'AIMS2');
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+		insert isoc;
 
-        insert new List<Account>{acc1,acc2,acc3};
+		Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+		Account acc2 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test2 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345679', AIMS_ID__c = '12345679', Source_System__c = 'AIMS2');
+		Account acc3 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test2 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345670', AIMS_ID__c = '12345670', Source_System__c = 'AIMS2');
+
+		insert new List<Account>{acc1,acc2,acc3};
 
 
 
@@ -39,9 +39,9 @@ private class AMS_AddressTriggerHandlerTest {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest static void insertIncorrectAddress1() {
-		
+
 		boolean exceptionDone = false;
 
 		List<Account> accounts = [SELECT Id from Account];
@@ -96,7 +96,7 @@ private class AMS_AddressTriggerHandlerTest {
 			update addrToUpdate1;
 		}
 		catch(Exception e){
-			
+
 			exceptionDone = true;
 			System.assertEquals(true,e.getMessage().contains('in the Address to insert/update is duplicated in the Account Addresses'));
 
@@ -123,5 +123,5 @@ private class AMS_AddressTriggerHandlerTest {
 		Test.stopTest();
 
 	}
-	
+
 }

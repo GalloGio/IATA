@@ -111,7 +111,6 @@ input[type="checkbox"] {
 }
 
 .changeUserStatus {
-  display: flex;
   float: left;
 }
 
@@ -175,4 +174,14 @@ input[type="checkbox"] {
     margin-right: 0;
     margin-top: 15px;
   }
+}
+
+.grayBackgroundSection {
+    background-color: #f7f8fc;
+}
+
+.underLinded {
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 1%;
+  padding-top: 1%;
 }

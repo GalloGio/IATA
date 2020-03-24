@@ -9,10 +9,10 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 	public String idCardQuery {get;set;}
 	public String idCardAppQuery {get;set;}
 	public ID_Card_Application__c [] pendingIdCardsAppV2 {get;set;}
- 
+
 	public String DOB {get; set;}
 
-	public Boolean isNew {get; set;} 
+	public Boolean isNew {get; set;}
 
 	private String applicationType = null;
 
@@ -20,7 +20,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
 	public String FNAME {
 		get;
-		set { FNAME = String.escapeSingleQuotes(value);  } 
+		set { FNAME = String.escapeSingleQuotes(value);  }
 	}
 	public String LNAME {
 		get;
@@ -122,7 +122,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
 			// Kofi: 12/09/2013. Card_Status__c is removed from the criteria.
 			// INC183592
-			
+
 			contacts = [Select   c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
 						c.Account.IDCard_Key_Account__c, c.Account.type, c.Account.Short_Name__c, c.Account.Is_AIMS_Account__c , c.Id,
 						c.Account.Status__c, c.Account.IATACode__c, c.Account.ID_Card_KeyAccount_features__c
@@ -198,12 +198,12 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 				Case[] pendingCase =  [Select Id from Case where RecordType.Name = 'ID Card Application' AND Contact.Id = : contacts[0].Id AND status <> 'Closed' limit 1];
 				//INC239933
 				TempVERNumber = 'Z'+VERNumber;
-				ID_Card_Application__c [] pendingIdCardsApp = [Select id from ID_Card_Application__c where RecordType.Name = 'Single ID Card Operation' 
+				ID_Card_Application__c [] pendingIdCardsApp = [Select id from ID_Card_Application__c where RecordType.Name = 'Single ID Card Operation'
 																										AND (((VER_Number__c = :VERNumber OR VER_Number__c = :TempVERNumber) AND IATA_Code__c =:IATACodeLocation.trim())
-																										OR (VER_Number__c = :VERNumber OR VER_Number__c = :TempVERNumber )) 
+																										OR (VER_Number__c = :VERNumber OR VER_Number__c = :TempVERNumber ))
 																										AND (Application_Status__c = 'Pending' OR Application_Status__c = 'Unpaid')  limit 1];
-														  
-				
+
+
 				if (pendingCase != null && pendingCase.size() > 0){
 					prAgencyDetails = Page.IDCard_PendingCase_Details;
 					prAgencyDetails.getParameters().put('cid', IDCardUtil.EncryptEncodeParameter(pendingCase[0].Id));
@@ -352,11 +352,11 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 											  and a.RecordType.Name = 'Agency'
 													  and (a.Status__c in :IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Account.Status__c = 'Terminated') // INC183592
 															and WebStar_ID__c = null
-															  and (a.Location_Class__c in :IDCardUtil.ALLOWED_ACCOUNT_LOCATION_CLASS)];  
-															  
+															  and (a.Location_Class__c in :IDCardUtil.ALLOWED_ACCOUNT_LOCATION_CLASS)];
+
 
 				if (accounts == null || accounts.size() == 0) {
-					AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'})); 
+					AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'}));
 					System.debug('*** ' + accounts);
 					return null;
 				}
@@ -421,7 +421,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 								 + '  i.RecordTypeId = \'' + rectypeid
 								 + '\' and i.FirstName__c = \'' + FNAME.trim() + '\' '
 								 + ' and i.LastName__c = \'' + LNAME.trim() + '\' '
-								 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd') 
+								 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd')
 								 + ' order by i.Valid_To_Date__c desc LIMIT 1';
 
 			system.debug('[IDCardLoginController] Existing card search query ' + IDCardQuery);
@@ -439,10 +439,10 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
 			//INC239933
 			Date birthDate = Date.newInstance(parsedDtDOB.year(), parsedDtDOB.month(), parsedDtDOB.day());
-			
+
 			idCardQuery = 'Select id,FirstName__c,LastName__c,Date_of_Birth__c,Card_Status__c, VER_Number__c'
 									  + ' from ID_Card__c '
-									  + ' where Agency_IATA_Code__c=\'' + IATACodeLocation2.trim() + '\' '                                      
+									  + ' where Agency_IATA_Code__c=\'' + IATACodeLocation2.trim() + '\' '
 									  + ' and LastName__c =  \'' + LNAME.trim() + '\''
 									  + ' and FirstName__c = \'' + FNAME.trim() +'\''
 									  + ' and Date_of_Birth__c =  ' + parsedDtDOB.format('yyyy-MM-dd')
@@ -454,7 +454,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 								+ ' and Date_of_Birth__c=  ' + parsedDtDOB.format('yyyy-MM-dd')
 								+ ' and First_Name__c=\''+FNAME.trim()+'\''
 								+ ' AND ( Application_Status__c=\'Pending\''
-									+ ' OR Application_Status__c=\'Unpaid\')'; 
+									+ ' OR Application_Status__c=\'Unpaid\')';
 
 
 			ID_Card__c[] checkIdCard = Database.query(idCardQuery);
@@ -486,13 +486,13 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 									   where RecordType.Name = 'ID Card Application'
 											   AND Contact.Id = : contID
 													   AND status <> 'Closed' limit 1];
-								
+
 				if (pendingCase != null && pendingCase.size() > 0){
 					//redirect to new pending case information
 					Pagereference  pendingCasePage = Page.IDCard_PendingCase_Details;
 					pendingCasePage.getParameters().put('cid', IDCardUtil.EncryptEncodeParameter(pendingCase[0].Id));
 					return pendingCasePage;
-				} 
+				}
 			}
 
 
@@ -558,7 +558,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 				// INC183592
 				if (agencyStatus == 'Terminated') {
 					AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'}));
-					return null; 
+					return null;
 				}
 
 				Pagereference prAgencyDetails = Page.IDCard_Agency_Details;
@@ -763,9 +763,9 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 		}catch(Exception e){
 
 		}
-		
-		
-		
+
+
+
 
 
 	}

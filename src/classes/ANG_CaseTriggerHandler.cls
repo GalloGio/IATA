@@ -9,14 +9,21 @@ public class ANG_CaseTriggerHandler {
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
-	
-	//public void onBeforeInsert() {}
+
+	public void onBeforeInsert(){
+		handleMulticountryCases(triggerNew, oldMap);
+	}
+
 	public void onAfterInsert() {
 		updateFinancialReviewResultOnAccount();
+		handleMulticountryCases(triggerNew, oldMap);
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
 	}
 
-	//public void onBeforeUpdate() {}
+	public void onBeforeUpdate(){
+		handleMulticountryCases(triggerNew, oldMap);
+	}
+
 	public void onAfterUpdate() {
 		updateFinancialReviewResultOnAccount();
 		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
@@ -48,18 +55,31 @@ public class ANG_CaseTriggerHandler {
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] has SAAM Area - ' + (c.CaseArea__c == saamArea));
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] is IFAP - ' + (c.RecordTypeId == AMS_Utils.RECTYPE_IFAP));
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] has IFAP status - ' + ifapStatus.contains(c.status));
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Financial Review Type - ' + c.Financial_Review_Type__c);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Exception Approved On: ' + c.Exception_Approved_on__c);
 
-			if( (Trigger.isInsert || (Trigger.isUpdate && c.Status != oldMap.get(c.Id).Status)) && 
+			if( (Trigger.isInsert || (Trigger.isUpdate && c.Status != oldMap.get(c.Id).Status)) &&
 				(
 					(c.RecordTypeId == AMS_Utils.RECTYPE_SAAM
 					&& saamStatus.contains(c.status)
 					&& saamReason.contains(c.Reason1__c)
-					&& c.CaseArea__c == saamArea) 
+					&& c.CaseArea__c == saamArea)
 					||
 					(c.RecordTypeId == AMS_Utils.RECTYPE_IFAP
 					&& ifapStatus.contains(c.status))
 				)
 			){
+				//Skip updating the financial result on the account  considering the following scenario:
+				if(c.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL && c.Exception_Approved_on__c != NULL){
+					//A Financial Review is done on a multicountry key hierarchy and an exception is raised to evaluate
+					//if the consequences should be applied or not. If the exception is approved,
+					//it means that the consequences of the new Financial Assessment result
+					//do not need to be applied on the hierarchy and so
+					//the new Financial Assessment result will not be copied at all on the account
+					System.debug(loggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] Skip case with exception approved: ' + c.CaseNumber);
+					continue;
+				}
+
 				if(!casesPerAccount.containsKey(c.AccountId)) casesPerAccount.put(c.AccountId, new List<Case>());
 				casesPerAccount.get(c.AccountId).add(c);
 
@@ -76,7 +96,7 @@ public class ANG_CaseTriggerHandler {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] ngAccounts - ' + ngAccounts);
 		if(ngAccounts.isEmpty()) return;
-		
+
 		//set information on account
 		List<Account> toUpdate = new List<Account>();
 		for(Account a : ngAccounts){
@@ -104,7 +124,7 @@ public class ANG_CaseTriggerHandler {
 		Set<Id> accsIds = new Set<Id>();
 		for(Case c : triggerNew){
 			if (c.Financial_Security_Amount__c != null && oldMap.get(c.Id).Financial_Security_Amount__c != c.Financial_Security_Amount__c){
-				accsIds.add(c.AccountId);			
+				accsIds.add(c.AccountId);
 			}
 		}
 
@@ -116,13 +136,60 @@ public class ANG_CaseTriggerHandler {
 	private static void updateRHCInfoFSMinimumAmount(Set<Id> caseIds, Set<Id> accsIds){
 
 		List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c, ANG_isToUpdateRHC__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c, Security_Status__c, Amount__c FROM Financial_Security__c WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active') AND Account__c IN :accsIds AND Account__r.ANG_IsNewGenAgency__c = TRUE];
-		
+
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateRHCInfoFSMinimumAmount] Financial Securities - ' + financialSecurities);
 
 		if(!financialSecurities.isEmpty()){
 			ANG_FinancialSecurityTriggerHandler fsth = new ANG_FinancialSecurityTriggerHandler();
 			fsth.updateRHCInfoFSMinimumAmount(accsIds, financialSecurities);
 		}
+
+	}
+
+	private static void handleMulticountryCases(List<Case> caseLst, Map<Id,Case> caseOldMap){
+
+		Id financialReviewPdRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Multicountry_Yearly_Financial_Review');
+
+		List<AMS_Process_Detail__c> pdLst = new List<AMS_Process_Detail__c>();
+		List<Case> casesToRunFsCurrencyValidationsLst = new List<Case>();
+
+		for(Case cse : caseLst){
+			if(cse.RecordTypeId == AMS_Utils.RECTYPE_IFAP && cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
+				if(Trigger.isInsert && Trigger.isAfter){
+					pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
+				}
+				if(shouldRunFsCurrencyValidations(cse, caseOldMap)){
+					casesToRunFsCurrencyValidationsLst.add(cse);
+				}
+				}
+			else if(cse.RecordTypeId == AMS_Utils.RECTYPE_SAAM && String.isNotBlank(cse.Reason1__c) && cse.Reason1__c.contains('Financial Security') &&
+							cse.Account_Location_Type__c == AMS_Utils.GE && shouldRunFsCurrencyValidations(cse, caseOldMap)){
+				casesToRunFsCurrencyValidationsLst.add(cse);
+			}
+		}
+
+		if(!pdLst.isEmpty()){
+			insert pdLst;
+		}
+
+		if(!casesToRunFsCurrencyValidationsLst.isEmpty()){
+			AMS_Utils.runCurrencyValidations(casesToRunFsCurrencyValidationsLst, 'Financial_Security_Currency__c');
+		}
+
+	}
+
+	private static Boolean shouldRunFsCurrencyValidations(Case cse, Map<Id, Case> caseOldMap){
+
+		if(Trigger.isInsert && Trigger.isBefore && String.isNotBlank(cse.Financial_Security_Currency__c)){
+			return true;
+		}
+
+		if(Trigger.isUpdate && Trigger.isBefore && String.isNotBlank(cse.Financial_Security_Currency__c) &&
+			 cse.Financial_Security_Currency__c != caseOldMap.get(cse.Id).Financial_Security_Currency__c){
+			return true;
+		}
+
+		return false;
 
 	}
 

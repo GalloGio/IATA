@@ -46,9 +46,9 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static List<PortalFAQs__mdt> getL2Topics(){
-		List<PortalFAQs__mdt> topics = [SELECT Id, DataTopicName__c
-										FROM PortalFAQs__mdt
+	public static List<PortalKnowledge__c> getL2Topics(){
+		List<PortalKnowledge__c> topics = [SELECT Id, DataTopicName__c
+										FROM PortalKnowledge__c
 										WHERE DataCategoryName__c <> ''
 										AND DataTopicName__c <> ''
 										AND DataSubtopicName__c = ''
@@ -85,6 +85,8 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c FROM Contact WHERE Id =: con.Id];
 
 			sendEmailNotification(updatedContact);
+			//IFTP
+			setIFTPUser(acc,con,false);
 		}
 		catch(Exception e){
 			return false;
@@ -96,7 +98,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static Boolean registrationWithExistingAccount(Account acc, Contact con){
 		try{
 			Account acc2 = [SELECT Id, RecordType.DeveloperName, Sector__c, Category__c, IsPartner FROM Account WHERE Id =: acc.Id];
-			
+
 			// Ensure that the existing account is a partner account
 			if(!acc2.IsPartner){
 				acc2.IsPartner = true;
@@ -112,9 +114,11 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 			OneId_RegistrationProcessController.updateUserProfile(con, acc2, false);
 
 			OneId_RegistrationProcessController.addDefaultAppRights(con.Id, null);
-			
+
 			ISSP_CreateNotification.SendEmailToPortalAdminNewContact(new List<Contact>{con});
 
+			//IFTP
+			setIFTPUser(acc,con,true);
 			return true;
 		}
 		catch(Exception e){
@@ -127,7 +131,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		String errorMessage = '';
 
 		List<GCS_Customer_Type_For_Registration__mdt> customerTypeList = [Select Send_Email_Notification__c from GCS_Customer_Type_For_Registration__mdt
-																		   where Type__c =: 'Category' and Created_Account_Sector__c =: contact.account.sector__c
+																			 where Type__c =: 'Category' and Created_Account_Sector__c =: contact.account.sector__c
 																			 and Created_Account_Category__c =: contact.account.category__c and Send_Email_Notification__c =: true];
 		if(!customerTypeList.isEmpty()) {
 			try {
@@ -249,4 +253,99 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
 		return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
 	}
+
+	public static void setIFTPUser(Account acc, Contact con, Boolean bAccExist){
+		/**
+		IFTP Accounts - IFTP Service
+		only for NEW Accounts
+		*/
+
+		acc = [SELECT Id, Name, Sector__c, Category__c FROM Account WHERE Id = :acc.Id];
+
+		if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
+
+			String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+			String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+			String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
+
+			Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c
+									WHERE Name = 'Airline Supplier - ITP' limit 1];
+
+			Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
+									WHERE Name like 'IFTP%ITP' limit 1];
+
+			PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
+
+			Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
+
+
+			Account_Role__c accRole = new Account_Role__c();
+			if(bAccExist == false){
+
+				accRole.Account__c = acc.Id;
+				accRole.Account_Roles__c = accRoles.id;
+				accRole.RecordTypeId = RECTYPE_ITP_AccRole;
+				insert accRole;
+
+				Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
+				accRoleSrv.Account_Role__c = accRole.id;
+				accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
+				insert accRoleSrv;
+
+			
+			}else{
+				accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
+			}
+
+			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+			accContRoleToInsert.Service_Rendered__c = 'IFTP';
+			accContRoleToInsert.Status__c = 'Active';
+			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+			accContRoleToInsert.Account_Role__c = accRole.Id;
+			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+			accContRoleToInsert.Details__c = '';
+			accContRoleToInsert.company_code__c='TC';//temporary employee code
+			accContRoleToInsert.Contact__c = con.Id;
+			insert accContRoleToInsert;
+
+			List<Portal_Application_Right__c> par = [SELECT id FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
+
+			if(par != null && !par.isEmpty()){
+				Portal_Application_Right__c portalApplicationRight = par[0];
+				if(portalApplicationRight.Right__c != 'Access Requested'){
+					portalApplicationRight.Right__c = 'Access Requested';
+
+					update portalApplicationRight;
+				}
+			}else{
+				Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+					Portal_Application__c = pa.id,
+					Right__c = 'Access Requested',
+					Contact__c = con.Id,
+					Favourite_Service__c = true
+				);
+				insert portalApplicationRight;
+			}
+
+			updatePortalUseProfile(con.id,'ISS Portal (Partner)');
+			assignPermissionSet(psAbsorb.Id, con.id);
+		}
+	}
+
+	
+	public static void updatePortalUseProfile(String conId, String sProfile){
+		User u=[select id,contact.user_portal_status__c from user where ContactId =:conId];
+		if(u.contact.user_portal_status__c =='Approved Admin'){
+			Profile prflId=[Select id from profile where name ='ISS Portal Delegated Admin User'];
+			OneId_RegistrationProcessController.updateUserProfile(u.id,prflId.id);
+		}
+	}
+
+	@future
+	private static void assignPermissionSet(Id absorbId, Id conId){
+		User u=[select id from user where ContactId =:conId];
+		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = u.id);
+		insert psa;
+	}
+
 }

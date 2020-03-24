@@ -3,22 +3,22 @@
  */
 
 public with sharing class GADM_FileSharing {
-    public static void assignGadmRecordType(List<ContentVersion> newValues) {
-        List<GroupMember> internalGadmGroupMembers = [SELECT Id, UserOrGroupId FROM GroupMember WHERE Group.DeveloperName = 'GADM_Internal_Users'];
-        Set<Id> internalGadmGroupMemberIds = new Set<Id>();
-        if(internalGadmGroupMembers != null && internalGadmGroupMembers.size() > 0){
-            for(GroupMember gm: internalGadmGroupMembers){
-                internalGadmGroupMemberIds.add(gm.UserOrGroupId);
-            }
-        }
+	public static void assignGadmRecordType(List<ContentVersion> newValues) {
+		List<GroupMember> internalGadmGroupMembers = [SELECT Id, UserOrGroupId FROM GroupMember WHERE Group.DeveloperName = 'GADM_Internal_Users'];
+		Set<Id> internalGadmGroupMemberIds = new Set<Id>();
+		if(internalGadmGroupMembers != null && internalGadmGroupMembers.size() > 0){
+			for(GroupMember gm: internalGadmGroupMembers){
+				internalGadmGroupMemberIds.add(gm.UserOrGroupId);
+			}
+		}
 
-        Id fileGadmRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('ContentVersion', 'GADM');
-        if (fileGadmRecordtype != null){
-            for (ContentVersion cv: newValues) {
-                if(internalGadmGroupMemberIds.contains(cv.CreatedById)){
-                    cv.RecordTypeId = fileGadmRecordtype;
-                }
-            }
-        }
-    }
+		Id fileGadmRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('ContentVersion', 'GADM');
+		if (fileGadmRecordtype != null){
+			for (ContentVersion cv: newValues) {
+				if(internalGadmGroupMemberIds.contains(cv.CreatedById)){
+					cv.RecordTypeId = fileGadmRecordtype;
+				}
+			}
+		}
+	}
 }

@@ -2,7 +2,26 @@
     <apex:includeScript value="/soap/ajax/13.0/connection.js"/>
 
     <script>
+
+        function isFinancialReviewTypeAllowed(){
+
+            var financialReviewType = "{!Case.Financial_Review_Type__c}";
+
+            if(financialReviewType == 'Multicountry Annual'){
+                alert('Error: It is not possible to notify the agent since the Financial Review Type is Multicountry Annual');
+                return false;
+            }
+
+            return true;
+
+        }
+
         function InitialEmail(type){
+            
+            if(!isFinancialReviewTypeAllowed()){
+                return;
+            }
+
             var remTemplate = "{!Case.EmailTemplate__c}";
         
             if(remTemplate != ""){
@@ -25,6 +44,11 @@
         }
         
         function FAReminder(type){
+
+            if(!isFinancialReviewTypeAllowed()){
+                return;
+            }
+            
             var s = '{!Case.Status}';
             if ( s != 'Agent Notified (Mail)' && s != 'Agent Notified (Email)' ){
                 alert('Case status have to be either Agent Notified(Mail) or Agent Notified(Email)');

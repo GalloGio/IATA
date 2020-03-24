@@ -2,16 +2,16 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 
 	private final Id CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
 	private final String ERROR_REQUEST_FILE = 'Request file has a problem, cannot be processed';
-	
+
 	private String jsonString;
 	private BatchNumber__c batchNumber;
 	private Attachment request;
 	private responsePWC response;
 	private EmailTemplateCustomHandler templateHandler;
 	private set<String> setAIMSID;
-	
+
 	private DateTime period;
-	
+
 	global BatchCreateCasesFromPWC( String batchName ){
 		this( batchName, DateTime.now().addMonths(-1).date() );
 	}
@@ -20,7 +20,7 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		this.period = period;
 		this.templateHandler = new EmailTemplateCustomHandler();
 		this.setAIMSID = new set<String>();
-		
+
 		//find batch process
 		this.batchNumber = [ Select Id from BatchNumber__c where Name = :batchName ];
 		if ( this.batchNumber == null ) {
@@ -28,9 +28,9 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 			return;
 		}
 		//find request file
-		this.request = [ Select Id, Body 
-			from Attachment 
-			where parentId = :this.batchNumber.Id 
+		this.request = [ Select Id, Body
+			from Attachment
+			where parentId = :this.batchNumber.Id
 			and Name = :WSCreateCasesFromPWC.FILE_NAME_REQUEST
 		];
 		// remove any other response file if exists
@@ -48,8 +48,8 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 			setErrorResponseFile(ERROR_REQUEST_FILE);
 		}
 	}
-	
-	
+
+
 	global List<WSCreateCasesFromPWC.SecurityCase> start(Database.BatchableContext BC){
 		return (List<WSCreateCasesFromPWC.SecurityCase>) JSON.deserialize(this.jsonString, List<WSCreateCasesFromPWC.SecurityCase>.class);
 	}
@@ -61,34 +61,34 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 	global void finish(Database.BatchableContext BC){
 		setFinishedResponseFile();
 	}
-	
+
 	public void setFinishedResponseFile() {
 		String text = JSON.serialize( this.response );
 		Attachment att = createAttachment( WSCreateCasesFromPWC.FILE_NAME_RESPONSE, this.batchNumber.Id, text );
 		insert att;
 	}
-	
+
 	public void processScope( list<WSCreateCasesFromPWC.SecurityCase> scope ) {
 		// get cases to insert
 		list<Case> listCase = createListCase(scope);
-		
+
 		// insert cases
 		Database.DMLOptions dmo = new Database.DMLOptions();
 		dmo.assignmentRuleHeader.useDefaultRule = true;
 		Database.SaveResult[] listResults = Database.insert(listCase, dmo);
-		
+
 		// add succesful cases to Json response
 		for ( Case caseObj: [Select Id, Account.AIMS_ID__c, CaseNumber from Case where id in :listCase ] ) {
 			this.response.addSuccess( caseObj );
 		}
 	}
-	
+
 	private list<Case> createListCase( list<WSCreateCasesFromPWC.SecurityCase> listSecurityCases ) {
 		map<String,Account> mapAimsidAccount = getmapAimsidAccount(listSecurityCases);
 		list<Case> listCase = new list<Case>();
 		for ( WSCreateCasesFromPWC.SecurityCase securityCase: listSecurityCases ) {
 			Account account = mapAimsidAccount.get( securityCase.AIMSID );
-			
+
 			if ( account == null ) {
 				// if account doesnt exist append to temp file
 				this.response.addError( securityCase.aimsId, 'Account not found');
@@ -118,7 +118,7 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		this.setAIMSID.add( aimsid );
 		return false;
 	}
-	
+
 	// is not allowed to insert more than one case per aims id and month
 	private Boolean caseAlreadyExists( list<Case> listCases ) {
 		for ( Case caseObj: listCases ) {
@@ -128,15 +128,15 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		}
 		return false;
 	}
-	
+
 	private map<String,Account> getmapAimsidAccount( list<WSCreateCasesFromPWC.SecurityCase> listSecurityCases ) {
 		list<String> listAimsId = new list<String>();
 		for ( WSCreateCasesFromPWC.SecurityCase securityCase: listSecurityCases ) {
 			listAimsId.add( securityCase.AIMSID );
 		}
-		
+
 		map<String,Account> mapAimsidAccount = new map<String,Account>();
-		for ( Account account: [ Select Id, AIMS_ID__c, Region_formula__c, Country_ISO_Code__c, CCG_Participant__c, Guaranteed_amount__c, CurrencyISOCode, Industry, 
+		for ( Account account: [ Select Id, AIMS_ID__c, Region_formula__c, Country_ISO_Code__c, CCG_Participant__c, Guaranteed_amount__c, CurrencyISOCode, Industry,
 								(select id, Preferred_Language__c from Contacts where Financial_Assessment_Contact__c=:true),
 								(select Id, isClosed, ParentId, Reporting_date__c from Cases where recordtypeId = :CASE_RECORDTYPE_FSM order by Reporting_date__c desc, createdDate desc )
 								from Account where AIMS_ID__c in :listAimsId] ) {
@@ -144,12 +144,12 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		}
 		return mapAimsidAccount;
 	}
-	
+
 	private Case createCase( WSCreateCasesFromPWC.SecurityCase securityCase, Account account ) {
 		Case newCase = new Case();
 		newCase.RecordTypeId = CASE_RECORDTYPE_FSM;
 		newCase.Reporting_date__c = this.period.date();
-		newCase.Subject = account.Country_ISO_Code__c + '-FS_UPDATE-Sales_Monitoring-' + this.period.format('YYYY-MM'); 
+		newCase.Subject = account.Country_ISO_Code__c + '-FS_UPDATE-Sales_Monitoring-' + this.period.format('YYYY-MM');
 		newCase.Description = 'Financial Security Monitoring ' + this.period.format('YYYY');
 		newCase.ParentId = getParentId( account.Cases );
 		newCase.ContactId = account.Contacts.isEmpty()?null:account.Contacts[0].Id;
@@ -166,11 +166,11 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		//newCase.Expiry_Date_chkbx__c = securityCase.extractReason();
 		newCase.Request_Expiry_Date__c = securityCase.extractExpiryDate();
 		newCase.BatchNumber__c = this.batchNumber.Id;
-		
+
 		// find and set Email Template
 		try {
 			String country = account.Country_ISO_Code__c;
-			//String language = account.Contacts[0].Preferred_Language__c; //DECOMMENT AND COMMENT NEXT LINE IF WANT TO USE CONTACT'S PREFEREDD LANGUAGE. NEED TO LOAD TEMPLATES IF USED! 
+			//String language = account.Contacts[0].Preferred_Language__c; //DECOMMENT AND COMMENT NEXT LINE IF WANT TO USE CONTACT'S PREFEREDD LANGUAGE. NEED TO LOAD TEMPLATES IF USED!
 			string language = 'English';
 			newCase.Reminder_EmailTemplate__c = this.templateHandler.getTemplateByCountryLang(country, language, account.Industry).Id;
 		} catch ( Exception e ) {
@@ -179,7 +179,7 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		}
 		return newCase;
 	}
-	
+
 	// Complex retrieval of the parent case
 	// input, list of FSM cases of the account
 	// output, Id of the case that is the parent case, or null if not
@@ -189,7 +189,7 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 			//If there is a case in the las 30 days this will be the parent case, or its parent
 			if ( caseObj.Reporting_date__c >= periodMinusOneMonth ) {
 				return (caseObj.ParentId == null)? caseObj.Id: caseObj.parentId;
-				
+
 			// if this is a further case but is opened, then do the same
 			} else if ( caseObj.isClosed == false ) {
 				return (caseObj.ParentId == null)? caseObj.Id: caseObj.parentId;
@@ -197,19 +197,19 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		}
 		return null;
 	}
-	
+
 	private void setErrorResponseFile( String errorMsg ) {
 		responsePWCError response = new responsePWCError('ERROR', errorMsg);
 		Attachment att = createAttachment( WSCreateCasesFromPWC.FILE_NAME_RESPONSE, this.batchNumber.Id, JSON.serialize(response) );
 		insert att;
 	}
-	
+
 	private void setQueuedResponseFile() {
 		responsePWCError response = new responsePWCError('IN_PROGRESS', '');
 		Attachment att = createAttachment( WSCreateCasesFromPWC.FILE_NAME_RESPONSE, this.batchNumber.Id, JSON.serialize(response) );
 		insert att;
 	}
-	
+
 	private Attachment createAttachment( String filename, Id parentId, String data ) {
 		Attachment att = new Attachment(
 			Body = Blob.valueOf(data),
@@ -218,12 +218,12 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		);
 		return att;
 	}
-	
+
 	//Classes for JSON answer definition
 	public class responsePWCError  {
 		public String status { get; set; }
 		public String Msg { get; set; }
-		
+
 		public responsePWCError( String status, String errorMsg) {
 			this.status = status;
 			this.Msg = errorMsg;
@@ -234,17 +234,17 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 		public String status { get; set; }
 		public String Msg { get; set; }
 		public list<ResponsePWCCase> ResultList { get; set; }
-		
+
 		public responsePWC() {
 			this.status = 'FINISHED';
 			this.Msg = '';
 			this.ResultList = new list<ResponsePWCCase>();
 		}
-		
+
 		public void addSuccess( Case caseObj ) {
 			this.ResultList.add( new ResponsePWCCase('SUCCESS', caseObj.CaseNumber, caseObj.Account.AIMS_ID__c, '') );
 		}
-		
+
 		public void addError( String aimsId, String errorMsg ) {
 			this.ResultList.add( new ResponsePWCCase('ERROR', '', aimsId, errorMsg) );
 		}
@@ -252,13 +252,13 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 			return ResultList;
 		}
 	}
-	
+
 	public virtual class ResponsePWCCase {
 		public String AimsId { get; set; }
 		public String Status { get; set; }
 		public String CaseNumber { get; set; }
 		public String Msg { get; set; }
-		
+
 		public ResponsePWCCase( String status, String caseNumber, String aimsId, String errorMsg ) {
 			this.AimsId = aimsId;
 			this.Status = status;
@@ -266,5 +266,5 @@ global class BatchCreateCasesFromPWC implements Database.Batchable<WSCreateCases
 			this.Msg = errorMsg;
 		}
 	}
-	
+
 }

@@ -1,7 +1,7 @@
 @isTest
 public class MITA_PortalAgreementsCtrl_Test {
 	public static testMethod void testMyController(){
-	
+
 	MITA_PortalAgreementsCtrl m = new MITA_PortalAgreementsCtrl();
 	m.selectAccount();
 	m.getAccountTable();
@@ -21,7 +21,7 @@ public class MITA_PortalAgreementsCtrl_Test {
 	m.getBIETAAgreementTable();
 	m.selectMITAAgreement();
 	m.selectBIETAAgreement();
-	m.selectAgreement(false); 
+	m.selectAgreement(false);
 	m.escape('s');
 	m.selectContact();
 	}

@@ -64,7 +64,7 @@ private class IEC_ShoppingCartControllerTest
 		{
 			Product2 p = lstProduct[x];
 			p.Post_to_Ecommerce_Date__c = Date.today().addDays(-10);
-			p.Sell_through_eCommerce__c = true; 
+			p.Sell_through_eCommerce__c = true;
 			p.Inventory_Status__c = 'In stock';
 			p.SAP_Status_Code__c = 'A';
 			p.Line_of_Business__c = (Math.mod(x,2)==0) ? 'Publications' : 'GDP';
@@ -87,7 +87,7 @@ private class IEC_ShoppingCartControllerTest
 		oOrder.Status = 'New';
 		insert oOrder;
 		oOrder = [select Id, OrderNumber from Order where Id = :oOrder.Id limit 1];
-		
+
 		List<Id> lstProductId = new List<Id>();
 		for (Product2 p : lstProduct)
 			lstProductId.add(p.Id);
@@ -98,7 +98,7 @@ private class IEC_ShoppingCartControllerTest
 		insert lstOrderItem;
 
 		System.assert(lstProduct.size() == lstOrderItem.size(), 'Created ' + lstOrderItem.size() + ' order items  instead of ' + lstProduct.size());
-		
+
 		return oOrder;
 	}
 
@@ -109,7 +109,7 @@ private class IEC_ShoppingCartControllerTest
 		testSetupNewShoppingCart();
 
 		Test.setCurrentPage(Page.IEC_ShoppingCart);
-		IEC_ShoppingCartController ctrl = new IEC_ShoppingCartController(); 
+		IEC_ShoppingCartController ctrl = new IEC_ShoppingCartController();
 		ctrl.vfOrder = new Order_DTO();
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
@@ -127,28 +127,28 @@ private class IEC_ShoppingCartControllerTest
 
 		//*** with a requested order
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=abc'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 
 		//*** with cart already have a time-based subscription or sibling in cart
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?msg=siblingInCart'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		ctrl.onLoadAction();
 		System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Itemalready_in_cart), 'Invalid error: ' + ApexPages.getMessages());
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?msg=time-based'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		ctrl.onLoadAction();
 		System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Only_one_subscription_can_be_purchased), 'Invalid error: ' + ApexPages.getMessages());
 
 		//*** checkout
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?action=checkout'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in() 
+	static void test_logged_in()
 	{
 		testSetupNewShoppingCart();
 
@@ -182,19 +182,19 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				//*** have a request order and add product already existed
 				Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=' + oOrder.OrderNumber + '&productNumber=' + lstProduct[0].SAP_Material_Number__c));
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 				//*** assert on product already existed is risky due to merge field: System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Item_already_in_your_cart), 'Invalid error: ' + ApexPages.getMessages());
 
 				//*** continue shopping and checkout with non-compliant
 				//system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
 				ctrl.continueShopping();
-				
+
 				//system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
 				ctrl.startCheckout();
 			}
@@ -202,7 +202,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in2() 
+	static void test_logged_in2()
 	{
 		testSetupNewShoppingCart();
 
@@ -237,7 +237,7 @@ private class IEC_ShoppingCartControllerTest
 
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=' + oOrder.OrderNumber));
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 
@@ -257,7 +257,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in3() 
+	static void test_logged_in3()
 	{
 		testSetupNewShoppingCart();
 
@@ -282,7 +282,7 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				//*** update quantity
@@ -296,7 +296,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in4() 
+	static void test_logged_in4()
 	{
 		testSetupNewShoppingCart();
 
@@ -320,7 +320,7 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				Test.startTest();
@@ -339,14 +339,14 @@ private class IEC_ShoppingCartControllerTest
 				ctrl.onLoadAction();
 
 				system.assert(ctrl.vfOrder.orderItems.size() == 1 && ctrl.vfOrder.orderItems[0].quantity == 5, 'Wrong quantity: ' + ctrl.vfOrder.orderItems);
-				
+
 				Test.stopTest();
-				
+
 				//*** continue shopping and checkout
 				system.assert(ctrl.continueShopping() != null, 'Continue shopping should be allowed');
 				system.assert(ctrl.startCheckout() != null, 'Checkout should be allowed');
 			}
-		
+
 	}
 
 	// ------------------------ old version ---------------------------------
@@ -357,7 +357,7 @@ private class IEC_ShoppingCartControllerTest
 		testSetupOldShoppingCart();
 
 		Test.setCurrentPage(Page.IEC_ShoppingCart);
-		IEC_ShoppingCartController ctrl = new IEC_ShoppingCartController(); 
+		IEC_ShoppingCartController ctrl = new IEC_ShoppingCartController();
 		ctrl.vfOrder = new Order_DTO();
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
@@ -375,28 +375,28 @@ private class IEC_ShoppingCartControllerTest
 
 		//*** with a requested order
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=abc'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 
 		//*** with cart already have a time-based subscription or sibling in cart
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?msg=siblingInCart'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		ctrl.onLoadAction();
 		System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Itemalready_in_cart), 'Invalid error: ' + ApexPages.getMessages());
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?msg=time-based'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		ctrl.onLoadAction();
 		System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Only_one_subscription_can_be_purchased), 'Invalid error: ' + ApexPages.getMessages());
 
 		//*** checkout
 		Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?action=checkout'));
-		ctrl = new IEC_ShoppingCartController(); 
+		ctrl = new IEC_ShoppingCartController();
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in_old() 
+	static void test_logged_in_old()
 	{
 		testSetupOldShoppingCart();
 
@@ -428,12 +428,12 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				//*** have a request order and add product already existed
 				Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=' + oOrder.OrderNumber + '&productNumber=' + lstProduct[0].SAP_Material_Number__c));
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 				//*** assert on product already existed is risky due to merge field: System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Item_already_in_your_cart), 'Invalid error: ' + ApexPages.getMessages());
 
@@ -445,7 +445,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in_old2() 
+	static void test_logged_in_old2()
 	{
 		testSetupOldShoppingCart();
 
@@ -480,7 +480,7 @@ private class IEC_ShoppingCartControllerTest
 
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPageReference(new PageReference('/apex/IEC_ShoppingCart?order=' + oOrder.OrderNumber));
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 
@@ -499,7 +499,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in_old3() 
+	static void test_logged_in_old3()
 	{
 		testSetupOldShoppingCart();
 
@@ -524,7 +524,7 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				//*** update quantity
@@ -538,7 +538,7 @@ private class IEC_ShoppingCartControllerTest
 	}
 
 	@isTest (SeeAllData=true)
-	static void test_logged_in_old4() 
+	static void test_logged_in_old4()
 	{
 		testSetupOldShoppingCart();
 
@@ -562,7 +562,7 @@ private class IEC_ShoppingCartControllerTest
 			{
 				//*** get pending cart - nothing to assert
 				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController(); 
+				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
 				Test.startTest();

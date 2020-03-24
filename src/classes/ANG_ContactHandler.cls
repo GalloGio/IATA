@@ -22,7 +22,7 @@ public class ANG_ContactHandler {
 		Set<Id> contactsIdsSet = new Set<Id>();
 		Set<Id> accountsIdsSet = new Set<Id>();
 
-		for (Contact old : triggerOld) {			
+		for (Contact old : triggerOld) {
 			if (old.accountId != null && old.accountId != newMap.get(old.id).accountId) {
 				contactsIdsSet.add(old.id);
 				accountsIdsSet.add(old.accountId);
@@ -30,13 +30,13 @@ public class ANG_ContactHandler {
 		}
 
 		if (contactsIdsSet.size() != 0) {
-			List<Portal_Application_Right__c> parList = [Select contact__c 
-														   From Portal_Application_Right__c 
-														  Where Contact__c in : contactsIdsSet 
-														    AND portal_application__r.ANG_Cannot_move_contact_between_Agencies__c = true
-														    And Right__c in ('Access Requested', 'Access Granted')];
+			List<Portal_Application_Right__c> parList = [Select contact__c
+															 From Portal_Application_Right__c
+															Where Contact__c in : contactsIdsSet
+																AND portal_application__r.ANG_Cannot_move_contact_between_Agencies__c = true
+																And Right__c in ('Access Requested', 'Access Granted')];
 
-			if (parList.size() != 0) {														    
+			if (parList.size() != 0) {
 
 				Map<Id, List<AMS_Agencies_relationhip__c>> hier = AMS_HierarchyHelper.getAccountsHierarchies(accountsIdsSet);
 

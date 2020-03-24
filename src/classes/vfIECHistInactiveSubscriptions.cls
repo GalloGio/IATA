@@ -15,38 +15,38 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 	public ID idSelectedRatePlanInfo		{get; set;} // Initially set from Subscription History, but then swapped if applicable
 	public String sSelectedInvoiceID		{get; set;}
 	public String sSelectedPaymentID		{get; set;}
-	
+
 	//Object data variables
 	public List<Zuora__Subscription__c> lstListInactiveSubscriptions	{get; private set;}
 	public IEC_Subscription_History__c oSubscriptionHistory				{get; private set;}
 	public Zuora__Subscription__c subscriptionObj						{get; private set;}
 	public Zuora__ZInvoice__c invoice									{get; set;}
 	public Zuora__Payment__c payment									{get; set;}
-	
+
 	public String sPaymentMethod {
 		get {
 			return (oSubscriptionHistory != null) ? oSubscriptionHistory.Selected_Payment_Method__c
 				 + ((oSubscriptionHistory.Selected_Payment_Method__c == 'Credit Card') ? '<BR/>' + oSubscriptionHistory.Credit_Card__c : '') : '';
 		}
 	}
-	
+
 	public String sProductName {
 		get {
 			return (subscriptionObj != null) ? subscriptionObj.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c : '';
 		}
 	}
-	
+
 	public String sOptionName {
 		get {
 			return (subscriptionObj != null) ? subscriptionObj.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name : '';
 		}
 	}
-	
+
 	/*********************************************************************************************************************/
 	/* Constructor Methods
 	/*********************************************************************************************************************/
-	 
-	 
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Controller class constructor
 	public vfIECHistInactiveSubscriptions() {
@@ -62,45 +62,45 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Update the calculated variables used in the page.
 	private void updatUIVariables() {
-		
+
 		if (subscriptionObj != null) {
-			
+
 			//Set the remaining days calculated from today to subscriptionEndDate
 			iSubscriptionDaysLeft = Date.today().daysBetween(subscriptionObj.Zuora__SubscriptionEndDate__c);
 			if (iSubscriptionDaysLeft < 0) iSubscriptionDaysLeft = 0;
-			
+
 			//Gets the usage status from wherever it is store (TBD)
 			sSubscriptionUsageStatus = 'TBD';
 		}
 	}
-	
-	
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Refreshes the detail information, including the related references to invoice and payment
 	private void refresSubscriptionDetails() {
 		if (subscriptionObj != null) {
-					
+
 			//Update UI variables
 			updatUIVariables();
-			
+
 			//Get Usage data
 			List<IEC_Product_Access__c> productAccess = IECApplicationsManager.getProductAccessBySubscriptionNumber(subscriptionObj.Name);
-			
+
 			if (productAccess != null && productAccess.size() > 0) {
 				bShowUsage = true;
 				dUnitsPurchased =
 					dUnitsConsumed =
 					dUnitsLeft = 0;
-					
+
 				for (IEC_Product_Access__c access : productAccess) {
 					dUnitsPurchased += ((access.Usage_Qty_Start__c != null) ? access.Usage_Qty_Start__c : 0);
 					dUnitsConsumed += (((access.Usage_Qty_Start__c != null) ? access.Usage_Qty_Start__c : 0)
 						- ((access.Usage_Qty_Left__c != null) ? access.Usage_Qty_Left__c : 0));
-					
+
 					// Only count units left if they are still valid
 					if (access.Effective_Start_Date__c <= DateTime.now()
 						&& access.Effective_End_Date__c >= DateTime.now()
@@ -109,14 +109,14 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 			}
 			else
 				bShowUsage = false;
-					
+
 			//Get InvoiceItem related to the subscription
 			Invoice_Item__c oInvoiceItem = IECSubscriptionManager.getInvoiceItemBySFSubscriptionName(subscriptionObj.Name);
 
 			if (oInvoiceItem != null) {
 				//Get the Invoice related to InvoiceItem
 				invoice = IECSubscriptionManager.getInvoiceById(oInvoiceItem.Invoice__c);
-						
+
 				if (invoice != null) {
 					if (invoice.Zuora__Payments__r != null && invoice.Zuora__Payments__r.size() > 0) {
 						//Get the Payment related to the Invoice
@@ -130,18 +130,18 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 				} // END if (invoice != null)
 			} // END if (invoiceItemResult != null)
 		} // END if (subscriptionObj != null)
-	}	
-	
-	
+	}
+
+
 	/*********************************************************************************************************************/
 	/* Pagereference Methods
 	/*********************************************************************************************************************/
-	 
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Executes when the page is loaded
 	public Pagereference pageLoad() {
 		try {
-			
+
 			// first check if the user is logged in
 			if (IECUserManager.isUserLoggedIn() == false) {
 				Pagereference prLogin = Page.IECLogin;
@@ -153,10 +153,10 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 			else {
 				// Validate Logged in user profile and ensure profile is complete
 				validUserProfile();
-				
+
 				//Query for the active subscription list related to the current logged user
 				lstListInactiveSubscriptions = getInactiveSubscriptionsList();
-								
+
 				// preselect subscription if one was specified in the parameters: subscriptionId
 				if (lstListInactiveSubscriptions != null && lstListInactiveSubscriptions.size() > 0 && !String.isEmpty(sSelectedSubscriptionID) && sSelectedSubscriptionID != null) {
 					selectSubscription();
@@ -170,7 +170,7 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 
 		return null;
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Handles the selection of one subscription and query for its details
 	public Pagereference selectSubscription() {
@@ -184,19 +184,19 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 
 				//Query for subsrciption's detail
 				subscriptionObj = IECSubscriptionManager.getSubscriptionById(sSelectedSubscriptionID);
-				
-				loadSubscriptionHistory();				
+
+				loadSubscriptionHistory();
 				refresSubscriptionDetails();
-			} 
+			}
 		}
 		catch(Exception ex) {
 			addErrorMessage(ex.getMessage());
 		}
-	
+
 		return null;
 	}
-	
-	
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Handles the selection of payment and redirects to Payments page
 	public Pagereference selectPayment() {
@@ -212,11 +212,11 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 		catch(Exception ex) {
 			addErrorMessage(ex.getMessage());
 		}
-		
+
 		return null;
-	}	
-	
-	
+	}
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Handles the selection of invoice and redirects to Invoice page
 	public Pagereference selectInvoice() {
@@ -233,7 +233,7 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Navigate to the product category with similar product category
 	 */
@@ -241,8 +241,8 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 		try {
 			Pagereference pgRef = Page.IECProductViewer;
   			pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(subscriptionObj.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name));
-		    pgRef.setRedirect(true); 
-		    return pgRef;
+			pgRef.setRedirect(true);
+			return pgRef;
 		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage());
@@ -256,25 +256,25 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 	public Pagereference addToCart() {
 		try {
 			IEC_Shopping_Cart__c cart = IECShoppingCartHelper.getCurrentShoppingCart();
-			
+
 			// create shopping cart if not existing
 			if (cart == null) {
 				// create new shopping cart and save guid in cookie
 				cart = IECShoppingCartHelper.createNewShoppingCart(IECUserManager.getContactId(), !IECUserManager.isUserLoggedIn());
 			}
-			
+
 			// by default, quantity is 1 unless subscription history has different quantity
 			IECShoppingCartHelper.addCartItem(cart, idSelectedRatePlanInfo, (oSubscriptionHistory == null) ? 1 : (integer) oSubscriptionHistory.Rate_Plan_Quantity__c);
   			Pagereference prShoppingCart = Page.IECShoppingCart;
-		    prShoppingCart.setRedirect(true); 
-		    return prShoppingCart;
+			prShoppingCart.setRedirect(true);
+			return prShoppingCart;
 		}
 		catch (Exception ex) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Retrieves subscription history and determines whether to display the New button
 	 * and gets the selected rate plan according to the current user type
@@ -283,16 +283,16 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 		try {
 			if (subscriptionObj != null) {
 				oSubscriptionHistory = IECSubscriptionManager.getSubscriptionHistoryByName(subscriptionObj.Name);
-				
+
 				// Check if this rateplan and its audience type match the current user type
 				if (IECProductManager.isProductAudienceAllowedForClientType(subscriptionObj.Product_Rate_Plan_Information__r.Related_Product_Information__r.Product_Audience__c, IECUserManager.getClientType())) {
 					idSelectedRatePlanInfo = subscriptionObj.Product_Rate_Plan_Information__c;
 				}
 				// Else get swapped rate plan
 				else {
-					// Get SWAP if the client type doesn't match using the Swap Configuration (Source -> Target) 
+					// Get SWAP if the client type doesn't match using the Swap Configuration (Source -> Target)
 					Map<ID, Product_Rate_Plan_Information__c> targetRatePlans = IECSubscriptionManager.getTargetSwappedRatePlans(new Set<Id> {subscriptionObj.Product_Rate_Plan_Information__c}, IECUserManager.getClientType());
-						
+
 					if (targetRatePlans != null && !targetRatePlans.isEmpty()) {
 						idSelectedRatePlanInfo = targetRatePlans.values().get(0).Id;
 					}
@@ -304,16 +304,16 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 						idSelectedRatePlanInfo  = (sourceRatePlans != null && !sourceRatePlans.isEmpty()) ? sourceRatePlans.values().get(0).Id : null;
 					}
 				}
-				
+
 				bDisplaySimProdBtn = IECProductManager.isProductCategoryAvailable(subscriptionObj.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c);
 			}
-					
+
 			if (oSubscriptionHistory != null) {
 				// Load the last accepted T&C attachment Id
 				Terms_and_Conditions__c oTnC = IECProductManager.getLastAcceptedTermsAndConditionBySubscriptionName(oSubscriptionHistory.Subscription_Number__c);
 				sAttachTermsId = (oTnC != null ? (String)oTnC.Attachments.get(0).Id : '');
 			}
-				
+
 			bDisplayNewBtn = (idSelectedRatePlanInfo != null
 								&& (oSubscriptionHistory == null || oSubscriptionHistory.Action__c != 'Trial'))
 								? IECProductManager.isRatePlanAvailable(idSelectedRatePlanInfo, IECUserManager.getClientType())
@@ -324,7 +324,7 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 		}
 	}
 
-	
+
 	/*********************************************************************************************************************/
 	/* Query Methods
 	/*********************************************************************************************************************/
@@ -339,7 +339,7 @@ public with sharing class vfIECHistInactiveSubscriptions extends IECPageControll
 			// *** IECCUstomer is based on the IECUserManager current logged user
 			IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
 			if (currentCustomer == null) return null;
-				
+
 			//Query the active subscriptions related to the billing account of logged user
 			if (currentCustomer.RelatedBillingAccount != null)
 				return IECSubscriptionManager.getInactiveSubscriptionsByBillingAccount(currentCustomer.RelatedBillingAccount.Id);

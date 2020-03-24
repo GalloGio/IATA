@@ -1,7 +1,7 @@
 public with sharing class GDPR_Logout_CTRL {
-	
+
 	@AuraEnabled
-    public static Boolean killToken(String individualId) {
+	public static Boolean killToken(String individualId) {
 		list<Individual> inds = [SELECT id FROM Individual WHERE Id =: individualId];
 		if(!inds.isEmpty()) {
 			Individual ind = inds[0];
@@ -14,6 +14,6 @@ public with sharing class GDPR_Logout_CTRL {
 			}
 			return true;
 		}
-        return false;
-    }
+		return false;
+	}
 }

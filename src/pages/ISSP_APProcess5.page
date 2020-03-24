@@ -1,0 +1,62 @@
+<apex:page controller="ISSP_APProcess"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}">
+    
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
+            
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/main.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/main.min.js')}"></script>
+            <c:iss_ap_css />
+            <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+                
+            <c:ISSP_CustomNavigation />
+            <div class="container">
+                <div id="contentWrapper">
+                    
+                    <c:ISSP_WaitingStatus />
+                    <!-- ------------------------------------- -->
+                    <!--STEP 5 Check the created case details -->
+                    <!-- ------------------------------------- -->
+                    <apex:pageBlock rendered="{!isFinalStep}" mode="maindetail">
+                        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
+                            <h3>Thank you for submitting your Airline Participation {!IF(strAreaType=='Airline Joining', 'Joining application', 'Change request')}.</h3>
+                            <br/><br/>
+                            <div class="col-md-12 row">Your case number is <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!newCase.CaseNumber}</a>.</div>
+                            <br/><br/>
+                            <apex:outputPanel rendered="{!(strAreaType=='Airline Joining')}">
+                                <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                                You can also <a href="/ISSP_PDF_Form{!IF(isCASS,'_CASS','')}?caseId={!newCase.Id}&step=3" target="_new">download a PDF version</a> of the application you just submitted.
+                            </apex:outputPanel>
+                            <br/><br/>
+                            
+                            <br/>
+                            Please <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">access your case</a> directly if you wish to attach additional files to your application.
+                            <br/><br/>
+                            In addition you can follow all your cases with IATA in the <a href="/ISSP_CaseList" target="_blank">"My Cases"</a> area.
+                            <br/><br/><br/><br/>
+                            
+                            <a href="/ISSP_APCases?proc={!IF(strAreaType=='Airline Joining', '', IF(strChangeType=='Minor database changes','chg','bnk'))}&retURL=/ISSP_Homepage">
+                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002SzVg&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strAreaType=='Airline Joining'}"/>
+                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000361Bb&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strChangeType=='Bank Account Instructions'}"/>
+                                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000361Dr&oid=00D2000000008TF&lastMod=1425387305000" width="60" height="60" style="vertical-align: middle;" rendered="{!strChangeType=='Minor database changes'}"/>
+                            </a>&nbsp;<b>Create new BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining application', IF(strChangeType=='Minor database changes', 'Change request', 'Bank Account details change'))}.</b>
+                            
+                        </div>
+                    </apex:pageBlock>
+
+                </div>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
+    </html>
+    
+</apex:page>

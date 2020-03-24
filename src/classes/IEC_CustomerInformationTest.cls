@@ -1,11 +1,11 @@
 @isTest
-private class IEC_CustomerInformationTest 
+private class IEC_CustomerInformationTest
 {
 	@isTest (SeeAllData=true)
-	static void test_onLoadAction() 
+	static void test_onLoadAction()
 	{
 		Test.setCurrentPage(Page.IEC_CustomerInformation);
-		IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
+		IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 
 		//*** cover case not logged
 		System.assert(ctrl.onLoadAction() != null, 'Should return login page');
@@ -17,7 +17,7 @@ private class IEC_CustomerInformationTest
 		//*** add sharing to prevent missing access rights
 		try {
 			insert new AccountShare(AccountId=oContact.AccountId, UserOrGroupId=oUser.Id, RowCause='Manual'
-			                      , AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
+														, AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
 		} catch (Exception e) { /* ignore error */ }
 
 		//*** create address for non-compliant
@@ -30,7 +30,7 @@ private class IEC_CustomerInformationTest
 		{
 			Product2 p = lstProduct[x];
 			p.Post_to_Ecommerce_Date__c = Date.today().addDays(-10);
-			p.Sell_through_eCommerce__c = true; 
+			p.Sell_through_eCommerce__c = true;
 			p.Inventory_Status__c = 'In stock';
 			p.SAP_Status_Code__c = 'A';
 			p.Line_of_Business__c = 'Publications';
@@ -102,10 +102,10 @@ private class IEC_CustomerInformationTest
 	} //*** end of "test_onLoadAction"
 
 	@isTest (SeeAllData=true)
-	static void test_onLoadAction2() 
+	static void test_onLoadAction2()
 	{
 		Test.setCurrentPage(Page.IEC_CustomerInformation);
-		IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
+		IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 
 		//*** cover case not logged
 		System.assert(ctrl.onLoadAction() != null, 'Should return login page');
@@ -117,7 +117,7 @@ private class IEC_CustomerInformationTest
 		//*** add sharing to prevent missing access rights
 		try {
 			insert new AccountShare(AccountId=oContact.AccountId, UserOrGroupId=oUser.Id, RowCause='Manual'
-			                      , AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
+														, AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
 		} catch (Exception e) { /* ignore error */ }
 
 		//*** create address for non-compliant
@@ -130,7 +130,7 @@ private class IEC_CustomerInformationTest
 		{
 			Product2 p = lstProduct[x];
 			p.Post_to_Ecommerce_Date__c = Date.today().addDays(-10);
-			p.Sell_through_eCommerce__c = true; 
+			p.Sell_through_eCommerce__c = true;
 			p.Inventory_Status__c = 'In stock';
 			p.SAP_Status_Code__c = 'A';
 			p.Line_of_Business__c = 'Publications';
@@ -198,13 +198,13 @@ private class IEC_CustomerInformationTest
 	static void test_InvalidForm()
 	{
 
-		//-- Create an logged-in has portal customer 
+		//-- Create an logged-in has portal customer
 		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 
-		//-- Create Order 
+		//-- Create Order
 		Account oAccount = TestDataGenerator.generateAccounts(1, true)[0];
 		Order ord = TestDataGenerator.generateOrder(1, oAccount.Id, usr.contactId, usr.contactId,false)[0];
-		ord.OwnerId = usr.Id; 
+		ord.OwnerId = usr.Id;
 		insert ord;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(ord.Id, 1, true);
 
@@ -212,8 +212,8 @@ private class IEC_CustomerInformationTest
 		{
 			Test.startTest();
 				Test.setCurrentPage(Page.IEC_CustomerInformation);
-				IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
-				ctrl.onLoadAction(); 
+				IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
+				ctrl.onLoadAction();
 				ctrl.sfOrder = IECOrder_Svc.getPenddingOrder(true);
 				ctrl.vfOrder = new Order_DTO(ctrl.sfOrder);
 				ctrl.initialOrder = new Order_DTO(ctrl.sfOrder);
@@ -266,8 +266,8 @@ private class IEC_CustomerInformationTest
 	} //*** end of "test_InvalidForm"
 
 
-	@isTest (seeAllData=true) 
-	static void test_saveCustomerInformation() 
+	@isTest (seeAllData=true)
+	static void test_saveCustomerInformation()
 	{
 		//*** create portal user and test data
 		TestDataGenerator.generateApexSetting();
@@ -276,10 +276,10 @@ private class IEC_CustomerInformationTest
 		User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 		Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 		Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='~~Billing~~ Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-		                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-		                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-		                              , ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-		                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																	, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																	, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																	, ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																	, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 		List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -296,10 +296,10 @@ private class IEC_CustomerInformationTest
 		//*** add sharing to prevent missing access rights
 		try {
 			insert new AccountShare(AccountId=accPortal.Id, UserOrGroupId=usrPortal.Id, RowCause='Manual'
-			                      , AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
+														, AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
 		} catch (Exception e) { /* ignore error */ }
 
-		//*** create order 
+		//*** create order
 		Order oOrder = TestDataGenerator.generateOrder(1, conPortal.AccountId, conPortal.Id, conPortal.Id, false)[0];
 		oOrder.SoldTo_Location__c = lstLocation[0].Id;
 		oOrder.BillTo_Location__c = lstLocation[1].Id;
@@ -315,10 +315,10 @@ private class IEC_CustomerInformationTest
 		System.runAs(usrPortal)
 		{
 			Test.setCurrentPage(Page.IEC_CustomerInformation);
-			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
+			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 
 			Test.startTest();
-				ctrl.onLoadAction(); 
+				ctrl.onLoadAction();
 
 				//*** prepare to update contact information
 				ctrl.loggedCustomer.sfContact.Salutation = 'Mr';
@@ -330,7 +330,7 @@ private class IEC_CustomerInformationTest
 				ctrl.vfOrder.billToAddress.city = accPortal.ShippingCity;
 				ctrl.refreshBillToProvinces();
 				ctrl.vfOrder.billToAddress.stateCode = 'CA-QC';
-				ctrl.vfOrder.billToAddress.isPostalCodeRequired = true; 
+				ctrl.vfOrder.billToAddress.isPostalCodeRequired = true;
 				ctrl.vfOrder.billToAddress.postalCode = accPortal.ShippingPostalCode;
 				//addressCount = [select count() from IECAddress__c];
 				//locationCount = [select count() from Location__c];
@@ -342,8 +342,8 @@ private class IEC_CustomerInformationTest
 
 				//*** save Customer Information for case of information on location - skip assert because error of #records in real environment
 				Test.setCurrentPage(Page.IEC_CustomerInformation);
-				ctrl.onLoadAction(); 
-				ctrl.vfOrder.billToAddress.phone = '111-333-5555'; 
+				ctrl.onLoadAction();
+				ctrl.vfOrder.billToAddress.phone = '111-333-5555';
 				//addressCount = [select count() from IECAddress__c];
 				//locationCount = [select count() from Location__c];
 				ctrl.saveCustomerInformation();
@@ -356,8 +356,8 @@ private class IEC_CustomerInformationTest
 	} //*** end of "test_saveCustomerInformation"
 
 
-	@isTest (seeAllData=true) 
-	static void test_saveCustomerInformation2() 
+	@isTest (seeAllData=true)
+	static void test_saveCustomerInformation2()
 	{
 		//*** create portal user and test data
 		TestDataGenerator.generateApexSetting();
@@ -366,10 +366,10 @@ private class IEC_CustomerInformationTest
 		User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 		Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 		Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='~~Billing~~ Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-		                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-		                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-		                              , ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-		                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																	, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																	, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																	, ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																	, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 		List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -386,10 +386,10 @@ private class IEC_CustomerInformationTest
 		//*** add sharing to prevent missing access rights
 		try {
 			insert new AccountShare(AccountId=accPortal.Id, UserOrGroupId=usrPortal.Id, RowCause='Manual'
-			                      , AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
+														, AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
 		} catch (Exception e) { /* ignore error */ }
 
-		//*** create order 
+		//*** create order
 		Order oOrder = TestDataGenerator.generateOrder(1, conPortal.AccountId, conPortal.Id, conPortal.Id, false)[0];
 		oOrder.SoldTo_Location__c = lstLocation[0].Id;
 		oOrder.BillTo_Location__c = lstLocation[1].Id;
@@ -405,10 +405,10 @@ private class IEC_CustomerInformationTest
 		System.runAs(usrPortal)
 		{
 			Test.setCurrentPage(Page.IEC_CustomerInformation);
-			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
+			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 
 			Test.startTest();
-				ctrl.onLoadAction(); 
+				ctrl.onLoadAction();
 
 				//*** prepare to update contact information
 				ctrl.loggedCustomer.sfContact.Salutation = 'Mr';
@@ -438,8 +438,8 @@ private class IEC_CustomerInformationTest
 		}
 	} //*** end of "test_saveCustomerInformation2"
 
-	@isTest (seeAllData=true) 
-	static void test_saveCustomerInformation3() 
+	@isTest (seeAllData=true)
+	static void test_saveCustomerInformation3()
 	{
 		//*** create portal user and test data
 		TestDataGenerator.generateApexSetting();
@@ -448,10 +448,10 @@ private class IEC_CustomerInformationTest
 		User usrPortal = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 		Contact conPortal = new Contact_Sel().getContactById(usrPortal.ContactId);
 		Account accPortal = new Account(Id=conPortal.AccountId, BillingStreet='~~Billing~~ Street 1', BillingCity='City', BillingPostalCode='H0H0H0'
-		                              , BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
-		                              , BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
-		                              , ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
-		                              , ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
+																	, BillingCountry='Canada', IATA_ISO_Country__r = new IATA_ISO_Country__c(ISO_Code__c = 'CA')
+																	, BillingState='Quebec', IATA_ISO_Billing_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC')
+																	, ShippingStreet='~~Shipping~~ Street 1', ShippingCity='City', ShippingPostalCode='H0H0H0'
+																	, ShippingCountry='Canada', ShippingState='Quebec', IATA_ISO_Shipping_State__r = new IATA_ISO_State__c(ISO_Code__c = 'CA-QC'));
 		List<IECAddress__c> lstAddress = new List<IECAddress__c>();
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.BillingStreet, City__c = accPortal.BillingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Billing_State__r, ZipCode__c = accPortal.BillingPostalCode));
 		lstAddress.add(new IECAddress__c(Street__c = accPortal.ShippingStreet, City__c = accPortal.ShippingCity, ISO_Country__r = accPortal.IATA_ISO_Country__r, ISO_State__r = accPortal.IATA_ISO_Shipping_State__r, ZipCode__c = accPortal.ShippingPostalCode));
@@ -468,10 +468,10 @@ private class IEC_CustomerInformationTest
 		//*** add sharing to prevent missing access rights
 		try {
 			insert new AccountShare(AccountId=accPortal.Id, UserOrGroupId=usrPortal.Id, RowCause='Manual'
-			                      , AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
+														, AccountAccessLevel='Edit', ContactAccessLevel='Edit', CaseAccessLevel='None', OpportunityAccessLevel='None');
 		} catch (Exception e) { /* ignore error */ }
 
-		//*** create order 
+		//*** create order
 		Order oOrder = TestDataGenerator.generateOrder(1, conPortal.AccountId, conPortal.Id, conPortal.Id, false)[0];
 		oOrder.SoldTo_Location__c = lstLocation[0].Id;
 		oOrder.BillTo_Location__c = lstLocation[1].Id;
@@ -487,10 +487,10 @@ private class IEC_CustomerInformationTest
 		System.runAs(usrPortal)
 		{
 			Test.setCurrentPage(Page.IEC_CustomerInformation);
-			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
+			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController();
 
 			Test.startTest();
-				ctrl.onLoadAction(); 
+				ctrl.onLoadAction();
 
 				//*** prepare to update contact information
 				ctrl.loggedCustomer.sfContact.Salutation = 'Mr';

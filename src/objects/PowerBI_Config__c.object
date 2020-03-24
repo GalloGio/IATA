@@ -3,6 +3,19 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Application_Identifier__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>Used for key for caching access token when identifying originating application during PwerBI calls.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Use only letters and numbers, no spaces or special characters!</inlineHelpText>
+        <label>Application Identifier</label>
+        <length>10</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>ClientId__c</fullName>
         <externalId>false</externalId>
         <label>ClientId</label>
@@ -16,6 +29,17 @@
         <fullName>Client_secret__c</fullName>
         <externalId>false</externalId>
         <label>Client secret</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Details_Resource__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>URL for details calls, e.g. for dataset, report detail etc.</inlineHelpText>
+        <label>Details Resource</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -46,6 +70,17 @@
         <fullName>Password__c</fullName>
         <externalId>false</externalId>
         <label>Password</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Resource__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>URL address for embedded report.</inlineHelpText>
+        <label>Report Resource</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>

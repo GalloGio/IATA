@@ -37,6 +37,10 @@
         <name>EF_CRM</name>
     </customApplications>
     <customApplications>
+        <label><!-- E&amp;F CRM Lightning --></label>
+        <name>EF_CRM_Lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- E&amp;F --></label>
         <name>E_F</name>
     </customApplications>
@@ -95,6 +99,10 @@
     <customApplications>
         <label><!-- IEC Admin Console --></label>
         <name>IEC_Admin_Console</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IFTP --></label>
+        <name>IFTP</name>
     </customApplications>
     <customApplications>
         <label><!-- MITA / BIETA --></label>
@@ -245,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>{0} 거리는 필수입니다. {1} 거리 입력란을 작성하십시오.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -353,6 +365,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -447,6 +463,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -661,6 +681,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -735,6 +759,10 @@
     <customLabels>
         <label>* 이 하위 조직은 상위 조직과 법적으로 별개의 조직입니까?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -905,6 +933,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>인가 유형 비교로 돌아가기</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -971,6 +1003,14 @@
     <customLabels>
         <label>귀하의 국가에서 금융 보안 보험을 제공하는 금융 기관 목록</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>GDI 포털로 이동</label>
@@ -1041,6 +1081,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -1075,6 +1119,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>요청을 관리하려면 -여기-를 클릭하여</label>
@@ -1269,6 +1329,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1365,6 +1429,26 @@
         <name>ANG_ISSP_e_mail_address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
         <name>ANG_NON_COMPLIANCE</name>
     </customLabels>
@@ -1445,6 +1529,10 @@
         <name>API_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- ASD Service Description --></label>
+        <name>ASD_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Acc_Fin_Mgmt_Agencies_Description --></label>
         <name>Acc_Fin_Mgmt_Agencies_Description</name>
     </customLabels>
@@ -1455,6 +1543,14 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailBody --></label>
+        <name>AccountContextActivationEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailSubject --></label>
+        <name>AccountContextActivationEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
@@ -1580,6 +1676,10 @@
         <name>Assist_Travelers_Special_Needs_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- Attach_Proof_Of_Payment --></label>
+        <name>Attach_Proof_Of_Payment</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Attachment Name --></label>
         <name>Attachment_Name</name>
     </customLabels>
@@ -1616,12 +1716,36 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP/CASS Ch Bank Service Description --></label>
+        <name>BSP_CASS_Ch_Bank_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP/CASS Ch Request Service Description --></label>
+        <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSPlink Service Description --></label>
+        <name>BSPlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Bank Transfer Payment terms --></label>
         <name>Bank_Transfer_Payment_terms</name>
     </customLabels>
     <customLabels>
         <label><!-- Bank transfer validation for auto renew --></label>
         <name>Bank_transfer_validation_for_auto_renew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Accounting Code --></label>
+        <name>Billing_Member_Accounting_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Designator Code --></label>
+        <name>Billing_Member_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Name --></label>
+        <name>Billing_Member_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Billing address --></label>
@@ -1756,8 +1880,36 @@
         <name>CASSLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- CASSlink Analytics Service Description --></label>
+        <name>CASSlink_Analytics_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Export Service Description --></label>
+        <name>CASSlink_Export_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Import Service Description --></label>
+        <name>CASSlink_Import_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CASSlink Service Description --></label>
+        <name>CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS CASSlink Service Description --></label>
+        <name>CNS_CASSlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS End Changes Service Description --></label>
+        <name>CNS_End_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID-19 eComm Home Page --></label>
+        <name>COVID_19_eComm_Home_Page</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -1792,6 +1944,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1824,6 +1980,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>새로운 서비스 할당하기</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -1848,6 +2008,10 @@
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
+    </customLabels>
+    <customLabels>
         <label>서비스</label>
         <name>CSP_Breadcrumb_Services_Title</name>
     </customLabels>
@@ -1866,10 +2030,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>고객님 &amp; 국제항공운송협회 (IATA)</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>온라인 구매</label>
@@ -1928,6 +2088,10 @@
         <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_hasInvoicePaid --></label>
+        <name>CSP_Case_hasInvoicePaid</name>
+    </customLabels>
+    <customLabels>
         <label>사례</label>
         <name>CSP_Cases</name>
     </customLabels>
@@ -1964,6 +2128,10 @@
         <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Close --></label>
+        <name>CSP_Close</name>
+    </customLabels>
+    <customLabels>
         <label>커뮤니티</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1998,6 +2166,10 @@
     <customLabels>
         <label>{0} 액세스 요청이 포털 관리자에게 전달되었습니다. 프로세스에 대한 질문이나 요청이 있으시면 아래의 관리자에게 문의하십시오.</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 프로필 이름을 변경하면 ID 카드의 유효성에 영향을 미칩니다. 귀하의 프로필 이름을 변경하려면 저희 고객 지원팀에 문의하세요.</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
@@ -2048,7 +2220,15 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 거부</label>
+        <label><!-- CSP_Deduction_Notice --></label>
+        <name>CSP_Deduction_Notice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Deduction Notice Israel Description --></label>
+        <name>CSP_Deduction_Notice_Israel_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2070,6 +2250,10 @@
     <customLabels>
         <label>출판국</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invoices --></label>
+        <name>CSP_EF_Invoices</name>
     </customLabels>
     <customLabels>
         <label>이메일</label>
@@ -2276,7 +2460,11 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 권한 부여</label>
+        <label><!-- CSP Go to Webstar --></label>
+        <name>CSP_Go_to_Webstar</name>
+    </customLabels>
+    <customLabels>
+        <label>액세스 권한 부여</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2284,12 +2472,48 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP IATAN Register Info --></label>
+        <name>CSP_IATAN_Register_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Invoices --></label>
+        <name>CSP_IATA_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 카드의 이름</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 ID 카드 사진을 보시려면 여기를 클릭하세요.</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>사진</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>상태</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>만료 날짜</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 카드 VER 번호</label>
+        <name>CSP_IDCard_Ver_Number</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
         <name>CSP_IMPORTANT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Id Card --></label>
+        <name>CSP_Id_Card</name>
     </customLabels>
     <customLabels>
         <label>잘못된 이메일</label>
@@ -2584,7 +2808,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>안녕하세요</label>
+        <label>더 말해 주세요.</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2780,6 +3004,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>죄송합니다. 적용된 필터에 대한 결과가 없습니다.</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>결과 없음</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>
@@ -2794,6 +3022,10 @@
     <customLabels>
         <label>월간 보기</label>
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Outstanding_Invoices --></label>
+        <name>CSP_Outstanding_Invoices</name>
     </customLabels>
     <customLabels>
         <label>비밀번호</label>
@@ -2988,7 +3220,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
+        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -3112,12 +3344,56 @@
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
+    </customLabels>
+    <customLabels>
         <label>요청된 액세스</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
     <customLabels>
         <label>요청된 액세스</label>
         <name>CSP_Services_AccessRequestedTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨 찾기 추가</label>
+        <name>CSP_Services_AddFavorite</name>
     </customLabels>
     <customLabels>
         <label>귀하의 회사에서 사용 가능한 모든 서비스가 아래에 나열되어 있습니다.</label>
@@ -3152,6 +3428,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>즐겨 찾기 제거</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>사용 가능한 서비스 보기</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3166,6 +3446,14 @@
     <customLabels>
         <label>서비스 정보</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>모두 표시하기</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기만 표시하기</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>서비스</label>
@@ -3230,6 +3518,10 @@
     <customLabels>
         <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; 국제항공운송협회 (IATA) 인증 및 변경을 요청하려면 여기를 클릭&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard --></label>
+        <name>CSP_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label>문제 해결</label>
@@ -3300,16 +3592,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>고객 &amp; 국제항공운송협회 (IATA)</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>고객님을 위해 엄선된 서비스</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>여기에서 항공 산업과 괸련된 다양한 국제항공운송협회 (IATA) 서비스, 출판물, 제품 및 자료를 확인할 수 있습니다. 고객님의 관심사 및 활동 내역에 따라 특별히 엄선되었습니다.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3480,12 +3764,28 @@
         <name>Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Company --></label>
         <name>Company</name>
     </customLabels>
     <customLabels>
         <label><!-- Company name --></label>
         <name>Company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CompleteThisField --></label>
+        <name>CompleteThisField</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailBody --></label>
+        <name>ComplianceProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailSubject --></label>
+        <name>ComplianceProcessEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- ConfirmSendRecycleBin --></label>
@@ -3516,12 +3816,20 @@
         <name>Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
+        <name>Control_Total_Percentage_Owners_And_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Copyright --></label>
         <name>Copyright</name>
     </customLabels>
     <customLabels>
         <label><!-- Country --></label>
         <name>Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Requirements Service Description --></label>
+        <name>Country_Requirements_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Country cannot be empty --></label>
@@ -3542,6 +3850,10 @@
     <customLabels>
         <label><!-- Creation date --></label>
         <name>Creation_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Credit_Card_Payment_Link --></label>
+        <name>Credit_Card_Payment_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- Credit card payment msg --></label>
@@ -4016,6 +4328,10 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
+        <label><!-- Currency Center Service Description --></label>
+        <name>Currency_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>현재 비밀번호</label>
         <name>Current_password</name>
     </customLabels>
@@ -4088,6 +4404,10 @@
         <name>Date</name>
     </customLabels>
     <customLabels>
+        <label><!-- Deduction Notice Service Description --></label>
+        <name>Deduction_Notice_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Del --></label>
         <name>Del</name>
     </customLabels>
@@ -4128,6 +4448,10 @@
         <name>EBulletin_More_than_8_owners_message</name>
     </customLabels>
     <customLabels>
+        <label><!-- EFComplianceReview --></label>
+        <name>EFComplianceReview</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -4138,6 +4462,10 @@
     <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E-Bulletin Service Description --></label>
+        <name>E_Bulletin_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- E-mail to Case - IS Help Desk --></label>
@@ -4240,6 +4568,10 @@
         <name>FW</name>
     </customLabels>
     <customLabels>
+        <label><!-- Fee Codes --></label>
+        <name>Fee_Codes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Feed Item Invalid Topics --></label>
         <name>Feed_Item_Invalid_Topics</name>
     </customLabels>
@@ -4278,6 +4610,10 @@
     <customLabels>
         <label>재무리뷰 서류</label>
         <name>Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Financial Securities Service Description --></label>
+        <name>Financial_Securities_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- First name --></label>
@@ -4480,6 +4816,18 @@
         <name>GADM_Power_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- GADM Service Description --></label>
+        <name>GADM_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Status Change Template Link --></label>
+        <name>GADM_Status_Change_Template_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Already Invited --></label>
+        <name>GADM_User_Already_Invited</name>
+    </customLabels>
+    <customLabels>
         <label><!-- GADM_User_Invitation_Mr --></label>
         <name>GADM_User_Invitation_Mr</name>
     </customLabels>
@@ -4556,6 +4904,10 @@
         <name>GADM_active_users_reached</name>
     </customLabels>
     <customLabels>
+        <label><!-- GDI Service Description --></label>
+        <name>GDI_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>국가</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
@@ -4604,8 +4956,32 @@
         <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA Acr Changes Service Description --></label>
+        <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Airl Location Codes Service Description --></label>
+        <name>IATA_Airl_Location_Codes_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
         <name>IATA_Alpha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Certificates Service Description --></label>
+        <name>IATA_Certificates_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (2C2P) Service Description --></label>
+        <name>IATA_EasyPay_2C2P_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (EDENRED) Service Description --></label>
+        <name>IATA_EasyPay_EDENRED_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA EasyPay (MSTS) Service Description --></label>
+        <name>IATA_EasyPay_MSTS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA_GDPR_URL --></label>
@@ -4614,6 +4990,10 @@
     <customLabels>
         <label><!-- IATA GDPR White Logo --></label>
         <name>IATA_GDPR_White_Logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Store Service Description --></label>
+        <name>IATA_Store_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -4702,6 +5082,22 @@
     <customLabels>
         <label><!-- ICCS Additional Codes Number --></label>
         <name>ICCS_Additional_Codes_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Button Help Text --></label>
+        <name>ICCS_Adhoc_Button_Help_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Creation Not Allowed --></label>
+        <name>ICCS_Adhoc_Creation_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc SI by Currency --></label>
+        <name>ICCS_Adhoc_SI_by_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Selection error --></label>
+        <name>ICCS_Adhoc_Selection_error</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Agreement Label --></label>
@@ -4808,8 +5204,16 @@
         <name>ICCS_Client_Testimonial_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Clone SI --></label>
+        <name>ICCS_Clone_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Clone SI Link --></label>
         <name>ICCS_Clone_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Collapse All --></label>
+        <name>ICCS_Collapse_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Comment Label --></label>
@@ -4832,8 +5236,16 @@
         <name>ICCS_Create_Adhoc_SI_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Create Currency SI Link --></label>
+        <name>ICCS_Create_Currency_SI_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Create Future SI Link --></label>
         <name>ICCS_Create_Future_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Create Mass Currency Header --></label>
+        <name>ICCS_Create_Mass_Currency_Header</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Created Date Label --></label>
@@ -4846,6 +5258,10 @@
     <customLabels>
         <label><!-- ICCS Currency Label --></label>
         <name>ICCS_Currency_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Currency SI created --></label>
+        <name>ICCS_Currency_SI_created</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS CycleMgmt AdHoc Header --></label>
@@ -4904,6 +5320,10 @@
         <name>ICCS_EF_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Edit SI --></label>
+        <name>ICCS_Edit_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Edit SI Link --></label>
         <name>ICCS_Edit_SI_Link</name>
     </customLabels>
@@ -4946,6 +5366,10 @@
     <customLabels>
         <label><!-- ICCS Endpoint Username PROD --></label>
         <name>ICCS_Endpoint_Username_PROD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Expand All --></label>
+        <name>ICCS_Expand_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Expected Deadline --></label>
@@ -4998,6 +5422,14 @@
     <customLabels>
         <label><!-- ICCS Headquarter Branch --></label>
         <name>ICCS_Headquarter_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned --></label>
+        <name>ICCS_Helptext_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned With Amount --></label>
+        <name>ICCS_Helptext_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Hide Child Codes --></label>
@@ -5184,12 +5616,20 @@
         <name>ICCS_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Mandatory Instruction Line --></label>
+        <name>ICCS_Mandatory_Instruction_Line</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Mandatory Uploads Message --></label>
         <name>ICCS_Mandatory_Uploads_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Marked for Deletion Label --></label>
         <name>ICCS_Marked_for_Deletion_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Mass Edit SI --></label>
+        <name>ICCS_Mass_Edit_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Membership Status --></label>
@@ -5206,6 +5646,10 @@
     <customLabels>
         <label><!-- ICCS More About Link --></label>
         <name>ICCS_More_About_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Multi Countries Adhoc SI --></label>
+        <name>ICCS_Multi_Countries_Adhoc_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Multiple Signatories Change Message --></label>
@@ -5238,6 +5682,10 @@
     <customLabels>
         <label><!-- ICCS NoA Message --></label>
         <name>ICCS_NoA_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS No Currencies Available --></label>
+        <name>ICCS_No_Currencies_Available</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS No Editable Cycle Message --></label>
@@ -5472,6 +5920,14 @@
         <name>ICCS_Role_Label</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS SI Successfully Created --></label>
+        <name>ICCS_SI_Successfully_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS SI deleted --></label>
+        <name>ICCS_SI_deleted</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Save Action --></label>
         <name>ICCS_Save_Action</name>
     </customLabels>
@@ -5540,6 +5996,10 @@
         <name>ICCS_Service_Users_Table_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Settlement Instructions created --></label>
+        <name>ICCS_Settlement_Instructions_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Show Child Codes --></label>
         <name>ICCS_Show_Child_Codes</name>
     </customLabels>
@@ -5564,8 +6024,20 @@
         <name>ICCS_Si_Create_Adhoc</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Si Create Currency --></label>
+        <name>ICCS_Si_Create_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Create Currency Warning --></label>
+        <name>ICCS_Si_Create_Currency_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Si Create Future --></label>
         <name>ICCS_Si_Create_Future</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Edit Currency --></label>
+        <name>ICCS_Si_Edit_Currency</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Si Edit Future --></label>
@@ -5578,6 +6050,22 @@
     <customLabels>
         <label><!-- ICCS Start Date Label --></label>
         <name>ICCS_Start_Date_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received --></label>
+        <name>ICCS_Status_For_Not_Received</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received With Amount --></label>
+        <name>ICCS_Status_For_Not_Received_With_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned --></label>
+        <name>ICCS_Status_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned With Amount --></label>
+        <name>ICCS_Status_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Subject Label --></label>
@@ -5662,6 +6150,10 @@
     <customLabels>
         <label><!-- ICE Portal Service --></label>
         <name>ICE_Portal_Service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICE Service Description --></label>
+        <name>ICE_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ICH --></label>
@@ -5822,6 +6314,26 @@
     <customLabels>
         <label><!-- IDCard_CardDuration --></label>
         <name>IDCard_CardDuration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_DigCardNo --></label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCardYes --></label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_WishToRecieve --></label>
+        <name>IDCard_CardType_WishToRecieve</name>
     </customLabels>
     <customLabels>
         <label>케이스 내역</label>
@@ -6028,6 +6540,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Course2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Create Application --></label>
         <name>IDCard_Create_Application</name>
     </customLabels>
@@ -6078,6 +6594,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard Details --></label>
         <name>IDCard_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Displayed Name Remaining Character --></label>
@@ -6132,6 +6652,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Expedite_Note</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_Expedite_Text --></label>
+        <name>IDCard_Expedite_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
     </customLabels>
@@ -6142,6 +6666,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label>비용</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_FeesPhysical --></label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_FileUploadSuccess --></label>
@@ -6440,6 +6968,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>ID 카드 (신규, 갱신, 대행사 변경)를 신청 &amp; 지불하고 국제항공운송협회 (IATA) 여행사 혜택을 받으십시오.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6601,6 +7133,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PromotionCode --></label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -6730,6 +7266,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_TrxNum</name>
     </customLabels>
     <customLabels>
+        <label>(미국 담당자용)ID 카드 요청, 에이전트 등록, 연간 서비스 요금 지불, 대행사 재인증 처리 등</label>
+        <name>IDCard_USServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Update Application --></label>
         <name>IDCard_Update_Application</name>
     </customLabels>
@@ -6772,6 +7312,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card fee --></label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -7142,6 +7686,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID_Card_Taxes --></label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7162,6 +7710,10 @@ and
     <customLabels>
         <label><!-- ID Card To Agency --></label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Training_Fee --></label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Upload Proof --></label>
@@ -7750,6 +8302,10 @@ and
         <name>IFAP_Save</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP Service Description --></label>
+        <name>IFAP_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFAP Submit for approval message --></label>
         <name>IFAP_Submit_for_approval_message</name>
     </customLabels>
@@ -7774,6 +8330,10 @@ and
         <name>IFAP_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFG Production Service Description --></label>
+        <name>IFG_Production_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFG_Prov_Declined --></label>
         <name>IFG_Prov_Declined</name>
     </customLabels>
@@ -7788,6 +8348,10 @@ and
     <customLabels>
         <label><!-- IFG_Thanks_for_request --></label>
         <name>IFG_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IFTP Service Description --></label>
+        <name>IFTP_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_My_Application --></label>
@@ -9198,6 +9762,10 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Add Director --></label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -9272,6 +9840,10 @@ and
     <customLabels>
         <label>새 하위 조직 - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -9634,6 +10206,10 @@ and
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -9896,6 +10472,10 @@ and
     <customLabels>
         <label>주의! 소유권 정보를 대행사에 복사하면 대상 대행사의 기존 소유권 정보가 전부 삭제됩니다.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
@@ -10242,6 +10822,10 @@ and
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>새 상위 조직 - GoLight</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -10282,12 +10866,24 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>하위 조직이 법적으로 별개의 조직인 경우 선택합니다.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS If Approved Gross Amnt --></label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -10866,6 +11462,14 @@ and
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Current Legal details --></label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -11268,6 +11872,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Signature --></label>
@@ -11688,6 +12296,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>대상 계정 선택</label>
@@ -12346,6 +12958,14 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Indicate_GDSs_Short --></label>
+        <name>ISSP_AMS_Step3_Indicate_GDSs_Short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>인가 신청 사무소의 주소</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -12404,6 +13024,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
@@ -12596,6 +13220,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Financial Contact --></label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
@@ -13086,12 +13714,20 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
+        <label>IATA에 은행계좌 세부정보의 변경사항을 알리시려면 IATA로 연락해 주십시오</label>
+        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP ANG Branch Office address details --></label>
         <name>ISSP_ANG_Branch_Office_address_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
     </customLabels>
     <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
@@ -13138,6 +13774,10 @@ and
         <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_DISCARD_APPLICATION --></label>
+        <name>ISSP_ANG_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label>전체 계층 구조</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
@@ -13160,6 +13800,10 @@ and
     <customLabels>
         <label>대리점 인가 상위 조직 GoLite 초안 신청서</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>코드에 대한 신용 카드 결제 형식 활성화</label>
@@ -13234,12 +13878,20 @@ and
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>최소 하나의 지점을 선택하십시오.</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -13260,6 +13912,14 @@ and
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>하나 또는 여러 개의 하위 조직</label>
@@ -13482,6 +14142,30 @@ and
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label>자발적 철회</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
@@ -13520,6 +14204,18 @@ and
     <customLabels>
         <label>항공사 가입 신청서류</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
@@ -13625,6 +14321,10 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
     <customLabels>
         <label><!-- ISSP Add FAP Contact --></label>
         <name>ISSP_Add_FAP_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Add_New_Associate_Entity --></label>
+        <name>ISSP_Add_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
         <label>이 서비스에 사용자 추가하기</label>
@@ -13911,7 +14611,7 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>참고: 이 시장의 캘린더에는 이 애플리케이션에 반영되지 않은 지역별 날짜가 포함되어 있습니다.</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -15637,6 +16337,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
+        <label>ID 카드 온라인 플랫폼</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>국제여행사협회 (IATAN) 온라인 서비스</label>
+        <name>ISSP_IdCard_US</name>
+    </customLabels>
+    <customLabels>
         <label>진행 중</label>
         <name>ISSP_In_Progress</name>
     </customLabels>
@@ -15953,6 +16661,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_My_Contact_Action</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NDC_Transaction_Info --></label>
+        <name>ISSP_NDC_Transaction_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NDS_Transaction_Question --></label>
+        <name>ISSP_NDC_Transaction_Question</name>
+    </customLabels>
+    <customLabels>
         <label>새 사례</label>
         <name>ISSP_NewCase</name>
     </customLabels>
@@ -15999,6 +16715,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label><!-- ISSP NoC HE with AEs Warning --></label>
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
@@ -16197,6 +16917,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>다운로드 일자</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -16241,6 +16965,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>재설정</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -16249,8 +16977,24 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>캘린더 동기화</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -17574,7 +18318,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 IP주소는 미(美) 정부 당국에 의해 통상/접속 금지된 국가에 속한 것으로 확인됩니다.&lt;br/&gt;IATA 커스터머포털은 본 미(美) 정부의 규정을 준수하는 플랫폼에 의해 지원되고 있습니다. 이에 귀하의 IP 주소로 IATA 커스터머포털에 접속이 불가함을 안내드립니다.&lt;br/&gt;확인 or 클릭 &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;이곳 &lt;/a&gt;IATA에 컨택하기</label>
+        <label>귀하의 IP주소는 미(美) 정부 당국에 의해 통상/접속 금지된 국가에 속한 것으로 확인됩니다.&lt;br/&gt;IATA 커스터머포털은 본 미(美) 정부의 규정을 준수하는 플랫폼에 의해 지원되고 있습니다. 이에 귀하의 IP 주소로 IATA 커스터머포털에 접속이 불가함을 안내드립니다.&lt;br/&gt;확인 or 클릭 &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;이곳 &lt;/a&gt;IATA에 컨택하기</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
@@ -18161,6 +18905,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
+    </customLabels>
+    <customLabels>
         <label>버젼</label>
         <name>ISSP_Version</name>
     </customLabels>
@@ -18453,12 +19201,20 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Industry_Activities --></label>
         <name>Industry_Activities</name>
     </customLabels>
     <customLabels>
         <label><!-- InputRequiredMessage --></label>
         <name>InputRequiredMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Insurance Providers Service Description --></label>
+        <name>Insurance_Providers_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Internal and external emails error --></label>
@@ -18471,6 +19227,18 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Invalid Topic Assignment --></label>
         <name>Invalid_Topic_Assignment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Amount --></label>
+        <name>Invoice_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Status --></label>
+        <name>Invoice_Status</name>
     </customLabels>
     <customLabels>
         <label><!-- Invoice number --></label>
@@ -18503,6 +19271,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Job title required --></label>
         <name>Job_title_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Join BSP/CASS Service Description --></label>
+        <name>Join_BSP_CASS_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
@@ -19005,6 +19777,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Line_of_Business_LoB</name>
     </customLabels>
     <customLabels>
+        <label><!-- Link To SIS --></label>
+        <name>Link_To_SIS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -19111,6 +19887,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>로그아웃</label>
         <name>Logout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MIR Service Description --></label>
+        <name>MIR_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MITA Agreements Service Description --></label>
+        <name>MITA_Agreements_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Make All Private --></label>
@@ -19231,6 +20015,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- NoSameName --></label>
         <name>NoSameName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Invoices_To_Display --></label>
+        <name>No_Invoices_To_Display</name>
     </customLabels>
     <customLabels>
         <label><!-- No-Reply --></label>
@@ -19693,8 +20481,16 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;GSA 코드 및 국가 조합으로 회사를 찾을 수 없는 경우, 올바른 정보를 입력했는지 확인하거나 당사 &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;문제 해결 가이드&lt;/a&gt;를 참조하십시오&quot;</label>
@@ -20804,6 +21600,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Payment_number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Paymentlink Service Description --></label>
+        <name>Paymentlink_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Period --></label>
         <name>Period</name>
     </customLabels>
@@ -21052,6 +21852,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -21062,6 +21866,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- SIDRA Automated Case Message --></label>
         <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>
@@ -21100,6 +21908,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Salutation</name>
     </customLabels>
     <customLabels>
+        <label><!-- SapProcessEmailBody --></label>
+        <name>SapProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SapProcessEmailSubject --></label>
+        <name>SapProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
     </customLabels>
@@ -21120,12 +21936,20 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Section_Title_Top_Sellers</name>
     </customLabels>
     <customLabels>
+        <label><!-- See_Bank_Account_Details --></label>
+        <name>See_Bank_Account_Details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- See details --></label>
         <name>See_details</name>
     </customLabels>
     <customLabels>
         <label><!-- Select --></label>
         <name>Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SelectAnOption --></label>
+        <name>SelectAnOption</name>
     </customLabels>
     <customLabels>
         <label><!-- SelectRequiredMessage --></label>
@@ -21220,6 +22044,18 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Signaturit_Endpoint</name>
     </customLabels>
     <customLabels>
+        <label><!-- SisProcessCaseSubject --></label>
+        <name>SisProcessCaseSubject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailBody --></label>
+        <name>SisProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailSubject --></label>
+        <name>SisProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SiteTitle --></label>
         <name>SiteTitle</name>
     </customLabels>
@@ -21264,6 +22100,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Stay_Informed</name>
     </customLabels>
     <customLabels>
+        <label><!-- Stop creating accounts from Owners and Subsidiaries --></label>
+        <name>Stop_creating_accounts_from_Owners_and_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Street cannot be empty --></label>
         <name>Street_cannot_be_empty</name>
     </customLabels>
@@ -21296,8 +22136,20 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIP Reports Service Description --></label>
+        <name>TIP_Reports_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label>과제들</label>
@@ -21328,6 +22180,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Title_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Cost --></label>
+        <name>Total_Cost</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -21336,8 +22196,128 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Tracking_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Training Platform (LMS) Service Description --></label>
+        <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Transfer Attachments --></label>
         <name>Transfer_Attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP --></label>
+        <name>Treasury_Dashboard_BSP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP Long --></label>
+        <name>Treasury_Dashboard_BSP_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays --></label>
+        <name>Treasury_Dashboard_Bank_Holidays</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays URL --></label>
+        <name>Treasury_Dashboard_Bank_Holidays_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS --></label>
+        <name>Treasury_Dashboard_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS Long --></label>
+        <name>Treasury_Dashboard_CASS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide URL --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center --></label>
+        <name>Treasury_Dashboard_Currency_Center</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center URL --></label>
+        <name>Treasury_Dashboard_Currency_Center_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates --></label>
+        <name>Treasury_Dashboard_Exchange_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates Long --></label>
+        <name>Treasury_Dashboard_Exchange_Rates_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates --></label>
+        <name>Treasury_Dashboard_FX_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates URL --></label>
+        <name>Treasury_Dashboard_FX_Rates_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Header Text --></label>
+        <name>Treasury_Dashboard_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS --></label>
+        <name>Treasury_Dashboard_ICCS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS Long --></label>
+        <name>Treasury_Dashboard_ICCS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH --></label>
+        <name>Treasury_Dashboard_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH Long --></label>
+        <name>Treasury_Dashboard_ICH_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Links --></label>
+        <name>Treasury_Dashboard_Links</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News --></label>
+        <name>Treasury_Dashboard_Market_News</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News URL --></label>
+        <name>Treasury_Dashboard_Market_News_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Premium Dashboard --></label>
+        <name>Treasury_Dashboard_Premium_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Service Name --></label>
+        <name>Treasury_Dashboard_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Standard Dashboard --></label>
+        <name>Treasury_Dashboard_Standard_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms Of Use --></label>
+        <name>Treasury_Dashboard_Terms_Of_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms of Use URL --></label>
+        <name>Treasury_Dashboard_Terms_of_Use_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide --></label>
+        <name>Treasury_Dashboard_User_Guide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide URL --></label>
+        <name>Treasury_Dashboard_User_Guide_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Trust Weaver --></label>
@@ -22292,6 +23272,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>가능한 서비스</label>
         <name>Available_Services</name>
     </customTabs>
@@ -22428,6 +23412,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>My_Status</name>
     </customTabs>
     <customTabs>
+        <label><!-- Notification Center --></label>
+        <name>Notification_Center</name>
+    </customTabs>
+    <customTabs>
         <label><!-- OPS --></label>
         <name>OPS</name>
     </customTabs>
@@ -22474,6 +23462,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customTabs>
         <label><!-- Unregistered users --></label>
         <name>Unregistered_users</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Usage Report --></label>
+        <name>Usage_Report</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

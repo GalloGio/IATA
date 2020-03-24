@@ -1,246 +1,246 @@
 @isTest
 private class ANG_CreateAccountDetails_Test {
-	
-    @testSetup static void setup() {
 
+	@testSetup static void setup() {
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
-        insert stt;         
-    
-        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
+		insert ctry ;
 
-        Account account = new Account();
-        account.Name = 'Main HE Account H1';
-        account.Sector__c = 'Travel Agent';
-        account.IATACode__c = '12345678';
-        account.Category__c = 'IATA Passenger Sales Agent';
-        account.Location_Class__c = 'P';
-        account.Location_Type__c = 'HE';
-        account.ANG_Accreditation_Model__c = 'Cashless';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = accountAgencyRT;
-        account.GDI_Status__c = 'Open';
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-        insert account;
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Contact con = new Contact(AccountId = account.id, Firstname = 'Lemmy', Lastname='Kilmister', Phone = '33344555666', 
-        							MobilePhone = '00555444333', Email = 'lemmy.kilmister@test.com', Financial_Assessment_Contact__c = true);
+		Account account = new Account();
+		account.Name = 'Main HE Account H1';
+		account.Sector__c = 'Travel Agent';
+		account.IATACode__c = '12345678';
+		account.Category__c = 'IATA Passenger Sales Agent';
+		account.Location_Class__c = 'P';
+		account.Location_Type__c = 'HE';
+		account.ANG_Accreditation_Model__c = 'Cashless';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = accountAgencyRT;
+		account.GDI_Status__c = 'Open';
 
-        insert con;		
+		insert account;
 
-    }
+		Contact con = new Contact(AccountId = account.id, Firstname = 'Lemmy', Lastname='Kilmister', Phone = '33344555666',
+									MobilePhone = '00555444333', Email = 'lemmy.kilmister@test.com', Financial_Assessment_Contact__c = true);
 
-     @isTest static void testCreateAccountDetailsSuccess() {
-        
-    	Test.startTest();
+		insert con;
 
-        RestRequest req = new RestRequest();
-        req.requestBody = Blob.valueOf('{"offerId":"test123"}');
-        RestResponse res = new RestResponse(); 
+	}
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+	 @isTest static void testCreateAccountDetailsSuccess() {
 
-        RestContext.request = req;
-        RestContext.response = res;
+		Test.startTest();
 
-        ANG_CreateAccountDetails.doPost();
+		RestRequest req = new RestRequest();
+		req.requestBody = Blob.valueOf('{"offerId":"test123"}');
+		RestResponse res = new RestResponse();
 
-        Test.stopTest();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        System.assertEquals(1, [SELECT Id FROM AMS_OSCAR__c].size(), 'Oscar was not created');
-        System.assertEquals(1, [SELECT Id FROM Opportunity].size(), 'Opportunity was not created');
+		RestContext.request = req;
+		RestContext.response = res;
 
-    }
+		ANG_CreateAccountDetails.doPost();
 
-    @isTest static void testCreateAccountDetails400() {
-        
-    	Test.startTest();
+		Test.stopTest();
 
-        RestRequest req = new RestRequest(); 
-        RestResponse res = new RestResponse(); 
+		System.assertEquals(1, [SELECT Id FROM AMS_OSCAR__c].size(), 'Oscar was not created');
+		System.assertEquals(1, [SELECT Id FROM Opportunity].size(), 'Opportunity was not created');
 
-        // WRONG URI size
-        req.requestURI = 'account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+	}
 
-        RestContext.request = req;
-        RestContext.response = res;
+	@isTest static void testCreateAccountDetails400() {
 
-        ANG_CreateAccountDetails.doPost();
+		Test.startTest();
 
+		RestRequest req = new RestRequest();
+		RestResponse res = new RestResponse();
 
+		// WRONG URI size
+		req.requestURI = 'account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        // WRONG URI - request type
-        req = new RestRequest();
+		RestContext.request = req;
+		RestContext.response = res;
 
-        req.requestURI = '/account-create-details/12345678/test400'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		ANG_CreateAccountDetails.doPost();
 
-        RestContext.request = req;
 
-        ANG_CreateAccountDetails.doPost();
 
+		// WRONG URI - request type
+		req = new RestRequest();
 
+		req.requestURI = '/account-create-details/12345678/test400';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        // No Iata code
-        req = new RestRequest();
+		RestContext.request = req;
 
-        req.requestURI = '/account-create-details//gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		ANG_CreateAccountDetails.doPost();
 
-        RestContext.request = req;
 
-        ANG_CreateAccountDetails.doPost();
 
+		// No Iata code
+		req = new RestRequest();
 
-        // No Caller
-        req = new RestRequest();
+		req.requestURI = '/account-create-details//gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', '');
-        req.httpMethod = 'POST';
+		RestContext.request = req;
 
-        RestContext.request = req;
+		ANG_CreateAccountDetails.doPost();
 
-        ANG_CreateAccountDetails.doPost();
 
+		// No Caller
+		req = new RestRequest();
 
-        // No accountType
-        req = new RestRequest();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', '');
+		req.httpMethod = 'POST';
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', '');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		RestContext.request = req;
 
-        RestContext.request = req;
+		ANG_CreateAccountDetails.doPost();
 
-        ANG_CreateAccountDetails.doPost();
 
+		// No accountType
+		req = new RestRequest();
 
-        // Invalid accountType
-        req = new RestRequest();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', '');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'test400');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		RestContext.request = req;
 
-        RestContext.request = req;
+		ANG_CreateAccountDetails.doPost();
 
-        ANG_CreateAccountDetails.doPost();
 
+		// Invalid accountType
+		req = new RestRequest();
 
-        // Invalid caller
-        req = new RestRequest();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'test400');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'test400');
-        req.httpMethod = 'POST';
+		RestContext.request = req;
 
-        RestContext.request = req;
+		ANG_CreateAccountDetails.doPost();
 
-        ANG_CreateAccountDetails.doPost();
 
-        Test.stopTest();
+		// Invalid caller
+		req = new RestRequest();
 
-    }
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'test400');
+		req.httpMethod = 'POST';
 
-    @isTest static void test_ANG_CreateAccountDetails_Oscar_validations() {
+		RestContext.request = req;
 
-    	Test.startTest();
+		ANG_CreateAccountDetails.doPost();
 
-        RestRequest req = new RestRequest();
+		Test.stopTest();
 
-        //Empty offer
-        req.requestBody = Blob.valueOf('{"offerId":""}');
-        RestResponse res = new RestResponse(); 
+	}
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+	@isTest static void test_ANG_CreateAccountDetails_Oscar_validations() {
 
-        RestContext.request = req;
-        RestContext.response = res;
+		Test.startTest();
 
-        ANG_CreateAccountDetails.doPost();
+		RestRequest req = new RestRequest();
 
+		//Empty offer
+		req.requestBody = Blob.valueOf('{"offerId":""}');
+		RestResponse res = new RestResponse();
 
-        //Invalid body
-        req = new RestRequest();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        req.requestBody = Blob.valueOf('{"invalid body"}');
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		RestContext.request = req;
+		RestContext.response = res;
 
-        RestContext.request = req;
+		ANG_CreateAccountDetails.doPost();
 
-        ANG_CreateAccountDetails.doPost();
 
-        Test.stopTest();
+		//Invalid body
+		req = new RestRequest();
 
-    }
+		req.requestBody = Blob.valueOf('{"invalid body"}');
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
+
+		RestContext.request = req;
+
+		ANG_CreateAccountDetails.doPost();
+
+		Test.stopTest();
+
+	}
 
    @isTest static void testCreateAccountDetails404() {
-        
-    	Test.startTest();
 
-        RestRequest req = new RestRequest(); 
-        RestResponse res = new RestResponse(); 
+		Test.startTest();
 
-        req.requestURI = '/account-create-details/99999999/gdi-create-offer'; 
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		RestRequest req = new RestRequest();
+		RestResponse res = new RestResponse();
 
-        RestContext.request = req;
-        RestContext.response = res;
+		req.requestURI = '/account-create-details/99999999/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        ANG_CreateAccountDetails.doPost();
+		RestContext.request = req;
+		RestContext.response = res;
 
-        Test.stopTest();
+		ANG_CreateAccountDetails.doPost();
 
-    }
+		Test.stopTest();
 
-    @isTest static void testCreateAccountDetails403() {
+	}
 
-    	Account a = [SELECT Id, GDI_Status__c FROM Account WHERE IATAcode__c ='12345678'];
-    	a.GDI_Status__c = 'Rejected';
-    	update a;
-        
-    	Test.startTest();
+	@isTest static void testCreateAccountDetails403() {
 
-        RestRequest req = new RestRequest(); 
-        RestResponse res = new RestResponse(); 
+		Account a = [SELECT Id, GDI_Status__c FROM Account WHERE IATAcode__c ='12345678'];
+		a.GDI_Status__c = 'Rejected';
+		update a;
 
-        req.requestURI = '/account-create-details/12345678/gdi-create-offer';
-        req.addParameter('accountType', 'Agency');
-        req.addParameter('caller', 'GDI');
-        req.httpMethod = 'POST';
+		Test.startTest();
 
-        RestContext.request = req;
-        RestContext.response = res;
+		RestRequest req = new RestRequest();
+		RestResponse res = new RestResponse();
 
-        ANG_CreateAccountDetails.doPost();
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
 
-        Test.stopTest();
-    }
-    	
+		RestContext.request = req;
+		RestContext.response = res;
+
+		ANG_CreateAccountDetails.doPost();
+
+		Test.stopTest();
+	}
+
 }

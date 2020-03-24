@@ -1,4 +1,4 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement,track,api } from 'lwc';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import getContactsListFields from '@salesforce/apex/PortalProfileCtrl.getContactsListFields';
@@ -21,6 +21,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ISSP_Pending_Approval from '@salesforce/label/c.ISSP_Pending_Approval';
 import CSP_ALPHAFILTER_All from '@salesforce/label/c.CSP_ALPHAFILTER_All';
 import CSP_ALPHAFILTER_Other from '@salesforce/label/c.CSP_ALPHAFILTER_Other';
+import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
 
 export default class PortalCompanyProfileContactsList extends LightningElement {
 
@@ -41,6 +42,14 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         CSP_ALPHAFILTER_Other
     };
 
+    @api 
+    reloadData(){
+        //reloads Data when the Contacts tab (active) is clicked
+        if(this.contactsFilteringObject.searchInput !== ''){
+            this.removeTextSearch();
+        }
+    }
+
     @track contactsLoaded = false;
 
     @track contactsFilteringObject = {
@@ -49,6 +58,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         sortDirection: 'ASC',
         firstLetter: 'All'
     };
+
+ 
 
     /*@track paginationObject = {
         totalItems : 15,
@@ -70,6 +81,9 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track accountId;
     @track objectid;
     @track action = '';
+
+    @track showCross = false;
+	@track showIFAPBtn = false;
 
     @track alphaFiltersNormal = [
         { value:'A', label: 'A', selected: false },
@@ -154,7 +168,10 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
             this.objectid = this.loggedUser.Contact.AccountId;
             this.userLoaded = true;
         });
-
+		
+		isAdminAndIATAAgencyAcct().then(result => {
+            this.showIFAPBtn = result;
+            });
 
         //init the contacts list
         this.resetContactsList();
@@ -284,7 +301,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
 
             this.contactsLoaded = false;
             this.retrieveContactsList(1);
-
+            this.showCross = searchtext.length > 0;
         }, 500, this);
     }
 
@@ -384,8 +401,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     }
 
     downloadCSV() {
-        let rowEnd = '\n';
-        let csvString = '';
+        let rowEnd = '\r\n';
+        let csvString = '\ufeff';
         let rowDataLabel = new Set();
         let rowDataFieldsMap = [];
         let allContacts = this.contactFields.ROWS;
@@ -422,18 +439,34 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
             csvString += rowEnd;
         }
 
-        // Creating anchor element to download
-        let downloadElement = document.createElement('a');
+        if(window.navigator.msSaveBlob) { // IE 10+i
+            let blob = new Blob([csvString], {
+                "type": "text/csv;charset=utf8;"          
+            });
+            
+            window.navigator.msSaveBlob(blob, 'exportContacts.csv');
+        }
+        else{            
+            let blob = new Blob([csvString]);
+            // Creating anchor element to download
+            let downloadElement = document.createElement('a');
+            downloadElement.href = URL.createObjectURL(blob);
 
-        // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-        downloadElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
-        downloadElement.target = '_self';
-        // CSV File Name
-        downloadElement.download = 'exportContacts.csv';
-        // below statement is required if you are using firefox browser
-        document.body.appendChild(downloadElement);
-        // click() Javascript function to download CSV file
-        downloadElement.click();
+            downloadElement.target = '_self';
+            // CSV File Name
+            downloadElement.download = 'exportContacts.csv';
+            // below statement is required if you are using firefox browser
+            document.body.appendChild(downloadElement);
+            // click() Javascript function to download CSV file
+            downloadElement.click();
+            downloadElement.remove();
+        }
         this.contactsLoaded = true;
     }    
+        
+    removeTextSearch() {
+        this.showCross = false;
+        this.contactsLoaded = false;
+        this.resetContactsList();
+    }
 }

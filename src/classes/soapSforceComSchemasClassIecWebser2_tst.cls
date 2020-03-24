@@ -25,19 +25,19 @@ private class soapSforceComSchemasClassIecWebser2_tst {
 		}
 
 		public void doInvoke(
-			   Object stub,
-			   Object request,
-			   Map<String, Object> response,
-			   String endpoint,
-			   String soapAction,
-			   String requestName,
-			   String responseNS,
-			   String responseName,
-			   String responseType) {
+				 Object stub,
+				 Object request,
+				 Map<String, Object> response,
+				 String endpoint,
+				 String soapAction,
+				 String requestName,
+				 String responseNS,
+				 String responseName,
+				 String responseType) {
 
 			Object responseElement = Type.forName(responseType).newInstance();
 			response.put('response_x', responseElement);
-	   }
+		 }
 	}
 
 	static testMethod void test_callouts() {

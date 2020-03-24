@@ -1,13 +1,13 @@
 /*
-    Class Name: ISSP_AMC_TermsAndConditions_Test
-    Related Classes: ISSP_AMC_TermsAndConditions
+	Class Name: ISSP_AMC_TermsAndConditions_Test
+	Related Classes: ISSP_AMC_TermsAndConditions
 
-    Copyright @Right IT Services
+	Copyright @Right IT Services
 
-    Purpose: 
+	Purpose:
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
 */
 @isTest
 public class ISSP_AMC_TermsAndConditions_Test {
@@ -18,7 +18,7 @@ public class ISSP_AMC_TermsAndConditions_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					ISSP_AMC_TermsAndConditions controller = new ISSP_AMC_TermsAndConditions();
 					controller.controllerParticipation = new Participation_Online_Application__c();

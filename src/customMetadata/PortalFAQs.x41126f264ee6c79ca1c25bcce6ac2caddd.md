@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Technical_Issue_FFP_Frequent_Flyer_Program_Benchmark</value>
+        <value xsi:type="xsd:string">Technical_Issue_FFP</value>
     </values>
     <values>
         <field>DataTopicName__c</field>

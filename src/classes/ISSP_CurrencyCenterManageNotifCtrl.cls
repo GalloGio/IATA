@@ -18,10 +18,10 @@ public with sharing class ISSP_CurrencyCenterManageNotifCtrl {
 			regionList = new List<String>();
 		}
 		Schema.DescribeFieldResult fieldResult = IATA_ISO_Country__c.Region__c.getDescribe();
-        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-        for(Schema.PicklistEntry f : ple){
-           regionList.add(f.getLabel());
-        }
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+		for(Schema.PicklistEntry f : ple){
+		   regionList.add(f.getLabel());
+		}
 
 		/*
 		if (lstCountryProfiles == null) {
@@ -35,7 +35,7 @@ public with sharing class ISSP_CurrencyCenterManageNotifCtrl {
 			lstCountryProfilesWL = new list<CountryProfileWrapper>();
 		}
 
-		map<Id, Country_Profile__c> mapCountryProfilesPerId = new map<Id, Country_Profile__c>([Select Id, Name, Listed_In__c, Region__c FROM Country_Profile__c ORDER BY Name]); 
+		map<Id, Country_Profile__c> mapCountryProfilesPerId = new map<Id, Country_Profile__c>([Select Id, Name, Listed_In__c, Region__c FROM Country_Profile__c ORDER BY Name]);
 		system.debug('@@@mapCountryProfilesPerId: '+mapCountryProfilesPerId);
 		map<Id, EntitySubscription> mapSubscriptionsPerCountryId = new map<Id, EntitySubscription>();
 
@@ -79,7 +79,7 @@ public with sharing class ISSP_CurrencyCenterManageNotifCtrl {
 			delete lstDel;
 
 			// Upsert the new subscriptions
-			// duplicate values will throw errors, so use Database insert to just ignore those errors 
+			// duplicate values will throw errors, so use Database insert to just ignore those errors
 			Database.insert(lstSubscriptionsToUpsert, false);
 
 			isSaved = true;
@@ -91,17 +91,17 @@ public with sharing class ISSP_CurrencyCenterManageNotifCtrl {
 	}
 
 
-    public class CountryProfileWrapper{
-        public String CountryProfileId {get;set;}
-        public String CountryName {get;set;}
-        public Boolean isChecked {get;set;}
-        public String region {get;set;}
+	public class CountryProfileWrapper{
+		public String CountryProfileId {get;set;}
+		public String CountryName {get;set;}
+		public Boolean isChecked {get;set;}
+		public String region {get;set;}
 
-        public CountryProfileWrapper(String CountryProfileId, String CountryName, Boolean isChecked, String region){
-            this.CountryProfileId = CountryProfileId;
-            this.CountryName = CountryName;
-            this.isChecked = isChecked;
-            this.region = region;
-        }
-    }
+		public CountryProfileWrapper(String CountryProfileId, String CountryName, Boolean isChecked, String region){
+			this.CountryProfileId = CountryProfileId;
+			this.CountryName = CountryName;
+			this.isChecked = isChecked;
+			this.region = region;
+		}
+	}
 }

@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: Product_Dom_Test.cls
+		 File: Product_Dom_Test.cls
 	Subject: Test Class for Product_Dom Class.
 	History: 2017-06-26, asantos, Initial Release.
 
@@ -21,7 +21,7 @@ private class Product_Dom_Test {
 		contact.Account = account;
 
 		Apex_Setting__c setting = new Apex_Setting__c (Name = 'Execute Trigger Product', Number_1__c = 1);
-		
+
 		insert setting;
 	}
 

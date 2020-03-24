@@ -1,6 +1,11 @@
 .THIS .inblock{
 	display: block!important;
 }
+
+.THIS .puCheckExisting{
+    display: inline-block;
+    margin-left: 10px;
+}
 .THIS .functionsSelect{
     display: inline-block !important;
     border-radius: 0px;

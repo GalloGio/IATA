@@ -27,10 +27,10 @@ trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, before updat
 		{
 			// Delete the standard attachments
 			List<Attachment> stAttachmentstoDelete = [select Id from Attachment where Id in :standardAttachmentsToDelete];
-			
+
 			Map<Id, EF_Document_Log__c> logRecords = EF_DocumentLogHelper.getLogRecordsToUpdateMap(standardAttachmentsToDelete);
 			List<EF_Document_Log__c> updateList = logRecords.values();
-			
+
 			try
 			{
 				delete stAttachmentstoDelete;
@@ -39,14 +39,14 @@ trigger EF_DocumentLogTrigger on EF_Document_Log__c (before insert, before updat
 					EF_DocumentLogHelper.setStatus(dl, 'Process Completed', 'File uploaded to Amazon WS and standard Attachment deleted.');
 					dl.AttachmentId__c = null;
 				}
-				
+
 			} catch(Exception e)
 			{
 				// Log failure
 				for(EF_Document_Log__c dl : updateList)
 				{
 					EF_DocumentLogHelper.setStatus(dl, 'Attachment - Delete Error', 'File uploaded to Amazon WS, but the standard Attachment could not be deleted. [' +e+']');
-				}				
+				}
 			}
 
 			if(updateList.size() > 0)

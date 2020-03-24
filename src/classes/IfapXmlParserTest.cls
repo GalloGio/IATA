@@ -39,7 +39,7 @@ public class IfapXmlParserTest {
 		System.debug(ReassessmentRequest);
 
 	}
-	
+
 	private static testmethod void parseIfapResultErrorTest() {
 		IfapXmlParser demo = new IfapXmlParser();
 
@@ -57,7 +57,7 @@ public class IfapXmlParserTest {
 		System.debug(ReassessmentRequest);
 
 	}
-	
+
 	private static testmethod void testClasses() {
 		//file
 		IfapXmlParser.File file = new IfapXmlParser.File();
@@ -89,13 +89,13 @@ public class IfapXmlParserTest {
 		ifapResult.setFiles( listFiles);
 		ifapResult.setSalesforceCaseNumber( 'caseNumber');
 		ifapResult.setError( error);
-		
+
 		System.assert(true, ifapResult.getFinancialSecurity() == null);
 		System.assert(true, ifapResult.getGFAStatus() == 'status');
 		System.assert(true, ifapResult.getFiles().size() == 1);
 		System.assert(true, ifapResult.getSalesforceCaseNumber() == 'caseNumber');
 		System.assert(true, ifapResult.getError() == error);
-		
+
 		//ReassessmentRequest
 		IfapXmlParser.ReassessmentRequest reassessmentRequest = new IfapXmlParser.ReassessmentRequest();
 		reassessmentRequest.setSalesforceCaseNumber('123456');

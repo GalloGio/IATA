@@ -10,27 +10,27 @@ private class ISSP_RegistrationTest {
 
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
-    	con.AccountId = acc.Id;
-    	con.LastName = 'test';
-    	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rtId;
+		con.AccountId = acc.Id;
+		con.LastName = 'test';
+		con.Email = 'test.issp.registration@testisspregistration.com';
+		con.RecordTypeId = rtId;
 		insert con;
 
-       	User newUser = new User(alias = 'dsfsdfds',
-                                email = con.email,
-                                emailencodingkey = 'UTF-8',
-                                firstname = con.firstName,
-                                lastname = con.lastname,
-                                languagelocalekey = 'en_US',
-                                localesidkey = 'en_US',
-                                contactId = con.Id,
-                                timezonesidkey = 'Asia/Dubai',
-                                Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
-                                PortalRole = 'Manager',
-                                CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-                                ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = true);
-        insert newUser;
+	   	User newUser = new User(alias = 'dsfsdfds',
+								email = con.email,
+								emailencodingkey = 'UTF-8',
+								firstname = con.firstName,
+								lastname = con.lastname,
+								languagelocalekey = 'en_US',
+								localesidkey = 'en_US',
+								contactId = con.Id,
+								timezonesidkey = 'Asia/Dubai',
+								Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
+								PortalRole = 'Manager',
+								CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+								ProfileId = ISSP_Constant.TEST_User_ProfileID,
+								IsActive = true);
+		insert newUser;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -50,15 +50,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.IATACode__c = '100';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Airline_designator__c = 'TT';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '100';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Airline_designator__c = 'TT';
+		insert acc;
 
 		ApexPages.currentPage().getParameters().put('subject','test');
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -106,27 +106,27 @@ private class ISSP_RegistrationTest {
 
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
-    	con.AccountId = acc.Id;
-    	con.LastName = 'test';
-    	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rtId;
+		con.AccountId = acc.Id;
+		con.LastName = 'test';
+		con.Email = 'test.issp.registration@testisspregistration.com';
+		con.RecordTypeId = rtId;
 		insert con;
 
 		User newUser = new User(alias = 'dsfsdfds',
-                                email = con.email,
-                                emailencodingkey = 'UTF-8',
-                                firstname = con.firstName,
-                                lastname = con.lastname,
-                                languagelocalekey = 'en_US',
-                                localesidkey = 'en_US',
-                                contactId = con.Id,
-                                timezonesidkey = 'Asia/Dubai',
-                                Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
-                                PortalRole = 'Manager',
-                                CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-                                ProfileId = ISSP_Constant.TEST_User_ProfileID,
-                                IsActive = false);
-        insert newUser;
+								email = con.email,
+								emailencodingkey = 'UTF-8',
+								firstname = con.firstName,
+								lastname = con.lastname,
+								languagelocalekey = 'en_US',
+								localesidkey = 'en_US',
+								contactId = con.Id,
+								timezonesidkey = 'Asia/Dubai',
+								Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
+								PortalRole = 'Manager',
+								CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+								ProfileId = ISSP_Constant.TEST_User_ProfileID,
+								IsActive = false);
+		insert newUser;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = true;
@@ -147,29 +147,29 @@ private class ISSP_RegistrationTest {
 
 			Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 			Contact con = ISSP_ObjectFactory.createNewContact();
-	    	con.AccountId = acc.Id;
-	    	con.LastName = 'test';
-	    	con.Email = 'test.issp.registration@testisspregistration.com';
-	    	con.RecordTypeId = rtId;
+			con.AccountId = acc.Id;
+			con.LastName = 'test';
+			con.Email = 'test.issp.registration@testisspregistration.com';
+			con.RecordTypeId = rtId;
 			insert con;
 
 			User newUser = new User(alias = 'dsfsdfds',
-	                                email = con.email,
-	                                emailencodingkey = 'UTF-8',
-	                                firstname = con.firstName,
-	                                lastname = con.lastname,
-	                                languagelocalekey = 'en_US',
-	                                localesidkey = 'en_US',
-	                                contactId = con.Id,
-	                                timezonesidkey = 'Asia/Dubai',
-	                                Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
-	                                PortalRole = 'Manager',
-	                                CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-	                                ProfileId = ISSP_Constant.TEST_User_ProfileID,
-	                                Portal_User_Frozen_Checkbox__c = true,
-	                                IsActive = false);
-	        insert newUser;
-	        ISSP_Registration.permissionNewAgency(newUser.Id);
+									email = con.email,
+									emailencodingkey = 'UTF-8',
+									firstname = con.firstName,
+									lastname = con.lastname,
+									languagelocalekey = 'en_US',
+									localesidkey = 'en_US',
+									contactId = con.Id,
+									timezonesidkey = 'Asia/Dubai',
+									Username = 'test.issp.registration.testisspregistration.com@partner.iata.org',
+									PortalRole = 'Manager',
+									CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+									ProfileId = ISSP_Constant.TEST_User_ProfileID,
+									Portal_User_Frozen_Checkbox__c = true,
+									IsActive = false);
+			insert newUser;
+			ISSP_Registration.permissionNewAgency(newUser.Id);
 		}
 
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -188,10 +188,10 @@ private class ISSP_RegistrationTest {
 
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact con = ISSP_ObjectFactory.createNewContact();
-    	con.AccountId = acc.Id;
-    	con.LastName = 'test';
-    	con.Email = 'test.issp.registration@testisspregistration.com';
-    	con.RecordTypeId = rtId;
+		con.AccountId = acc.Id;
+		con.LastName = 'test';
+		con.Email = 'test.issp.registration@testisspregistration.com';
+		con.RecordTypeId = rtId;
 		insert con;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -206,16 +206,16 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.IATACode__c = '100';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Airline_designator__c = 'TT';
-        acc.Name = 'TestAccount';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '100';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Airline_designator__c = 'TT';
+		acc.Name = 'TestAccount';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -250,16 +250,16 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.IATACode__c = '100';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Airline_designator__c = 'TT';
-        acc.Name = 'TestAccount';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '100';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Airline_designator__c = 'TT';
+		acc.Name = 'TestAccount';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -294,17 +294,17 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
-        IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
-        insert ISO_Country2;
+		insert ISO_Country;
+		IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
+		insert ISO_Country2;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.IATACode__c = '100';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Airline_designator__c = 'TT';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '100';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Airline_designator__c = 'TT';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -339,15 +339,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678912';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678912';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -390,15 +390,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -441,15 +441,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Name = 'TestAccount';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Name = 'TestAccount';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -482,15 +482,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Name = 'TestAccount';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Name = 'TestAccount';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -523,22 +523,22 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678';
+		insert acc;
 
-        Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = new Portal_Applications__c();
 		newApp.Name = 'TEST';
 		insert newApp;
 
-        String appId = String.valueOf(newApp.Id);
-        ISSP_Portal_Service_Ids__c theIds = new ISSP_Portal_Service_Ids__c();
+		String appId = String.valueOf(newApp.Id);
+		ISSP_Portal_Service_Ids__c theIds = new ISSP_Portal_Service_Ids__c();
 		theIds.AgencyAccreditation__c = appId.left(15);
 		insert theIds;
 
@@ -577,15 +577,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -623,15 +623,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.accept = false;
@@ -669,15 +669,15 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
+		insert ISO_Country;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.IATACode__c = '12345678';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.IATACode__c = '12345678';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.backToContactPage();
@@ -716,17 +716,17 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
-        IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
-        insert ISO_Country2;
+		insert ISO_Country;
+		IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='test2');
+		insert ISO_Country2;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Sector__c = 'General Public';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Sector__c = 'General Public';
+		insert acc;
 
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.backToContactPage();
@@ -783,21 +783,21 @@ private class ISSP_RegistrationTest {
 		ISSP_RegistrationTest.createTestData();
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
-        insert ISO_Country;
-        IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='United States');
-        insert ISO_Country2;
+		insert ISO_Country;
+		IATA_ISO_Country__c ISO_Country2 = new IATA_ISO_Country__c(ISO_Code__c='TP',Name='United States');
+		insert ISO_Country2;
 
-        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        acc.Name = 'TestAgency';
-        acc.IATA_ISO_Country__c = ISO_Country.Id;
-        acc.RecordTypeId = recordTypeId;
-        acc.Sector__c = 'General Public';
-        acc.billingstate = 'fakeState';
-        acc.shippingstate = 'fakeState';
-        insert acc;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'TestAgency';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.RecordTypeId = recordTypeId;
+		acc.Sector__c = 'General Public';
+		acc.billingstate = 'fakeState';
+		acc.shippingstate = 'fakeState';
+		insert acc;
 
-        ApexPages.currentPage().getParameters().put('subject','testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttes');
+		ApexPages.currentPage().getParameters().put('subject','testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttes');
 		ISSP_Registration ctrl = new ISSP_Registration();
 		ctrl.selectedCustomerType = 'Airline';
 		ctrl.searchIATACode = '123';

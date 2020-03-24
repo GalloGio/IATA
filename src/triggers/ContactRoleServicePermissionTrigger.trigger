@@ -3,7 +3,7 @@
  */
 
 trigger ContactRoleServicePermissionTrigger on Contact_Role_Service_Permission__c (after insert, after update, after delete) {
-    if(Trigger.IsAfter) {
-        ShareObjectsToExternalUsers.reshareContactRoleServicePermissions(Trigger.new ,Trigger.oldMap);
-    }
+	if(Trigger.IsAfter) {
+		ShareObjectsToExternalUsers.reshareContactRoleServicePermissions(Trigger.new ,Trigger.oldMap);
+	}
 }

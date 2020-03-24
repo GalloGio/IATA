@@ -26,7 +26,7 @@
                     </div>
 
                     <!-- ASSESSMENT CONTRACT -->
-                    <div class="slds-col slds-order_3 slds-small-order_4 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
+                    <div if:true={showIFAPBtn} class="slds-col slds-order_3 slds-small-order_4 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
                         <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
                             label={label.ISSP_Assign_IFAP} variant="neutral" onclick={navigateToIFAP}></lightning-button>
                     </div>
@@ -101,17 +101,8 @@
     </div>
 
 
-    <div if:false={contactsLoaded} class="slds-grid spinnerContainer slds-p-horizontal_medium slds-p-top_medium" >
-		<div  class="slds-col slds-size--1-of-1 text-xsmall text-blue">			
-			
-			<p><lightning-icon class="slds-p-right_x-small" variant="warning"  icon-name="utility:warning" size="small" alternative-text=""></lightning-icon>
-				We are having a planned maintenance on this page and it might take up to 2 minutes to load for companies with large number of users.</p> 
-			<p>The page will go back to full performance in a couple of days. Thanks for your understanding.</p>
-			
-		</div>
-		<div class="slds-col slds-size--1-of-1 fadeInCss" style="height:300px">
-			<lightning-spinner class="background-superLightGray" style="top:100px;" alternative-text="Loading"></lightning-spinner>
-		</div>
+    <div if:false={contactsLoaded} class="spinnerContainer fadeInCss">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
     </div>
     
 </template>

@@ -1,0 +1,49 @@
+<!-- Portal Treasury Dashboard Link Tiles -->
+<template>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" size="medium"></lightning-spinner>
+    </div>
+
+    <div if:false={loading} class="linksContainer" style="margin-top:12px;">
+
+        <div class="text-medium text-darkGray text-bold slds-m-bottom_x-small">
+            {labels.TreasuryDashboardLinks}
+        </div>
+
+
+        <div class="slds-grid slds-wrap slds-gutters_xx-small">
+            <template for:each={lstTiles} for:item="tile" for:index="index">
+                <div key={tile.name} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                    <div class="slds-p-around_xx-small cursorPointer linksCard " onclick={linkClicked} data-item={tile.name}>
+                        <img src={tile.imageURL} class="link" data-item={tile.name}/>
+                        <span class="slds-p-left_x-small text-xsmall text-black" data-item={tile.name}>{tile.name}</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- MODAL WINDOW -->
+        <div class="linksModal" if:true={openModal}>
+            <div class="customPopupInteriorHalfScreenCentered threeQuartersWidth modalBottom">
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer" onclick={closeModal}></lightning-icon>
+                    </span>
+                    <span>{modalHeader}</span>
+                </div>
+                <div class="slds-p-vertical_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                                   value={modalBody}>
+                    </lightning-formatted-rich-text>
+                </div>
+            </div>
+        </div>
+
+        <!-- GET SCROLLBAR WIDTH -->
+        <div class="outer" style="width: 20px; overflow-y: scroll; position:relative; top: -9999px;">
+            <div class="inner" style="height: 5px;"></div>
+        </div>
+
+
+    </div>
+</template>

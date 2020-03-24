@@ -1,891 +1,974 @@
 global without sharing class AMS_RecordCreatorWebservice {
 
-    private static String NEWBR_PV = 'NEW.BR';
-    private static String NEWHO_PV = 'NEW.HO.1.0';
-    private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
-    private static String MAJOR_CHANGES_PV = 'MAJOR.CHANGES';
-    private static String DGR_DGA_PV = 'DGR.DGA';
-    private static String NEWBRABRD_PV= 'NEW.BR.ABROAD';
-    private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
-    private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
-    private static String NEWDGR_PV = 'CERTIFICATION.1.0';
-    public static String NEWVR_PV = 'VR.1.0';
-    public static String NEWVRCA_PV = 'VR.1.0.CA';
-    public static String NEWCER_PV = 'CER.1.0';
-    public static String NEWGSA_PV = 'NEW.GSA.1.0';
-    public static String NEWAHA_PV = 'NEW.AHA.1.0';
-    public static String NEWMSO_PV = 'NEW.MSO.1.0';
-    public static String NEWSA_PV = 'NEW.SA.1.0';
-    public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
-    public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
-    public static String NEWNAE = 'ANG.NEW.AE.1.0';
-    public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
-    public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
-    public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
-    public static String IEP_MODEL_A_ACCOUNT_SETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
-    public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
-    public static String IEP_MODEL_B_PLUS_ACCOUNT_SETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
-    public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
-    public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+	//Types of processes
+	private static String NEWBR_PV = 'NEW.BR';
+	private static String NEWHO_PV = 'NEW.HO.1.0';
+	private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
+	private static String MAJOR_CHANGES_PV = 'MAJOR.CHANGES';
+	private static String DGR_DGA_PV = 'DGR.DGA';
+	private static String NEWBRABRD_PV= 'NEW.BR.ABROAD';
+	private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
+	private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
+	private static String NEWDGR_PV = 'CERTIFICATION.1.0';
+	public static String NEWVR_PV = 'VR.1.0';
+	public static String NEWVRCA_PV = 'VR.1.0.CA';
+	public static String NEWCER_PV = 'CER.1.0';
+	public static String NEWGSA_PV = 'NEW.GSA.1.0';
+	public static String NEWAHA_PV = 'NEW.AHA.1.0';
+	public static String NEWMSO_PV = 'NEW.MSO.1.0';
+	public static String NEWSA_PV = 'NEW.SA.1.0';
+	public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
+	public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
+	public static String NEWNAE = 'ANG.NEW.AE.1.0';
+	public static String MCAE = 'ANG.MULTICOUNTRY.AE.1.0';
+	public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
+	public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
+	public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+	public static String IEP_MODEL_A_ACCOUNT_SETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+	public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
+	public static String IEP_MODEL_B_PLUS_ACCOUNT_SETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
+	public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
+	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
+	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
+	private static Id mainRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
+
+	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
+
+	public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE};
+	public static String EMPTYACCREDITATIONID = 'EMPTY';
+
+	/**
+		Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
+	**/
+	webservice static String createAccreditation(String accountId, String accreditationId, String typeOfProcess, String caseId){
 
+		// Create a savepoint
+		Savepoint sp = Database.setSavepoint();
+		String oscarId = null;
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, IEP_MODEL_B_PLUS_ACCOUNT_SETUP, NEWVR_PV};
+		try{
 
-    public static String EMPTYACCREDITATIONID = 'EMPTY';
+			List<String> fieldsToValidate = new List<String>();
 
-    /**
-        Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
-    **/
-    webservice static String createAccreditation(String accountId, String accreditationId, String typeOfProcess, String caseId){
+			fieldsToValidate.add(accountId);
+			fieldsToValidate.add(accreditationId);
+			fieldsToValidate.add(typeOfProcess);
+
+			if(isSomethingEmpyOrNull(fieldsToValidate))
+				throw new CalloutException('Arguments cannot be null.');
+
+			String oscarRecordType = fetchOscarRecordType(typeOfProcess);
 
-        // Create a savepoint
-        Savepoint sp = Database.setSavepoint();
-        String oscarId = null;
+			if(String.isBlank(oscarRecordType))
+				throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
+				//return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
 
-        try{
+			List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Region_Formula__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
-            List<String> fieldsToValidate = new List<String>();
+			String realAccountId = fetchRealAccountId(typeOfProcess, accountId, cases);
 
-            fieldsToValidate.add(accountId);
-            fieldsToValidate.add(accreditationId);
-            fieldsToValidate.add(typeOfProcess);
+			if(realAccountId == null){
+				//throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
+				realAccountId = accountId;
+			}
 
-            if(isSomethingEmpyOrNull(fieldsToValidate))
-                throw new CalloutException('Arguments cannot be null.');
+			Id ownerId = null;
+
+			if(!cases.isEmpty()){
+				Case cse = cases.get(0);
 
-            String oscarRecordType = fetchOscarRecordType(typeOfProcess);
+				if(!Test.isRunningTest()){
+					ownerId = cse.OwnerId;
+				}
 
-            if(String.isBlank(oscarRecordType))
-                throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
-                //return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
+				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC)){
+					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
+				}
+			}
 
-            String realAccountId = fetchRealAccountId(typeOfProcess,accountId,caseId);
+			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+				String selectedAccount = cases.get(0).Account_Concerned__c;
+				oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 
-            if(realAccountId == null){
-                //throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
-                realAccountId = accountId;
-            }
+			} else {
+				oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
+			}
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
+			if(String.isBlank(oscarId))
+				throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
+				//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-            Id ownerId = null;
+			if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE)){
+				if(!createHierarchy(realAccountId, typeOfProcess)){
+					Database.rollback(sp);
+					throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
+					//return 'There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.';
+				}
+			}
 
-            if(!cases.isEmpty() && !Test.isRunningTest()){
-                ownerId = cases.get(0).OwnerId;
-            }
 
 
-            if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+			if(!cases.isEmpty()){
 
-                String selectedAccount = cases.get(0).Account_Concerned__c;
-                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
+				Case oscarCase = cases.get(0);
 
-            } else {
+				oscarCase.OSCAR__c = oscarId;
 
-                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
+				if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
+					if(oscarCase.AccountId != realAccountId)
+						oscarCase.AccountId = realAccountId;
 
-            }
+				String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
 
-            if(String.isBlank(oscarId))
-                throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
-                //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
+				if(typeOfCustomer != null)
+					oscarCase.Type_of_Customer__c = typeOfCustomer;
 
-            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE)){
-                if(!createHierarchy(realAccountId, typeOfProcess)){
-                    Database.rollback(sp);
-                    throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
-                    //return 'There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.';
-                }
-            }
+				update oscarCase;
+			 }
 
+		}
+		catch(Exception e){
+			System.debug('DML exception: ' + e);
+			Database.rollback(sp);
+			throw e;
+			//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
+		}
 
+		return oscarId;
 
-            if(!cases.isEmpty()){
+		// Rollback to the previous null value
 
-                Case oscarCase = cases.get(0);
 
-                oscarCase.OSCAR__c = oscarId;
+	}
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
-                    if(oscarCase.AccountId != realAccountId)
-                        oscarCase.AccountId = realAccountId;
+	public static void createProcessDetailsForConversion(String oscarId, List<Account> accounts) {
+		Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
-                String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
+		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
 
-                if(typeOfCustomer != null)
-                    oscarCase.Type_of_Customer__c = typeOfCustomer;
+		for (Account acc: accounts) {
+			AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+			pd.Oscar__c = oscarId;
+			pd.Account__c = acc.Id;
+			pd.RecordTypeId = rtAgencyInvolved;
+			pd.ANG_Location_Type_Conversion__c = acc.Location_Type__c;
+			processDetailLst.add(pd);
+		}
 
-                update oscarCase;
-             }
+		insert processDetailLst;
+	}
 
-        }
-        catch(Exception e){
-            System.debug('DML exception: ' + e);
-            Database.rollback(sp);
-            throw e;
-            //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
-        }
+	private static String fetchRealAccountId(String typeOfProcess, String accountId, List<Case> cases){
 
-        return oscarId;
+		if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase()))){
+			return accountId;
+		}
 
-        // Rollback to the previous null value
+		if(!cases.isEmpty()){
+				System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
+				return cases.get(0).Account_Concerned__c;
+		}else{
+			System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
+		}
 
+		return null;
+	}
 
-    }
+	private static boolean createHierarchyNewgen(String AccountId, String typeOfProcess){
 
-    private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
+		// in theory, we should, for NEWGEN, already have an Hierarchy coming from the HE or GE (for Multicountry).ApexPages
 
-        if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
-            return accountId;
+		Account accountToProcess = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :AccountId LIMIT 1].get(0);
 
-        List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
+		if(accountToProcess.Top_Parent__c == null){
+			System.debug('There is no Parent Id to create an Hierarchy.');
+			return false;
+		}
 
-        if(!cases.isEmpty()){
-                System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
-                return cases.get(0).Account_Concerned__c;
+		List<AMS_Agencies_Hierarchy__c> hierarchyLst = [Select Id from AMS_Agencies_Hierarchy__c where Main_account__c = :accountToProcess.Top_Parent__c];
 
-        }else{
-            System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
-        }
+		AMS_Agencies_Hierarchy__c hierarchy = null;
 
-        return null;
-    }
+		if(!hierarchyLst.isEmpty()){
+			hierarchy = hierarchyLst.get(0);
+		}else{
+			List<AMS_Agencies_relationhip__c> existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:accountToProcess.Top_Parent__c LIMIT 1];
 
-    private static boolean createHierarchy(String accountId, String typeOfProcess){
+			if(!existingRelations.isEmpty()){
+				hierarchy = new AMS_Agencies_Hierarchy__c(id= existingRelations.get(0).Hierarchy__c);
+			}
+		}
 
-        Account account = new Account(Id = accountId);
 
-        System.debug('Account to create hierarchy is ' + account.Id);
+		if(hierarchy == null){
+			System.debug('Did not find any hierarchy, creating new one.');
 
-        List<Account> parentIdLst = [SELECT Id, ParentId, Location_Type__c from Account where Id = :account.Id LIMIT 1];
+			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c, RecordTypeId = mainRecTypeId);
+			insert hierarchy;
+		}
 
-        if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
-            System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');
-            return true;
-        }
+		AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = accountToProcess.Id, Parent_Account__c = accountToProcess.ParentId, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true);
 
-        if(parentIdLst.isEmpty()){
-            System.debug('There is no Parent Id to create an Hierarchy.');
-            return false;
-        }
+		insert relationship;
 
+		return true;
+	}
 
-        System.debug('Parent account to create hierarchy is ' + parentIdLst.get(0).ParentId);
+	private static boolean createHierarchy(String accountId, String typeOfProcess){
 
-        Id parentId = parentIdLst.get(0).ParentId;
+		if(newgenChildProcess.contains(typeOfProcess)){
+			return createHierarchyNewgen(AccountId, typeOfProcess);
+		}
 
-        Account parentAccount = new Account(Id = ParentId);
+		Account account = new Account(Id = accountId);
 
-        List<AMS_Agencies_relationhip__c> existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:parentAccount.Id LIMIT 1];
+		System.debug('Account to create hierarchy is ' + account.Id);
 
-        AMS_Agencies_Hierarchy__c hierarchy = null;
+		List<Account> parentIdLst = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :account.Id LIMIT 1];
 
-        if(existingRelations.isEmpty()){ // create a new hierarchy if not SA. If so we need to check something first ...
+		if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
+			System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');
+			return true;
+		}
 
-            // we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
-            if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
+		if(parentIdLst.isEmpty()){
+			System.debug('There is no Parent Id to create an Hierarchy.');
+			return false;
+		}
 
-               existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
 
-               if(existingRelations.isEmpty()){
+		System.debug('Parent account to create hierarchy is ' + parentIdLst.get(0).ParentId);
 
-                    System.debug('Did not find any hierarchy, creating new one.');
+		Id parentId = parentIdLst.get(0).ParentId;
 
-                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+		Account parentAccount = new Account(Id = ParentId);
 
-                    insert hierarchy;
+		List<AMS_Agencies_relationhip__c> existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:parentAccount.Id LIMIT 1];
 
-               }else{
+		AMS_Agencies_Hierarchy__c hierarchy = null;
 
-                System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
+		if(existingRelations.isEmpty()){ // create a new hierarchy if not SA. If so we need to check something first ...
 
-                hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
+			// we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
+			if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
 
-               }
+				 existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
 
+				 if(existingRelations.isEmpty()){
 
-            }else{
+					System.debug('Did not find any hierarchy, creating new one.');
 
-                    System.debug('Did not find any hierarchy, creating new one.');
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
-                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+					insert hierarchy;
 
-                    insert hierarchy;
-            }
+				 }else{
 
-        }else{
+				System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
-            System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
+				hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
 
-            hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
-        }
+				 }
 
-        System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-        Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE);
+			}else{
 
-        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
+					System.debug('Did not find any hierarchy, creating new one.');
 
-        insert relationship;
+					hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', RecordTypeId = mainRecTypeId);
 
-        return true;
+					insert hierarchy;
+			}
 
-    }
+		}else{
 
-    private static String fetchOscarRecordType(String typeOfProcess){
+			System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+			hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
+		}
 
-        if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+		System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-        if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
+		Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE);
 
-        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
+		AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
 
-        if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+		insert relationship;
 
-        if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+		return true;
 
-        if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+	}
+	@TestVisible
+	private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+		if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
-        if(typeOfProcess.equalsIgnoreCase(NEWNAE))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+		if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
-        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
-        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
- 
-        if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
+		if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 
-        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+		if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 
-        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
-            return AMS_Utils.RECTYPE_GDI;
-            
-        return null;
+		if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
 
-    }
+		if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-    private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){
+		if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        if(fieldsToValidate.isEmpty())
-            return false;
+		if(typeOfProcess.equalsIgnoreCase(NEWNAE))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
 
+		if(typeOfProcess.equalsIgnoreCase(MCAE))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
 
+		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
-        for(String elem: fieldsToValidate){
-            if(String.isBlank(elem) || String.isEmpty(elem))
-                return true;
-        }
+		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
 
-        return false;
+		if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
-    }
+		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
 
-    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId, Id parentAccount){
+		if(typeOfProcess.equalsIgnoreCase(NEWNGLOBAL)) {
+			return AMS_Utils.RECTYPE_NEWGE;
+		}
 
-        AMS_OSCAR__c oscar;
-        AMS_Pax_Accreditation_Form__c accreditationObj;
+		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI)) {
+			return AMS_Utils.RECTYPE_GDI;
+		}
 
-        if(owner == null)
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
-        else
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
+		if(typeOfProcess.equalsIgnoreCase(AMS_UTILS.MCAE)) {
+			return AMS_Utils.RECTYPE_MCAE;
+		}
 
-        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV && processType != OPTINOPTOUT){
-            oscar.AMS_Online_Accreditation__c = accreditationId;
-        }
+		if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_MC)) {
+			return AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY;
+		}
 
-        if(processType.equalsIgnoreCase(AMS_Utils.NEWAE)){
-            fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
-        }
+		return null;
+	}
 
-        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
-        Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
+	private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){
 
-        if(processType.equalsIgnoreCase(NEWVR_PV)){
-            accreditationObj = fetchAccreditationObject(accreditationId);
-            oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
-            oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
-        }
+		if(fieldsToValidate.isEmpty())
+			return false;
 
-        //AMSU-140
-        //if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP) || processType.equalsIgnoreCase(AMS_Utils.COR)){
 
-            accreditationObj = fetchAccreditationObject(accreditationId);
 
-            handleOwners(accreditationObj);
+		for(String elem: fieldsToValidate){
+			if(String.isBlank(elem) || String.isEmpty(elem))
+				return true;
+		}
 
-            String typeOfChange = getFormatedTypeOfChange(processType,accreditationObj);
+		return false;
 
-            if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
-                oscar.Type_of_change__c = typeOfChange;
+	}
 
-            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+	private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId, Id parentAccount){
 
-                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
-            }
-        }
+		AMS_OSCAR__c oscar;
+		AMS_Pax_Accreditation_Form__c accreditationObj;
 
-        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
-        if(processesToUpdateCaseOnOscar.contains(processType)){
-            oscar.Oscar_Communication_Case_Id__c = caseId;
-        }
+		if(owner == null)
+			oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
+		else
+			oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
 
-        // this needs to be fetched from Accreditation Object. For now just use this.
-        if(processType == NEWNGLITE){
-            oscar.Is_using_credit_card__c = true;
-        }
+		if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV && processType != OPTINOPTOUT){
+			oscar.AMS_Online_Accreditation__c = accreditationId;
+		}
 
-        if(processType.equalsIgnoreCase(NEWCER_PV)){
-            List<Case> caseList = [SELECT Id, QuantityProduct__c FROM Case WHERE Id = :caseId LIMIT 1];
-            if(!caseList.isEmpty()){
-                oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
-            }
+		if(processType.equalsIgnoreCase(AMS_Utils.NEWAE) || processType.equalsIgnoreCase(AMS_Utils.MCAE)){
+			fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
+		}
 
-        }
+		//Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
+		Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
 
-        if(processType.equalsIgnoreCase(NGFOP_PV)){
-            oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
-            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;
-        }
+		if(processType.equalsIgnoreCase(NEWVR_PV)){
+			accreditationObj = fetchAccreditationObject(accreditationId);
+			oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
+			oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+		}
 
-        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+		//AMSU-140
+		//if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
+		if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP) || processType.equalsIgnoreCase(AMS_Utils.COR)){
 
-            oscar.ANG_FA_Opt_out__c = acc.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
-        }
-        
-        insert oscar;
+			accreditationObj = fetchAccreditationObject(accreditationId);
 
-        //AMSU-140
-        //if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
-        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) || processType.equalsIgnoreCase(AMS_Utils.COR) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+			handleOwners(accreditationObj);
 
-            processOscarProcessDetail(oscar,accreditationObj,accountId);
-        }
-        
-        return oscar.id;
-    }
+			String typeOfChange = getFormatedTypeOfChange(processType,accreditationObj);
 
-    public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
+			if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
+				oscar.Type_of_change__c = typeOfChange;
 
-        //Let's get the parent account
-        Account acct = [SELECT Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
-                        FROM Account WHERE Id = :parentId];
+			if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
 
-        AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
+				oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+			}
+		}
 
-        if(!acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c){
+		Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT, AMS_Utils.NGCONVERSIONTOMULTICOUNTRY};
+		if(processesToUpdateCaseOnOscar.contains(processType)){
+			oscar.Oscar_Communication_Case_Id__c = caseId;
+		}
 
-            if(parentId == accountId && acct.Location_Type__c == 'AE'){
-                accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
-            }
-            else
-                accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+		// this needs to be fetched from Accreditation Object. For now just use this.
+		if(processType == NEWNGLITE){
+			oscar.Is_using_credit_card__c = true;
+		}
 
-            update accredObject;
-        }
+		if(processType.equalsIgnoreCase(NEWCER_PV)){
+			List<Case> caseList = [SELECT Id, QuantityProduct__c FROM Case WHERE Id = :caseId LIMIT 1];
+			if(!caseList.isEmpty()){
+				oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
+			}
 
-        Account acctChild = new Account(Id = accountId);
-        acctChild.ANG_Accreditation_Model__c = acct.ANG_Accreditation_Model__c;
+		}
 
-        update acctChild;
+		if(processType.equalsIgnoreCase(NGFOP_PV)){
+			oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
+			oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;
+		}
 
-    }
+		if(processType.equalsIgnoreCase(OPTINOPTOUT)){
 
-    private static void handleOwners(AMS_Pax_Accreditation_Form__c accreditationObj){
+			oscar.ANG_FA_Opt_out__c = acc.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+		}
 
-        // The accreditation Contacts have two types : previous and current.
-        // The business rule is the following:
-        // if the accreditation form doesn't have current contact, just clone the previous contacts into current contacts.
-        // if the accreditation form has current contacts, don't clone nothing.
+		insert oscar;
 
-        Map<String,String> previousContactTypes = new Map<String,String>();
+		//AMSU-140
+		//if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+		if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) || processType.equalsIgnoreCase(AMS_Utils.COR) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
 
+			processOscarProcessDetail(oscar,accreditationObj,accountId);
+		}
 
-        previousContactTypes.put('Previous_Company_Owner','Current_Company_Owner');
-        previousContactTypes.put('Previous_Owner','Current_Owner');
+		if (processType.equalsIgnoreCase(CONVERT_TO_MC)) {
+			accreditationObj = fetchAccreditationObject(accreditationId);
+			createProcessDetailsForConversion(oscar.Id, getSelectedBranchList(accreditationObj.Agency_Codes_Concerned__c.split(',')));
+		}
 
-        List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
+		return oscar.id;
+	}
 
-        List<AMS_Accreditation_Contact__c> accContacts = [SELECT Id, RecordType.DeveloperName, Last_name__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id];
+	private static List<Account> getSelectedBranchList(List<String> branchCodes) {
+		Set<String> iataCodes = new Set<String>();
 
-        for(AMS_Accreditation_Contact__c con: accContacts){
-            if(previousContactTypes.get(con.RecordType.DeveloperName) != null){
-                idsToClone.add(con);
-            }
-        }
+		for (String iataCode: branchCodes) {
+			if (!String.isBlank(iataCode)) {
+				iataCodes.add(iataCode);
+			}
+		}
 
-        if(!accContacts.isEmpty() && accContacts.size() == idsToClone.size()){
-            cloneContacts(idsToClone,previousContactTypes);
-        }
+		return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+				FROM Account
+				WHERE IATACode__c IN :iataCodes
+				ORDER BY Name, IATACode__c];
+	}
 
+	public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
 
-    }
+		//Let's get the parent account
+		Account acct = [SELECT Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+						FROM Account WHERE Id = :parentId];
 
-    private static void cloneContacts(List<AMS_Accreditation_Contact__c> contacts, Map<String,String> previousContactTypes){
+		AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
 
-       // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
-        List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
+		if(!acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c){
 
-       for(AMS_Accreditation_Contact__c contact: contacts){
+			if(parentId == accountId && acct.Location_Type__c == 'AE'){
+				accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
+			}
+			else
+				accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
 
-            AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
+			update accredObject;
+		}
 
-            String newRecordTypeDevName = previousContactTypes.get(contact.RecordType.DeveloperName);
+		Account acctChild = new Account(Id = accountId);
+		acctChild.ANG_Accreditation_Model__c = acct.ANG_Accreditation_Model__c;
 
-            ID newRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', newRecordTypeDevName);
+		update acctChild;
 
-            contactCloned.recordTypeId = newRecordType;
+	}
 
-            toInsert.add(contactCloned);
+	private static void handleOwners(AMS_Pax_Accreditation_Form__c accreditationObj){
 
-       }
+		// The accreditation Contacts have two types : previous and current.
+		// The business rule is the following:
+		// if the accreditation form doesn't have current contact, just clone the previous contacts into current contacts.
+		// if the accreditation form has current contacts, don't clone nothing.
 
-       if(!toInsert.isEmpty())
-        insert toInsert;
+		Map<String,String> previousContactTypes = new Map<String,String>();
 
-    }
 
-    private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
+		previousContactTypes.put('Previous_Company_Owner','Current_Company_Owner');
+		previousContactTypes.put('Previous_Owner','Current_Owner');
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c, SAAM_Case__r.Reason1__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+		List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
 
-    }
+		List<AMS_Accreditation_Contact__c> accContacts = [SELECT Id, RecordType.DeveloperName, Last_name__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id];
 
-    public static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
+		for(AMS_Accreditation_Contact__c con: accContacts){
+			if(previousContactTypes.get(con.RecordType.DeveloperName) != null){
+				idsToClone.add(con);
+			}
+		}
 
-        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
-            return;
+		if(!accContacts.isEmpty() && accContacts.size() == idsToClone.size()){
+			cloneContacts(idsToClone,previousContactTypes);
+		}
 
-        if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){
-            AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
-            return ;
-        }
 
-        if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
+	}
 
-            List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(',');
+	private static void cloneContacts(List<AMS_Accreditation_Contact__c> contacts, Map<String,String> previousContactTypes){
 
-            List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
+		 // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
+		List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
 
-            List<AMS_Process_Detail__c> detailsToInsert = new List<AMS_Process_Detail__c>();
+		 for(AMS_Accreditation_Contact__c contact: contacts){
 
-            ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+			AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
 
-            for(Account acct: accountsToCreate){
+			String newRecordTypeDevName = previousContactTypes.get(contact.RecordType.DeveloperName);
 
-                if(acct.Id <> accountFromOscar){
+			ID newRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', newRecordTypeDevName);
 
-                    System.debug('Oscar Account Id is ' + oscar.Account__r.Id + ' and account Id is ' + acct.Id);
+			contactCloned.recordTypeId = newRecordType;
 
-                    AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
+			toInsert.add(contactCloned);
 
-                    detailsToInsert.add(detail);
-                }
-            }
+		 }
 
-            if(!detailsToInsert.isEmpty())
-                insert detailsToInsert;
-        }
+		 if(!toInsert.isEmpty())
+		insert toInsert;
 
+	}
 
-        return;
+	private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-    }
+		return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c, SAAM_Case__r.Reason1__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
-    private static String getFormatedTypeOfChange(String processType, AMS_Pax_Accreditation_Form__c accreditationObj){
+	}
 
-        String typeOfChange = '';
+	public static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
-        if(accreditationObj.Notify_Change_Legal_Details__c)
-            typeOfChange += 'Name;';
-        if(accreditationObj.Notify_Change_Location__c)
-            typeOfChange += 'Location;';
-        if(accreditationObj.Notify_Change_Ownership__c)
-            typeOfChange += 'Ownership to non-IATA Agent;';
+		if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
+			return;
 
-        if(typeOfChange != '')
-            typeOfChange = typeOfChange.removeEnd(';');
-        else
-            return null;
+		if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){
+			AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+			return ;
+		}
 
-        return typeOfChange;
+		if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
 
-    }
+			List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(',');
 
-    public static boolean containsTradeName(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
-        for(AMS_RecordCreatorWebservice.AccountChanges achange: accountChanges){
-            if(achange.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
-                return true;
-        }
-        return false;
-    }
+			List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
 
-    /**
-        Creates an Change Code object, based on a pre-defined message, and alerts the Owner of the Account
-    **/
-    webservice static void createMinorChangesChangeCode(String accountId, List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+			List<AMS_Process_Detail__c> detailsToInsert = new List<AMS_Process_Detail__c>();
 
-        // get the Account and creates a change code (Agency_Applied_Change_code__c)
-        // Notify the Agent via email using predefined email template
+			ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
-        Boolean hasTN = containsTradeName(accountChanges);
+			for(Account acct: accountsToCreate){
 
-        List<Account> accountsToProcess = new List<Account>();
-        List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
-        List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
+				if(acct.Id <> accountFromOscar){
 
-        AMS_OSCAR_JSON.ChangeCode changeCodeTN = null;
-        AMS_OSCAR_JSON.ChangeCode changeCode = null;
+					System.debug('Oscar Account Id is ' + oscar.Account__r.Id + ' and account Id is ' + acct.Id);
 
-        if(accountId == null)
-            throw new CalloutException('Account Id must be filled.');
+					AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
 
-        Account account = new Account(Id = accountId);
-        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
+					detailsToInsert.add(detail);
+				}
+			}
 
-        if(a == null)
-            throw new CalloutException('Account could not be found.');
+			if(!detailsToInsert.isEmpty())
+				insert detailsToInsert;
+		}
 
-        if(hasTN){
-                  
-            if(!a.CNS_Agency__c) {
-                changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
-                if(a.Agencies_Applied_Change_codes__r.size() > 0){
-                        changeCodeTN.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
-                        changeCodeTN.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
-                }
+		return;
 
-                //2080607 DT: switched to A
-	            //accountsToProcess.add(account);
-	            accountsToProcess.add(a);
-                changeCodesToProcess.add(changeCodeTN);
-                oscarsToProcess.add(null);
-            }
-        }
+	}
 
-        if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !hasTN )){
+	private static String getFormatedTypeOfChange(String processType, AMS_Pax_Accreditation_Form__c accreditationObj){
 
-            changeCode = generateChangeCode(accountChanges);
-            changeCode.publishedOnEBulletin = a.CNS_Agency__c && a.Location_Class__c == 'C'; //CAD change codes for CNS C agencies is published on the ebulletin
+		String typeOfChange = '';
 
-            if(a.Agencies_Applied_Change_codes__r.size() > 0){
-                    changeCode.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
-                    changeCode.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
-            }
+		if(accreditationObj.Notify_Change_Legal_Details__c)
+			typeOfChange += 'Name;';
+		if(accreditationObj.Notify_Change_Location__c)
+			typeOfChange += 'Location;';
+		if(accreditationObj.Notify_Change_Ownership__c)
+			typeOfChange += 'Ownership to non-IATA Agent;';
 
-            //2080607 DT: switched to A
-            //accountsToProcess.add(account);
-            accountsToProcess.add(a);
-            changeCodesToProcess.add(changeCode);
-            oscarsToProcess.add(null);
-        }
+		if(typeOfChange != '')
+			typeOfChange = typeOfChange.removeEnd(';');
+		else
+			return null;
 
-        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
+		return typeOfChange;
 
-        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
-        // for now we shouldn't sent any notification.
-        //sendNotification(accountId,accountChanges);
+	}
 
-    }
+	public static boolean containsTradeName(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+		for(AMS_RecordCreatorWebservice.AccountChanges achange: accountChanges){
+			if(achange.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
+				return true;
+		}
+		return false;
+	}
 
-    public static void testsendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
-        sendNotification(accountId, accountChanges );
-    }
+	/**
+		Creates an Change Code object, based on a pre-defined message, and alerts the Owner of the Account
+	**/
+	webservice static void createMinorChangesChangeCode(String accountId, List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
-    private static void sendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
+		// get the Account and creates a change code (Agency_Applied_Change_code__c)
+		// Notify the Agent via email using predefined email template
 
-        String name = '';
-        String userEmail = '';
-        String alias = '';
+		Boolean hasTN = containsTradeName(accountChanges);
 
-        Account acct = [SELECT Id, OwnerId, Name from Account where Id = :accountId];
+		List<Account> accountsToProcess = new List<Account>();
+		List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
+		List<AMS_OSCAR__c> oscarsToProcess = new List<AMS_OSCAR__c>();
 
-        if(acct == null)
-            throw new CalloutException('Account could not be found.');
+		AMS_OSCAR_JSON.ChangeCode changeCodeTN = null;
+		AMS_OSCAR_JSON.ChangeCode changeCode = null;
 
-        List<User> usrLst = [select Id, Alias, FirstName, LastName, Email from USER where Id = :acct.OwnerId];
+		if(accountId == null)
+			throw new CalloutException('Account Id must be filled.');
 
-        if(!usrLst.isEmpty()){
-            name = usrLst.get(0).FirstName + ' ' + usrLst.get(0).LastName;
-            userEmail = usrLst.get(0).Email;
-        }
+		Account account = new Account(Id = accountId);
+		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		if(a == null)
+			throw new CalloutException('Account could not be found.');
 
-        EmailTemplate et = [Select Id, Subject, Body, HtmlValue from EmailTemplate where Name = 'AMS Minor Changes Notification'];
-        String subject = et.Subject;
-        String plainBody = et.Body;
-        String htmlBody = et.HtmlValue;
+		if(hasTN){
 
-        String memoText = createMemoText(accountChanges);
+			if(!a.CNS_Agency__c) {
+				changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
-        String accountURL = System.URL.getSalesforceBaseURL().toExternalForm() + '/' + acct.Id;
+				if(a.Agencies_Applied_Change_codes__r.size() > 0){
+						changeCodeTN.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+						changeCodeTN.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
+				}
 
-        plainBody = plainBody.replace('#USERFULLNAME',name);
-        plainBody = plainBody.replace('#ACCOUNTNAME',acct.Name);
-        plainBody = plainBody.replace('#ACCOUNTCHANGES', memoText);
+				//2080607 DT: switched to A
+				//accountsToProcess.add(account);
+				accountsToProcess.add(a);
+				changeCodesToProcess.add(changeCodeTN);
+				oscarsToProcess.add(null);
+			}
+		}
 
-        memoText = memoText.replaceAll('\r\n', '<br>');
+		if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !hasTN )){
 
-        htmlBody = htmlBody.replace('#USERFULLNAME',name);
-        htmlBody = htmlBody.replace('#ACCOUNTNAME',acct.Name);
-        htmlBody = htmlBody.replace('#ACCOUNTCHANGES', memoText);
-        htmlBody = htmlBody.replace('#HTMLPAGE', accountURL);
+			changeCode = generateChangeCode(accountChanges);
+			changeCode.publishedOnEBulletin = a.CNS_Agency__c && a.Location_Class__c == 'C'; //CAD change codes for CNS C agencies is published on the ebulletin
 
-        mail.setHtmlBody(htmlBody);
-        mail.setPlainTextBody(plainBody);
-        mail.subject = ' IATA - AMS Minor Changes Notification';
+			if(a.Agencies_Applied_Change_codes__r.size() > 0){
+					changeCode.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+					changeCode.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
+			}
 
-        // set users
-        List<String> emails = new List<String>{userEmail};
-        mail.setToAddresses(emails);
+			//2080607 DT: switched to A
+			//accountsToProcess.add(account);
+			accountsToProcess.add(a);
+			changeCodesToProcess.add(changeCode);
+			oscarsToProcess.add(null);
+		}
 
-        List<String> emailsCC = new List<String>{'goncalvesd@iata.org'};
-        mail.setCcAddresses(emailsCC);
+		List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
-        // Sends the email
-        Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-    }
+		AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
-    public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+	}
 
-        AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
-        AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
+	public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
-        toReturn.name = cad.Change_Code__c;
-        toReturn.memoText = cad.Bulletin_Memo_Text__c;
+		AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
 
-        return toReturn;
-    }
+		toReturn.name = cad.Change_Code__c;
+		toReturn.memoText = cad.Bulletin_Memo_Text__c;
 
-    public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,Boolean isToChangeStatus){
+		return toReturn;
+	}
 
-        AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
-        AMS_ChangeCodes__c cta = AMS_ChangeCodes__c.getInstance('CTA');
+	public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,Boolean isToChangeStatus){
 
-        toReturn.name = cta.Change_Code__c;
-        toReturn.memoText = cta.Bulletin_Memo_Text__c;//createMemoText(accountChanges);
+		AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_ChangeCodes__c cta = AMS_ChangeCodes__c.getInstance('CTA');
 
-        return toReturn;
-    }
+		toReturn.name = cta.Change_Code__c;
+		toReturn.memoText = cta.Bulletin_Memo_Text__c;//createMemoText(accountChanges);
 
-    private static String createMemoText(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+		return toReturn;
+	}
 
-        String type='Account';
-        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        Schema.SObjectType leadSchema = schemaMap.get(type);
-        Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+	private static String createMemoText(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
-        String bulletinInformation = 'Changes requested via Portal with the following values: \r\n\r\n';
+		String type='Account';
+		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+		Schema.SObjectType leadSchema = schemaMap.get(type);
+		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
-        for(AMS_RecordCreatorWebservice.AccountChanges change: accountChanges){
+		String bulletinInformation = 'Changes requested via Portal with the following values: \r\n\r\n';
 
-            String label = fieldMap.get(change.accountFieldAPI).getDescribe().getLabel();
+		for(AMS_RecordCreatorWebservice.AccountChanges change: accountChanges){
 
-            bulletinInformation += 'Field:'+label+' || Old Value:'+change.oldValue+ ' || New Value:' +change.newValue + '\r\n\r\n';
+			String label = fieldMap.get(change.accountFieldAPI).getDescribe().getLabel();
 
-        }
+			bulletinInformation += 'Field:'+label+' || Old Value:'+change.oldValue+ ' || New Value:' +change.newValue + '\r\n\r\n';
 
-        return bulletinInformation;
-    }
+		}
 
+		return bulletinInformation;
+	}
 
 
-    global class AccountChanges {
 
-        webservice String accountFieldAPI{get;set;}
-        webservice String oldValue{get;set;}
-        webservice String newValue{get;set;}
+	global class AccountChanges {
 
-        public AccountChanges(String accountFieldAPI, String oldValue, String newValue){
+		webservice String accountFieldAPI{get;set;}
+		webservice String oldValue{get;set;}
+		webservice String newValue{get;set;}
 
-            this.accountFieldAPI = accountFieldAPI;
-            this.oldValue = oldValue;
-            this.newValue = newValue;
-        }
+		public AccountChanges(String accountFieldAPI, String oldValue, String newValue){
 
-    }
+			this.accountFieldAPI = accountFieldAPI;
+			this.oldValue = oldValue;
+			this.newValue = newValue;
+		}
 
-    /**
-        Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
-    **/
-    webservice static String createAccreditationForSA(String caseId){
+	}
 
-        // Create a savepoint
-        Savepoint sp = Database.setSavepoint();
-        String oscarId = null;
+	/**
+		Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
+	**/
+	webservice static String createAccreditationForSA(String caseId){
 
-        try{
+		// Create a savepoint
+		Savepoint sp = Database.setSavepoint();
+		String oscarId = null;
 
-            Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+		try{
 
-            Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+			Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
-            Id ownerId = null;
+			Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
-            if(!Test.isRunningTest())
-                ownerId = caseObj.OwnerId;
+			Id ownerId = null;
 
-            //Create a new Account for the SA, with the values reported in the below table
+			if(!Test.isRunningTest())
+				ownerId = caseObj.OwnerId;
 
-            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,Top_Parent__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+			//Create a new Account for the SA, with the values reported in the below table
 
-            Account newSAAccount = createSAAccount(parentAccount);
+			Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,Top_Parent__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
-            String typeOfProcess = 'NEW.SA.1.0';
+			Account newSAAccount = createSAAccount(parentAccount);
 
-            AMS_Pax_Accreditation_Form__c accreditationObj = createAccreditationObjectForSA(newSAAccount,caseObj);
+			String typeOfProcess = 'NEW.SA.1.0';
 
-            AMS_MigrationToolHelper.createAccreditationContacts(accreditationObj, parentAccount.Id, typeOfProcess);
+			AMS_Pax_Accreditation_Form__c accreditationObj = createAccreditationObjectForSA(newSAAccount,caseObj);
 
-            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null, null);
+			AMS_MigrationToolHelper.createAccreditationContacts(accreditationObj, parentAccount.Id, typeOfProcess);
 
-            if(String.isBlank(oscarId))
-                throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
-                //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
+			oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null, null);
 
-            if(!createHierarchy(newSAAccount.Id, typeOfProcess)){
-                Database.rollback(sp);
-                throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
-            }
+			if(String.isBlank(oscarId))
+				throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
+				//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
+			if(!createHierarchy(newSAAccount.Id, typeOfProcess)){
+				Database.rollback(sp);
+				throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
+			}
 
-            ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-            caseObj.OSCAR__c = oscarId;
-            caseObj.AccountId = newSAAccount.Id;
-            caseObj.RecordTypeId = rtCommCase;
-            caseObj.Account_Concerned__c = null;
+			ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-            String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(caseObj.Account.Location_Type__c,caseObj.Account.Category__c);
+			caseObj.OSCAR__c = oscarId;
+			caseObj.AccountId = newSAAccount.Id;
+			caseObj.RecordTypeId = rtCommCase;
+			caseObj.Account_Concerned__c = null;
 
-            if(typeOfCustomer != null)
-                caseObj.Type_of_Customer__c = typeOfCustomer;
+			String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(caseObj.Account.Location_Type__c,caseObj.Account.Category__c);
 
-            update caseObj;
+			if(typeOfCustomer != null)
+				caseObj.Type_of_Customer__c = typeOfCustomer;
 
+			update caseObj;
 
-        }
-        catch(Exception e){
-            System.debug('DML exception: ' + e);
-            Database.rollback(sp);
-            throw e;
-            //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
-        }
 
-        return oscarId;
+		}
+		catch(Exception e){
+			System.debug('DML exception: ' + e);
+			Database.rollback(sp);
+			throw e;
+			//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
+		}
 
-        // Rollback to the previous null value
+		return oscarId;
 
+		// Rollback to the previous null value
 
-    }
 
-    public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForSA(Account accountSA, Case caseObj){
+	}
 
-        AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+	public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForSA(Account accountSA, Case caseObj){
 
-        accreditationObj.SAAM_Case__c = caseObj.Id;
-        accreditationObj.Account_Name__c = accountSA.Name;
-        accreditationObj.Short_Name__c = accountSA.Short_Name__c;
-        accreditationObj.Abbreviated_name__c = accountSA.Abbreviated_name__c;
-        accreditationObj.Trade_Name__c = accountSA.TradeName__c;
-        accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountSA.Company_Type__c);
+		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
 
-        accreditationObj.Shipping_City__c = accountSA.ShippingCity;
-        accreditationObj.Shipping_Country__c = accountSA.ShippingCountry;
-        accreditationObj.Shipping_ISO_Country__c = accountSA.IATA_ISO_Shipping_Country__c;
-        accreditationObj.Shipping_ISO_State__c = accountSA.IATA_ISO_Shipping_State__c;
-        accreditationObj.Shipping_Postal_Code__c = accountSA.ShippingPostalCode;
-        accreditationObj.Shipping_State__c = accountSA.ShippingState;
-        accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
+		accreditationObj.SAAM_Case__c = caseObj.Id;
+		accreditationObj.Account_Name__c = accountSA.Name;
+		accreditationObj.Short_Name__c = accountSA.Short_Name__c;
+		accreditationObj.Abbreviated_name__c = accountSA.Abbreviated_name__c;
+		accreditationObj.Trade_Name__c = accountSA.TradeName__c;
+		accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountSA.Company_Type__c);
 
-        accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
-        accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
-        accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
-        accreditationObj.Billing_State__c = accountSA.BillingState;
-        accreditationObj.Abbreviated_Address__c = accountSA.Abbreviated_Address__c;
-        accreditationObj.Website__c = accountSA.Website;
-        accreditationObj.Branch_Office_Phone__c = accountSA.Phone;
-        accreditationObj.Branch_Office_Email__c = accountSA.Email__c;
-        accreditationObj.Branch_Office_FAX__c = accountSA.Fax;
-        accreditationObj.Location_Type__c = 'SA';
-        accreditationObj.Location_Class__c = 'P';
-        accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
-        accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
-        accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
-        accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
+		accreditationObj.Shipping_City__c = accountSA.ShippingCity;
+		accreditationObj.Shipping_Country__c = accountSA.ShippingCountry;
+		accreditationObj.Shipping_ISO_Country__c = accountSA.IATA_ISO_Shipping_Country__c;
+		accreditationObj.Shipping_ISO_State__c = accountSA.IATA_ISO_Shipping_State__c;
+		accreditationObj.Shipping_Postal_Code__c = accountSA.ShippingPostalCode;
+		accreditationObj.Shipping_State__c = accountSA.ShippingState;
+		accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
 
+		accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
+		accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
+		accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
+		accreditationObj.Billing_State__c = accountSA.BillingState;
+		accreditationObj.Abbreviated_Address__c = accountSA.Abbreviated_Address__c;
+		accreditationObj.Website__c = accountSA.Website;
+		accreditationObj.Branch_Office_Phone__c = accountSA.Phone;
+		accreditationObj.Branch_Office_Email__c = accountSA.Email__c;
+		accreditationObj.Branch_Office_FAX__c = accountSA.Fax;
+		accreditationObj.Location_Type__c = 'SA';
+		accreditationObj.Location_Class__c = 'P';
+		accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
+		accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
+		accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
+		accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
 
-        insert accreditationObj;
 
-        return accreditationObj;
-    }
+		insert accreditationObj;
 
+		return accreditationObj;
+	}
 
-    public static Account createSAAccount(Account parentAccount){
+	public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForMC(Account accountMC, Case caseObj){
 
-        Account acctSA = new Account();
+		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
 
-        acctSA.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        acctSA.Name = parentAccount.Name;
-        acctSA.Short_Name__c = parentAccount.Short_Name__c;
-        acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;
-        acctSA.TradeName__c = parentAccount.TradeName__c;
-        acctSA.Company_Type__c = parentAccount.Company_Type__c;
+		accreditationObj.SAAM_Case__c = caseObj.Id;
+		accreditationObj.Account_Name__c = accountMC.Name;
+		accreditationObj.Short_Name__c = accountMC.Short_Name__c;
+		accreditationObj.Abbreviated_name__c = accountMC.Abbreviated_name__c;
+		accreditationObj.Trade_Name__c = accountMC.TradeName__c;
+		accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountMC.Company_Type__c);
 
-        acctSA.ShippingCity = parentAccount.ShippingCity;
-        acctSA.ShippingCountry = parentAccount.ShippingCountry;
-        acctSA.ShippingPostalCode = parentAccount.ShippingPostalCode;
-        acctSA.ShippingState = parentAccount.ShippingState;
-        acctSA.ShippingStreet = parentAccount.ShippingStreet;
+		accreditationObj.Shipping_City__c = accountMC.ShippingCity;
+		accreditationObj.Shipping_Country__c = accountMC.ShippingCountry;
+		accreditationObj.Shipping_ISO_Country__c = accountMC.IATA_ISO_Shipping_Country__c;
+		accreditationObj.Shipping_ISO_State__c = accountMC.IATA_ISO_Shipping_State__c;
+		accreditationObj.Shipping_Postal_Code__c = accountMC.ShippingPostalCode;
+		accreditationObj.Shipping_State__c = accountMC.ShippingState;
+		accreditationObj.Shipping_Street__c = accountMC.ShippingStreet;
 
-        acctSA.BillingCity = parentAccount.BillingCity;
-        acctSA.BillingCountry = parentAccount.BillingCountry;
-        acctSA.BillingPostalCode = parentAccount.BillingPostalCode;
-        acctSA.BillingState = parentAccount.BillingState;
-        acctSA.BillingStreet = parentAccount.BillingStreet;
+		accreditationObj.Branch_Office_Country__c = accountMC.IATA_ISO_Country__c;
+		accreditationObj.ISO_Country__c = accountMC.IATA_ISO_Country__c;
+		accreditationObj.IATA_ISO_State__c = accountMC.Iso_State__c;
+		accreditationObj.Billing_State__c = accountMC.BillingState;
+		accreditationObj.Abbreviated_Address__c = accountMC.Abbreviated_Address__c;
+		accreditationObj.Website__c = accountMC.Website;
+		accreditationObj.Branch_Office_Phone__c = accountMC.Phone;
+		accreditationObj.Branch_Office_Email__c = accountMC.Email__c;
+		accreditationObj.Branch_Office_FAX__c = accountMC.Fax;
+		accreditationObj.Location_Type__c = accountMC.Location_Type__c;
+		accreditationObj.Location_Class__c = accountMC.Location_Class__c;
+		accreditationObj.Branch_Office_Street_name_number__c = accountMC.BillingStreet;
+		accreditationObj.Branch_Office_Postal_code__c = accountMC.BillingPostalCode;
+		accreditationObj.Branch_Office_City__c = accountMC.BillingCity;
+		accreditationObj.Operation_Type__c = accountMC.Sector__c.replace(' ','_');
 
-        acctSA.IATA_ISO_Country__c = parentAccount.IATA_ISO_Country__c;
-        acctSA.Iso_State__c = parentAccount.Iso_State__c;
-        acctSA.Abbreviated_address__c = parentAccount.Abbreviated_address__c;
-        acctSA.Website = parentAccount.Website;
-        acctSA.Phone = parentAccount.Phone;
-        acctSA.Fax = parentAccount.Fax;
-        acctSA.Email__c = parentAccount.Email__c;
-        acctSA.Location_Type__c ='SA';
-        acctSA.Location_Class__c = 'P';
-        acctSA.Sector__c = 'Travel Agent';
-        acctSA.Category__c = 'Non-IATA Travel Agent';
-        acctSA.ParentId = parentAccount.Id;
-        acctSA.REASON_FOR_CREATION__C = 'Created by customer';
 
-        if (parentAccount.Top_Parent__c == null) {
-            acctSA.Top_Parent__c = parentAccount.Id;
-        } else {
-                acctSA.Top_Parent__c = parentAccount.Top_Parent__c;
-        }
+		insert accreditationObj;
 
-        insert acctSA;
+		return accreditationObj;
+	}
 
-        return acctSA;
 
-    }
+	public static Account createSAAccount(Account parentAccount){
+
+		Account acctSA = new Account();
+
+		acctSA.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		acctSA.Name = parentAccount.Name;
+		acctSA.Short_Name__c = parentAccount.Short_Name__c;
+		acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;
+		acctSA.TradeName__c = parentAccount.TradeName__c;
+		acctSA.Company_Type__c = parentAccount.Company_Type__c;
+
+		acctSA.ShippingCity = parentAccount.ShippingCity;
+		acctSA.ShippingCountry = parentAccount.ShippingCountry;
+		acctSA.ShippingPostalCode = parentAccount.ShippingPostalCode;
+		acctSA.ShippingState = parentAccount.ShippingState;
+		acctSA.ShippingStreet = parentAccount.ShippingStreet;
+
+		acctSA.BillingCity = parentAccount.BillingCity;
+		acctSA.BillingCountry = parentAccount.BillingCountry;
+		acctSA.BillingPostalCode = parentAccount.BillingPostalCode;
+		acctSA.BillingState = parentAccount.BillingState;
+		acctSA.BillingStreet = parentAccount.BillingStreet;
+
+		acctSA.IATA_ISO_Country__c = parentAccount.IATA_ISO_Country__c;
+		acctSA.Iso_State__c = parentAccount.Iso_State__c;
+		acctSA.Abbreviated_address__c = parentAccount.Abbreviated_address__c;
+		acctSA.Website = parentAccount.Website;
+		acctSA.Phone = parentAccount.Phone;
+		acctSA.Fax = parentAccount.Fax;
+		acctSA.Email__c = parentAccount.Email__c;
+		acctSA.Location_Type__c ='SA';
+		acctSA.Location_Class__c = 'P';
+		acctSA.Sector__c = 'Travel Agent';
+		acctSA.Category__c = 'Non-IATA Travel Agent';
+		acctSA.ParentId = parentAccount.Id;
+		acctSA.REASON_FOR_CREATION__C = 'Created by customer';
+
+		if (parentAccount.Top_Parent__c == null) {
+			acctSA.Top_Parent__c = parentAccount.Id;
+		} else {
+				acctSA.Top_Parent__c = parentAccount.Top_Parent__c;
+		}
+
+		insert acctSA;
+
+		return acctSA;
+
+	}
 }

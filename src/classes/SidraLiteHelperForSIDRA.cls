@@ -1,7 +1,7 @@
 public with sharing class SidraLiteHelperForSIDRA {
 
 	public static final Set<String> ALLOWED_ACCOUNT_STATUS = new Set<String>{'Approved', 'Changes processed'};
-	
+
 	public class SidraLiteException extends Exception {}
 
 
@@ -15,27 +15,27 @@ public with sharing class SidraLiteHelperForSIDRA {
 	}
 
 	/**
-        Create a dummy case to set the default values for first non compliance date
-    **/
-    public static Case createDummyCaseFirstNonCompliance(Case parentCase) {
+		Create a dummy case to set the default values for first non compliance date
+	**/
+	public static Case createDummyCaseFirstNonCompliance(Case parentCase) {
 
-        Case newCase = new Case();
-        newCase.RecordTypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE;
-        newCase.Subject = 'SIDRA Lite – Financial Security Non-compliance';
-        newCase.ParentId = parentCase.Id;
-        newCase.Region__c = parentCase.Region__c;
-        newCase.BSPCountry__c = parentCase.BSPCountry__c;
-        newCase.BSP_CASS__c = 'BSP';
-        newCase.Priority = 'Normal';
-        newCase.AccountId = parentCase.AccountId;
-        newCase.ContactId = parentCase.ContactId;
-        newCase.Origin = 'IATA Internal User';
-        newCase.Status = 'Open';
-        newCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
-        newCase.SIDRA_Lite_Default_Date__c = Date.today();
-        newCase.Reason_for_Default__c ='Suspension - FS Non Compliance';
+		Case newCase = new Case();
+		newCase.RecordTypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE;
+		newCase.Subject = 'SIDRA Lite – Financial Security Non-compliance';
+		newCase.ParentId = parentCase.Id;
+		newCase.Region__c = parentCase.Region__c;
+		newCase.BSPCountry__c = parentCase.BSPCountry__c;
+		newCase.BSP_CASS__c = 'BSP';
+		newCase.Priority = 'Normal';
+		newCase.AccountId = parentCase.AccountId;
+		newCase.ContactId = parentCase.ContactId;
+		newCase.Origin = 'IATA Internal User';
+		newCase.Status = 'Open';
+		newCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+		newCase.SIDRA_Lite_Default_Date__c = Date.today();
+		newCase.Reason_for_Default__c ='Suspension - FS Non Compliance';
 
-        return newCase;
-    }
+		return newCase;
+	}
 
 }

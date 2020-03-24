@@ -94,7 +94,7 @@ private class ISSP_LoginTest {
 		am.TeamMemberRole = 'Portal Administrator';
 
 		insert am;
-		
+
 		system.runAs(newUser){
 			Apexpages.currentPage().getParameters().put('retURL', '/test');
 			ISSP_Login ctrl = new ISSP_Login();

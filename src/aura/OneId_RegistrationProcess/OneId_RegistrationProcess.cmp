@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div aria-hidden="true" class="slds-accordion__content" id="step1">
-                                    <c:OneId_EmailValidation contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" isGuest="{!v.isGuest}"/>
+                                    <c:OneId_EmailValidation contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" isInvited = "{!not(empty(v.invitationId))}" isGuest="{!v.isGuest}"/>
                                 </div>
                             </section>
                         </div>

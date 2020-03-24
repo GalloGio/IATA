@@ -17,7 +17,7 @@ public class ANG_AgencyAChangeCodeTriggerHandler{
 
 	public void onBeforeUpdate(){
 	}
-	
+
 	public void onAfterUpdate() {
 	}
 

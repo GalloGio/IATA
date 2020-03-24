@@ -2,14 +2,14 @@
  *	Description: This batch class is use to perform IEC_Event_Release_Log__c
  *	Author: David D
  *	Version: 1.0
- *	
+ *
  ***********************************************/
-global class IEC_ReleaseLogCleanup_Batch implements Database.Batchable<sObject> 
+global class IEC_ReleaseLogCleanup_Batch implements Database.Batchable<sObject>
 {
 	List<IEC_Event_Release__c> releases;
 	String finalAction;
-	
-	global IEC_ReleaseLogCleanup_Batch(List<IEC_Event_Release__c> lst, String fAction) 
+
+	global IEC_ReleaseLogCleanup_Batch(List<IEC_Event_Release__c> lst, String fAction)
 	{
 		releases = lst;
 		finalAction = fAction;
@@ -23,10 +23,10 @@ global class IEC_ReleaseLogCleanup_Batch implements Database.Batchable<sObject>
 
 		update releasesToUpdate;
 	}
-	
-	global Database.QueryLocator start(Database.BatchableContext BC) 
+
+	global Database.QueryLocator start(Database.BatchableContext BC)
 	{
-		List<String> releaseIds = new List<String>(); 
+		List<String> releaseIds = new List<String>();
 		Set<Id> setReleaseIds = new Set<Id>();
 		for(IEC_Event_Release__c release : releases)
 		{
@@ -41,17 +41,17 @@ global class IEC_ReleaseLogCleanup_Batch implements Database.Batchable<sObject>
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<sObject> scope) 
-   	{
+	 	global void execute(Database.BatchableContext BC, List<sObject> scope)
+	 	{
 		delete scope;
 	}
-	
-	global void finish(Database.BatchableContext BC) 
+
+	global void finish(Database.BatchableContext BC)
 	{
 		if(finalAction == 'ClearAutoRenewals')
 		{
 			Database.executeBatch(new IEC_AutoRenewCleanup_Batch(releases, 'GenerateEventAutoRenewals'));
 		}
 	}
-	
+
 }

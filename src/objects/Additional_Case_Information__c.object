@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Acknowledgment_Sent__c</fullName>
+        <description>The date the acknowledgment of the receipt of the request was sent to the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date the acknowledgment of the receipt of the request was sent to the customer</inlineHelpText>
+        <label>Acknowledgment Sent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Agreement_Deadline__c</fullName>
+        <description> The date by when the customer needs to submit the signed agreement</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date by when the customer needs to submit the signed agreement</inlineHelpText>
+        <label>Agreement Deadline</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Agreement_Received__c</fullName>
+        <description> The date when the signed  agreement has been received  from the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when the signed  agreement has been received  from the customer</inlineHelpText>
+        <label>Agreement Received</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Agreement_Requested__c</fullName>
+        <description> The date when then the agreement has been sent to the customer to sign</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when then the agreement has been sent to the customer to sign</inlineHelpText>
+        <label>Agreement Requested</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Agreement_Result__c</fullName>
+        <description> The result of the agreement whether it passes the sanity check and meets all the necessary criteria or not.</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The result of the agreement whether it passes the sanity check and meets all the necessary criteria or not.</inlineHelpText>
+        <label>Agreement Result</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Additional Case Informations</relationshipLabel>
+        <relationshipName>Additional_Case_Informations</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Change_Effective_As_Of__c</fullName>
+        <description> The date when the change request became affected, reflected in the relative systems and communicated to the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when the change request became affected, reflected in the relative systems and communicated to the customer</inlineHelpText>
+        <label>Change Effective As Of</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Deadline_Date__c</fullName>
+        <description>This is the initial deadline for the processing</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the initial deadline for the processing</inlineHelpText>
+        <label>Deadline Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Documentation_Complete__c</fullName>
+        <description>Indicates the  date when the documentation has passed the sanity check and deemed as complete to start the processing of the request</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the  date when the documentation has passed the sanity check and deemed as complete to start the processing of the request</inlineHelpText>
+        <label>Documentation Complete</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Documentation_Remarks__c</fullName>
+        <description>Used to enter any remarks regarding the sanity of the documentation submitted  or any missing requirement in relation to the submitted request</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to enter any remarks regarding the sanity of the documentation submitted  or any missing requirement in relation to the submitted request</inlineHelpText>
+        <label>Documentation Remarks</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Dossier_Reception_Date__c</fullName>
+        <description>The date the request with the relevant documentation has been received</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date the request with the relevant documentation has been received</inlineHelpText>
+        <label>Dossier Reception Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Due_Diligence_Deadline__c</fullName>
+        <description>Indicates the deadline based on the due diligence process timelines</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the deadline based on the due diligence process timelines</inlineHelpText>
+        <label>Due Diligence Deadline</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Due_Diligence_Performed_Date__c</fullName>
+        <description>It is used to confirm when the due diligence was performed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>It is used to confirm when the due diligence was performed</inlineHelpText>
+        <label>Due Diligence Performed Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Due_Diligence_Requested__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox indicates when due diligence has been requested, please select it when applicable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This checkbox indicates when due diligence has been requested, please select it when applicable</inlineHelpText>
+        <label>Due Diligence Requested</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Due_Diligence_Result__c</fullName>
+        <description>This field is used to provide the result of the due diligence process</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to provide the result of the due diligence process</inlineHelpText>
+        <label>Due Diligence Result</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fail</fullName>
+                    <default>false</default>
+                    <label>Fail</label>
+                </value>
+                <value>
+                    <fullName>Pass</fullName>
+                    <default>false</default>
+                    <label>Pass</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Fees_Refund_Requested__c</fullName>
+        <description> The date the paid fees refund has been requested, applicable in case of withdrawal or cancellation of the request</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date the paid fees refund has been requested, applicable in case of withdrawal or cancellation of the request</inlineHelpText>
+        <label>Fees Refund Requested </label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Finalized_In_Systems__c</fullName>
+        <description> The date when all necessary system has been updated to finalize the request</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when all necessary system has been updated to finalize the request</inlineHelpText>
+        <label>Finalized In Systems</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <description> The document number of the invoice</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The document number of the invoice</inlineHelpText>
+        <label>Invoice Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Requested__c</fullName>
+        <description> The date the invoice was requested to be issued</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date the invoice was requested to be issued</inlineHelpText>
+        <label>Invoice Requested</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <description>The status of the invoice whether paid or not</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The status of the invoice whether paid or not</inlineHelpText>
+        <label>Invoice Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Unpaid</fullName>
+                    <default>true</default>
+                    <label>Unpaid</label>
+                </value>
+                <value>
+                    <fullName>Paid</fullName>
+                    <default>false</default>
+                    <label>Paid</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>New_Deadline_Date__c</fullName>
+        <description>If the initial deadline has been updated (delayed or forwarded) this date should have the updated deadline</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If the initial deadline has been updated (delayed or forwarded) this date should have the updated deadline</inlineHelpText>
+        <label>New Deadline Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Deadline__c</fullName>
+        <description> The date the deadline should be paid by</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date the deadline should be paid by</inlineHelpText>
+        <label>Payment Deadline</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Requested__c</fullName>
+        <description> The date the payment was requested from the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date the payment was requested from the customer</inlineHelpText>
+        <label>Payment Requested</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Status_Updated__c</fullName>
+        <description> The date when the payment status has been last updated to paid or unpaid</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when the payment status has been last updated to paid or unpaid</inlineHelpText>
+        <label>Payment Status Updated</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>System_Updated__c</fullName>
+        <description> The date when the system has been first updated applicable especially when there are other system(s) dependent this initial update</description>
+        <externalId>false</externalId>
+        <inlineHelpText> The date when the system has been first updated applicable especially when there are other system(s) dependent this initial update</inlineHelpText>
+        <label>System Updated</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Additional Case Information</label>
+    <nameField>
+        <label>Additional Case Information Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Additional Case Informations</pluralLabel>
+    <recordTypes>
+        <fullName>Due_Diligence</fullName>
+        <active>true</active>
+        <label>Due Diligence</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Result__c</picklist>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Finalization</fullName>
+        <active>true</active>
+        <label>Finalization</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Result__c</picklist>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Payment</fullName>
+        <active>true</active>
+        <label>Payment</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Result__c</picklist>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Processing</fullName>
+        <active>true</active>
+        <label>Processing</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Result__c</picklist>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Reception</fullName>
+        <active>true</active>
+        <label>Reception</label>
+        <picklistValues>
+            <picklist>Due_Diligence_Result__c</picklist>
+            <values>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpaid</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+</CustomObject>

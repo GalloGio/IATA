@@ -31,6 +31,12 @@ body {
   	background-color: #f7f8fa;
 }
 
+.cardImageProperties{
+    background-size: contain !important; 
+    background-position: 50% 50% !important; 
+    background-repeat: no-repeat !important;
+}
+
 /*used to display the cards for the portal with opaque background */
 .customCard{
     box-shadow: 5px 5px 20px #e2e2e2;
@@ -398,9 +404,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -419,9 +425,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -434,9 +440,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -448,9 +454,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 /* ############################################## */
 @media only screen and (max-device-width: 480px){
@@ -485,6 +491,20 @@ lightning-datatable .slds-th__action {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modalNarrowTopMargin {
+    position: fixed; /* Stay in place */ 
+    z-index: 2; /* Sit on top */
+    padding-top: 2vh; /* Location of the box */
+    padding-bottom: 2vh;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
 .customPopupInteriorHalfScreenCentered {
   background-color: #f7f8fa;
   width: 35%;
@@ -501,6 +521,15 @@ lightning-datatable .slds-th__action {
   box-shadow: 5px 5px 20px #808080;
   border-radius: 1px;
   border: solid 1px #e2e2e2;
+}
+
+.customPopupInteriorNinetyScreenCentered {
+    background-color: #f7f8fa;
+    width: 90%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -711,12 +740,21 @@ lightning-datatable .slds-th__action {
     min-height: 40px;
     height: 56px;
     width: 220px;
-    word-break: normal;
+    word-break: break-word; 
 }
 
 .containedButton-size {
     height: 56px;
+    width: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .containedButton-size,
+  .containedButtonAlt {
+    height: auto;
+    min-height: 56px;
     width: 100%;
+  }
 }
 
 .filterButton,
@@ -735,7 +773,7 @@ lightning-datatable .slds-th__action {
   color: #3333ff;
   min-height: 40px;
   width: 220px;
-  word-break: break-all;
+  word-break: break-word;
   border: none;
 }
 
@@ -743,6 +781,7 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeightDiv,
 .fullHeight,
 .fullHeight button,
 .fullHeight button:active,
@@ -756,7 +795,7 @@ lightning-datatable .slds-th__action {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px #1e32fa;
   	background-color: #ffffff;
@@ -774,7 +813,7 @@ lightning-datatable .slds-th__action {
 	-webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px rgba(0, 0, 0, 0.08);
   	background-color: #ffffff;
@@ -788,14 +827,24 @@ lightning-datatable .slds-th__action {
   	color: #3333ff;
 }
 
+.outlinedButton.button-half-height,
+.outlinedButton.button-half-height button,
+.outlinedButton.button-half-height button:active,
+.outlinedButton.button-half-height button:visited,
+.outlinedButton.button-half-height button:focus,
+.outlinedButton.button-half-height button:hover  {
+  min-height: 24px;
+  font-size: 14px;
+}
+
 .blueCustomButtonLink, .blueCustomButtonLink button, .blueCustomButtonLink button:active, .blueCustomButtonLink button:visited, .blueCustomButtonLink button:focus {
 	color: #3333ff;
     fill: #3333ff;
     border: none;
   font-weight: 500;
   font-size: 14px;
+  line-height: normal;
 }
-
 .blueCustomButtonLink button:hover {
 	color: #3333ff;
     fill: #3333ff;
@@ -840,10 +889,6 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
-.slds-button__icon_right,
-.slds-button__icon--right {
-    margin-left: 0;
-}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1056,6 +1101,62 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 6px solid #fff;
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid #fff;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 6px solid rgb(93, 107, 248);
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 4px;
+}
+
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid rgb(93, 107, 248);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 10px;
+}
+
+.icon-combobox .slds-input__icon-group_right {
+  left: 0.475rem;
+  width: 0.875rem;
+}
+
 .languageSelection .slds-combobox_container
   .slds-input__icon_right
   lightning-primitive-icon:after {
@@ -1137,6 +1238,18 @@ lightning-datatable .slds-th__action {
 
 .customCombobox input {
     height: 3.2rem;
+}
+
+.combobox-categories .slds-combobox_container input {
+  background-color: transparent !important;
+  color: #FFFFFF;
+  margin-top: -2%;
+  margin-bottom: 0%;
+  margin-left: 2%;
+}
+
+.combobox-list-options .slds-listbox {
+  width: auto;
 }
 
 .innerHeaderCss .slds-button .slds-button__icon_right,
@@ -1235,6 +1348,30 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
+/***** HP Recent Cases Table ******/
+.hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
+    border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
+.hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 1500px) {
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: hidden;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .cardBodyContentSmall {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    overflow-x: auto;
+  }
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: auto;
+  }
+}
 
 /*       New Documents Button Overrides*/
 .newattlist .slds-cell-fixed,.newattlist .slds-has-button-menu{
@@ -1414,6 +1551,7 @@ lightning-datatable .slds-th__action {
     color: #525252;
     padding-top: 5%;
 	display: contents;
+    max-width: none;
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
@@ -1557,6 +1695,19 @@ lightning-datatable .slds-th__action {
     color: #9a9eb0;
 }
 
+.textSize .slds-form-element__control {
+  font-size: 32px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+
+@media only screen and (max-width: 767px) {
+  .textSize.text-xxxsmall .slds-form-element__control {
+      font-size: 1.2rem;
+  }
+}
 /* End of Profile section overrides*/
 
 .containedButtonWhite {
@@ -1574,7 +1725,7 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
@@ -1593,10 +1744,14 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
     display: inline-block;
     min-height: 40px;
+}
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 /* Custom picklist Support Reach Us*/
@@ -1632,6 +1787,10 @@ lightning-datatable .slds-th__action {
 
 .slideIcon svg {
     fill: #e2e2e2;
+}
+
+.hideDocsIcon svg {
+  fill:white;
 }
 
 /* Footer select language styles */
@@ -1723,6 +1882,11 @@ visibility: hidden;
 /*Used to limit the height of the dropdownlist*/
 .customDropDownMaxHeight .slds-dropdown_length-with-icon-10 {
     max-height: calc(10rem);
+}
+
+
+.firstLevelRegistrationCombobox .slds-dropdown_length-with-icon-10{
+    max-height: calc(18rem);
 }
 
 /* USER INACTIVE POPUP */
@@ -2361,5 +2525,196 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     animation-name: fadeOutKeyFrame;
     animation-duration: 0.3s;
 }
+/* portalServicesManagedServices table configuration for mobile */
+@media only screen and (max-device-width: 760px) {
+  .usersTable table tr td:nth-child(3),
+  .usersTable table tr th:nth-child(3),
+  .usersTable table tr td:nth-child(5),
+  .usersTable table tr th:nth-child(5) {
+    display: none;
+  }
+  .usersTable table * {
+    font-size: 12px;
+  }
+  .usersTable table tr th:first-child,
+  .usersTable table tr td:first-child {
+    width:12px !important;
+  }
+  .usersTable table tr th:last-child,
+  .usersTable table tr td:last-child {
+    width:10px !important;
+  }
+
+  th:nth-child(2) .slds-th__action span,
+  th:nth-child(4) .slds-th__action span {
+    min-width: 100px;
+  }
+}
 /*#################################*/
 
+/* ############################################## */
+/* Transformation & Animation Classes */
+
+.rotateIcon45Deg{
+  transform: rotate(45deg);
+}
+
+/* ############################################## */
+.showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
+    width: 165px;
+    min-height: 48px;
+    border-radius: 0;
+    border: 0;
+    background-color: #d0d7fb;
+    font-family: AktivGrotesk;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
+
+.idCardPopup {
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+}
+.outlinedButtonCancel button, .outlinedButtonCancel button:hover, .outlinedButtonCancel button:focus, .outlinedButtonCancel button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 56px;
+    word-break: break-all;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+}
+.popupApproveButton, .popupApproveButton button, .popupApproveButton button:active, .popupApproveButton button:visited, .popupApproveButton button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+    height: 56px;
+    width: 100%;
+}
+.popupApproveButton button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+	height: 56px;
+    width: 100%;
+}
+
+/*#################################*/
+
+/*RS - START - Needed for IFTP app */
+.Expired{
+	color: red;
+ }
+.Success{
+	color: green;
+ }
+.Failed{
+	color: red;
+ }
+.changeUploadFileTextToSelectFile .slds-file-selector__button{
+	font-size: 0;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__button:after{
+	content: 'Select File';
+	font-size: .8125rem;
+	color: #0070d2;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__text{
+	font-size: 0;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__text:after{
+	content: 'Or drag and drop file';
+	font-size: .8125rem;
+}
+.to-upper-case {
+	text-transform: uppercase;
+}
+.modal + .modal {
+  display: none;
+}
+.modal-backdrop + .modal-backdrop{
+  display: none;
+}
+.combobox_max_height .slds-listbox{
+	max-height: 15rem;
+}
+.slds-hide-action{
+	visibility:hidden;
+}
+
+.slds-hide-proficiency-action .slds-button{
+	visibility:hidden;
+}
+
+.remove_focus .slds-table [role="gridcell"]:focus, .remove_focus .slds-table [role="gridcell"].slds-has-focus{
+	box-shadow: unset;
+}
+
+.displayCalendarIcon .slds-button_icon-bare {
+  display: block;
+}
+
+.displayWrapText .slds-button_icon-bare {
+  display: none;
+}
+
+.displayWrapText tbody .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
+
+/* FM - added for error toast to work correctly on IFTP app*/
+.toastContainer .slds-button_icon-bare {
+  display: flex !important;
+}
+
+/*RS - END - Needed for IFTP app */

@@ -12,8 +12,27 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
     @api category;
     @api language;
+    @track _faqObject = {};
 
-    connectedCallback() {        
+    @track redirectObject = {};
+
+    @api
+    get faqObject() {
+        return this._faqObject;
+    }
+    set faqObject(value) {
+        let _value = JSON.parse(JSON.stringify(value));
+        this._faqObject = _value;
+    }
+
+    connectedCallback() {
+        this.category = this._faqObject.category;
+        this.language = this._faqObject.language;
+        this.redirectObject.category = this.category;
+
+        const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
+
         getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
@@ -23,7 +42,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 let tempTopicOptions = [];
                 let tempAccordionMap = [];
                 
-                let tempCategoryName = this.category; //Contains selected category from portalFAQPage
+                let tempCategoryName = this._faqObject.category; //Contains selected category from portalFAQPage
         
                 Object.keys(result).forEach(function (el) {
                     if(tempCategoryName === result[el].categoryName) {
@@ -47,9 +66,11 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         let topicName = event.target.attributes.getNamedItem('data-item').value;
         
         this.topic = topicName;
+
+        this.redirectObject.topic = event.target.attributes.getNamedItem('data-item').value;
         
         let topicVals = JSON.parse(JSON.stringify(this.topicTiles));
-        
+
         Object.keys(topicVals).forEach(function (el) {
             if(topicName === topicVals[el].value && topicVals[el].open === false) {
                 topicVals[el].open = true;
@@ -59,8 +80,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle';
             }
         });
-
+        
         this.topicTiles = topicVals;
+
+        let categorySelected = topicVals.filter(topic => topic.open === true); //Check if a topic is selected
 
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[topicName].childs)); //Get subtopics under each topic
@@ -72,16 +95,30 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         this.subTopicTiles = [];
         this.subTopicTiles = tempSubTopics;
 
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
-        let topicInfo = {
-            topic: this.topic,
-            counter: this.counter++
-        };      
-        this.selectedEvent('topicselected', topicInfo);
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = categorySelected.length > 0 ? '' : this.category;
+        __faqObject.topic = categorySelected.length > 0 ? topicName : '';
+        __faqObject.subtopic = '';
+
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
+        this.dispatchEvent(selectedEvent);
+        var screenWidth = window.innerWidth;
+
+	const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
+
+        if(screenWidth > 640) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo(0, this.template.querySelector(".plsFocusOnThis").scrollHeight);
+        }
+
+	
     }
     
-    subTopicSelected(event) {        
+    subTopicSelected(event) {
         let subtopicName = event.target.attributes.getNamedItem('data-name').value;
+        //let goBottom = document.body.scrollHeight - 600;
         
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[this.topic].childs)); //Get subtopics under each topic
@@ -95,23 +132,26 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;      
-        
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
-        let subtopicInfo = {
-            topic: this.topic,
-            subtopic: subtopicName
-        };   
-        this.selectedEvent('subtopicselected', subtopicInfo);
-    }
+        this.subTopicTiles = tempSubTopics;
 
-    selectedEvent(eventName, params) {
-        const selectedEvent = new CustomEvent(eventName, {
-            detail: {
-                options: params
-            }
-        });
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = '';
+        __faqObject.topic = '';
+        __faqObject.subtopic = subtopicName;
 
+        this.redirectObject.subtopic = subtopicName;
+
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+        var screenWidth = window.innerWidth;
+
+	const selectedEvent2 = new CustomEvent('supportredirectschange', { detail: this.redirectObject });
+        this.dispatchEvent(selectedEvent2);
+
+        if(screenWidth > 640) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo(0, this.template.querySelector(".plsFocusOnThis").scrollHeight);
+        }
     }
 }

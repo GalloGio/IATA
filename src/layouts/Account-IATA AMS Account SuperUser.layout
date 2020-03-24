@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -86,6 +89,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IATACode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -157,10 +164,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Airline_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
             <layoutItems>
@@ -178,6 +181,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Business_Postal_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bulletin_Headquarter__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -199,6 +206,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -269,6 +284,10 @@
                 <field>ANG_RiskStatus__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_HE_RiskStatus__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RiskHistoryAssessment__c</field>
             </layoutItems>
@@ -308,6 +327,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -481,6 +504,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GDS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Agent__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -737,6 +764,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>Site</fields>
         <fields>BillingAddress</fields>
