@@ -89,3 +89,9 @@
     overflow: auto;
   }
 }
+
+
+/* This class is as CSP_Stylesheet but this needs to be here so it works in the old portal*/
+.rotateIcon45Deg{
+  transform: rotate(45deg);
+}

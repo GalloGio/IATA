@@ -365,22 +365,23 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 	}
 
 	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
-
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
 	}
 
 	private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {
-			  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];
-
+		return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];
 	}
 
-	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
+	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments){
+		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, attachments, true);
+	}
+
+	public static List<Messaging.SingleEmailMessage> sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments, Boolean sendEmail) {
 		Id templateId;
 		Boolean templateToIATA = false;
 		List<EmailTemplate> tempIata = new List<EmailTemplate>();
 
-		if(recipents == null)
-		{
+		if(recipents == null){
 			templateToIATA = true;
 
 			//getTemplate
@@ -393,14 +394,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			//get contact from IATA by custom setting
 			List<IATA_Contacts_by_Region__c> customSettingValues = IATA_Contacts_by_Region__c.getall().values();
 			List<String> emailsToSend = new List<String>();
-			for(IATA_Contacts_by_Region__c cR : customSettingValues)
-			{
-				if(cR.Region__c == region)
-					emailsToSend.add(cR.Contact_Email__c);
+			for(IATA_Contacts_by_Region__c cR : customSettingValues){
+				if(cR.Region__c == region) emailsToSend.add(cR.Contact_Email__c);
 			}
 
 			//put the contacts in recipents list
-			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend and IsEmailBounced = false];
+			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
 			System.debug('IATA recipents list: ' + recipents);
 		}
 
@@ -436,9 +435,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						mail.setFileAttachments(attachments);
 					}
 					mail.setWhatId(oscarId);
-
 					mail.setOrgWideEmailAddressId(owea.Id);
-
 					mailsToSend.add(mail);
 
 				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
@@ -469,26 +466,21 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 						system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
 
-
 					}else{
-					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-					mail.saveAsActivity = true;
-					mail.setToAddresses(new List<String>{recipient.Email});
-					if(templateToIATA){
-						mail.setTemplateId(tempIata.get(0).Id);
-					} else {
-						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.saveAsActivity = true;
+						mail.setToAddresses(new List<String>{recipient.Email});
+						if(templateToIATA){
+							mail.setTemplateId(tempIata.get(0).Id);
+						} else {
+							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						}
+						mail.setTargetObjectId(recipient.Id);
+						mail.setWhatId(oscarId);
+						mail.setOrgWideEmailAddressId(owea.Id);
+						mailsToSend.add(mail);
 					}
-					mail.setTargetObjectId(recipient.Id);
-
-					mail.setWhatId(oscarId);
-
-					mail.setOrgWideEmailAddressId(owea.Id);
-
-					mailsToSend.add(mail);
 				}
-				}
-
 			}
 
 			//FM 24/10/2017 - AMSU-32
@@ -509,17 +501,18 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
 					mailPortalAdmin.setTargetObjectId(auxCont.Id);
-
 					mailPortalAdmin.setWhatId(oscarId);
-
 					mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
 					mailsToSend.add(mailPortalAdmin);
-			}
+				}
 			}
 
 			system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
 
-			if(!mailsToSend.isEmpty()){
+			//Return emails to be sent once ANG_:OscarProcess.createPCIComplianceOscars
+			if(!sendEmail) return mailsToSend;
+
+			else if(!mailsToSend.isEmpty()){
 				if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
 				for(Messaging.SingleEmailMessage mail: mailsToSend){
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
@@ -535,8 +528,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				}
 				insert mailsToTrackInCase;
 			}
-
 		}
+		return new List<Messaging.SingleEmailMessage>();
 	}
 
 	private static Map<String, Id> DGRemailTemplates(String type){

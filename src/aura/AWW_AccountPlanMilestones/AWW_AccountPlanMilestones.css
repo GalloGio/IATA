@@ -1,3 +1,10 @@
 .THIS .bckColor{
     background: inherit !important;
 }
+
+.THIS .no-truncate tbody .slds-truncate{
+    max-width: 100%;
+    overflow: initial; 
+    text-overflow: initial; 
+    white-space: normal;
+}

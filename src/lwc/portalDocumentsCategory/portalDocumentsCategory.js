@@ -56,7 +56,7 @@ export default class PortalDocumentsCategory extends LightningElement {
     }
 
     get documentsResults() {
-        return this.documentsList.length > 0;
+        return this.documentsList.length > 0 && this.documentObject.show;
     }
 
     connectedCallback() {

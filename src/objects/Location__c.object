@@ -431,6 +431,30 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>D_B_Company__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup to the Dunn &amp; Bradstreet (D&amp;B) Company master data record.</description>
+        <externalId>false</externalId>
+        <label>D&amp;B Company</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The Company chosen is Out of Business and cannot be referenced.</errorMessage>
+            <filterItems>
+                <field>D_B_Company__c.Out_of_Business__c</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>D_B_Company__c</referenceTo>
+        <relationshipLabel>Locations</relationshipLabel>
+        <relationshipName>Locations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Email__c</fullName>
         <externalId>false</externalId>
         <label>Email</label>

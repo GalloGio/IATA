@@ -1047,28 +1047,28 @@ public class ANG_AgencyChangesHelperTest {
 
 		 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				IATAcode__c = he1.IATAcode__c,
-				Branch_Office_Country__c = he1.IATA_ISO_Country__c,
-				Location_Class__c = he1.Location_Class__c,
-				Location_Type__c = he1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			IATAcode__c = he1.IATAcode__c,
+			Branch_Office_Country__c = he1.IATA_ISO_Country__c,
+			Location_Class__c = he1.Location_Class__c,
+			Location_Type__c = he1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1178,28 +1178,28 @@ public class ANG_AgencyChangesHelperTest {
 
 				 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				IATAcode__c = he.IATAcode__c,
-				Branch_Office_Country__c = he.IATA_ISO_Country__c,
-				Location_Class__c = he.Location_Class__c,
-				Location_Type__c = he.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			IATAcode__c = he.IATAcode__c,
+			Branch_Office_Country__c = he.IATA_ISO_Country__c,
+			Location_Class__c = he.Location_Class__c,
+			Location_Type__c = he.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1300,28 +1300,28 @@ public class ANG_AgencyChangesHelperTest {
 
 				 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				IATAcode__c = he.IATAcode__c,
-				Branch_Office_Country__c = he.IATA_ISO_Country__c,
-				Location_Class__c = he.Location_Class__c,
-				Location_Type__c = he.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			IATAcode__c = he.IATAcode__c,
+			Branch_Office_Country__c = he.IATA_ISO_Country__c,
+			Location_Class__c = he.Location_Class__c,
+			Location_Type__c = he.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1425,28 +1425,28 @@ public class ANG_AgencyChangesHelperTest {
 
 				 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				IATAcode__c = he.IATAcode__c,
-				Branch_Office_Country__c = he.IATA_ISO_Country__c,
-				Location_Class__c = he.Location_Class__c,
-				Location_Type__c = he.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			IATAcode__c = he.IATAcode__c,
+			Branch_Office_Country__c = he.IATA_ISO_Country__c,
+			Location_Class__c = he.Location_Class__c,
+			Location_Type__c = he.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1551,30 +1551,30 @@ public class ANG_AgencyChangesHelperTest {
 
 				 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = he.IATAcode__c,
-				Branch_Office_Country__c = he.IATA_ISO_Country__c,
-				Location_Class__c = he.Location_Class__c,
-				Location_Type__c = he.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cash',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = he.IATAcode__c,
+			Branch_Office_Country__c = he.IATA_ISO_Country__c,
+			Location_Class__c = he.Location_Class__c,
+			Location_Type__c = he.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cash',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1669,30 +1669,30 @@ public class ANG_AgencyChangesHelperTest {
 
 				 // Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = he.IATAcode__c,
-				Branch_Office_Country__c = he.IATA_ISO_Country__c,
-				Location_Class__c = he.Location_Class__c,
-				Location_Type__c = he.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = he.IATAcode__c,
+			Branch_Office_Country__c = he.IATA_ISO_Country__c,
+			Location_Class__c = he.Location_Class__c,
+			Location_Type__c = he.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -1821,30 +1821,30 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -2034,30 +2034,30 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -2224,30 +2224,30 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -2310,29 +2310,29 @@ public class ANG_AgencyChangesHelperTest {
 		//2nd oscar - CAD
 
 		AMS_Pax_Accreditation_Form__c stagingArea2 = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase2.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase2.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 		);
 
 		insert stagingArea2;
@@ -2467,30 +2467,30 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -2618,30 +2618,30 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
@@ -2758,37 +2758,36 @@ public class ANG_AgencyChangesHelperTest {
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
-				RecordTypeId = rtChangesStagingId,
-				IATAcode__c = a1.IATAcode__c,
-				Branch_Office_Country__c = a1.IATA_ISO_Country__c,
-				Location_Class__c = a1.Location_Class__c,
-				Location_Type__c = a1.Location_Type__c,
-				SAAM_Case__c = oscarCase.Id,
-				Account_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_Legal_Status__c = 'Association',
-				Short_Name__c = 'Lisbon Travel Gods',
-				TradeName__c = 'Lisbon Travel Gods',
-				Trade_Name__c = 'Lisbon Travel Gods',
-				ISSP_AMS_License_No__c = '111222333',
-				ISSP_AMS_VAT_Number_Input__c = '111222333',
-				Branch_Office_Email__c = 'ltg23@fefff2.com',
-				Website__c = 'wwww.asdasidsss12233.pt',
-				Branch_Office_Phone__c = '123456780',
-				Branch_Office_Phone_National__c = '123456780',
-				Branch_Office_FAX__c = '123456780',
-				Branch_Office_Fax_National__c = '123456780',
-				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless',
-				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-				);
+			RecordTypeId = rtChangesStagingId,
+			IATAcode__c = a1.IATAcode__c,
+			Branch_Office_Country__c = a1.IATA_ISO_Country__c,
+			Location_Class__c = a1.Location_Class__c,
+			Location_Type__c = a1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			Account_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_Legal_Status__c = 'Association',
+			Short_Name__c = 'Lisbon Travel Gods',
+			TradeName__c = 'Lisbon Travel Gods',
+			Trade_Name__c = 'Lisbon Travel Gods',
+			ISSP_AMS_License_No__c = '111222333',
+			ISSP_AMS_VAT_Number_Input__c = '111222333',
+			Branch_Office_Email__c = 'ltg23@fefff2.com',
+			Website__c = 'wwww.asdasidsss12233.pt',
+			Branch_Office_Phone__c = '123456780',
+			Branch_Office_Phone_National__c = '123456780',
+			Branch_Office_FAX__c = '123456780',
+			Branch_Office_Fax_National__c = '123456780',
+			Abbreviated_name__c = 'Lisbon Travel Gods',
+			VAT_Number_2__c = '111222333',
+			ANG_Accreditation_type__c = 'Cashless',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+		);
 
 		insert stagingArea;
 
 		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 		update oscar;
 
-		Test.startTest();
 
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
@@ -2815,6 +2814,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert att;
 
+		Test.startTest();
+		
 		oscar.ANG_FA_Opt_out__c = 'Opt-Out';
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP15__c = AMS_Utils.PASSED;

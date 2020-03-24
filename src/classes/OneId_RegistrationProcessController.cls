@@ -567,7 +567,13 @@ public without sharing class OneId_RegistrationProcessController {
 
 		//it's general public account? create contact / user
 		if(acc.Id == null && acc.Sector__c == 'General Public'){
-			List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+			List<Account> gpAccount = new List<Account>();
+			if(acc.IATA_ISO_Country__c != null){
+				gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+			}
+			else{
+				gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' AND Name like 'General Public%' AND IATA_ISO_Country__r.Name =: acc.BillingCountry];
+			}
 			if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
 		}
 
@@ -653,16 +659,6 @@ public without sharing class OneId_RegistrationProcessController {
 
 					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
 						portalServiceNewAgency(con.Id);
-				}
-				/**
-				IFTP Accounts - IFTP Service
-				only for NEW Accounts
-				*/
-
-				if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
-
-					handleIFTPProcess(acc, con, isNewAcc);
-
 				}
 			}
 
@@ -1185,114 +1181,6 @@ public without sharing class OneId_RegistrationProcessController {
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
 
 		insert psa;
-	}
-
-	public static void handleIFTPProcess(Account acc, Contact con, Boolean isNewAccount){
-		String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-		String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
-
-		Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c
-								WHERE Name = 'Airline Supplier - ITP' limit 1];
-
-		Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
-								WHERE Name = 'IFTP - ITP' limit 1];
-
-		PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
-
-		List<Contact_Roles__c> contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name in ('ITP Administrator','ITP Training Coordinator') ];
-		Id idContRoleAdmin = null;
-		Id idContRoleTranCoord = null;
-
-		for(Contact_Roles__c cr : contRoles){
-			if(cr.name == 'ITP Administrator'){
-				idContRoleAdmin = cr.id;
-			}else if(cr.name == 'ITP Training Coordinator'){
-				idContRoleTranCoord = cr.id;
-			}
-		}
-
-		Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
-
-		Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
-
-		if(isNewAccount == true){
-			Account_Role__c accRole = new Account_Role__c();
-			accRole.Account__c = acc.Id;
-			accRole.Account_Roles__c = accRoles.id;
-			accRole.RecordTypeId = RECTYPE_ITP_AccRole;
-			insert accRole;
-
-			Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
-			accRoleSrv.Account_Role__c = accRole.id;
-			accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
-			insert accRoleSrv;
-
-			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
-			accContRoleToInsert.Service_Rendered__c = 'IFTP';
-			accContRoleToInsert.Status__c = 'Active';
-			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-			accContRoleToInsert.Account_Role__c = accRole.Id;
-			accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
-			accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
-			accContRoleToInsert.Details__c = '';
-			accContRoleToInsert.Contact__c = con.Id;
-			insert accContRoleToInsert;
-
-			accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-		}else{
-			Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
-
-			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			accContRoleToInsert.Service_Rendered__c = 'IFTP';
-			accContRoleToInsert.Status__c = 'Active';
-			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-			accContRoleToInsert.Account_Role__c = accRole.Id;
-			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-			accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
-			accContRoleToInsert.Details__c = '';
-			accContRoleToInsert.Contact__c = con.Id;
-			insert accContRoleToInsert;
-
-			accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-		}
-
-		Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
-				Portal_Application__c = pa.id,
-				Right__c = 'Access Requested',
-				Contact__c = con.Id,
-				Favourite_Service__c = true
-			);
-			insert portalApplicationRight;
-
-		accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
-
-		String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
-		accContRoleToInserted.Company_Code__c = newEmployeeCode;
-
-		update accContRoleToInserted;
-
-		Contact cont = [SELECT id, FirstName, LastName, Account.Name FROM Contact WHERE Id = :con.Id LIMIT 1];
-
-		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-		IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-															accContRoleToInserted.Company_Code__c,
-															cont.account.name,
-															cont.FirstName,
-															cont.LastName);
-		IftpHistoryRecordsToBeInserted.add(ihrec);
-
-		if(IftpHistoryRecordsToBeInserted.size() > 0){
-			portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-		}
-
-		if(!Test.isRunningTest()){
-			updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
-			assignPermissionSet(psAbsorb.Id, cont.id);
-		}
 	}
 
 	/* Manuel Conde commented this...

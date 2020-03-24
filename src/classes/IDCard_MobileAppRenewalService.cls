@@ -916,32 +916,11 @@ public with sharing class IDCard_MobileAppRenewalService
 		{
 			if (aCard.Blacklisted__c)
 			{
-				mailAlertOnBlackListedConnection(aCard, requestInformation.verNumber, requestInformation.iataCode);
 				throw new IDCardException('Your IATA/IATAN ID Card has been blacklisted. For more information, please kindly contact IATA Customer Service on www.iata.org/cs');
 			}
 
 			break;
 		}
-	}
-
-	private static void mailAlertOnBlackListedConnection(ID_Card__c card, String verNumber, String iataCode)
-	{
-		/*
-		// logic disabled
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-		mail.setToAddresses(new String[] {'jfonteray@gmail.com'});
-		mail.setSubject('A blacklisted agent has tried to sign in on ID Card Online Platform. VER: ' + verNumber + ' IATA Code: ' + iataCode);
-		mail.setPlainTextBody('A blacklisted agent has tried to sign in on ID Card Online Platform. VER: ' + verNumber + ' IATA Code: ' + iataCode);
-
-		List<Messaging.SingleEmailMessage> lstMsgs = new List<Messaging.SingleEmailMessage>();
-		lstMsgs.add(mail);
-
-		try {
-			Messaging.sendEmail(lstMsgs);
-		} catch (Exception  e) {
-			system.debug('Failed to send email ' + e.getMessage());
-		}*/
 	}
 
 	private static String getPardotBody(RequestInformation requestInformation)
