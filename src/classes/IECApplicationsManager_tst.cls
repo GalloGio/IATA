@@ -110,6 +110,9 @@ private class IECApplicationsManager_tst {
 
 		// create ID_Card records
 		oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Valid ID Card');
+		oIDCard.FirstName__c = 'John';
+		oIDCard.LastName__c = 'Doe';
+		oIdCard.Duties__c = 'OPERATIONS';
 		oIDCard.Valid_To_Date__c = Date.today().addYears(1);
 		oIDCard.Valid_From_Date__c = Date.today();
 		insert oIDCard;
