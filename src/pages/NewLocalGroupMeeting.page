@@ -53,17 +53,14 @@
             <apex:inputField value="{!lm.Proposal_to_Conference__c}"/>
             <apex:pageBlockSectionItem/>
 
-            <apex:inputField value="{!lm.Comments_checklist__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:inputField value="{!lm.Comments__c}"/>
+            <apex:inputField value="{!lm.Date_Legal_REJECTED_the_minutes__c}"/>
 
             <apex:inputField value="{!lm.Date_Legal_Requested_to_Sign_Off_Minutes__c}"/>
-            <apex:inputField value="{!lm.Date_Legal_Signed_Off_the_Minutes__c}"/>
-
-            <apex:inputField value="{!lm.Date_Legal_REJECTED_the_minutes__c}"/>
-            <apex:inputField value="{!lm.Comments__c}"/>
-
             <apex:inputField value="{!lm.Reason_for_Rejection_Minutes__c}"/>
-            <apex:pageBlockSectionItem/>
+
+            <apex:inputField value="{!lm.Date_Legal_Signed_Off_the_Minutes__c}"/>
+            <apex:inputField value="{!lm.Legal_Remarks_Minutes__c}"/>
         </apex:pageBlockSection>
         
         <apex:pageBlockSection title="Add Group Participants as attendees for this meeting" columns="1">

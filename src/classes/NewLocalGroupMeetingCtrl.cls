@@ -11,7 +11,8 @@ public class NewLocalGroupMeetingCtrl {
 													'Date_Legal_REJECTED_the_minutes__c','Comments__c', 'Local_Governance__c',
 													'Reason_for_Rejection_Agenda__c','Legal_Remarks_Agenda__c','Other__c',
 													'Comments_checklist__c','Reason_for_Rejection_Minutes__c','Proposal_to_Conference__c',
-													'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c'};
+													'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c',
+													'Legal_Remarks_Minutes__c'};
 
 		if(!Test.isRunningTest()) ctrl.addFields(fieldNames);
 		lm = (LocalGovernance_Meeting__c) ctrl.getRecord();
@@ -63,7 +64,7 @@ public class NewLocalGroupMeetingCtrl {
 			database.upsert(lm);
 		}catch(DMLException e){
 			system.debug(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting: '+e.getMessage()));
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting: '+e.getMessage()));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, cleanMessage(e.getMessage())));
 			return null;
 		}
 
@@ -97,7 +98,7 @@ public class NewLocalGroupMeetingCtrl {
 			return new PageReference('/'+lm.id);
 
 		}catch(DMLException e){
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting attendees: '+e.getMessage()));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR while saving local meeting attendees2: '+cleanMessage(e.getMessage())));
 		}
 		Database.rollBack(sp);
 		return null;
@@ -120,6 +121,12 @@ public class NewLocalGroupMeetingCtrl {
 				return -1;
 			return 0;
 		}
+	}
+
+	public String cleanMessage(String message) {
+		message = message.replaceFirst('.*FIELD_CUSTOM_VALIDATION_EXCEPTION, ','');
+		message = message.removeEnd(': []');
+		return message;
 	}
 
 }
