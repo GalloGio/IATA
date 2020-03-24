@@ -95,9 +95,13 @@ public with sharing class PortalRecommendationCtrl {
 		String prodDescription = '';
 		for(Card_Visibility__c rec : recommendationList) {
 			if (rec.Recommendation_Visibility__r.Product__c != null || availableAppNames.contains(rec.Recommendation_Visibility__r.PortalService__c) ) {
+				
+				IEC_Settings__c iecSettings = IEC_Settings__c.getOrgDefaults();
+				String iecURL = '';
 
 				if (rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId) {
 					prodDescription = getProductDescriptionWithUserLanguage(LANGUAGE, rec);
+					iecURL =  iecSettings.IEC_User_Portal_URL__c;
 				}
 
 				recommendations.add(new RecommendationWrapper(
@@ -108,11 +112,10 @@ public with sharing class PortalRecommendationCtrl {
 					learnMoreLabel,
 					rec.Recommendation_Visibility__r.InformationButtonLink__c,
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rec.Recommendation_Visibility__r.PortalService__r.Requestable__c ? (isPortalAdmin ? (rec.Recommendation_Visibility__r.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
-					rec.Recommendation_Visibility__r.ActionButtonLink__c,
+					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? iecURL + rec.Recommendation_Visibility__r.ActionButtonLink__c : rec.Recommendation_Visibility__r.ActionButtonLink__c),
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
 				));
 			}
-
 		}
 
 		return recommendations;
@@ -167,10 +170,4 @@ public with sharing class PortalRecommendationCtrl {
 			this.actionType = actionType;
 		}
 	}
-
-	@AuraEnabled
-	public static String getBaseURL() {
-		return URL.getSalesforceBaseUrl().toExternalForm();
-	}
-
 }

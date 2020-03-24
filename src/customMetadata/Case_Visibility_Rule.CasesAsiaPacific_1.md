@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Origin NOT_IN</value>
+        <value xsi:type="xsd:string">Origin NOT_IN, Phone_Redirected_to_Web__c IS_FALSE</value>
     </values>
     <values>
         <field>Origin__c</field>
