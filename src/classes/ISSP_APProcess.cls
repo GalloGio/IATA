@@ -1186,6 +1186,7 @@ global without sharing class ISSP_APProcess {
 	/**
 		Returns a list of all required filed to upload for current form type
 	**/
+	@TestVisible
 	private list<String> getMandatoryFileList() {
 		List<String> listMandatoryFiles = new list<String>();
 		if (isBSP || isCASS) {

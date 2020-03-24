@@ -169,6 +169,7 @@ private class ISSP_APProcess_Test
 			Test.setCurrentPage(pr);
 			pr.getParameters().put('step', '4');
 			pr.getParameters().put('retURL', '/ISSP_TEST');
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ctrl.typeOfChangeRequested = new List<String>();
 			ctrl.newCase = testCase;
@@ -432,6 +433,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -531,6 +533,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -755,6 +758,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -864,6 +868,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -973,6 +978,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -1080,6 +1086,7 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			AP_Country_specs__c testSpec = new AP_Country_specs__c();
@@ -1133,13 +1140,14 @@ private class ISSP_APProcess_Test
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Case newCase = new Case(ContactId = con.Id);
+		Case newCase = new Case(ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
 		insert newCase;
 
 		Test.startTest();
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('caseId', newCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			ctrl.isBSP = true;
@@ -1180,13 +1188,14 @@ private class ISSP_APProcess_Test
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Case newCase = new Case(ContactId = con.Id);
+		Case newCase = new Case(ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
 		insert newCase;
 
 		Test.startTest();
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('caseId', newCase.Id);
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
 			newCase.BSPCountry__c = 'Brazil';
@@ -1485,6 +1494,8 @@ private class ISSP_APProcess_Test
 		Test.startTest();
 		System.runAs(newUser)
 		{
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ctrl.strOperationType = 'ICH';
 			ctrl.strParentMembershipstatus = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
@@ -1503,7 +1514,7 @@ private class ISSP_APProcess_Test
 	}
 
 	@isTest static void testOptInOut() {
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'EasyPay');
 		insert portalApp;
 
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
@@ -1608,7 +1619,7 @@ private class ISSP_APProcess_Test
 		Test.startTest();
 		System.runAs(newUser) {
 
-			PageReference pr = Page.ISSP_APCases;
+			PageReference pr = new PageReference('/ISSP_APCases');
 			List<String> countriesOut = new List<String> {countryES.Id, countryPT.Id};
 			String optInOutParam = 'OUT';
 
@@ -1662,6 +1673,12 @@ private class ISSP_APProcess_Test
 			ctrl.getLocalVATMandatory();
 			ctrl.getlocalAddressMandatory();
 			ctrl.getShowCounterIndemnity();
+			ctrl.getICCSSettlementALaCarteUrl();
+			ctrl.getICCSSettlementALaCarteName();
+			ctrl.getBSPVoluntaryWithdrawalUrl();
+			ctrl.getBSPVoluntaryWithdrawalName();
+			ctrl.getCASSVoluntaryWithdrawalUrl();
+			ctrl.getCASSVoluntaryWithdrawalName();
 			ctrl.isBSP=true;
 			ctrl.isCASS=false;
 			ctrl.getShowCounterIndemnity();
@@ -1812,6 +1829,8 @@ private class ISSP_APProcess_Test
 
 		System.runAs(newUser) {
 			Test.startTest();
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ctrl.newContact();
 			Contact_Endorsement__c contact = ctrl.selectedContact;
@@ -1825,4 +1844,111 @@ private class ISSP_APProcess_Test
 		}
 	}
 
+	@isTest static void testMandatoryFileList() {
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'App');
+		insert portalApp;
+
+		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+
+		IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', ANG_Portal_Service__c = portalApp.Id, Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
+		insert countryUS;
+
+		Account headquarter = new Account(
+			Name = 'Emirates hq',
+			Field_Head_Office__c = 'Headquarter',
+			Airline_Designator__c = 'LH',
+			IATACode__c = '220',
+			Airline_Prefix__c = '220',
+			Sector__c = 'Airline',
+			Category__c = 'Passenger and Cargo',
+			Key_Customer_Reason__c = 'Volume',
+			TradeName__c = 'Emirates',
+			Legal_name__c = 'Stuff',
+			Name_on_AOC__c = 'Stuff',
+			IATA_ISO_Country__c = countryUS.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
+		insert headquarter;
+
+		// Create a new Product
+		Product2 p = new Product2(Name = 'BSP', Family = 'ICCS');
+		insert p;
+
+		// Create a new ICCS Product Country for this product
+		ICCS_Product_Country__c pct = new ICCS_Product_Country__c(Product__c = p.Id, Country__c = countryUS.Id);
+		insert pct;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = headquarter.Id;
+		insert con;
+
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+		
+		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			Test.startTest();
+
+			ctrl.isBSP = true;
+			ctrl.newForm.Airline_wish_to_join_ICCS__c='Yes';
+			ctrl.strAreaType='Airline Joining';
+			ctrl.ICCSProductCountry = ctrl.retrieveICCSProductCountry('BSP', countryUS);
+			//ICCS_Join
+			set<String> result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('ICCS_Join'), 'wrong result ' + result );
+
+			//Settlement a la carte
+			ctrl.newForm.Type_of_Settlement__c = 'Settlement a la carte';
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('ICCS_Settlement_alacarte'), 'wrong result ' + result );
+
+			//ICCS_Join_market
+			ctrl.newForm.Airline_wish_to_join_ICCS__c='Yes';
+			ctrl.newForm.Type_of_Settlement__c = 'Local Bank';
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('ICCS_Join_market'), 'wrong result ' + result );
+			
+			//Bank_Mandate
+			ctrl.newForm.Airline_wish_to_join_ICCS__c='No';
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('Bank_Mandate'), 'wrong result ' + result );
+			
+			//CounterIndemnityAgreement
+			ctrl.isGSSAUser = false;
+			ctrl.accountToShowSections.Sector__c='Airline';
+			ctrl.accountToShowSections.BSP_CI_Valid__c=false;
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('CounterIndemnityAgreement'), 'wrong result ' + result );
+			
+			//FormOfAuthorization
+			ctrl.accountToShowSections.Sector__c='Airline';
+			ctrl.accountToShowSections.BSP_FOC_Valid__c=false;
+			ctrl.accountToShowSections.Membership_status__c='Member';
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('FormOfAuthorization'), 'wrong result ' + result );
+			//FormOfApplication
+			System.assert( result.contains('FormOfApplication'), 'wrong result ' + result );
+			
+			//FormOfApplicationAndConcurrence
+			ctrl.isCASS = true;
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('FormOfApplicationAndConcurrence'), 'wrong result ' + result );
+
+			//SignedICHForm
+			ctrl.isICH = true;
+			ctrl.accountToShowSections.SIS_Status__c='Inactive';
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('SignedICHForm'), 'wrong result ' + result );
+
+			//SignedSISISPAForm
+			ctrl.newCase.Classification_SIS__c=ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
+			result = new set<String>(ctrl.getMandatoryFileList());
+			System.assert( result.contains('SignedSISISPAForm'), 'wrong result ' + result );
+
+			Test.StopTest();
+		}
+	}
 }
