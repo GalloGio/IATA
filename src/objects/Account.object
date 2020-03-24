@@ -114,6 +114,12 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <content>AccountCreation</content>
+        <skipRecordTypeSelect>true</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
         <content>AccountCreationCmp</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>true</skipRecordTypeSelect>
@@ -121,13 +127,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
-        <content>AccountCreation</content>
+        <content>AccountCreationCmp</content>
+        <formFactor>Small</formFactor>
         <skipRecordTypeSelect>true</skipRecordTypeSelect>
-        <type>Visualforce</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>New</actionName>
-        <type>Default</type>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>RequestUpdate</actionName>
