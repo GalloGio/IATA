@@ -1,4 +1,4 @@
-global class updateNamedCredentialsBatch Implements Database.batchable<sobject>{
+global class updateNamedCredentialsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts{
     global final string scheduleQuery;
     global updateNamedCredentialsBatch(){
         if(Test.isRunningTest()){
