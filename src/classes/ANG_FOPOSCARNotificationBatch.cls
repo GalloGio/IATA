@@ -73,10 +73,15 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c, CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c '+
 				'FROM Case '+
 				'WHERE RecordtypeID = :RECTYPE_OSCARCOMM '+
-				'AND OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+
+				'AND((OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+
 				'AND (Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)'+
-				'AND (DAY_ONLY(CreatedDate) = :dateReminder '+
-					'OR DAY_ONLY(CreatedDate) = :dateNonCompliance)';
+				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :dateNonCompliance)) '+
+				'OR (OSCAR__r.RecordTypeId = :RECTYPE_ANN_REV '+
+				'AND Reason1__c = :ANN_REV_REASON '+
+				'AND ((OSCAR__r.STEP43__c = :PASSED '+
+				'AND (OSCAR__r.ANG_Administrative_non_compliance_date__c = :dateReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevSecondReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevThirdReminder)) '+
+				'OR (OSCAR__r.STEP43__c != :PASSED '+
+				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :annualRevSecondReminder OR DAY_ONLY(CreatedDate) = :annualRevThirdReminder)))))';
 		}else{
 			query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, Origin, Reason1__c,'+
 				'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c, CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c '+
@@ -115,7 +120,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 		for (Case cse :scope) {
 			Date dt = Date.newInstance(cse.CreatedDate.year(), cse.CreatedDate.month(), cse.CreatedDate.day());
 
-			if (cse.Reason1__c == ANN_REV_REASON) {
+			if (cse.Reason1__c == ANN_REV_REASON && cse.OSCAR__r.STEP43__c == PASSED) {
 				deadlineDate = Date.newInstance(cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.year(), cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.month(), cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.day());
 			}
 
