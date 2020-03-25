@@ -9,7 +9,6 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 		List<Id> toAddressesUsers = new List<Id>();
 
 		if(sManagers.isEmpty()){
-			System.debug('Warning: No RTS Senior Managemrs found');
 			return;
 		}
 
@@ -17,7 +16,6 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 		List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
 		if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
-			System.debug('Warning: No email template or org wide email found');
 			return;
 		}
 
@@ -49,7 +47,6 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 		}
 
 		if(mails.isEmpty()){
-			System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
 			return;
 		}
 

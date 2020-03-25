@@ -72,9 +72,6 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 			}
 		}
 		
-
-		System.debug('[ANG_RHCEqualFSBatch] ERRORS: '+errors);
-		System.debug('[ANG_RHCEqualFSBatch] PROCESSED AGENTS: '+iataCodesAndNames.size());
 		Integer i=0;
 		i=0;
 		i=0;

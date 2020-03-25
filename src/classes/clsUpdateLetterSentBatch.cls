@@ -70,8 +70,6 @@ global class clsUpdateLetterSentBatch implements Database.Batchable<sObject>{
 			//if (!Test.isRunningTest())
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 
-			System.debug('** Send Batch Email 3');
-
 		}
 
 }
