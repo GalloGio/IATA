@@ -4394,6 +4394,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Grant Access</value>
     </labels>
     <labels>
+        <fullName>CSP_Have_Read_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Have_Read_Terms</shortDescription>
+        <value>I have read and agree to the following terms:</value>
+    </labels>
+    <labels>
         <fullName>CSP_Home_WelcomeTitle</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6143,6 +6151,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_Access</shortDescription>
         <value>Service Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_Accept_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_Accept_Terms</shortDescription>
+        <value>Accept</value>
     </labels>
     <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
