@@ -67,11 +67,13 @@ private class SchdlEBCCreateNotificationForRenewal_tst {
 		TestDataGenerator.generateSAPSettings();
 
 		IECEBC_TestUtility.createEbcSetupAndRelatedData();
+
+		Test.startTest();
+
 		IECEBC_TestUtility.createTestUser();
 		Date dSubscriptionEndDate = Date.today().addDays(Integer.valueOf(IECEBC_TestUtility.EBC_RENEWAL_WINDOW));
-		
-        Test.startTest();
-        IECEBC_TestUtility.createEbcSubscription( IECEBC_TestUtility.lEbcProductRatePlanMember[0], IECEBC_TestUtility.oEbcProductMember, dSubscriptionEndDate);
+
+		IECEBC_TestUtility.createEbcSubscription( IECEBC_TestUtility.lEbcProductRatePlanMember[0], IECEBC_TestUtility.oEbcProductMember, dSubscriptionEndDate);
 
 
 		BtchEBCCreateNotificationForRenewal.callBatchEBCCreateNotification();

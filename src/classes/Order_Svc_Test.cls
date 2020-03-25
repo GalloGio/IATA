@@ -23,7 +23,7 @@ private class Order_Svc_Test
 		try { update new Order(Id=orders[0].Id, Shipping_Instruction__c='999-888-7777'); } catch (Exception e) {}
 	}
 
-	@isTest (seeAllData=true)
+	@isTest
 	static void test_saveOrderItem()
 	{
 		//-- Generate Orders & OrderItem
@@ -98,6 +98,7 @@ private class Order_Svc_Test
 			prod.Inventory_Status__c = 'In stock';
 		}
 
+		Test.startTest();
 		insert zRatePlans;
 
 		//Create Unit Price Charge & Discount for each Plan
@@ -196,10 +197,12 @@ private class Order_Svc_Test
 		sop.ecomProduct.ProductId = UserInfo.getUserId();
 		sop_dtos.add(sop);
 		Order_Svc.addItemsToOrder(sop_dtos, theOrder);
+		Test.stopTest();
+		
 		system.assertEquals([select count() from OrderItem where OrderId = :theOrder.Id], 4);
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_createSapSalesOrders()
 	{
 		TestDataGenerator.generateApexSetting();
@@ -247,7 +250,7 @@ private class Order_Svc_Test
 		Indirectly cover
 			Method "getOrderForContract" of class "Order_Sel"
 	****************************************************************************************************/
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_createSAPContracts() {
 		TestDataGenerator.generateApexSetting();
 
@@ -1051,7 +1054,7 @@ private class Order_Svc_Test
 			Cover code for methods "setPriceToOrder", "setPriceToOrderItem", "setUnitPriceFromPlan",
 				"getDiscountFromPlan", "getCouponPlan" in class
 	****************************************************************************************************/
-	@isTest (seeAllData=true)
+	@isTest
 	private static void test_setPriceToOrderItemDTO()
 	{
 		List<IATA_ISO_Country__c> ISOCountryState = TestDataGenerator.generateISOCountryState();
