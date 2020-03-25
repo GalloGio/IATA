@@ -426,7 +426,7 @@
                                                                   <!-- temp for CNS -->
                                                                   <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c != 'CNS Endorsement & Changes'}" >
                                                                     <apex:outputPanel rendered="{!IF(app.IsSCIMIFG__c,IF(app.Right__c=='Access Granted', IF(app.Technical_Provisioning_Status__c=='External Access Granted', true,false),false), IF(app.Right__c=='Access Granted', true,false))}" >
-                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',app.Application_Start_URL__c)}">
+                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',IF(communityName != null, app.Application_Start_URL__c+'?communityName='+communityName, app.Application_Start_URL__c))}">
                                                                       <h5>{!if(isCNSAgency, SUBSTITUTE(app.PortalServiceTranslatedName__c, 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
                                                                     </a>
                                                                     </apex:outputPanel>

@@ -104,7 +104,7 @@ public with sharing class ISSP_Homepage {
 			FROM Contact
 			WHERE Id = :user.ContactId];
 		
-		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c && (con.Account.Location_Type__c == 'HO' || con.Account.Location_Type__c == 'BR');
+		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
 
 		userMap = new map<string,integer> {'Pending approvals'=>0,'Portal Users'=>0,'Portal Delegates Administrators'=>0,'Regional Administrator'=>0};
 		string topParentId = con.Account.Top_Parent__c==null?con.AccountId:con.Account.Top_Parent__c;
