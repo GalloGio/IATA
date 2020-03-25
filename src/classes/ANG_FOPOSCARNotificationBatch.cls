@@ -3,6 +3,14 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	 Will run every day and send email and Portal notification if:
 		a) The FOP OSCAR is not submitted by the agent within 15 days (creation date + 15 days) => Reminder
 		b) The FOP OSCAR is not submitted by the agent within 30 days (creation date + 30 days) => Non Compliance
+
+		c) The Annual Revalidation is not submitted by the agent within 15 days (creation date + 15 days) => Reminder
+		d) The Annual Revalidation is not submitted by the agent within 21 days (creation date + 21 days) => Reminder
+		e) The Annual Revalidation is not submitted by the agent within 27 days (creation date + 27 days) => Reminder
+
+		f) The Annual Revalidation is not submitted by the agent and the Administrative non-compliance step is passed within 15 days (creation date + 45 days) => Reminder
+		g) The Annual Revalidation is not submitted by the agent and the Administrative non-compliance step is passed within 21 days (creation date + 51 days) => Reminder
+		h) The Annual Revalidation is not submitted by the agent and the Administrative non-compliance step is passed within 27 days (creation date + 57 days) => Reminder
 	*/
 
 	// FOP OSCAR was mass created if Origin is the following:
@@ -24,8 +32,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	public static final String ANNUAL_REV_REMINDER = 'ANG_Annual_Revalidation_Reminder';
 	public static final String ANNUAL_REV_DEADLINE_REMINDER = 'ANG_Annual_Revalidation_Deadline_Reminder';
 
-	public static final String PASSED = AMS_Utils.PASSED;
-
 	public static final Set<String> emailTemplates = new Set<String>{
 		FOP_REMINDER_TEMPLATE_ID,
 		FOP_NONCOMPLIANCE_TEMPLATE_ID,
@@ -40,67 +46,64 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	private Map<String,String> notificationTemplatesInverted;
 
 	//dates:
-	Date dateReminder; //15 days ago
-	Date dateNonCompliance; //30 days ago
+	private static final Date DATE_REMINDER_15 = Date.today().addDays(-15);
+	private static final Date DATE_REMINDER_30 = Date.today().addDays(-30);
+	private static final Date DATE_REMINDER_21 = Date.today().addDays(-21);
+	private static final Date DATE_REMINDER_27 = Date.today().addDays(-27);
 
-	Date annualRevSecondReminder;
-	Date annualRevThirdReminder;
-
-	List<String> errors = new List<String>();
+	private List<String> errors = new List<String>();
 
 	global ANG_FOPOSCARNotificationBatch() {}
 
 	global Iterable<Case> start(Database.BatchableContext BC) {
-		dateReminder = Date.today().addDays(-15);
-		dateNonCompliance = Date.today().addDays(-30);
-		annualRevSecondReminder = Date.today().addDays(-21);
-		annualRevThirdReminder = Date.today().addDays(-27);
+		notificationTemplates = new Map<String, String>();
+		notificationTemplatesInverted = new Map<String, String>();
 
-		notificationTemplates = new Map<String,String>();
-		notificationTemplatesInverted = new Map<String,String>();
-
-		for (Notification_template__c nt: [SELECT Id,Name, Identifier__c 
+		for (Notification_template__c nt: [SELECT Id, Name, Identifier__c 
 										FROM Notification_Template__c 
 										WHERE Identifier__c IN :emailTemplates]) {
 			notificationTemplates.put(nt.Identifier__c,nt.Name);
 			notificationTemplatesInverted.put(nt.Name,nt.Identifier__c);
 		}
 
-		String query;
-		//cannot access owner.name while test is running
-		if (Test.isRunningTest()){
-			query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, Origin, Reason1__c, '+
-				'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c, CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c '+
-				'FROM Case '+
-				'WHERE RecordtypeID = :RECTYPE_OSCARCOMM '+
-				'AND((OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+
-				'AND (Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)'+
-				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :dateNonCompliance)) '+
-				'OR (OSCAR__r.RecordTypeId = :RECTYPE_ANN_REV '+
-				'AND Reason1__c = :ANN_REV_REASON '+
-				'AND ((OSCAR__r.STEP43__c = :PASSED '+
-				'AND (OSCAR__r.ANG_Administrative_non_compliance_date__c = :dateReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevSecondReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevThirdReminder)) '+
-				'OR (OSCAR__r.STEP43__c != :PASSED '+
-				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :annualRevSecondReminder OR DAY_ONLY(CreatedDate) = :annualRevThirdReminder)))))';
-		}else{
-			query = 'SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate, Contact.Account.IataCode__c, Origin, Reason1__c,'+
-				'Contact.Preferred_Language__c, Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c, CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c '+
-				'FROM Case '+
-				'WHERE RecordtypeID = :RECTYPE_OSCARCOMM '+
-				'AND((OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP '+
-				'AND (Origin = :MASSIVE_FOP_ORIGIN OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN) '+
-				'AND Owner.Name IN :MASS_FOP_QUEUES '+
-				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :dateNonCompliance)) '+
-				'OR (OSCAR__r.RecordTypeId = :RECTYPE_ANN_REV '+
-				'AND Reason1__c = :ANN_REV_REASON '+
-				'AND Owner.Name = :ANN_REV_QUEUE '+
-				'AND ((OSCAR__r.STEP43__c = :PASSED '+
-				'AND (OSCAR__r.ANG_Administrative_non_compliance_date__c = :dateReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevSecondReminder OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :annualRevThirdReminder)) '+
-				'OR (OSCAR__r.STEP43__c != :PASSED '+
-				'AND (DAY_ONLY(CreatedDate) = :dateReminder OR DAY_ONLY(CreatedDate) = :annualRevSecondReminder OR DAY_ONLY(CreatedDate) = :annualRevThirdReminder)))))';
+		Set<String> fopQueueIds = new Set<String>();
+		String annualRevQueueId;
+
+		for (Group groupQueue: [SELECT Id, Name 
+								FROM Group 
+								WHERE (Name IN :MASS_FOP_QUEUES OR Name = :ANN_REV_QUEUE)
+									AND Type = 'Queue']) {
+			if (MASS_FOP_QUEUES.contains(groupQueue.Name)) {
+				fopQueueIds.add(groupQueue.Id);
+			} else {
+				annualRevQueueId = groupQueue.Id;
+			}
 		}
 
-		return (Iterable<Case>) Database.getQueryLocator(query);
+		return (Iterable<Case>) Database.getQueryLocator([SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate,
+															Contact.Account.IataCode__c, Origin, Reason1__c, Contact.Preferred_Language__c,
+															Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c,
+															CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c,
+															Owner.Name
+														  FROM Case
+														  WHERE RecordtypeID = :RECTYPE_OSCARCOMM
+															  AND ((OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP
+																	AND (Origin = :MASSIVE_FOP_ORIGIN
+																		OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)
+																	AND OwnerId IN :(Test.isRunningTest() ? new Set<String>{UserInfo.getUserId()} : fopQueueIds)
+																	AND (DAY_ONLY(CreatedDate) = :DATE_REMINDER_15
+																		OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_30))
+																OR (OSCAR__r.RecordTypeId = :RECTYPE_ANN_REV
+																	AND Reason1__c = :ANN_REV_REASON
+																	AND OwnerId = :(Test.isRunningTest() ? UserInfo.getUserId() : annualRevQueueId)
+																	AND ((OSCAR__r.STEP43__c = :AMS_Utils.PASSED
+																			AND (OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_15
+																				OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_21
+																				OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_27))
+																			OR (OSCAR__r.STEP43__c != :AMS_Utils.PASSED
+																				AND (DAY_ONLY(CreatedDate) = :DATE_REMINDER_15
+																					OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_21
+																					OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_27)))))]);
 	}
 
 	global void execute(Database.BatchableContext BC, List<Case> scope) {
@@ -115,16 +118,10 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 		Map<String,Map<Id,Case>> casesByTemplateName =  new Map<String,Map<Id,Case>>();
 		Map<String,Set<Id>> templateContIdMap = new Map<String,Set<Id>>();
 
-		Date deadlineDate;
-
 		for (Case cse :scope) {
 			Date dt = Date.newInstance(cse.CreatedDate.year(), cse.CreatedDate.month(), cse.CreatedDate.day());
 
-			if (cse.Reason1__c == ANN_REV_REASON && cse.OSCAR__r.STEP43__c == PASSED) {
-				deadlineDate = Date.newInstance(cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.year(), cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.month(), cse.OSCAR__r.ANG_Administrative_non_compliance_date__c.day());
-			}
-
-			if (dt == dateReminder || deadlineDate == dateReminder) {
+			if (dt == DATE_REMINDER_15 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_15) {
 				if(cse.origin == MASSIVE_FOP_ORIGIN) {
 					populateTemplateMap(reminderCases, cse, FOP_REMINDER_TEMPLATE_ID, templateContIdMap);
 				} else if (cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN) {
@@ -132,7 +129,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				} else if (cse.Reason1__c == ANN_REV_REASON) {
 					populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
 				}
-			} else if (dt == dateNonCompliance || deadlineDate == dateNonCompliance) {
+			} else if (dt == DATE_REMINDER_30 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_30) {
 				nonComplianceCases.put(cse.id,cse);
 					
 				if (cse.origin == MASSIVE_FOP_ORIGIN) {
@@ -140,7 +137,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				} else if (cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN) {
 					populateTemplateMap(renewalNonComplianceCases, cse, RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID, templateContIdMap);
 				}
-			} else if ((dt == annualRevSecondReminder || dt == annualRevThirdReminder || deadlineDate == annualRevSecondReminder || deadlineDate == annualRevThirdReminder) && cse.Reason1__c == ANN_REV_REASON) {
+			} else if ((dt == DATE_REMINDER_21 || dt == DATE_REMINDER_27 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_21 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_27) && cse.Reason1__c == ANN_REV_REASON) {
 				populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
 			}
 		}
@@ -177,7 +174,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	}
 
 	private void populateAnnualRevalidationTemplateMap(Map<Id,Case> annualRevDeadlineReminderCases, Map<Id,Case> annualRevReminderCases, Case cse, Map<String,Set<Id>> templateContIdMap) {
-		if (cse.OSCAR__r.STEP43__c == PASSED) {
+		if (cse.OSCAR__r.STEP43__c == AMS_Utils.PASSED) {
 			populateTemplateMap(annualRevDeadlineReminderCases, cse, ANNUAL_REV_DEADLINE_REMINDER, templateContIdMap);
 		} else {
 			populateTemplateMap(annualRevReminderCases, cse, ANNUAL_REV_REMINDER, templateContIdMap);

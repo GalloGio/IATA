@@ -3,6 +3,8 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 	@testSetup 
 	static void setup() {
+		Test.startTest();
+
 		insert new List<Notification_template__c>{
 			new Notification_template__c(Language__c = 'English', 
 				Identifier__c = ANG_FOPOSCARNotificationBatch.ANNUAL_REV_REMINDER,
@@ -114,6 +116,20 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
+		String annualRevGroup;
+		String massFopGroup;
+
+		for (Group groupQueue: [SELECT Id, Name 
+								FROM Group 
+								WHERE Name IN ('NewGen PCI - Americas', 'Annual Revalidation') 
+									AND Type = 'Queue']) {
+			if (groupQueue.Name == 'NewGen PCI - Americas') {
+				massFopGroup = groupQueue.Id;
+			} else {
+				annualRevGroup = groupQueue.Id;
+			}
+		}
+
 		Case testcase = new Case (Account_Concerned__c = account.Id,
 			AccountId = account.Id,
 			OSCAR__c  = oscar.Id,
@@ -145,6 +161,14 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			newCaseFop
 		};
 
+		testcase.OwnerId = annualRevGroup;
+		newCaseFop.OwnerId = massFopGroup;
+
+		update new List<Case>{
+			testcase,
+			newCaseFop
+		};
+
 		insert new SalesforceSupportEmails__c(Name = 'test', 
 			Support_Email__c = 'testSupportEmail@newgen.istest');
 
@@ -153,6 +177,8 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			Change_Code__c = 'ARV',
 			Published_in_bulletin__c = true,
 			Integration_RecId__c = 'C');
+
+		Test.stopTest();
 	}
 	@isTest 
 	static void testReminderFOPMassNotificationError() {
@@ -265,7 +291,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			FROM AMS_OSCAR__c
 			WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
 
-		oscar.STEP43__c = 'Passed';
+		oscar.STEP43__c = AMS_Utils.PASSED;
 		oscar.ANG_Administrative_non_compliance_date__c = Date.today()-27;
 
 		update oscar;
