@@ -122,15 +122,4 @@ global class PostCopyScript implements SandboxPostCopy {
 		deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch();
 		Database.executeBatch(deleteConnectedApps,10);
 	}
-
-	/**
-	 * This create a service to connect with MetadataAPI service:
-	*/
-	@TestVisible
-	private static MetadataService.MetadataPort createService(){
-		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-		service.SessionHeader = new MetadataService.SessionHeader_element();
-		service.SessionHeader.sessionId = UserInfo.getSessionId();
-		return service;
-	}
 }
