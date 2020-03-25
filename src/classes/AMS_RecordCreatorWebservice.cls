@@ -666,7 +666,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			throw new CalloutException('Account Id must be filled.');
 
 		Account account = new Account(Id = accountId);
-		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
+		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, ANG_IsNewGenAgency__c,(SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
 		if(a == null)
 			throw new CalloutException('Account could not be found.');
