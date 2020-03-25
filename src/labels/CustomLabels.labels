@@ -27250,6 +27250,20 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_Form_Administrators_Recommendation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Form_Administrators_Recommendation</shortDescription>
+        <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
+        <value>Are you sure you want to withdraw the selected countries?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
         <categories>ISSP AP</categories>
         <language>en_US</language>
@@ -32803,6 +32817,20 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Freight Forwarder</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Administrators</shortDescription>
+        <value>If more than 2 new PASS administrators need to be created, please provide details.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Administrators_Rec</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Administrators Rec</shortDescription>
+        <value>Recommendation: Each Airline/GSSA should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Agent</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -32864,6 +32892,20 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <value>https://www.iata.org/pass</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_NewUsers</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS NewUsers</shortDescription>
+        <value>New PASS Users</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_New_Admins</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS New Admins</shortDescription>
+        <value>Extra new PASS administrators</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Participation_Agreement</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32897,6 +32939,20 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
         <value>Link of Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_TextAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS TextAreas</shortDescription>
+        <value>First Name, Last Name, Email;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Users</shortDescription>
+        <value>If it&#39;s necessary to create PASS Users, please provide details.</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
