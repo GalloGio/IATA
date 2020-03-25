@@ -119,13 +119,8 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteConnectedApps(){
-		List<String> fullNameList = new List<String>();
-		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
-			fullNameList.add(ca.Name.replace(' ','_'));
-		}
-		if(!fullNameList.isEmpty()){
-			createService().deleteMetadata('ConnectedApp', fullNameList);
-		}
+		deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch();
+		Database.executeBatch(deleteConnectedApps,10);
 	}
 
 	/**
