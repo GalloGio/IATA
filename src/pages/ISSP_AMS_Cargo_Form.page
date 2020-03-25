@@ -2671,7 +2671,7 @@
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem labelStyleClass="modallabel" labelStyle="width:19%">
-                    <apex:outputLabel value="{!$ObjectType.Account.fields.TradeName__c.Label}"/> 
+                    <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_Trade_Name_DBA, $ObjectType.Account.fields.TradeName__c.Label)}"/> 
                     <apex:inputField styleClass="modalinput" value="{!hqAccount.TradeName__c}"/>  
                 </apex:pageBlockSectionItem>
 
