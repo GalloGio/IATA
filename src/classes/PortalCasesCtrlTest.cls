@@ -239,7 +239,7 @@ private class PortalCasesCtrlTest {
 		Test.startTest();
 			System.runAs(usr) {
 
-				createOscar('Test','Test','Draft',usr.ContactId,'OSCAR_Communication');
+				createOscar('CHG – Data Maintenance','Test','Draft',usr.ContactId,'OSCAR_Communication');
 				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
 				portFilterWrapper.searchText = 'Bla';
 

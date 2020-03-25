@@ -18,7 +18,7 @@ global without sharing class FSM_Webservice {
 	WebService static String sendFSRequestedLetter(String caseId) {
 		//INC193737 10-08-2015 - select the attachments related list
 		list<Case> listCase = [
-			Select Id, Account.Id, FS_Letter_Sent__c, Reminder_EmailTemplate__c, FS_Deadline_Date__c, Account.RecordtypeId, Account.Industry, Account.Name, Contact.Id, Contact.Email, /*ThreadID__c,*/ Account.AIMS_ID__c, (select Id from Attachments)
+			Select Id, Account.Id, FS_Letter_Sent__c, Reminder_EmailTemplate__c, FS_Deadline_Date__c, Account.RecordtypeId, Account.Industry, Account.Name, Contact.Id, Contact.Email, Contact.IsEmailBounced, /*ThreadID__c,*/ Account.AIMS_ID__c, (select Id from Attachments)
 			from Case where Id = :caseId
 		];
 
@@ -89,46 +89,47 @@ global without sharing class FSM_Webservice {
 					signature = updateField( t.Signature_Details__c, '&lt;CASE&gt;', String.ValueOf( c.CaseNumber) );
 					text1 = updateField( t.Text_1__c, '<IATA CODE>', String.ValueOf( c.Account.AIMS_ID__c ) );
 
+					if(c.Contact.Id != null && !c.Contact.IsEmailBounced && String.isNotBlank(c.Contact.Email) && !c.Contact.Email.endsWithIgnoreCase('.inactive')){
+						// build email body
+						String htmlEmailBody = '<html><body style=\'font-family:"Calibri","sans-serif";\'>';
+						//htmlEmailBody += '<td style="background-color:#FFFFFF; vertical-align:top; height:200px; text-align:left;">';
+						htmlEmailBody += '<img id="hi" src="'+ getImageHeader() + '"/>';
+						htmlEmailBody += '<br/><br/>' + greeting + ',<br/>';
+						htmlEmailBody += text1 + '<br/>';
+						htmlEmailBody += section1 + '<br/>';
+						if(section2 != null && section2 != '')htmlEmailBody += section2 + '<br/>';
+							else htmlEmailBody += '';
+						if(section3 != null && section3 != '')htmlEmailBody += section3 + '<br/>';
+							else htmlEmailBody += '';
+						htmlEmailBody += signature + '<br/>';
+						htmlEmailBody += '</body></html>';
 
-					// build email body
-					String htmlEmailBody = '<html><body style=\'font-family:"Calibri","sans-serif";\'>';
-					//htmlEmailBody += '<td style="background-color:#FFFFFF; vertical-align:top; height:200px; text-align:left;">';
-					htmlEmailBody += '<img id="hi" src="'+ getImageHeader() + '"/>';
-					htmlEmailBody += '<br/><br/>' + greeting + ',<br/>';
-					htmlEmailBody += text1 + '<br/>';
-					htmlEmailBody += section1 + '<br/>';
-					if(section2 != null && section2 != '')htmlEmailBody += section2 + '<br/>';
-						else htmlEmailBody += '';
-					if(section3 != null && section3 != '')htmlEmailBody += section3 + '<br/>';
-						else htmlEmailBody += '';
-					htmlEmailBody += signature + '<br/>';
-					htmlEmailBody += '</body></html>';
 
+						Messaging.SingleEmailMessage em = new Messaging.SingleEmailMessage();
+						em.setToAddresses(new list<string>{c.Contact.Email});
+						//em.setTemplateId(template[0].Id);
+						em.setTargetObjectId(c.Contact.Id);
+						em.saveAsActivity=false;
+						em.setSubject(sEmailSubject);
+						em.setHtmlBody(htmlEmailBody);
 
-					Messaging.SingleEmailMessage em = new Messaging.SingleEmailMessage();
-					em.setToAddresses(new list<string>{c.Contact.Email});
-					//em.setTemplateId(template[0].Id);
-					em.setTargetObjectId(c.Contact.Id);
-					em.saveAsActivity=false;
-					em.setSubject(sEmailSubject);
-					em.setHtmlBody(htmlEmailBody);
+						system.debug('EMAIL IS ' + em.getToAddresses());
 
-					system.debug('EMAIL IS ' + em.getToAddresses());
+						if(t.Attachments.size()>0){
 
-					if(t.Attachments.size()>0){
+							List<Attachment> listAtt = [Select Name, Body, ContentType From Attachment where parentId = :t.Id];
 
-						List<Attachment> listAtt = [Select Name, Body, ContentType From Attachment where parentId = :t.Id];
+							for(Attachment a : listAtt){
+								Messaging.Emailfileattachment efa = new Messaging.Emailfileattachment();
+								efa.setFileName(a.Name);
+								efa.setBody(a.Body);
+								Attachments.add(efa);
+							}
 
-						for(Attachment a : listAtt){
-							Messaging.Emailfileattachment efa = new Messaging.Emailfileattachment();
-							efa.setFileName(a.Name);
-							efa.setBody(a.Body);
-							Attachments.add(efa);
+							em.setFileAttachments(Attachments);
 						}
-
-						em.setFileAttachments(Attachments);
+						EmailMessages.add(em);
 					}
-					EmailMessages.add(em);
 				}
 
 

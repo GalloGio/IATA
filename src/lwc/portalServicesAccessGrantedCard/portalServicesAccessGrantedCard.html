@@ -15,11 +15,11 @@
             </template>
         </span>
 
-        <span slot="serviceImage">
-            <template if:true={hasIcon}>
-                <img class="slds-p-around_small serviceImageStyles" src={service.recordService.Application_icon_URL__c}/>
+        <div slot="serviceImage" class="fullHeight fullWidth customCardBorder">
+            <template if:true={hasIcon} class="fullHeight fullWidth">
+                <div class="fullHeight fullWidth cardImageProperties" style={service.recordService.imageCSS}>&nbsp;</div>
             </template>
-        </span>
+        </div>
 
         <span slot="serviceName">
             {service.recordService.ServiceName__c}

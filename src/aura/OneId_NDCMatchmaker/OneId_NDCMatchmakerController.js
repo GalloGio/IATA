@@ -93,5 +93,6 @@
     	$A.util.removeClass(component.find("NDC_Type_of_CC_Accepted__c"), "none");
     	$A.util.removeClass(component.find("NDC_Other_Products_and_Services__c"), "none");
 		$A.util.removeClass(component.find("NDC_Seller_Type__c"), "none");
+		$A.util.removeClass(component.find("NDC_Travel_Agents_on_boarding_portal__c"), "none");
     }
 })

@@ -33,4 +33,16 @@ public abstract class ISSP_ICCS_ComponentController {
 	public abstract Boolean resetController(ISSP_ICCS_ServiceController pageController);
 
 	public abstract void cleanController();
+
+	// map to find instructions by code
+	private static map<String,ISSP_ICCS_CoreRest.InstructionType> mapInstructionTypeByCode = null;
+	public ISSP_ICCS_CoreRest.InstructionType getInstructionType(String instructionTypeCode) {
+		if (mapInstructionTypeByCode==null) {
+			mapInstructionTypeByCode = new map<String,ISSP_ICCS_CoreRest.InstructionType>();
+			for(ISSP_ICCS_CoreRest.InstructionType instructionType : pageController.coreRest.getInstructionTypes()){
+				mapInstructionTypeByCode.put(instructionType.code, instructionType);
+			}
+		}
+		return mapInstructionTypeByCode.get(instructionTypeCode);
+	}
 }

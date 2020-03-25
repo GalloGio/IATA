@@ -30,15 +30,19 @@ private class Order_Ext_Test
 		accounts[0].ICH_Member__c = true;
 		accounts[0].Payment_Term__c = '0011';
 		accounts[0].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[0].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[0].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[0].IATA_ISO_Shipping_State__c = stateQuebec.Id;
+		accounts[0].Sector__c = IECConstants.Account_Industry_Airline;
 		accounts[1].RecordTypeId = IECUserManager.getAccountRecordTypeForIEC(ClientType);
 		accounts[1].Membership_status__c = IECConstants.Account_MembershipStatus_IATAMember;
 		accounts[1].ICH_Member__c = true;
 		accounts[1].Payment_Term__c = '0011';
 		accounts[1].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[1].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[1].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[1].IATA_ISO_Shipping_State__c = stateQuebec.Id;
+		accounts[1].Sector__c = IECConstants.Account_Industry_Airline;
 		insert accounts;
 		accounts[1].ParentId = accounts[0].Id; //accounts[0] is the Parent Account
 		update accounts;
@@ -319,7 +323,7 @@ Test.startTest();
 	} //*** end of "test_Order_Header2"
 
 
-	@isTest(SeeAllData = true)
+	@isTest
 	static void test_Order_Items()
 	{
 		//-- Generate Test Data
@@ -358,6 +362,8 @@ Test.startTest();
 		sfOrder.ShippingCountryCode__c = 'CA';
 		update sfOrder;
 
+		Test.startTest();   //*** to bypass nb of queries
+
 		//Goto order Page
 		ApexPages.StandardController ctrl = new ApexPages.StandardController(sfOrder);
 		Order_Ext ext = new Order_Ext(ctrl);
@@ -369,10 +375,6 @@ Test.startTest();
 
 		//No Item added in the order
 		System.assertEquals(1, ext.orderProducts.size());
-
-
-		// orderitems are not compliant
-		//System.assertEquals(false, ext.bAreProductsCompliant);  -> to fix when Samy complete the new structure
 
 		// Add 1st product
 		ext.addProducts();
@@ -388,8 +390,6 @@ Test.startTest();
 		ext.addSelectedProducts();
 
 		ext.selectMore();
-
-		Test.startTest();   //*** to bypass nb of queries
 
 		ApexPages.currentPage().getParameters().put('orderItemId',sfOrderItem.Id);
 		ext.resendOrderItemLink();
@@ -552,9 +552,7 @@ Test.startTest();
 		ext.vfOrder.EffectiveDate = system.today();
 		ext.vfOrder.Shipping_Instruction__c = 'special shipping';
 		//*** skip locationCount and assert because error "Too many query rows" in production
-		//locationCount = [select count() from Location__c];
 		ext.saveOrder();
-		//system.assert([select count() from Location__c] == locationCount + 1, 'Should have ' + (locationCount + 1) + ' locations: ' + ApexPages.getMessages());
 
 		Test.startTest();
 			//*** success - billing is same as shipping and have ship to location
@@ -584,6 +582,5 @@ Test.startTest();
 			ext.cancelOrder();  // nothing to assert for this method
 		Test.stopTest();
 	} //*** end of "test_saveOrder"
-
 
 }

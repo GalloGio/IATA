@@ -1,9 +1,4 @@
-/**
- * Created by pvavruska on 5/28/2019.
- */
-
 import { LightningElement, api, track } from 'lwc';
-
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -98,7 +93,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track photoPopUp = false;
     @track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
     @track paymentLinkURL; //WMO-699 - ACAMBAS
-    @track hasAccessToSISPortal; //WMO-736 - ACAMBAS
+    @track hasAccessToSISPortal = false; //WMO-736 - ACAMBAS
     @track SISPortalLink; //WMO-736 - ACAMBAS
     @track firstEntry = false;
     @track initialList = [];
@@ -270,23 +265,25 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
         //WMO-699 - ACAMBAS: End
 
-        //WMO-736 - ACAMBAS: Begin
-        let SISPortalService = 'SIS';
+        if(this.isCustomerInvoice){
+            //WMO-736 - ACAMBAS: Begin
+            let SISPortalService = 'SIS';
 
-        hasAccessToSIS({ str: SISPortalService }).then(result => {
-            this.hasAccessToSISPortal = result;
+            hasAccessToSIS({ str: SISPortalService }).then(result => {
+                this.hasAccessToSISPortal = result;
 
-            if(this.hasAccessToSISPortal) {
-                getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
-                    let portalService = JSON.parse(JSON.stringify(result));
-                    if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
-						this.iconUrl = portalService.recordService.Application_icon_URL__c;
-						this.sisPage = portalService.recordService.Application_URL__c;
-                    }
-                });
-            }
-        });
-        //WMO-736 - ACAMBAS: End
+                if(this.hasAccessToSISPortal) {
+                    getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
+                        let portalService = JSON.parse(JSON.stringify(result));
+                        if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
+                            this.iconUrl = portalService.recordService.Application_icon_URL__c;
+                            this.sisPage = portalService.recordService.Application_URL__c;
+                        }
+                    });
+                }
+            });
+            //WMO-736 - ACAMBAS: End
+        }
 
         this.getAccountEmailDomains();
     }

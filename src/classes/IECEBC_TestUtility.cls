@@ -23,7 +23,7 @@
 	*
 	*/
 
-//@isTest
+@isTest
 public with sharing class IECEBC_TestUtility {
 
 	// Test User related records, created by createTestUser

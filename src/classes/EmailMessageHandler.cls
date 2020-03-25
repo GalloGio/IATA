@@ -86,7 +86,8 @@ public with sharing class EmailMessageHandler {
 					contact.CNS_Contact__c, contact.Preferred_Language__c, account.Source_System__c
 				FROM Case
 				WHERE id IN :mapCaseIdEmail.keyset()
-				AND RecordType.DeveloperName IN :LIST_VALID_RT]
+				AND RecordType.DeveloperName IN :LIST_VALID_RT
+				AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]
 				) {
 			if (cse.ClosedDate < Date.today().addDays(-14)) {
 				mapCases.put(cse.Id, cse);
@@ -215,7 +216,7 @@ public with sharing class EmailMessageHandler {
 
 		if(mapCases.isEmpty()) return;
 
-		List<Contact> contactList = [SELECT Id, Preferred_Language__c FROM Contact WHERE Id IN :contactIds];
+		List<Contact> contactList = [SELECT Id, Preferred_Language__c FROM Contact WHERE Id IN :contactIds AND isEmailBounced = false AND (NOT Email LIKE '%.inactive')];
 
 		//system.debug('### EmailMessageHandler - contactList: ' + contactList);
 

@@ -1,3 +1,4 @@
+@isTest
 public class vfIECEBC_TestPaymentSuite {
 	public static Account IECTestUtil_Account;
 	public static Contact IECTestUtil_Contact;
