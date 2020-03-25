@@ -78,7 +78,8 @@ public class SurveyBatchTest {
 		insert ign;
 	}
 
-	static testMethod void SurveyEmailTest2() {
+	@isTest
+	static void SurveyEmailTest2() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -328,7 +329,8 @@ public class SurveyBatchTest {
 	 }
 	}
 
-		static testMethod void SurveyEmailTest3() {
+	@isTest
+	static void SurveyEmailTest3() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -631,7 +633,8 @@ public class SurveyBatchTest {
 	CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 	}
 
-	static testMethod void testForCountries() {
+	@isTest
+	static void testForCountries() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -648,7 +651,8 @@ public class SurveyBatchTest {
 	test.stopTest();
 
 }
-	static testMethod void testForCountries2() {
+	@isTest
+	static void testForCountries2() {
 
 	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 	TransformationHelper.CalculateBusinessHoursAges = true;
@@ -664,7 +668,8 @@ public class SurveyBatchTest {
 	Database.executeBatch(batch, 50);
 	test.stopTest();
 }
-static testMethod void testForCountries3() {
+	@isTest
+	static  void testForCountries3() {
 
 	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 	TransformationHelper.CalculateBusinessHoursAges = true;
@@ -682,7 +687,8 @@ static testMethod void testForCountries3() {
 	test.stopTest();
 }
 
-	static testMethod void testForRegions() {
+	@isTest
+	static void testForRegions() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -811,7 +817,8 @@ static testMethod void testForCountries3() {
 
 }
 
-	static testMethod void testForRoles01() {
+	@isTest
+	static void testForRoles01() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -871,7 +878,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles02() {
+	@isTest
+	static void testForRoles02() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -932,7 +940,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles03() {
+	@isTest
+	static void testForRoles03() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -994,7 +1003,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles04() {
+	@isTest
+	static void testForRoles04() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1053,7 +1063,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles05() {
+	@isTest
+	static void testForRoles05() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1115,7 +1126,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles06() {
+	@isTest
+	static void testForRoles06() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1176,7 +1188,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles07() {
+	@isTest
+	static void testForRoles07() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1234,7 +1247,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles08() {
+	@isTest
+	static void testForRoles08() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1291,7 +1305,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles09() {
+	@isTest
+	static void testForRoles09() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1348,7 +1363,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles10() {
+	@isTest
+	static void testForRoles10() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1406,7 +1422,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testForRoles11() {
+	@isTest
+	static void testForRoles11() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1469,7 +1486,8 @@ static testMethod void testForCountries3() {
 	}
 
 
-	static testMethod void testForRoles12() {
+	@isTest
+	static void testForRoles12() {
 
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
@@ -1531,7 +1549,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 
-	static testMethod void testProcessCustomerRecovery() {
+	@isTest
+	static void testProcessCustomerRecovery() {
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;
 		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
@@ -1591,7 +1610,8 @@ static testMethod void testForCountries3() {
 		test.stopTest();
 	}
 	
-	static testMethod void testProcessSurvey() {
+	@isTest
+	static void testProcessSurvey() {
 		Test.startTest();
 		IATA_ISO_Country__c ct1 = new IATA_ISO_Country__c(
 			Name= 'Country Test',
@@ -1644,7 +1664,8 @@ static testMethod void testForCountries3() {
 		Test.stopTest();
 	}
 
-	static testMethod void testAccountRole() {
+	@isTest
+	static void testAccountRole() {
 		
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 		TransformationHelper.CalculateBusinessHoursAges = true;

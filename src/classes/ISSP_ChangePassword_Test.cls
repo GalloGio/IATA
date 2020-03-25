@@ -426,7 +426,7 @@ private class ISSP_ChangePassword_Test {
 	}
 
 	@isTest
-	static void ChangePasswordServiceName(){
+	static void ChangePasswordServiceNameTest(){
 			
 		Test.startTest();
 		PageReference pgRef = Page.ISSP_ChangePassword;
@@ -435,9 +435,11 @@ private class ISSP_ChangePassword_Test {
 		Test.setCurrentPageReference(pgRef); 
 
 		ISSP_ChangePassword pageCP = new ISSP_ChangePassword();
-		pageCP.changePassword();
+		PageReference result = pageCP.changePassword();
 		Test.stopTest();
 
+		System.assertEquals(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?&serviceName=testServiceName')).getUrl(), result.getUrl());
+		
 	}
 
 	@isTest
