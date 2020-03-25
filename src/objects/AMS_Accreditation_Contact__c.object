@@ -799,16 +799,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>PASS_contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Checkbox indicating if the Accreditation Contact is related to a PASS Accreditation Process</description>
-        <externalId>false</externalId>
-        <label>PASS contact</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>PASS_user__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
