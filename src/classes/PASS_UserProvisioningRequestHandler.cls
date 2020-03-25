@@ -78,14 +78,14 @@ public class PASS_UserProvisioningRequestHandler {
 	@future
 	public static void createPassUserProvAccounts(Set<Id> contactIdPASSAccreditationSet){
 		//Create User Provisioning Accounts for PASS SSO
-		Id PASSConnectedApp = [SELECT id FROM ConnectedApplication WHERE name = 'Pass User Prov' LIMIT 1].id;
+		Connected_App_Roles__c PASSConnectedApp = [SELECT Provisioning_Id__c FROM Connected_App_Roles__c WHERE Name = 'Pass' LIMIT 1];
 		List<User> passSsoUsers = [SELECT Id,Username,Federation_ID__c FROM User WHERE ContactId IN:contactIdPASSAccreditationSet];
 		List<UserProvAccount> provAccList = new List<UserProvAccount>();
 		for(User passUser : passSsoUsers){
 			UserProvAccount upa = new UserProvAccount (
 							ExternalUserId = passUser.Federation_ID__c,
 							SalesforceUserId = passUser.Id,
-							ConnectedAppId = PASSConnectedApp,
+							ConnectedAppId = PASSConnectedApp.Provisioning_Id__c,
 							LinkState = 'Linked',
 							Status = 'Active'
 						);

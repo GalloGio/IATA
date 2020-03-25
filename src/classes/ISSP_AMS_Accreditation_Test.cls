@@ -5609,8 +5609,6 @@ Location_Type__c = 'BR');
 
 			AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
 			testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-			testAgencyContact.PASS_contact__c  =true;
-
 			testAgencyContact.PASS_admin__c = true;
 			testAgencyContact.PASS_user__c = true;
 			testAgencyContact.Authorised_signatory__c=true;
@@ -5621,8 +5619,6 @@ Location_Type__c = 'BR');
 
 			AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
 			testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-			testTrainedStaffContact.PASS_contact__c  =true;
-
 			testTrainedStaffContact.PASS_admin__c = true;
 			testTrainedStaffContact.PASS_user__c = true;
 			testTrainedStaffContact.Authorised_signatory__c=true;
