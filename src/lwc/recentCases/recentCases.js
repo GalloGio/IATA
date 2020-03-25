@@ -112,6 +112,9 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     get showReachUs(){
         return this.homePageLocal && !this.loading;
     }
+    get showTopReachUs(){
+        return this.dataRecords & this.homePageLocal && !this.loading;
+    }
 	
     redirectToSupport(event) {
         event.preventDefault();
