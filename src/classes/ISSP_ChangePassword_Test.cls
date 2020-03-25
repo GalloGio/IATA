@@ -468,10 +468,6 @@ private class ISSP_ChangePassword_Test {
 
 		User newUser = [SELECT Id FROM User WHERE Username = 'test.issp.registration.testisspregistration.com@partner.iata.org' LIMIT 1];
 
-		ISSP_CS__c issp_cs = new ISSP_CS__c(Name = 'PasswordResetPeriod', Value__c = '90');
-		ISSP_CS__c issp_cs2 = new ISSP_CS__c(Name = 'Fred_System', Value__c = 'test');		
-		insert new List<ISSP_CS__c>{issp_cs, issp_cs2};
-
 		UserProvisioningRequest userProvisining = new UserProvisioningRequest(State = 'Failed',
 												Operation = 'Activate', 
 												ApprovalStatus = 'Required',
