@@ -2,7 +2,6 @@ import { LightningElement, track } from 'lwc';
 import getInitialMonthPage from '@salesforce/apex/PortalCalendarCtrl.getInitialMonthPage';
 import getNextMonth from '@salesforce/apex/PortalCalendarCtrl.getNextMonth';
 import getPreviousMonth from '@salesforce/apex/PortalCalendarCtrl.getPreviousMonth';
-import goToOldPortalCalendar from '@salesforce/apex/PortalCalendarCtrl.goToOldPortalCalendar';
 import isAirlineOrAgencyUser from '@salesforce/apex/PortalCalendarCtrl.isAirlineOrAgencyUser';
 
 //custom labels
@@ -41,6 +40,8 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track showCalendar = false;
 
+    calendarPage='/ISSP_OperationalCalendar';
+
     connectedCallback() {
 
         isAirlineOrAgencyUser({})
@@ -76,10 +77,7 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     goToOldPortalCalendarJS(){
-        goToOldPortalCalendar({})
-        .then(results => {
-            window.open(results, "_self");
-        });
+        window.open(this.calendarPage, "_self");
     }
 
     getInitialMonth(){

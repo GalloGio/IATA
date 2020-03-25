@@ -40,7 +40,7 @@
     indican que lo(s) Certificados de Mercancías Peligrosas de su empresa
     expiran de</span></i><i><span lang="PT" style="font-size:10.0pt;font-family:
     &quot;Arial&quot;,sans-serif;color:#212121;mso-ansi-language:PT">&nbsp;<b>{!AMS_OSCAR__c.DGR_First_Name__c}
-    &nbsp;{!AMS_OSCAR__c.DGR_Last_Name__c},&nbsp;{!AMS_OSCAR__c.DGR_Position__c}</b></span></i><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;"> de fecha el&nbsp;</span></i><b><i><span lang="PT" style="font-size: 10pt; font-family: Arial, sans-serif;">{!AMS_OSCAR__c.Change_effective_as_of__c}</span></i></b><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">.&nbsp; Por lo tanto, es necesario que nos envíen evidencia/copias
+    &nbsp;{!AMS_OSCAR__c.DGR_Last_Name__c},&nbsp;{!AMS_OSCAR__c.DGR_Position__c}</b></span></i><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;"> de fecha el&nbsp;</span></i><b><i><span lang="PT" style="font-size: 10pt; font-family: Arial, sans-serif;">{!AMS_OSCAR__c.DGR_Expiry_Date__c}</span></i></b><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">.&nbsp; Por lo tanto, es necesario que nos envíen evidencia/copias
     de certificados en la Aceptación de Mercancías Peligrosas, juntamente con
     cualquier otra información que ustedes consideren conveniente y que indique
     que su empresa cumple con este requisito.</span></i><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
