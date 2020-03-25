@@ -2165,7 +2165,7 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>创建新账户</label>
+        <label>创建新用户</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2441,6 +2441,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>我已阅读并同意以下条款：</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>您好 [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2537,11 +2541,11 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>返回个人资料详细信息</label>
+        <label>返回其他详细信息</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>个人资料填写与账户选择</label>
+        <label>帐户选择与其他详细信息</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2549,7 +2553,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>请填写您的公司地址信息。</label>
+        <label>请提供您的工作地点的地址。</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2581,7 +2585,7 @@
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>公司所在地</label>
+        <label>你的工作地点所在的国家/地区</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2709,6 +2713,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>下一步</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>不是</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2745,7 +2753,7 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>个人资料详细信息</label>
+        <label>其他详细信息</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2757,7 +2765,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>但是我们会将其保存为草稿，以便您以后可以继续填写。您确定要退出吗？</label>
+        <label>你确定要退出吗？</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2845,7 +2853,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>标题</label>
+        <label>称呼</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3317,6 +3325,10 @@
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label>接受</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>访问请求</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3479,6 +3491,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>用户创建</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>欢迎使用 国际航空运输协会 (IATA) 客户门户</label>
