@@ -2,7 +2,8 @@
 private class clsFSRequestControllerTest{
 
 
-		static testMethod void testMyController() {  
+	@isTest	
+	static void testMyController() {  
 		
 				//Use the PageReference Apex class to instantiate a page
 				PageReference pageRef = Page.FinancialSecurityRequest;
@@ -113,7 +114,8 @@ private class clsFSRequestControllerTest{
 		
 		}
 
-			static testMethod void testTrackedEmails() {
+	@isTest		
+	static void testTrackedEmails() {
 				
 				Account account1 = new Account();
 				account1.Name = 'Test account';
@@ -189,7 +191,8 @@ private class clsFSRequestControllerTest{
 				
 			controller.MassSendTrackedEmail();
 		}
-	static testMethod void caseBatchTest() {	
+	@isTest
+	static void caseBatchTest() {	
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name = 'Portugal', ISO_Code__c = 'PT', AIMS_Area_ID__c = '2');
 		insert ctry;
