@@ -88,20 +88,24 @@
         <c:UploadFileToAmazonButton />
         <apex:actionFunction name="updateAmazonFileName" action="{!UploadAmazonFile}" rerender="AttachmentTable" oncomplete="stopLoading();"/>
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
-
+            <style>
+                .pbTitle{
+                    display:none;
+                }
+            </style>
             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
-                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
+                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
             </apex:pageBlockButtons>
-
+            
             <apex:pageMessages />
 
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
-                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
+                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{!isPassAirline || managePASS}">
                         <div class="aplabel" style="font-weight:bold;"> {!$Label.ISSP_PASS_Download_Documents}</div>

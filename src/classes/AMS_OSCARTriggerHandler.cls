@@ -260,7 +260,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		if(!accountIdSet.isEmpty()){
-
+			
 			//Fetch all the accounts from the hierarchies
 			List<Account> acctLst = new List<Account>(
 				[SELECT
@@ -4059,8 +4059,8 @@ public class AMS_OSCARTriggerHandler {
 
 						//AMSU-151 & AMSU-153 (AMSU-1) - Begin
 						Account accountCheckVAT = [SELECT Id, Is_Branch_Abroad__c, VAT_Number__c, VAT_Number_2__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Sector__c, Category__c
-												   FROM Account
-												   WHERE Id = :updatedOscar.Account__c];
+													 FROM Account
+													 WHERE Id = :updatedOscar.Account__c];
 
 						UtilityCS__c ucsVATnumberSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_VAT_COUNTRIES',value__c = 'BR;IN;MY;TH') : UtilityCS__c.getInstance('AMS_COR_VAT_COUNTRIES');
 						UtilityCS__c ucsAccNameSpecialCaseCountries = Test.isRunningTest() ? new UtilityCS__c(name ='AMS_COR_ACC_NAME_COUNTRIES',value__c = 'CN;TW') : UtilityCS__c.getInstance('AMS_COR_ACC_NAME_COUNTRIES'); //AMSU-153
