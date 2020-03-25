@@ -109,6 +109,32 @@ public class vfIECEBC_Test {
 	}
 	*/
 
+	@isTest
+	static void testUsr(){
+		vfIECEBC_Controller ctrl = new vfIECEBC_Controller();
+		
+		Profile profile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
 
+		User u = New User();
+		u.Alias = 'TestUSR';
+		u.Email = 'testUSR@iata.org';
+		u.EmailEncodingKey = 'UTF-8';
+		u.LastName = 'TestUSR';
+		u.LanguageLocaleKey = 'en_US';
+		u.LocaleSidKey = 'en_US';
+		u.ProfileId = '00e20000000h0gFAAQ';
+		u.TimeZoneSidKey = 'Europe/Brussels';
+		u.UserName = 'testUSR.user@test.com';
+		u.License_Cost_Center__c = 'AAA000AA00';
+		insert u;
+
+		Test.StartTest();
+
+		u = ctrl.usr;
+
+		Test.StopTest();
+
+		System.assertEquals(ctrl.usr, u);
+	}
 
 }
