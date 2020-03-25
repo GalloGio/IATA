@@ -148,7 +148,7 @@ public class AMS_ChangeCodesHelper {
 		Set<Account> accountsToUpdate = new Set<Account>();
 
 		Set<Id> accountIds = new Set<Id>();
-		for(Account acc: oscarAgencies)
+		for(Account acc : oscarAgencies)
 			accountIds.add(acc.Id);
 
 		List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
@@ -156,9 +156,12 @@ public class AMS_ChangeCodesHelper {
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
 		Map<Id,List<Agency_Authorization__c>> fOPs = null;
 
-		//if(AMS_Utils.isNewGenProcess)
-		Boolean isNewGen = (oscars != null && !oscars.isEmpty() && oscars[0] != null) ? oscars[0].Is_NewGen__c : oscarAgencies[0].ANG_IsNewGenAgency__c;
-		if(isNewGen)
+		AMS_OSCAR__c oscar = (oscars != null && !oscars.isEmpty()) ? oscars[0] : null;
+		Account agency = !oscarAgencies.isEmpty() ? oscarAgencies[0] : null;
+
+		Boolean isNewGen = isNewGen(oscar, agency);
+		
+		if (isNewGen)
 			fOPs = fetchFormsOfPayment(accountIds);
 
 		ObjectChangesStruct objectChangesByChangeCode = null;
@@ -284,8 +287,8 @@ public class AMS_ChangeCodesHelper {
 
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-		Boolean isNewGen = oscar != null ? oscar.Is_NewGen__c : oscarAgency.ANG_IsNewGenAgency__c;
-
+		Boolean isNewGen = isNewGen(oscar, oscarAgency);
+		
 		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
 			Active__c = isActive
 			, Account__c = oscarAgency.Id
@@ -692,4 +695,12 @@ public class AMS_ChangeCodesHelper {
 		return fOPs;
 	}
 
+	private static Boolean isNewGen(AMS_OSCAR__c oscar, Account agency){
+		return oscar != null ? oscar.Is_NewGen__c 
+			//Avoid "field was not requested on SOQL exception" on entry points from AMS processes 
+			//that might not query for the ANG_IsNewGenAgency__c flag
+			: agency != null && AMS_Utils.isSObjectFieldRetrieved(agency, 'ANG_IsNewGenAgency__c') 
+				? agency.ANG_IsNewGenAgency__c 
+				: false;
+	}
 }

@@ -2811,4 +2811,9 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	public static Boolean pickListContains(String picklist, String lookFor) {
 		return picklist != null && picklist.contains(lookFor);
 	}
+
+	public static Boolean isSObjectFieldRetrieved(SObject sObj, String fieldName){
+		return sObj.getPopulatedFieldsAsMap().containsKey(fieldName);
+	}
+
 }
