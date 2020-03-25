@@ -1,8 +1,22 @@
 global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObject>, Database.Stateful {
 
+	public class AMS_AgencyRegulationAutoRenewalException extends Exception {}
+
 	public List<AMS_Agency_Regulation__c> agencyRegulations;
 	public Map<Id, List<Contact>> keyContactsPerAccount;
 	public Map<String, Integer> renewalCertificatesPerAccount;
+
+	private static OrgWideEmailAddress AGENCY_MNGM_OWA;
+	public static OrgWideEmailAddress getAgencyManagementOwa() {
+		if (AGENCY_MNGM_OWA==null) {
+			try {
+				AGENCY_MNGM_OWA = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'];
+			} catch (Exception e) {
+				throw new AMS_AgencyRegulationAutoRenewalException('Could not find the org wide address for agency management ("agencymanagement@iata.org")');
+			}
+		}
+		return AGENCY_MNGM_OWA;
+	} 
 
 	public AMS_AgencyRegulationAutoRenewal(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id, List<Contact>> keyContactsPerAccount, Map<String, Integer> renewalCertificatesPerAccount){
 		this.agencyRegulations = agencyRegulations;
@@ -49,10 +63,14 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			accts.add(agReg.Account__c);
 		}
 
-		//DGR, TSA
-		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA')]);
-
-		system.debug('allCertificates: ' + allCertificates);
+		//DGR, TSA, ULD
+		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>(
+			[SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Expired__c, Notification_Sent__c,
+				Account__r.IATACode__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c
+			FROM AMS_Agency_Regulation__c
+			WHERE Account__c IN :accts
+			AND Type_of_Certificate__c IN (:AMS_Utils.CERT_DGR, :AMS_Utils.CERT_TSA, :AMS_Utils.CERT_ULD)]
+		);
 
 		for(AMS_Agency_Regulation__c agReg : allCertificates.values()){
 			if(!agReg.Expired__c && !agReg.Notification_Sent__c){
@@ -62,148 +80,132 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			}
 		}
 
-		system.debug('allNonExpiredCertificatesPerAccount ' + allNonExpiredCertificatesPerAccount);
 		Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c,
-																   Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c,
-																   License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,
-																   Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry,
-																   ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c,
-																   VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,
-																   IATA_ISO_Country__r.ISO_Code__c, Company_Type__c
+																Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c,
+																License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c,
+																Location_Type__c, Mobile__c, Operation__c, Remittance_frequency__c, ShippingCity, ShippingCountry,
+																ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, TradeName__c,
+																VAT_Number_2__c, Website, BillingCountry, Region_formula__c, Legal_name__c, IATA_ISO_Country__r.Name,
+																IATA_ISO_Country__r.ISO_Code__c, Company_Type__c
 															FROM Account WHERE Id IN :accts]);
 
 		for(Account acc: accountData.values())
 			isoCountries.add(acc.IATA_ISO_Country__c);
 
 		//minimum requirements for location class 'R'
-		Map<String, Integer> minimumHODgrRequirements = new Map<String, Integer>();
-		Map<String, Integer> minimumBRDgrRequirements = new Map<String, Integer>();
+		Map<String, Integer> minimumHORequirements = new Map<String, Integer>();
+		Map<String, Integer> minimumBRRequirements = new Map<String, Integer>();
 
 		for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries))	{
 
-			system.debug('country.AMS_Country_Specific_Attributes__r ' + country.AMS_Country_Specific_Attributes__r);
 			for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-				if(att != null && att.RecordType.Name == 'DGR Minimum Requirements' ){
-					minimumHODgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
-					minimumBRDgrRequirements.put(''+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
+				if(att == null) {
+				} else if (att.RecordType.DeveloperName == 'DGR_Minimum_Requirements') {
+					minimumHORequirements.put(AMS_Utils.CERT_DGR+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
+					minimumBRRequirements.put(AMS_Utils.CERT_DGR+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
+					//TSA share the same requirements as DGR
+					minimumBRRequirements.put(AMS_Utils.CERT_TSA+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
+					minimumHORequirements.put(AMS_Utils.CERT_TSA+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
+				} else if (att.RecordType.DeveloperName == 'ULD_Minimum_Requirements') {
+					minimumHORequirements.put(AMS_Utils.CERT_ULD+country.Id+att.Location_Class__c, att.Minimum_DGR_HO__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_HO__c));
+					minimumBRRequirements.put(AMS_Utils.CERT_ULD+country.Id+att.Location_Class__c, att.Minimum_DGR_BR__c == null ? 0 : Integer.valueOf(att.Minimum_DGR_BR__c));
 				}
 			}
 		}
 
-		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
-		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		map<String,Map<String, Id>> mapTypeCountryTemplates = new map<String,Map<String, Id>>();
+		mapTypeCountryTemplates.put(AMS_Utils.CERT_DGR, getMapEmailTemplates(AMS_Utils.CERT_DGR));
+		mapTypeCountryTemplates.put(AMS_Utils.CERT_ULD, getMapEmailTemplates(AMS_Utils.CERT_ULD));
+		// for TSA use same templates as for ULD
+		mapTypeCountryTemplates.put(AMS_Utils.CERT_TSA, mapTypeCountryTemplates.get(AMS_Utils.CERT_DGR));
+
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
 			Contact comCasecontact;
 
 			if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
-				system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
 				//find portal admin
 				for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
 					if(c.User_Portal_Status__c == 'Approved Admin')
 						comCasecontact = c;
 				}
 
-				system.debug('CHECK comcasecontact' + keyContactsPerAccount.get(agReg.Account__c).get(0));
 				//if no admin is found just use one of the existing keyContacts
 				if(comCasecontact == null) comCasecontact = keyContactsPerAccount.get(agReg.Account__c).get(0);
 			}
 
-			if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
-				//only create renewal if account is going below DGR requirements
-				String key = allCertificates.get(agReg.Id).Account__r.IATA_ISO_Country__c + allCertificates.get(agReg.Id).Account__r.Location_Class__c;
-				system.debug('key value ' + key);
-				Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
-				system.debug('minDgrHO ' + minDgrHO);
-				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
-				system.debug('minDgrBR ' + minDgrBR);
+			Account account = allCertificates.get(agReg.Id).Account__r;
+			String certificateType = agReg.Type_Of_Certificate__c;
 
-				//FM 07-07-2017 - AMSU-14
-				Boolean is90DaysNotif = true; //if it's the 90 days notification them the OSCAR is created, otherwise we must query the existing OSCAR
-				if(agReg.Notification_Date__c != null){
-					is90DaysNotif = false;
-				}
+			String key = certificateType + account.IATA_ISO_Country__c + account.Location_Class__c;
+			Integer minDgrHO = minimumHORequirements.get(key) == null ? 0 : minimumHORequirements.get(key);
+			Integer minDgrBR = minimumBRRequirements.get(key) == null ? 0 : minimumBRRequirements.get(key);
 
-				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
+			String accountKey = agReg.Account__c+agReg.Type_of_Certificate__c;
 
-				System.debug('DGR renewalCertificatesPerAccount before if: ' + renewalCertificatesPerAccount);
+			Integer activeCertificateInAccount = allNonExpiredCertificatesPerAccount.get(accountKey).size();
+			Integer certificateToRenewInAccount = certificatesToRenewPerAccount.get(accountKey).size();
+			Integer numberOfRemainingCertificatesInAccountToExpire = activeCertificateInAccount-certificateToRenewInAccount;
 
-				if(renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) == -1){
-					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, numberOfRemainingDGRInAccountToExpire);
-				}
-
-				System.debug('DGR renewalCertificatesPerAccount after if: ' + renewalCertificatesPerAccount);
-
-				Integer numberOfActiveDGR = renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c);
-
-				System.debug('DGR numberOfActiveDGR: ' + numberOfActiveDGR);
-
-				system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveDGR, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
-
-					system.debug('creating renewal for DGR');
-
-					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification otherwise we need to query the existing one
-					AMS_OSCAR__c oscar = null;
-					if(is90DaysNotif){
-						oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
-						agReg.OSCAR__c = oscar.Id;
-						update agReg;
-					}else{
-						String sContactName = agReg.First_Name__c + ' ' +agReg.Last_Name__c;
-
-						oscar = [SELECT Id, Region__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c = :agReg.Account__c
-										AND AMS_Online_Accreditation__r.DGR_Agency_Regulation__c = :agReg.Id
-										AND Process__c = :AMS_Utils.CERTIFICATION
-										order by CreatedDate desc
-										limit 1];
-					}
-
-					System.debug('oscar: ' + oscar);
-					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
-
-					//FM 07-07-2017 - AMSU-14 - only create OSCAR on the 90 days notification
-					if(is90DaysNotif){
-						renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
-					}
-				}
+			if(renewalCertificatesPerAccount.get(accountKey) == -1){
+				renewalCertificatesPerAccount.put(accountKey, numberOfRemainingCertificatesInAccountToExpire);
 			}
-			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA){
-				//only create renewal if account is going below DGR requirements
-				String key = allCertificates.get(agReg.Id).Account__r.IATA_ISO_Country__c + allCertificates.get(agReg.Id).Account__r.Location_Class__c;
-				system.debug('key value ' + key);
-				Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
-				system.debug('minDgrHO ' + minDgrHO);
-				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
-				system.debug('minDgrBR ' + minDgrBR);
 
-				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer numberOfRemainingTSAInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
+			Integer numberOfActiveCertificates = renewalCertificatesPerAccount.get(accountKey);
 
+			if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveCertificates, minDgrHO, minDgrBR, agReg.Type_Of_Certificate__c)){
+				
+				Boolean is90DaysNotif = agReg.Notification_Date__c == null; //if it's the 90 days notification them the OSCAR is created, otherwise we must query the existing OSCAR
+				AMS_OSCAR__c oscar = null;
+				if(is90DaysNotif){
+					oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(accountKey), comCasecontact);
+					
+					agReg.OSCAR__c = oscar.Id;
+					update agReg;
+				}else{
+					if (certificateType == AMS_Utils.CERT_DGR) {
+						oscar = [SELECT Id, Region__c,Oscar_Communication_Case_Id__c
+							FROM AMS_OSCAR__c
+							WHERE Account__c = :agReg.Account__c
+							AND AMS_Online_Accreditation__r.DGR_Agency_Regulation__c = :agReg.Id
+							AND Process__c = :AMS_Utils.CERTIFICATION
+							order by CreatedDate desc
+							limit 1];
+					}
+					if (certificateType == AMS_Utils.CERT_ULD) {
+						oscar = [
+							SELECT Id, Oscar_Communication_Case_Id__c
+							FROM AMS_OSCAR__c
+							WHERE Id = :agReg.OSCAR__c];
+					}
 
-				if(renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) == -1){
-					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, numberOfRemainingTSAInAccountToExpire);
+				}
+				if (oscar!=null) {
+					map<String,Id> mapCountryTemplates = mapTypeCountryTemplates.get(certificateType);
+					Boolean isDGR = (certificateType == AMS_Utils.CERT_DGR || certificateType == AMS_Utils.CERT_TSA);
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, mapCountryTemplates, oscar.Oscar_Communication_Case_Id__c, getAgencyManagementOwa(), isDGR);
 				}
 
-				Integer numberOfActiveTSA = renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c);
-
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveTSA, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
-
-					system.debug('creating renewal for TSA');
-					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
-
-					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
+				if(is90DaysNotif){
+					renewalCertificatesPerAccount.put(accountKey, renewalCertificatesPerAccount.get(accountKey) + 1);
 				}
 			}
 		}
 	}
 
 	private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveCertificates, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements,String typeOfCertificate){
-
+		// for ULD
+		if(typeOfCertificate == AMS_Utils.CERT_ULD) {
+			if(accountData.Location_Type__c == AMS_Utils.HO) {
+				return numberOfActiveCertificates < minimumHODgrRequirements;
+			}
+			if(accountData.Location_Type__c == AMS_Utils.BR) {
+				return numberOfActiveCertificates < minimumBRDgrRequirements;
+			}
+			return false;
+		}
+		// for DGR
 		if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
 			//AMSU-208
 			if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && typeOfCertificate == AMS_Utils.CERT_DGR) {
@@ -224,7 +226,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					return true;
 			}else if(accountData.Location_Class__c == 'R'){
 				//Only America is using DGR for Cass associate.
-				if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveCertificates < minimumHODgrRequirements )
+				if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveCertificates < minimumHODgrRequirements )
 					return true;
 				else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates < minimumBRDgrRequirements){
 					return true;
@@ -256,7 +258,10 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		theCommunicationCase.SAAM_Deadline_Date__c = agReg.Expiry_Date__c; //FM - AMSU-32
 		if(communicationCaseContact != null)
 			theCommunicationCase.ContactId = communicationCaseContact.Id;
-		//theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
+		if (agReg.Type_Of_Certificate__c == AMS_Utils.CERT_ULD) {
+			theCommunicationCase.Subject = 'ULD Renewal - ' + accountData.IATACode__c + ' - ' + accountData.Name;
+			AMS_OscarMigrationFromCase.changeSubject = false;
+		}
 		theCommunicationCase.setOptions(dmlOpts);
 
 		insert theCommunicationCase;
@@ -300,7 +305,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		theStagingArea.Website__c                               = accountData.Website;
 		theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
 		//FM 19-07-2017 - AMSU-14 -
-		theStagingArea.DGR_Agency_Regulation__c					= agReg.Id;
+		theStagingArea.DGR_Agency_Regulation__c                 = agReg.Id;
 
 		insert theStagingArea;
 
@@ -317,8 +322,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
 		theOscar.OwnerId = caseOscar.OwnerId;
 		insert theOscar;
-
-		system.debug('createStagingArea oscar: '+ theOscar);
 
 		theCommunicationCase.OSCAR__c = theOscar.Id;
 		update theCommunicationCase;
@@ -364,12 +367,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 	}
 
-	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
-		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
-	}
-
 	private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {
 		return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];
+	}
+
+	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
+		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
 	}
 
 	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments){
@@ -400,15 +403,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			//put the contacts in recipents list
 			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
-			System.debug('IATA recipents list: ' + recipents);
 		}
 
 		if(recipents != null){
 
 			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-
-			system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
-			system.debug('DGR sendEmailAlert: recipents ' + recipents);
 
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
@@ -442,29 +441,20 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
 				}else if(isDGR){
 
-					system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
-
 					//FM 24/10/2017 - AMSU-32
 					if(recipient.User_Portal_Status__c == 'Approved Admin'){
 
-						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-						system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
-
 						//lPortalAdminsEmailsDGR.add(recipient.Email);
 						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-							system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
 							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
 							aux.add(recipient.Email);
 							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
 						}else{
-							system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
 							List<String> aux = new List<String>();
 							aux.add(recipient.Email);
 							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
 							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
 						}
-
-						system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
 
 					}else{
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -487,9 +477,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
 				for(String key : mPortalAdminsEmailsDGR.keySet()){
 
-					system.debug('DGR sendEmailAlert: key : ' + key);
-					system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
-
 					Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
 					mailPortalAdmin.saveAsActivity = true;
 					mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
@@ -506,18 +493,21 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					mailsToSend.add(mailPortalAdmin);
 				}
 			}
-
-			system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
-
 			//Return emails to be sent once ANG_:OscarProcess.createPCIComplianceOscars
 			if(!sendEmail) return mailsToSend;
 
-			else if(!mailsToSend.isEmpty()){
+			if(!mailsToSend.isEmpty()){
+
+				if (owea.Address==null) {
+					owea = getfromAddress(owea.Id)[0];
+				}
+
+				CaseTeamRole partnerRole = [SELECT Id FROM CaseTeamRole WHERE Name = 'Partner User Role' LIMIT 1];
 				if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
 				for(Messaging.SingleEmailMessage mail: mailsToSend){
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-					emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
-					emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
+					emailMsg.FromAddress = owea.Address;
+					emailMsg.FromName = owea.DisplayName;
 					emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
 					emailMsg.Subject = mail.getSubject();
 					emailMsg.HtmlBody = mail.getHtmlBody();
@@ -527,24 +517,33 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					mailsToTrackInCase.add(emailMsg);
 				}
 				insert mailsToTrackInCase;
+
+				// add recipients to Case Team
+				list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
+				for (Contact contact: recipents) {
+					listCaseTeam.add(new CaseTeamMember(
+						ParentId = oscarCommCaseId,
+						MemberId = contact.Id,
+						TeamRoleId = partnerRole.Id
+					));
+				}
+				Database.insert(listCaseTeam, false);
 			}
 		}
 		return new List<Messaging.SingleEmailMessage>();
 	}
 
-	private static Map<String, Id> DGRemailTemplates(String type){
+	public static Map<String, Id> getMapEmailTemplates(String type){
 
 		Map<String, Id> multilangTemplates = new Map<String, Id>();
 
 		String devNameLike = 'AMS_' + type + '_Renewal%';
-		List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
+		List<EmailTemplate> listTemplates = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
 		Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
-		for(EmailTemplate et: etDGR){
+		for(EmailTemplate et: listTemplates){
 			if(!countryTemplates.containsKey(et.DeveloperName))
 				countryTemplates.put(et.DeveloperName, et);
 		}
-
-		system.debug('CHECK countryTemplates ' + countryTemplates);
 
 		//map template Ids with their respective language
 		List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
@@ -560,8 +559,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 		//this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
 		if(multilangTemplates.isEmpty()) multilangTemplates.put('English', countryTemplates.get('AMS_' + type + '_Renewal_English').Id);
-
-		system.debug(type + ' templates mapping ' + multilangTemplates);
 
 		return multilangTemplates;
 
