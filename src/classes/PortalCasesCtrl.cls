@@ -269,9 +269,9 @@ public with sharing class PortalCasesCtrl {
 				}
 				if(filtersWrapper.casesComponent.caseCountryFilter != null && filtersWrapper.casesComponent.caseCountryFilter != ''){
 					if(queryConditions == ''){
-						queryConditions = ' WHERE IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
+						queryConditions = ' WHERE Country_concerned_by_the_query__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
 					}else{
-						queryConditions += ' AND IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
+						queryConditions += ' AND Country_concerned_by_the_query__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
 					}
 				}
 				if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
