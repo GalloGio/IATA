@@ -14317,7 +14317,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Attivo</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>

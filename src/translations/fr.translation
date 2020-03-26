@@ -14351,7 +14351,7 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Actif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
