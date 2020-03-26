@@ -43,11 +43,11 @@ public AccountContactOrder_Ext(ApexPages.StandardController controller) {
 		if (objId.getSObjectType().getDescribe().getName() == 'Contact') {
 			listOrder = Order_Sel.getOrderForAccountOrContact(null, new List<Id>{objId});
 			newURL = URL.getSalesforceBaseUrl().toExternalForm() + '/apex/Order?sfdc.override=1&retURL=%2F' + String.valueOf(objId).left(15)
-				   + '&contactID=' + String.valueOf(objId).left(15) + '&save_new=1';
+					 + '&contactID=' + String.valueOf(objId).left(15) + '&save_new=1';
 		} else {
 			listOrder = Order_Sel.getOrderForAccountOrContact(new List<Id>{objId}, null);
 			newURL = URL.getSalesforceBaseUrl().toExternalForm() + '/apex/Order?sfdc.override=1&retURL=%2F' + String.valueOf(objId).left(15)
-				   + '&accountID=' + String.valueOf(objId).left(15) + '&save_new=1';
+					 + '&accountID=' + String.valueOf(objId).left(15) + '&save_new=1';
 		}
 	}
 
@@ -60,27 +60,5 @@ public AccountContactOrder_Ext(ApexPages.StandardController controller) {
 	if (objId != null)
 		returnURL = '&retURL=%2F' + String.valueOf(objId).left(15);
 } //*** end of "AccountContactOrder_Ext"
-
-
-/****************************************************************************************************
-	Created by CGI, Thai 2015-10-04
-		Delete an order
-****************************************************************************************************/
-public void deleteOrder() {
-	Savepoint sp = Database.setSavepoint();
-	try {
-		delete [select Id from Order where Id = :orderIdToDelete];
-		for (Integer i1 = 0; i1 < vfOrder.size(); i1++)
-			if (vfOrder[i1].orderInfo.Id == orderIdToDelete) {
-				vfOrder.remove(i1);
-				break;
-			}
-		orderIdToDelete = null;
-	} catch (Exception e) {
-		ApexPages.addMessages(e);
-		Database.rollback(sp);
-	}
-} //*** end of "deleteOrder"
-
 
 } //*** end of class
