@@ -42,13 +42,14 @@ public class ANG_AgencyChangesConfigHelper{
 	}
 
 	public static ChangesConfig getConfig(AMS_OSCAR__c oscar, String accreditationModel) {
+		Boolean isSingleBspToCashConversion = (oscar.Process__c == AMS_Utils.NGCHANGES && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT));
 
 		ChangesConfig c = null;
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES'){
 			return null;
 		}
-		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
+		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || isSingleBspToCashConversion) {
 			c = getConfig(CONVERSION, accreditationModel);
 		}
 		else {
