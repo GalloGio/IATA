@@ -323,18 +323,16 @@ public class IDCardLoginControllerTest {
 		priceTables.Expedite__c = 25;       
 		priceTables.ISO_Country__c = aCountry.Id;
 		insert priceTables;
-		
-		Test.startTest();   
-	
+
 		try{
-			idCardLoginController.verifyAlternative();
+			Test.startTest();   
+				idCardLoginController.verifyAlternative();
+			Test.stopTest();
 		}catch(Exception e){
 			
 			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: Price Table not found for the following Country:'  + aCountry.Name + ' ISO search from ' + aCountry.Id));
 		}
 
-		Test.stopTest();
-	
 	}
   
 	@isTest
@@ -367,15 +365,14 @@ public class IDCardLoginControllerTest {
 		theAccount.IATA_ISO_Country__c = aCountry.Id;
 		insert theAccount;
 
-		Test.startTest();   
-		
 		try{
-			idCardLoginController.verifyAlternative();
+			Test.startTest();   
+				idCardLoginController.verifyAlternative();
+			Test.stopTest();
 		}catch(Exception e){
 			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: ISO Country not found for the following Account:'));
 		}
 
-		Test.stopTest();  
 	}
 	
 }
