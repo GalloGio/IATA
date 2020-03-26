@@ -417,7 +417,9 @@ private class ISSP_ChangePassword_Test {
 			Test.stopTest();
 		}
 
-		System.assertEquals(new PageReference(issp_cs2.Value__c).getUrl(), pagereference.getUrl());
+		ISSP_CS__c issp = [SELECT Name, Value__c FROM ISSP_CS__c WHERE Name = 'Fred_System'];
+
+		System.assertEquals(new PageReference(issp.Value__c).getUrl(), pagereference.getUrl());
 
 	}
 
