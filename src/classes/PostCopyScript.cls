@@ -9,7 +9,7 @@ global class PostCopyScript implements SandboxPostCopy {
 		updateQueuesEmail();
 		deleteScheduleDashboards();
 		updateNamedCredentials();
-		deleteConnectedApps();
+
 	}
 
 	/**
@@ -87,8 +87,8 @@ global class PostCopyScript implements SandboxPostCopy {
 
 	@TestVisible
 	private void updateQueuesEmail() {
-		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and email != ''];
 
+		List<Group> lstQueues = [SELECT Id, Email FROM Group WHERE Type = 'Queue' and email != ''];
 		for (Group q : lstQueues) {
 				List<String> updateEmail = q.Email.split('@');
 				q.Email = q.Email.replace('@'+updateEmail[1],'='+updateEmail[1] + '@example.com');
@@ -101,6 +101,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteScheduleDashboards(){
+
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
 		Database.executeBatch(deleteScheduleDashboards,10);
 	}
@@ -110,16 +111,8 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void updateNamedCredentials(){
+
 		updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
 		Database.executeBatch(updateNamedCredentials,10);
-	}
-
-	/**
-	 * This method delete all ConnectedApps from the ORG:
-	*/
-	@TestVisible
-	private void deleteConnectedApps(){
-		deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch();
-		Database.executeBatch(deleteConnectedApps,10);
 	}
 }

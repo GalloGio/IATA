@@ -1,11 +1,14 @@
-global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts, Database.Stateful {
-    global final string appItemQuery;
-    public List<String> errorsList;
+global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts, Database.Stateful  {
 
-    global deleteConnectedAppsBatch(){
+    global final string appItemQuery;
+    global List<String> errorsList;
+
+    global deleteConnectedAppsBatch(List<String> nCRerros){
+
         errorsList = new List<String>();
+
         if(Test.isRunningTest()){
-			appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
+            appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
 		}else{
 			appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
 		}
@@ -13,11 +16,11 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
 
     global Database.QueryLocator start(Database.BatchableContext BC){
 
-	 return Database.getQueryLocator(appItemQuery);
+     return Database.getQueryLocator(appItemQuery);
 	}
 
 	global  void execute(Database.BatchableContext BC,List<AppMenuItem> scope){
-        
+
 		for(AppMenuItem app: scope){
             List<MetadataService.DeleteResult> results = createService().deleteMetadata(
                 'ConnectedApp', new String[] { app.Name.replace(' ','_') });
@@ -26,7 +29,9 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
     }
     
    global void finish(Database.BatchableContext BC){
+
        System.debug('deleteConnectedAppsBatch completed: '+ BC);
+
        if(!errorsList.isEmpty()){
            for(String err: errorsList){
                System.debug('Error: '+err);
@@ -35,12 +40,16 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
    }
 
    private static MetadataService.MetadataPort createService(){
+
 		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
 		service.SessionHeader = new MetadataService.SessionHeader_element();
-		service.SessionHeader.sessionId = UserInfo.getSessionId();
+        service.SessionHeader.sessionId = UserInfo.getSessionId();
+        
 		return service;
     }
+
     private void handleDeleteResults(MetadataService.DeleteResult deleteResult){
+        
         if(deleteResult.errors!=null){
             List<String> messages = new List<String>();
             messages.add(

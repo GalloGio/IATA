@@ -16,13 +16,16 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 	 return Database.getQueryLocator(scheduleQuery);
 	}
 	global  void execute(Database.BatchableContext BC,List<SObject> scope){
+
 	  for(SObject cronJob : scope){
 		System.abortJOb(cronJob.Id);
 	  }
 
    }
    global void finish(Database.BatchableContext BC){
-	   System.debug('deleteScheduleDashboardsBatch completed: '+BC);
-   }
 
+	   System.debug('deleteScheduleDashboardsBatch completed: '+BC);
+	   updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
+	   Database.executeBatch(updateNamedCredentials,10);
+   }
 }
