@@ -90,6 +90,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public boolean isNewAccount{get;set;}
 		public string selectedCustomerType {get;set;}
 		public string registrationTime {get;set;}
+		public string termsAndUsageIds {get;set;}
 	}
 
 	public class UserInformation {
@@ -399,6 +400,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
 			params.registrationTime = string.valueOf(DateTime.Now());
+			params.termsAndUsageIds = (inputMap.get('termsAndUsageIds') != null) ? string.valueOf(inputMap.get('termsAndUsageIds')) : '';
 
 
 			if(params.contactId.length() < 1){
@@ -505,6 +507,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				registrationRequired = true;
 				//}
 			}
+			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptance(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;
@@ -1154,5 +1157,4 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		return orderedPicklists;
 	}
-
 }

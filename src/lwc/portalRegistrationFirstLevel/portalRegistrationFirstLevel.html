@@ -322,24 +322,11 @@
                                         <template if:true={displayToU}>
                                             <!------------------------------------------      Terms of Use      --------------------------------------------->
                                             <lightning-layout-item size="12">
-                                                <div style="height:54px;">
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div style="display: flex;justify-content: center;align-items: start;">
-                                                    <div style="display: flex; align-items: center;justify-content: center;">
-                                                        <div style="max-width:20px; padding-left:5px;" >
-                                                            <lightning-input type="checkbox" variant="label-hidden" checked={registrationForm.termsAndUsage} onchange={handleTouChange} class="registerCheckBox"></lightning-input>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-small" style="margin-left:12px; width:100%;">
-                                                        <lightning-formatted-rich-text value={labels.CSP_Privacy_Policy} class="text-small text-gray"></lightning-formatted-rich-text>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div style="height:60px;">
-                                                </div>
+                                                <c-portal-services-terms-and-conditions
+                                                    portal-service-id={gcsPortalServiceId}
+                                                    language={registrationForm.language}
+                                                    onacceptancechanged={tcAcceptanceChanged}>
+                                                </c-portal-services-terms-and-conditions>
                                             </lightning-layout-item>
                                             <!------------------------------------------      Submit Button      --------------------------------------------->
                                             <lightning-layout-item size="12">

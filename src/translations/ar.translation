@@ -21910,6 +21910,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label>سياسة الخصوصية</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>شروط الاستخدام</label>
+        <name>TC_CSP_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
         <name>TECH_GDPR_Community_Name</name>
     </customLabels>

@@ -23,6 +23,8 @@ import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
+import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -118,7 +120,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     // terms
-    @track displayAcceptTerms = true;
+    @track displayAcceptTerms = false;
     @track displayRegistrationConfirmation = false;
     @track displayFirstLogin = false;
     @track firstLogin = false;
@@ -127,34 +129,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     level2RegistrationTrigger = 'homepage';
     isTriggeredByRequest = false;
     
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
-    WiregetUserRecord(result) {
-        if (result.data) {
-            let user = JSON.parse(JSON.stringify(result.data));
-            let acceptTerms = user.fields.ToU_accepted__c.value;
-            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
-            let currentURL = window.location.href;
-            if (currentURL.includes(this.labels.PortalName)) {
-                this.displayAcceptTerms = acceptTerms;
-            }
-
-            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
-            console.log('firstLogin: ', this.firstLogin);
-            console.log('registrationRequired: ', registrationRequired);
-
-            if(acceptTerms == true){
-                if(registrationRequired == true){
-                    this.displayRegistrationConfirmation = true;
-                }else{
-                    if(this.firstLogin == true){
-                        this.displayFirstLogin = true;
-                    }
-                }
-            }
-
-        }
-    }
-
     // company tab on profile
     @track displayCompanyTab = false;
 
@@ -291,6 +265,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonSideMenuLogoutStyle = 'headerBarButton buttonLogout';
 
     @track trackedIsInOldPortal;
+    userInfo = {};
+
+    @track gcsPortalServiceId;
 
     @api
     get isInOldPortal() {
@@ -392,7 +369,32 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
 
         getContactInfo().then(result => {
+            this.userInfo = JSON.parse(JSON.stringify(result));
             this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+
+            getPortalServiceId({portalServiceName:'Login T&C Checker'}).then(result2 => {
+                var gcsPortalServiceId = JSON.parse(JSON.stringify(result2));
+                this.gcsPortalServiceId = gcsPortalServiceId;
+
+                checkLatestTermsAndConditionsAccepted({portalServiceId: gcsPortalServiceId, contactId:this.userInfo.Id}).then(result3 => {
+                    let isLatestAccepted = JSON.parse(JSON.stringify(result3));
+                    console.log('latestAccepted :' + isLatestAccepted);
+
+                    if(isLatestAccepted){
+                        this.displayAcceptTerms = false;
+                        if(result.users[0].Portal_Registration_Required__c === true){
+                            this.displayRegistrationConfirmation = true;
+                        }else{
+                            if(this.firstLogin === true){
+                                this.displayFirstLogin = true;
+                            }
+                        }
+                    } else{
+                        this.displayAcceptTerms = true;
+                    }
+                });
+            });
+
         });
     }
 
@@ -729,20 +731,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-    acceptTerms() {
-
-        const fields = {};
-        fields.Id = Id;
-        fields.ToU_accepted__c = true;
-        fields.Date_ToU_accepted__c = new Date().toISOString();
-        const recordInput = { fields };
-
-        updateRecord(recordInput)
-            .then(() => {
-                this.displayAcceptTerms = true;
-                this.redirectChangePassword();
-            });
-
+    acceptTerms(){
+        this.displayAcceptTerms = false;
+        this.redirectChangePassword();        
     }
 
     confirmRegistration() {
