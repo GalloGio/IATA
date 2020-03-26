@@ -829,6 +829,11 @@ lightning-datatable .slds-th__action {
   	color: #3333ff;
 }
 
+.recentcases > .aroundLinkBlueBorder:hover{
+	-webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+  	border: solid 1px rgba(0, 0, 0, 0.08);
+}
 .outlinedButton.button-half-height,
 .outlinedButton.button-half-height button,
 .outlinedButton.button-half-height button:active,
