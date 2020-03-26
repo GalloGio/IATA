@@ -86,8 +86,6 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 		//Below code will fetch the job Id
 		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
 
-		System.debug('$$$ Jobid is'+BC.getJobId());
-
 		//below code will send an email to User about the status
 		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSenderDisplayName('Apex Newgen Conversion Batch Processing Module');

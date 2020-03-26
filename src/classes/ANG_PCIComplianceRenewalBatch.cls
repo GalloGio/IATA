@@ -91,9 +91,6 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 			if (!mails.isEmpty()){
 					Messaging.sendEmail(mails);
 			}
-
-			System.debug('[ANG_PCIComplianceRenewalBatch] ERRORS: '+errorMsg);
-			System.debug('[ANG_PCIComplianceRenewalBatch] AGENTS WITHOUT CONTACTS: '+noContactAgents);
 		}
 
 	}
