@@ -272,6 +272,12 @@
         <fields>ISO_Code__c</fields>
         <relatedList>Portal_Service_Assignment__c.Portal_Service__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Term_Condition__c</fields>
+        <fields>Term_Condition_Version__c</fields>
+        <relatedList>Service_Term_and_Condition__c.Portal_Service__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
