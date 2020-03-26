@@ -1618,8 +1618,7 @@ public without sharing class ISSP_Case {
 				WHERE Email IN :setEmailPriority
 				AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
 				AND Status__c = 'Active'
-				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)
-				LIMIT 1];
+				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
 
 			for(Contact contact : listContact) {
 				CaseTeamMember teammember = new CaseTeamMember(
