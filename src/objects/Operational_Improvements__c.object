@@ -8188,6 +8188,16 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <label>AR_BSP_Y_USD_I</label>
                 </value>
                 <value>
+                    <fullName>SY_BSP_Y_USD_I</fullName>
+                    <default>false</default>
+                    <label>SY_BSP_Y_USD_I</label>
+                </value>
+                <value>
+                    <fullName>SY_BSP_Y_SYP_I</fullName>
+                    <default>false</default>
+                    <label>SY_BSP_Y_SYP_I</label>
+                </value>
+                <value>
                     <fullName>DE_CAS_I_EUR_I</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -8825,6 +8835,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <valueSettings>
                 <controllingFieldValue>Switzerland</controllingFieldValue>
                 <valueName>CH_CAS_E_CHF_I</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Syria</controllingFieldValue>
+                <valueName>SY_BSP_Y_USD_I</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Syria</controllingFieldValue>
+                <valueName>SY_BSP_Y_SYP_I</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Tanzania</controllingFieldValue>
@@ -12073,10 +12091,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Saudi Arabia</fullName>
                 <default>false</default>
             </values>
@@ -14956,6 +14970,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>SX_BSP_Y_USD_I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY_BSP_Y_SYP_I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY_BSP_Y_USD_I</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -284,4 +284,56 @@ private class EF_AccountTriggerHandlerTest {
 
 
 	}
+
+	static testMethod void inactiveEFBillingAgreementTest() {
+
+		IATA_ISO_Country__c ct1 = new IATA_ISO_Country__c (
+			Name = 'Portugal', 
+			ISO_Code__c = 'PT', 
+			AIMS_Area_ID__c = '2'
+		);
+		insert ct1;
+
+		Account acc = new Account(
+			Name = 'Test Agency',
+			IATA_ISO_Country__c = ct1.Id,
+			IATACode__c = '1234567',
+			EF_Status__c ='Active'
+		);
+		insert acc;
+
+		Contract cont = new Contract(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement'),
+			AccountId = acc.Id,
+			EF_Status__c = 'Active'
+		);
+		insert cont;
+
+		EF_Billing_Agreement__c ef_BA = new EF_Billing_Agreement__c(
+			Contract__c = cont.Id
+		);
+		insert ef_BA;
+
+		EF_Material_Line_Item__c ef_Mat = new EF_Material_Line_Item__c(
+			EF_Relationship__c = ef_BA.Id,
+			EF_Status__c = 'Active',
+			Contract__c = cont.Id
+		);
+		insert ef_Mat;
+
+		ef_BA.EF_Status__c ='Active';
+		update ef_BA;
+
+		Test.startTest();
+		acc.EF_Status__c ='Inactive';
+		update acc;
+		Test.stopTest();
+
+		EF_Material_Line_Item__c ef_MAT2 = [SELECT Id, EF_Status__c, EF_Relationship__r.EF_Status__c, Contract__r.EF_Status__c FROM EF_Material_Line_Item__c WHERE Id = :ef_Mat.Id];
+
+		System.assertEquals('Inactive', ef_MAT2.EF_Status__c);
+		System.assertEquals('Inactive', ef_MAT2.EF_Relationship__r.EF_Status__c);
+		System.assertEquals('Inactive', ef_MAT2.Contract__r.EF_Status__c);
+		
+	}
 }

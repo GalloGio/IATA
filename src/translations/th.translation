@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>ถนน {0} เป็นภาคบังคับ กรุณากรอกข้อมูลในช่องถนน {1}</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -1899,6 +1903,14 @@
     <customLabels>
         <label><!-- CNS End Changes Service Description --></label>
         <name>CNS_End_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID-19 eComm Home Page --></label>
+        <name>COVID_19_eComm_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -6527,6 +6539,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_Course2 --></label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -14294,7 +14310,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>ยังใช้งานอยู่</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -19189,6 +19205,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
     <customLabels>
         <label><!-- IfapSubmissionOfDocsOK --></label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>
