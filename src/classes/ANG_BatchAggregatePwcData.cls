@@ -247,7 +247,6 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
 		//Send email to support if any error is found
 		if (!upsertErrors.isEmpty()){
 
-			System.debug('[ANG_BatchAggregatePwcData] upsertErrors: '+upsertErrors);
 			List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){								
 				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

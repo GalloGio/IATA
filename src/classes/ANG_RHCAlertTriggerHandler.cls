@@ -913,7 +913,6 @@ public class ANG_RHCAlertTriggerHandler{
 		
 
 		if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
-			System.debug('Warning: No RTS Senior Managemrs found');
 			return emailLst;
 		}
 
@@ -936,18 +935,15 @@ public class ANG_RHCAlertTriggerHandler{
 		}
 
 		if(String.isEmpty(emailTemplate)){
-			System.debug('Warning: No email Template defined');
 			return emailLst;
 		}
 
 		EmailTemplate template = emailTemplateMap.get(emailTemplate);
 
 		if (template == NULL || orgWideEmail.isEmpty()) {
-			System.debug('Warning: No email template or org wide email found');
 			return emailLst;
 		}
 		if(toAddressesNoUsers.isEmpty() || toAddressesUsers.isEmpty()){
-			 System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
 			 return emailLst;
 		}
 
