@@ -1,5 +1,5 @@
 <template>
-	<div class="modal">
+	<div class={modalTypeClass}>
 		<div class={widthClass}>
 	
 			<!-- Popup Header -->
@@ -13,8 +13,10 @@
 			</div>
 
 			<!-- Popup Footer -->
-			<div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
-				<slot name="modalFooter"></slot>
+			<div if:true={viewFooterDiv}>
+				<div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+					<slot name="modalFooter"></slot>
+				</div>
 			</div>
 
 		</div>

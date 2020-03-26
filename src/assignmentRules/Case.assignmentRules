@@ -166,7 +166,7 @@ ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),
 or(
 ISPICKVAL(Reason1__c,&quot;General Information&quot;),
 ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),
-ISPICKVAL(Reason1__c,&quot;Closure / Cancellation &quot;),
+ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),
 ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
 ISPICKVAL(Reason1__c,&quot;Payment related query&quot;),
 ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
@@ -923,7 +923,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618</value>
+                <value>CA 999,SQ 618,LH 020,LH 220</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -4028,7 +4028,7 @@ Product__r.Product_Section__c = &quot;TRQ003&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Mira_Hmoud</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
@@ -4157,7 +4157,7 @@ Product__r.Product_Section__c = &quot;TRA006&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Training_ProductMgmt_Adelia_Candido</assignedTo>
+            <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 
@@ -6516,7 +6516,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Airline_Coding_YMQ</assignedTo>
+            <assignedTo>L3_Airline_and_Location_Codes</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7 OR (8 AND 9 AND 10) OR (8 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
@@ -6945,7 +6945,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_MITA_YMQ</assignedTo>
+            <assignedTo>GCSMITABIETA</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5) OR 6</booleanFilter>
             <criteriaItems>

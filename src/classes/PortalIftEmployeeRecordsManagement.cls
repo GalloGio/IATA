@@ -581,7 +581,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 															AND Address__r.Code__c IN :addressCodesList];
 
 					for(Role_Address__c proficiencyRec: roleAddressesToUpdateProficiency){
-						proficiencyRec.Proficiency_Status__c = 'Inactive';
 						IFTP_History__c ihrec0 = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency,
 																		proficiencyRec.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
 																		proficiencyRec.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
@@ -595,7 +594,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 						IftpHistoryRecordsLoseProficiency.add(ihrec0);
 					}
 
-					if (roleAddressesDeleted.size() > 0){
+					if (roleAddressesDeleted.size() > 0 || roleAddressesToUpdateProficiency.size() > 0 ){
+						roleAddressesDeleted.addAll(roleAddressesToUpdateProficiency);
 						delete roleAddressesDeleted;
 					}
 					if(roleAddressToBeInsertedList.size() > 0){
@@ -605,9 +605,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 						update roleAddressToUpdatePrimary;
 					}
 
-					if (roleAddressesToUpdateProficiency.size() > 0){
-						update roleAddressesToUpdateProficiency;
-					}
 
 					List<Role_Address__c> roleAddressesInsertedList = [SELECT Account_Contact_Role__r.Company_Code__c,
 																			Account_Contact_Role__r.First_Name__c,
@@ -739,7 +736,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Case transferCase = new Case();
 			transferCase.recordtypeID = ProcessRTId;
 			transferCase.AccountId = ui.accountId;
-			transferCase.OwnerId = ownerId;
 			transferCase.Subject = 'Request Employee Records Transfer';
 			transferCase.Description = description;
 			transferCase.ContactId = ui.contactId;
@@ -753,6 +749,15 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 			Savepoint sp = Database.setSavepoint();
 			try {
 				insert transferCase;
+				
+				transferCase.OwnerId = ownerId;
+				
+				Database.DMLOptions dlo=new Database.DMLOptions();
+				dlo.EmailHeader.triggerUserEmail=true;
+				//To assign the case to the correct queue and send the email notification
+				
+				Database.update(transferCase,dlo);				
+				
 				resultWrapper = new EmployeeTransferRequestResultWrapper(employeeToTransferData.firstName + employeeToTransferData.lastName,
 																		'Transfer requested successfully. ',
 																		true);

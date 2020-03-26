@@ -15,9 +15,9 @@ private class ANG_OscarProcessHelperTest {
 		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
 			new AWSKey__c(
 				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
+				Key__c = 'asd', 
+				Secret__c = 'asd',  
+				IAS_configuration_name__c = 'asdas', 
 				IAS_Access_Point__c = 'asd',
 				Bucket__c = 'asd',
 				AWS_ENDPOINT_URL__c = 'asd')
@@ -32,7 +32,7 @@ private class ANG_OscarProcessHelperTest {
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
 		insert stt;
-
+		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
@@ -40,7 +40,7 @@ private class ANG_OscarProcessHelperTest {
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
 		insert a1;
-
+		
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -132,29 +132,26 @@ private class ANG_OscarProcessHelperTest {
 				Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
 			),
 			new AMS_ChangeCodes__c(
-				Name = 'DOM',
-				Change_Code__c = 'DOM',
-				Integration_RecId__c = 'C',
-				Reason_Code__c = '43',
-				Reason_Code_Description__c = 'Voluntary relinquishment',
-				Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International',
+				Name = 'DOM', 
+				Change_Code__c = 'DOM', 
+				Integration_RecId__c = 'C', 
+				Reason_Code__c = '43', 
+				Reason_Code_Description__c = 'Voluntary relinquishment', 
+				Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', 
 				Published_in_bulletin__c = true,
 				Account_status_change__c = '4'
 			)
 		};
 
-		insert changeCodeList;
+		insert changeCodeList;		
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
-
-		ANG_OscarProcessHelper aoph = new ANG_OscarProcessHelper();
-		aoph.fakemethod();
-
+		
 		System.debug('Starting testIATACodeGenerationOKNoDueDiligenceCase');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
 		Test.startTest();
 
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
@@ -166,7 +163,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -180,9 +177,9 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKWithDueDiligenceCase');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
-		IATA_ISO_Country__c theCountry = [Select id, Due_diligence_mandatory__c from IATA_ISO_Country__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
+		IATA_ISO_Country__c theCountry = [SELECT id, Due_diligence_mandatory__c FROM IATA_ISO_Country__c LIMIT 1];
 		theCountry.Due_diligence_mandatory__c = true;
 		update theCountry;
 
@@ -198,7 +195,7 @@ private class ANG_OscarProcessHelperTest {
 		System.assertEquals('0',result[0], result[1]);
 		System.assertEquals('0',result[2]); // due diligence was created
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -212,9 +209,9 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKTwice');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
-		IATA_ISO_Country__c theCountry = [Select id, Due_diligence_mandatory__c from IATA_ISO_Country__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
+		IATA_ISO_Country__c theCountry = [SELECT id, Due_diligence_mandatory__c FROM IATA_ISO_Country__c LIMIT 1];
 		theCountry.Due_diligence_mandatory__c = true;
 		update theCountry;
 
@@ -240,7 +237,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -254,12 +251,12 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKAlreadyIATACodeGenerated');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
 		oscar.Flag_IATACode__c = true;
 		update oscar;
 
-		IATA_ISO_Country__c theCountry = [Select id, Due_diligence_mandatory__c from IATA_ISO_Country__c LIMIT 1];
+		IATA_ISO_Country__c theCountry = [SELECT id, Due_diligence_mandatory__c FROM IATA_ISO_Country__c LIMIT 1];
 		theCountry.Due_diligence_mandatory__c = true;
 		update theCountry;
 
@@ -274,7 +271,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -288,8 +285,8 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKAlreadyDataCopied');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
 		oscar.Flag_Data_to_Account__c = true;
 		update oscar;
 
@@ -304,7 +301,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -319,9 +316,9 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKAlreadyChangeCodeNew');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
-		IATA_ISO_Country__c theCountry = [Select id, Due_diligence_mandatory__c from IATA_ISO_Country__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
+		IATA_ISO_Country__c theCountry = [SELECT id, Due_diligence_mandatory__c FROM IATA_ISO_Country__c LIMIT 1];
 		theCountry.Due_diligence_mandatory__c = true;
 		update theCountry;
 
@@ -332,7 +329,7 @@ private class ANG_OscarProcessHelperTest {
 		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Account__c = oscar.Account__c, OSCAR__c = oscar.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
 		insert aacc;
-
+		
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
 
 		system.debug('testIATACodeGenerationOKAlreadyChangeCodeNew Result code is:'+result[0]);
@@ -342,7 +339,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -356,9 +353,9 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKWithDueDiligenceCaseInProgress');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
-		IATA_ISO_Country__c theCountry = [Select id, Due_diligence_mandatory__c from IATA_ISO_Country__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
+		IATA_ISO_Country__c theCountry = [SELECT id, Due_diligence_mandatory__c FROM IATA_ISO_Country__c LIMIT 1];
 		theCountry.Due_diligence_mandatory__c = true;
 		update theCountry;
 
@@ -377,7 +374,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('0',result[0], result[1]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.assertEquals(true,oscar.Flag_IATACode__c);
 		System.assertEquals(AMS_Utils.PASSED,oscar.STEP10__c);
@@ -391,8 +388,8 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationOKWithNOSTEP6PASSED');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
 		oscar.STEP6__c = AMS_Utils.IN_PROGRESS;
 		update oscar;
 
@@ -407,7 +404,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('-1',result[0]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.debug('Oscar is:'+oscar);
 
@@ -424,11 +421,11 @@ private class ANG_OscarProcessHelperTest {
 
 		System.debug('Starting testIATACodeGenerationBadDataMigration');
 
-		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
-
-
-
-		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(id = oscar.AMS_Online_Accreditation__c, ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
+		
+				
+		
+		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(id = oscar.AMS_Online_Accreditation__c);
 		theAccreditation.Branch_Office_Email__c='sdf+dfgdg@~df3434.comsdsd';
 		update theAccreditation;
 
@@ -443,7 +440,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals('-1',result[0]);
 
-		oscar = [Select Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
+		oscar = [SELECT Id, Flag_IATACode__c, STEP10__c, Flag_Data_to_Account__c, Flag_Data_to_SAPECC__c FROM AMS_OSCAR__c LIMIT 1];
 
 		System.debug('Oscar is:'+oscar);
 
@@ -458,7 +455,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
@@ -501,7 +498,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
@@ -545,9 +542,9 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id from Account LIMIT 1];
+		Account a = [SELECT Id FROM Account LIMIT 1];
 
-		Case c = [Select Id from Case LIMIT 1];
+		Case c = [SELECT Id FROM Case LIMIT 1];
 
 		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
 
@@ -572,7 +569,7 @@ private class ANG_OscarProcessHelperTest {
 		}
 
 
-		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
+		Account a = [SELECT Abbreviated_address__c, Abbreviated_name__c,
 						BillingState,
 						BillingCity,
 						Email__c,
@@ -610,63 +607,21 @@ private class ANG_OscarProcessHelperTest {
 						Solicitation_Flag__c,
 						TradeName__c,
 						VAT_Number_2__c,
-						Website from account limit 1];
+						Website FROM account limit 1];
 
 		a.IATACode__c = '7463812';
 		a.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 
 		update a;
-
-	/*	a = [select Abbreviated_address__c, Abbreviated_name__c,
-						BillingState,
-						BillingCity,
-						Email__c,
-						Fax,
-						Phone,
-						BillingPostalCode,
-						BillingStreet,
-						CASS_Number__c,
-						BillingCountry,
-						Name,
-						Region_formula__c,
-						ANG_Accreditation_Model__c,
-						Id,
-						Iata_iso_country__c,
-						IATACode__c,
-						Iso_State__c,
-						GDS__c,
-						Company_Type__c,
-						License_Number__c,
-						VAT_Number__c,
-						Is_your_firm_handling_Dangerous_Goods__c,
-						Location_Class__c,
-						Location_Type__c,
-						Mobile__c,
-						Operation__c,
-						Remittance_frequency__c,
-						ShippingCity,
-						ShippingCountry,
-						IATA_ISO_Shipping_Country__c,
-						IATA_ISO_Shipping_State__c,
-						ShippingPostalCode,
-						ShippingState,
-						ShippingStreet,
-						Short_Name__c,
-						Solicitation_Flag__c,
-						TradeName__c,
-						VAT_Number_2__c,
-						Reason__c,
-						Website from account limit 1];
-	*/
-
-		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId from contact where accountid =:a.id];
-
+		
+		List<Contact> conts = [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId FROM contact WHERE accountid =:a.id];
+		
 		Test.startTest();
 
 		// Test Oscar Creation
 		String caseId = ANG_OscarProcessHelper.createRevalidationOscar(a, conts, true);
 
-		List<AMS_Oscar__c> oscars = [select id, step43__c, step44__c, (Select id from Cases__r) from AMS_Oscar__c where Account__c = :a.Id and Process__c = :AMS_Utils.NGANNUALREVAL];
+		List<AMS_Oscar__c> oscars = [SELECT id, step43__c, step44__c, (SELECT id FROM Cases__r) FROM AMS_Oscar__c WHERE Account__c = :a.Id and Process__c = :AMS_Utils.NGANNUALREVAL];
 
 		System.assertEquals(1, oscars.size(), '1 Oscar record should to be created for this account');
 		System.assertEquals(1, oscars[0].cases__r.size(), '1 case record should to be created for the account');
@@ -677,19 +632,19 @@ private class ANG_OscarProcessHelperTest {
 
 		update oscars;
 
-		System.assertEquals(1, [Select id from Agency_Applied_Change_code__c where change_code__c = 'ARV'].size(), '1 ARV change code should be created');
+		System.assertEquals(1, [SELECT id FROM Agency_Applied_Change_code__c WHERE change_code__c = 'ARV'].size(), '1 ARV change code should be created');
 
 		AMS_OSCAR_Webservice.createSIDRALite(oscars[0].Id, '44',true);
 
-		System.assertEquals(1, [Select id from Case where SIDRA_lite_reason__c = 'Annual Revalidation Non-Compliance' and RecordType.Name= 'SIDRA Lite'].size(), '1 Sidra Lite Case should be created');
+		System.assertEquals(1, [SELECT id FROM Case WHERE SIDRA_lite_reason__c = 'Annual Revalidation Non-Compliance' and RecordType.Name= 'SIDRA Lite'].size(), '1 Sidra Lite Case should be created');
 
 		Test.stopTest();
 
 	}
 
 	 	@isTest static void testFetchKeyContact() {
-
-			IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name='France'];
+			
+			IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c WHERE Name='France'];
 			Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 			Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
@@ -697,7 +652,6 @@ private class ANG_OscarProcessHelperTest {
 
 			Test.startTest();
 
-			//Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
 			Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj4@test.com');
 			Contact co3 = new Contact(AccountId = a1.id, Firstname = 'John2', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john2j@test.com', Financial_Assessment_Contact__c = true);
 			Contact co4 = new Contact(AccountId = a1.id, Firstname = 'John3', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john3j@test.com', BSP_CASS_Payment_contact__c = true);
@@ -711,10 +665,29 @@ private class ANG_OscarProcessHelperTest {
 
 			System.debug(contactsOrdered);
 
-			//System.assertEquals(co2, contactsOrdered.get(0));
 			System.assertEquals(co3, contactsOrdered.get(0));
 			System.assertEquals(co4, contactsOrdered.get(1));
 			System.assertEquals(co1, contactsOrdered.get(2));
+
+			Test.stopTest();
+
+		}
+		
+		@isTest static void testFetchKeyContactApprovalAdmin() {
+			
+			IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c WHERE Name='France'];
+			Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+			Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
+			insert a1;
+
+			Test.startTest();
+
+			Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
+			insert co2;
+				
+			String approvedUserPortal = co2.User_Portal_Status__c;
+			System.assertEquals(approvedUserPortal, 'Approved Admin');
 
 			Test.stopTest();
 
@@ -724,7 +697,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
@@ -758,15 +731,15 @@ private class ANG_OscarProcessHelperTest {
 		Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
 		insert newCaseFop;
 
-		List<Agency_Applied_Change_code__c> ccList = [Select Id from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccList = [SELECT Id FROM Agency_Applied_Change_code__c];
 
 		ANG_OscarProcessHelper.processRestoreFOP(oscar.Id, true , true);
 
-		List<Agency_Applied_Change_code__c> ccListBefore = [Select Id from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListBefore = [SELECT Id FROM Agency_Applied_Change_code__c];
 
 		Test.stopTest();
 
-		List<Agency_Applied_Change_code__c> ccListAfter = [Select Id from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListAfter = [SELECT Id FROM Agency_Applied_Change_code__c];
 
 		System.assertEquals(ccListBefore.size(),ccListAfter.size());
 
@@ -780,7 +753,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
@@ -814,7 +787,7 @@ private class ANG_OscarProcessHelperTest {
 		Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
 		insert newCaseFop;
 
-		List<Agency_Applied_Change_code__c> ccListBefore = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListBefore = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListBefore is:'+ccListBefore);
 
@@ -822,16 +795,16 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 
-		List<Agency_Applied_Change_code__c> ccListAfter = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListAfter = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListAfter is:'+ccListAfter);
 
 		System.assertEquals(ccListBefore.size()+1,ccListAfter.size());
 
-		System.assertEquals([Select Id, Change_Code__c from Agency_Applied_Change_code__c where Active__c = true].get(0).Change_Code__c,'PCR');
+		System.assertEquals([SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Active__c = true].get(0).Change_Code__c,'PCR');
 
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Active');
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Active');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Active');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Active');
 
 	 }
 
@@ -843,7 +816,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
@@ -877,7 +850,7 @@ private class ANG_OscarProcessHelperTest {
 		Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
 		insert newCaseFop;
 
-		List<Agency_Applied_Change_code__c> ccListBefore = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListBefore = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListBefore is:'+ccListBefore);
 
@@ -885,16 +858,16 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 
-		List<Agency_Applied_Change_code__c> ccListAfter = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListAfter = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListAfter is:'+ccListAfter);
 
 		System.assertEquals(ccListBefore.size()+1,ccListAfter.size());
 
-		System.assertEquals([Select Id, Change_Code__c from Agency_Applied_Change_code__c where Active__c = true].get(0).Change_Code__c,'CCR');
+		System.assertEquals([SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Active__c = true].get(0).Change_Code__c,'CCR');
 
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Active');
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Active');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Active');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Active');
 
 	 }
 
@@ -906,7 +879,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.startTest();
 
-		Account a = [Select Id, BillingCountry from Account LIMIT 1];
+		Account a = [SELECT Id, BillingCountry FROM Account LIMIT 1];
 
 		insert new Agency_Applied_Change_code__c(Account__c = a.Id, Change_Code__c = 'NEW',  Sent_to_external_system__c = false);
 
@@ -940,7 +913,7 @@ private class ANG_OscarProcessHelperTest {
 		Case newCaseFop =ANG_EntityCreator.createCase(caseRT, a.Id, fieldsOfObject);
 		insert newCaseFop;
 
-		List<Agency_Applied_Change_code__c> ccListBefore = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListBefore = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListBefore is:'+ccListBefore);
 
@@ -948,22 +921,22 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 
-		List<Agency_Applied_Change_code__c> ccListAfter = [Select Id, Change_Code__c, Account__c, OSCAR__c from Agency_Applied_Change_code__c];
+		List<Agency_Applied_Change_code__c> ccListAfter = [SELECT Id, Change_Code__c, Account__c, OSCAR__c FROM Agency_Applied_Change_code__c];
 
 		System.debug('ccListAfter is:'+ccListAfter);
 
 		System.assertEquals(ccListBefore.size()+1,ccListAfter.size());
 
-		System.assertEquals([Select Id, Change_Code__c from Agency_Applied_Change_code__c where Active__c = true].get(0).Change_Code__c,'CCA');
+		System.assertEquals([SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE Active__c = true].get(0).Change_Code__c,'CCA');
 
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Non-Active');
-		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Not Authorized');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CC' ].get(0).Status__c, 'Non-Active');
+		System.assertEquals([SELECT Id, Status__c FROM Agency_Authorization__c WHERE ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Not Authorized');
 
 	 }
 
 	@isTest static void createGenericChangeCodeTest() {
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name = 'France'];
+		IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'France'];
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'D', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
@@ -973,13 +946,13 @@ private class ANG_OscarProcessHelperTest {
 		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT, ANG_Type_Of_Change__c = 'Conversion to International');
 		insert oscar_china;
 
-		List<AMS_Oscar__c> oscars = [select id, Account__c, Process__c, Is_NewGen__c, RecordTypeId, ANG_Type_Of_Change__c from AMS_Oscar__c where Process__c = :AMS_Utils.NGCHINACONVERSION AND Account__c = :a1.Id limit 1];
+		List<AMS_Oscar__c> oscars = [SELECT id, Account__c, Process__c, Is_NewGen__c, RecordTypeId, ANG_Type_Of_Change__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.NGCHINACONVERSION AND Account__c = :a1.Id limit 1];
 
 		Test.startTest();
 
 		ANG_OscarProcessHelper.createGenericChangeCode(oscars[0], 'DOM');
 
-		List<Agency_Applied_Change_code__c> changeCodes = [select Reason_Code__c, Reason_Description__c, Bulletin_Information__c, To_Publish_in_e_Bulletin__c from Agency_Applied_Change_code__c where Change_Code__c = 'DOM' and OSCAR__c = :oscars[0].id and Account__c = :oscars[0].Account__c];
+		List<Agency_Applied_Change_code__c> changeCodes = [SELECT Reason_Code__c, Reason_Description__c, Bulletin_Information__c, To_Publish_in_e_Bulletin__c FROM Agency_Applied_Change_code__c WHERE Change_Code__c = 'DOM' and OSCAR__c = :oscars[0].id and Account__c = :oscars[0].Account__c];
 
 		System.assertEquals('43', changeCodes[0].Reason_Code__c);
 		System.assertEquals('VOLUNTARY RELINQUISHMENT', changeCodes[0].Reason_Description__c);

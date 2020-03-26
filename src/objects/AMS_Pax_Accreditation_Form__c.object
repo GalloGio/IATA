@@ -1163,6 +1163,11 @@
         <fullName>ANG_location</fullName>
         <description>fields to be migrated when we have a change of location process</description>
         <displayedFields>
+            <field>Geoname_Billing_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Branch_Office_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1209,6 +1214,11 @@
         </displayedFields>
         <displayedFields>
             <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Geoname_Shipping_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -3043,6 +3053,11 @@ Used in multicountry related pages to have additional information on the staging
                 <operation>equals</operation>
                 <valueField>$Source.IATA_ISO_State__c</valueField>
             </filterItems>
+            <filterItems>
+                <field>IATA_ISO_City__c.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Pending</value>
+            </filterItems>
             <isOptional>true</isOptional>
         </lookupFilter>
         <referenceTo>IATA_ISO_City__c</referenceTo>
@@ -3063,7 +3078,12 @@ Used in multicountry related pages to have additional information on the staging
             <filterItems>
                 <field>IATA_ISO_City__c.IATA_ISO_State__c</field>
                 <operation>equals</operation>
-                <valueField>$Source.Shipping_ISO_Country__c</valueField>
+                <valueField>$Source.Shipping_ISO_State__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>IATA_ISO_City__c.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Pending</value>
             </filterItems>
             <isOptional>true</isOptional>
         </lookupFilter>
@@ -3323,6 +3343,21 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Billing ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.ISO_Country__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Branch_Office_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
@@ -5705,6 +5740,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                     <default>false</default>
                     <label>Long Daily</label>
                 </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>EasyPay</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
@@ -5891,6 +5931,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Shipping ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Shipping_ISO_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations (Shipping ISO State)</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations1</relationshipName>
@@ -7361,6 +7410,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14813,6 +14866,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -17408,6 +17465,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -18377,6 +18438,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -19310,6 +19375,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20279,6 +20348,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21885,6 +21958,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -22717,6 +22794,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23635,6 +23716,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -24465,6 +24550,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25360,6 +25449,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>F</fullName>
                 <default>false</default>
             </values>
@@ -26225,6 +26318,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27203,6 +27300,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -28507,6 +28608,7 @@ ANG_IsNewGenAgency__c,
 NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;),
 
 IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;E&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
@@ -28524,6 +28626,7 @@ ANG_IsNewGenAgency__c,
 Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;,
 				
 IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;E&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +

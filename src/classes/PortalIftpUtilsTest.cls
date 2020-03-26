@@ -180,8 +180,8 @@ public class PortalIftpUtilsTest {
 
 	static testMethod void integrationLogUtils_Test() {
 
-		AccountRole__e are = New AccountRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'ITP');
-		AccountContactRole__e acre = New AccountContactRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'ITP');
+		AccountRole__e are = New AccountRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'IFTP');
+		AccountContactRole__e acre = New AccountContactRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'IFTP');
 
 		Test.startTest();
 
@@ -216,7 +216,7 @@ public class PortalIftpUtilsTest {
 			List<Role_Address__c> toDelete = new List<Role_Address__c>();
 			toDelete.add(roleAddressITP);
 
-			PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(u1.Contact.AccountId, toDelete);
+			PortalIftpUtils.InsertStationWrapper insertStationRes = PortalIftpUtils.insertStation(u1.Contact.AccountId, toDelete, 'ITP Account');
 			System.assert(insertStationRes.succeeded);
 		}
 
