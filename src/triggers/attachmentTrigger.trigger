@@ -25,28 +25,25 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 	}
 	
 	if(Trigger.isAfter && Trigger.isInsert) {  
-		Savepoint sp = Database.setSavepoint();
-		List<Case> caseList = new List<Case>();
+		
 		List<Id> atts = new List<Id>();
 		
 		for(Attachment t : Trigger.new) {
-			atts.add(t.ParentId);
+			if(t.ParentId.getSObjectType() == Case.SObjectType){
+				atts.add(t.ParentId);
+			}
 		}
+		
+		if(atts.size()>0){
 
-		caseList = [select id,Status from Case where id IN: atts AND Status = 'Closed'];
+			List<Case> caseList = [select id,Status from Case where id IN: atts AND Status = 'Closed'];
 
-		try{   
 			if(caseList.size() > 0){
 				for(case c: caseList){
 					c.Status = 'Reopen';
 				} 
-
 				update caseList;
 			}
 		}
-		catch(Exception ex){
-			Database.rollback(sp);
-		}	
-
 	}
 }
