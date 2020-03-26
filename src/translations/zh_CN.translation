@@ -14309,7 +14309,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>活跃</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
