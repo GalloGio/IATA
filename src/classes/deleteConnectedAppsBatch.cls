@@ -1,12 +1,13 @@
 global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts, Database.Stateful  {
 
     global final string appItemQuery;
-    global List<String> errorsList;
+    global List<String> errorList;
+    global List<String> nCErrors;
 
     global deleteConnectedAppsBatch(List<String> nCRerros){
 
-        errorsList = new List<String>();
-
+        errorList = new List<String>();
+        nCErrors = nCRerros;
         if(Test.isRunningTest()){
             appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
 		}else{
@@ -30,13 +31,35 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
     
    global void finish(Database.BatchableContext BC){
 
-       System.debug('deleteConnectedAppsBatch completed: '+ BC);
+       System.debug('The Batch deleteScheduleDashboardsBatch is completed');
+       System.debug('The Batch updateNamedCredentialsBatch is completed');
+       System.debug('The Batch deleteConnectedAppsBatch is completed');
 
-       if(!errorsList.isEmpty()){
-           for(String err: errorsList){
-               System.debug('Error: '+err);
+       Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+       String [] toAddress = new String[] {'claudio.catarino@isobar.com'};
+       email.setToAddresses(toAddress);
+       email.setSubject('Sandbox Post Deploymment Script Batch');
+
+       String namedCredErrors = 'Named Credentials errors: \n';
+       String connAppErrors = 'Connected Apps errors: \n';
+
+       if(!nCErrors.isEmpty()){
+           for(String nc: nCErrors){
+               namedCredErrors += nc + '\n';
             }
+       }else {
+           namedCredErrors += 'No errors found \n';
        }
+       if(!nCErrors.isEmpty()){
+           for(String ca: errorList){
+               connAppErrors += ca + '\n';
+            }
+        }else {
+            connAppErrors += 'No errors found \n';
+        }
+       
+       email.setPlainTextBody(namedCredErrors + ' ' + connAppErrors);
+       Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
    }
 
    private static MetadataService.MetadataPort createService(){
@@ -49,22 +72,27 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
     }
 
     private void handleDeleteResults(MetadataService.DeleteResult deleteResult){
-        
-        if(deleteResult.errors!=null){
+
+        if(deleteResult.errors != null){
             List<String> messages = new List<String>();
             messages.add(
                 (deleteResult.errors.size() == 1 ? 'Error ' : 'Errors ') +
-                    'occured processing component ' + deleteResult.fullName + '.');
-            for(MetadataService.Error error : deleteResult.errors)
+                'occured processing component ' + deleteResult.fullName + '.');
+
+            for(MetadataService.Error error : deleteResult.errors){
                 messages.add(
                     error.message + ' (' + error.statusCode + ').' +
-                    ( error.fields!=null && error.fields.size()>0 ?
-                        ' Fields ' + String.join(error.fields, ',') + '.' : '' ) );
-            if(messages.size()>0)
-            errorsList.add(String.join(messages, ' '));
-            
+                    (error.fields != null && error.fields.size() > 0 ?
+                    ' Fields ' + String.join(error.fields, ',') + '.' : '' ) );
+            }
+
+            if(messages.size() > 0){
+                errorList.add(String.join(messages, ' '));
+            }         
         }
-        if(!deleteResult.success)
-            errorsList.add('Request failed with no specified error.');
+              
+        if(!deleteResult.success){
+            errorList.add('Request failed with no specified error.');
+        }
     }
 }

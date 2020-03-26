@@ -7,9 +7,7 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
-		deleteScheduleDashboards();
-		updateNamedCredentials();
-
+		startBatchSequence();
 	}
 
 	/**
@@ -97,22 +95,15 @@ global class PostCopyScript implements SandboxPostCopy {
 	}
 
 	/**
-	 * This method deletes all Schedule Dashboards":s
+	 * This method will start the following Batch sequence:
+	 * deleteScheduleDashboards
+	 * updateNamedCredentialsBatch
+	 * deleteConnectedAppsBatch
 	*/
 	@TestVisible
-	private void deleteScheduleDashboards(){
+	private void startBatchSequence(){
 
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
 		Database.executeBatch(deleteScheduleDashboards,10);
-	}
-
-	/**
-	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
-	*/
-	@TestVisible
-	private void updateNamedCredentials(){
-
-		updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
-		Database.executeBatch(updateNamedCredentials,10);
 	}
 }
