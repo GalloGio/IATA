@@ -152,98 +152,55 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
-        <fullName>Contact__c</fullName>
+        <fullName>Portal_Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Related Contact</description>
         <externalId>false</externalId>
-        <label>Contact</label>
-        <referenceTo>Contact</referenceTo>
-        <relationshipLabel>Term and Condition Acceptances</relationshipLabel>
-        <relationshipName>Term_and_Condition_Acceptances</relationshipName>
+        <label>Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>Services Terms and Conditions</relationshipLabel>
+        <relationshipName>Services_Terms_and_Conditions</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Date_Accepted__c</fullName>
-        <description>Date when the related Term &amp; Condition has been accepted by the related Contact</description>
+        <fullName>Term_Condition_Version__c</fullName>
         <externalId>false</externalId>
-        <label>Date Accepted</label>
+        <formula>Term_Condition__r.Version_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Term &amp; Condition Version</label>
+        <precision>18</precision>
         <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Is_Accepted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Indicates if the related Term and Condition was accepted by the related Contact</description>
-        <externalId>false</externalId>
-        <label>Is Accepted</label>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Status</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Pending</fullName>
-                    <default>false</default>
-                    <label>Pending</label>
-                </value>
-                <value>
-                    <fullName>Accepted</fullName>
-                    <default>false</default>
-                    <label>Accepted</label>
-                </value>
-                <value>
-                    <fullName>Rejected</fullName>
-                    <default>false</default>
-                    <label>Rejected</label>
-                </value>
-                <value>
-                    <fullName>Superseded</fullName>
-                    <default>false</default>
-                    <label>Superseded</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Term_Condition__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Related Term &amp; Condition record</description>
         <externalId>false</externalId>
         <label>Term &amp; Condition</label>
         <referenceTo>Term_and_Condition__c</referenceTo>
-        <relationshipLabel>Term and Condition Acceptances</relationshipLabel>
-        <relationshipName>Term_and_Condition_Acceptances</relationshipName>
+        <relationshipLabel>Services Terms and Conditions</relationshipLabel>
+        <relationshipName>Services_Terms_and_Conditions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <label>Term and Condition Acceptance</label>
+    <label>Service Term and Condition</label>
     <nameField>
-        <displayFormat>TCA-{000000}</displayFormat>
-        <label>Name</label>
+        <displayFormat>STC-{00000}</displayFormat>
+        <label>Service Term and Condition Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Term and Condition Acceptances</pluralLabel>
+    <pluralLabel>Services Terms and Conditions</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

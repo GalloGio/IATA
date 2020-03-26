@@ -173,6 +173,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Custom_Label_for_Translated_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Custom Label for Translated Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Effective_Start_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective Start Date</label>
@@ -299,6 +309,38 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>T_C_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>T&amp;C URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>URL</fullName>
+                    <default>false</default>
+                    <label>URL</label>
+                </value>
+                <value>
+                    <fullName>Rich Text</fullName>
+                    <default>false</default>
+                    <label>Rich Text</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Version_Number__c</fullName>
         <defaultValue>1</defaultValue>
         <externalId>false</externalId>
@@ -314,9 +356,13 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Status__c</columns>
-        <columns>Effective_Start_Date__c</columns>
+        <columns>NewGenApp_PortalService__c</columns>
         <columns>Version_Number__c</columns>
+        <columns>Is_Latest__c</columns>
+        <columns>Type__c</columns>
+        <columns>T_C_URL__c</columns>
+        <columns>Effective_Start_Date__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -357,6 +403,17 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Rich Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>URL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>NOT_Bypass_Trigger_Behavior</fullName>
@@ -386,6 +443,17 @@
             </values>
             <values>
                 <fullName>Final</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Rich Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>URL</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
