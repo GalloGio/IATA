@@ -1913,6 +1913,10 @@
         <name>COVID_19_eComm_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -14311,7 +14315,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktiv</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>

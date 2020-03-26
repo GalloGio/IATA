@@ -1909,6 +1909,10 @@
         <name>COVID_19_eComm_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -14302,7 +14306,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
