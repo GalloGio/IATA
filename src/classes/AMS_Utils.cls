@@ -13,6 +13,8 @@ public without sharing class AMS_Utils {
 	public static final String FAILED = 'Failed';
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
+	public static final String SUCCESS = 'SUCCESS';
+	public static final String VALID = 'VALID';
 
 	public static final String ACTIVE = 'Active';
 	public static final String AUTHORIZED = 'Authorized';
@@ -299,6 +301,18 @@ public without sharing class AMS_Utils {
 	// Case - Status
 	public static final String CASE_STATUS_CLOSED = 'Closed';
 	public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+	public static final String CASE_STATUS_AGENT_NOTIFIED_EMAIL = 'Agent Notified (Email)';
+	public static final String CASE_STATUS_AGENT_NOTIFIED_MAIL = 'Agent Notified (Mail)';
+	public static final String CASE_STATUS_SANITY_CHECK_FAILURE = 'Sanity Check Failure';
+	public static final String CASE_STATUS_FINANCIAL_STATEMENTS_UPLOADED = 'Financial Statements Uploaded';
+	public static final String CASE_STATUS_ACTION_NEEDED = 'Action Needed';
+	public static final String CASE_STATUS_AGENT_TO_BE_NOTIFIED = 'Agent to be Notified';
+	public static final String CASE_STATUS_AGENT_TO_BE_NOTIFIED_EMAIL = 'Agent to be notified (Email)';
+	public static final String CASE_STATUS_ASSESSMENT_PERFORMED = 'Assessment Performed';
+	public static final String CASE_STATUS_FINANCIAL_SECURITY_PROVIDED = 'Financial Security Provided';
+	public static final String CASE_STATUS_RE_OPENED = 'Re-open/ed';
+	public static final String CASE_STATUS_SUBMITTED = 'Submitted';
+	public static final String CASE_STATUS_ASSESSMENT_CANCELED = 'Assessment Cancelled';
 
 	// Case - Reason1__c //AMSU-165
 	public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
@@ -398,8 +412,6 @@ public without sharing class AMS_Utils {
 	public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
 	public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 	public static final String NDC = 'NDC';
-
-	public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
 	//Mass created FOP case/OSCAR is assigned to one of theses queues when created:
 	public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
@@ -2821,4 +2833,9 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	public static Boolean pickListContains(String picklist, String lookFor) {
 		return picklist != null && picklist.contains(lookFor);
 	}
+
+	public static Boolean isSObjectFieldRetrieved(SObject sObj, String fieldName){
+		return sObj.getPopulatedFieldsAsMap().containsKey(fieldName);
+	}
+
 }

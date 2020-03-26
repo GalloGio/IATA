@@ -3,7 +3,7 @@ public class ANG_RHCMassCalculation {
 	// ******************************
 	// ********** variables *********
 	// ******************************
-	private Id ifap = AMS_Utils.RECTYPE_CASEIFAP; //need to fetch because dynamic queries only receive direct variables
+	private Id ifap = AMS_Utils.RECTYPE_IFAP; //need to fetch because dynamic queries only receive direct variables
 	private Id batchId;
 	private Datetime submitTime;
 

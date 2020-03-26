@@ -146,7 +146,7 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		update oscar;
 
-		Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_CASEIFAP , Status = 'Open',Region__c = 'Africa',
+		Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP , Status = 'Open',Region__c = 'Africa',
 			CaseArea__c = 'Accreditation', Origin= 'Internal User', Reason1__c = 'Annual revalidation',
 			Subject =  'Annual revalidation', Type_of_customer__c = 'IATA Travel Agent', AccountId = oscar.Account__c,
 			BSPCountry__c = 'US', IFAP_Area__c = 'asda', IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
