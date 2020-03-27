@@ -1911,6 +1911,10 @@
         <name>COVID_19_eComm_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -14335,7 +14339,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Activo</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>

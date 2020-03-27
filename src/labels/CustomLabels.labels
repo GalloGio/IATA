@@ -3359,6 +3359,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
     </labels>
     <labels>
+        <fullName>COVID_Updates_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID Updates Service</shortDescription>
+        <value>This service is your reference guide for the latest IATA updates related to the impact of COVID-19 on all IATA BSP and CASS operations.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
