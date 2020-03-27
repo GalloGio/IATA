@@ -80,7 +80,7 @@
                                                     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right custTextInput custTextInputSmall" >
                                                         <input type={passwordInputType} value={password} data-id="passwordInput"  placeholder=" " onkeyup={handlePasswordChange}
                                                             onfocusout={handlePasswordFocusOut} class="slds-input inputHasError" autocomplete="off" />
-                                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right showPasswordButton" title="" onclick={handleShowPassword} disabled={isPasswordIconDisabled}>
+                                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right showPasswordButton" title="" tabindex="-1" onclick={handleShowPassword} disabled={isPasswordIconDisabled}>
                                                             <img src={svgURL} data-id="passwordIcon" class="slds-button__icon slds-icon-text-light showPasswordIcon showPasswordIconDisabled" aria-hidden="true">
                                                             <!-- <input type="image" data-id="passwordIcon" style="border:none !important;" class="slds-button__icon slds-icon-text-light showPasswordIcon showPasswordIconDisabled" src={svgURL} /> -->
                                                             <span class="slds-assistive-text"></span>

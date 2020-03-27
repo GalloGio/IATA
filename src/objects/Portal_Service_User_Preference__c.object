@@ -196,6 +196,18 @@
         <type>Checkbox</type>
     </fields>
     <label>Portal Service User Preference</label>
+    <listViews>
+        <fullName>All_w_details</fullName>
+        <columns>NAME</columns>
+        <columns>Portal_Service_Access__c</columns>
+        <columns>Category__c</columns>
+        <columns>Subscribed__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All w details</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Category Instance</label>
         <type>Text</type>
