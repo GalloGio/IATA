@@ -923,7 +923,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618</value>
+                <value>CA 999,SQ 618,LH 020,LH 220</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5331,113 +5331,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>iiNet Information request,iiNet WEB File retrieval,iiNet WEB How-to question,iiNet WEB interface,Integrated connectivity,Integrated file processing</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_Academic_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Academic Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_RTP_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>RTP Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_ATS_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>ATS Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_ATC_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>ATC Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Exam</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – Exam</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_ATC_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – ATC Student Enrolment</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Ind_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – Individual Student Enrolment</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Ind_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

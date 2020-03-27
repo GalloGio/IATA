@@ -200,7 +200,11 @@ public without sharing class PortalServiceAccessTriggerHandler {
 		return
 			[SELECT Id,
 					UserId,
-					AccountId
+					AccountId,
+					User.Email,
+					User.isActive,
+					User.ContactId,
+					User.Contact.isEmailBounced
 			FROM AccountTeamMember
 			WHERE AccountId IN: accountIds
 				AND TeamMemberRole=: ENV.TeamMemberRolePL.PortalAdministrator];
@@ -343,7 +347,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
 			contact.Available_Services_Images__c = String.join(listImages,' ');
 		}
 		AMS_TriggerExecutionManager.SET_TRIGGER_TO_SKIP.add('GlobalContactTrigger');
-		if (System.isQueueable()) {
+		if (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() <= 0) {
 			update listContact;
 		} else {
 			System.enqueueJob(new AsyncDML_Util(listContact, AsyncDML_Util.DML_UPDATE, false));

@@ -68,6 +68,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.redirectionTo();
     }
 
+    @api redirectObject;
+
     @api
     get articleView() {
         return this._articleView;

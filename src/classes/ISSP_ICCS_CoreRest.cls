@@ -13,8 +13,6 @@ public class ISSP_ICCS_CoreRest{
 	public String token {
 		get{
 			if(token == null){
-				System.debug('***** ISSP_ICCS_CoreRest retrieving token *****');
-
 				HttpRequest req = new HttpRequest();
 
 				req.setEndpoint(tokenURL);
@@ -38,8 +36,6 @@ public class ISSP_ICCS_CoreRest{
 					response = ISSP_ICCS_Mock.getMockToken(pageController.participantId);
 				}
 
-				System.debug('RESPONSE : ' + response);
-
 				if(response == null){
 					throw new ICCS_Exception('ISSP_ICCS_CoreRest retrieving token : ' + CORE_EXCEPTION + ' No reponse from server');
 				}
@@ -48,7 +44,6 @@ public class ISSP_ICCS_CoreRest{
 				}
 				else{
 					Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-					System.debug('ISSP_ICCS_CoreRest retrieving token - response body : ' + m);
 					token = (String) m.get('access_token');
 				}
 			}
@@ -79,7 +74,10 @@ public class ISSP_ICCS_CoreRest{
 
 
 	public HttpResponse sendRequest(String method, String body, String service, Map<String, String> headers, Boolean resetTokenIfExpired){
-		System.debug('**** ' + (serviceURL + service) + ' ****');
+		return sendRequest(method, body, service, headers, resetTokenIfExpired, true);
+	}
+
+	public HttpResponse sendRequest(String method, String body, String service, Map<String, String> headers, Boolean resetTokenIfExpired, Boolean addParticipationHeader){
 		HttpRequest req = new HttpRequest();
 
 		// Request endpoint
@@ -94,7 +92,9 @@ public class ISSP_ICCS_CoreRest{
 		}
 		catch(ICCS_Exception e){throw e;}
 
-		req.setHeader('participant_code', pageController.participantId);
+		if (addParticipationHeader) {
+			req.setHeader('participant_code', pageController.participantId);
+		}
 
 		if(headers != null){
 			for(String key : headers.keySet()){
@@ -106,8 +106,6 @@ public class ISSP_ICCS_CoreRest{
 
 		// Request body
 		if(body != ''){
-			System.debug('**** Request body ****');
-			System.debug(body);
 			req.setHeader('Content-Type', 'application/json');
 			req.setBody(body);
 		}
@@ -147,8 +145,6 @@ public class ISSP_ICCS_CoreRest{
 			}
 		}
 
-		System.debug('**** Response body ****\n' + response.getBody());
-
 		return response;
 	}
 
@@ -162,8 +158,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of existing cashflows.
 	*/
 	public List<Cashflow> getCashflows(){
-		System.debug('**** ISSP_ICCS_CoreRest.getCashflows() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/cashflows', null, true);
 
 		try{
@@ -175,14 +169,27 @@ public class ISSP_ICCS_CoreRest{
 		}
 	}
 
+	/*	GET /cycles/{cid}/PreassignedAndNotReceivedCashflows
+		
+		Returns all the pre-assigned cashflows and not received notification from a cycle
+	*/
+	public List<Cashflow> getPreassignedAndNotReceivedCashflows(String cycleId){
+		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/PreassignedAndNotReceivedCashflows?participant_code=' + pageController.participantId, null, true);
+
+		try{
+			String result = response.getBody().replaceAll('"BankAccountCode"', '"AccountCode"').replaceAll('"CashflowType"', '"Type"');
+			return (List<Cashflow>) JSON.deserialize(result, List<Cashflow>.class);
+		}
+		catch(Exception e){
+			throw new ICCS_Exception(JSON_EXCEPTION + e.getMessage());
+		}
+	}
 
 	/*	GET /cycles
 
 		Returns a filtered, ordered list of cycles. The statuses SF is interested in are 'Created' (for future) and 'AdHocWindow' (for cycle).
 	*/
 	public List<Cycle> getCycles(Set<CYCLE_STATUS> statuses){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycles(' + statuses + ') ****');
-
 		String finalEndpoint = '/cycles';
 
 		List<String> parameters = new List<String>();
@@ -216,8 +223,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of instruction types.
 	*/
 	public List<InstructionType> getInstructionTypes(){
-		System.debug('**** ISSP_ICCS_CoreRest.getInstructionTypes() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/settlementInstructions/types', null, true);
 
 		try{
@@ -235,8 +240,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of instruction line types
 	*/
 	public List<InstructionLineType> getInstructionLineTypes(){
-		System.debug('**** ISSP_ICCS_CoreRest.getInstructionLineTypes() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/settlementInstructions/lineTypes', null, true);
 
 		try{
@@ -254,8 +257,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of report types
 	*/
 	public List<ReportType> getReportTypes(){
-		System.debug('**** ISSP_ICCS_CoreRest.getReportTypes() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/reports/types', null, true);
 
 		try{
@@ -280,8 +281,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of participations for a specific participant.
 	 */
 	public List<Participation> getParticipations(){
-		System.debug('**** ISSP_ICCS_CoreRest.getParticipations() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/participants/' + pageController.participantId + '/participations', null, true);
 
 		try{
@@ -298,8 +297,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of settlement instructions for a specific participant.
 	 */
 	public List<SettlementInstruction> getSettlementInstructions(){
-		System.debug('**** ISSP_ICCS_CoreRest.getSettlementInstructions() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/participants/' + pageController.participantId + '/settlementInstructions', null, true);
 
 		try{
@@ -317,8 +314,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of Bank Account Codes for a specific participant.
 	*/
 	public List<BankAccountCode> getBankAccountsCodes(){
-		System.debug('**** ISSP_ICCS_CoreRest.getBankAccountsCodes() ****');
-
 		HttpResponse response = sendRequest('GET', '', '/participants/' + pageController.participantId + '/bankAccountsCodes', null, true);
 
 		try{
@@ -340,8 +335,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns a specific participation.
 	*/
 	public Participation getParticipation(Integer participationId){
-		System.debug('**** ISSP_ICCS_CoreRest.getParticipation(' + participationId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/participations/' + participationId, null, true);
 
 		try{
@@ -362,8 +355,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns a specific settlement instruction.
 	*/
 	public SettlementInstruction getSettlementInstruction(Integer settlementInstructionId){
-		System.debug('**** ISSP_ICCS_CoreRest.getSettlementInstruction(' + settlementInstructionId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/settlementInstructions/' + settlementInstructionId, null, true);
 
 		try{
@@ -380,11 +371,8 @@ public class ISSP_ICCS_CoreRest{
 		Creates a future settlement instruction (the cycle id is set in the settlement instruction object).
 	*/
 	public void createSettlementInstruction(SettlementInstruction settlementInstruction){
-		System.debug('**** ISSP_ICCS_CoreRest.createSettlementInstruction(SettlementInstruction settlementInstruction) ****');
-
 		String serializedInstruction = JSON.serialize(settlementInstruction, true).replaceAll( '"currency_x"', '"Currency"').replaceAll('"number_x"', '"Number"');
 
-//		sendRequest('POST', serializedInstruction, '/settlementinstructions', new Map<String,String>{'participant_code' => pageController.participantId}, true);
 		sendRequest('POST', serializedInstruction, '/settlementinstructions', null, true);
 	}
 
@@ -393,8 +381,6 @@ public class ISSP_ICCS_CoreRest{
 		Updates a standard or a future settlement instruction.
 	*/
 	public void updateSettlementInstruction(SettlementInstruction settlementInstruction){
-		System.debug('**** ISSP_ICCS_CoreRest.updateSettlementInstruction(SettlementInstruction settlementInstruction) ****');
-
 		String serializedSettlementInstruction = JSON.serialize(settlementInstruction, true).replaceAll( '"currency_x"', '"Currency"').replaceAll('"number_x"', '"Number"');
 
 		sendRequest('PUT', serializedSettlementInstruction, '/settlementinstructions/' + settlementInstruction.id, null, true);
@@ -405,8 +391,6 @@ public class ISSP_ICCS_CoreRest{
 		Deletes a future settlement instruction.
 	*/
 	public void deleteSettlementInstruction(SettlementInstruction settlementInstruction, Integer settlementInstructionId){
-		System.debug('**** ISSP_ICCS_CoreRest.deleteSettlementInstruction(' + settlementInstructionId + ') ****');
-
 		String serializedInstruction = JSON.serialize(settlementInstruction, true);
 
 		sendRequest('DELETE', serializedInstruction, '/settlementinstructions/' + settlementInstructionId, null, true);
@@ -422,8 +406,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of cashflows for a specific cycle.
 	*/
 	public List<Cashflow> getCycleCashflows(String cycleId){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycleCashflows(' + cycleId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/cashflows', null, true);
 
 		try{
@@ -440,9 +422,7 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of participations for a specific cycle. It contains the list for all participants, we have to filter.
 	*/
 	public List<Participation> getCycleParticipations(String cycleId){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycleParticipations(' + cycleId + ') ****');
-
-		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/participations', null, true);
+		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/participations', null, true, false);
 
 		try{
 			String result = response.getBody().replaceAll('"BankAccountCode"', '"AccountCode"');
@@ -469,8 +449,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of participant's Bank Account Codes for a specific cycle.
 	*/
 	public List<BankAccountCode> getCycleBankAccountsCodes(String cycleId){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycleBankAccountsCodes(' + cycleId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#','_').replaceAll('-', '_') + '/participants/' + pageController.participantId + '/bankAccountsCodes', null, true);
 
 		try{
@@ -487,12 +465,10 @@ public class ISSP_ICCS_CoreRest{
 		Returns the list of settlement instructions for a specific cycle.
 	*/
 	public List<SettlementInstruction> getCycleSettlementInstructions(String cycleId){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycleSettlementInstructions(' + cycleId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementInstructions?participant_code=' + pageController.participantId, null, true);
 
 		try{
-			String result = response.getBody().replaceAll('"Currency"', '"Currency_x"').replaceAll('"Number"', '"Number_x"');
+			String result = response.getBody().replaceAll('"Currency":', '"Currency_x":').replaceAll('"Number"', '"Number_x"');
 			return (List<SettlementInstruction>) JSON.deserialize(result, List<SettlementInstruction>.class);
 		}
 		catch(Exception e){
@@ -506,8 +482,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns a specific settlement instruction for a specific cycle.
 	*/
 	public SettlementInstruction getCycleSettlementInstruction(String cycleId, Integer settlementInstructionId){
-		System.debug('**** ISSP_ICCS_CoreRest.getCycleSettlementInstruction(' + cycleId + ',' + settlementInstructionId + ') ****');
-
 		HttpResponse response = sendRequest('GET', '', '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementInstructions/' + settlementInstructionId, null, true);
 
 		try{
@@ -525,13 +499,19 @@ public class ISSP_ICCS_CoreRest{
 		Creates an Adhoc SI for a specific cycle.
 	*/
 	public void createCycleSettlementInstruction(SettlementInstruction settlementInstruction){
-		System.debug('**** ISSP_ICCS_CoreRest.createCycleSettlementInstruction() ****');
-
 		String serializedInstruction = JSON.serialize(settlementInstruction, true).replaceAll('"currency_x"', '"Currency"').replaceAll('"number_x"', '"Number"');
 
 		sendRequest('POST', serializedInstruction, '/cycles/' + settlementInstruction.cycle.cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementinstructions', null, true);
 	}
 
+	/*	POST /cycles/{cid}/settlementinstructions
+		
+		Creates a list of new Settlement Instructions for a cycle
+	*/
+	public void createMassCycleSettlementInstruction(String cycleId, list<SettlementInstruction> listSettlementInstruction){
+		String serializedInstruction = JSON.serialize(listSettlementInstruction, true).replaceAll('"currency_x"', '"Currency"').replaceAll('"number_x"', '"Number"');
+		sendRequest('POST', serializedInstruction, '/cycles/' + cycleId.replaceAll('#', '_').replaceAll('-', '_') + '/settlementInstructions/range', null, true);
+	}
 
 	/**************
 		REPORTS
@@ -543,8 +523,6 @@ public class ISSP_ICCS_CoreRest{
 		Returns a sub-set of participant reports based on the filter criterias passed in parameters.
 	*/
 	public Reports getReports(Integer pageNumber, Integer pageSize, String cycleId, String fromDate, String toDate, String type){
-		System.debug('**** ISSP_ICCS_CoreRest.getReports(' + pageNumber + ',' + pageSize + ',' + cycleId + ',' + fromDate + ',' + toDate + ',' + type + ') ****');
-
 		String finalEndpoint = '/reports?';
 
 		List<String> parameters = new List<String>();
@@ -590,12 +568,8 @@ public class ISSP_ICCS_CoreRest{
 		returns the URL of a report based on its Id and its mimetype set in the HTTP Request header
 	*/
 	public String getReport(String id, String mimetype){
-		System.debug('**** ISSP_ICCS_CoreRest.getReport(' + id + ',' +  mimetype + ') ****');
-
 		if(!Test.isRunningTest()){
 			HttpResponse response = sendRequest('GET', '', '/reports/' + id, new Map<String,String>{'Accept' => mimetype}, true);
-
-			System.debug('****** GET  : /reports/' + id + ' Location header : ' + response.getHeader('Location'));
 
 			return response.getHeader('Location');
 		}
@@ -623,6 +597,11 @@ public class ISSP_ICCS_CoreRest{
 		public Double settlementAmount {get;set;}
 		public Boolean isApplied {get;set;}
 		public String approvalStatus {get;set;}
+
+		// Specific for Cycle Currency Settlement Instruction (CCSI)
+		public String participant {get;set;}
+		public String CurrencyIso3Code {get;set;}
+		public Integer IntegrationSystemId {get;set;}
 
 		public SettlementInstruction(){
 			participation = new Participation();
@@ -653,6 +632,13 @@ public class ISSP_ICCS_CoreRest{
 		public String code {get;set;}
 	}
 
+	public static final map<Integer,CASHFLOW_STATUS> MAP_CASHFLOW_STATUS = new map<Integer,CASHFLOW_STATUS>{
+		1 => CASHFLOW_STATUS.PreAssigned,
+		2 => CASHFLOW_STATUS.Assigned,
+		3 => CASHFLOW_STATUS.NotReceived,
+		4 => CASHFLOW_STATUS.Parked
+	};
+
 	public class Cashflow{
 		public Integer id {get;set;}
 		public String name {get;set;}
@@ -661,6 +647,13 @@ public class ISSP_ICCS_CoreRest{
 		public CashflowType type {get;set;}
 		public Country country {get;set;}
 		public BankAccountCode accountCode {get;set;}
+		public Integer status {get;set;}
+		public Integer participationId {get;set;}
+		public String participantCode {get;set;}
+
+		public CASHFLOW_STATUS getCashflowStatus() {
+			return MAP_CASHFLOW_STATUS.get(this.status);
+		}
 	}
 
 	public class CashflowType {
@@ -687,15 +680,8 @@ public class ISSP_ICCS_CoreRest{
 				return id_string;
 			}
 			set{
-//				try{
-					id = Integer.valueOf(value);
-					id_string = value;
-					System.debug('bankAccount : ' + this);
-/*				}
-				catch(Exception e){
-					System.debug('Not an Integer : ' + value);
-					throw new ICCS_Exception('Please select a Bank Account Code');
-				}*/
+				id = Integer.valueOf(value);
+				id_string = value;
 			}
 		}
 
@@ -744,6 +730,22 @@ public class ISSP_ICCS_CoreRest{
 		public Decimal value {get;set;}
 		public Integer order {get;set;}
 		public String modifiedOn {get;set;}
+		public String valueString {
+			get { return String.ValueOf(this.value);}
+			set { 
+				valueString = value;
+				assignValue(valueString);
+			}
+		}
+
+		public void assignValue(String input) {
+			try {
+				String newValue = input.replaceAll(',','');
+				this.value = Decimal.ValueOf(newValue);
+			} catch (Exception e) {
+				this.value = 0;
+			}
+		}
 
 		public InstructionLine(){
 			accountCode = new BankAccountCode();
@@ -782,15 +784,8 @@ public class ISSP_ICCS_CoreRest{
 				return id_string;
 			}
 			set{
-//				try{
-					id = Integer.valueOf(value);
-					id_string = value;
-					System.debug('instructionLineType : ' + this);
-/*				}
-				catch(Exception e){
-					throw new ICCS_Exception('Please select a Instruction Line Type');
-					System.debug('Not an Integer : ' + value);
-				}*/
+				id = Integer.valueOf(value);
+				id_string = value;
 			}
 		}
 	}
@@ -872,5 +867,13 @@ public class ISSP_ICCS_CoreRest{
 		NONE,
 		ASCENDING,
 		DESCENDING
+	}
+
+	public Enum CASHFLOW_STATUS {
+		NONE,
+		PreAssigned,
+		Assigned,
+		NotReceived,
+		Parked
 	}
 }
