@@ -404,9 +404,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -425,9 +425,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -440,9 +440,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -454,9 +454,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 /* ############################################## */
 @media only screen and (max-device-width: 480px){

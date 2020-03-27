@@ -61,7 +61,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 								AccountId = account.id,
 								OSCAR__c  = oscar.id,
 								Reason1__c = 'Annual revalidation',
-								Region__c = 'Europe',
 								RecordTypeId = rtCase,
 								Subject = 'Annual revalidation - GoStandard - test',
 								Type = 'Case',
@@ -177,11 +176,16 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 										IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
 									FROM IATA_ISO_Country__c
 									WHERE Name = 'test'];
-
+		
 		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
 													FROM AMS_Accreditation_Country_CheckList__c
 													WHERE Operation__c = 'Travel Agent'];
-		insert new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+		IATA_ISO_State__c  state = new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+
+		insert state;
+
+		IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Toronto', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Toronto');
+		insert city;
 
 		Account account;
 		Account child;
@@ -206,8 +210,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 							Type_of_customer__c
 						FROM Case
 						WHERE Reason1__c = 'Annual revalidation'];
-
-		Test.startTest();
 
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
@@ -373,8 +375,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Financial_interest__c = 10;
 
 		ctrl.createAgencyContact();
-
-		ctrl.contactType = 'Current Owner';
+        
+		Test.startTest();
+        ctrl.contactType = 'Current Owner';
 		ctrl.iatacode = '3421';
 		ctrl.currentAccount.newContact.AddressCountry__c = null;
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = '';
@@ -385,7 +388,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'jlfdçskkdklfj';
 
 		ctrl.createAgencyContact();
-
 		ctrl.contactType = 'Person';
 
 		ctrl.createAgencyContact();
@@ -419,8 +421,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.saveDraftAndLeave();
 
 		ctrl = null;
-
-		Test.stopTest();
 
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
@@ -540,6 +540,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = null;
 
 		ctrl.confirmUpdate();
+		Test.stopTest();
 	}
 
 	@isTest
@@ -567,27 +568,17 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			} else if (a.Name == 'test child') {
 				child = a;
 			}
-							}
-		
-		Contact conMulticountry = ISSP_ObjectFactory.createNewContact();
-		conMulticountry.AccountId = account.Id;
-		conMulticountry.Email = 'multicountry@test11.com';
-		insert conMulticountry;
-		
-		User userIcc = ISSP_ObjectFactory.createPortalUser(conMulticountry);
-		conMulticountry.OwnerId = userIcc.Id;
-		update conMulticountry;
-		
+		}
+
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c, RecordTypeId, IATA_Codes_OK__c
-							  FROM AMS_OSCAR__c
-							  WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
-		
+							FROM AMS_OSCAR__c
+							WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
+
 		Case testcase = [SELECT Id, Account_Concerned__c, AccountId, OSCAR__c, CaseArea__c, Reason1__c, RecordTypeId, Subject, Type,
-						 Type_of_customer__c, Region__c
-						 FROM Case
-						 WHERE Reason1__c = 'Annual revalidation'];
-		
-		Test.startTest();
+							Type_of_customer__c, Region__c
+						FROM Case
+						WHERE Reason1__c = 'Annual revalidation'];
+
 		Id auxId = Ams_Utils.getRegionalQueue(testcase);
 		testcase.Region__c = 'Africa & Middle East';
 		auxId = Ams_Utils.getRegionalQueue(testcase);
@@ -599,23 +590,23 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		auxId = Ams_Utils.getRegionalQueue(testcase);
 		testcase.Region__c = 'Europe';
 		auxId = Ams_Utils.getRegionalQueue(testcase);
-		
+
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
-		
+
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
-		
+
 		ISSP_ANG_ANNUAL_REVALIDATION.setCaseVisibleInPortal(testcase);
-		
+
 		String aux = ISSP_ANG_ANNUAL_REVALIDATION.CONFIRMED_ICON;
 		aux = ctrl.step1GoToNumber;
 		aux = ctrl.tree;
 		aux = ctrl.caseId;
 		aux = ctrl.legalstatusAfterChange;
 		Boolean auxFlag = ctrl.isAddCompanyModal;
-		
+
 		ctrl.updateDetails();
-		
+
 		ctrl.currentAccount.fw.newform.Notify_Change_Legal_Details__c = true;
 		ctrl.currentAccount.fw.newform.Account_Name__c = 'name';
 		ctrl.currentAccount.fw.newform.Trade_Name__c = 'trade name';
@@ -628,49 +619,52 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newForm.ISSP_AMS_License_No__c = '123';
 		ctrl.currentAccount.fw.newForm.ISSP_AMS_Date_license_granted__c = system.today();
 		ctrl.currentAccount.fw.newForm.Effective_Date_Of_Change__c = system.today();
-		
+
 		ctrl.confirmUpdate();
-		
+
 		ctrl.currentAccount.status = 'UC';
-		
+
 		ctrl.discardDetails();
-		
+
 		ctrl.currentIataCode = '12345678';
 		ctrl.loadIataCode();
 		ctrl.currentIataCode = '87654321';
 		ctrl.loadIataCode();
-		
+
 		ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT_HELPER submitHelper = ctrl.submitHelper;
-		
+
 		String strListNotStarted = submitHelper.strListNotStarted;
 		String strListUpdateInProgress = submitHelper.strListUpdateInProgress;
 		String strListDetailsConfirmed = submitHelper.strListDetailsConfirmed;
 		String strListUpdateCompleted = submitHelper.strListUpdateCompleted;
-		
+
 		ctrl = null;
-		
+
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
 		System.currentPageReference().getParameters().put('step', '2');
-		
+
 		ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
-		
+
+		Test.startTest();
+		ctrl.submitForm();
+		Test.stopTest();
+
 		String statusDesc = ctrl.currentAccount.statusDesc;
-		
+
 		ctrl.currentAccount.fw.newForm.status__c = ISSP_ANG_ANNUAL_REVALIDATION.FORM_STATUS_COMPLETED;
-		
+
 		ctrl.setIataCodesOkNotOk(oscar);
-		
+
 		ctrl.iataCodesConfirmed.add('123');
-		
+
 		ctrl.getIcon('123');
-		
+
 		ctrl.iataCodesOk.add('456');
 		ctrl.getStatus('456');
 		ctrl.getStatus('123');
-		
+
 		ctrl.getMode('dfa');
-		Test.stopTest();
 
 	}
 
@@ -934,21 +928,104 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		Test.stopTest();
 	}
 
+	@isTest static void test9(){
+		IATA_ISO_Country__c country = [SELECT Id, Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c,
+										IATA_Country_ZH__c, IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c,
+										IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
+									FROM IATA_ISO_Country__c
+									WHERE Name = 'test'];
+		
+		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
+													FROM AMS_Accreditation_Country_CheckList__c
+													WHERE Operation__c = 'Travel Agent'];
+		IATA_ISO_State__c  state = new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+
+		insert state;
+
+		IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Toronto', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Toronto');
+		insert city;
+
+		Account account;
+		Account child;
+
+		for (Account a:  [SELECT BillingCity, Name, Sector__c, Location_Type__c, RecordTypeId, IATACode__c, Status__c, IATA_ISO_Country__c,
+							Location_Class__c
+						FROM Account
+						WHERE Name = 'test'
+							OR Name = 'test child']) {
+			if (a.Name == 'test')  {
+				account = a;
+			} else if (a.Name == 'test child') {
+				child = a;
+			}
+		}
+
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c, RecordTypeId
+							FROM AMS_OSCAR__c
+							WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
+
+		Case testcase = [SELECT Id, Account_Concerned__c, AccountId, OSCAR__c, CaseArea__c, Reason1__c, RecordTypeId, Subject, Type,
+							Type_of_customer__c
+						FROM Case
+						WHERE Reason1__c = 'Annual revalidation'];
+
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
+		System.currentPageReference().getParameters().put('caseId', testcase.id);
+
+		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+
+		String mode = ctrl.mode;
+
+		List<SelectOption> countryNameList = ctrl.countryNameList;
+		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
+
+
+		ctrl.currentIataCode = '87654321';
+		ctrl.loadIataCode();
+
+		ctrl.updateDetails();
+
+		ctrl.saveDraft();
+
+		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+
+		upd.chsb = true;
+		upd.chss = true;
+		ctrl.currentAccount.account.IATA_ISO_Country__c = country.Id;
+		ctrl.currentAccount.fw.newform.State_Province__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = country.Name;
+		ctrl.currentAccount.fw.newform.Shipping_State__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Geoname_Billing_City__c = Id.valueOf(city.Id);
+		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
+		ctrl.confirmUpdate();	
+		upd.ca = ctrl.currentAccount;
+		String stateListByCountryName = upd.stateListByCountryName;	
+		String geonameBillingCityId = upd.geonameBillingCityId;
+		String geonameShippingCityId = upd.geonameShippingCityId;
+		upd.currentBillingStateCities();
+		upd.currentShippingStateCities();
+		upd.currentShippingCountryStates();
+		
+		String shippingCityName = ISSP_ANG_ANNUAL_REV_UPDATE.shippingCityListNameStr;
+		String cityName = ISSP_ANG_ANNUAL_REV_UPDATE.billingCityListNameStr;
+
+		
+	}
 
 	@isTest
-	static void CloseCaseAfterSumbitValidAccount() {
+	static void closeCaseAfterSumbitValidAccountTest() {
 		IATA_ISO_Country__c country = [SELECT Id, Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c,
 									   IATA_Country_ZH__c, IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c,
 									   IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
 									   FROM IATA_ISO_Country__c
 									   WHERE Name = 'test'];
-		
+
 		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
 													   FROM AMS_Accreditation_Country_CheckList__c
 													   WHERE Operation__c = 'Travel Agent'];
-		
-				
-	   	Account account = new Account(
+
+		Account account = new Account(
 		BillingCity = 'test',
 		Name = 'test',
 		sector__c = Ams_Utils.SECTOR_PASSENGER,
@@ -959,21 +1036,21 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		IATA_ISO_Country__c = country.Id,
 		Location_Class__c = 'P');
 		insert account;
-		
+
 		Contact conMulticountry = ISSP_ObjectFactory.createNewContact();
 		conMulticountry.AccountId = account.Id;
 		conMulticountry.Email = 'multicountry@test11.com';
 		insert conMulticountry;
-		
+
 		User userIcc = ISSP_ObjectFactory.createPortalUser(conMulticountry);
 		conMulticountry.OwnerId = userIcc.Id;
 		update conMulticountry;
-		
+
 		System.runAs(userIcc){
 			Test.startTest();
 			AMS_OSCAR__c oscar = New AMS_OSCAR__c(Account__c = account.id, Process__c = 'ANG.ANNUAL.REVALIDATION', RecordTypeId = rtOscar);
 			insert oscar;
-			
+
 			Case testcase = new Case (Account_Concerned__c = account.id,
 									  AccountId = account.id,
 									  OSCAR__c  = oscar.id,
@@ -984,25 +1061,26 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 									  Type = 'Case',
 									  Type_of_customer__c = 'IATA Travel Agent',
 									  CaseArea__c = 'something');
-			
+
 			insert testcase;
-			
+
 			Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
-			System.currentPageReference().getParameters().put('caseId', testcase.id);       
-			
+			System.currentPageReference().getParameters().put('caseId', testcase.id);
+
 			ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
-			
+
 			ISSP_ANG_ANNUAL_REVALIDATION.setCaseVisibleInPortal(testcase);
-			
+
 			ctrl.currentIataCode = '12345678';
 			ctrl.loadIataCode();
 			ctrl.confirmDetails();
 			ctrl.newCase.Region__c = 'Europe';
 			ctrl.newCase.ownerId=userIcc.Id;
-			Test.stopTest(); 
+			Test.stopTest();
 			ctrl.submitForm();
-			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c,  'Case should be closed after all accounts be confirmed and submited.');
+			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c, 'Case should be closed after all accounts be confirmed and submited.');
 		}
+
 	}
 
 }

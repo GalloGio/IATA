@@ -3983,7 +3983,7 @@
     </alerts>
     <alerts>
         <fullName>Send_Email_to_Online_store_support</fullName>
-        <ccEmails>servicedesk@iata.org</ccEmails>
+        <ccEmails>kurups@external.iata.org</ccEmails>
         <ccEmails>szpyndam@iata.org</ccEmails>
         <ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
