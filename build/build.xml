@@ -236,7 +236,6 @@
     <antcall target="deployLayouts" />
     <antcall target="deployFlowStep" />
   </target>
-
   <target name="deployFlowStep">
     <antcall target="deployFlows" />
   </target>
@@ -423,5 +422,121 @@
 
     <antcallback target="getStaticResourceAndLayouts" />
   </target>
+
+
+  <!-- PROPERTIES -->
+
+  <taskdef uri="antlib:com.salesforce" resource="com/salesforce/antlib.xml" classpath="${basedir}/build/ant-salesforce.jar" />
+  <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/build/ant-contrib/ant-contrib-1.0b3.jar" />
+
+  <taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy">
+    <classpath>
+      <pathelement location="${basedir}/build/groovy-all-2.4.9.jar" />
+    </classpath>
+  </taskdef>
+
+  <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+    <classpath>
+      <pathelement location="${basedir}/build/groovy-all-2.4.9.jar" />
+    </classpath>
+  </taskdef>
+
+  <property file="${basedir}/build/build.properties" />
+  <property environment="env" />
+
+  <property name="dataLoaderAPIVersion" value="29.0.0-uber" />
+
+  <!-- Define required jars for data deployment-->
+  <path id="taskDependencies">
+    <pathelement location="${basedir}/build/lib/commons-io-2.4.jar" />
+    <pathelement location="${basedir}/build/lib/commons-lang-2.6.jar" />
+    <pathelement location="${basedir}/build/lib/commons-logging-1.1.3.jar" />
+    <pathelement location="${basedir}/build/lib/gson-2.2.4.jar" />
+    <pathelement location="${basedir}/build/lib/httpclient-4.3.5.jar" />
+    <pathelement location="${basedir}/build/lib/httpcore-4.3.2.jar" />
+    <pathelement location="${basedir}/build/lib/json-20080701.jar" />
+  </path>
+
+  <target name="deployDifferences">
+    <echo level="info">
+      Deploying STARTS
+    </echo>
+    <antcall target="deployLabels" />
+    <antcall target="deployDiffObjectsAndApexStep" />
+    <antcall target="deployLayouts" />
+  </target>
+
+  
+
+  <!-- Only deploys differences found between the HEAD and a specific commit version
+       given from the property diffRange defined on build.properties.
+       Only considers the directories defined on the TARGET_FOLDERS below.
+  -->
+  <target name="deployDiffObjectsAndApexStep">
+    <delete dir="${basedir}/build/groovy/bin" />
+    <mkdir dir="${basedir}/build/groovy/bin" />
+    <groovyc destdir="${basedir}/build/groovy/bin" srcdir="${basedir}/build/groovy/src" />
+    <deldir />
+    <groovy>
+      <classpath>
+        <dirset dir="${basedir}/build/groovy/bin" />
+      </classpath>
+      import groovy.io.FileType
+        import PackageManager
+        import PackageAction
+
+        import groovy.util.XmlParser
+    
+        def diffRange = properties['diffRange']
+        def baseDir = properties['basedir']
+        
+        def command = "git log --first-parent --pretty=oneline --since=${diffRange} --reverse"
+
+        println command
+        
+        def packageManager = new PackageManager(
+          sourceDir: "${baseDir}",
+          destinationDir: "${baseDir}${File.separator}Code"
+        )
+                                                    
+        def output = packageManager.runCommand(command)
+
+        def commitId = output.split(' ')[0].trim()
+
+        println "Fetching differences since commit: ${commitId}"
+
+        packageManager.setVersion("${commitId}")
+
+        PackageManager.TARGET_FOLDERS = [
+            "src/approvalProcesses", 
+            "src/workflow", 
+            "src/customPermissions", 
+            "src/email", 
+            "src/objects", 
+            "src/standardValueSets",
+            "src/classes",
+            "src/aura",
+            "src/components",
+            "src/lwc",
+            "src/pages",
+            "src/triggers",
+            "src/flows",
+            "src/staticresources",
+            "src/customMetadata",
+            "src/globalValueSets",
+            "src/permissionsets",
+            "src/quickActions",
+            "src/reportTypes",
+            "src/tabs",
+            "src/flexipages"
+        ]
+        
+        packageManager.createDeployPackage()
+    </groovy>
+
+    <deployCodeLocal deleteDirectories="true" />
+
+  </target>
+
 
 </project>
