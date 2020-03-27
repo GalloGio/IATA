@@ -310,7 +310,6 @@ private class ANG_RHCMassCalculationTest {
 		System.assertNotEquals(0, controller.countries.size());
 		
 		System.assertEquals(1, controller.agents.size(), 'Expected one result');
-		System.debug('YYY:' + controller.agents);
 		System.assertEquals('50%', controller.agents.get(0).calculatedConsumedRHC);
 
 		Test.stopTest();
