@@ -8,6 +8,12 @@
 *****************************************************************************/
 global class IFAP_WebService {
 
+	global class IFAPActionWrapper {
+		webservice String message;
+		webservice Id ifapId; 
+		webservice Boolean redirectUserToIFAP = false;
+	}
+
 	@RemoteAction
 	public static final String CASE_STATUS_R_PENDING_APPROVAL = 'Quality Issue Request Pending Approval';
 	public static final String CASE_STATUS_REASSESS_REJECTED = 'Quality Issue Rejected';
@@ -406,16 +412,16 @@ global class IFAP_WebService {
 			AMS_Utils.CASE_STATUS_SANITY_CHECK_FAILURE
 		};
 
+		if(acct.ANG_IsNewgenAgency__c && isAssessmentPerformed(cse)){
+			if(hasAgentFS){
+				return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
+			} else {
+				return INVALID_ACTION_REINSTATE_AGENT;
+			}
+		}
+
 		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !hasAgentFS){
 			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
-		}
-
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
-			return INVALID_ACTION_REINSTATE_AGENT;
-		}
-
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && hasAgentFS){
-			return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
 		}
 
 		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !hasAgentFS || !hasFailFinancialStatementsRE){
@@ -463,17 +469,12 @@ global class IFAP_WebService {
 
 	private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
 
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
+		if(acct.ANG_IsNewgenAgency__c && isAssessmentPerformed(cse) && !hasAgentFS){
 			return INVALID_ACTION_REINSTATE_AGENT;
 		}
 
-		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
-			//If we have a non compliance task related with this case 
-			//this validation error message is skipped to allow
-			//removing cash condition from an on going non compliance
-			if(!ANG_MulticountryHelper.skipNonComplianceRules(cse)){
-				return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
-			}
+		if(!acct.ANG_IsNewgenAgency__c || !isAssessmentPerformed(cse)){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
 		}
 
 		if(!acct.ANG_HE_CashCondition__c){
@@ -500,10 +501,12 @@ global class IFAP_WebService {
 
 	}
 
-	global class IFAPActionWrapper {
-		webservice String message;
-		webservice Id ifapId; 
-		webservice Boolean redirectUserToIFAP = false;
+	public static Boolean isAssessmentPerformed(Case cse) {
+		//If we have a non compliance task related with this case 
+		//the assessment for this case is considered as performed
+		//since the assessment result was obtained on a subsequent IFAP case
+		return ANG_MulticountryHelper.proceedWithoutFinancialAssessmentResult(cse)
+			|| (String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c);
 	}
 
 	webservice static String processNonComplianceOnDifferentIfap(Id ifapId){

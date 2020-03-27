@@ -26,9 +26,9 @@ public with sharing class SidraLiteHelperForIFAP {
 	
 	private static final String FS_LETTER_NOT_TICKED = 'The "FS Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.';
 	private static final String FA_LETTER_NOT_TICKED = 'The "FA Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.';
-	private static final String INVALID_ACTION_CLICK_CASH_CONDITION = 'Invalid action, you need to click on the button in order to apply Cash condition true.';
-	private static final String INVALID_ACTION_CLICK_REMOVE_CONDITION = 'Invalid action, you need to click on the button in order to remove Cash condition.';
-	private static final String SIDRA_LITE_CANNOT_BE_CREATED_TOKEN = 'A SIDRA lite case cannot be created when the parent case status is ';
+	private static final String INVALID_ACTION_CLICK_APPLY_CASH_CONDITION = 'Invalid action, you need to click on the button in order to apply Cash condition true.';
+	private static final String INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION = 'Invalid action, you need to click on the button in order to remove Cash condition.';
+	private static final String SIDRA_LITE_CANNOT_BE_CREATED_TOKEN = 'A SIDRA lite case cannot be created when the parent case status is {{parentStatus}}';
 	private static final String SIDRA_LITE_PROCESS_THIRD_NON_COMPLIANCE_WARNING = 'Process third non-compliance date, continue?';
 	@TestVisible
 	private static final String SIDRA_LITE_PROCESS_SECOND_NON_COMPLIANCE_WARNING = 'Process second non-compliance date, continue?';
@@ -58,7 +58,7 @@ public with sharing class SidraLiteHelperForIFAP {
 		}
 		// check parent status
 		if ( STATUS_NOT_VALID.contains(parentCase.Status) ){
-			throw new SidraLiteException(SIDRA_LITE_CANNOT_BE_CREATED_TOKEN + parentCase.Status);
+			throw new SidraLiteException(SIDRA_LITE_CANNOT_BE_CREATED_TOKEN.replace('{{parentStatus}}', parentCase.Status));
 		}
 
 		/*NEWGEN-5320*/
@@ -67,8 +67,6 @@ public with sharing class SidraLiteHelperForIFAP {
 	}
 
 	public static void verifyNewgenBusinessRules(Case parentCase){
-		boolean firstRule =  parentCase.Financial_Review_Result__c <> null && parentCase.Financial_Review_Result__c <> '';
-		boolean secondRule = parentCase.Assessment_Performed_Date__c > parentCase.FA_Second_Deadline_Date__c;
 
 		Account acct = [SELECT Id, ANG_IsNewGenAgency__c, ANG_CashCondition__c,
 							(SELECT Id
@@ -77,17 +75,12 @@ public with sharing class SidraLiteHelperForIFAP {
 						FROM Account
 						WHERE Id = :parentCase.accountId];
 
-		if(firstRule && secondRule && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c){
-			throw new SidraLiteException(INVALID_ACTION_CLICK_REMOVE_CONDITION);
+		if(IFAP_WebService.isAssessmentPerformed(parentCase) && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c){
+			throw new SidraLiteException(INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION);
 		}
 
-		firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
-		secondRule = STATUS_FOR_FA.contains(parentCase.Status);
-
-		boolean thirdRule = !acct.Financial_Securities__r.isEmpty();
-
-		if(firstRule && secondRule && thirdRule && acct.ANG_IsNewGenAgency__c){
-			throw new SidraLiteException(INVALID_ACTION_CLICK_CASH_CONDITION);
+		if(parentCase.FA_Second_Deadline_Date__c < System.today() && STATUS_FOR_FA.contains(parentCase.Status) && !acct.Financial_Securities__r.isEmpty() && acct.ANG_IsNewGenAgency__c){
+			throw new SidraLiteException(INVALID_ACTION_CLICK_APPLY_CASH_CONDITION);
 		}
 
 	}

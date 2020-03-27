@@ -959,7 +959,7 @@ public class ANG_MulticountryHelper {
 		return AMS_Utils.SUCCESS;
 	}
 
-	public static Boolean skipNonComplianceRules(Case cse){
+	public static Boolean proceedWithoutFinancialAssessmentResult(Case cse){
 		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
 			return !fetchCaseNonComplianceTasks(cse.Id).isEmpty();
 		}
