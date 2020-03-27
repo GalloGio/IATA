@@ -20,7 +20,7 @@ global class updateNamedCredentialsBatch Implements Database.batchable<sobject>,
             MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
 			namedCredential.fullName = nc.DeveloperName;
 			namedCredential.label = nc.MasterLabel;
-			namedCredential.endpoint = nc.endpoint + '/test';
+			namedCredential.endpoint = nc.endpoint + '/test-postCopyScript';
 			namedCredential.principalType = nc.PrincipalType;
 			namedCredential.protocol = 'NoAuthentication';
 

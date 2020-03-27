@@ -144,7 +144,7 @@ global class PostCopyScript implements SandboxPostCopy {
 	private void deleteConnectedApps(){
 		System.debug('#1 deleteConnectedApps');
 		List<String> fullNameList = new List<String>();
-		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
+		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication WHERE Name = 'ASD' OR Name = 'BSPLink A' OR Name = 'BSPLink B' OR Name ='CASSLink Analytics' OR Name = 'CASSLink Export' OR Name = 'CASSLink Import' OR Name = 'SIS']){
 			fullNameList.add(ca.Name.replace(' ','_'));
 		}
 		System.debug('#2 deleteConnectedApps');
