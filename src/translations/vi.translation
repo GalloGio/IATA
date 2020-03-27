@@ -14311,7 +14311,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Có hiệu lực</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
