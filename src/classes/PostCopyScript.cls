@@ -106,41 +106,4 @@ global class PostCopyScript implements SandboxPostCopy {
 		deleteScheduleDashboardsBatch deleteScheduleDashboards = new deleteScheduleDashboardsBatch();
 		Database.executeBatch(deleteScheduleDashboards,10);
 	}
-
-	/**
-	 * This create a service to connect with MetadataAPI service:
-	*/
-	@TestVisible
-	private static MetadataService.MetadataPort createService(){
-		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-		service.SessionHeader = new MetadataService.SessionHeader_element();
-		service.SessionHeader.sessionId = UserInfo.getSessionId();
-		return service;
-	}
-
-	/**
-	 * This method updates all NamedCredentials by adding in the end of the endpoint "/test":
-	*/
-	@TestVisible
-	private void updateNamedCredentials(){
-		updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
-		Database.executeBatch(updateNamedCredentials,10);
-	}
-
-	/**
-	 * This method delete all ConnectedApps from the ORG:
-	*/
-	@TestVisible
-	private void deleteConnectedApps(){
-		System.debug('#1 deleteConnectedApps');
-		List<String> fullNameList = new List<String>();
-		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication WHERE Name = 'ASD' OR Name = 'BSPLink A' OR Name = 'BSPLink B' OR Name ='CASSLink Analytics' OR Name = 'CASSLink Export' OR Name = 'CASSLink Import' OR Name = 'SIS']){
-			fullNameList.add(ca.Name.replace(' ','_'));
-		}
-		System.debug('#2 deleteConnectedApps');
-		if(!fullNameList.isEmpty()){
-			System.debug('#3 deleteConnectedApps');
-			createService().deleteMetadata('ConnectedApp', fullNameList);
-		}
-	}
 }
