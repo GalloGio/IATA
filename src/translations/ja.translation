@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>{0}番地は必須です。 {1} 番地欄にご入力ください。</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -1906,6 +1910,10 @@
     <customLabels>
         <label><!-- COVID-19 eComm Home Page --></label>
         <name>COVID_19_eComm_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -6535,6 +6543,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_Course2 --></label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -14302,7 +14314,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>アクティブ</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -19195,6 +19207,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>ドキュメントが正しく提出されました。</label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>

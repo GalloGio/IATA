@@ -114,6 +114,82 @@
             .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
                 fill: #fff;
             }
+
+            .slds-scope .slds-input ,.slds-scope .slds-input:focus, .slds-scope .slds-input:active{
+                border: none;
+                outline: none;
+                outline-style: none;
+                box-shadow: none;
+                border-color: transparent;
+            }
+
+            .searchInputPlaceHolder input {
+                font-size: 22px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: 1.45;
+                letter-spacing: normal;
+                color: #333333;
+                caret-color: #1e32fa;
+            }
+
+            .slds-scope .slds-button{
+                color: #3333ff;
+                background-color: transparent;
+                border: 1px solid transparent;
+            }
+
+            .background-white {
+                background-color: #FFFFFF;
+            }
+            .customCardWhite {
+                box-shadow: 5px 5px 20px #e2e2e2;
+                border-radius: 1px;
+                border: solid 1px #e2e2e2;
+                background-color: #FFFFFF;
+            }
+
+            .background-anotherGray {
+                background-color: #f7f8fa;
+            }
+
+            .text-blue {
+                color: #3333ff;
+            }
+
+            .spinnerContainer{
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                vertical-align: middle;
+                white-space: nowrap;
+                height:250px;
+            }
+
+                        
+            .newLinkButton button {
+            color: #3333ff;
+            background-color: transparent;
+            border: 1px solid transparent;
+            }
+            .newLinkButton, 
+            .newLinkButton button:hover,
+            .newLinkButton button:active,
+            .newLinkButton button:visited,
+            .newLinkButton button:focus {
+            color: #3333ff;
+            background-color: transparent;
+            border: 1px solid transparent;
+            }
+
+            .fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+                width: 100%;
+            }
+
+            .buttonMinHeightMedium button {
+                min-height: 40px;
+            }
         </style>
         
     </head>

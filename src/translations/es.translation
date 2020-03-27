@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>El campo calle {0} es obligatoria. Rellene el {1} campo de la calle.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -1905,6 +1909,10 @@
     <customLabels>
         <label><!-- COVID-19 eComm Home Page --></label>
         <name>COVID_19_eComm_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -6550,6 +6558,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
     <customLabels>
         <label>Curso 2:</label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -14327,7 +14339,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Activo</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -19223,6 +19235,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label>El envío de los documentos se completó con éxito!</label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>

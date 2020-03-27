@@ -7,7 +7,6 @@ public class AmazonRestTest {
 		createCredentials('IFAP');
 
 		AmazonRest.getFile('Test File Name', AmazonCredentials.getCredentials('IFAP'));
-	AmazonRest.fakemethod();
 	}
 
 	static testMethod void listBucketTest(){
@@ -25,9 +24,20 @@ public class AmazonRestTest {
 
 		// AmazonRest.getFile(Filename,AmazonCredentials.getCredentials('IFAP'));
 		AmazonRest.make_sig('',AmazonCredentials.getCredentials('IFAP'));
-		AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
-		//AmazonRest.copyFile(AmazonCredentials sourceCredentials, String sourceFilename, AmazonCredentials destCredentials, string destFilename)
+		AmazonRest.genPublicExpiringAWSLink('teste_File', AmazonCredentials.getCredentials('IFAP'), 10 );
 	}
+
+	static testMethod void Exception_listBucketTest(){
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+		createCredentials('IFAP');
+
+		String result = AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
+
+		System.assertEquals(result, null);
+
+	}
+
 
 	static testMethod void deleteTest(){
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
@@ -80,21 +90,54 @@ public class AmazonRestTest {
 		insert Amazon_Cred;
 
 		List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{new AWSKey__c(name = credentialName+'aprodconf',
-																	Key__c = 'asd',
-																	Secret__c = 'asd',
-																	IAS_configuration_name__c = 'asdas',
-																	IAS_Access_Point__c = 'asd',
-																	Bucket__c = 'asd',
-																	AWS_ENDPOINT_URL__c = 'asd'),
-														new AWSKey__c(name = credentialName+'adevconf' ,
-																	Key__c = 'asd',
-																	Secret__c = 'asd',
-																	IAS_configuration_name__c = 'asdas',
-																	IAS_Access_Point__c = 'asd',
-																	Bucket__c = 'asd',
-																	AWS_ENDPOINT_URL__c = 'asd')
+			Key__c = 'asd',
+			Secret__c = 'asd',
+			IAS_configuration_name__c = 'asdas',
+			IAS_Access_Point__c = 'asd',
+			Bucket__c = 'asd',
+			AWS_ENDPOINT_URL__c = 'asd'),
+			new AWSKey__c(name = credentialName+'adevconf' ,
+			Key__c = 'asd',
+			Secret__c = 'asd',
+			IAS_configuration_name__c = 'asdas',
+			IAS_Access_Point__c = 'asd',
+			Bucket__c = 'asd',
+			AWS_ENDPOINT_URL__c = 'asd')
 		};
 
 		insert AWS_KEYs;
+	}
+
+	static testMethod void copyTest() {
+
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+		createCredentials('IFAP');
+
+		String sourceFilename = 'IFAP/afile';
+		String destFilename = 'IFAP/dest';
+		AmazonCredentials cred = AmazonCredentials.getCredentials('IFAP');
+
+		Boolean resultCopy = AmazonRest.copyFile(cred, sourceFilename, cred, destFilename);
+
+		System.assert(resultCopy);
+	}
+
+	Static testMethod void deleteFilesTest(){
+
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+		createCredentials('IFAP');
+
+		Set<String> fileNames = new Set<String>();
+		fileNames.add('IFAP/afile');
+		fileNames.add('IFAP');
+		AmazonCredentials cred = AmazonCredentials.getCredentials('IFAP');
+		String folder = 'test folder';
+
+		Boolean doneDeleteFiles = AmazonRest.deleteFiles(fileNames, folder, cred);
+
+		System.assert(doneDeleteFiles);
+
 	}
 }
