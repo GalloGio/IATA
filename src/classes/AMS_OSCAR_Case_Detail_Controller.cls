@@ -30,7 +30,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 					agenciesAffectedWithHO.add(pd.Account__c);
 				
 				this.isSplitMcHierarchy = this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && !isConversionFromStandardToMulticountry
-					&& isMulticountry() && agenciesAffectedWithHO.contains(oscarObj.New_parent__c);
+					&& isMulticountry() && agenciesAffectedWithHO.contains(oscarObj.New_parent__c) && !AMS_Utils.pickListContains(oscarObj.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT);
 			}
 			
 			return this.isSplitMcHierarchy;
@@ -786,7 +786,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 						Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c, //AMSU-151 
 						Location_Type__c,  //NEWGEN-4850
 						Account__r.ANG_Accreditation_Model__c, //NEWGEN-5859
-						New_parent__c
+						New_parent__c, Change_of_Hierarchy_Scenario__c 
 						FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
 		if(oSCARs.isEmpty()) return null;
