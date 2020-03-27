@@ -30,6 +30,7 @@ private class Order_Ext_Test
 		accounts[0].ICH_Member__c = true;
 		accounts[0].Payment_Term__c = '0011';
 		accounts[0].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[0].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[0].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[0].IATA_ISO_Shipping_State__c = stateQuebec.Id;
 		accounts[0].Sector__c = IECConstants.Account_Industry_Airline;
@@ -38,6 +39,7 @@ private class Order_Ext_Test
 		accounts[1].ICH_Member__c = true;
 		accounts[1].Payment_Term__c = '0011';
 		accounts[1].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[1].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[1].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[1].IATA_ISO_Shipping_State__c = stateQuebec.Id;
 		accounts[1].Sector__c = IECConstants.Account_Industry_Airline;
@@ -366,7 +368,7 @@ Test.startTest();
 	} //*** end of "test_Order_Header2"
 
 
-	@isTest(SeeAllData = true)
+	@isTest
 	static void test_Order_Items()
 	{
 		//-- Generate Test Data
@@ -405,6 +407,8 @@ Test.startTest();
 		sfOrder.ShippingCountryCode__c = 'CA';
 		update sfOrder;
 
+		Test.startTest();   //*** to bypass nb of queries
+
 		//Goto order Page
 		ApexPages.StandardController ctrl = new ApexPages.StandardController(sfOrder);
 		Order_Ext ext = new Order_Ext(ctrl);
@@ -431,8 +435,6 @@ Test.startTest();
 		ext.addSelectedProducts();
 
 		ext.selectMore();
-
-		Test.startTest();   //*** to bypass nb of queries
 
 		ApexPages.currentPage().getParameters().put('orderItemId',sfOrderItem.Id);
 		ext.resendOrderItemLink();

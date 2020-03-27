@@ -401,8 +401,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     }
 
     downloadCSV() {
-        let rowEnd = '\n';
-        let csvString = '';
+        let rowEnd = '\r\n';
+        let csvString = '\ufeff';
         let rowDataLabel = new Set();
         let rowDataFieldsMap = [];
         let allContacts = this.contactFields.ROWS;
@@ -439,21 +439,31 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
             csvString += rowEnd;
         }
 
-        // Creating anchor element to download
-        let downloadElement = document.createElement('a');
+        if(window.navigator.msSaveBlob) { // IE 10+i
+            let blob = new Blob([csvString], {
+                "type": "text/csv;charset=utf8;"          
+            });
+            
+            window.navigator.msSaveBlob(blob, 'exportContacts.csv');
+        }
+        else{            
+            let blob = new Blob([csvString]);
+            // Creating anchor element to download
+            let downloadElement = document.createElement('a');
+            downloadElement.href = URL.createObjectURL(blob);
 
-        // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-        downloadElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
-        downloadElement.target = '_self';
-        // CSV File Name
-        downloadElement.download = 'exportContacts.csv';
-        // below statement is required if you are using firefox browser
-        document.body.appendChild(downloadElement);
-        // click() Javascript function to download CSV file
-        downloadElement.click();
+            downloadElement.target = '_self';
+            // CSV File Name
+            downloadElement.download = 'exportContacts.csv';
+            // below statement is required if you are using firefox browser
+            document.body.appendChild(downloadElement);
+            // click() Javascript function to download CSV file
+            downloadElement.click();
+            downloadElement.remove();
+        }
         this.contactsLoaded = true;
     }    
-
+        
     removeTextSearch() {
         this.showCross = false;
         this.contactsLoaded = false;

@@ -204,7 +204,7 @@ public without sharing class OneId_NDCMatchmakerController {
 
 		// Step 6: retrieve the NDC Account Service Detail record
 		// This one might not exist
-		List<NDC_Account_Service_Detail__c> accountServiceDetails = [SELECT Id, NDC_Capable__c, Company_Type__c, NDC_Rich_Content__c, NDC_Forms_of_Payment_Accepted__c, Submittable_for_Approval__c, Submitted_for_Approval__c
+		List<NDC_Account_Service_Detail__c> accountServiceDetails = [SELECT Id, NDC_Capable__c, Company_Type__c, NDC_Rich_Content__c, NDC_Forms_of_Payment_Accepted__c, Submittable_for_Approval__c, Submitted_for_Approval__c, NDC_Travel_Agents_on_boarding_portal__c
 																	 FROM NDC_Account_Service_Detail__c
 																	 WHERE Account_Role_Service__c =: accountRoleService.Id LIMIT 1];
 
@@ -214,7 +214,7 @@ public without sharing class OneId_NDCMatchmakerController {
 			NDC_Account_Service_Detail__c newAccountServiceDetails = new NDC_Account_Service_Detail__c(Account_Role_Service__c = accountRoleService.Id, NDC_Capable__c = false, Submittable_for_Approval__c = false, Submitted_for_Approval__c = false);
 			insert newAccountServiceDetails;
 
-			NDC_Account_Service_Detail__c newNdcCapabilitiesDetails = [SELECT Id, NDC_Capable__c, Company_Type__c, NDC_Rich_Content__c, NDC_Forms_of_Payment_Accepted__c, Submittable_for_Approval__c, Submitted_for_Approval__c
+			NDC_Account_Service_Detail__c newNdcCapabilitiesDetails = [SELECT Id, NDC_Capable__c, Company_Type__c, NDC_Rich_Content__c, NDC_Forms_of_Payment_Accepted__c, Submittable_for_Approval__c, Submitted_for_Approval__c, NDC_Travel_Agents_on_boarding_portal__c
 																	   FROM NDC_Account_Service_Detail__c
 																	   WHERE Account_Role_Service__c =: accountRoleService.Id];
 			return newNdcCapabilitiesDetails;
