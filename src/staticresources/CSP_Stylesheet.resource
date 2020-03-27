@@ -210,6 +210,9 @@ body {
     background-color: #f7f8fa;
 }
 
+.topSearchDiv{
+    height:50px;
+}
 .grayInputPlaceholder input::placeholder {
   	color: #999999;
 }
