@@ -62,7 +62,9 @@ Financial review opt-in / opt-out
 Change of Trade Name
 Change of Hierarchy
 Annual revalidation
-PCI DSS Compliant</value>
+PCI DSS Compliant
+Onboarding IEP Model A
+IEP Bank account setup</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>
