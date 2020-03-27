@@ -337,7 +337,8 @@ public class CaseIFAPHandler {
 			salesForceClientNumber = isUser ? protectNullValues(user.Contact.Account.IATACode__c) : protectNullValues(user.Contact.Account.Global_ID__c);
 			contactStatus = protectNullValues(user.Contact.Status__c);
 			preferredLanguage = protectNullValues(user.Contact.ID_Card_Preferred_Language__c).toLowerCase();
-			salesForceUserEmailId = UserInfo.getOrganizationId() + '@' + protectNullValues(user.Username);
+			// used substring because getOrganizationId returns 18 digits and the SSO uses 15 for the Company Id
+			salesForceUserEmailId = UserInfo.getOrganizationId().substring(0, 15) + '@' + protectNullValues(user.Username);
 		}
 	}
 
@@ -397,7 +398,8 @@ public class CaseIFAPHandler {
 
 		public WrapperUserRoleForJSON(User us, Case cs){
 
-			salesForceUserEmailId = UserInfo.getOrganizationId() + '@' + protectNullValues(us.Username);
+			// used substring because getOrganizationId returns 18 digits and the SSO uses 15 for the Company Id
+			salesForceUserEmailId = UserInfo.getOrganizationId().substring(0, 15) + '@' + protectNullValues(us.Username);
 			roleName = '';
 			emailId = protectNullValues(us.Contact.Email);
 			salesForceClientNumber = isUser ? protectNullValues(cs.Account.Global_ID__c) : protectNullValues(cs.Account.IATACode__c);
