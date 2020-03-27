@@ -2433,29 +2433,46 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Associate_Entity');
 			}
 		} else if (sectorValue.StartsWith('Cargo_Agent')) {
-			if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
-				if (newForm.Agent_Type__c == 'IATA Cargo Agent') {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_HO');
-				} else if (newForm.Agent_Type__c == 'EACP Intermediary') {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_HO');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_HO');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_HO');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_HO');
+
+			if(!isCNSAgency) {
+				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+					if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_HO');
+					} else if (newForm.Agent_Type__c == 'EACP Intermediary') {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_HO');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_HO');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_HO');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_HO');
+					}
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
+					if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_Branch');
+					} else if (newForm.Agent_Type__c == 'EACP Intermediary') {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_Branch');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_Branch');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_Branch');
+					} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_Branch');
+					}
 				}
-			} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
-				if (newForm.Agent_Type__c == 'IATA Cargo Agent') {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_Branch');
-				} else if (newForm.Agent_Type__c == 'EACP Intermediary') {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_EACP_Branch');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_Branch');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Courier_Branch');
-				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
-					newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Import_Branch');
+			}else{
+				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO) {
+					if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_HO');
+					}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE){
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_HO');
+					}
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL) {
+					if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Cargo_Agent_Branch');
+					}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE){
+						newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'CASS_Associate_Branch');
+					}
 				}
 			}
 

@@ -24351,7 +24351,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
-        <value>E. Submit to CNS</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
