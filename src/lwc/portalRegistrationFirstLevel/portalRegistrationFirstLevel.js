@@ -18,6 +18,8 @@ import register                                 from '@salesforce/apex/PortalReg
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
 import isGuest                                  from '@salesforce/user/isGuest';
+import getPortalServiceId						from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
 
 /* ==============================================================================================================*/
 /* External Resources
@@ -31,7 +33,7 @@ import PhoneFormatterS                          from '@salesforce/resourceUrl/In
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.Login';
 import CSP_Email                                from '@salesforce/label/c.CSP_Email';
-import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description'
+import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description';
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
@@ -83,7 +85,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								"extraChoice" : "",
 								"language" : "",
 								"selectedCustomerType" : "",
-								"termsAndUsage" : false
+								"termsAndUsage" : false,
+								"termsAndUsageIds" : ""
 							  };
 	@track errorMessage = "";
 	@track displayError = false;
@@ -104,7 +107,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track jsLoaded = false;
     phoneRegExp = /^\(?[+]\)?([()\d]*)$/
     @track rerender = false;
+	@track gcsPortalServiceId;
 
+
+	tcAcceptanceChanged(event){
+		var detail = event.detail;
+		this.registrationForm.termsAndUsage = detail;
+		this._checkForMissingFields();
+	}
 
 	_labels = {
 		Login,
@@ -283,6 +293,21 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							}
 						}
 
+						getPortalServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
+							var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
+							this.gcsPortalServiceId = gcsPortalServiceId;
+				
+							getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
+								var tcs = JSON.parse(JSON.stringify(result2));
+
+								var tcIds = [];
+				
+								for(let i = 0; i < tcs.length; i++){
+									tcIds.push(tcs[i].id);
+								}
+								this.registrationForm.termsAndUsageIds = tcIds.join();
+							});
+						});						
 
 					})
 					.catch(error => {
@@ -538,13 +563,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this._checkForMissingFields();
 	}
 
-	handleTouChange(event){
-		var inputValue = event.target.checked;
-		this.registrationForm.termsAndUsage = inputValue;
-		this._checkForMissingFields();
-
-	}
-
 
 	handleSectorChange(event){
 
@@ -759,7 +777,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								  "extraChoice" : "",
 								  "language" : this.registrationForm.language,
 								  "selectedCustomerType" : "",
-								  "termsAndUsage" : false
+								  "termsAndUsage" : false,
+								  "termsAndUsageIds" : ""
 								};
 
 		this.selectedCustomerType = null;

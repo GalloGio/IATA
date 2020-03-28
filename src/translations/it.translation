@@ -21932,6 +21932,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label>Informativa sulla privacy</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Termini di utilizzo</label>
+        <name>TC_CSP_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
         <name>TECH_GDPR_Community_Name</name>
     </customLabels>

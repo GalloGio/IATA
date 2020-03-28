@@ -1,0 +1,68 @@
+<template>
+    <lightning-layout-item size="12">
+        <div style="height:54px;">
+        </div>
+    </lightning-layout-item>
+    <lightning-layout-item size="12">
+        <div style="display: flex;justify-content: center;align-items: start;">
+            <div style="display: flex; align-items: center;justify-content: center;">
+                <div style="max-width:20px; padding-left:5px;" >
+                    <lightning-input type="checkbox" variant="label-hidden" checked={termsAndConditionsAccepted} onchange={handleAcceptanceChange} class="registerCheckBox"></lightning-input>
+                </div>
+            </div>
+            <div class="text-small" style="margin-left:12px; width:100%;">{labels.CSP_Have_Read_Terms}</div>
+        </div>
+    </lightning-layout-item>
+    <template for:each={termsAndConditionsLocal} for:item="term">
+        <lightning-layout-item key={term.Id} size="12">
+            <div style="display: flex;justify-content: center;align-items: start;">
+                <div style="display: flex; align-items: center;justify-content: center;">
+                    <div style="width:20px; margin-left:7px;" >
+                    </div>
+                </div>
+                <div class="text-small" style="margin-left:7px; width:100%;">
+                    <template if:true={term.isUrl}>
+                        <a class="tcLink" target="_blank" href={term.url}>{term.label}</a>
+                    </template>
+                    <template if:false={term.isUrl}>
+                        <a class="tcLink" onclick={openModal} data-id={term.id}>{term.label}</a>
+                    </template>
+                </div>
+            </div>
+        </lightning-layout-item>
+    </template>
+    <lightning-layout-item size="12">
+        <div style="height:60px;">
+        </div>
+    </lightning-layout-item>
+
+    <template if:true={showTermsAndConditions}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+            <div class="modal">
+                <div class="customPopupInteriorHalfScreenCentered">
+
+                    <!-- Popup Header -->
+                    <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                        <span>{termsAndConditionsTitle}</span>
+                        <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                onclick={closeModal}></lightning-icon>
+                        </span>
+                    </div>
+
+                    <div class="slds-is-relative">
+                        <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+                            <div class="slds-m-left_x-small slds-m-bottom_small">
+                                <label class="checkbox-button">
+                                    <span class="text-small font checkbox-button__label">
+                                        <lightning-formatted-rich-text value={termsAndConditionsDescription} class="text-small text-gray"></lightning-formatted-rich-text>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</template>

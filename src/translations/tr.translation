@@ -21932,6 +21932,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label>Gizlilik Politikası</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanım Koşulları&#39;nı</label>
+        <name>TC_CSP_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
         <name>TECH_GDPR_Community_Name</name>
     </customLabels>

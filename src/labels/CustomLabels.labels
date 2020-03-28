@@ -41825,6 +41825,22 @@ title,Title,Name</value>
         <value>005w0000003XCG8</value>
     </labels>
     <labels>
+        <fullName>TC_CSP_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Privacy_Policy</shortDescription>
+        <value>Privacy Policy</value>
+    </labels>
+    <labels>
+        <fullName>TC_CSP_Terms_of_Use</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Terms_of_Use</shortDescription>
+        <value>Terms of Use</value>
+    </labels>
+    <labels>
         <fullName>TECH_GDPR_Community_Name</fullName>
         <categories>GDPR</categories>
         <language>en_US</language>

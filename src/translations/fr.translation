@@ -21967,6 +21967,14 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label>Politique de confidentialité</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Conditions d&#39;utilisation</label>
+        <name>TC_CSP_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
         <name>TECH_GDPR_Community_Name</name>
     </customLabels>
