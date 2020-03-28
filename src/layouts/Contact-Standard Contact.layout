@@ -1099,10 +1099,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Registration__c.Associated_Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>Term_Condition__c</fields>
         <fields>Term_and_Condition_Version_Number__c</fields>
         <fields>Status__c</fields>
