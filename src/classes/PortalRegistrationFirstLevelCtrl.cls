@@ -507,7 +507,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				registrationRequired = true;
 				//}
 			}
-			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptance(con.id, params.termsAndUsageIds);
+			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;

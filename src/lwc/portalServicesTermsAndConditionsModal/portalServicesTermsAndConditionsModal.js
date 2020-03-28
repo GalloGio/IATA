@@ -33,7 +33,7 @@ export default class PortalServicesTermsAndConditionsModal extends LightningElem
     accept(){
         this.startLoading();
         //save the T&C
-        acceptServiceTermsAndConditions({portalServiceId: this.portalServiceId, contactId: this.contactId}).then(result=> {
+        acceptServiceTermsAndConditions({contactId: this.contactId, portalServiceId: this.portalServiceId}).then(result=> {
             this.stopLoading();
             this.dispatchEvent(new CustomEvent('accept'));
         })

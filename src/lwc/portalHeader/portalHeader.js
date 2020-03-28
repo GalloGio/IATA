@@ -25,6 +25,7 @@ import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
+import createPendingTermsAndConditionsAcceptances from '@salesforce/apex/ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -376,7 +377,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 var gcsPortalServiceId = JSON.parse(JSON.stringify(result2));
                 this.gcsPortalServiceId = gcsPortalServiceId;
 
-                checkLatestTermsAndConditionsAccepted({portalServiceId: gcsPortalServiceId, contactId:this.userInfo.Id}).then(result3 => {
+                checkLatestTermsAndConditionsAccepted({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result3 => {
                     let isLatestAccepted = JSON.parse(JSON.stringify(result3));
                     console.log('latestAccepted :' + isLatestAccepted);
 
@@ -390,7 +391,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                             }
                         }
                     } else{
-                        this.displayAcceptTerms = true;
+                        createPendingTermsAndConditionsAcceptances({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result4 => {
+                            this.displayAcceptTerms = true;
+                        });
                     }
                 });
             });

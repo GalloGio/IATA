@@ -13,18 +13,27 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Custom_Label_for_Translated_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>NewGenApp_PortalService__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
+                <field>Custom_Label_for_Translated_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Attachment_Changed__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Version</label>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Version_Number__c</field>
@@ -35,24 +44,28 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_Latest__c</field>
+                <field>Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Attachment_Changed__c</field>
+                <field>Is_Latest__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Previous_Version__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Initial_Version__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Effective_Start_Date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Status__c</field>
-            </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -134,6 +147,13 @@
         <fields>ListPrice</fields>
         <fields>TotalPrice</fields>
         <relatedList>OrderItem.Accepted_Term_Condition__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Version_Number__c</fields>
+        <fields>Status__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <relatedList>Term_and_Condition__c.Initial_Version__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -45,14 +45,12 @@ private class PortalServiceTermAndConditionHandlerTest {
 
         Term_and_Condition__c tc2 = new Term_and_Condition__c(
             Name = 'GCS Private Policy',
+            Previous_Version__c = tc.Id,
             Is_Latest__c = true,
             Effective_Start_Date__c = Date.today(),
             Version_Number__c = 2,
             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
         );
         insert tc2;
-
-
     }
-
 }

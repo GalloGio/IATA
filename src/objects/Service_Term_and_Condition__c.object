@@ -194,6 +194,16 @@
         <type>Lookup</type>
     </fields>
     <label>Service Term and Condition</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Portal_Service__c</columns>
+        <columns>Term_Condition__c</columns>
+        <columns>Term_Condition_Version__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>STC-{00000}</displayFormat>
         <label>Service Term and Condition Name</label>

@@ -16,7 +16,7 @@ private class ServiceTermsAndConditionsUtilsTest {
             Effective_Start_Date__c = Date.today(),
             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
         );
-        insert tc;
+        insert tc; 
 
         Service_Term_and_Condition__c stc = new Service_Term_and_Condition__c(
             Portal_Service__c = pa.Id,
@@ -73,50 +73,41 @@ private class ServiceTermsAndConditionsUtilsTest {
 		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 	}
 
-/*	static testMethod void testGetServiceTermsAndConditions() {
-        Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
-
-        List<Term_and_Condition__c> termsAndConditions = ServiceTermsAndConditionsUtils.getServiceTermsAndConditions(portalServiceId);
-    }*/
-
-	static testMethod void testCheckLatestTermsAndConditionsAccepted() {
+	static testMethod void testAcceptTermsAndConditionsAcceptances() {
         Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
         Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
 
-        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(portalServiceId, null, 'en_US');
+        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
 
-        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(portalServiceId, con.Id, 'en_US');
+        List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
+        System.assertEquals(1, tcWrappers.size());
 
-        Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(portalServiceId, con.Id);
-
+        Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
         System.assertEquals(accepted, false);
 
-        ServiceTermsAndConditionsUtils.acceptServiceTermsAndConditions(portalServiceId, con.Id);
+        ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances(con.Id, portalServiceId);
+        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+        System.assertEquals(accepted, false);
 
-        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(portalServiceId, con.Id);
-
+		ServiceTermsAndConditionsUtils.acceptServiceTermsAndConditions(con.Id, portalServiceId);
+        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
         System.assertEquals(accepted, true);
+    }
 
-        ServiceTermsAndConditionsUtils.rejectServiceTermsAndConditions(portalServiceId, con.Id);
+	static testMethod void testCreateTermsConditionsAcceptancesForNewUser() {
+        Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
+        Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
 
-        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(portalServiceId, con.Id);
+        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
 
+        List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
+        System.assertEquals(1, tcWrappers.size());
+
+        Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
         System.assertEquals(accepted, false);
+
+		ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.Id, tcWrappers[0].id);
+        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+        System.assertEquals(accepted, true);
     }
-
-/*	static testMethod void testGetWrappedTermsAndConditions() {
-
-    }
-
-	static testMethod void testAcceptServiceTermsAndConditions() {
-
-    }
-
-	static testMethod void testRejectServiceTermsAndConditions() {
-
-    }
-
-	static testMethod void testUpsertTermAndConditionAcceptances() {
-
-    }*/
 }

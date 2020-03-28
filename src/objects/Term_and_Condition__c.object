@@ -191,6 +191,20 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Initial_Version__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Initial Version of the Terms and Conditions.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This value is set in the Term and Condition trigger</inlineHelpText>
+        <label>Initial Version</label>
+        <referenceTo>Term_and_Condition__c</referenceTo>
+        <relationshipLabel>Terms &amp; Conditions New Versions</relationshipLabel>
+        <relationshipName>Terms_Conditions1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Is_Latest__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if the this record is the latest version of the T&amp;C of the related Service</description>
@@ -251,6 +265,19 @@
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Previous_Version__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Previous version of the Term and Condition</description>
+        <externalId>false</externalId>
+        <label>Previous Version</label>
+        <referenceTo>Term_and_Condition__c</referenceTo>
+        <relationshipLabel>Terms &amp; Conditions</relationshipLabel>
+        <relationshipName>Terms_Conditions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>

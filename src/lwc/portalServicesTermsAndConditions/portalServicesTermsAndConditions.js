@@ -35,7 +35,7 @@ export default class PortalServicesTermsAndConditions extends LightningElement {
     }
 
     connectedCallback(){
-        getWrappedTermsAndConditions({portalServiceId: this.portalServiceId, contactId: this.contactId, language : this.language})
+        getWrappedTermsAndConditions({contactId: this.contactId, portalServiceId: this.portalServiceId, language : this.language})
         .then(result => {
             var termsAndConditions = JSON.parse(JSON.stringify(result));
             this.termsAndConditionsLocal = [];
