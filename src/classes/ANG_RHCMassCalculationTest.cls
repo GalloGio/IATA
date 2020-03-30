@@ -205,7 +205,8 @@ private class ANG_RHCMassCalculationTest {
 			ANG_RHC_Amount_Equals_FS__c = false,
 			ANG_RHC_Amount__c = 15,
 			ANG_RME_Amount__c = 100,
-			ANG_CashCondition__c = false
+			ANG_CashCondition__c = false,
+			ANG_ConsumedRHC__c = 50
 		);
 
 		rhcInfos.add(rhcInfoToRevertBSP);
@@ -213,13 +214,12 @@ private class ANG_RHCMassCalculationTest {
 		rhcInfos.add(rhcInfoToRevertIATA);
 		rhcInfos.add(rhcInfoToApplyIATA);
 		insert rhcInfos;
+
+		update new ANG_RHC_Information__c(Id = rhcInfoToApplyIATA.Id, ANG_RHC_Amount_Forecasted__c = 100);
 	}
 
-	@isTest static void test_method_one() {
-		User newUser = ISSP_ObjectFactory.createAdminUser();
-		newUser.IDFS_Region__c = 'Europe';
-		update newUser;
-
+	@isTest
+	static void test_method_one() {
 		List<Case> retrievedCases = [SELECT Id FROM Case];
 
 		for (Case c: retrievedCases) {
@@ -230,62 +230,87 @@ private class ANG_RHCMassCalculationTest {
 
 		Test.startTest();
 
-		System.runAs(newUser) {
-			ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
-			Integer days = controller.days;
-			List<SelectOption> regions = controller.regions;
-			Integer totalPages = controller.totalPages;
+		ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
+		// search filters
+		controller.userRegion = 'Europe';
+		controller.days = 30;
 
-			controller.search();
-			controller.first();
-			controller.next();
-			controller.previous();
-			controller.last();
-			controller.pageNumber = 20;
-			controller.selectAll = true;
-			controller.calculate();
-			controller.fetchResults();
+		Integer days = controller.days;
+		List<SelectOption> regions = controller.regions;
+		Integer totalPages = controller.totalPages;
+
+		controller.search();
+		controller.next();
+		controller.previous();
+		controller.last();
+		controller.pageNumber = 20;
+		controller.first();
+		controller.selectAll = true;
+		
+		System.assertEquals(2, controller.agents.size(), 'Expected two results');
+		
+		controller.calculate(); // no account selected, no work for the batch
+		controller.fetchResults();
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void excludeMulticountryAccountsFromCalculationTest() {
+		List<Case> retrievedCases = [SELECT Id FROM Case];
+
+		for (Case c: retrievedCases) {
+			Test.setCreatedDate(c.Id, Datetime.newInstance(Date.today() - 15, Time.newInstance(0, 0, 0, 0)));
+			c.Status = 'Closed';
+		}
+		update retrievedCases;
+
+		Test.startTest();
+
+		ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
+		// search filters
+		controller.userRegion = 'Europe';
+		controller.days = 30;
+
+		Integer days = controller.days;
+		List<SelectOption> regions = controller.regions;
+		Integer totalPages = controller.totalPages;
+
+		controller.search();
+		controller.next();
+		controller.previous();
+		controller.last();
+		controller.pageNumber = 20;
+		controller.first();
+		controller.selectAll = true;
+		
+		System.assertEquals(2, controller.agents.size(), 'Expected two results');
+
+		Id geAccount = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE].Id;
+		for (ANG_RHCMassCalculation.Agent i : controller.agents) {
+			System.assertNotEquals(geAccount, i.rhcInfo.ANG_AccountId__c, 'GE Accounts should not be retrieved in rhcQuery()');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void excludeMulticountryAccountsFromCalculationTest() {
-		User newUser = ISSP_ObjectFactory.createAdminUser();
-		newUser.IDFS_Region__c = 'Europe';
-		update newUser;
-
-		List<Case> retrievedCases = [SELECT Id FROM Case];
-
-		for (Case c: retrievedCases) {
-			Test.setCreatedDate(c.Id, Datetime.newInstance(Date.today() - 15, Time.newInstance(0, 0, 0, 0)));
-			c.Status = 'Closed';
-		}
-		update retrievedCases;
+	@isTest
+	static void testSearchByCountry() {
 
 		Test.startTest();
 
-		System.runAs(newUser) {
-			ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
-			Integer days = controller.days;
-			List<SelectOption> regions = controller.regions;
-			Integer totalPages = controller.totalPages;
-			controller.search();
-			controller.first();
-			controller.next();
-			controller.previous();
-			controller.last();
-			controller.pageNumber = 20;
-			controller.selectAll = true;
-			controller.calculate();
+		ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
+		// search filters
+		controller.userRegion = 'Europe';
+		controller.regionSelected();
+		controller.country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'AA'].Id;
 
-			Id geAccount = [Select Id From Account Where Location_Type__c = :AMS_Utils.GE].Id;
-			System.assert (!controller.agents.isEmpty(), 'List of agents should not be empty');
-			for (ANG_RHCMassCalculation.Agent i :controller.agents) {
-				System.assert (i.rhcInfo.ANG_AccountId__c != geAccount, 'GE Accounts should not be retrieved in rhcQuery()');
-			}
-			controller.fetchResults();
-		}
+		controller.search();
+		System.assertEquals(true, controller.validRegion);
+		System.assertNotEquals(0, controller.countries.size());
+		
+		System.assertEquals(1, controller.agents.size(), 'Expected one result');
+		System.assertEquals('50%', controller.agents.get(0).calculatedConsumedRHC);
 
 		Test.stopTest();
 	}
