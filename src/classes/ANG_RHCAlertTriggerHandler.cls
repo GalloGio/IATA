@@ -178,8 +178,8 @@ public class ANG_RHCAlertTriggerHandler{
 					if(String.isNotEmpty(config.ANG_EmailTemplate_Legacy__c)) emailTemplateNames.add(config.ANG_EmailTemplate_Legacy__c);
 					if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
 				}
-			}
-
+			}	
+			System
 			if(!orangeRiskAlerts.isEmpty()){
 				List<Messaging.SingleEmailMessage> emailLst = createNotificationToSeniors(orangeRiskAlerts, RTS_NOTIFICATION_MANAGER_ORANGE, false);
 				if(!emailLst.isEmpty()){
@@ -918,19 +918,22 @@ public class ANG_RHCAlertTriggerHandler{
 
 		if(isRedAlert) {
 			for (RTS_Senior_Manager__c sManager: sManagersRed) {
-				if (sManager.Active__c && String.isNotBlank(sManager.User_Id__c))
-					toAddressesUsers.add(sManager.User_Id__c);
-				else
-					toAddressesNoUsers.add(sManager.Email__c);
+				if(sManager.Active__c){
+					if (String.isNotBlank(sManager.User_Id__c))
+						toAddressesUsers.add(sManager.User_Id__c);
+					else
+						toAddressesNoUsers.add(sManager.Email__c);
+				}
 			}
 
 		} else {
-
 			for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
-				if (sManager.Active__c && String.isNotBlank(sManager.User_Id__c))
-					toAddressesUsers.add(sManager.User_Id__c);
-				else
-					toAddressesNoUsers.add(sManager.Email__c);
+				if(sManager.Active__c){
+					if (String.isNotBlank(sManager.User_Id__c))
+						toAddressesUsers.add(sManager.User_Id__c);
+					else
+						toAddressesNoUsers.add(sManager.Email__c);
+				}
 			}
 		}
 
@@ -943,7 +946,7 @@ public class ANG_RHCAlertTriggerHandler{
 		if (template == NULL || orgWideEmail.isEmpty()) {
 			return emailLst;
 		}
-		if(toAddressesNoUsers.isEmpty() || toAddressesUsers.isEmpty()){
+		if(toAddressesNoUsers.isEmpty() && toAddressesUsers.isEmpty()){
 			 return emailLst;
 		}
 
