@@ -666,4 +666,32 @@ private class AMS_AccreditationContactControllerTest
 
 	}
 
+	@isTest
+	static void verifyOwnershipOver100Error(){
+
+		setup();
+
+		Test.startTest();
+
+		ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
+		AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
+
+		//add owner from contact
+		Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = true);
+		insert c1;
+
+		ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
+		ctrl.linkedRecordId = c1.Id;
+		ctrl.acWrapper.get(0).ac.Financial_interest__c = 101;
+		ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
+		ctrl.acWrapper.get(0).dateJoined = '2010-01-10';
+
+		ctrl.onSave();
+
+		System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownership rate for all inserted contacts is ' + ctrl.acWrapper.get(0).ac.Financial_interest__c + '%. Please set it to at least 99.99% and less than 100.01% before saving.')));
+
+		Test.stopTest();
+
+	}
+
 }
