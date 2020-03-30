@@ -718,7 +718,7 @@ public without sharing class ISSP_Case {
 				//Before this option was made by a query to the User object.
 				//For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
 				
-				List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = DPC2DPCCasesEmails__c.getall().values();
+				DPC2DPCCasesEmails = DPC2DPCCasesEmails__c.getall().values();
 
 				JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
 				newCase.ACCA_Owner__c = Userinfo.getUserId();
@@ -1655,7 +1655,10 @@ public without sharing class ISSP_Case {
 			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 			list<User> listUsers = [SELECT Id, ContactId
 				FROM User
-				WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)];
+				WHERE ContactId != null AND Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
+				AND Contact.isEmailBounced = false 
+				AND (NOT Contact.Email LIKE '%.inactive')
+				AND isActive = true];
 
 			List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
 			for(User user : listUsers) {

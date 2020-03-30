@@ -1,15 +1,12 @@
 public with sharing class AMS_Change_Code_Notification_Controller {
-	
-	public static final Set<String> VALID_RECORDTYPES = new Set<String>{'SIDRA', 'SIDRA_Lite', 'ProcessEuropeSCE'};
 
 	public String caseId {get; set;}
 	public Case currentCase {get; set;}
-	public Boolean isVisible {get{
-		return currentCase!=null && VALID_RECORDTYPES.contains(currentCase.RecordType.DeveloperName);
-	}}
+	public Boolean isSidra {get; set;}
 
 	public AMS_Change_Code_Notification_Controller(ApexPages.StandardController stdController) {
 		caseId = stdController.getId();
+		isSidra = false;
 
 		list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, Status, AccountId,
 								 Account.Name, Account.IATACode__c, Account.Location_Type__c,
@@ -19,7 +16,12 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 								 WHERE Id = :caseId];
 		if (!lstCases.isEmpty()) {
 			currentCase = lstCases[0];
+
+			if (currentCase.RecordType.DeveloperName == 'SIDRA' || currentCase.RecordType.DeveloperName == 'SIDRA_Lite')
+				isSidra = true;
 		}
+
+
 	}
 
 	public void setNotificationMessage() {
@@ -34,8 +36,8 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 				lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :currentCase.OSCAR__c AND CreatedDate > :dateRange];
 				isOscar = true;
 
-			} else if (VALID_RECORDTYPES.contains(currentCase.RecordType.DeveloperName)) {
-				// SIDRA or SAAM Cases - change code linked to the case
+			} else if (currentCase.RecordType.DeveloperName == 'SIDRA' || currentCase.RecordType.DeveloperName == 'SIDRA_Lite') {
+				// SIDRA Cases - change code linked to the case
 				lstRecentChangeCodes = [SELECT Id, Change_Code__c FROM Agency_Applied_Change_code__c WHERE SIDRA_Case__c = :currentCase.Id AND CreatedDate > :dateRange];
 			}
 

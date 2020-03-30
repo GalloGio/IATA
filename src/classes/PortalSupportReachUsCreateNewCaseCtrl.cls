@@ -15,9 +15,17 @@ public static List<PortalLookupSearchResult> searchAccounts(String searchTerm) {
 	String accountIcon = 'standard:account';
 	for (Account account : searchRelatedAccounts(searchTerm)) {
 		if(account.BillingCity == null) {
-			results.add(new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account'));
+			PortalLookupSearchResult res = new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account');
+			Map<String,String> extraFields = new Map<String,String>();
+			extraFields.put('iataCode',account.Site);
+			res.setExtraFields(extraFields);
+			results.add(res);
 		}else{
-			results.add(new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account • '+ account.BillingCity));
+			PortalLookupSearchResult res = new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account • '+ account.BillingCity);
+			Map<String,String> extraFields = new Map<String,String>();
+			extraFields.put('iataCode',account.Site);
+			res.setExtraFields(extraFields);
+			results.add(res);
 		}
 	}
 
@@ -56,7 +64,7 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	}
 
 
-	String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
+	String finalQuery = 'SELECT ID, IATAcode__c, Name, Site, BillingCity FROM Account '
 						+ 'WHERE IATAcode__c != null ';
 
 	finalQuery +=
@@ -269,7 +277,7 @@ private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country,
 		return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
 				Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
 				FROM ISSP_FAQ2Case_Record_Type__c
-				WHERE  (Topic__c =: topic
+				WHERE Complaint__c =: isComplaint AND (Topic__c =: topic
 								   OR SubTopic__c = : subtopic
 													OR Country_concerned_by_the_query__c like: country
 													OR Country_concerned_by_the_query2__c like: country

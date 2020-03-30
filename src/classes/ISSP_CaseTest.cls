@@ -526,28 +526,35 @@ public class ISSP_CaseTest {
 		insert teamContact;
 		User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
 		contact.OwnerId = thisUser.Id;
+		contact.Status__c = 'Active';
 		update contact;
-		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','FDS_ICCS_Email_to_Case');
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Cases_IFG');
 		Case c = new Case();
 		c.Subject = 'test 1';
-		c.Status = 'Open';
+		c.Status = TIP_Utils.CASE_STATUS_DRAFT;
 		c.AccountId = account.id;
 		c.ContactId = contact.id;
 		c.Region__c = 'Europe';
 		c.RecordTypeId = recordTypeId;
-		c.CaseArea__c = 'test';
+		c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
 		c.Reason1__c = 'test';
 		c.Visible_on_ISS_Portal__c = true;
 		c.Account_Concerned__c = contact.AccountId;
+		c.OwnerId = thisUser.Id;
+		c.Phone_Redirected_to_Web__c = false;
 		insert c;
 
-		ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
-		ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
-		ApexPages.currentPage().getParameters().put('topic', 'test');
-		ApexPages.currentPage().getParameters().put('subtopic', 'test1');
-		ApexPages.currentPage().getParameters().put('origin', 'Portal');
 		Test.startTest();
 		system.runAs(thisUser){
+			
+			PageReference pageRef = Page.ISSP_Case;
+			Test.setCurrentPageReference(pageRef);
+			pageRef.getParameters().put('caseId', String.valueOf(c.Id));
+			pageRef.getParameters().put('recordTypeId', recordTypeId);
+			pageRef.getParameters().put('topic', 'test');
+			pageRef.getParameters().put('subtopic', 'test1');
+			pageRef.getParameters().put('origin', 'Portal');
+
 			ISSP_Case cttr = new ISSP_Case();
 			cttr.pageLoad();
 			// test there are no cc others

@@ -151,7 +151,7 @@ public without sharing class ISSP_Financial_Institutions {
 				agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
 				agencyCategory = existingGDIPortalAppRight.Contact__r.Account.Category__c;
 				agencyIsGdi = existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c;
-				countryIsGDIEnabled = (agencyIsGdi && gdiPortalAppAgentCategory != null && gdiPortalAppAgentCategory.CONTAINS(agencyCategory));
+				countryIsGDIEnabled = (agencyIsGdi && ((gdiPortalAppAgentCategory != null && gdiPortalAppAgentCategory.CONTAINS(agencyCategory)) || (gdiPortalAppAgentCategory == null && agencyCategory == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || agencyCategory == AMS_Utils.CATEGORY_DOMESTIC_AGENT)));
 
 				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
 					gdiAppRightDenied = true;
@@ -178,7 +178,7 @@ public without sharing class ISSP_Financial_Institutions {
 				agencyRegion = userAcc.Region_formula__c;
 				countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT));
 				userCanRequestGDI = (!gdiAppRightDenied && !gdiAppRightGranted && !gdiAppRightRequested
-					&& userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+					&& (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT)
 					&& userAcc.Sector__c == AMS_Utils.SECTOR_PASSENGER
 					&& (AMS_Utils.ACTIVEAGENCYSTATUS.contains(userAcc.Status__c) || userAcc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 					&& (currentPortalUser.Contact.Financial_Assessment_Contact__c || currentPortalUser.Contact.User_Portal_Status__c == 'Approved Admin'));

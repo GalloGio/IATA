@@ -68,6 +68,11 @@
     </relatedLists>
     <relatedLists>
         <fields>DeveloperName</fields>
+        <fields>Add_Service_On_Checked__c</fields>
+        <fields>MasterLabel</fields>
+        <fields>Checkbox_Fieldname__c</fields>
+        <fields>NamespacePrefix</fields>
+        <fields>Remove_Service_On_Unchecked__c</fields>
         <relatedList>Portal_Application_Contact_Visibility__mdt.Parent__c</relatedList>
         <sortField>DeveloperName</sortField>
         <sortOrder>Asc</sortOrder>
@@ -78,7 +83,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1l000000Fk1x</masterLabel>
+        <masterLabel>00h1r00000jzSE6</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -2,7 +2,7 @@
  * An apex page controller that takes the user to the right start page based on credentials or lack thereof
  */
 public with sharing class CommunitiesLandingController {
-
+	
 	// Code we will invoke on page load.
 	public PageReference forwardToStartPage() {
 		//TD: use this controller to manage redirection from the serviceName param
@@ -19,28 +19,17 @@ public with sharing class CommunitiesLandingController {
 			  }else{
 				return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage'));
 			  }
-			}
+			} 
 						if(serviceName==Label.TECH_GDPR_Community_Name){
 							// GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
 							return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.GDPR, '/'));
 						}
 		}
-
+		
 		//Just in case
 		return Network.communitiesLanding();
 	}
-
+	
 	public CommunitiesLandingController() {}
 
-	public  void fakemethod () {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-	}
 }
