@@ -182,7 +182,8 @@ public with sharing class SIDRACaseHelper {
 				mapAccountsToUpdate.put(acc.Id, acc);
 
 				// validate if there isn't more than 3 cases with "Bank Error" in the last 365 days
-				validateBankError(thisCase, acc);
+				if (!validateBankError(thisCase, acc))
+					return;
 
 				// find if there is another Sidra case with the same remittance period in the same account
 				Case otherSidraCase = null;
@@ -317,9 +318,9 @@ public with sharing class SIDRACaseHelper {
 	/**
 	 * Validate if there isn't more than 3 cases with "Bank Error" in the last 365 days.
 	 */
-	private static void validateBankError(Case thisCase, Account acct) {
+	private static Boolean validateBankError(Case thisCase, Account acct) {
 		if (thisCase.IRR_Withdrawal_Reason__c != BANK_ERROR && thisCase.DEF_Withdrawal_Reason__c != BANK_ERROR)
-			return; // don't block other cases
+			return true; // don't block other cases
 
 		Integer countIRR = 0;
 		Integer countDEF = 0;
@@ -336,7 +337,10 @@ public with sharing class SIDRACaseHelper {
 			}
 		}
 
-		if (countIRR > 3 || countDEF > 3)
+		if (countIRR > 3 || countDEF > 3) {
 			thisCase.addError(BANK_ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 }

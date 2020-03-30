@@ -11,11 +11,19 @@
         <value xsi:type="xsd:string">tempfordeploy</value>
     </values>
     <values>
+        <field>LastModifiedDate__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Report_Id_Dev__c</field>
         <value xsi:type="xsd:string">80b884f5-0ef5-4b16-b637-ce293de61066</value>
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
         <value xsi:type="xsd:string">tempfordeploy</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

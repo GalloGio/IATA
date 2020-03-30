@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>GCS-DDS-DataQuality-L3</name>
+    <name>DDS-DataQuality-L3</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

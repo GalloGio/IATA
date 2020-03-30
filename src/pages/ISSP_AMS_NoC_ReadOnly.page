@@ -63,6 +63,7 @@
         }
     </style>
 
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
     <apex:form >
         <apex:pageBlock >
         <apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_Type_and_Location_New,$Label.ISSP_AMS_NoC_Change_Type_and_Location)}" collapsible="false">
@@ -91,7 +92,7 @@
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_AMS_NoC_Change_Bank_Details}
-                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
                         </apex:outputpanel>
                     </apex:facet>
                     <apex:panelGrid columns="1" rendered="{!isocountry.original_bank_details_not_required__c==false}">  
@@ -113,7 +114,7 @@
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}
-                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
                         </apex:outputpanel>
                     </apex:facet>
                     <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
@@ -192,7 +193,7 @@
                                 <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
                                     {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
                                 </apex:outputText>
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                                <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
                             </apex:outputpanel>                       
                         </apex:facet>
                     <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">     
@@ -261,7 +262,7 @@
                                 <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
                                     {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
                                 </apex:outputText>
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                                <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                             </apex:outputpanel>                       
                 </apex:facet>
               
@@ -333,7 +334,7 @@
                 <apex:facet name="header">
                             <apex:outputpanel >
                                 {!txtLocalAgencyDetailsTitle}
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                                <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                             </apex:outputpanel>                       
                 </apex:facet>
                         <apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, colNoC2" columns="2" rendered="{!isocountry.Local_language_Agency_details_required__c}">     
@@ -379,7 +380,7 @@
                         <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
                             {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
                         </apex:outputText>
-                        <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
                     </apex:outputpanel>                    
                 </apex:facet>
             <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col1" columns="2">    
@@ -612,7 +613,7 @@
                                 <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
                                     {!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
                                 </apex:outputText>
-                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section5" style="float:right"/>                                
+                                <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section5" style="float:right"/>                                
                               </apex:outputpanel>
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">

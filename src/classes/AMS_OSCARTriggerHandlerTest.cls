@@ -1,8 +1,8 @@
 @isTest
 private class AMS_OSCARTriggerHandlerTest {
-
+	
 	@testSetup static void setup(){
-
+		
 		AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'OOT', Change_Code__c = 'OOT', Billable__c = false, Integration_RecId__c='C', Billable_Location_Class__c = 'P');
 		insert cc;
 
@@ -26,7 +26,7 @@ private class AMS_OSCARTriggerHandlerTest {
 		fieldsOfObject.put('Reason1__c','Annual revalidation');
 		fieldsOfObject.put('Subject','Annual revalidation - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 		fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
-
+		
 		Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 		insert cse;
 
@@ -86,7 +86,7 @@ private class AMS_OSCARTriggerHandlerTest {
 		fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
 		fieldsOfObject.put('ANG_FA_Opt_out__c','Opt-Out');
 
-		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENOPTINOUT, acc.Id, fieldsOfObject);
+		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENOPTINOUT, acc.Id, fieldsOfObject);       
 		insert oscar;
 
 		cse.Oscar__c = oscar.Id;
@@ -99,7 +99,7 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		// Create a new Financial Security
 		Financial_Security__c fs = new Financial_Security__c(Region__c = 'Americas', Security_status__c = 'Active', Account__c = acc.Id, CurrencyIsoCode = 'USD', Amount__c = 100,
-						Expiry_date__c = Date.today().addYears(2), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee',
+						Expiry_date__c = Date.today().addYears(2), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee', 
 						ValIdity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = cse.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
 		insert fs;
 
@@ -111,7 +111,6 @@ private class AMS_OSCARTriggerHandlerTest {
 	@isTest static void processOscarOptinoutTest1() {
 
 		AMS_OSCARTriggerHandler aoth = new AMS_OSCARTriggerHandler();
-		aoth.fakemethod();
 
 		List<String> fieldListOscar = new List<String>();
 
@@ -125,7 +124,7 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		List<AMS_Oscar__c> oscars =  Database.query(query);
 
-
+		
 
 		AMS_Oscar__c oscar = oscars.get(0);
 
@@ -139,7 +138,7 @@ private class AMS_OSCARTriggerHandlerTest {
 		);
 
 		insert con;
-
+ 
 		Test.startTest();
 
 		oscar.STEP1__c = 'Passed';
@@ -148,11 +147,11 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP , Status = 'Open',Region__c = 'Africa',
 			CaseArea__c = 'Accreditation', Origin= 'Internal User', Reason1__c = 'Annual revalidation',
-			Subject =  'Annual revalidation', Type_of_customer__c = 'IATA Travel Agent', AccountId = oscar.Account__c,
+			Subject =  'Annual revalidation', Type_of_customer__c = 'IATA Travel Agent', AccountId = oscar.Account__c, 
 			BSPCountry__c = 'US', IFAP_Area__c = 'asda', IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
 			Deadline_Date__c = Date.today().addDays(360), contactid = con.id, Assessment_Performed_Date__c = date.today()
 		);
-
+						 
 		insert cseIfap;
 
 		Case oscarCase = [SELECT Id, ParentId FROM Case WHERE Oscar__c = :oscar.Id];
@@ -186,7 +185,7 @@ private class AMS_OSCARTriggerHandlerTest {
 		AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGOPTINOUT, AMS_Utils.FAILED, false);
 
 		Test.stopTest();
-
+		
 	}
 
 	@isTest static void testFOPOSCAR() {
@@ -204,17 +203,17 @@ private class AMS_OSCARTriggerHandlerTest {
 		insert ccConfig;
 
 		List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
-		IATA_ISO_Country__c isoc1 = new IATA_ISO_Country__c(Name = 'Test1', ISO_Code__c = 'TS',
-															Region__c = 'Americas',
+		IATA_ISO_Country__c isoc1 = new IATA_ISO_Country__c(Name = 'Test1', ISO_Code__c = 'TS', 
+															Region__c = 'Americas', 
 															Case_BSP_Country__c= 'Canada'
 															);
 		countrylist.add(isoc1);
 		insert countrylist;
-
+		
 		List<Account> agencylist = new List<Account>();
 		Account a1 = new Account(Name='Test1 Agency',
-			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true,
-			IATACode__c = '12345678',
+			IATA_ISO_Country__c = isoc1.id, Sent_to_external_system__c = true, 
+			IATACode__c = '12345678', 
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
@@ -227,16 +226,16 @@ private class AMS_OSCARTriggerHandlerTest {
 		Agency_Applied_Change_code__c aChangeCode = new Agency_Applied_Change_code__c(Change_Code__c = 'FIN', Account__c = a1.Id, Reason_Description__c = 'ACCREDITED–MEETS–STANDARDS',  Reason_Code__c= '91', Active__c = true);
 		insert aChangeCode;
 
-		Agency_Authorization__c fop = new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active',
+		Agency_Authorization__c fop = new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', 
 					RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment'));
 
 		insert fop;
 
-		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111',
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', 
 									Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, //User_Portal_Status__c = 'Approved Admin',
-									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);
+									Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);    
 		insert co1;
-
+		 
 		Test.startTest();
 
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
@@ -247,7 +246,7 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
-
+		
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		fieldsOfObject.clear();
@@ -263,12 +262,12 @@ private class AMS_OSCARTriggerHandlerTest {
 		Case newCaseFop =ANG_EntityCreator.createCase(caseRT, agencylist[0].Id, fieldsOfObject);
 
 		insert newCaseFop;
-
+		
 		oscar.STEP40__c = AMS_Utils.PASSED;
-		oscar.ANG_Sanity_checks__c = AMS_Utils.PASSED;
+		oscar.ANG_Sanity_checks__c = AMS_Utils.PASSED;   
 
 		try{
-			update oscar;
+			update oscar;            
 		}catch (Exception e){
 			System.assert(e.getMessage().contains('In order to pass this step you need to check the Is PCI compliant field.'));
 		}
@@ -276,10 +275,10 @@ private class AMS_OSCARTriggerHandlerTest {
 		oscar.Is_PCI_compliant__c = 'Yes';
 
 		try{
-			update oscar;
+			update oscar;            
 		}catch (Exception e){
 			System.assert(e.getMessage().contains('For PCI compliance, you need to add an expiry date.'));
-		}
+		}      
 
 		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 
@@ -308,6 +307,36 @@ private class AMS_OSCARTriggerHandlerTest {
 
 	}
 
+	@isTest static void testApplicationWithdrawalChanges(){
+		
+		AMS_AgencyChangesConfig__c combination08 = new AMS_AgencyChangesConfig__c (
+			Name = 'Combination08', TCA_Fields_to_Migrate__c = 'ChangeOfLocationType', TCA_Not_Applicable_Steps__c = 'STEP17;STEP11;STEP13;STEP3;STEP2;STEP25', TCA_Application_withdrawal__c = 'CWD',
+			TCA_Sanity_check__c = 'CAD', TC_Location_type__c = true, Process__c = 'AMS');
+		insert combination08;
 
+		IATA_ISO_Country__c ctry =  [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = false;
+		update ctry;
 
+		Account acc =  [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HO';
+		update acc;
+		
+		AMS_OSCAR__c oscar = [SELECT Id, RecordTypeID, Process__c, Type_Of_Change__c, STEP4__c FROM AMS_OSCAR__c LIMIT 1][0];
+
+		oscar.Type_Of_Change__c = AMS_Utils.LOCATION_TYPE;
+		oscar.RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+		oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+		update oscar;
+		
+		Test.startTest();
+		oscar.STEP4__c = AMS_Utils.PASSED;
+		try{
+			update oscar;
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('Something went wrong! The Hierarchy Account selection for Change of Location Type must have a single entry for this Oscar. Please contact your administrator.'));
+		}
+		
+		Test.stopTest();
+	}
 }

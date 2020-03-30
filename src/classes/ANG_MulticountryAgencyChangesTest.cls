@@ -1284,7 +1284,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		//Check test scenario 1
 		ApexPages.Message[] pageMessagesScenario1 = ApexPages.getMessages();
 
-		System.assertEquals('You cannot select a Standard or Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
+		System.assertEquals('You cannot select a Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
 
 		//Test Scenario 3
 
@@ -1338,7 +1338,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		checkErrorMessage = false;
 		for(ApexPages.Message msg : ApexPages.getMessages()){
-			if(msg.getSummary().contains('You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'))
+			if(msg.getSummary().contains('You cannot choose an Account as a target for the destination hierarchy which does not have a valid top Location type (HE for cash and cashless, GE for multicountry).'))
 				checkErrorMessage = true;
 		}
 

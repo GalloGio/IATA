@@ -122,9 +122,9 @@
         
         let controlDPOField = h.controlDPOFields(c);
 
-        $A.util.toggleClass(c.find('loadingApi'), 'slds-hide');
-
         if(controlDPOField){
+
+            $A.util.toggleClass(c.find('loadingApi'), 'slds-hide');
 
             let fetchTACN = c.get("c.getTACN");
             

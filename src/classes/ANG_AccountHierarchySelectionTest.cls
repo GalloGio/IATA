@@ -817,6 +817,8 @@ private class ANG_AccountHierarchySelectionTest {
 			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.HE ) i.selected = true;
 		}
 		controller.handleSelection();
+
+		List<String> actualNotes = controller.noteList;
 		//deve setar automaticamente o HE como api
 		controller.save();
 
@@ -827,86 +829,19 @@ private class ANG_AccountHierarchySelectionTest {
 
 	@isTest
 	static void mcBeingAcuiredByStandard() {
-		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
-			Name = 'BSP-PT',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			ANG_RHC_Amount_Equals_FS__c = true
-		);
-
-		AMS_Settlement_System__c bspES = new AMS_Settlement_System__c(
-			Name = 'BSP-ES',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			ANG_RHC_Amount_Equals_FS__c = true
-		);
-
-		AMS_Settlement_System__c bspDK = new AMS_Settlement_System__c(
-			Name = 'BSP-DK',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			ANG_RHC_Amount_Equals_FS__c = true
-		);
-
-		insert new List<AMS_Settlement_System__c>{bspPT, bspES, bspDK};
-
-		IATA_ISO_Country__c ctryPT = new IATA_ISO_Country__c (Name='PT',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspPT.id);
-		IATA_ISO_Country__c ctryES = new IATA_ISO_Country__c (Name='ES',ISO_Code__c='ES', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspES.id);
-		IATA_ISO_Country__c ctryDK = new IATA_ISO_Country__c (Name='DK',ISO_Code__c='DK', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspDK.id);
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
 		
-		insert new List<IATA_ISO_Country__c>{ctryPT, ctryES, ctryDK};
-
-		IATA_ISO_State__c sttPT = new IATA_ISO_State__c(Name= 'Portugal', ISO_Code__c = 'PT', IATA_ISO_Country__c = ctryPT.Id);
-		IATA_ISO_State__c sttES = new IATA_ISO_State__c(Name= 'Spain', ISO_Code__c = 'ES', IATA_ISO_Country__c = ctryES.Id);
-		IATA_ISO_State__c sttDK = new IATA_ISO_State__c(Name= 'Denmark', ISO_Code__c = 'DK', IATA_ISO_Country__c = ctryDK.Id);
-
-		insert new List<IATA_ISO_State__c>{sttPT, sttES, sttDK};
+		Account GE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account HE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', GE1.Id, GE1.Id, AMS_Utils.HE, gb, '10000001');
+		Account AE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', HE1.Id, GE1.Id, AMS_Utils.AE, gb, '10000002');
+		Account HE2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', GE1.Id, GE1.Id, AMS_Utils.HE, fr, '10000003');
+		Account AE2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE FR', HE2.Id, GE1.Id, AMS_Utils.AE, fr, '10000004');
 
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-
-		Account GE1 = new Account(Name = 'Main GE1 PT Account',
-			Sector__c = 'Travel Agent',
-			IATACode__c = '12345678',
-			Category__c = 'IATA Passenger Sales Agent',
-			Location_Class__c = 'P',
-			Location_Type__c = AMS_Utils.GE,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
-			IATA_ISO_Country__c = ctryPT.Id,
-			ANG_IEP_HE_AccntNum__c = '1232132323',
-			ANG_IEP_Status__c = 'Suspended',
-			ANG_HE_CashCondition__c = true,
-			ANG_HE_RiskHistoryAssessment__c = 'Not Applicable',
-			ANG_HE_RiskStatus__c = 'Not Applicable',
-			RecordTypeId = accountAgencyRT);
-
-		insert GE1;
-
-		Account HE1 = new Account(IATA_ISO_Country__c = ctryES.id,
-			ANG_IEP_Status__c = null,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
-			RecordTypeId = accountAgencyRT,
-			IATACode__c = '12345679',
-			Name = 'Account HE1 GE1',
-			Short_Name__c = 'Account HE1 GE1',
-			Category__c = 'IATA Passenger Sales Agent',
-			Location_Class__c = 'P',
-			Location_Type__c = AMS_Utils.HE,
-			ParentId = GE1.Id,
-			Top_Parent__c = GE1.Id,
-			Status__c = AMS_Utils.ACC_S9_APPROVED);
-
-		Account HE2 = new Account(IATA_ISO_Country__c = ctryDK.id,
-			ANG_IEP_Status__c = null,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
-			RecordTypeId = accountAgencyRT,
-			IATACode__c = '12345679',
-			Name = 'Account HE2 GE1',
-			Short_Name__c = 'Account HE2 GE1',
-			Category__c = 'IATA Passenger Sales Agent',
-			Location_Class__c = 'P',
-			Location_Type__c = AMS_Utils.HE,
-			ParentId = GE1.Id,
-			Top_Parent__c = GE1.Id,
-			Status__c = AMS_Utils.ACC_S9_APPROVED);
-
-		Account newParentES = new Account(IATA_ISO_Country__c = ctryES.id,
+		
+		Account newParentES = new Account(IATA_ISO_Country__c = gb.id,
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
 			RecordTypeId = accountAgencyRT,
@@ -918,63 +853,11 @@ private class ANG_AccountHierarchySelectionTest {
 			Location_Type__c = AMS_Utils.HE,
 			Status__c = AMS_Utils.ACC_S9_APPROVED);
 
-		insert new List<Account>{HE1, HE2, newParentES};
+		insert newParentES;
 
-		Account AE1 = new Account(IATA_ISO_Country__c = ctryES.id,
-			ANG_IEP_Status__c = null,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
-			RecordTypeId = accountAgencyRT,
-			IATACode__c = '12345679',
-			Name = 'Account AE1 GE1',
-			Short_Name__c = 'Account AE1 GE1',
-			Category__c = 'IATA Passenger Sales Agent',
-			Location_Class__c = 'P',
-			Location_Type__c = AMS_Utils.AE,
-			ParentId = HE1.Id,
-			Top_Parent__c = GE1.Id,
-			Status__c = AMS_Utils.ACC_S9_APPROVED);
-
-		Account AE2 = new Account(IATA_ISO_Country__c = ctryES.id,
-			ANG_IEP_Status__c = null,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
-			RecordTypeId = accountAgencyRT,
-			IATACode__c = '12345679',
-			Name = 'Account AE2 GE1',
-			Short_Name__c = 'Account AE2 GE1',
-			Category__c = 'IATA Passenger Sales Agent',
-			Location_Class__c = 'P',
-			Location_Type__c = AMS_Utils.AE,
-			ParentId = HE1.Id,
-			Top_Parent__c = GE1.Id,
-			Status__c = AMS_Utils.ACC_S9_APPROVED);
-
-		insert new List<Account>{AE1, AE2};
-
-		AMS_Agencies_Hierarchy__c hierarchyGE1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy GE1', Main_Account__c = GE1.Id);
-		AMS_Agencies_Hierarchy__c hierarchyNewPrent = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy New Parent', Main_Account__c = newParentES.Id);
-		insert new List<AMS_Agencies_Hierarchy__c>{hierarchyGE1, hierarchyNewPrent};
-
-		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
-			Child_Account__c = HE1.Id ,
-			Parent_Account__c = GE1.Id,
-			Hierarchy__c = hierarchyGE1.Id);
-
-		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
-			Child_Account__c = HE2.Id ,
-			Parent_Account__c = GE1.Id,
-			Hierarchy__c = hierarchyGE1.Id);
-
-		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
-			Child_Account__c = AE1.Id ,
-			Parent_Account__c = GE1.Id,
-			Hierarchy__c = hierarchyGE1.Id);
-
-		AMS_Agencies_relationhip__c r4 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,
-			Child_Account__c = AE2.Id ,
-			Parent_Account__c = GE1.Id,
-			Hierarchy__c = hierarchyGE1.Id);
-
-		insert new List<AMS_Agencies_relationhip__c>{r1, r2, r3, r4};
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			GE1, HE1, AE1, HE2, AE2
+		});
 		
 		Contact contact = new Contact(AccountId = GE1.id,
 			Firstname = 'teste2', 
@@ -1012,7 +895,7 @@ private class ANG_AccountHierarchySelectionTest {
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
 			Branch_Office_Country__c = HE1.IATA_ISO_Country__c,
 			Location_Class__c = HE1.Location_Class__c,
-			Location_Type__c = HE2.Location_Type__c,
+			Location_Type__c = HE1.Location_Type__c,
 			SAAM_Case__c = oscarCase.Id,
 			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
@@ -1025,7 +908,7 @@ private class ANG_AccountHierarchySelectionTest {
 		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
 
 		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()) {
-			if (i.acc.IATA_ISO_Country__c == ctryES.id) {
+			if (i.acc.IATA_ISO_Country__c == gb.id) {
 				i.selected = true;
 			} else {
 				i.selected = false;
@@ -1039,6 +922,8 @@ private class ANG_AccountHierarchySelectionTest {
 		controller.oscar.New_parent__c = newParentES.Id;
 		controller.currentGE = GE1;
 
+		List<String> actualNotes = controller.noteList;
+
 		controller.FetchNewParent();
 
 		controller.save();
@@ -1046,6 +931,97 @@ private class ANG_AccountHierarchySelectionTest {
 		System.assertEquals(AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD, controller.oscar.Change_of_Hierarchy_Scenario__c, 'The scenario should be the acquisition of mc locations by a standard hierarchy');
 
 		Test.stopTest();
+	}
+
+	@isTest
+	static void bspSplit() {
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
+		
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac2.Id, ac1.Id, AMS_Utils.AE, gb, '10000002');
+		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000003');
+		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE FR', ac4.Id, ac1.Id, AMS_Utils.AE, fr, '10000004');
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			ac1, ac2, ac3, ac4, ac5 
+		});
+
+		Contact contact = new Contact(AccountId = ac1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ac1.id,
+			New_parent__c = ac4.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = ac1.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = ac1.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = ac4.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = ac4.IATA_ISO_Country__c,
+			Location_Class__c = ac4.Location_Class__c,
+			Location_Type__c = ac4.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()) {
+			if (i.acc.IATA_ISO_Country__c == fr.id) {
+				i.selected = true;
+			} else {
+				i.selected = false;
+				i.main = false;
+			}
+		}
+
+		controller.handleSelection();
+
+		controller.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		controller.oscar.New_parent__c = ac4.Id;
+		controller.currentGE = ac1;
+
+		List<String> actualNotes = controller.noteList;
+
+		controller.FetchNewParent();
+
+		controller.save();
+
+		System.assertEquals(AMS_Utils.MULTICOUNTRY_BSP_SPLIT, controller.oscar.Change_of_Hierarchy_Scenario__c, 'The scenario should be the splitting of a single BSP from a MC Hierarchy');
+
+		Test.stopTest();
+
 
 	}
 }

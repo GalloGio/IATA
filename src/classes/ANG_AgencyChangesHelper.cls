@@ -305,7 +305,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			Boolean isMulticountry = 
 				(oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
 				AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) &&
-				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD);
+				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD) &&
+				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT);
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);
@@ -1407,17 +1408,21 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
+		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+		if(oscarAccount == null) {
+			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c 
+							FROM Account 
+							WHERE Id = :oscarToProcess.Account__c];
+		}
+
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
 
 			//Map<Id,Account> accountsMap;
 
-			if(newHEaccount == null)
+			if(newHEaccount == null) {
 				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c from Account where Id = :oscarToProcess.New_parent__c];
-
-			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-			if(oscarAccount == null)
-				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.Account__c];
+			}
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 				switchAccreditationModel = true;
@@ -1426,10 +1431,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			if(newHEaccount.Remittance_frequency__c != oscarAccount.Remittance_frequency__c){
-
 				switchRemittanceFrequency = true;
 				newRemittanceFrequency = newHEaccount.Remittance_frequency__c;
 			}
+		} else if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT)) {
+			switchAccreditationModel = true;
+			newAccreditationModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
+			oldAccreditationModel = oscarAccount.ANG_Accreditation_Model__c;
 		}
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
@@ -1459,7 +1467,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				System.debug('[ANG_AgencyChangesHelper] Inserted new Hierarchy with Id:' + newH.Id + ' since the destination account is a single Account.');
 			}
 
-			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
+			oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
 
 			if(oscarAccount.Location_type__c == AMS_Utils.HE){
 				// it should have his own hierarchy, so we need to remove it since he is becoming an AE.
@@ -1515,8 +1523,10 @@ public with sharing class ANG_AgencyChangesHelper {
 							toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 				}
-				if(newAccreditationModel ==  'Cash')
+				
+				if(newAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 					toUpsert = performCashTransformation(accountsAffected);
+				}
 
 				if(!toUpsert.isEmpty())
 					upsert toUpsert;
@@ -1570,6 +1580,10 @@ public with sharing class ANG_AgencyChangesHelper {
 				newHe.ANG_HE_CashCondition__c = false;
 				newHe.ANG_HE_RiskHistoryAssessment__c = null;
 				newHe.ANG_HE_RiskStatus__c = 'Not Applicable';
+
+				if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT) && switchAccreditationModel) {
+					newHe.ANG_Accreditation_Model__c = newAccreditationModel;
+				}
 
 				toReturn.addAccount(newHe);
 
@@ -1794,7 +1808,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
 		,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
 		,'Link_agent_name__c' => 'Link_agent_name__c'
-		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'};
+		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'
+		,'Geoname_Billing_City__c' => 'Geoname_Billing_City__c'
+		,'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'};
 
 		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
 			Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -2220,7 +2236,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c,
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
 		FROM AMS_Pax_Accreditation_Form__c
 		WHERE Id =: oscarOnlineAccredId limit 1];
 	}

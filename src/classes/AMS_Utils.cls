@@ -435,6 +435,7 @@ public without sharing class AMS_Utils {
 	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
 	public static final String MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD = 'MC_LOCATIONS_ACQUIRED_BY_ST';
 	public static final String MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE = 'GE_LEFT_ALONE';
+	public static final String MULTICOUNTRY_BSP_SPLIT = 'MC_BSP_SPLIT';
 
 	public static final String OSCAR_CHILD_PROCESSING_IN_PROGRESS = 'In Progress';
 	public static final String OSCAR_CHILD_PROCESSING_FINISHED = 'Finished';
@@ -1932,6 +1933,8 @@ public without sharing class AMS_Utils {
 		String errorString = ex.getMessage();
 		String searchString = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
 		String searchString2 = '##';
+		String searchString3 = 'FIELD_FILTER_VALIDATION_EXCEPTION';
+		String searchString4 = 'Geoname';
 		System.debug('EXCEPTION!! ' + ex.getMessage() + '\n ' + ex.getStackTraceString());
 		if (ex.getMessage().containsIgnoreCase(searchString)) {
 			System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
@@ -1943,6 +1946,12 @@ public without sharing class AMS_Utils {
 			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString2) + searchString2.length();
 			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
 			errorString = errorString.substringBefore('##');
+		}
+
+		if(ex.getMessage().containsIgnoreCase(searchString3) && ex.getMessage().containsIgnoreCase(searchString4)){
+			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString3) + searchString3.length() + 2;
+			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
+			errorString = errorString.substringBefore(': [');
 		}
 		return 'ERROR: ' + errorString.unescapeHtml4();
 	}
