@@ -21,7 +21,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	private static final String RECTYPE_OSCARCOMM = AMS_Utils.RECTYPE_OSCARCOMM;
 	private static final String RECTYPE_NEWGENFOP = AMS_Utils.RECTYPE_NEWGENFOP;
 	private static final Set<String> MASS_FOP_QUEUES = AMS_Utils.MASS_FOP_QUEUES;
-	private static final String RECTYPE_ANN_REV = AMS_Utils.RECTYPE_NEWGENANNUALREVAL;
 	private static final String ANN_REV_QUEUE = 'Annual Revalidation';
 
 	// Portal Notification and Email templates identifiers
@@ -46,14 +45,21 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	private Map<String,String> notificationTemplatesInverted;
 
 	//dates:
-	private static final Date DATE_REMINDER_15 = Date.today().addDays(-15);
-	private static final Date DATE_REMINDER_30 = Date.today().addDays(-30);
-	private static final Date DATE_REMINDER_21 = Date.today().addDays(-21);
-	private static final Date DATE_REMINDER_27 = Date.today().addDays(-27);
+	private static Date DATE_REMINDER_15 = Date.today().addDays(-15);
+	private static Date DATE_REMINDER_30 = Date.today().addDays(-30);
+	private static Date DATE_REMINDER_21 = Date.today().addDays(-21);
+	private static Date DATE_REMINDER_27 = Date.today().addDays(-27);
 
 	private List<String> errors = new List<String>();
 
 	global ANG_FOPOSCARNotificationBatch() {}
+
+	global ANG_FOPOSCARNotificationBatch(Date reminder15, Date reminder30, Date reminder21, Date reminder27) {
+		DATE_REMINDER_15 = reminder15;
+		DATE_REMINDER_30 = reminder30;
+		DATE_REMINDER_21 = reminder21;
+		DATE_REMINDER_27 = reminder27;
+	}
 
 	global Iterable<Case> start(Database.BatchableContext BC) {
 		notificationTemplates = new Map<String, String>();
@@ -93,17 +99,13 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 																	AND OwnerId IN :(Test.isRunningTest() ? new Set<String>{UserInfo.getUserId()} : fopQueueIds)
 																	AND (DAY_ONLY(CreatedDate) = :DATE_REMINDER_15
 																		OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_30))
-																OR (OSCAR__r.RecordTypeId = :RECTYPE_ANN_REV
+																OR (OSCAR__r.RecordTypeId = :AMS_Utils.RECTYPE_NEWGENANNUALREVAL
 																	AND Reason1__c = :ANN_REV_REASON
 																	AND OwnerId = :(Test.isRunningTest() ? UserInfo.getUserId() : annualRevQueueId)
 																	AND ((OSCAR__r.STEP43__c = :AMS_Utils.PASSED
-																			AND (OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_15
-																				OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_21
-																				OR OSCAR__r.ANG_Administrative_non_compliance_date__c = :DATE_REMINDER_27))
+																			AND OSCAR__r.ANG_Administrative_non_compliance_date__c IN (:DATE_REMINDER_15, :DATE_REMINDER_21, :DATE_REMINDER_27))
 																			OR (OSCAR__r.STEP43__c != :AMS_Utils.PASSED
-																				AND (DAY_ONLY(CreatedDate) = :DATE_REMINDER_15
-																					OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_21
-																					OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_27)))))]);
+																				AND DAY_ONLY(CreatedDate) IN (:DATE_REMINDER_15, :DATE_REMINDER_21, :DATE_REMINDER_27)))))]);
 	}
 
 	global void execute(Database.BatchableContext BC, List<Case> scope) {
@@ -129,7 +131,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				} else if (cse.Reason1__c == ANN_REV_REASON) {
 					populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
 				}
-			} else if (dt == DATE_REMINDER_30 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_30) {
+			} else if (dt == DATE_REMINDER_30) {
 				nonComplianceCases.put(cse.id,cse);
 					
 				if (cse.origin == MASSIVE_FOP_ORIGIN) {

@@ -302,7 +302,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		Test.startTest();
 
-		Database.executeBatch(new ANG_FOPOSCARNotificationBatch(), 200);
+		Database.executeBatch(new ANG_FOPOSCARNotificationBatch(Date.today(), Date.today(), Date.today(), Date.today()-27), 200);
 
 		Test.stopTest();
 
