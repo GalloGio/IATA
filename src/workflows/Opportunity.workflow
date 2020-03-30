@@ -153,7 +153,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>barrocasb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>charkovad@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

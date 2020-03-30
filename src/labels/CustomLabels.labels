@@ -178,6 +178,13 @@
         <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_Select_From_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Select From List</shortDescription>
+        <value>If possible select your city from the suggestion list</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Street_Compulsory</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3343,6 +3350,20 @@ CNS CASSlink is an internet-based system which facilitates these interactions an
 Through this online service, you can manage your endorsement process directly online.
 
 If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
+    </labels>
+    <labels>
+        <fullName>COVID_19_eComm_Home_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID-19 eComm Home Page</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
+        <fullName>COVID_Updates_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID Updates Service</shortDescription>
+        <value>This service is your reference guide for the latest IATA updates related to the impact of COVID-19 on all IATA BSP and CASS operations.</value>
     </labels>
     <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
@@ -12422,6 +12443,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Course2</shortDescription>
         <value>Course 2:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Covid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Covid</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
@@ -36525,6 +36553,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>IfapSubmissionOfDocsOK</shortDescription>
         <value>Submission of the documents successfully completed!</value>
+    </labels>
+    <labels>
+        <fullName>Important_Delivery_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Important_Delivery_Information</shortDescription>
+        <value>IMPORTANT DELIVERY INFORMATION:</value>
     </labels>
     <labels>
         <fullName>Industry_Activities</fullName>
