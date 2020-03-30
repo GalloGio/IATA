@@ -1348,21 +1348,36 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
         <fullName>SSO_cannot_be_approved_by_admin</fullName>
         <active>true</active>
         <errorConditionFormula>AND( 
-OR (ISCHANGED(Right__c) , ISNEW() ), 
-OR( 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.ASD__c, 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.BSPLink__c , 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkExport__c, 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkImport__c, 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkRouteAnalyzer__c, 
-Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c 
-), 
-OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;), ISPICKVAL(Right__c, &apos;Access Requested&apos;)), 
-$User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;, 
-$User.Profile_Name__c != &apos;Developer&apos;, 
-NOT(CONTAINS($Profile.Name,&quot;System Administrator&quot;)),
-NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
-NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
+  OR (ISCHANGED(Right__c) , ISNEW() ),
+  OR(
+    AND(
+      OR(
+        Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.ASD__c, 
+        Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.BSPLink__c , 
+        Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkExport__c, 
+        Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkImport__c, 
+        Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.CASSLinkRouteAnalyzer__c  
+      ),
+      $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;, 
+      $User.Profile_Name__c != &apos;Developer&apos;, 
+      NOT(CONTAINS($Profile.Name,&quot;System Administrator&quot;))
+    ),
+    AND(
+      Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
+      Contact__r.Account.RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+      NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
+      NOT($Permission.Grant_SIS_Service),
+      $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
+    ),
+    AND(
+      Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
+      Contact__r.Account.RecordType.DeveloperName != &apos;IATA_Agency&apos;,
+      NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
+      $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
+    )
+  ),
+  OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;),
+  ISPICKVAL(Right__c, &apos;Access Requested&apos;))
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by a request coming from the external service.</errorMessage>
     </validationRules>
