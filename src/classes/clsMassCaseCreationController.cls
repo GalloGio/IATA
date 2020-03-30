@@ -1,5 +1,10 @@
 public with sharing class clsMassCaseCreationController {
 
+	private static final Set<String> ACCREDITATION_MODELS_TO_EXCLUDE = new Set<String>{
+		AMS_Utils.ACCREDITATIONMODEL_CASHLESS, 
+		AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY 
+	};
+ 
 	public boolean IFAP_CanCreateWhileClosedCase {get; set;}
 	public Date sixMonthsAgo = date.today().addMonths(-6);
 
@@ -397,7 +402,7 @@ public with sharing class clsMassCaseCreationController {
 			if(exclFAOptOut.equals('true'))
 				soql += ' and Account.ANG_FA_Opt_out__c = false';
 			soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\'  or ((Account.Default_date__c >= :sixMonthsAgo or Account.Reinstated_Date__c >= :sixMonthsAgo) and Account.ANG_IsNewGenAgency__c = true ))';
-			soql += ' and Account.ANG_Accreditation_Model__c = \'Cash\' ';
+			soql += ' and Account.ANG_Accreditation_Model__c not in :ACCREDITATION_MODELS_TO_EXCLUDE ';
 
 			system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);
 
@@ -409,9 +414,6 @@ public with sharing class clsMassCaseCreationController {
 			Else   {
 				system.debug('ERROR:(clsMassCaseCreationController.runSearch) The report IFAP_Agents_with_Open_Closed_cases does not exist');
 			}
-
-
-
 
 			if (email.equals('1'))
 				openCasesReportURL += 'pn5=ne'; // not equals
@@ -537,7 +539,7 @@ public with sharing class clsMassCaseCreationController {
 		// Location Type HO/ AO filter
 		soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\' OR c.Contact.Account.Location_Type__c LIKE \'AE%\' )';
 
-		soql += 'and c.Contact.Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079
+		soql += 'and c.Contact.Account.ANG_Accreditation_Model__c not in :ACCREDITATION_MODELS_TO_EXCLUDE ';
 
 		casesQuery = soql;
 
