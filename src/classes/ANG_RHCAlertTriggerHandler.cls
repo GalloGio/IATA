@@ -179,7 +179,7 @@ public class ANG_RHCAlertTriggerHandler{
 					if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
 				}
 			}	
-			System
+
 			if(!orangeRiskAlerts.isEmpty()){
 				List<Messaging.SingleEmailMessage> emailLst = createNotificationToSeniors(orangeRiskAlerts, RTS_NOTIFICATION_MANAGER_ORANGE, false);
 				if(!emailLst.isEmpty()){
