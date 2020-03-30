@@ -128,8 +128,12 @@ public class PortalFAQsCtrlTest {
 
 		Test.startTest();
 		System.runAs(testUser) {
-			List<FAQ__kav> article = PortalFAQsCtrl.getArticles('Travel__c');
+			List<FAQ__kav> articleList = PortalFAQsCtrl.getArticles('Travel__c');            
+			system.assertEquals(0,articleList.size());
+            
 			List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'pt_BR');
+			system.assertEquals(0,articleByLanguage.size());
+            
 		}
 		Test.stopTest();
 	}
@@ -153,7 +157,8 @@ public class PortalFAQsCtrlTest {
 
 	@isTest static void testGetArticleTitle() {
 		FAQ__kav faqka=[SELECT KnowledgeArticleId FROM FAQ__kav limit 1];
-		PortalFAQsCtrl.getArticleTitle(faqka.Id);
+		String title=PortalFAQsCtrl.getArticleTitle(faqka.Id);
+		System.assertEquals('Sample Article Portal Test',title);
 
 	}
 	@isTest static void testUpdateArticleCategoriesAndApproval() {
