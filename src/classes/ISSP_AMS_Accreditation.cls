@@ -2860,14 +2860,22 @@ public without sharing class ISSP_AMS_Accreditation {
 			locationClass = 'D';
 		}
 		else if (sectorValue.StartsWith('Cargo_Agent')) {
-			if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary'){
-				locationClass = 'C';
-			} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
-				locationClass = 'R';
-			} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
-				locationClass = 'I';
-			} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
-				locationClass = 'Q';
+			if(!isCNSAgency){
+				if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary'){
+					locationClass = 'C';
+				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
+					locationClass = 'R';
+				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
+					locationClass = 'I';
+				} else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
+					locationClass = 'Q';
+				}
+			}else{
+				if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
+					locationClass = 'C';
+				}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE){
+					locationClass = 'R';
+				}
 			}
 		}
 
@@ -2887,7 +2895,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				&& contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA'
 				&& contactToUpsert.Training_dangerous_goods_completed__c == null) {
 				contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
-				if(isCNSAgency) newContact.CNS_Contact__c = true;
 				contactSaved = false;
 				
 				return;
@@ -2899,6 +2906,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				return;
 			}
 		}
+		if(isCNSAgency) contactToUpsert.CNS_Contact__c = true;
 
 		if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null)
 			contactToUpsert.AMS_Pax_Accreditation_Form__c = newForm.Id;
