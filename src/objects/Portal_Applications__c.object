@@ -1102,6 +1102,11 @@ Name
                     <default>false</default>
                     <label>ICCS Settlement</label>
                 </value>
+                <value>
+                    <fullName>TIP Reports</fullName>
+                    <default>false</default>
+                    <label>TIP Reports</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>5</visibleLines>
@@ -1517,6 +1522,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>Settlement Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP Reports</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
