@@ -130,7 +130,6 @@ public class PortalFAQsCtrlTest {
 		System.runAs(testUser) {
 			List<FAQ__kav> article = PortalFAQsCtrl.getArticles('Travel__c');
 			List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'pt_BR');
-			PortalFAQsCtrl.getArticleTitle(article.get(0).Id);
 		}
 		Test.stopTest();
 	}
