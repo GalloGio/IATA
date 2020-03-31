@@ -58,10 +58,10 @@ global with sharing  class pkb_mobile_proxy {
 				sessionId = sessionCookie.getValue();
 			}
 		} catch (Exception e) {
-			notifyAdmin(e, System.Label.PKB2_No_Settings_Yet, p.siteAdmin.Email);
+			notifyAdmin(e, System.Label.PKB2_No_Settings_Yet, p.siteAdmin.Id);
 		}
 		if (cSetting.Id == null){
-			notifyAdmin(null, System.Label.PKB2_No_Settings_Yet, p.siteAdmin.Email);
+			notifyAdmin(null, System.Label.PKB2_No_Settings_Yet, p.siteAdmin.Id);
 		}
 	}
 
@@ -314,7 +314,7 @@ global with sharing  class pkb_mobile_proxy {
 		send email method
 	********************************************************************/
 
-	public static void notifyAdmin(Exception e, String introMessage, String adminEmail) {
+	public static void notifyAdmin(Exception e, String introMessage, String adminId) {
 		String body;
 		Messaging.SingleEmailMessage msg;
 		String debug;
@@ -324,10 +324,11 @@ global with sharing  class pkb_mobile_proxy {
 		}
 
 		// send email only if siteAdmin isn't null
-		if (adminEmail != null) {
+		if (adminId != null) {
 			msg = new Messaging.SingleEmailMessage();
 			msg.setSubject('Public Knowledge Base 2 Mobile - Package Exception Notification');
-			msg.setToAddresses(new List<String>{adminEmail});
+			msg.setTargetObjectId(adminId);
+			msg.setSaveAsActivity(false);
 			body = introMessage;
 			body += '\n\nAPEX TRANSACTION DEBUG INFORMATION:\n' +debug;
 			body += '\n\n';

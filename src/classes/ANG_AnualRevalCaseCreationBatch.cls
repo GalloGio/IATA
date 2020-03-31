@@ -91,14 +91,11 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 		//Below code will fetch the job Id
 		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
 
-		String userName = UserInfo.getUserName();
-		User activeUser = [Select Email From User where Username = : userName limit 1];
-		String userEmail = activeUser.Email;
-
 		//below code will send an email to User about the status
-		mail.setToAddresses( new String[] {userEmail} );
+		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSenderDisplayName('Apex Newgen Anual Revalidation Module');
 		mail.setSubject('Batch Processing '+a.Status);
+		mail.setSaveAsActivity(false);
 
 		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
 

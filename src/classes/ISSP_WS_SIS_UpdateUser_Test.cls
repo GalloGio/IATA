@@ -231,10 +231,10 @@ private class ISSP_WS_SIS_UpdateUser_Test {
 
 		Contact contact = ISSP_ObjectFactory.createNewContact();
 		contact.AccountId = account.Id;
-		contact.FirstName = 'firstname';
-		contact.LastName = 'lastname';
+		contact.FirstName = 'firstname1';
+		contact.LastName = 'lastname1';
 		contact.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
-		contact.Email = 'test@email.com';
+		contact.Email = Datetime.now().getTime()+'test1@email.com';
 		insert contact;
 
 		User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
