@@ -453,7 +453,7 @@ private class ProcessIDCardMassApplicationsTest {
 		u.LocaleSidKey = 'en_US';
 		u.ProfileId = testProfile.Id;
 		u.TimeZoneSidKey = 'America/Los_Angeles';
-		u.UserName = 'test.username@test.com';
+		u.UserName = Datetime.now().getTime()+'test.username@test.com';
 		u.License_Cost_Center__c = 'ISF005CH01';
 		u.IsActive = true;
 		u.Receive_Apex_emails__c = true;
@@ -468,7 +468,7 @@ private class ProcessIDCardMassApplicationsTest {
 		u1.LocaleSidKey = 'en_US';
 		u1.ProfileId = '00e20000000h0gFAAQ';
 		u1.TimeZoneSidKey = 'Europe/Brussels';
-		u1.UserName = 'test.user11@test.com';
+		u1.UserName = Datetime.now().getTime()+'test.user11@test.com';
 		u1.License_Cost_Center__c = 'AAA000AA00';
 		u1.IsActive = true;
 		u1.Receive_Apex_emails__c = true;
