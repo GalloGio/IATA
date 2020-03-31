@@ -1080,17 +1080,35 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if (!CaseChildHelper.noValidationsOnTrgCAseIFAP && !IFAPCaseList.isEmpty()) {
 				System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP Trigger.isInsert]');
 
-				Map<ID, List<Case>> mapAccountCases = new Map<ID, List<Case>>();
+				Map<ID, List<Case>> mapAccountClosedCases = new Map<ID, List<Case>>();
 				Map<Case, Case> insertedCases = new Map<Case, Case>();
+				Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap = new Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper>();
 
 				//accountHasClosedCases
-				for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c
-										WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
+				for (Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, 
+											 c.AccountId, c.RecordTypeId, c.Financial_Review_Type__c
+										 FROM Case c
+										 WHERE c.AccountId IN :IFAPaccountIds
+											 AND c.RecordTypeId = :IFAPcaseRecordTypeID
+											 AND ((c.Account.ANG_Accreditation_Model__c != :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+												   AND c.Status = :AMS_Utils.CASE_STATUS_CLOSED)
+												  OR c.Account.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)]){
 
-					if(!mapAccountCases.containsKey(currentCase.AccountId)){
-						mapAccountCases.put(currentCase.AccountId, new List<Case>());
+					if (currentCase.Status == AMS_Utils.CASE_STATUS_CLOSED) {
+						if (!mapAccountClosedCases.containsKey(currentCase.AccountId)) {
+							mapAccountClosedCases.put(currentCase.AccountId, new List<Case>());
+						}
+						mapAccountClosedCases.get(currentCase.AccountId).add(currentCase);
 					}
-					mapAccountCases.get(currentCase.AccountId).add(currentCase);
+
+					if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(currentCase.Financial_Review_Type__c)){
+						ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper wrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+						if(wrapper == null){
+							wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper();
+						}
+						wrapper.increment(currentCase);
+						nbrOfOpenCasesPerReviewTypeMap.put(currentCase.AccountId, wrapper);
+					}
 				}
 
 				for (Case newCase : IFAPCaseList) {
@@ -1146,7 +1164,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					}
 					// Phase 4
 					// check if the agent already has closed case for the same financial year and if the checkbox has been checked
-					List<Case> caseClosedList = mapAccountCases.get(newCase.AccountId);
+					List<Case> caseClosedList = mapAccountClosedCases.get(newCase.AccountId);
 					if (caseClosedList != null && newCase.IFAP_CanCreateWhileClosedCase__c == false && IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList, newCase.IFAP_Financial_Year__c))
 						newCase.addError('The selected agent already has a closed IFAP case for the financial year ' + newCase.IFAP_Financial_Year__c + '. Please confirm that you really wish to create another IFAP case for this account by checking the confirmation check box at the bottom of this page.');
 					else if (caseClosedList == null && newCase.IFAP_CanCreateWhileClosedCase__c && !IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList,newCase.IFAP_Financial_Year__c))
@@ -1156,6 +1174,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					List<Case> caseIFAPList = mapIFAPParentIDCase.get(newCase.ParentId);
 					if (String.valueOf(newCase.ParentId) != '' && (caseSAAMList != null && caseSAAMList.size() > 0) && (caseIFAPList != null && caseIFAPList.size() > 0)) {
 						newCase.addError('The parent SAAM case already has an IFAP case.');
+					}
+
+					ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper openCasesWrapper = nbrOfOpenCasesPerReviewTypeMap.get(newCase.AccountId);
+					if(openCasesWrapper != null && openCasesWrapper.hasAlreadyOpenIFAPCases(newCase.Financial_Review_Type__c)){
+						// For multicountry agents make sure that the following criteria is fulfilled:
+						//	- No more that one Multicountry Annual open case is allowed at the same time
+						// 	- No more than one Multicountry Adhoc open case is allowed at the same time
+						// 	- There can be as many Multicountry Quarterly open cases as the user creates
+						// 	- There can be one annual and one adhoc IFAP cases open at the same time
+						newCase.addError(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS);
 					}
 
 				}

@@ -298,7 +298,16 @@ public without sharing class AMS_Utils {
 
 	// Case - Status
 	public static final String CASE_STATUS_CLOSED = 'Closed';
+	public static final String CASE_STATUS_CLOSED_OPT_OUT = 'Closed Opt-out';
+	public static final String CASE_STATUS_CLOSED_NON_COMPLIANCE = 'Closed_Non compliance';
 	public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUESTED = 'Financial Security Requested';
+
+	public static final Set<String> IFAP_CLOSED_STATUS = new Set<String>{
+		CASE_STATUS_CLOSED,
+		CASE_STATUS_CLOSED_OPT_OUT,
+		CASE_STATUS_CLOSED_NON_COMPLIANCE,
+		CASE_STATUS_ASSESSMENT_CANCELED
+	};
 
 	// Case - Reason1__c //AMSU-165
 	public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';

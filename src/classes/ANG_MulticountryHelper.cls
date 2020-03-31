@@ -66,6 +66,40 @@ public class ANG_MulticountryHelper {
 		public Id hierarchyId;
 	}
 
+	public class AccountOpenIFAPPerReviewTypeWrapper {
+		public Id accountId;
+		public integer nbrOfMulticountryAnnualCases = 0;
+		public integer nbrOfMulticountryAdhocCases = 0;
+		
+		public void increment(Case cse) {
+			if (AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)) {
+				return;
+			}
+
+			if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL) {
+				this.nbrOfMulticountryAnnualCases++;
+			} else if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC) {
+				this.nbrOfMulticountryAdhocCases++;
+			}
+		}
+
+		/*	
+		* For multicountry agents make sure that the following criteria is fulfilled:
+		* 	- No more that one Multicountry Annual open case is allowed at the same time
+		* 	- No more than one Multicountry Adhoc open case is allowed at the same time
+		* 	- There can be as many Multicountry Quarterly open cases as the user creates
+		* 	- There can be one annual and one adhoc IFAP cases open at the same time
+		*/
+		public boolean hasAlreadyOpenIFAPCases(String financialReviewType) {
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL)
+				return nbrOfMulticountryAnnualCases > 0;
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC)
+				return nbrOfMulticountryAdhocCases > 0;
+			return false;
+		}
+
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
 	public static Set<String> locationTypesSet = new Set<String>{
@@ -73,6 +107,8 @@ public class ANG_MulticountryHelper {
 		AMS_Utils.AE,
 		AMS_Utils.GE
 	};
+
+	public static final String MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS = 'The selected account already has open IFAP cases.';
 
 	/**
 	* Verifies if the immediate parent
