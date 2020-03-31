@@ -707,66 +707,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 	}
 
-	public static void testsendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
-		sendNotification(accountId, accountChanges );
-	}
-
-	private static void sendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
-
-		String name = '';
-		String userId = '';
-		String alias = '';
-
-		Account acct = [SELECT Id, OwnerId, Name from Account where Id = :accountId];
-
-		if(acct == null)
-			throw new CalloutException('Account could not be found.');
-
-		List<User> usrLst = [select Id, Alias, FirstName, LastName, Email from USER where Id = :acct.OwnerId];
-
-		if(!usrLst.isEmpty()){
-			name = usrLst.get(0).FirstName + ' ' + usrLst.get(0).LastName;
-			userId = usrLst.get(0).Id;
-		}
-
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-		EmailTemplate et = [Select Id, Subject, Body, HtmlValue from EmailTemplate where Name = 'AMS Minor Changes Notification'];
-		String subject = et.Subject;
-		String plainBody = et.Body;
-		String htmlBody = et.HtmlValue;
-
-		String memoText = createMemoText(accountChanges);
-
-		String accountURL = System.URL.getSalesforceBaseURL().toExternalForm() + '/' + acct.Id;
-
-		plainBody = plainBody.replace('#USERFULLNAME',name);
-		plainBody = plainBody.replace('#ACCOUNTNAME',acct.Name);
-		plainBody = plainBody.replace('#ACCOUNTCHANGES', memoText);
-
-		memoText = memoText.replaceAll('\r\n', '<br>');
-
-		htmlBody = htmlBody.replace('#USERFULLNAME',name);
-		htmlBody = htmlBody.replace('#ACCOUNTNAME',acct.Name);
-		htmlBody = htmlBody.replace('#ACCOUNTCHANGES', memoText);
-		htmlBody = htmlBody.replace('#HTMLPAGE', accountURL);
-
-		mail.setHtmlBody(htmlBody);
-		mail.setPlainTextBody(plainBody);
-		mail.subject = ' IATA - AMS Minor Changes Notification';
-
-		// set users
-		mail.setTargetObjectId(userId);
-		mail.setSaveAsActivity(false);
-
-		List<String> emailsCC = new List<String>{'goncalvesd@iata.org'};
-		mail.setCcAddresses(emailsCC);
-
-		// Sends the email
-		Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-	}
-
-	public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+		public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
 		AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 		AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
