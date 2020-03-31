@@ -7,29 +7,32 @@
             <div if:false={specialCase}>
                 <span class={titleCss}> {title} </span>
             </div>
-        </span>        
-        <div  slot="cardButton" if:true={showTopReachUs}
-            class="slds-text-align_center slds-align--absolute-center slds-show_medium recentcases">
-            <div class="slds-card__body_inner aroundLinkBlueBorder slds-size--1-of-1 slds-m-right_medium">
-                <div class="cursorPointer slds-grid slds-gutters slds-grid_align-center slds-grid_vertical-align-center" onclick={redirectToSupport}>
-                    <span
-                        class="slds-col slds-m-vertical_x-small tileNewServiceText text-blue text-bold">
-                        {label.CSP_FAQReachUsBanner_ButtonText}
-                    </span>
+        </span>   
+        
+        <div slot="cardButton" class="slds-grid slds-align_absolute-center slds-gutters_direct-x-small" >
+            <span if:true={showTopReachUs}
+                class="slds-col slds-text-align_center slds-align--absolute-center slds-show_medium recentcases">
+                <div class="slds-card__body_inner aroundLinkBlueBorder slds-size--1-of-1 slds-var-m-horizontal_xx-small" >
+                    <div class="cursorPointer slds-grid slds-gutters slds-grid_align-center slds-grid_vertical-align-center" onclick={redirectToSupport}>
+                        <span
+                            class="slds-col slds-m-vertical_x-small tileNewServiceText text-blue text-bold">
+                            {label.CSP_FAQReachUsBanner_ButtonText}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </span>
 
-        <span  slot="cardButton" if:true={dataRecordsSeeAll}>
-            <lightning-button variant="base" 
-                label={label.CSP_SeeAll} 
-                title={label.CSP_SeeAll}
-                icon-name="utility:forward" 
-                icon-position="right" 
-                onclick={seeAllCases}
-                class="slds-p-right_small blueCustomButtonLink">
-            </lightning-button>
-        </span>
+            <span if:true={dataRecordsSeeAll} class="slds-col">
+                <lightning-button variant="base" 
+                    label={label.CSP_SeeAll} 
+                    title={label.CSP_SeeAll}
+                    icon-name="utility:forward" 
+                    icon-position="right" 
+                    onclick={seeAllCases}
+                    class="blueCustomButtonLink">
+                </lightning-button>
+            </span>
+        </div>
 
         <span slot="cardBody">
             <div class={cardBodyContent}>
