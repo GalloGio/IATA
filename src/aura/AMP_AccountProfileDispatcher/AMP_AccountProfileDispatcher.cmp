@@ -1,4 +1,4 @@
-<aura:component implements="force:appHostable">
+<aura:component implements="force:appHostable" access="public">
     
 	<!-- Account ID parameter - to be received from app -->
     <aura:attribute name="accountId" type="String"/>

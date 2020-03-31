@@ -1,4 +1,4 @@
-<aura:component controller="AWW_CoreRelationshipCtrl">
+<aura:component controller="AWW_CoreRelationshipCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="columns1" type="List"/>
     <aura:attribute name="data1" type="List"/>

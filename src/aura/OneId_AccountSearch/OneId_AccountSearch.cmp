@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_AccountSearch">
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_AccountSearch" access="public">
 
     <aura:registerEvent name="itemSelected" type="c:OneId_ItemSelected_EVT"/>
 

@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountPlanCtrl">
+<aura:component controller="AWW_AccountPlanCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="activityView" type="String" default="current"/>
     <aura:attribute name="milestoneView" type="Boolean" default="false"/>
