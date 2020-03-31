@@ -2864,6 +2864,10 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>VAT番号</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>ウェブサイト</label>
         <name>CSP_L2_Website</name>
     </customLabels>
