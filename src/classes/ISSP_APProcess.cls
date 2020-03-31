@@ -581,6 +581,9 @@ global without sharing class ISSP_APProcess {
 									}
 								} else if (newForm.Type_of_Report_Options__c=='PDF') {
 									ISSP_AP_fieldLists.changeMandatoryFields.put('Hot_files_delivery_format__c', 'Hot_files_delivery_format__c');
+									if (newForm.Hot_files_delivery_format__c=='E-mail and download') {
+										ISSP_AP_fieldLists.changeMandatoryFields.put('HOT_File_Recipient_Email_1__c', 'HOT_File_Recipient_Email_1__c');
+									}
 								} else if (newForm.Type_of_Report_Options__c=='Excel') {
 									ISSP_AP_fieldLists.changeMandatoryFields.put('Receive_XLS_Reports__c', 'Receive_XLS_Reports__c');
 								}
@@ -644,7 +647,7 @@ global without sharing class ISSP_APProcess {
 		}
 		retrieveAccountToShowSections();
 
-		if (ApexPages.currentPage().getUrl().contains('ISSP_APCases')) {
+		if (ApexPages.currentPage().getUrl().containsIgnoreCase('ISSP_APCases')) {
 			populateCountriesMap();
 			poupulateOptInOutOptions();
 		}
@@ -1869,13 +1872,20 @@ global without sharing class ISSP_APProcess {
 		}
 	}
 
+	public static final Map<String,Set<String>> MAP_CHANGE_ITEMS = new Map<String,Set<String>>{
+		'BSP' => new Set<String>{'Change of Address', 'Tax Number', 'Master Table', 'Voluntary Withdrawal'},
+		'CASS' => new Set<String>{'Change of Address', 'Tax Number', 'Master Table', 'Voluntary Withdrawal', 'Report Options', 'Commission', 'Stock Management'}
+	};
 	public List<SelectOption> getChangeItems() {
+		Set<String> setValidItems = MAP_CHANGE_ITEMS.get(strLoB);
 		List<SelectOption> options = new List<SelectOption>();
 		for( Schema.PicklistEntry pickListVal : AP_Process_Form__c.Type_of_Change_Requested__c.getDescribe().getPicklistValues()){
 			String label = pickListVal.getLabel();
 			String value = pickListVal.getValue();
-			if (value == 'Master Table') label = strLoB + 'Link Master Table';
-			options.add(new SelectOption(value, label));
+			if (setValidItems.contains(value)) {
+				if (value == 'Master Table') label = strLoB + 'Link Master Table';
+				options.add(new SelectOption(value, label));
+			}
 		}
 		return options;
 	}

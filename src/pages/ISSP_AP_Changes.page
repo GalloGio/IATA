@@ -26,6 +26,7 @@
         function makeRows(table, columnCount) {
             cells = table.rows[0].cells;
             cellCount = cells.length;
+            if (cellCount<=columnCount) return;
             rowCount = Math.ceil(cellCount / columnCount);
             for (i = 0; i < rowCount; i++) {
                 table.insertRow(0);
@@ -381,7 +382,7 @@
 
                 <!-- Show when Type of change Voluntary Withdrawal is selected -->
                 <apex:outputPanel id="WithdrawalFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Voluntary Withdrawal')=true}">
-                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Voluntary Withdrawal Request {!strLoB} {!apcountry}">
+                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Voluntary Withdrawal Request {!apcountry} {!strLoB}">
                         <tr><td colspan="4" class="aplabel">
                             Please download and complete the form in the link below. Once completed please uploaded using the box.
                         </td></tr>
@@ -391,7 +392,7 @@
                         <apex:iframe scrolling="false" height="180px"
                             src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=BSP Voluntary Withdrawal&reqDescription=&reqIdentifier=BSP_Voluntary_Withdrawal"/>
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='CASS'}" columns="1" title="Voluntary Withdrawal Request {!strLoB} {!apcountry}">
+                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='CASS'}" columns="1" title="Voluntary Withdrawal Request {!apcountry} {!strLoB}">
                         <tr><td colspan="4" class="aplabel">
                             Please download and complete the form in the link below. Once completed please uploaded using the box.
                         </td></tr>
@@ -405,7 +406,7 @@
 
                 <!-- Show when Type of change Report Options is selected -->
                 <apex:outputPanel id="ReportOptionsFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options')=true}">
-                    <apex:pageBlockSection collapsible="false" rendered="{!strLoB='BSP'}" columns="1" title="Report Options">
+                    <apex:pageBlockSection collapsible="false" columns="1" title="Report Options">
                         <tr><td colspan="4" class="aplabel">
                             Please select at least one of the options below to be modified:
                         </td></tr>
@@ -421,7 +422,7 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="HOTselected" value="{!newForm.Type_of_Report_Options__c='HOT'}"/>
+                        <apex:variable var="HOTselected" value="{!LOWER(newForm.Type_of_Report_Options__c)='hot'}"/>
                         <apex:pageBlockSectionItem rendered="{!HOTselected}">
                             <apex:outputLabel value="Does your airline wish to receive HOT files?" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Receive_HOT_files__c}" size="1">
@@ -433,7 +434,7 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="receiveHOTFiles" value="{!HOTselected && OR(newForm.Receive_HOT_files__c='Yes – Billing Period HOT',newForm.Receive_HOT_files__c='Yes – Remittance Period HOT')}" />
+                        <apex:variable var="receiveHOTFiles" value="{!HOTselected && OR(LOWER(newForm.Receive_HOT_files__c)='yes – billing period hot',LOWER(newForm.Receive_HOT_files__c)='yes – remittance period hot')}" />
                         <apex:pageBlockSectionItem rendered="{! receiveHOTFiles}">
                             <apex:outputLabel value="HOT file receipt preference" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
@@ -445,7 +446,7 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="PDFSelected" value="{!newForm.Type_of_Report_Options__c='PDF'}" />
+                        <apex:variable var="PDFSelected" value="{!LOWER(newForm.Type_of_Report_Options__c)='pdf'}" />
                         <apex:pageBlockSectionItem rendered="{! PDFSelected}">
                             <apex:outputLabel value="PDF file receipt preference" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
@@ -457,33 +458,33 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="HOTFilesNotRequired" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='Not Required'}" />
+                        <apex:variable var="HOTFilesNotRequired" value="{!receiveHOTFiles && LOWER(newForm.Hot_files_delivery_format__c)='not required'}" />
                         <apex:outputText value="Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base."
                             rendered="{!HOTFilesNotRequired}"/>
 
-                        <apex:variable var="PDFFilesNotRequired" value="{!PDFSelected && newForm.Hot_files_delivery_format__c='Not Required'}" />
+                        <apex:variable var="PDFFilesNotRequired" value="{!PDFSelected && LOWER(newForm.Hot_files_delivery_format__c)='not required'}" />
                         <apex:outputText value="Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base."
                             rendered="{!PDFFilesNotRequired}"/>
 
-                        <apex:variable var="HOTFilesEmails" value="{!receiveHOTFiles && newForm.Hot_files_delivery_format__c='E-mail and Download'}" />
+                        <apex:variable var="HOTandPDFFilesEmails" value="{! OR(PDFSelected,receiveHOTFiles) && LOWER(newForm.Hot_files_delivery_format__c)='e-mail and download'}" />
                         <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change."
-                            rendered="{!HOTFilesEmails}"/>
-                        <apex:pageBlockSectionItem rendered="{!HOTFilesEmails}">
+                            rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:pageBlockSectionItem rendered="{!HOTandPDFFilesEmails}">
                             <apex:outputLabel value="Email 1" styleclass="ap-required"/>
                             <apex:inputField value="{!newform.HOT_File_Recipient_Email_1__c}"/>
                         </apex:pageBlockSectionItem>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_2__c}" label="Email 2" rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_3__c}" label="Email 3" rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_4__c}" label="Email 4" rendered="{!HOTFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_2__c}" label="Email 2" rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_3__c}" label="Email 3" rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Email_4__c}" label="Email 4" rendered="{!HOTandPDFFilesEmails}"/>
 
                         <apex:outputText value="Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only."
-                            rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_1__c}" label="Email To Remove 1" rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_2__c}" label="Email To Remove 2" rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_3__c}" label="Email To Remove 3" rendered="{!HOTFilesEmails}"/>
-                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_4__c}" label="Email To Remove 4" rendered="{!HOTFilesEmails}"/>
+                            rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_1__c}" label="Email To Remove 1" rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_2__c}" label="Email To Remove 2" rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_3__c}" label="Email To Remove 3" rendered="{!HOTandPDFFilesEmails}"/>
+                        <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_4__c}" label="Email To Remove 4" rendered="{!HOTandPDFFilesEmails}"/>
 
-                        <apex:variable var="ExcelSelected" value="{!newForm.Type_of_Report_Options__c='Excel'}"/>
+                        <apex:variable var="ExcelSelected" value="{!LOWER(newForm.Type_of_Report_Options__c)='excel'}"/>
                         <apex:pageBlockSectionItem rendered="{!ExcelSelected}">
                             <apex:outputLabel value="Does your Airline wish to receive XLS reports?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Receive_XLS_Reports__c}">
@@ -491,7 +492,7 @@
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="ExcelSelectedYes" value="{!ExcelSelected && newForm.Receive_XLS_Reports__c='Yes'}" />
+                        <apex:variable var="ExcelSelectedYes" value="{!ExcelSelected && LOWER(newForm.Receive_XLS_Reports__c)='yes'}" />
                         <apex:outputText value="Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library."
                             rendered="{!ExcelSelectedYes}"/>
 
@@ -510,13 +511,13 @@
                         <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
 
                         <apex:pageBlockSectionItem helpText="Standard Commission will be applied where AWB Billing record indicates a Commission is to be paid on the billing file uploaded in CASSlink."
-                            rendered="{!newForm.Pay_Commission_to_agents__c='Yes'}">
+                            rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes'}">
                             <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Pay_Standard_Commission__c}">
                                 <apex:actionSupport event="onchange" rerender="CommissionFields" status="WaitingStatus"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem rendered="{!newForm.Pay_Commission_to_agents__c='Yes' && newForm.Pay_Standard_Commission__c='Yes'}">
+                        <apex:pageBlockSectionItem rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes' && LOWER(newForm.Pay_Standard_Commission__c)='yes'}">
                             <apex:outputLabel value="Standard Commission Rate (%)" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Commission_Rate__c}"/>
                         </apex:pageBlockSectionItem>
