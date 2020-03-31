@@ -707,7 +707,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 	}
 
-		public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
+	public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
 		AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
 		AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
