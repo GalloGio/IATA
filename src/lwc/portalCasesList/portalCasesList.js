@@ -118,7 +118,11 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
         getPickListValues({ sobj : 'Case', field : 'Country_concerned_by_the_query__c' })
         .then(result => {
-            this.countryPickOptions = this.getPickWithAllValue(result);
+            let auxCountryPickOptions = JSON.parse(JSON.stringify(result));
+
+            //used to order alphabetically
+            this.countryPickOptions = auxCountryPickOptions.sort((a, b) => {return (a.label).localeCompare(b.label)});
+            this.countryPickOptions = this.getPickWithAllValue(this.countryPickOptions);
         });
 
         companyCasesContactsPicklist({})
