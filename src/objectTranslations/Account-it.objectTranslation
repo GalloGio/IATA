@@ -56,6 +56,10 @@
             <translation>Fornitore compagnia aerea</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Aeroporto</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Associazione</translation>
         </picklistValues>

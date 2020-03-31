@@ -60,6 +60,10 @@
             <translation>ผู้จัดจำหน่ายของสายการบิน</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>สนามบิน</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>สมาคม</translation>
         </picklistValues>
