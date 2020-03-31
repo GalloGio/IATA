@@ -3456,6 +3456,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>우리의 정기적 인 업데이트의 일환으로, 우리는 우리의 관점에서 몇 가지 사항을 변경하고 있습니다. 우리는 전체의 문서를 읽어 보시기 바랍니다.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>의견을 보내 주셔서 감사합니다.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>

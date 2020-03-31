@@ -6401,6 +6401,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Task</value>
     </labels>
     <labels>
+        <fullName>CSP_Terms_Updated_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Terms_Updated_Message</shortDescription>
+        <value>As part of our regular updates, we're making a few changes to our terms. We encourage you to read the documents in full.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ThanksFeedback</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

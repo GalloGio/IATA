@@ -322,12 +322,23 @@
                                         <template if:true={displayToU}>
                                             <!------------------------------------------      Terms of Use      --------------------------------------------->
                                             <lightning-layout-item size="12">
+                                                <div style="height:54px;">
+                                                </div>
+                                            </lightning-layout-item>
+
+                                            <lightning-layout-item size="12">
                                                 <c-portal-services-terms-and-conditions
                                                     portal-service-id={gcsPortalServiceId}
                                                     language={registrationForm.language}
                                                     onacceptancechanged={tcAcceptanceChanged}>
                                                 </c-portal-services-terms-and-conditions>
                                             </lightning-layout-item>
+
+                                            <lightning-layout-item size="12">
+                                                <div style="height:60px;">
+                                                </div>
+                                            </lightning-layout-item>
+
                                             <!------------------------------------------      Submit Button      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div>
