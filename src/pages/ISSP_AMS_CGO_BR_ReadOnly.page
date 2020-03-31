@@ -170,17 +170,34 @@
 	        </apex:dataTable>
 	        <br/>
 	        </apex:panelGrid>
-	        <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+	        <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rendered="{!!isCNSAgency}">
 		        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Separate_user_access}" />
 		        <apex:outputField value="{!newForm.Separate_user_access__c}"/>
 		        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access}" />
 		        <apex:outputField value="{!newForm.Head_Office_have_access__c}"/>
 	        </apex:panelGrid>
 	      </apex:pageBlockSection>
-	    </div>
+		</div>
+		
+		<div style="page-break-after:always;">
+			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isCNSAgency}">
+				<apex:facet name="header">
+					<apex:outputpanel >
+						{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4}
+						<apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section6" style="float:right"/>
+						</apex:outputpanel>                       
+					</apex:facet>
+				<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+					<apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Separate_user_access}" />
+					<apex:outputField value="{!newForm.Separate_user_access__c}"/>
+					<apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access}" />
+					<apex:outputField value="{!newForm.Head_Office_have_access__c}"/>
+				</apex:panelGrid>
+	  		</apex:pageBlockSection>
+	   </div>
 	   
 	   	 <div style="page-break-after:always;">
-	         <apex:pageBlockSection columns="1" collapsible="false">
+	         <apex:pageBlockSection columns="1" collapsible="false" rendered="{!!isCNSAgency}">
 	        <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4}

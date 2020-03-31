@@ -436,19 +436,26 @@
         <apex:form id="AMSForm">
         <div class="progress iata-tabs">
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" value="{!$Label.ISSP_AMS_Step1_ProgressBar}" id="Prev1"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_ProgressBar}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_AMS_Step2_ProgressBar}" id="Prev2"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" id="Prev2">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step2_ProgressBar}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!$Label.ISSP_AMS_Step3_ProgressBar}
+                <apex:outputText value="{!$Label.ISSP_AMS_Step3_ProgressBar}" escape="false"/>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4"/>
+                <apex:outputText value="{!$Label.ISSP_AMS_Step4_ProgressBar}" escape="false"/>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" value="{!$Label.ISSP_AMS_Step5_ProgressBar}" id="Next5"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+                    <apex:outputText value="{!IF(CommunityName=='CNS', $Label.ISSP_AMS_Step5_ProgressBar_CNS, $Label.ISSP_AMS_Step5_ProgressBar)}" escape="false"/>
+                </apex:commandLink>
             </div>
         </div>
                
