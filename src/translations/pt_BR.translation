@@ -3452,6 +3452,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Como parte de nossas atualizações regulares, estamos fazendo algumas mudanças em nossos termos. Nós o encorajamos a ler os documentos na íntegra.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Obrigado pelo seu feedback!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>

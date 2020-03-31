@@ -3455,6 +3455,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Im Rahmen unserer regelmäßigen Aktualisierungen nehmen wir einige Änderungen an unseren Bedingungen vor. Wir empfehlen Ihnen, die Dokumente vollständig zu lesen.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Vielen Dank für Ihr Feedback!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>

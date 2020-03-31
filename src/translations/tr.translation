@@ -3449,6 +3449,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Düzenli güncellemelerin bir parçası olarak, bizim şartları birkaç değişiklik yapıyoruz. Biz tam belgeleri okumanızı öneriyoruz.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Geri bildiriminiz için teşekkür ederiz.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>

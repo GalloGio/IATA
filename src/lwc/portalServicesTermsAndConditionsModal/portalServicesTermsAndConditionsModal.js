@@ -3,6 +3,7 @@ import { LightningElement, api, track } from 'lwc';
 import acceptServiceTermsAndConditions from '@salesforce/apex/ServiceTermsAndConditionsUtils.acceptServiceTermsAndConditions';
 
 import CSP_Services_Accept_Terms from '@salesforce/label/c.CSP_Services_Accept_Terms';
+import CSP_Terms_Updated_Message from '@salesforce/label/c.CSP_Terms_Updated_Message';
 import OneId_TermsAndConditions from '@salesforce/label/c.OneId_TermsAndConditions';
 
 export default class PortalServicesTermsAndConditionsModal extends LightningElement {
@@ -16,6 +17,7 @@ export default class PortalServicesTermsAndConditionsModal extends LightningElem
 
     _labels = {
         CSP_Services_Accept_Terms,
+        CSP_Terms_Updated_Message,
         OneId_TermsAndConditions
     }
     get labels() {

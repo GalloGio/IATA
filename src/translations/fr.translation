@@ -3453,6 +3453,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Dans le cadre de nos mises à jour régulières, nous apportons quelques modifications à nos conditions. Nous vous encourageons à lire les documents dans leur intégralité.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Merci pour vos commentaires.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
