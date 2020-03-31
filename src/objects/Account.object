@@ -7068,11 +7068,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>IATA</controllingFieldValue>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
                 <controllingFieldValue>Media</controllingFieldValue>
                 <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
                 <controllingFieldValue>Recreational</controllingFieldValue>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Airport</controllingFieldValue>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
                 <controllingFieldValue>Airline</controllingFieldValue>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
@@ -7092,22 +7092,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Airline Holding Company</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Authority</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Concessionaire</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Operator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Internal Use</controllingFieldValue>
@@ -7200,6 +7184,22 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>General Public</controllingFieldValue>
                 <valueName>Student</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Authority</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Concessionaire</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Operator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
@@ -16731,6 +16731,11 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <label>Airline Supplier</label>
                 </value>
                 <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+                <value>
                     <fullName>Association</fullName>
                     <default>false</default>
                     <label>Association</label>
@@ -16774,11 +16779,6 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <fullName>IATA</fullName>
                     <default>false</default>
                     <label>IATA</label>
-                </value>
-                <value>
-                    <fullName>Infrastructure Partner</fullName>
-                    <default>false</default>
-                    <label>Infrastructure Partner</label>
                 </value>
                 <value>
                     <fullName>Internal Use</fullName>
@@ -36516,6 +36516,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -36545,10 +36549,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46168,6 +46168,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -46201,10 +46205,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59640,6 +59640,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -59669,10 +59673,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65798,6 +65798,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -65823,10 +65827,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -81000,6 +81000,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -81029,10 +81033,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -96188,6 +96188,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -96217,10 +96221,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -103175,6 +103175,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -103208,10 +103212,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -109706,6 +109706,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -109735,10 +109739,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -118235,6 +118235,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -118264,10 +118268,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
