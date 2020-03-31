@@ -2855,6 +2855,10 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Número de IVA</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Página web</label>
         <name>CSP_L2_Website</name>
     </customLabels>

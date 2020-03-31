@@ -2857,6 +2857,10 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Partita IVA</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Sito web</label>
         <name>CSP_L2_Website</name>
     </customLabels>
