@@ -4882,6 +4882,11 @@ Location_Type__c = 'BR');
 			Boolean isPassAccreditation = ctrl.isPassAccreditation;
 			String goGlobalDocumentLink = ctrl.goGlobalDocumentLink;
 			List<SelectOption> mcNocCountryList = ctrl.mcNocCountryList;
+			ctrl.getDisablePrevious();
+			ctrl.Beginning();
+			ctrl.Previous();
+			ctrl.Next();
+			ctrl.selectAllCountries();
 		}
 
 	}
