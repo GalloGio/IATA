@@ -1721,22 +1721,28 @@ public without sharing class ISSP_AMS_Accreditation {
 						}
 					}
 				} else if (con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates') {
-					if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
-						options.add(new SelectOption(AMS_Utils.TYPE_CASS_ASSOC_BRANCH, Label.ISSP_AMS_OPTION_CASS_ASSOC_BRANCH));
-
-						if (isUKTerritory) {
-							options.add(new SelectOption(AMS_Utils.TYPE_COURIER_HO, Label.ISSP_AMS_OPTION_COURIER_HO));
+					if(isCNSAgency && communityName=='CNS'){
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
+						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
+					}else{
+						if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
+							options.add(new SelectOption(AMS_Utils.TYPE_CASS_ASSOC_BRANCH, Label.ISSP_AMS_OPTION_CASS_ASSOC_BRANCH));
+	
+							if (isUKTerritory) {
+								options.add(new SelectOption(AMS_Utils.TYPE_COURIER_HO, Label.ISSP_AMS_OPTION_COURIER_HO));
+							}
+	
+							if (isCASSImport) {
+								options.add(new SelectOption(AMS_Utils.TYPE_IMPORT_HO, Label.ISSP_AMS_OPTION_IMPORT_HO));
+							}
 						}
-
-						if (isCASSImport) {
-							options.add(new SelectOption(AMS_Utils.TYPE_IMPORT_HO, Label.ISSP_AMS_OPTION_IMPORT_HO));
+	
+						if (isocountry.EACP_Country__c) {
+							options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
+						} else {
+							options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 						}
-					}
-
-					if (isocountry.EACP_Country__c) {
-						options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
-					} else {
-						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 					}
 				} else if (con.Account.Category__c == AMS_Utils.CATEGORY_COURIER) {
 					options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
