@@ -106,7 +106,7 @@ public with sharing class PortalRecommendationCtrl {
 					rec.Recommendation_Visibility__r.RecommendationTitle__c,
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rec.Recommendation_Visibility__r.Product_Description__c): rec.Recommendation_Visibility__r.Service_Description__c),
 					learnMoreLabel,
-					rec.Recommendation_Visibility__r.InformationButtonLink__c,
+					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? iecURL + rec.Recommendation_Visibility__r.InformationButtonLink__c : rec.Recommendation_Visibility__r.InformationButtonLink__c),
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rec.Recommendation_Visibility__r.PortalService__r.Requestable__c ? (isPortalAdmin ? (rec.Recommendation_Visibility__r.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
 					rec.Recommendation_Visibility__r.ActionButtonLink__c,
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
