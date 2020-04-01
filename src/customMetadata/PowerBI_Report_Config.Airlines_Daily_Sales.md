@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>LastModifiedDate__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:dateTime">2020-03-30T10:32:00.000Z</value>
     </values>
     <values>
         <field>Report_Id_Dev__c</field>
