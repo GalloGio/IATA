@@ -56,6 +56,10 @@
             <translation>航空会社プロバイダー</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>空港</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>協会</translation>
         </picklistValues>

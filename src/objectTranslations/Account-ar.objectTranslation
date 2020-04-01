@@ -56,6 +56,10 @@
             <translation>مزود الطيران</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>مطار</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>جمعية</translation>
         </picklistValues>

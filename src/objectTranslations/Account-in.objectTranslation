@@ -56,6 +56,10 @@
             <translation>Pemasok Maskapai Penerbangan</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Bandara</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Asosiasi</translation>
         </picklistValues>

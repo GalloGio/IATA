@@ -246,6 +246,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		List<GCS_CustomerType> customerTypesList = GCS_CustomerType.getCustomerTypesMap().values();
 		for(GCS_CustomerType customerType : customerTypesList){
+			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'Other'){
+				return customerType.metadataCustomerType.DeveloperName;
+			}
+			
 			if((customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category)
 					|| (customerType.metadataCustomerType.Filter_on_Sector__c == sector && customerType.metadataCustomerType.Filter_on_Category__c == category)){
 				return customerType.metadataCustomerType.DeveloperName;
@@ -662,16 +666,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		BucketAccountDetail accDetail = new BucketAccountDetail();
 
-		String sector = '';
-		String category = '';
-
-		if(selectedMetadataCustomerType.Can_Account_Be_Created__c == true){
-			sector = selectedMetadataCustomerType.Created_Account_Sector__c;
-			category = selectedMetadataCustomerType.Created_Account_Category__c;
-		}else{
-			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
-			category = selectedMetadataCustomerType.Filter_on_Category__c;
-		}
+		String sector = selectedMetadataCustomerType.MasterLabel;
 
 		String accountQuery = '';
 		accountQuery +='SELECT Id, Sector__c, Category__c';
@@ -690,10 +685,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		if(!String.isEmpty(sector)){
-			accountQuery +=' AND Sector__c =\''+ sector +'\'';
-		}
-		if(!String.isEmpty(category)){
-			accountQuery +=' AND Category__c =\''+ category +'\'';
+			accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\'Other\'';
 		}
 
 		List<Account> accList = new List<Account>();
@@ -706,9 +698,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - ' + category;
+			acc.Name = sector + ' - Other';
 			acc.Sector__c = sector;
-			acc.Category__c = category;
+			acc.Category__c = 'Other';
+			acc.Category_Other_Value__c = 'Bucket Account';
 			acc.Is_General_Public_Account__c = true;
 			//acc.IsPartner = true;
 

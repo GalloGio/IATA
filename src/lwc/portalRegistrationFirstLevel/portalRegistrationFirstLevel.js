@@ -566,8 +566,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSectorChange(event){
 
-		this.isLoading = true;
-
 		if(this.selectedCustomerType == event.target.value){
 			this._checkForMissingFields();
 			this.isLoading = false;
@@ -830,8 +828,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			}
 
 			if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
-				isValid = false;
-			}else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
 				isValid = false;
 			}
 

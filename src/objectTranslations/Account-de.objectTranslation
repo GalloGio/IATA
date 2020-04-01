@@ -60,6 +60,10 @@
             <translation>Fluggesellschafts-Anbieter</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Flughafen</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Verband</translation>
         </picklistValues>

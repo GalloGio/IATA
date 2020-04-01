@@ -60,6 +60,10 @@
             <translation>항공사 공급업체</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>공항</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>협회</translation>
         </picklistValues>
