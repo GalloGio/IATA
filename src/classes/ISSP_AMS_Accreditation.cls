@@ -1866,9 +1866,13 @@ public without sharing class ISSP_AMS_Accreditation {
 					includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
 				}
-			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && !isPassAccreditation) {
+			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 				includedPageName = 'ISSP_AMS_CASS_Associate_Form';
 				includedSummaryPage = 'ISSP_AMS_CASS_HO_ReadOnly';
+			}
+			else {
+				includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
+				includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
 			}
 		}else if(sectorValue.StartsWith(AMS_Utils.sectorValuePass)){
 			if (isPassAccreditation) {//If the user is in the ISSP_AMS_Upload page on the PASS process
@@ -1882,10 +1886,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 		}
-		else {
-				includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
-				includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
-			}
 	}
 
 	private List<String> hasPendingHOAccreditations(Case cse) {
