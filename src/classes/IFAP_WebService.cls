@@ -8,6 +8,12 @@
 *****************************************************************************/
 global class IFAP_WebService {
 
+	global class IFAPActionWrapper {
+		webservice String message;
+		webservice Id ifapId; 
+		webservice Boolean redirectUserToIFAP = false;
+	}
+
 	@RemoteAction
 	public static final String CASE_STATUS_R_PENDING_APPROVAL = 'Quality Issue Request Pending Approval';
 	public static final String CASE_STATUS_REASSESS_REJECTED = 'Quality Issue Rejected';
@@ -51,14 +57,7 @@ global class IFAP_WebService {
 			return e.getmessage() + e.getStackTraceString();
 		}
 
-
 	}
-
-
-
-
-
-
 
 	WebService static boolean isPortalUser() {
 		boolean isPortalUser = false;
@@ -86,11 +85,8 @@ global class IFAP_WebService {
 		return caseStatus;
 	}
 
-
-
 	//RA: used for FA Letter sent mass update button
 	webService static Boolean UpdateFALetterSent(List<Case> cases, String batch) {
-
 
 		try {
 			clsUpdateLetterSentBatch cBatch = new clsUpdateLetterSentBatch ();
@@ -107,7 +103,6 @@ global class IFAP_WebService {
 			system.debug('**** UpdateFALetterSent Error');
 			return false;
 		}
-
 
 	}
 
@@ -195,9 +190,6 @@ global class IFAP_WebService {
 
 		return url;
 	}
-
-
-
 
 	webService static String CheckCaseStatus(String caseId) {
 		String caseStatus;
@@ -297,37 +289,30 @@ global class IFAP_WebService {
 					ANG_IsNewgenAgency__c,
 					ANG_HE_CashCondition__c,
 					(SELECT
-						Id,
-						ANG_Limit_Cash_Conditions__c
+						Id, ANG_Limit_Cash_Conditions__c
 					 FROM Location_Risk_Events__r
-					 WHERE
-						ANG_Risk_Type__r.Name = 'Fail Financial Statements'
-					 AND
-						ANG_Event_Status__c IN ('Active', 'Inactive_Revoked')
+					 WHERE ANG_Risk_Type__r.Name = :ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS
+					 	AND ANG_Event_Status__c IN (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_REVOKED)
 					 ORDER BY LastModifiedDate DESC
-					 LIMIT 1
-					),
+					 LIMIT 1),
 					(SELECT
 						Id,
 						Status,
+						AccountId,
+						CreatedDate,
 						Deadline_Date__c,
+						Financial_Review_Type__c,
 						FA_Second_Deadline_Date__c,
 						Financial_Review_Result__c,
 						Assessment_Performed_Date__c
 					FROM Cases
-					WHERE
-						Id = :caseId
-					),
-					(SELECT
-						Id,
-						Security_Status__c
-					FROM Financial_Securities__r
-					)
+					WHERE Id = :caseId),
+					(SELECT 
+						Id, Security_Status__c
+					FROM Financial_Securities__r)
 				FROM Account
-				WHERE
-					Id = :accountId
-				LIMIT 1
-				];
+				WHERE Id = :accountId
+				LIMIT 1];
 
 		return acct;
 
@@ -350,7 +335,7 @@ global class IFAP_WebService {
 
 	}
 
-	webservice static String applyCashCondition(Id caseId, Id accountId){
+	webservice static IFAPActionWrapper applyCashCondition(Id caseId, Id accountId){
 
 		try {
 
@@ -358,27 +343,40 @@ global class IFAP_WebService {
 
 			Case cse = acct.Cases.get(0);
 
-			String message = isValidForApplyingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
+			IFAPActionWrapper ifapAction = ANG_MulticountryHelper.assessOnGoingNonCompliance(cse);
 
-			if('VALID' != message){
-				return message;
+			if(ifapAction != null){
+				return ifapAction;
+			}
+
+			ifapAction = new IFAPActionWrapper();
+
+			String message = isValidForApplyingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r), !acct.Location_Risk_Events__r.isEmpty());
+
+			if(message != AMS_Utils.VALID){
+				ifapAction.message = message;
+				return ifapAction;
 			}
 
 			ANG_Agency_Risk_Event__c riskEvent = acct.Location_Risk_Events__r.get(0);
 
 			message = applyCashConditionAction(riskEvent, cse);
 
-			if(message != 'SUCCESS'){
-				return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+			if(message != AMS_Utils.SUCCESS){
+				ifapAction.message = UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+				return ifapAction;
 			}
 
-			return CASH_CONDITION_SUCCESSFULLY_APPLIED;
+			ifapAction.message = CASH_CONDITION_SUCCESSFULLY_APPLIED;
+			return ifapAction;
 
 		}
 		catch(Exception e){
-			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
-			system.debug(LoggingLevel.ERROR, e.getMessage());
-			return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(e.getMessage()) + '.';
+			System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, e.getMessage());
+			IFAPActionWrapper ifapAction = new IFAPActionWrapper();
+			ifapAction.message = UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(e.getMessage()) + '.';
+			return ifapAction;
 		}
 
 	}
@@ -392,79 +390,90 @@ global class IFAP_WebService {
 			update riskEvent;
 
 			cse.secondFAnonComplianceDate__c = System.today();
-			cse.FA_Third_Deadline_Date__c    = cse.Deadline_Date__c.addDays(365);
+			cse.FA_Third_Deadline_Date__c = cse.Deadline_Date__c.addDays(365);
 			update cse;
 		}
 		catch(Exception e){
-			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
-			system.debug(LoggingLevel.ERROR, e.getMessage());
+			System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, e.getMessage());
 			Database.rollback(sp);
 			return e.getMessage();
 		}
 
-		return 'SUCCESS';
+		return AMS_Utils.SUCCESS;
 
 	}
 
-	private static String isValidForApplyingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
+	private static String isValidForApplyingCashCondition(Account acct, Case cse, Boolean hasAgentFS, Boolean hasFailFinancialStatementsRE){
 
 		Set<String> caseStatusSet = new Set<String>{
-			'Agent Notified (Email)',
-			'Agent Notified (Mail)',
-			'Sanity Check Failure'
+			AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_EMAIL,
+			AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_MAIL,
+			AMS_Utils.CASE_STATUS_SANITY_CHECK_FAILURE
 		};
+
+		if(acct.ANG_IsNewgenAgency__c && isAssessmentPerformed(cse)){
+			if(hasAgentFS){
+				return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
+			} else {
+				return INVALID_ACTION_REINSTATE_AGENT;
+			}
+		}
 
 		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !hasAgentFS){
 			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
 		}
 
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
-			return INVALID_ACTION_REINSTATE_AGENT;
-		}
-
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && hasAgentFS){
-			return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
-		}
-
-		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !hasAgentFS){
+		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !hasAgentFS || !hasFailFinancialStatementsRE){
 			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY;
 		}
 
-		return 'VALID';
+		return AMS_Utils.VALID;
 
 	}
 
-	webservice static String removeCashCondition(Id caseId, Id accountId){
+	webservice static IFAPActionWrapper removeCashCondition(Id caseId, Id accountId){
 
 		Account acct = fetchAccountInformation(caseId, accountId);
 
 		Case cse = acct.Cases.get(0);
 
+		IFAPActionWrapper ifapAction = ANG_MulticountryHelper.assessOnGoingNonCompliance(cse);
+
+		if(ifapAction != null){
+			return ifapAction;
+		}
+
+		ifapAction = new IFAPActionWrapper();
+		
 		String message = isValidForRemovingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
 
-		if('VALID' != message){
-			return message;
+		if(message != AMS_Utils.VALID){
+			ifapAction.message = message;
+			return ifapAction;
 		}
 
 		ANG_Agency_Risk_Event__c riskEvent = acct.Location_Risk_Events__r.get(0);
 
 		message = removeCashConditionAction(riskEvent);
 
-		if(message != 'SUCCESS'){
-			return UNABLE_TO_REMOVE_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+		if(message != AMS_Utils.SUCCESS){
+			ifapAction.message = UNABLE_TO_REMOVE_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+			return ifapAction;
 		}
 
-		return CASH_CONDITION_SUCCESSFULLY_REMOVED;
+		ifapAction.message = CASH_CONDITION_SUCCESSFULLY_REMOVED;
+		return ifapAction;
 
 	}
 
 	private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
 
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
+		if(acct.ANG_IsNewgenAgency__c && isAssessmentPerformed(cse) && !hasAgentFS){
 			return INVALID_ACTION_REINSTATE_AGENT;
 		}
 
-		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
+		if(!acct.ANG_IsNewgenAgency__c || !isAssessmentPerformed(cse)){
 			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
 		}
 
@@ -472,7 +481,7 @@ global class IFAP_WebService {
 			return AGENT_DOES_NOT_HAVE_CASH_CONDITION;
 		}
 
-		return 'VALID';
+		return AMS_Utils.VALID;
 
 	}
 
@@ -483,13 +492,25 @@ global class IFAP_WebService {
 			update riskEvent;
 		}
 		catch(Exception e){
-			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
-			system.debug(LoggingLevel.ERROR, e.getMessage());
+			System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, e.getMessage());
 			return e.getMessage();
 		}
 
-		return 'SUCCESS';
+		return AMS_Utils.SUCCESS;
 
+	}
+
+	public static Boolean isAssessmentPerformed(Case cse) {
+		//If we have a non compliance task related with this case 
+		//the assessment for this case is considered as performed
+		//since the assessment result was obtained on a subsequent IFAP case
+		return ANG_MulticountryHelper.proceedWithoutFinancialAssessmentResult(cse)
+			|| (String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c);
+	}
+
+	webservice static String processNonComplianceOnDifferentIfap(Id ifapId){
+		return ANG_MulticountryHelper.processNonComplianceOnDifferentIfap(ifapId);
 	}
 
 }

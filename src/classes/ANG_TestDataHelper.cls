@@ -80,6 +80,7 @@ public class ANG_TestDataHelper
 		acct.ANG_Accreditation_Model__c = isMulticountry ? AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY : AMS_Utils.ACCREDITATIONMODEL_CASH;
 		acct.ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
 		acct.ANG_HE_CashCondition__c = false;
+		acct.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 		return acct;
 	}
 

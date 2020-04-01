@@ -68,11 +68,16 @@ public class ANG_MulticountryHelper {
 
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
-	public static Set<String> locationTypesSet = new Set<String>{
-		AMS_Utils.HE,
-		AMS_Utils.AE,
-		AMS_Utils.GE
+	private static final Set<String> MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES = new Set<String>{
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL,
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_QUARTERLY
 	};
+
+	private static final String NON_COMPLIANCE_TASK_SUBJECT = 'Multiple IFAP non compliance';
+	@TestVisible
+	private static final String NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE = 'The non compliance was started on the IFAP {{caseNumber}}, therefore this action is not allowed.';
+	@TestVisible
+	private static final String NON_COMPLIANCE_ON_DIFFERENT_IFAP_CONFIRMATION_TOKEN = 'By clicking ok, you will be redirected to the previous IFAP and you agree to continue processing the non compliance from there.';
 
 	/**
 	* Verifies if the immediate parent
@@ -867,4 +872,97 @@ public class ANG_MulticountryHelper {
 				 ]);
 	}
 
+	public static Case fetchIFAPWithOnGoingNonCompliance(Case cse){
+
+		if(MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+			List<Case> ifapLst = [SELECT Id, CaseNumber,
+									(SELECT Id
+									FROM Tasks
+									WHERE Subject = :NON_COMPLIANCE_TASK_SUBJECT
+										AND Status = :AMS_Utils.COMPLETED)
+								  FROM Case
+								  WHERE RecordType.DeveloperName = 'IATA_Financial_Review'
+									AND Id != :cse.Id
+									AND AccountId = :cse.AccountId
+									AND Status != :AMS_Utils.CASE_STATUS_CLOSED
+									AND Financial_Review_Result__c = null
+									AND Financial_Review_Type__c IN :AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES
+									AND CreatedDate < :cse.CreatedDate
+								  ORDER BY CreatedDate ASC];
+
+			//If assessment result is blank and there is a non compliance task created
+			//it means that non compliance for that IFAP is already processed so we discard it
+			for(Case ifap : ifapLst){
+				if(ifap.Tasks.isEmpty()){
+					return ifap;
+				}
+			}
+		}
+
+		return null;
+
+	}
+
+	@TestVisible
+	private static List<Task> fetchCaseNonComplianceTasks(Id caseId) {
+		return [SELECT Id
+					FROM Task
+					WHERE Status = :AMS_Utils.COMPLETED
+						AND Subject = :NON_COMPLIANCE_TASK_SUBJECT
+						AND WhatId = :caseId];
+	}
+
+	public static IFAP_WebService.IFAPActionWrapper assessOnGoingNonCompliance(Case cse){
+
+		Case onGoingNonComplianceIFAP = fetchIFAPWithOnGoingNonCompliance(cse);
+
+		if(onGoingNonComplianceIFAP != null){ 
+			IFAP_WebService.IFAPActionWrapper ifapAction = new IFAP_WebService.IFAPActionWrapper();
+
+			String nonComplianceMessage = NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE.replace('{{caseNumber}}', onGoingNonComplianceIFAP.CaseNumber);
+
+			if(String.isBlank(cse.Financial_Review_Result__c)){
+				//Action not allowed, non compliance should continue on the on going IFAP
+				ifapAction.ifapId = onGoingNonComplianceIFAP.Id;
+				ifapAction.message = nonComplianceMessage;
+				return ifapAction;
+			} else {
+				//Redirect user to the on going IFAP 
+				ifapAction.redirectUserToIFAP = true;
+				ifapAction.ifapId = onGoingNonComplianceIFAP.Id;
+				ifapAction.message = nonComplianceMessage + ' ' + NON_COMPLIANCE_ON_DIFFERENT_IFAP_CONFIRMATION_TOKEN;
+				return ifapAction;
+			}
+		}
+		return null;
+	}
+
+	public static String processNonComplianceOnDifferentIfap(Id ifapId){
+		try {	
+			List<Task> taskLst = [SELECT Id
+								  FROM Task
+								  WHERE Status = :AMS_Utils.COMPLETED
+									  AND Subject = :NON_COMPLIANCE_TASK_SUBJECT
+									  AND WhatId = :ifapId];
+			if (taskLst.isEmpty()) {
+				Task newtask = new Task();
+				newtask.Subject = NON_COMPLIANCE_TASK_SUBJECT;
+				newtask.Status = AMS_Utils.COMPLETED;
+				newTask.WhatId = ifapId;
+				insert newtask;
+			}
+		} catch (Exception e){
+			System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, e.getMessage());
+			return AMS_Utils.beautifyErrorMessage(e.getMessage());
+		}
+		return AMS_Utils.SUCCESS;
+	}
+
+	public static Boolean proceedWithoutFinancialAssessmentResult(Case cse){
+		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+			return !fetchCaseNonComplianceTasks(cse.Id).isEmpty();
+		}
+		return false;
+	}
 }

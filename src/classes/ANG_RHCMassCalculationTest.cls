@@ -120,7 +120,7 @@ private class ANG_RHCMassCalculationTest {
 
 		Case c1 = new Case(
 			AccountId = agencyRevertBSP.Id,
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			ClosedDate = Date.today() - 10,
 			Region__c = 'Europe',
 			CaseArea__c = 'IDK',
@@ -129,7 +129,7 @@ private class ANG_RHCMassCalculationTest {
 
 		Case c2 = new Case(
 			AccountId = agencyApplyBSP.Id,
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			ClosedDate = Date.today() - 10,
 			Region__c = 'Europe',
 			CaseArea__c = 'IDK',
@@ -138,7 +138,7 @@ private class ANG_RHCMassCalculationTest {
 
 		Case c3 = new Case(
 			AccountId = agencyRevertIATA.Id,
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			ClosedDate = Date.today() - 10,
 			Region__c = 'Europe',
 			CaseArea__c = 'IDK',
@@ -147,7 +147,7 @@ private class ANG_RHCMassCalculationTest {
 
 		Case c4 = new Case(
 			AccountId = agencyApplyIATA.Id,
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			ClosedDate = Date.today() - 10,
 			Region__c = 'Europe',
 			CaseArea__c = 'IDK',
