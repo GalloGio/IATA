@@ -600,7 +600,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
 
 					if(applyOptOutFA){
-						ANG_OscarProcessHelper.updateCaseStatusForAccounts(new Set<Id>{oscar.Account__c}, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
+						ANG_OscarProcessHelper.updateCaseStatusForAccounts(new Set<Id>{oscar.Account__c}, AMS_Utils.RECTYPE_IFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
 					}
 
 				}

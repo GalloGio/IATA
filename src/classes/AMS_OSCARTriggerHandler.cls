@@ -312,7 +312,7 @@ public class AMS_OSCARTriggerHandler {
 				update acctLst;
 			}
 
-			ANG_OscarProcessHelper.updateCaseStatusForAccounts(accountIdSet, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
+			ANG_OscarProcessHelper.updateCaseStatusForAccounts(accountIdSet, AMS_Utils.RECTYPE_IFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
 
 		}
 
@@ -4781,7 +4781,7 @@ public class AMS_OSCARTriggerHandler {
 
 		List<Case> casesToUpdate = new List<Case>();
 
-		List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND parent.RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP AND Parent.Status <> null];
+		List<Case> oscarCasesToProcess = [SELECT Id, Parent.Status, ParentId FROM Case WHERE Id IN :oscarCaseIdToProcess AND parent.RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Parent.Status <> null];
 
 		for(Case c: oscarCasesToProcess){
 			if(c.Parent.Status != 'Closed Opt-out'){
