@@ -70,6 +70,10 @@ public class ANG_MulticountryHelper {
 		public Id accountId;
 		public integer nbrOfMulticountryAnnualCases = 0;
 		public integer nbrOfMulticountryAdhocCases = 0;
+
+		public AccountOpenIFAPPerReviewTypeWrapper(Id accountId){
+			this.accountId = accountId;
+		}
 		
 		public void increment(Case cse) {
 			if (AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)) {

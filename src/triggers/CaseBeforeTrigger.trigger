@@ -1104,7 +1104,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(currentCase.Financial_Review_Type__c)){
 						ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper wrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
 						if(wrapper == null){
-							wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper();
+							wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper(currentCase.AccountId);
 						}
 						wrapper.increment(currentCase);
 						nbrOfOpenCasesPerReviewTypeMap.put(currentCase.AccountId, wrapper);
