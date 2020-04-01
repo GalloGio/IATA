@@ -1,5 +1,4 @@
 <apex:page controller="ANG_AnualRevalCaseCreationController" showHeader="true">
-	
 	<style>
 		.hidden {
 			display: none;
@@ -21,123 +20,148 @@
 			margin-top: -16px;
 			margin-left: -16px;
 		}
-	</style>
-<apex:sectionHeader title="Annual Revalidation Cases Page" />
 
+		.listWidth {
+			width: 154px;
+		}
+
+		.inputWidth {
+			width: 150px;
+		}
+	</style>
+
+	<script>
+		function setArrowListeners() {
+			document.querySelector("[id$=rightList]").removeAttribute("multiple");
+			document.querySelector("[id$=leftList]").removeAttribute("multiple");
+
+			document.querySelector("[id$=rightList]").addEventListener('DOMNodeInserted', function(e) {
+				var selectedAccredModels = document.querySelector("[id$=rightList]").children;
+				var unselectedAccredModels = document.querySelector("[id$=leftList]");
+				
+				for(var k = selectedAccredModels.length -1; k >=0 ; k--) {
+					if ((selectedAccredModels[k].value == "Multicountry" && (e.target.value == "Cash" || e.target.value == "Cashless")) || 
+						(e.target.value == "Multicountry" && (selectedAccredModels[k].value == "Cash" || selectedAccredModels[k].value == "Cashless"))) {
+						unselectedAccredModels.insertBefore(selectedAccredModels[k], unselectedAccredModels[0]);
+					}
+				}
+
+				setTimeout( function() {
+					checkAccreditationModelSelected();
+				}, 500);
+			});
+
+			document.querySelector("[id$=rightList]").addEventListener('DOMNodeRemoved', function(e) {
+				setTimeout( function() {
+					if (document.querySelector("[id$=rightList]").children.length == 0) {
+						checkAccreditationModelSelected();
+					}
+				}, 500);
+			});
+		}
+	</script>
+
+<apex:sectionHeader title="Annual Revalidation Cases Page" />
 	<apex:form >
+
+		<apex:actionFunction name="checkAccreditationModelSelected" action="{!validateAccreditationModel}" reRender="cashOptions, informations, parameter1, parameter2, parameter3, parameter4"/>
 
 		<apex:pageBlock mode="edit" id="pageBlock">
 
-			<apex:pageBlockSection columns="1" title="Please select Region and Mode" >
-
-			<apex:pageMessage detail="{!infoNote}" severity="info" escape="false" strength="3" />
-
+			<apex:pageBlockSection id="accreditationType" columns="1" title="Please select the agencies using the criteria below">
+				<apex:pageMessage id="informations" detail="{!infoNote}" severity="info" escape="false" strength="2" />
 				<apex:pageblockSectionItem >
+					<apex:outputLabel value="Accreditation Model"/>
+					<apex:outputPanel layout="block">
+						<c:MultiselectPicklist id="countryMultiSelection"
+							leftLabel="Available" 
+							leftOptions="{!nonSelectedAccreditations}"
+							rightLabel="Selected"
+							rightOptions="{!selectedAccreditations}"
+							size="4"
+							width="150px"
+							btn_up_down="false"/>
 
-				    <apex:outputLabel value="Region Name"/>
-
-				    <apex:outputPanel styleClass="requiredInput" layout="block">
-
-				        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
-				        
-				        <apex:selectList size="1" value="{!region}">
-
-				            <apex:selectoptions value="{!regionobj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons"/>
-
-				        </apex:selectList>
-
-				    </apex:outputPanel>
-
+						<script>
+							setArrowListeners();
+						</script>
+					</apex:outputPanel>
 				</apex:pageblockSectionItem>
-				<apex:pageblockSectionItem > </apex:pageblockSectionItem> 
-				<apex:pageblockSectionItem >
+			</apex:pageBlockSection>
 
-				    <apex:outputLabel value="Mode"/>
+			<apex:pageBlockSection columns="1" id="cashOptions">
 
-				    <apex:outputPanel styleClass="requiredInput" layout="block">
-
-				        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
-				        
-				        <apex:selectList size="1" value="{!mode}">
-
-				            <apex:selectoptions value="{!modeObj}"/>
+				<apex:pageblockSectionItem rendered="{!cashOrLiteAccreditationModelSelected}">
+					<apex:outputLabel value="Region Name"/>
+					<apex:outputPanel styleClass="requiredInput" layout="block">
+						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+						<apex:selectList size="1" value="{!region}" styleClass="listWidth">
+							<apex:selectoptions value="{!regionobj}"/>
 							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons"/>
-
-				        </apex:selectList>
-
-				    </apex:outputPanel>
-
+						</apex:selectList>
+					</apex:outputPanel>
 				</apex:pageblockSectionItem>
 
-			
-		</apex:pageBlockSection>
+				<apex:pageblockSectionItem rendered="{!cashOrLiteAccreditationModelSelected}"/>
 
+				<apex:pageblockSectionItem rendered="{!cashOrLiteAccreditationModelSelected}">
+					<apex:outputLabel value="Mode"/>
+					<apex:outputPanel styleClass="requiredInput" layout="block">
+						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
+						<apex:selectList size="1" value="{!mode}" styleClass="listWidth">
+							<apex:selectoptions value="{!modeObj}"/>
+							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblockSectionItem>
+
+			</apex:pageBlockSection>
 
 
 			<apex:pageBlockSection id="parameter1" >
 
-                    <apex:pageblockSectionItem rendered="{!mode == 'Financial year end' &&  !(region == 'Select Region')}">
-
-                        <apex:outputLabel value="Financial year end" />
-                        
-                        <apex:outputPanel styleClass="requiredInput" layout="block">
-
-                            <apex:selectList size="1" value="{!year}" id="year">
-
-                                <apex:selectoptions value="{!yearobj}"/>
-								<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
-
-                            </apex:selectList>
-
-                        </apex:outputPanel>
-
-                    </apex:pageblockSectionItem>
+				<apex:pageblockSectionItem rendered="{!mode == 'Financial year end' && !(region == 'Select Region')}">
+					<apex:outputLabel value="Financial year end" />
+					<apex:outputPanel styleClass="requiredInput" layout="block">
+						<apex:selectList size="1" value="{!year}" id="year" styleClass="listWidth">
+							<apex:selectoptions value="{!yearobj}"/>
+							<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblockSectionItem>
 
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="parameter2" >
-
-                    <apex:pageblockSectionItem rendered="{!mode == 'Country' &&  !(region == 'Select Region')}">
-
-                        <apex:outputLabel value="Country" />
-                        
-                        <apex:outputPanel styleClass="requiredInput" layout="block">
-
-                            <apex:selectList size="1" value="{!country}" id="country">
-
-                                <apex:selectoptions value="{!countryObj}"/>
-								<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
-
-                            </apex:selectList>
-
-                        </apex:outputPanel>
-
-                    </apex:pageblockSectionItem>
+				
+				<apex:pageblockSectionItem rendered="{!mode == 'Country' && !(region == 'Select Region')}">
+					<apex:outputLabel value="Country" />
+					<apex:outputPanel styleClass="requiredInput" layout="block">
+						<apex:selectList size="1" value="{!country}" id="country">
+							<apex:selectoptions value="{!countryObj}"/>
+							<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageblockSectionItem>
 
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="parameter3" >
 
-               <apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' &&  !(region == 'Select Region')}">
-
-	                <apex:outputLabel >IATA Code</apex:outputLabel>
-                    <apex:inputText label="IATA Code" value="{!account.IATACode__c}"/>
-
- 					<!-- <apex:actionSupport event="onchange" reRender="parameter4"/> -->
-
-                </apex:pageBlockSectionItem> 
+				<apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' && !(region == 'Select Region')}">
+					<apex:outputLabel >IATA Code</apex:outputLabel>
+					<apex:inputText label="IATA Code" value="{!account.IATACode__c}" styleClass="inputWidth">
+						<apex:actionSupport event="onkeyup" reRender="parameter4,parameter5,Overview,buttons"/>	
+					</apex:inputText>
+				</apex:pageBlockSectionItem>
 
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="parameter4">
-
 				<div align="center">
-
 					<apex:pageBlockSectionItem >
 						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" status="blockEditing" reRender="Overview, parameter5,buttons,actionButton2"/>
 					</apex:pageBlockSectionItem>
-
 				</div>
 
 				<apex:actionStatus id="blockEditing">
@@ -150,9 +174,7 @@
 				</apex:actionStatus>
 			
 			</apex:pageBlockSection>
-
-
-</apex:pageBlock>
+		</apex:pageBlock>
 
 <apex:pageBlock id="buttons">
 
