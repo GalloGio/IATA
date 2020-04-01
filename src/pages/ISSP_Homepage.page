@@ -462,7 +462,10 @@
                                                         if('{!app.Right__c}' == 'Access Requested'){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!app.Portal_Application__r.Name} Request: <br/> {!$Label.ISSP_Request_pending_approval}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
-                                                        } else if('{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'!=''){
+                                                        } else if('{!isCNSAgency}' && '{!communityName}' =='CNS' && '{!app.PortalServiceTranslatedName__c}' == 'IATA Accreditation & Changes'){
+                                                          var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label["IATA_Acr_Changes_Service_Description_CNS"])}'+'</div>';
+                                                          $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                        }else if('{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'!=''){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         } else if('{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'!=''){

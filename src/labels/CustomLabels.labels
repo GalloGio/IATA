@@ -9066,6 +9066,17 @@ Through this IATA Accreditation &amp; Changes service you can directly apply to 
 If you are already IATA Accredited, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
+        <fullName>IATA_Acr_Changes_Service_Description_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Acr Changes Service Description CNS</shortDescription>
+        <value>Through this CNS Accreditation &amp; Changes service you can directly apply to become a CNS Endorsed Agency. 
+
+If you are already CNS Endorsed, you can use this service to update information on a change of address, name and ownership. 
+
+You can also use this service to add additional branches or voluntarily terminate your CNS Code.</value>
+    </labels>
+    <labels>
         <fullName>IATA_Airl_Location_Codes_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
