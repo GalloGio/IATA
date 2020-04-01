@@ -254,7 +254,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 
 					Country_Profile__c countryProfile = new Country_Profile__c(Name = iataISOCountry.Name,
 																				Send_Notifications__C = 'No',
-																				IATA_ISO_Country__c = iataISOCountry.Id,
+																				Country_Name__c = iataISOCountry.Id,
 																				Currency_Exchange_Rate__c = 2,
 																				CurrencyIsoCode = 'EUR');
 					insert countryProfile;

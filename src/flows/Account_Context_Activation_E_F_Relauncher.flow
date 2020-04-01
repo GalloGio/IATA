@@ -3,7 +3,7 @@
     <assignments>
         <name>Set_Account_Id</name>
         <label>Set Account Id</label>
-        <locationX>466</locationX>
+        <locationX>1118</locationX>
         <locationY>1128</locationY>
         <assignmentItems>
             <assignToReference>AccountId</assignToReference>
@@ -26,7 +26,7 @@
     <decisions>
         <name>Account_Id_is_filled</name>
         <label>Account Id is filled ?</label>
-        <locationX>271</locationX>
+        <locationX>923</locationX>
         <locationY>52</locationY>
         <defaultConnector>
             <targetReference>Integration_Log_id_is_filled</targetReference>
@@ -49,9 +49,53 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Has_Account</name>
+        <label>Has Account</label>
+        <locationX>719</locationX>
+        <locationY>1137</locationY>
+        <defaultConnector>
+            <targetReference>Get_E_F_Account_Role</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Account</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Address_Role_Business_Context</name>
+        <label>Has Address Role Business Context</label>
+        <locationX>501</locationX>
+        <locationY>2166</locationY>
+        <defaultConnector>
+            <targetReference>Is_ARBC_with_pending_status_found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_Address_Role_Business_Context</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AddressRoleBusinessContext</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No Address Role Business Context</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Has_ARBC_a_pending_status</name>
         <label>Has ARBC a pending status ?</label>
-        <locationX>458</locationX>
+        <locationX>1110</locationX>
         <locationY>591</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -71,9 +115,119 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Has_Business_Address</name>
+        <label>Has Business Address</label>
+        <locationX>503</locationX>
+        <locationY>1802</locationY>
+        <defaultConnector>
+            <targetReference>Get_Business_Address_Role</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_Business_Address</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BusinessAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No Business Address</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Business_Address_Role</name>
+        <label>Has Business Address Role</label>
+        <locationX>504</locationX>
+        <locationY>1987</locationY>
+        <defaultConnector>
+            <targetReference>Get_Address_Role_Business_Context</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_Business_Address_Role</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BusinessAddressRole</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No Business Address Role</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Contacts</name>
+        <label>Has Contacts</label>
+        <locationX>719</locationX>
+        <locationY>1456</locationY>
+        <defaultConnector>
+            <targetReference>Get_E_F_Contact_Roles</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_Contacts</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Contacts</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No Contacts</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_E_F_Account_Role</name>
+        <label>Has E&amp;F Account Role</label>
+        <locationX>717</locationX>
+        <locationY>1301</locationY>
+        <defaultConnector>
+            <targetReference>Get_Contacts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_E_F_Account_Role</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRole</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No E&amp;F Account Role</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_E_F_Contact_Roles</name>
+        <label>Has E&amp;F Contact Roles</label>
+        <locationX>719</locationX>
+        <locationY>1605</locationY>
+        <defaultConnector>
+            <targetReference>Integration_Log_was_filled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_E_F_Contact_Roles</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ContactRoles</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No E&amp;F Contact Roles</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Integration_Log_id_is_filled</name>
         <label>Integration Log id is filled ?</label>
-        <locationX>455</locationX>
+        <locationX>1107</locationX>
         <locationY>50</locationY>
         <defaultConnectorLabel>else</defaultConnectorLabel>
         <rules>
@@ -95,7 +249,7 @@
     <decisions>
         <name>Integration_Log_was_filled</name>
         <label>Integration Log was filled ?</label>
-        <locationX>268</locationX>
+        <locationX>920</locationX>
         <locationY>1787</locationY>
         <defaultConnector>
             <targetReference>Get_Business_Address</targetReference>
@@ -120,7 +274,7 @@
     <decisions>
         <name>Is_ARBC_with_pending_status_found</name>
         <label>Is ARBC with pending status found ?</label>
-        <locationX>50</locationX>
+        <locationX>721</locationX>
         <locationY>2316</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -158,11 +312,11 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>277</locationX>
+        <locationX>929</locationX>
         <locationY>1128</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_E_F_Account_Role</targetReference>
+            <targetReference>Has_Account</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -193,11 +347,11 @@
     <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
         <label>Get Address Role Business Context</label>
-        <locationX>55</locationX>
-        <locationY>2138</locationY>
+        <locationX>727</locationX>
+        <locationY>2149</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_ARBC_with_pending_status_found</targetReference>
+            <targetReference>Has_Address_Role_Business_Context</targetReference>
         </connector>
         <filters>
             <field>Account_Activation_Context_Status__c</field>
@@ -223,7 +377,7 @@
     <recordLookups>
         <name>Get_Address_Role_Business_Context_From_Integration_Log</name>
         <label>Get Address Role Business Context</label>
-        <locationX>466</locationX>
+        <locationX>1118</locationX>
         <locationY>429</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -254,11 +408,11 @@
     <recordLookups>
         <name>Get_Business_Address</name>
         <label>Get Business Address</label>
-        <locationX>54</locationX>
-        <locationY>1784</locationY>
+        <locationX>726</locationX>
+        <locationY>1792</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Business_Address_Role</targetReference>
+            <targetReference>Has_Business_Address</targetReference>
         </connector>
         <filters>
             <field>Account__c</field>
@@ -281,7 +435,7 @@
     <recordLookups>
         <name>Get_Business_Address_From_Integration_Log</name>
         <label>Get Business Address</label>
-        <locationX>466</locationX>
+        <locationX>1118</locationX>
         <locationY>978</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -302,11 +456,11 @@
     <recordLookups>
         <name>Get_Business_Address_Role</name>
         <label>Get Business Address Role</label>
-        <locationX>54</locationX>
-        <locationY>1972</locationY>
+        <locationX>728</locationX>
+        <locationY>1969</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Address_Role_Business_Context</targetReference>
+            <targetReference>Has_Business_Address_Role</targetReference>
         </connector>
         <filters>
             <field>Address__c</field>
@@ -329,7 +483,7 @@
     <recordLookups>
         <name>Get_Business_Address_Role_From_Integration_Log</name>
         <label>Get Business Address Role</label>
-        <locationX>466</locationX>
+        <locationX>1118</locationX>
         <locationY>805</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -350,11 +504,11 @@
     <recordLookups>
         <name>Get_Contacts</name>
         <label>Get Contacts</label>
-        <locationX>276</locationX>
-        <locationY>1455</locationY>
+        <locationX>931</locationX>
+        <locationY>1439</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_E_F_Contact_Roles</targetReference>
+            <targetReference>Has_Contacts</targetReference>
         </connector>
         <filters>
             <field>AccountId</field>
@@ -370,11 +524,11 @@
     <recordLookups>
         <name>Get_E_F_Account_Role</name>
         <label>Get E&amp;F Account Role</label>
-        <locationX>276</locationX>
+        <locationX>928</locationX>
         <locationY>1284</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Contacts</targetReference>
+            <targetReference>Has_E_F_Account_Role</targetReference>
         </connector>
         <filters>
             <field>Account__c</field>
@@ -398,11 +552,11 @@
     <recordLookups>
         <name>Get_E_F_Contact_Roles</name>
         <label>Get E&amp;F Contact Roles</label>
-        <locationX>276</locationX>
-        <locationY>1607</locationY>
+        <locationX>928</locationX>
+        <locationY>1588</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Integration_Log_was_filled</targetReference>
+            <targetReference>Has_E_F_Contact_Roles</targetReference>
         </connector>
         <filters>
             <field>Account_Role__c</field>
@@ -426,7 +580,7 @@
     <recordLookups>
         <name>Get_Integration_Log</name>
         <label>Get Integration Log</label>
-        <locationX>466</locationX>
+        <locationX>1118</locationX>
         <locationY>272</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -448,7 +602,7 @@
     <recordLookups>
         <name>Get_User_that_launched_Account_Context_Activation</name>
         <label>Get User that launched Account Context Activation</label>
-        <locationX>277</locationX>
+        <locationX>929</locationX>
         <locationY>2313</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -468,17 +622,17 @@
         <queriedFields>Email</queriedFields>
     </recordLookups>
     <start>
-        <locationX>123</locationX>
+        <locationX>775</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Account_Id_is_filled</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
         <label>Restart Account Context Activation E&amp;F Background Subflow</label>
-        <locationX>274</locationX>
+        <locationX>926</locationX>
         <locationY>2474</locationY>
         <flowName>Account_Context_Activation_E_F_Background_Subflow</flowName>
         <inputAssignments>
