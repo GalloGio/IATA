@@ -141,3 +141,12 @@
 .IEFixWidth{
   width: 100%;
 }
+.icon{
+  padding-right: 16px;
+  text-align: center;
+}
+
+.spacerDiv{
+  height: 100%;
+  max-height: 50px;
+}
