@@ -28,7 +28,7 @@ public with sharing class SidraLiteHelperForIFAP {
 	private static final String FA_LETTER_NOT_TICKED = 'The "FA Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.';
 	private static final String INVALID_ACTION_CLICK_APPLY_CASH_CONDITION = 'Invalid action, you need to click on the button in order to apply Cash condition true.';
 	private static final String INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION = 'Invalid action, you need to click on the button in order to remove Cash condition.';
-	private static final String SIDRA_LITE_CANNOT_BE_CREATED_TOKEN = 'A SIDRA lite case cannot be created when the parent case status is {{parentStatus}}';
+	private static final String SIDRA_LITE_CANNOT_BE_CREATED = 'A SIDRA lite case cannot be created when the parent case status is {{parentStatus}}';
 	private static final String SIDRA_LITE_PROCESS_THIRD_NON_COMPLIANCE_WARNING = 'Process third non-compliance date, continue?';
 	@TestVisible
 	private static final String SIDRA_LITE_PROCESS_SECOND_NON_COMPLIANCE_WARNING = 'Process second non-compliance date, continue?';
@@ -58,7 +58,7 @@ public with sharing class SidraLiteHelperForIFAP {
 		}
 		// check parent status
 		if ( STATUS_NOT_VALID.contains(parentCase.Status) ){
-			throw new SidraLiteException(SIDRA_LITE_CANNOT_BE_CREATED_TOKEN.replace('{{parentStatus}}', parentCase.Status));
+			throw new SidraLiteException(SIDRA_LITE_CANNOT_BE_CREATED.replace('{{parentStatus}}', parentCase.Status));
 		}
 
 		/*NEWGEN-5320*/
