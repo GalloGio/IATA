@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
 	<!-- VARIABLES INITIATION -->    
     	<!-- Account ID parameter - to be received from the parent component -->
         <aura:attribute name="account" type="Account"/>
