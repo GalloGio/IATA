@@ -1,4 +1,4 @@
-<aura:component controller="AMP_CoreRelationshipExtension">
+<aura:component controller="AMP_CoreRelationshipExtension" access="public">
   <aura:attribute name="account" type="Account" />
   <aura:attribute name="accountId" type="String" />
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />

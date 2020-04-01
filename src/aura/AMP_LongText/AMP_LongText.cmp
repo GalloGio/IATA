@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:attribute name="text" type="String" />
     <aura:attribute name="truncate" type="Boolean" default="true" />
 	<ui:outputRichText value="{!v.text}" class="{!v.truncate==true ? 'slds-truncate'  :  ''}" aura:id="text" />

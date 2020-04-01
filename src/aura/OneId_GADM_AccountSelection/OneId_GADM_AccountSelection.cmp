@@ -1,4 +1,4 @@
-<aura:component description="OneId_GADM_AccountSelection" controller="OneId_RegistrationProcessController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" >
+<aura:component access="public" description="OneId_GADM_AccountSelection" controller="OneId_RegistrationProcessController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" >
     <aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleItem}"/>
 
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>

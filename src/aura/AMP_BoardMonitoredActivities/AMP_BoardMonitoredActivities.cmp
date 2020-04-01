@@ -1,4 +1,4 @@
-<aura:component controller="AMP_BoardMonitoredActivitiesExtension">
+<aura:component controller="AMP_BoardMonitoredActivitiesExtension" access="public">
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="boardMonitoredActivities" type="Objective__c[]"/><!-- List of BMAs -->
     <aura:attribute name="bma" type="Objective__c"/><!-- BMA to update -->
