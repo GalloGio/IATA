@@ -358,11 +358,18 @@ public with sharing class IFAP_BusinessRules {
 
 	public static Boolean AccountCountryHasChanged(Case oldCase, Case newCase) {
 
-		/*// get account associated to the old and new Case*/
-		Account oldAcc = [Select Id, BillingCountry, Type from Account where Id = : oldCase.AccountId limit 1];
-		Account newAcc = [Select Id, BillingCountry, Type from Account where Id = : newCase.AccountId limit 1];
+		if(oldCase.AccountId != newCase.AccountId){
+			/*// get account associated to the old and new Case*/
+			Map<Id, Account> acctMap = new Map<Id, Account>([SELECT Id, BillingCountry FROM Account WHERE Id IN (:oldCase.AccountId, :newCase.AccountId)]);
 
-		return (oldAcc.BillingCountry != newAcc.BillingCountry);
+			Account oldAcc = acctMap.get(oldCase.AccountId);
+			Account newAcc = acctMap.get(newCase.AccountId);
+
+			return (oldAcc.BillingCountry != newAcc.BillingCountry);
+		}
+
+		return false;
+
 	}
 
 	/*// ** replaces validation rule: IFAP_FS_validation_check_box*/

@@ -96,9 +96,9 @@ public class ANG_MulticountryHelper {
 		*/
 		public boolean hasAlreadyOpenIFAPCases(String financialReviewType) {
 			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL)
-				return nbrOfMulticountryAnnualCases > 0;
+				return nbrOfMulticountryAnnualCases > 1;
 			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC)
-				return nbrOfMulticountryAdhocCases > 0;
+				return nbrOfMulticountryAdhocCases > 1;
 			return false;
 		}
 
@@ -1004,4 +1004,21 @@ public class ANG_MulticountryHelper {
 		}
 		return false;
 	}
+
+	public static void addMulticountryOpenIFAPCase(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap){
+		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(currentCase.Financial_Review_Type__c)){
+			AccountOpenIFAPPerReviewTypeWrapper wrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+			if(wrapper == null){
+				wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper(currentCase.AccountId);
+			}
+			wrapper.increment(currentCase);
+			nbrOfOpenCasesPerReviewTypeMap.put(currentCase.AccountId, wrapper);
+		}
+	}
+
+	public static boolean hasMulticountryOpenIFAPCases(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap) {
+		AccountOpenIFAPPerReviewTypeWrapper openCasesWrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+		return openCasesWrapper != null && openCasesWrapper.hasAlreadyOpenIFAPCases(currentCase.Financial_Review_Type__c);
+	}
+
 }
