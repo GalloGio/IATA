@@ -36,7 +36,7 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 		
 		if(atts.size()>0){
 
-			List<Case> caseList = [select id,Status from Case where id IN: atts AND Status = 'Closed'];
+			List<Case> caseList = [select id,Status, ClosedDate from Case where Status = 'Closed' AND ClosedDate=LAST_N_DAYS:14];
 
 			if(caseList.size() > 0){
 				for(case c: caseList){
