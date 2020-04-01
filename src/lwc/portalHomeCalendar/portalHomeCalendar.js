@@ -214,7 +214,7 @@ export default class PortalHomeCalendar extends LightningElement {
                                     }
                                 });
 
-                                if(!foundEvent){
+                                if(foundEvent){
                                     lstEventDots.push({className : e.className, title: eventTitle});
                                 }
                             });
