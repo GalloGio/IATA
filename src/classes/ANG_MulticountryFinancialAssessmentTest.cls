@@ -849,4 +849,80 @@ private class ANG_MulticountryFinancialAssessmentTest {
 
 	}
 
+	@isTest static void insertMultipleMulticountryIFAPsOpenTest() {
+
+		Account acct = [SELECT Id, (SELECT Id FROM Contacts) FROM Account LIMIT 1];
+
+		Case ifapCase = new Case(
+			ContactId = acct.Contacts.get(0).Id,
+			AccountId = acct.Id,
+			Subject = 'MC - Annual Financial Review - 2021',
+			Description = 'MC - Annual Financial Review - 2021',
+			Status = AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_EMAIL,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
+			IFAP_Financial_Year__c = '2021',
+			Deadline_Date__c = System.today().addDays(365),
+			Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL,
+			FA_Letter_Sent__c = true
+		);
+
+		Test.startTest();
+
+		Boolean exceptionThrown = false;
+
+		try {
+			insert ifapCase;
+		} catch (DMLException e) {
+			exceptionThrown = true;
+			System.assert(e.getMessage().contains(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS), 'Should throw the exception \''
+				+ ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS + '\'');
+		}
+		
+		System.assert(exceptionThrown, 'Exception should have been thrown');
+		
+		exceptionThrown = false;
+		
+		try {
+			ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
+			insert ifapCase;
+		} catch (DMLException e) {
+			exceptionThrown = true;
+			System.assert(e.getMessage().contains(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS), 'Should throw the exception \''
+				+ ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS + '\'');
+		}
+
+		System.assert(exceptionThrown, 'Exception should have been thrown');
+
+		Test.stopTest();
+
+	}
+
+	@isTest
+	static void updateMultipleMulticountryIFAPsOpenTest() {
+		
+		Case ifapCase = [SELECT Id, AccountId, Account.Financial_Assessment_Points__c, Account.Financial_Review_Result__c,
+							 Account.Assessment_Performed_Date__c
+						 FROM Case
+						 WHERE Financial_Review_Type__c = :AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL
+						 LIMIT 1];
+		
+		Test.startTest();
+
+		Boolean exceptionThrown = false;
+		
+		try {
+			ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
+			update ifapCase;
+		} catch (DMLException e) {
+			exceptionThrown = true;
+			System.assert(e.getMessage().contains(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS), 'Should throw the exception \''
+				+ ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS + '\'');
+		}
+		
+		System.assert(exceptionThrown, 'Exception should have been thrown');
+
+		Test.stopTest();
+
+	}
+
 }
