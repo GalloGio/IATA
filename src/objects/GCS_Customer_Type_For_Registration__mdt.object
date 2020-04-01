@@ -159,7 +159,7 @@ PARTIAL MATCH</inlineHelpText>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Partial List Order</label>
-        <required>true</required>
+        <required>false</required>
         <type>Picklist</type>
         <valueSet>
             <restricted>true</restricted>
