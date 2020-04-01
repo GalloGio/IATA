@@ -7370,6 +7370,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
 		Boolean errorFound = false;
 
+		if(isCNSAgency && newForm.Has_your_firm_ever_held_a_Cargo_Agency__c =='Yes'){
+			newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
+			errorFound = true;
+		}
+		
 		if(isCNSAgency && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO)){
 			Boolean haveContact = false;
 			for(AMS_Accreditation_Contact__c acc: List_AgencyContacts){
