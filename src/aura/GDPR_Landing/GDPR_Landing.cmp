@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" controller="GDPR_Landing_CTRL">
+<aura:component access="public" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" controller="GDPR_Landing_CTRL">
     <ltng:require styles="{!$Resource.GDPR_Portal  + '/css/screen.css'}" />
     <div class="container">
         <h3>Our Signup &amp; Privacy Portal allows you to subscribe to IATA news and update your preferences.</h3>        

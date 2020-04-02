@@ -766,7 +766,8 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
 		if (siteAdmin != null) {
 			msg = new Messaging.SingleEmailMessage();
 			msg.setSubject('Public Knowledge Base 2 - Package Exception Notification');
-			msg.setToAddresses(new List<String>{siteAdmin.Email});
+			msg.setTargetObjectId(siteAdmin.Id);
+			msg.setSaveAsActivity(false);
 
 			body = introMessage;
 			body += '\n\nAPEX TRANSACTION DEBUG INFORMATION:\n' +debug;

@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:registerEvent name="editMenuClick" type="c:AMP_EditMenuItemClick"/>
     <aura:registerEvent name="deleteMenuClick" type="c:AMP_DeleteMenuItemClick"/>
     <aura:attribute name="canDelete" type="Boolean" default="true"/>
