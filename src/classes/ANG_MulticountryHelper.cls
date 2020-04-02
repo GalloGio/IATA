@@ -66,6 +66,44 @@ public class ANG_MulticountryHelper {
 		public Id hierarchyId;
 	}
 
+	public class AccountOpenIFAPPerReviewTypeWrapper {
+		public Id accountId;
+		public integer nbrOfMulticountryAnnualCases = 0;
+		public integer nbrOfMulticountryAdhocCases = 0;
+
+		public AccountOpenIFAPPerReviewTypeWrapper(Id accountId){
+			this.accountId = accountId;
+		}
+		
+		public void increment(Case cse) {
+			if (AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)) {
+				return;
+			}
+
+			if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL) {
+				this.nbrOfMulticountryAnnualCases++;
+			} else if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC) {
+				this.nbrOfMulticountryAdhocCases++;
+			}
+		}
+
+		/*	
+		* For multicountry agents make sure that the following criteria is fulfilled:
+		* 	- No more that one Multicountry Annual open case is allowed at the same time
+		* 	- No more than one Multicountry Adhoc open case is allowed at the same time
+		* 	- There can be as many Multicountry Quarterly open cases as the user creates
+		* 	- There can be one annual and one adhoc IFAP cases open at the same time
+		*/
+		public boolean hasAlreadyOpenIFAPCases(String financialReviewType) {
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL)
+				return nbrOfMulticountryAnnualCases > 1;
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC)
+				return nbrOfMulticountryAdhocCases > 1;
+			return false;
+		}
+
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
 	private static final Set<String> MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES = new Set<String>{
@@ -73,6 +111,7 @@ public class ANG_MulticountryHelper {
 		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_QUARTERLY
 	};
 
+	public static final String MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS = 'The selected account already has open IFAP cases.';
 	private static final String NON_COMPLIANCE_TASK_SUBJECT = 'Multiple IFAP non compliance';
 	@TestVisible
 	private static final String NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE = 'The non compliance was started on the IFAP {{caseNumber}}, therefore this action is not allowed.';
@@ -965,4 +1004,21 @@ public class ANG_MulticountryHelper {
 		}
 		return false;
 	}
+
+	public static void addMulticountryOpenIFAPCase(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap){
+		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(currentCase.Financial_Review_Type__c)){
+			AccountOpenIFAPPerReviewTypeWrapper wrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+			if(wrapper == null){
+				wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper(currentCase.AccountId);
+			}
+			wrapper.increment(currentCase);
+			nbrOfOpenCasesPerReviewTypeMap.put(currentCase.AccountId, wrapper);
+		}
+	}
+
+	public static boolean hasMulticountryOpenIFAPCases(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap) {
+		AccountOpenIFAPPerReviewTypeWrapper openCasesWrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+		return openCasesWrapper != null && openCasesWrapper.hasAlreadyOpenIFAPCases(currentCase.Financial_Review_Type__c);
+	}
+
 }
