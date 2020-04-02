@@ -45,10 +45,10 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	private Map<String,String> notificationTemplatesInverted;
 
 	//dates:
-	private Date DATE_REMINDER_15 = Date.today().addDays(-15);
-	private Date DATE_REMINDER_30 = Date.today().addDays(-30);
-	private Date DATE_REMINDER_21 = Date.today().addDays(-21);
-	private Date DATE_REMINDER_27 = Date.today().addDays(-27);
+	private Date DATE_REMINDER_15;
+	private Date DATE_REMINDER_30;
+	private Date DATE_REMINDER_21;
+	private Date DATE_REMINDER_27;
 
 	private List<String> errors = new List<String>();
 
