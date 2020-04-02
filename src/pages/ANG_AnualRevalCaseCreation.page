@@ -59,12 +59,19 @@
 				}, 500);
 			});
 		}
+
+		function setPasteListeners() {
+			document.querySelector("[id$=iataCode]").addEventListener('paste', function(e) {
+				reRenderSearchButton();
+			});
+		}
 	</script>
 
 <apex:sectionHeader title="Annual Revalidation Cases Page" />
 	<apex:form >
 
 		<apex:actionFunction name="checkAccreditationModelSelected" action="{!validateAccreditationModel}" reRender="cashOptions, informations, parameter1, parameter2, parameter3, parameter4"/>
+		<apex:actionFunction name="reRenderSearchButton" reRender="parameter4"/>
 
 		<apex:pageBlock mode="edit" id="pageBlock">
 
@@ -150,8 +157,11 @@
 
 				<apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' && !(region == 'Select Region')}">
 					<apex:outputLabel >IATA Code</apex:outputLabel>
-					<apex:inputText label="IATA Code" value="{!account.IATACode__c}" styleClass="inputWidth">
-						<apex:actionSupport event="onkeyup" reRender="parameter4,parameter5,Overview,buttons"/>	
+					<apex:inputText id="iataCode" label="IATA Code" value="{!account.IATACode__c}" styleClass="inputWidth">
+						<apex:actionSupport event="onkeyup" reRender="parameter4,parameter5,Overview,buttons"/>
+						<script>
+							setPasteListeners();
+						</script>
 					</apex:inputText>
 				</apex:pageBlockSectionItem>
 
