@@ -2,10 +2,6 @@
  * Created by ukaya01 on 09/08/2019.
  */
 
- .imgBg{
-  margin-bottom: 25px;
-}
-
 .headerTitle {
   /*width: 368px;*/
   /*height: 80px;*/
@@ -16,7 +12,6 @@
   line-height: 1.33;
   letter-spacing: normal;
   color: #1e32fa;
-  margin-bottom: 10px;
 }
 
 .infoText {
@@ -148,5 +143,5 @@
 
 .spacerDiv{
   height: 100%;
-  max-height: 50px;
+  max-height: 45px;
 }
