@@ -653,19 +653,27 @@
 		<apex:form id="AMSForm">
 		<div class="progress iata-tabs">
 			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" value="{!lblNoCStepA}" id="Prev1"/>
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
+					<apex:outputText value="{!lblNoCStepA}" escape="false"/>
+				</apex:commandLink>
 			</div>
 			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" value="{!lblStepB}" id="Prev2"/>
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" id="Prev2">
+					<apex:outputText value="{!lblStepB}" escape="false"/>
+				</apex:commandLink>
 			</div>
 			<div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-				{!lblNocStepC}
+				<apex:outputText value="{!lblNocStepC}" escape="false"/>
 			</div>
 			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" value="{!lblStepD}" id="Next4"/>
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4">
+					<apex:outputText value="{!lblStepD}" escape="false"/>
+				</apex:commandLink>
 			</div>
 			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNocStepD, lblStepE)}" id="Next5"/>
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+					<apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNocStepD, lblStepE)}" escape="false"/>
+				</apex:commandLink>
 			</div>
 		</div>
 		
