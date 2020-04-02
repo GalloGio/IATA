@@ -201,6 +201,16 @@
                 </dl>
             </div>
 
+            <!-- PAGE HEADER / ROW 2 / COLUMN 9 -->
+            <div class="slds-col--padded ">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Account Status</p>
+                    </dt>
+                    <dd>{!v.account.AccountStatus__c}</dd>
+                </dl>
+            </div>
+
         </div>
         <!-- / PAGE HEADER DETAIL ROW -->
 

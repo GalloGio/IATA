@@ -111,7 +111,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>AccountStatus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
