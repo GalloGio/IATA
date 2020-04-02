@@ -1,4 +1,4 @@
-<aura:component controller="AMP_KeyContactsController">
+<aura:component controller="AMP_KeyContactsController" access="public">
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="reportId" type="String" />
     <aura:attribute name="contacts" type="Object[]" />
