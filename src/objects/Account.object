@@ -3973,6 +3973,32 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AccountStatus__c</fullName>
+        <description>Defines if the Account is actively conducting business (Active) or is no longer operating (Out of Business). As draft Accounts can be created prior to being verified, this field will be defaulted to “Active” and so, using this field alone is not a reliable indicator of a truly Active Account.</description>
+        <externalId>false</externalId>
+        <label>Account Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Out of Business</fullName>
+                    <default>false</default>
+                    <label>Out of Business</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Account_Role__c</fullName>
         <description>The roles covered by the account (e.g. Payment Provider)</description>
         <externalId>false</externalId>
@@ -29845,6 +29871,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -39225,6 +39262,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54670,6 +54718,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -61963,6 +62022,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -68117,6 +68187,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -74201,6 +74282,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -83691,6 +83783,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -89480,6 +89583,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -98815,6 +98929,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Role__c</picklist>
             <values>
                 <fullName>Payment Provider</fullName>
@@ -104842,6 +104967,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -111436,6 +111572,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountStatus__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Out of Business</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
