@@ -37,7 +37,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
+	 	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
 
 		System.debug('List to execute vouchers printing:' + scope.size());
 
@@ -164,32 +164,6 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		return urlCode + '/' + region.Id ;
 
 	}
-
-  	private List<String> buildIdsString(List<AMS_Voucher__c> scope){
-
-  		List<String> toReturn = new List<String>();
-  		String stringIds = '';
-  		Integer i = 0;
-
-  		for(AMS_Voucher__c v : scope){
-
-  			if(i == 200){
-  				toReturn.add(stringIds);
-  				stringIds = '';
-  				i =0;
-  			}
-
-  			i++;
-
-  			stringIds += v.Id + ';';
-
-  		}
-
-		toReturn.add(stringIds);
-
-  		return toReturn;
-
-  	}
 
 	public Integer fetchProperRun(AMS_Voucher_Region__c regionInput){
 
