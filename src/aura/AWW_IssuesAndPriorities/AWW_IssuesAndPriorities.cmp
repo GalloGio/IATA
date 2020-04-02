@@ -187,19 +187,6 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col" >
-                            <!-- <span class="slds-truncate">Visible to all IATA</span> -->
-                                <ui:outputText value="Visible to all IATA" title="AM_Public__c"  click="{!c.sortList}" class="slds-truncate" />
-                                <span class="slds-assistive-text">Sort Column</span>
-                                <div class="slds-icon_container" title="Sort Column">
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__c'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__cesc'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                </div>
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -226,7 +213,6 @@
                             <td><ui:outputCheckbox value="{!issue.AM_Regional__c}"/></td>
                             <td><ui:outputCheckbox value="{!issue.AM_Local__c}"/></td>
                             <td><ui:outputCheckbox value="{!issue.AM_Issue_with_IATA__c}"/></td>
-                            <td><ui:outputCheckbox value="{!issue.AM_Public__c}"/></td>
                         </tr>
                     </aura:iteration>
                 </tbody>
