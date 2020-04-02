@@ -4386,7 +4386,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <choiceReferences>NewProcessCertificate</choiceReferences>
             <choiceReferences>NewProcessOscarCorrection</choiceReferences>
             <choiceReferences>NewProcessBankAccount</choiceReferences>
-            <choiceReferences>NewProcessOPTINOUT</choiceReferences>
             <choiceReferences>MCToSTConversion</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose a process :</fieldText>
@@ -4659,7 +4658,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <choiceReferences>NewProcessOscarCorrection</choiceReferences>
             <choiceReferences>NewProcessBankAccount</choiceReferences>
             <choiceReferences>NewProcessFOP</choiceReferences>
-            <choiceReferences>NewProcessOPTINOUT</choiceReferences>
             <choiceReferences>MCToSTConversion</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose a process :</fieldText>
