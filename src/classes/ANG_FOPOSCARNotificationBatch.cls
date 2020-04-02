@@ -45,20 +45,22 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	private Map<String,String> notificationTemplatesInverted;
 
 	//dates:
-	private static Date DATE_REMINDER_15 = Date.today().addDays(-15);
-	private static Date DATE_REMINDER_30 = Date.today().addDays(-30);
-	private static Date DATE_REMINDER_21 = Date.today().addDays(-21);
-	private static Date DATE_REMINDER_27 = Date.today().addDays(-27);
+	private Date DATE_REMINDER_15 = Date.today().addDays(-15);
+	private Date DATE_REMINDER_30 = Date.today().addDays(-30);
+	private Date DATE_REMINDER_21 = Date.today().addDays(-21);
+	private Date DATE_REMINDER_27 = Date.today().addDays(-27);
 
 	private List<String> errors = new List<String>();
 
-	global ANG_FOPOSCARNotificationBatch() {}
+	global ANG_FOPOSCARNotificationBatch() {
+		simulateRunOnDate(System.today());
+	}
 
-	global ANG_FOPOSCARNotificationBatch(Date reminder15, Date reminder30, Date reminder21, Date reminder27) {
-		DATE_REMINDER_15 = reminder15;
-		DATE_REMINDER_30 = reminder30;
-		DATE_REMINDER_21 = reminder21;
-		DATE_REMINDER_27 = reminder27;
+	public void simulateRunOnDate(Date simulatedDate) {
+		DATE_REMINDER_15 = simulatedDate.addDays(-15);
+		DATE_REMINDER_30 = simulatedDate.addDays(-30);
+		DATE_REMINDER_21 = simulatedDate.addDays(-21);
+		DATE_REMINDER_27 = simulatedDate.addDays(-27);
 	}
 
 	global Iterable<Case> start(Database.BatchableContext BC) {
@@ -72,8 +74,8 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 			notificationTemplatesInverted.put(nt.Name,nt.Identifier__c);
 		}
 
-		Set<String> fopQueueIds = new Set<String>();
-		String annualRevQueueId;
+		Set<Id> fopQueueIds = new Set<Id>();
+		Id annualRevQueueId;
 
 		for (Group groupQueue: [SELECT Id, Name 
 								FROM Group 
@@ -96,7 +98,7 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 															  AND ((OSCAR__r.RecordTypeId = :RECTYPE_NEWGENFOP
 																	AND (Origin = :MASSIVE_FOP_ORIGIN
 																		OR Origin = :AUTOMATIC_RENEWAL_FOP_ORIGIN)
-																	AND OwnerId IN :(Test.isRunningTest() ? new Set<String>{UserInfo.getUserId()} : fopQueueIds)
+																	AND OwnerId IN :(Test.isRunningTest() ? new Set<Id>{UserInfo.getUserId()} : fopQueueIds)
 																	AND (DAY_ONLY(CreatedDate) = :DATE_REMINDER_15
 																		OR DAY_ONLY(CreatedDate) = :DATE_REMINDER_30))
 																OR (OSCAR__r.RecordTypeId = :AMS_Utils.RECTYPE_NEWGENANNUALREVAL
