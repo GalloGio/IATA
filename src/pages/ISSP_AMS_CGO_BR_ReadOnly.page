@@ -25,7 +25,7 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+	                            {!IF(isCNSAgency, $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
@@ -50,7 +50,7 @@
 					    <apex:outputField value="{!hqAccount.Fax}"/>
 					    <apex:outputText value="{!$ObjectType.Account.fields.IATACode__c.Label}" />
 	                    <apex:outputField value="{!hqAccount.IATACode__c}" rendered="{!amsOfficeType != 'HO'}"/>
-	                    <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
+	                    <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(AND(isCNSAgency, newCase.Reason1__c == 'New Independent BR'), $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
 	                	<apex:outputField rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!hqAccount.VAT_Number__c}"/>
 	                    
 	                </apex:panelGrid>
