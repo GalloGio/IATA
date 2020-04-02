@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
 	<aura:attribute name="account" type="Account" />
 
     <div class="slds-grid slds-wrap">
