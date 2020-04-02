@@ -292,7 +292,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
 
 		oscar.STEP43__c = AMS_Utils.PASSED;
-		oscar.ANG_Administrative_non_compliance_date__c = Date.today()-27;
+		oscar.ANG_Administrative_non_compliance_date__c = Date.today()-20;
 
 		update oscar;
 
@@ -302,7 +302,9 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		Test.startTest();
 
-		Database.executeBatch(new ANG_FOPOSCARNotificationBatch(Date.today(), Date.today(), Date.today(), Date.today()-27), 200);
+		ANG_FOPOSCARNotificationBatch batch = new ANG_FOPOSCARNotificationBatch();
+		batch.simulateRunOnDate(Date.today().addDays(1));
+		Database.executeBatch(batch, 200);
 
 		Test.stopTest();
 
