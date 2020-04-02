@@ -64,25 +64,30 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public class AccountWrapper {
-		public Account account{get; set;}
+		public Account account {get; set;}
 		public Case oscarCase {get; set;}
-		public AccountWrapper(Account acct, Case oscarCase){
+		public Boolean selected {get; set;}
+
+		public AccountWrapper(Account acct, Case oscarCase, Boolean selected) {
 			this.account = acct;
 			this.oscarCase = oscarCase;
+			this.selected = selected;
 		}
 	}
 
 	public List<AccountWrapper> accountsToCreate{
 		get{
-			if(con != null){
-			accountsToCreate = new List<AccountWrapper>();
-			for(Account acct : (List<Account>)con.getRecords()){
-				AccountWrapper aw = new AccountWrapper(acct, annualRevalidationCaseOscar.get(acct.Id));
-				accountsToCreate.add(aw);
+			if (con != null) {
+				accountsToCreate = new List<AccountWrapper>();
+				
+				for (Account acct : (List<Account>)con.getRecords()) {
+					AccountWrapper aw = new AccountWrapper(acct, annualRevalidationCaseOscar.get(acct.Id), false);
+					accountsToCreate.add(aw);
+				}
 			}
+			
+			return accountsToCreate;
 		}
-				return accountsToCreate;
-			}
 		set;
 	}
 
@@ -298,9 +303,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	private String getOscarCasesSubquery(){
 		String subQuery = 
-		'   (SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate ' + 
+		'   (SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
 		'    FROM Cases ' +
-		'    WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS AND Oscar__r.Status__c NOT IN :INVALID_OSCAR_STATUS) ' +
+		'    WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
 		'       OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
 		' 			AND Oscar__r.ANG_Type_of_Change__c INCLUDES (:OWNERSHIP_CHG, :MAJOR_SHAREHOLDING_CHG, ' +
 		'			 :HIERARCHY_CHG, :LOC_TYPE_DIFF_LEGAL_CHG, :LEGAL_NAME_CHG, :LEGAL_STATUS_CHG)) ' +
@@ -310,24 +315,23 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	private Boolean processAccountRelatedCases(Account acct) {
 		if(!acct.Cases.isEmpty()){
-			boolean foundAnnualRevalidation = false;
+			Boolean foundAnnualRevalidation = false;
+			
 			for(Case cse : acct.Cases){
 				if(cse.OSCAR__c != null){
-					if(!foundAnnualRevalidation && cse.oscar__r.Process__c == AMS_Utils.NGANNUALREVAL){
+					if (!foundAnnualRevalidation && cse.oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
 						foundAnnualRevalidation = true;
 						annualRevalidationCaseOscar.put(acct.Id, cse);
-					}
-					else if(cse.oscar__r.Process__c == AMS_Utils.NGCHANGES && 
-							(ON_GOING_MAJOR_CHANGES_STATUS.contains(cse.Oscar__r.Status__c) || 
-							(cse.Oscar__r.Status__c == AMS_Utils.OSCAR_CLOSED && 
-								(System.today().daysBetween(Date.valueOf(cse.ClosedDate)) < 180)))
-						)
-					{
+					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
+						&& (ON_GOING_MAJOR_CHANGES_STATUS.contains(cse.Oscar__r.Status__c)
+							|| (cse.Oscar__r.Status__c == AMS_Utils.OSCAR_CLOSED
+								&& (System.today().daysBetween(Date.valueOf(cse.ClosedDate)) < 180)))) {
 						return true;
 					}
 				}
 			}
 		}
+
 		return false;
 	}
 
@@ -368,16 +372,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 		}
 
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] queryAccount is ' + queryAccount);
-
 		List<Account> queriedAccountLst = Database.query(queryAccount);
 
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Size of account list is: ' + queriedAccountLst.size());
-
 		List<Account> accountLst = new List<Account>();
-		for(Account acct : queriedAccountLst){
-			Boolean isToExcludeAcct = processAccountRelatedCases(acct);
-			if(!isToExcludeAcct){
+		
+		for (Account acct : queriedAccountLst) {
+			if (!processAccountRelatedCases(acct)) {
 				accountLst.add(acct);
 			}
 		}
@@ -434,7 +434,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public void launchCampaign(){
-
 		Set<Id> accountsToCreateIds = new Set<Id>();
 
 		con.setPageSize(con.getResultSize());
@@ -442,30 +441,22 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		con.setPageSize(size);
 
 		for(Account acct: tempAccountsToCreate){
-			Case annualRevCase = annualRevalidationCaseOscar.get(acct.Id);
-			if(annualRevCase == null){
+			//Case annualRevCase = annualRevalidationCaseOscar.get(acct.Id);
+			
+			//if(annualRevCase == null){
 				accountsToCreateIds.add(acct.Id);
-			}
+			//}
 		}
 
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - launchCampaign] accountsToCreateIds is ' + accountsToCreateIds);
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - launchCampaign] total size: ' + accountsToCreateIds.size());
-
 		if(!accountsToCreateIds.isEmpty()){
-
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - launchCampaign] Running batch !');
-
 			batchStatusBool = true;
 			pollerBool = true;
-
-			ANG_AnualRevalCaseCreationBatch aRCCbatch = new ANG_AnualRevalCaseCreationBatch(accountsToCreateIds);
-			batchId = Database.executeBatch(aRCCbatch,1);
+			batchId = Database.executeBatch(new ANG_AnualRevalCaseCreationBatch(accountsToCreateIds), 1);
 		}
 
 	}
 
 	public void getBatchStatus(){
-
 		if(batchId == null){
 			pollerBool = true;
 			return;
@@ -473,10 +464,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
-		if(batchJob.status == 'Ended' || batchJob.status == 'Completed')
+		if(batchJob.status == 'Ended' || batchJob.status == 'Completed') {
 			pollerBool = false;
-		else
+		} else {
 			pollerBool = true;
+		}
 
 		getBatchStatus++;
 
