@@ -132,6 +132,7 @@ export default class PortalAddressForm extends LightningElement {
     get isValidationButtonDisabled(){
         return  this.localAddress.cityName === '' 
                 || this.localAddress.street.length < 3 
+                || this.localAddress.street.length > 64 
                 || (this.localAddress.stateName === '' && this.isStateRequired) 
                 || !this.localAddress.inputModified;
     }
@@ -233,11 +234,10 @@ export default class PortalAddressForm extends LightningElement {
         let value = event.target.value;
         let fieldname = event.target.dataset.fieldname;
 
-        this.localAddress.inputModified = true;
-        this.setValidationStatus(this.localAddress.validationStatus);
-
         switch(fieldname){
             case 'IsPoBox':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.localAddress.isPoBox = event.target.checked;
                 this.localAddress.cityName = '';
                 this.localAddress.cityId = '';
@@ -245,22 +245,45 @@ export default class PortalAddressForm extends LightningElement {
                 this.localAddress.street = '';
                 break;
             case 'Country':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.handleCountryChange(value,true);
                 break;
             case 'StateId':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.handleStateChange(value,true);
                 break;
             case 'StateName':
-                this.localAddress.stateName = value;
+                if(this.localAddress.stateName !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.stateName = value;
+                }
                 break;
             case 'Street':
-                this.localAddress.street = value;
+                if(value.length <= 64 && this.localAddress.street !== value){
+                    this.localAddress.street = value;
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                }
+                else{
+                    this.localAddress.street = this.localAddress.street;
+                }
                 break;
             case 'City':
-                this.localAddress.cityName = value;
+                if(this.localAddress.cityName !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.cityName = value;
+                }
                 break;
             case 'Zip':
-                this.localAddress.zip = value;
+                if(this.localAddress.zip !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.zip = value;
+                }
                 break;
         }
     }
@@ -368,11 +391,15 @@ export default class PortalAddressForm extends LightningElement {
     handleCityKey(event){
         let stateData = this.stateData;
         let value = event.target.value;
+        if(this.localAddress.cityName === value){
+            return;
+        }
         let selectedState = this.localAddress.stateId;
         
         this.localAddress.cityId = '';
         this.localAddress.cityName = value;
         this.localAddress.inputModified = true;
+        this.setValidationStatus(this.localAddress.validationStatus);
 
         let isPoBox = this.localAddress.isPoBox;
         
@@ -541,15 +568,12 @@ export default class PortalAddressForm extends LightningElement {
                 let suggestions = [];
 
                 result.forEach((address,index,arr) => {
-                    address.title = address.street;
-                    address.title += address
-                    .locality === undefined || address.locality.length === 0 ? '' : (', '+address.locality);
-                    address.title += address.province === undefined || address.province.length === 0 ? '' : (', '+address.province);
-                    address.title += address.postalCode === undefined || address.postalCode.length === 0 ? '' : (', '+address.postalCode);
                     address.key = index;
                     address.isSelected = false;
 
-                    suggestions.push(address);
+                    if(address.street.length <= 64){
+                        suggestions.push(address);
+                    }
                 });
     
                 if(suggestions.length === 0){
