@@ -35,11 +35,11 @@ public without sharing class OneIdLightningLoginFormController {
 	* @example
 	* changeLanguage('paulo.bastos@rightisservices.com','asdsawqe','home');
 	*/
-   @AuraEnabled
+	 @AuraEnabled
 	public static String login(String username,
-							   String password,
-							   String startUrl,
-							   String serviceName) {
+								 String password,
+								 String startUrl,
+								 String serviceName) {
 		User oneUser;
 		String pageLink = startUrl == null || startUrl.equalsIgnoreCase('undefined') ? '' : startUrl;
 		//Clear spaces
@@ -129,10 +129,10 @@ public without sharing class OneIdLightningLoginFormController {
 
 			// if PWC or DPC user
 			if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){ //overrides to old portal
-			   serviceName='ISSP';
-			   startUrl ='/ISSP_Homepage';
+				 serviceName='ISSP';
+				 startUrl ='/ISSP_Homepage';
 
-			   if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
+				 if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
 
 			}
 
@@ -342,39 +342,11 @@ public without sharing class OneIdLightningLoginFormController {
 		return sanctionCountry;
 	}
 
-	/*
-	@AuraEnabled
-	public static Boolean getLoginInfo(String clientIpAddress) {
-		loginInfo=new LoginModel();
-
-		loginInfo.show90Days=show90Days;
-
-		loginInfo.isUsernamePasswordEnabled=getIsUsernamePasswordEnabled();
-		loginInfo.isSelfRegistrationEnabled=getIsSelfRegistrationEnabled();
-		loginInfo.forgotPasswordUrl=getForgotPasswordUrl();
-
-		loginInfo.sanctionCountry=getSanctionCountry(clientIpAddress);
-
-		return loginInfo;
-	}
-	*/
 
 	@AuraEnabled
 	public static Boolean getShow90Days() {
-		//show90Days=true;
 		return show90Days;
 	}
-
-	/*@AuraEnabled
-	public static Boolean getSanctionCountry(String clientIpAddress) {
-		//Set client ip address
-		ipAddress=clientIpAddress;
-
-		findLocationCaller();
-
-		//sanctionCountry=true;
-		return sanctionCountry;
-	}*/
 
 	@AuraEnabled
 	public static Boolean getIsUsernamePasswordEnabled() {

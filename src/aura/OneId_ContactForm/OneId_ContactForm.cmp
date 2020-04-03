@@ -1,4 +1,4 @@
-<aura:component controller="OneId_RegistrationProcessController">
+<aura:component controller="OneId_RegistrationProcessController" access="public">
 
     <aura:attribute name="contactLabels" type="Map"/>
     <aura:attribute name="jobFunctionOptions" type="List"/>

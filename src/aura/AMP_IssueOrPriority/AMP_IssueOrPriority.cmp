@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
 
     <aura:attribute name="issue" type="Objective__c" />
     <aura:attribute name="divisionValues" type="String[]" />
