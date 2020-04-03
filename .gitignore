@@ -165,7 +165,3 @@ sfdx-project.json
 .vscode/
 src/lwc/jsconfig.json
 src/lwc/.eslintrc.json
-AutoPackageGenerator.bash
-AutoPackageGenerator.config
-build
-build/build.properties

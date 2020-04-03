@@ -24,12 +24,14 @@ global class PostCopyScript implements SandboxPostCopy {
 			delete listBSPLinkIntegrations;
 		}
 
+
 		//delete AMS SAP Settings custom setting record
 		List<AMS_SAP_Settings__c> listSAPSettings = new List<AMS_SAP_Settings__c>();
 		listSAPSettings = [SELECT id From AMS_SAP_Settings__c];
 		if(!listSAPSettings.isEmpty()) {
 			delete listSAPSettings;
 		}
+
 
 		//delete IEC SAP Settings custom setting record
 		List<IEC_SAP_Settings__c> listIECSAPSettings = new List<IEC_SAP_Settings__c>();
@@ -38,12 +40,14 @@ global class PostCopyScript implements SandboxPostCopy {
 			delete listIECSAPSettings;
 		}
 
+
 		//delete IEC Settings custom setting record
 		List<IEC_Settings__c> listIECSettings = new List<IEC_Settings__c>();
 		listIECSettings = [SELECT id From IEC_Settings__c];
 		if(!listIECSettings.isEmpty()) {
 			delete listIECSettings;
 		}
+
 
 		//delete HPM Setting custom setting record
 		List<HPM_Setting__c> listHPMSettings = new List<HPM_Setting__c>();
