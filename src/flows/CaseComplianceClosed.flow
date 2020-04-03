@@ -285,6 +285,37 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Subject</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>formula_2_myRule_1_1709273474</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_1_pmetdec</targetReference>
             </connector>
@@ -442,11 +473,64 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_old.Subject</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>formula_3_myRule_1_pmetrule_0636020661</elementReference>
+                </rightValue>
+            </conditions>
             <label>Previously Met - Prev</label>
         </rules>
     </decisions>
     <description>Relaunch the account context activation flow when a case of type &quot;Compliance&quot; is closed</description>
-    <interviewLabel>CaseComplianceClosed-4_InterviewLabel</interviewLabel>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>$Label.EFComplianceReview </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_1709273474</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.EFComplianceReview}</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>$Label.EFComplianceReview </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_3_myRule_1_pmetrule_0636020661</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.EFComplianceReview}</expression>
+    </formulas>
+    <interviewLabel>CaseComplianceClosed-2_InterviewLabel</interviewLabel>
     <label>CaseComplianceClosed</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -474,7 +558,7 @@
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>myDecision</startElementReference>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

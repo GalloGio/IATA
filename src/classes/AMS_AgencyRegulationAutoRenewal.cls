@@ -422,7 +422,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					mail.saveAsActivity = true;
-					mail.setToAddresses(new List<String>{recipient.Email});
 					if(templateToIATA){
 						mail.setTemplateId(tempIata.get(0).Id);
 					} else {
@@ -459,15 +458,17 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					}else{
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 						mail.saveAsActivity = true;
-						mail.setToAddresses(new List<String>{recipient.Email});
 						if(templateToIATA){
 							mail.setTemplateId(tempIata.get(0).Id);
 						} else {
 							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 						}
 						mail.setTargetObjectId(recipient.Id);
+
 						mail.setWhatId(oscarId);
+
 						mail.setOrgWideEmailAddressId(owea.Id);
+
 						mailsToSend.add(mail);
 					}
 				}
@@ -508,7 +509,15 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
 					emailMsg.FromAddress = owea.Address;
 					emailMsg.FromName = owea.DisplayName;
-					emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+
+					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
+						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					}
+
+					if(!String.isBlank(mail.getTargetObjectId())) {
+						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
+					}
+
 					emailMsg.Subject = mail.getSubject();
 					emailMsg.HtmlBody = mail.getHtmlBody();
 					emailMsg.ParentId = oscarCommCaseId; //Attach with the case

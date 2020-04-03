@@ -535,42 +535,6 @@ public without sharing class AMS_Utils {
 
 	public AMS_Utils() {}
 
-	@future
-	public static void sendEmailAmsSupport( string subject, string message) {
-		List<ID> userIDs = new List<ID>();
-		userIDs.add('0057E000000HpGoQAK');
-
-
-		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-
-		try {
-			system.debug('Try to send message . ' + subject + ' ******  ' + message);
-
-			for (ID userId : userIDs) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				String[] toAddresses = new String[] {'fernando.mouzinho@gmail.com'};
-				mail.setToAddresses(toAddresses);
-				mail.setSenderDisplayName('Apex error message');
-				mail.setSubject(subject);
-				mail.setSaveAsActivity(false);
-				mail.setPlainTextBody(message);
-				emailsToSend.add(mail);
-
-			}
-
-			if (Test.isRunningTest() ) {
-				Messaging.sendEmail(emailsToSend);
-				System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-				return;
-			}
-
-		} catch (Exception  e1) {
-			system.debug('Failed to send email to users:' + e1.getMessage());
-			system.debug('Failed to send email to users:' + e1.getStackTraceString());
-		}
-
-	}
-
 	/**
 	 * Encrypts a string to be used as a GET parameter
 	 * @param sValue The string parameter to encrypt
@@ -1881,6 +1845,8 @@ public without sharing class AMS_Utils {
 		String errorString = ex.getMessage();
 		String searchString = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
 		String searchString2 = '##';
+		String searchString3 = 'FIELD_FILTER_VALIDATION_EXCEPTION';
+		String searchString4 = 'Geoname';
 		System.debug('EXCEPTION!! ' + ex.getMessage() + '\n ' + ex.getStackTraceString());
 		if (ex.getMessage().containsIgnoreCase(searchString)) {
 			System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
@@ -1892,6 +1858,12 @@ public without sharing class AMS_Utils {
 			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString2) + searchString2.length();
 			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
 			errorString = errorString.substringBefore('##');
+		}
+
+		if(ex.getMessage().containsIgnoreCase(searchString3) && ex.getMessage().containsIgnoreCase(searchString4)){
+			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString3) + searchString3.length() + 2;
+			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
+			errorString = errorString.substringBefore(': [');
 		}
 		return 'ERROR: ' + errorString.unescapeHtml4();
 	}

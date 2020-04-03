@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component access="public">
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="data" type="List"/>
     <aura:attribute name="sortBy" type="String"/>

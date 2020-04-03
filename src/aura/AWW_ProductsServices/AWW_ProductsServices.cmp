@@ -1,4 +1,4 @@
-<aura:component controller="AWW_ProductsServicesCtrl">
+<aura:component controller="AWW_ProductsServicesCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="accessToSAP" type="Boolean" default="false"/>
     <aura:attribute name="linkToSAP" type="String"/>

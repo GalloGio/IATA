@@ -253,6 +253,10 @@
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
+    </customLabels>
+    <customLabels>
         <label>La {0} rue est obligatoire. Veuillez renseigner le champ {1} de la rue.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
@@ -1902,6 +1906,14 @@
     <customLabels>
         <label><!-- CNS End Changes Service Description --></label>
         <name>CNS_End_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID-19 eComm Home Page --></label>
+        <name>COVID_19_eComm_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
@@ -6547,6 +6559,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
     <customLabels>
         <label>Cours 2:</label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -14335,7 +14351,7 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Actif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -19230,6 +19246,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Soumission des documents accomplie avec succès!</label>
         <name>IfapSubmissionOfDocsOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- Industry_Activities --></label>

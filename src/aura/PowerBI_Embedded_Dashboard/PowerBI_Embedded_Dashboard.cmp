@@ -1,4 +1,4 @@
-<aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard">
+<aura:component access="public" controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard">
 
     <aura:attribute name="dashboard" type="Object"/>
     <aura:attribute name="userDetail" type="Object"/>
