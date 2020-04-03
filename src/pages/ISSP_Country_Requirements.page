@@ -1,18 +1,7 @@
 <apex:page controller="ISSP_Ctrl_Country_Requirements" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!checkAccess}">
   <html>
     <c:ISSP_Header ></c:ISSP_Header>
-	<style>
-		.btn_iata_cancel{
-			margin: 10px 0 !important; 
-		}
-
-		.breadcrumb{
-			margin: 15px 0;
-		}
-      .btn{
-        border-radius: unset !important;
-      }
-    </style>
+	
 		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     	<script>
@@ -36,7 +25,21 @@
     	</script>
 
     <body>      
-      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+	  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+	  <style>
+			.btn_iata_cancel{
+				margin: 10px 0 !important; 
+			}
+
+			.breadcrumb{
+				margin: 15px 0;
+				color:#3333ff;
+			}
+			.btn{
+			border-radius: unset !important;
+			}
+
+		</style>
       <div class="container">
 			  <apex:form id="mainFrm">	
           <apex:pagemessages id="errors" />

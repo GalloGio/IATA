@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Integration_Log__c.External_Transaction_Id__c</field>
+    </columns>
+    <columns>
+        <field>Integration_Log__c.object_type__c</field>
+    </columns>
+    <columns>
+        <field>Integration_Log__c.RecordId__c</field>
+    </columns>
+    <columns>
+        <field>Integration_Log__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Integration_Log__c.Status_Detail__c</field>
+    </columns>
+    <columns>
+        <field>CUST_CREATED_DATE</field>
+    </columns>
+    <currency>USD</currency>
+    <description>E&amp;F CRM2 INTEGRATION LOG CHECK</description>
+    <filter>
+        <criteriaItems>
+            <column>Integration_Log__c.object_type__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>Business</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>E&amp;F CRM2 INTEGRATION LOG CHECK</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Integration_Log__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CUST_CREATED_DATE</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

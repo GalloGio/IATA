@@ -37,6 +37,10 @@
         <name>EF_CRM</name>
     </customApplications>
     <customApplications>
+        <label><!-- E&amp;F CRM Lightning --></label>
+        <name>EF_CRM_Lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- E&amp;F --></label>
         <name>E_F</name>
     </customApplications>
@@ -247,6 +251,10 @@
     <customLabels>
         <label>Controlli stato/provincia e/o nome della città. Se è certo di aver inserito correttamente i dati, faccia clic su &quot;Invia&quot;.</label>
         <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Select From List --></label>
+        <name>AMS_DQ_Select_From_List</name>
     </customLabels>
     <customLabels>
         <label>Il campo via {0} è obbligatorio. Si prega di compilare il campo della via {1}.</label>
@@ -1537,6 +1545,14 @@
         <name>Account</name>
     </customLabels>
     <customLabels>
+        <label><!-- AccountContextActivationEmailBody --></label>
+        <name>AccountContextActivationEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountContextActivationEmailSubject --></label>
+        <name>AccountContextActivationEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
         <name>Account_Invoicing_Collection_Cases_Report_ID</name>
     </customLabels>
@@ -1893,6 +1909,14 @@ la seguente procedura per completarlo :
         <name>CNS_End_Changes_Service_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- COVID-19 eComm Home Page --></label>
+        <name>COVID_19_eComm_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- COVID Updates Service --></label>
+        <name>COVID_Updates_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -1987,6 +2011,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CSP_Breadcrumb_Home_Title --></label>
         <name>CSP_Breadcrumb_Home_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
+        <name>CSP_Breadcrumb_Service_TIPReports</name>
     </customLabels>
     <customLabels>
         <label>Servizi</label>
@@ -3322,6 +3350,46 @@ la seguente procedura per completarlo :
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_TIPReports_AmazonType --></label>
+        <name>CSP_Service_TIPReports_AmazonType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoAccess --></label>
+        <name>CSP_Service_TIPReports_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_NoReports --></label>
+        <name>CSP_Service_TIPReports_NoReports</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_PBIType --></label>
+        <name>CSP_Service_TIPReports_PBIType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextAction --></label>
+        <name>CSP_Service_TIPReports_TextAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileName --></label>
+        <name>CSP_Service_TIPReports_TextFileName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextFileType --></label>
+        <name>CSP_Service_TIPReports_TextFileType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextOpen --></label>
+        <name>CSP_Service_TIPReports_TextOpen</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_TextPostedDate --></label>
+        <name>CSP_Service_TIPReports_TextPostedDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_TIPReports_Title --></label>
+        <name>CSP_Service_TIPReports_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Accesso richiesto</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3712,6 +3780,18 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- Company name --></label>
         <name>Company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CompleteThisField --></label>
+        <name>CompleteThisField</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailBody --></label>
+        <name>ComplianceProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ComplianceProcessEmailSubject --></label>
+        <name>ComplianceProcessEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- ConfirmSendRecycleBin --></label>
@@ -4374,6 +4454,10 @@ la seguente procedura per completarlo :
         <name>EBulletin_More_than_8_owners_message</name>
     </customLabels>
     <customLabels>
+        <label><!-- EFComplianceReview --></label>
+        <name>EFComplianceReview</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -5006,6 +5090,22 @@ la seguente procedura per completarlo :
         <name>ICCS_Additional_Codes_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Adhoc Button Help Text --></label>
+        <name>ICCS_Adhoc_Button_Help_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Creation Not Allowed --></label>
+        <name>ICCS_Adhoc_Creation_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc SI by Currency --></label>
+        <name>ICCS_Adhoc_SI_by_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Adhoc Selection error --></label>
+        <name>ICCS_Adhoc_Selection_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Agreement Label --></label>
         <name>ICCS_Agreement_Label</name>
     </customLabels>
@@ -5110,8 +5210,16 @@ la seguente procedura per completarlo :
         <name>ICCS_Client_Testimonial_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Clone SI --></label>
+        <name>ICCS_Clone_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Clone SI Link --></label>
         <name>ICCS_Clone_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Collapse All --></label>
+        <name>ICCS_Collapse_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Comment Label --></label>
@@ -5134,8 +5242,16 @@ la seguente procedura per completarlo :
         <name>ICCS_Create_Adhoc_SI_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Create Currency SI Link --></label>
+        <name>ICCS_Create_Currency_SI_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Create Future SI Link --></label>
         <name>ICCS_Create_Future_SI_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Create Mass Currency Header --></label>
+        <name>ICCS_Create_Mass_Currency_Header</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Created Date Label --></label>
@@ -5148,6 +5264,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS Currency Label --></label>
         <name>ICCS_Currency_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Currency SI created --></label>
+        <name>ICCS_Currency_SI_created</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS CycleMgmt AdHoc Header --></label>
@@ -5206,6 +5326,10 @@ la seguente procedura per completarlo :
         <name>ICCS_EF_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Edit SI --></label>
+        <name>ICCS_Edit_SI</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Edit SI Link --></label>
         <name>ICCS_Edit_SI_Link</name>
     </customLabels>
@@ -5248,6 +5372,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS Endpoint Username PROD --></label>
         <name>ICCS_Endpoint_Username_PROD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Expand All --></label>
+        <name>ICCS_Expand_All</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Expected Deadline --></label>
@@ -5300,6 +5428,14 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS Headquarter Branch --></label>
         <name>ICCS_Headquarter_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned --></label>
+        <name>ICCS_Helptext_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS HelpText For Preassigned With Amount --></label>
+        <name>ICCS_Helptext_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Hide Child Codes --></label>
@@ -5486,12 +5622,20 @@ la seguente procedura per completarlo :
         <name>ICCS_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Mandatory Instruction Line --></label>
+        <name>ICCS_Mandatory_Instruction_Line</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Mandatory Uploads Message --></label>
         <name>ICCS_Mandatory_Uploads_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Marked for Deletion Label --></label>
         <name>ICCS_Marked_for_Deletion_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Mass Edit SI --></label>
+        <name>ICCS_Mass_Edit_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Membership Status --></label>
@@ -5508,6 +5652,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS More About Link --></label>
         <name>ICCS_More_About_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Multi Countries Adhoc SI --></label>
+        <name>ICCS_Multi_Countries_Adhoc_SI</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Multiple Signatories Change Message --></label>
@@ -5540,6 +5688,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS NoA Message --></label>
         <name>ICCS_NoA_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS No Currencies Available --></label>
+        <name>ICCS_No_Currencies_Available</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS No Editable Cycle Message --></label>
@@ -5774,6 +5926,14 @@ la seguente procedura per completarlo :
         <name>ICCS_Role_Label</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS SI Successfully Created --></label>
+        <name>ICCS_SI_Successfully_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS SI deleted --></label>
+        <name>ICCS_SI_deleted</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Save Action --></label>
         <name>ICCS_Save_Action</name>
     </customLabels>
@@ -5842,6 +6002,10 @@ la seguente procedura per completarlo :
         <name>ICCS_Service_Users_Table_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Settlement Instructions created --></label>
+        <name>ICCS_Settlement_Instructions_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Show Child Codes --></label>
         <name>ICCS_Show_Child_Codes</name>
     </customLabels>
@@ -5866,8 +6030,20 @@ la seguente procedura per completarlo :
         <name>ICCS_Si_Create_Adhoc</name>
     </customLabels>
     <customLabels>
+        <label><!-- ICCS Si Create Currency --></label>
+        <name>ICCS_Si_Create_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Create Currency Warning --></label>
+        <name>ICCS_Si_Create_Currency_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICCS Si Create Future --></label>
         <name>ICCS_Si_Create_Future</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Si Edit Currency --></label>
+        <name>ICCS_Si_Edit_Currency</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Si Edit Future --></label>
@@ -5880,6 +6056,22 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS Start Date Label --></label>
         <name>ICCS_Start_Date_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received --></label>
+        <name>ICCS_Status_For_Not_Received</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Not Received With Amount --></label>
+        <name>ICCS_Status_For_Not_Received_With_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned --></label>
+        <name>ICCS_Status_For_Preassigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICCS Status For Preassigned With Amount --></label>
+        <name>ICCS_Status_For_Preassigned_With_Amount</name>
     </customLabels>
     <customLabels>
         <label><!-- ICCS Subject Label --></label>
@@ -6352,6 +6544,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_Course2 --></label>
         <name>IDCard_Course2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Covid --></label>
+        <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Create Application --></label>
@@ -13525,7 +13721,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Per comunicare un&apos;eventuale modifica delle coordinate bancarie contattare IATA</label>
+        <label>Per comunicare un eventuale modifica delle coordinate bancarie contattare IATA</label>
         <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
@@ -14121,7 +14317,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Attivo</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -19017,6 +19213,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
+        <label><!-- Important_Delivery_Information --></label>
+        <name>Important_Delivery_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Industry_Activities --></label>
         <name>Industry_Activities</name>
     </customLabels>
@@ -21720,6 +21920,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Salutation</name>
     </customLabels>
     <customLabels>
+        <label><!-- SapProcessEmailBody --></label>
+        <name>SapProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SapProcessEmailSubject --></label>
+        <name>SapProcessEmailSubject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
     </customLabels>
@@ -21750,6 +21958,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Select --></label>
         <name>Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SelectAnOption --></label>
+        <name>SelectAnOption</name>
     </customLabels>
     <customLabels>
         <label><!-- SelectRequiredMessage --></label>
@@ -21842,6 +22054,18 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Signaturit Endpoint --></label>
         <name>Signaturit_Endpoint</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessCaseSubject --></label>
+        <name>SisProcessCaseSubject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailBody --></label>
+        <name>SisProcessEmailBody</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SisProcessEmailSubject --></label>
+        <name>SisProcessEmailSubject</name>
     </customLabels>
     <customLabels>
         <label><!-- SiteTitle --></label>
