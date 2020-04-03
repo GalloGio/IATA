@@ -1,7 +1,7 @@
 <!--
  - Created by ppop on 8/7/2019.
  -->
-<aura:component description="GADM_RelatedFilesCategorizedLists" controller="GADM_RelatedFilesCategorizedLists_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+<aura:component access="public" description="GADM_RelatedFilesCategorizedLists" controller="GADM_RelatedFilesCategorizedLists_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="fileCategories" type="Set"/>
     <aura:attribute name="files" type="List"/>
     <aura:attribute name="objectIds" type="List"/>

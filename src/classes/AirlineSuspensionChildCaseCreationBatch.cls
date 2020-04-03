@@ -420,18 +420,16 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 		}
 
 
-		AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, ExtendedStatus, CreatedBy.Email FROM AsyncApexJob WHERE Id = :BC.getJobId()];
+		AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, ExtendedStatus, CreatedById FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 		String mailbody = 'The batch process that automatically ' + (isCloseChildCases ? 'closes' : 'generates') + ' the Airline Suspension child cases processed ' + a.TotalJobItems +
 				' creation batches (containing up to 10 cases each) with '+ a.NumberOfErrors + ' failures.\n\nExtended status:\n' + a.ExtendedStatus;
 
 		// Send an email to the Apex job's submitter notifying of job completion.
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		String[] toAddresses = new String[] {a.CreatedBy.Email};
-		mail.setToAddresses(toAddresses);
+		mail.setSaveAsActivity(false);
+		mail.setTargetObjectId(a.CreatedById);
 		mail.setSubject('Airline Suspension child cases ' + (isCloseChildCases ? 'closing' : 'creation') + ' status: ' + a.Status);
-		mail.setPlainTextBody (mailbody);
-
-		system.debug('ErrorLog: ' + errorLog);
+		mail.setPlainTextBody(mailbody);
 
 		// check if there were errors logged, and attach them in a file
 		if(errorLog != ''){

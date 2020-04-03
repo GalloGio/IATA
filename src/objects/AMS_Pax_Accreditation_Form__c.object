@@ -2081,7 +2081,7 @@
         <externalId>false</externalId>
         <label>Accreditation Type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>

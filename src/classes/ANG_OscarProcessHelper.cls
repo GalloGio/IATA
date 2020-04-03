@@ -1946,6 +1946,7 @@ global class ANG_OscarProcessHelper {
 			nt.Subject__c = nt.Subject__c
 				.replace('#IATACODE', acct.IataCode__c)
 				.replace('#ACCOUNTNAME', acct.Name);
+			nt.Subject__c = nt.Subject__c.length() > 140 ? nt.Subject__c.substring(0,140) : nt.Subject__c; //Notification__c.Subjec -> max size 140
 
 			notifications.add(nt);
 		}
