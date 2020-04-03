@@ -3901,6 +3901,10 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Unpaid</fullName>
                 <default>false</default>
             </values>

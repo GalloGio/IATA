@@ -196,5 +196,63 @@ public class AMS_AccreditationOnlineTriggerHelperTest {
 		update accr;
 	}
 
+	@isTest static void testUpdateAddressAccordingToLookup(){
+		Account a = new Account(Name = 'n');
+		insert a;
+
+		Contact c = new Contact(AccountId = a.Id, FirstName = 'Contact', LastName = 'Contact', Email = 'cont@act.com');
+		insert c;
+
+		Case cs = new Case(AccountId = a.Id, ContactId = c.Id, Subject = 'TEST Case');
+		insert cs;
+
+		IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(Name= 'c_one', ISO_Code__c= 'c1', ISO_Code_Numeric__c= 123);
+		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(Name= 'c_two', ISO_Code__c= 'c2', ISO_Code_Numeric__c= 456, AMS_Default_State__c= 's1');
+
+		insert new List<IATA_ISO_Country__c> {country1, country2};
+
+		IATA_ISO_State__c state = new IATA_ISO_State__c(Name= 's_one', ISO_Code__c= 's1', IATA_ISO_Country__c= country2.Id);
+
+		insert state;
+
+		IATA_ISO_City__c city1 = new IATA_ISO_City__c (Name= 'city_one', IATA_ISO_State__c = state.Id);
+		IATA_ISO_City__c city2 = new IATA_ISO_City__c (Name= 'city_two', IATA_ISO_State__c = state.Id);
+
+		insert new List<IATA_ISO_City__c> { city1, city2 };
+
+		AMS_Pax_Accreditation_Form__c accr = new  AMS_Pax_Accreditation_Form__c(
+			SAAM_Case__c = cs.Id,
+			Account_Name__c = 'AccountNameWhichIsDefinitelyTooLongToBeStoredAsAbbreviatedName',
+			Branch_Office_Street_name_number__c = 'AccountNameWhichIsDefinitelyTooLongToBeStoredAsAbbreviatedAddress',
+			Location_Class__c = 'P',
+			Location_Type__c = 'R',
+			Shipping_ISO_Country__c = country2.Id,
+			Geoname_Shipping_City__c = city1.Id,
+			Geoname_Billing_City__c = city1.Id,
+			Branch_Office_City__c = city1.Name,
+			Shipping_City__c = city1.Name
+		);
+
+		insert accr;
+
+
+
+		System.assertEquals(city1.Name, accr.Branch_Office_City__c);
+		System.assertEquals(city1.Name, accr.Shipping_City__c);
+
+		accr.Geoname_Billing_City__c = city2.Id;
+		accr.Geoname_Shipping_City__c = city2.Id;
+
+		update accr;
+		
+		accr = [SELECT Id, Branch_Office_City__c, Shipping_City__c 
+				FROM AMS_Pax_Accreditation_Form__c
+				WHERE ID = :accr.Id];
+
+		System.assertEquals(city2.Name, accr.Branch_Office_City__c);
+		System.assertEquals(city2.Name, accr.Shipping_City__c);
+
+	}
+
 
 }

@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="filteredData" type="Object"/>

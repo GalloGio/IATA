@@ -110,6 +110,9 @@ private class IECApplicationsManager_tst {
 
 		// create ID_Card records
 		oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Valid ID Card');
+		oIDCard.FirstName__c = 'John';
+		oIDCard.LastName__c = 'Doe';
+		oIdCard.Duties__c = 'OPERATIONS';
 		oIDCard.Valid_To_Date__c = Date.today().addYears(1);
 		oIDCard.Valid_From_Date__c = Date.today();
 		insert oIDCard;
@@ -248,6 +251,10 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// test customer search functionality: part 1
 	// test the product access consumption
+	/**
+	 * A test method that requires a Zuora Object must contain SeeAllData equals true, due to platform limitations. 
+	 * (https://knowledgecenter.zuora.com/CA_Commerce/I_Development_Resources/B_Order_Builder/D_Programming_with_Order_Builder#Unit_Tests_and_Code_Coverage) 
+	*/
 	@isTest(SeeAllData=true)
 	static void testCustomerSearch1_Count() {
 		initDataForCustomerSearch();
@@ -286,6 +293,10 @@ private class IECApplicationsManager_tst {
 	// test customer search functionality: part 2.1
 	// customerSearchAgencyByIATACode
 	// customerSearchAgentByVER
+	/**
+	 * A test method that requires a Zuora Object must contain SeeAllData equals true, due to platform limitations. 
+	 * (https://knowledgecenter.zuora.com/CA_Commerce/I_Development_Resources/B_Order_Builder/D_Programming_with_Order_Builder#Unit_Tests_and_Code_Coverage) 
+	*/
 	@isTest(SeeAllData=true)
 	static void testCustomerSearch2() {
 		initDataForCustomerSearch();
@@ -330,10 +341,7 @@ private class IECApplicationsManager_tst {
 		test.stopTest();
 	} // testCustomerSearch2
 
-
-
-	@isTest(SeeAllData=true)
-	static void testCustomerSearch3Pre() {
+	@isTest public static void testCustomerSearch3Pre() {
 
 		initDataForCustomerSearch();
 
@@ -427,8 +435,8 @@ private class IECApplicationsManager_tst {
 	} // end of testCustomerSearch4_Address
 
 	// test testLiveUsageTracking
-	 @isTest(SeeAllData=true)
-	static void testLiveUsageTracking() {
+	@isTest public static void testLiveUsageTracking() {
+
 		setupData();
 
 		Test.startTest();
@@ -485,8 +493,7 @@ private class IECApplicationsManager_tst {
 
 	// ====================================================================
 	// testAnonymousSearch
-	@isTest(SeeAllData=true)
-	static void testAnonymousSearch() {
+	@isTest public static void testAnonymousSearch() {
 
 		List<GDP_Products_Account_View__c> lstSearchResult = null;
 		List<IEC_Usage_Tracker_Live__c> lstUsageLive = null;
@@ -538,8 +545,7 @@ private class IECApplicationsManager_tst {
 
 	// ====================================================================
 	// testOtherStuff
-	@isTest(SeeAllData=true)
-	static void testOtherStuff() {
+	@isTest public static void testOtherStuff() {
 
 		// Test #1 - test string representation of filter
 
@@ -587,8 +593,8 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// testOtherStuff part 2
 	// just some extra calls just to increase the coverage
-	@isTest(SeeAllData=true)
-	static void testOtherStuff2() {
+	@isTest public static void testOtherStuff2() {
+
 		initDataForCustomerSearch();
 
 		Test.startTest();
@@ -630,8 +636,8 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// test isEbcAccessGrantedForContact()
 	// this method only check based on the value of related Zuora__CustomerAccount__c.eBroadcast_Product_Access__c
-	@isTest(SeeAllData=false)
-	static void testIsEbcAccessGrantedForContact() {
+	@isTest public static void testIsEbcAccessGrantedForContact() {
+		
 		// simplified data preparation
 		Account oTestAccount = IECTestUtil.createSampleAccount();
 		insert oTestAccount;

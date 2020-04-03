@@ -1,0 +1,10 @@
+.THIS.slds-has-error [role=combobox] input[readonly] {
+    border-color: rgb(194, 57, 52);
+}
+
+.THIS .fullWidth{
+    width:100%;
+}
+.THIS .slds-combobox .slds-combobox__form-element .slds-pill .slds-pill__remove{
+    right:0.55rem;
+}

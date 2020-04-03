@@ -241,6 +241,55 @@ private class ISSP_WS_Test {
 		}
 	}
 
+	static testMethod void NewUser_7() {
+		List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
+		insert errorList;
+
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '100';
+		acc.RecordTypeId = recordTypeId;
+		insert acc;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.LastName = 'test';
+		con.User_Portal_Status__c = 'Rejected';
+		con.Status__c = 'Inactive';
+		con.Email = 'test.issp.interface@testisspinterface.com';
+		insert con;
+
+		Portal_Applications__c newApp = new Portal_Applications__c();
+		newApp.Name = 'MYTEST';
+		insert newApp;
+
+		ISSP_Portal_Service_Ids__c theIds = new ISSP_Portal_Service_Ids__c();
+		theIds.CASSLinkExport__c = newApp.Id;
+		theIds.CASSLinkImport__c = newApp.Id;
+		theIds.CASSLinkRouteAnalyzer__c = newApp.Id;
+		theIds.SIS__c = newApp.Id;
+		theIds.ASD__c = newApp.Id;
+		theIds.BSPLink__c = newApp.Id;
+		insert theIds;
+
+		User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+		system.runAs(myUser){
+			ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
+			myInput.firstName = 'test';
+			myInput.lastName = 'test';
+			myInput.salutation = '';
+			myInput.email = 'test.issp.interface@testisspinterface.com';
+			myInput.accountIATAcode = '100';
+			myInput.accountCountry = 'PT';
+			myInput.phone = '';
+			myInput.services = 'CASS01';
+			myInput.sisMemberId = '';
+			myInput.description = '';
+			ISSP_WS_NewUser.createUser(myInput);
+		}
+	}
+
 	static testMethod void NewUser_8() {
 		List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
 		insert errorList;
