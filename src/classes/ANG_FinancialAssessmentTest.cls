@@ -571,4 +571,97 @@ private class ANG_FinancialAssessmentTest {
 
 	}
 
+	@isTest
+	static void testGenerateNOTChangeCode_ForMulticountry() {
+		// Create AMS Change Code Custom Setting
+		AMS_ChangeCodes__c amsChangeCode = new AMS_ChangeCodes__c(Name = 'ANG82', Accreditation_Model__c = 'NEWGEN', Apply_to_hierarchy__c = true,
+			Billable__c = false, Class_Type__c = 'P', Change_Code__c = 'NOT', CurrencyIsoCode = 'EUR', Field1__c = 'SIDRA_Lite_Reason__c',
+			Field1Values__c = 'VALUES:Financial Review Non-compliance', Field2__c = 'DEF_Approval_Rejection__c', Field2Values__c = 'VALUES:Approved',
+			Field3__c = 'Reason_for_Default__c', Field3Values__c = 'VALUES:Suspension - FA Non Compliance', Field4__c = 'Update_AIMS_DEF__c',
+			Field4Values__c = 'NOT Blank', Field5__c = 'Parent.Status', Field5Values__c = 'VALUES:Sanity Check Failure', Field6__c = 'LastYearIFAP.Status',
+			Field6Values__c = 'VALUES:Closed_non compliance', Record_Type__c = 'SIDRA_Lite', Reason_Code__c = '61', Reason_Code_Description__c = 'NON COMPLIANCE TO FINANCIAL CRITERIA',
+			Integration_RecId__c = 'C', Publish_HO_Only__c = true, Risk_ChangeCode__c = true, Published_in_bulletin__c = true);
+		
+		insert amsChangeCode;
+
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'), true, true, true);
+		Account ac1 = ANG_TestDataHelper.insertAccreditedMulticountryAccount('MC Account 1 GE GB', (Id) null, (Id) null, AMS_Utils.GE, gb, '10000000');
+		
+		Contact cont = ANG_TestDataHelper.insertContact(ac1.Id, true);
+		
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+		ANG_TestDataHelper.insertIfapCase(cont.Id, ac1.Id, '2018', System.today().addDays(-7), AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL);
+
+		// test begin
+		Test.startTest();
+		
+		// IFAP 2018 - Last year
+		Case ifapCaseLastYear = [SELECT Id, AccountId FROM Case WHERE AccountId = :ac1.Id LIMIT 1];
+		
+		ifapCaseLastYear.FA_Letter_Sent__c = true;
+		// Set the Last IFAP Case as Closed this will create a Technical Log , in order to present an error message on the Sidra Page layout
+		ifapCaseLastYear.Status = 'Closed';
+		
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+		update ifapCaseLastYear;
+		
+		// Create new IFAP Case
+		Case currentIfapCase = ANG_TestDataHelper.insertIfapCase(cont.Id, cont.AccountId, '2019', System.today().addDays(31),
+			AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL);
+		
+		// Update currentIFAPCase
+		currentIfapCase.Deadline_Date__c = System.today().addDays(-1);
+		currentIfapCase.FA_Letter_Sent__c = true;
+		currentIFAPCase.Status = 'Sanity Check Failure';
+		update currentIfapCase;
+		
+		Case sidraCase = createSIDRALite(currentIfapCase);
+		sidraCase.BSP_CASS__c = 'BSP';
+		insert sidraCase;
+		
+		// Set this flag in order to Run again the AMS_OscarCase_RiskMgmt
+		AMS_OscarCase_RiskMgmt.EndRun();
+		// Update SidraCase with the values from Excel
+		sidraCase.SIDRA_Lite_Default_Date__c = Date.today();
+		sidraCase.DEF_Approval_Rejection__c = 'Approved';
+		sidraCase.Update_AIMS_DEF__c = DateTime.now();
+		sidraCase.Reason_for_Default__c = 'Suspension - FA Non Compliance';
+		sidraCase.DEF_Approval_Rejection_Date__c = DateTime.now();
+		
+		update sidraCase;
+		
+		// For the Last IFAP Case status = 'Closed' no NOT Change Code will be generated and a Technical Log will be created to show an error message
+		List<Agency_Applied_Change_code__c> agencyChangeCode = [SELECT id, Change_Code__c
+																FROM Agency_Applied_Change_code__c
+																WHERE Account__c = :currentIfapCase.AccountId];
+		// No change code generated
+		System.assert(agencyChangeCode.isEmpty(), 'Shouldn\'t have any change codes');
+		
+		List<Technical_Logs__c> tecLogs = [SELECT id, Log__c FROM Technical_Logs__c];
+		System.assertEquals(1, tecLogs.size(), 'Should have 1 technical log');
+		System.assert(tecLogs.get(0).Log__c.contains('NOT'), 'The technical log should correspond to a Notice of Termination');
+		
+		// Set the Last IFAP Case as Closed this will create a Technical Log , in order to present an error message on the Sidra Page layout
+		ifapCaseLastYear.Status = 'Closed_Non compliance';
+		update ifapCaseLastYear;
+		
+		// Set this flag in order to Run again the AMS_OscarCase_RiskMgmt
+		AMS_OscarCase_RiskMgmt.EndRun();
+		// Update SidraCase with the values from Excel
+		sidraCase.SIDRA_Lite_Default_Date__c = Date.today();
+		sidraCase.DEF_Approval_Rejection__c = 'Approved';
+		sidraCase.Update_AIMS_DEF__c = DateTime.now();
+		sidraCase.Reason_for_Default__c = 'Suspension - FA Non Compliance';
+		sidraCase.DEF_Approval_Rejection_Date__c = DateTime.now();
+		update sidraCase;
+
+		Test.stopTest();
+		
+		// With the previous data the NOT Change Code will be generated
+		List<Agency_Applied_Change_code__c> notChangeCode = [SELECT id, Change_Code__c
+															 FROM Agency_Applied_Change_code__c
+															 WHERE Account__c = :currentIfapCase.AccountId];
+		System.assert(!notChangeCode.isEmpty(), 'Should have 1 change codes');
+		System.assertEquals('NOT', notChangeCode.get(0).Change_Code__c);
+	}
 }

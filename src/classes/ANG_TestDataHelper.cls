@@ -10,11 +10,17 @@ public class ANG_TestDataHelper
 
 	public static IATA_ISO_Country__c insertBspAndIsoCountry(ANG_TestDataHelper.CountryInformation countryInformation)
 	{
-		return insertBspAndIsoCountry(countryInformation, true, true);
+		return insertBspAndIsoCountry(countryInformation, true, true, false);
 	}
 
 	public static IATA_ISO_Country__c insertBspAndIsoCountry(
 		ANG_TestDataHelper.CountryInformation countryInformation, Boolean newGen, Boolean multicountry)
+	{
+		return insertBspAndIsoCountry(countryInformation, newGen, multicountry, false);
+	}
+
+	public static IATA_ISO_Country__c insertBspAndIsoCountry(
+		ANG_TestDataHelper.CountryInformation countryInformation, Boolean newGen, Boolean multicountry, Boolean forRisk)
 	{
 		AMS_Settlement_System__c bsp = new AMS_Settlement_System__c(
 			Name = countryInformation.bspName,
@@ -28,6 +34,10 @@ public class ANG_TestDataHelper
 		country.AMS_Settlement_System__c = bsp.Id;
 		country.ANG_Enable_NewGen__c = newGen;
 		country.Multicountry_Enabled__c = multicountry;
+		if (forRisk) {
+			country.AIMS_Area_ID__c = '1';
+			country.Enable_Risk_Change_Codes__c = true;
+		}
 		insert country;
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertBspAndIsoCountry] Created country: ' + country);
@@ -65,6 +75,27 @@ public class ANG_TestDataHelper
 		insert acct;
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertStandardAccount] Created account: ' + acct);
+
+		return acct;
+	}
+
+	public static Account insertAccreditedMulticountryAccount(String name, Id parent, Id topParent, String locationType, IATA_ISO_Country__c isoCountry,
+		String iataCode)
+	{
+		Account acct = createBasicAccount(true);
+		acct.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+		acct.Name = name;
+		acct.ParentId = parent;
+		acct.Top_Parent__c = topParent;
+		acct.Location_Type__c = locationType;
+		acct.IATA_ISO_Country__c = isoCountry.Id;
+		acct.IATACode__c = iataCode;
+		acct.Location_Class__c = 'P';
+		acct.Remittance_frequency__c = 'M';
+		acct.BillingCountry = isoCountry.Name;
+		insert acct;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertAccreditedMulticountryAccount] Created account: ' + acct);
 
 		return acct;
 	}
@@ -118,6 +149,10 @@ public class ANG_TestDataHelper
 	}
 
 	public static Contact insertContact(Id accountId) {
+		return insertContact(accountId, false);
+	}
+
+	public static Contact insertContact(Id accountId, Boolean financialContact) {
 		Contact cont = new Contact(
 			AccountId = accountId,
 			Firstname = 'Richard',
@@ -125,7 +160,7 @@ public class ANG_TestDataHelper
 			Phone = '666123456',
 			MobilePhone = '911111111',
 			Email = 'contact_for_' + accountId + '@test.com',
-			Financial_Assessment_Contact__c = false
+			Financial_Assessment_Contact__c = financialContact
 		);
 		insert cont;
 
@@ -297,6 +332,22 @@ public class ANG_TestDataHelper
 
 	private static Boolean isOscarVoluntaryRelinquishment(AMS_OSCAR__c oscar) {
 		return oscar.RecordTypeId == AMS_Utils.RECTYPE_VOLUNTARYRELINQUISHMENT;
+	}
+
+	public static Case insertIfapCase(Id contactId, Id accountId, String year, Date deadline, String finReviewType) {
+		Case c = new Case(
+			ContactId = contactId,
+			AccountId = accountId,
+			Subject = 'Financial Review',
+			Description = 'Financial Review - ' + year,
+			Status = 'Agent Notified',
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
+			IFAP_Financial_Year__c = year,
+			Deadline_Date__c = deadline,
+			Financial_Review_Type__c = finReviewType
+		);
+		insert c;
+		return c;
 	}
 
 	public class CountryInformation
