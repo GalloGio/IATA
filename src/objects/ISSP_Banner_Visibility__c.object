@@ -415,6 +415,11 @@
                     <label>Non-IATA Travel Agent</label>
                 </value>
                 <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
                     <fullName>Other Private Sector Association</fullName>
                     <default>false</default>
                     <label>Other Private Sector Association</label>
@@ -531,6 +536,26 @@
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <valueName>Inter-Governmental Body</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <controllingFieldValue>Holding Company</controllingFieldValue>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <controllingFieldValue>Media</controllingFieldValue>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <controllingFieldValue>Recreational</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Accommodation</controllingFieldValue>
+                <controllingFieldValue>Airline</controllingFieldValue>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <controllingFieldValue>Association</controllingFieldValue>
+                <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
+                <controllingFieldValue>Financial Institution</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>Other</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
