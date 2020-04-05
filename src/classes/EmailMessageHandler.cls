@@ -57,16 +57,6 @@ public with sharing class EmailMessageHandler {
 
 	}
 
-
-	/*
-	 * This method prevents the deletion of email messages
-	 */
-	public static void PreventEmailDeletion(list<EmailMessage> lstTriggerOld) {
-		for (EmailMessage em : lstTriggerOld) {
-			em.addError('You are not allowed to delete this Email message.');
-		}
-	}
-
 	/*
 	 * If an email message related to a case closed for more than 2 weeks is received
 	 * and this case is in one of the selected recordtypes then
@@ -204,11 +194,11 @@ public with sharing class EmailMessageHandler {
 
 		for(Case_RTs_for_Auto_Reply_Email__c cs : eligibleCaseRTs) {
 			validRTList.add(cs.Record_Type_Name__c);
-	  	}
+			}
 
-	  	system.debug('### EmailMessageHandler - validRTList: ' + validRTList);
+			system.debug('### EmailMessageHandler - validRTList: ' + validRTList);
 
-	  	// find, in previously selected cases, those that have a valid RT
+			// find, in previously selected cases, those that have a valid RT
 		List<Case> eligibleCases = [SELECT Id, ClosedDate, ContactId, RecordType__c,
 										contact.CNS_Contact__c, contact.Preferred_Language__c, account.Source_System__c
 									FROM Case

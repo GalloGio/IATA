@@ -1,4 +1,4 @@
-<aura:component controller="AMP_KeyAccountPlanExtension">
+<aura:component controller="AMP_KeyAccountPlanExtension" access="public">
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="activityName" type="String" />
     <aura:attribute name="activityId" type="String" />

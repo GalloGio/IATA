@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
     <aura:attribute name="recordId" type="Id"/>
     <aura:attribute name="errorMessage" type="String"/>
     <aura:method name="showModal" action="{!c.handleModalVisibility}">

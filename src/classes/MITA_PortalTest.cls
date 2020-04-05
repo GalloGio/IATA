@@ -25,7 +25,7 @@ public class MITA_PortalTest {
 		insert MyContact;
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
-		portalUser = new User(Alias = 'standt', Email='standarduser@testorg.com',
+		portalUser = new User(Alias = 'standt', Email=DateTime.now().getTime()+'standarduser@testorg.com',
 							EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 							LocaleSidKey='en_US', ProfileId = p.Id, ContactId = MyContact.Id,
 							TimeZoneSidKey='America/Los_Angeles', UserName='standarduser@testorg.com');

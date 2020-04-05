@@ -54,8 +54,8 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		for(User u : lsUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setOrgWideEmailAddressId(owa.id);
-			String[] toAddresses = new String[] {u.Email};
-			mail.setToAddresses(toAddresses);
+			mail.setTargetObjectId(u.Id);
+			mail.setSaveAsActivity(false);
 			if(dailyOrWeekly == 'weekly')
 				mail.setSubject('Your Weekly Digest by Topic(s)');
 			else
