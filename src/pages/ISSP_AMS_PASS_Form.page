@@ -191,14 +191,6 @@
 
 	    }
 
-	    function closeModalWithConsoleLogComment() {
-
-	        $j(function() {
-	            $j( '#addNewContactModal' ).modal('hide');
-	            clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
-	      });
-
-	    }
 
 	    function closeModal2() {
 	        $j(function() {
@@ -264,11 +256,6 @@
 	      });
 	    }
 
-	     function showNewCompanyDialog() {
-	        $j(function() {
-	            $j( '#addNewCompanyModal').modal('show');
-	      });
-	    }
 	    
 	    var ownerModalFields = [];
 	    ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactFinInterest}";
@@ -294,16 +281,6 @@
 	            }
 	    }
 
-	    function toggleIATACode(myValue){
-
-	        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
-	            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
-	                document.getElementById('iatacode').style.display='block';
-	             } else {
-	                document.getElementById('iatacode').style.display='none';
-	             }
-	    }
-
 	    
 	    function toggleContactDetails(s) {
 	        if($j(s).hasClass("glyphicon-plus")) {
@@ -312,28 +289,6 @@
 	            $j(s).switchClass("glyphicon-minus", "glyphicon-plus");
 	        }
 	        $j("." + s.id).toggle();
-	    }
-
-	    function togglePreviousEmploy(p) {
-	        if(p=='' || p=='none') {
-	            document.getElementById('job1').style.display='none';
-	            document.getElementById('job2').style.display='none';
-	            document.getElementById('prevJobsLabel').innerHTML = '';
-	        } else {
-	            document.getElementById('job1').style.display='block';
-	            document.getElementById('prevJobsLabel').innerHTML = '{!$Label.ISSP_AMS_Prev_Jobs}';
-	        }
-
-	         if(p=='2' || p=='3 or more') {
-	            document.getElementById('job2').style.display='block';
-
-	         } else {
-	            document.getElementById('job2').style.display='none';
-	        }
-
-	        if(p=='2') {
-	            document.getElementById('prevJobsLabel').innerHTML = '{!$Label.ISSP_AMS_Prev_Jobs_Most_Recent}';
-	        }
 	    }
 	    
 	    function updateFieldValue(input, textid) {
@@ -389,19 +344,7 @@
 	            $j(".email__c").wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
 	      });
 	    }
-	                   
-	  	function onlyNumbers(event) {
-	   		var event = event || window.event; // for trans-browser compatibility
-	        var charCode = event.which || event.keyCode;
-	     
-	        if (charCode === 44 || charCode === 46){
-	            return true;
-	        } else if ( charCode > 31 && (charCode < 48 || charCode > 57) ){
-	            return false;
-	        }
-
-	        return true;                
-	    }
+	      
 	</script>
 
 	<div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">

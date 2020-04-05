@@ -233,8 +233,7 @@ public class ISSP_AP_FieldLists {
 	'Contact_Resp_L_Name__c' 						=> '',
 	'Contact_Resp_Email__c' 						=> '',
 	'Contact_Resp_Job_Title__c'		 				=> '',
-	'Contact_Resp_Phone__c' 						=> ''
-	,
+	'Contact_Resp_Phone__c' 						=> '',
 	'CASSLink_Contact_Salutation__c' 				=> '',
 	'CASSLink_Contact_F_Name__c' 					=> '',
 	'CASSLink_Contact_L_Name__c' 					=> '',

@@ -273,7 +273,7 @@ global without sharing class ISSP_APProcess {
 	public Boolean showPDFReportsEmail{get;set;}
 	public Boolean changePass{get;set;}
 	public String listUploadedFileIds{get;set;}
-	public String passLink{get;set;}
+	public String ISSP_PASS_Participation_Checklist {get;set;}
 
 	public ISSP_APProcess(){
 		//Set the Variables default values
@@ -304,7 +304,6 @@ global without sharing class ISSP_APProcess {
 		showPDFReportsPreference=true;
 		showPDFReportsEmail=false;
 		changePass=false;
-		passlink=Label.ISSP_PASS_IATAWebsite;
 
 		newForm = new AP_Process_Form__c();
 		newCase = new Case();
@@ -918,9 +917,6 @@ global without sharing class ISSP_APProcess {
 			else{
 				countryConcerned = newCase.Country_Concerned__c.split(';');
 			}
-			
-
-			System.debug('DB paises esoclhidso countryConcerned '+countryConcerned);
 			countryReqments = [
 				SELECT Id, Name, Local_Representation_Mandatory__c, Local_accountant_mandatory__c, Local_VAT_Mandatory__c,
 				Foreign_VAT_accepted__c, Special_VAT_status_allowed__c, Local_Representation_for_Fiscal_requirem__c,

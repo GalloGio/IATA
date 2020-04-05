@@ -1,6 +1,6 @@
 @isTest
 public class PASS_UserProvisioningRequestHandler_Test {
-	@isTest//(SeeAllData = true)
+	@isTest
 	static void PASS_UserProvisioningRequestHandler_PassUserProv() {
 
 		Test.startTesT();

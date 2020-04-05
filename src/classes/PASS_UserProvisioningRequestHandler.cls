@@ -1,15 +1,10 @@
 public class PASS_UserProvisioningRequestHandler {
 
 	public void onAfterUpdate(Map<Id,UserProvisioningRequest> oldMap, Map<Id,UserProvisioningRequest> newMap) {
-		System.debug('JCFF PASS_UserProvisioningRequestHandler');
+
 		List<PermissionSetAssignment> passPrimaryUserAssignment = new List<PermissionSetAssignment>();
 
 		PermissionSet passPrimaryUserPermissionSet = [SELECT Id FROM PermissionSet WHERE Name='PASS_User_Prov' LIMIT 1];
-
-
-		System.debug('DB: oldMap '+oldMap);
-		System.debug('DB: newMap '+newMap);
-
 
 		// Consider only the user provisioning requests for PASS such that the state is changed to 'Completed'
 		Set<Id> requestsToConsider = new Set<Id>();
@@ -94,7 +89,7 @@ public class PASS_UserProvisioningRequestHandler {
 		insert provAccList;
 	}
 
-	@future 
+	@future
 	@TestVisible
 	private static void addPassPrimaryPermissionSet(List<Id> userIds){
 		List<PermissionSetAssignment> passPrimaryUserAssignment = new List<PermissionSetAssignment>();

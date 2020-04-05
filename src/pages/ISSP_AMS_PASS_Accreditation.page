@@ -175,43 +175,9 @@
             function setIsPilotCountry(isocode) {
                 isPilotCountry = pilotList[isocode];
             }
-
-            function toggleCountries(v) {
-                if (v==undefined || v.indexOf('New BR Abroad')==-1){
-                    updateAmsCountry();
-                    $('#brcountry').show();
-                    $('#brabroadcountries').hide();
-                }
-                else{
-                    $('#brcountry').hide();
-                    $('#brabroadcountries').show();
-                }
-            }
-
             function toggleOfficeTypes(officeSelect, ctrylistid) {
-                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
-                //var mySelect = $('select[name="' + ctrylistid + '"]');
                 var officeTypeSel = $('select[name="' + officeSelect + '"]');
                 vOfficeType = officeTypeSel.val();
-                /**
-                mySelectOptions.each(function() {
-                  if(vOfficeType=='New BR Abroad') {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', false);
-                     } else {
-                        $(this).prop('disabled', true);
-                        mySelect.val('');
-                     }
-                  } else {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', true);
-                     } else {
-                        $(this).prop('disabled', false);
-                        mySelect.val(defaultHQCountry);
-                     }
-                  }
-                });
-                **/
             }
 
             function isInArray(arr, val) {
@@ -221,20 +187,6 @@
                 return false;
            }
 
-            function isChinaDomestic() {
-                var chinaAgentType;
-                var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
-
-                if(defaultHQCountry=='CN') {
-                    var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
-                    if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
-                        return true;
-                    }
-                }
-
-                return false;
-            }
 
             function checkBranchAbroad(nextStep) {
                 var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
@@ -286,72 +238,8 @@
             }
         }
 
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
 
-        function resetStep1(v) {
-            operationType = v ;
-            if(v=='Cargo_Agent') {
-                $('#isGSA').hide();
-                $('#langPanel').hide();
-                $('#isLegal').hide();
-            } else {
-                $('#isGSA').show();
-                $('#langPanel').show();
-                $('#isLegal').show();
-            }
-        }
-
-        function togglePageItem(v, fldId) {
-            var el = document.getElementById(fldId);
-            if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
-                el.style.display='block';
-            } else {
-                el.style.display='none';
-            }
-        }
-
-        function getFileLink(fileName) {
-            // alert(''+fileName);
-            $("#loading").show();
-            setTimeout(function(){
-            try{
-                ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
-                    var result2= result.replace("&amp;","&");
-                    var newWin = window.open(result2);
-                    if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
-                        alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
-                    }
-                    $("#loading").hide();
-                },{escape:false});
-            }catch(err){alert( err.message);}
-            },500);
-        }
-
-        function isIE(){
-            //alert(navigator.userAgent);
-            //return /MSIE/.test(navigator.userAgent);
-            if (/MSIE/.test(navigator.userAgent)){
-                return true;
-            }
-            else if (/rv:11/.test(navigator.userAgent)){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
     var vReqNo
-
-    function resetUploadBar() {
-        //$('.uploadbar-' + vReqNo).css('width', '0%');
-        $("#loading-" + vReqNo).hide();
-    }
-
-    function resetUploadBarOnDelete() {
-        $('.uploadbar-' + vReqNo).css('width', '0%');
-    }
 
     function redirectToPDF() {
          window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
@@ -368,13 +256,6 @@
     </script>
 
     <apex:outputPanel id="amscountrylabel">
-      <script>
-      function getCountryFromController() {
-        $('#brcountry').text("{!amsAllLangCountryLabel}");
-        $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
-        //$('[id$=countrySelected]').val('');
-      }
-      </script>
     </apex:outputPanel>
 
      <div class="container">
@@ -416,7 +297,6 @@
         <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
 
             <apex:pageMessages id="theMessages" escape="false"></apex:pageMessages>
-            <!--<apex:pageMessages escape="false"></apex:pageMessages>-->
             <apex:actionFunction action="{!CheckCountryReqments}" name="Check_CountryReqments" reRender="theMessages"/>
             <apex:outputPanel rendered="{!(List_CountryReqments.size == 0)}">
                 <script>
@@ -495,28 +375,6 @@
        </apex:form>
         <div class="panel-body" id="body-enquiries">
          <apex:pageMessages />
-        <!--<apex:outputPanel rendered="{!!isNoticeOfChange}">
-            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-            <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
-        </apex:outputPanel>
-        <apex:form >
-        <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
-            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-            <apex:commandLink action="{!goToDownloadPDF}" value="{!$Label.ISSP_AMS_download_a_PDF_version}" id="DownloadPDF" oncomplete="if ({!passedFormValidation}){redirectToPDF();}" reRender="NoCForm"/> {!$Label.ISSP_AMS_download_of}
-            <!--a href="/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}</a> {!$Label.ISSP_AMS_download_of} -->
-        <!--</apex:outputPanel>
-        </apex:form>
-        <br/>
-        <apex:form >
-        <apex:pageBlock rendered="{!!isNoticeOfChange}">
-            <apex:facet name="header">
-                <apex:outputPanel style="margin:20px 0px;font-size:110%">
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_ACCR_Review_Msg}"/>
-                </apex:outputPanel>
-               </apex:facet>
-        </apex:pageBlock>
-       </apex:form>-->
        <apex:outputPanel rendered="{!!isNoticeOfChange}">
        <div class="col-md-12"></div>
         <div class="apcontainer">
@@ -638,16 +496,10 @@
             <br/><br/>
            {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
-            <!---
-            <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>
-            -->
             <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
                  <apex:pageBlockSection rendered="{!newCase.Reason1__c!='Annual revalidation'}" >
                      <apex:pageBlockSectionItem >
                          <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>
-<!--                          <apex:outputLink value="/ISSP_AMS_PDF_ApplicationForm?caseId={!newCase.Id}" id="amsFormLink" target="_new">
-                             {!$Label.ISSP_AMS_Download_PDF_Copy}
-                        </apex:outputLink> -->
                                         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PASS_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
                      </apex:pageBlockSectionItem>
                  </apex:pageBlockSection>
