@@ -388,7 +388,7 @@
             <apex:pageblockSectionItem id="sectionItemId">
                 <apex:outputPanel >
                     <apex:inputField style="float:left" label="" id="checkbox" value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
-                    <apex:outputtext style="white-space:pre-wrap;" value="{!termsAndConditionsText}"/>
+                    <apex:outputtext style="white-space:pre-wrap;" value="{!$Label.ISSP_PASS_Terms_And_Conditions}"/>
                 </apex:outputPanel>
             </apex:pageblockSectionItem>                    
         </apex:pageBlockSection>

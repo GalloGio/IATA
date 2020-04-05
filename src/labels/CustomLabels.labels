@@ -27219,20 +27219,6 @@ This service is free of charge.</value>
         <value>Joining form</value>
     </labels>
     <labels>
-        <fullName>ISSP_AP_PASS_Form_Administrators_Recommendation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_Form_Administrators_Recommendation</shortDescription>
-        <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_Withdraw</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
-        <value>Are you sure you want to withdraw the selected countries?</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -32850,11 +32836,18 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS Agreement</shortDescription>
-        <value>IATA currently does not hold any valid PASS agreement. All participants must sign this agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
-Agreements must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+        <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
+Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
 &lt;br/&gt;
 &lt;br/&gt;
 Please download, complete and upload the PASS agreement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Airline_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Airline_Checklist</shortDescription>
+        <value>Link of Airline Joining Checklist</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_BankMandate</fullName>
@@ -32917,7 +32910,7 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
-        <value>Link of participation agreement</value>
+        <value>Link of Participation Agreement</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
@@ -32932,6 +32925,16 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
         <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_And_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_And_Conditions</shortDescription>
+        <value>By submitting the present Application and pressing &quot;Accept terms and conditions&quot; below, the undersigned hereby confirms on behalf o the PASS Participant that all the information provided herein is correct and complete, that I have read and hereby acknowledge the terms and conditions contained in the Participation Agreement and the Terms of Use, and that I have enquired and am aware of the local laws and regulations as may apply to the operations of the PASS Participant in the applicable jurisdictions in regard to mail and postal activities.
+&lt;/br&gt;
+&lt;/br&gt;
+I, undersigned, hereby represents and declare that I am duty authorized to submit this application on behalfand in the name of the PASS Participant, and that I am duly authorized to submit this Application on behalf and in the name of the PASS Participant, and that I am duly authorized to bind the PASS Participant and enter on its behalf into the Participation Agreement and abide by the Terms of Use.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Terms_Conditions</fullName>

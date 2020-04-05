@@ -410,14 +410,17 @@
             <!-- Accept terms and conditions -->
             <apex:pageBlockSection title="Terms and conditions" columns="1" collapsible="false">
                     <div class="aplabel">
-                        <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in {!IF(isPassAirline==true && isGSSAUser==false,'the selected countries',apcountry)} and that the {!IF(isPassAirline==true,'PASS','ISS')} Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and {!IF(isPassAirline==true,'postal operators','agents')} free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
-                        <p>
-                            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the {!IF(isPassAirline==true,'PASS','ISS')} Participant, and that I am fully authorized to bind the {!IF(isPassAirline==true,'PASS','ISS')} Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
-                        </p><br/>
-                        <p>
-                            I also confirm that said participation in the {!IF(isPassAirline==true,'PASS','ISS')} system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the {!IF(isPassAirline==true,'PASS','ISS')} Participant with respect to the applicable laws and governmental regulations.
-                        </p>
-
+                            <apex:outputText value="{!$Label.ISSP_PASS_Terms_And_Conditions}" escape="false" styleclass="aplabel" rendered="{!(isPassAirline || managePASS)}"/>
+                            <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
+                            <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
+                                and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
+                            <p>
+                                I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+                            </p><br/> 
+                            <p>
+                                I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+                            </p>
+                        </apex:outputPanel>
                     <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
                         <div style="line-height: 20px;font-weight:bold">
                         In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
@@ -432,8 +435,9 @@
                      </apex:outputText>
                     </div>
                     <div class="aplabel">
-                    By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this {!IF(isPassAirline==true,'PASS','BSP')} Participation Details Form on behalf of my Airline.
-
+                        <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
+                            By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+                        </apex:outputPanel>
                     <br/>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
                     </div>

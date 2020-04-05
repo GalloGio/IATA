@@ -79,6 +79,9 @@ private class ISSP_AMS_Accreditation_Test {
 
 		insert new List<IATA_ISO_Country__c>{country, country2, country3, country4, country5};
 
+			IATA_ISO_Country__c country23 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',EACP_Country__c=true);
+		insert country23;
+
 		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account mcParentAcc = new Account(
@@ -166,7 +169,29 @@ private class ISSP_AMS_Accreditation_Test {
 			ANG_Accreditation_Model__c = 'Cash'
 		);
 
-		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc};
+		Account accountParentAccreditation = new Account(
+			BillingCity = 'test',
+			Name = 'accountParentAccreditation',
+			Sector__c = AMS_Utils.SECTOR_PASS,
+			Category__c=AMS_Utils.categoryPass,
+			ANG_Accreditation_Model__c=AMS_Utils.ACCREDITATIONMODEL_CASH,
+			ANG_FA_Opt_out__c=true,
+			Email__c=''
+		);
+
+		Account accountchildAccreditation = new Account(
+			BillingCity = 'test',
+			Name = 'accountchildAccreditation',
+			Sector__c = AMS_Utils.SECTOR_PASS,
+			Category__c=AMS_Utils.categoryPass,
+			ANG_Accreditation_Model__c=AMS_Utils.ACCREDITATIONMODEL_CASH,
+			ANG_FA_Opt_out__c=false,
+			Reason_for_creation__c='New agent',
+			Email__c=''
+		);
+
+
+		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation};
 
 		Account childAccIcc = new Account(
 			BillingCity = 'test2',
@@ -208,6 +233,30 @@ private class ISSP_AMS_Accreditation_Test {
 		);
 
 		insert new List<Account>{childAccIcc, basicChild, cashChild};
+			Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'AccIcc1';
+		parent.sector__c = AMS_Utils.SECTOR_PASS;
+		parent.Location_Type__c = 'HO';
+		parent.RecordTypeId = rtIdBr ;
+		parent.IATACode__c = '100';
+		parent.Email__c='';
+		insert parent;
+
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.BillingCity = 'test2';
+		child.Name = 'childAccIcc1';
+		child.Site = 'headSite';
+		child.sector__c = AMS_Utils.SECTOR_PASS;
+		child.Top_Parent__c = parent.Id;
+		child.IATA_ISO_Country__c = country.Id;
+		child.RecordTypeId = rtIdBr ;
+		child.Email__c='';
+		insert child;
+
+		AMS_OSCAR__c oscarTest= new AMS_OSCAR__c();
+		oscarTest.Account__c=parent.id;
+		insert oscarTest;
 
 		Contact conMulticountry = ISSP_ObjectFactory.createNewContact();
 		conMulticountry.AccountId = mcParentAcc.Id;
@@ -280,7 +329,9 @@ private class ISSP_AMS_Accreditation_Test {
 			Reopened_case__c = 0.0,
 			Account_Concerned__c = childAccIcc.Id,
 			IFAP_Country_ISO__c = 'tp',
-			OwnerId = userIcc.Id
+			OwnerId = userIcc.Id,
+			OSCAR__c=oscarTest.id
+
 		);
 		insert caseIcc;
 
@@ -328,6 +379,40 @@ private class ISSP_AMS_Accreditation_Test {
 			File_Identifier2__c = 'CV');
 
 		insert new List<AMS_Accreditation_Requirement__c>{ar1, ar2};
+
+			Case testCase2 = ISSP_ObjectFactory.createNewCase();
+		testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
+		testCase2.Status='On Hold_External';
+		testCase2.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		insert testCase2;
+
+		Case testCase3 = ISSP_ObjectFactory.createNewCase();
+		testCase3.BSPCountry__c = 'Hong Kong (SAR), China';
+		testCase3.Status='Closed_Disapproved';
+		testCase3.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		insert testCase3;
+
+		AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
+		testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+		testAgencyContact.PASS_admin__c = false;
+		testAgencyContact.PASS_user__c = true;
+		testAgencyContact.Authorised_signatory__c=true;
+		testAgencyContact.Financial_interest__c=50;
+		testAgencyContact.Legacy_External_Id__c = 'test1';
+		testAgencyContact.Last_name__c = 'Last_name';
+		testAgencyContact.Agency_owner__c =true;
+		insert testAgencyContact;
+
+		AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
+		testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+		testTrainedStaffContact.PASS_admin__c = false;
+		testTrainedStaffContact.PASS_user__c = true;
+		testTrainedStaffContact.Authorised_signatory__c=true;
+		testTrainedStaffContact.Financial_interest__c=50;
+		testTrainedStaffContact.Legacy_External_Id__c = 'test2';
+		testTrainedStaffContact.Last_name__c = 'Last_name';
+		testTrainedStaffContact.Agencies_prev_worked_for__c='';
+		insert testTrainedStaffContact;
 
 		Test.stopTest();
 	}
@@ -3357,7 +3442,7 @@ Location_Type__c = 'BR');
 		parent.IATA_ISO_Country__c = country.Id;
 
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -3375,7 +3460,6 @@ Location_Type__c = 'BR');
 		child.ShippingPostalCode = '1500';
 		child.ShippingCity = 'City';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 
 		Contact con = ISSP_ObjectFactory.createNewContact();
 		con.AccountId = child.Id;
@@ -3388,9 +3472,7 @@ Location_Type__c = 'BR');
 		con_adm.User_Portal_Status__c = 'Approved Admin';
 		insert con_adm;
 
-		System.debug('con Id: ' + con.Id);
 		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
 		con.OwnerId = newUser.Id;
 		update con;
 
@@ -3412,7 +3494,7 @@ Location_Type__c = 'BR');
 
 			insert testCase2;
 
- 			Test.startTest();
+			Test.startTest();
 
 			AMS_Pax_Accreditation_Form__c newForm2 = new AMS_Pax_Accreditation_Form__c();
 			newForm2.IsGSA__c = 'No';
@@ -4742,8 +4824,6 @@ Location_Type__c = 'BR');
 									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
 									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
 		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
 
 		Id rtIdBr = [ SELECT Id FROM RecordType
 		WHERE SobjectType = 'Account'
@@ -4803,9 +4883,7 @@ Location_Type__c = 'BR');
 		con.Email = 'Test@test11.com';
 		insert con;
 
-		System.debug('con Id: ' + con.Id);
 		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
 		con.OwnerId = newUser.Id;
 		update con;
 
@@ -4954,94 +5032,39 @@ Location_Type__c = 'BR');
 
 	}
 
+
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS2()
 	{
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'IATA_Agency'][0].Id;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
-		Account child = ISSP_ObjectFactory.createNewAccount();
-		child.BillingCity = 'test2';
-		child.Name = 'test2';
-		child.Site = 'headSite';
-		child.sector__c = AMS_Utils.SECTOR_PASS;
-		child.Top_Parent__c = parent.Id;
-		child.IATA_ISO_Country__c = country.Id;
-		child.RecordTypeId = rtIdBr ;
-		insert child;
-		System.debug('child Id: ' + child.Id);
-
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= child.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
-		AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist = new  AMS_Accreditation_Country_CheckList__c();
-		AMS_Acc_Checklist.IATA_ISO_Country__c = country.id ;
-		AMS_Acc_Checklist.Operation__c = AMS_Utils.SECTOR_PASS;
-		AMS_Acc_Checklist.License_required__c = true ;
-		AMS_Acc_Checklist.Registration_required__c = true ;
-		AMS_Acc_Checklist.Statement_of_International_Sales__c = true ;
-		insert AMS_Acc_Checklist;
-
-		AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c();
-		ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
-		ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
-		ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
-		ISSP_AMS_Accreditation_Acc_Req.Requirement_text__c = 'cdd';
-		ISSP_AMS_Accreditation_Acc_Req.Sort_Order__c = 1;
-		ISSP_AMS_Accreditation_Acc_Req.Name = 'TestReq1';
-		insert ISSP_AMS_Accreditation_Acc_Req;
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
-			//Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
-			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase.Reason1__c = 'Cargo';
-			testCase.Customer_recovery__c = false;
-			//testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
-			testCase.BounceEmailCounter__c = 0.0;
-			testCase.Case_Language__c = 'English';
-			testCase.Subject = 'Test 006';
-			testCase.Reopened_case__c = 0.0;
-			//testCase.Continous_Feed_SAF__c = true;
-			testCase.Account_Concerned__c = child.Id;
-			testCase.IFAP_Country_ISO__c = 'tq';
-			insert testCase;
+			Case testCase = [SELECT IFAP_Country_ISO__c, Reason1__c
+							 FROM  Case
+							 WHERE IFAP_Country_ISO__c = 'tp'
+							 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testCase.Id;
-			insert newForm ;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
+
+
 
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
 
@@ -5123,100 +5146,47 @@ Location_Type__c = 'BR');
 
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS4()
 	{
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'IATA_Agency'][0].Id;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.IATA_ISO_Country__c = country.Id;
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		Account testAccount =[SELECT Id, name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, BillingAddress, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ShippingAddress, Phone, Fax, AccountNumber, Website, PhotoUrl, Sic, Industry, AnnualRevenue, NumberOfEmployees, Ownership, TickerSymbol, Description, Rating, Site, CurrencyIsoCode, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, LastActivityDate, LastViewedDate, LastReferencedDate, AccountSource, SicDesc, ConnectionReceivedId, ConnectionSentId, AIMS_ID__c, Expiry_Date__c, Value_Opportunities__c, Test_Local_language__c, Last_Modified_by_Source__c, TradeName__c, IATA_Member__c, Source_System__c, Total_Value_Won_Opportunities__c, Member_Code_Numeric__c, Authorized_Training_Center__c, ATC_code__c, number_of_Opportunities__c, TIESS_Code__c, IATA_Area__c, TC_Comments__c, UFTAA_Accredited__c, BSP_Participant_in_new__c, Email__c, Accreditation_date__c, ACLI_Status__c, BSP_Participation_Status__c, IATACode__c, BSP_Expired_Date__c, VAT_Number__c, Type_of_Office__c, Identify_as_Key_Customer__c, Key_Customer__c, Strategic_Partners__c, Account_Type__c, TC_participant_type__c, IATA_code_Lenght__c, Agent_Type_Code__c, Termination_date_IATA_Membership__c, Region__c, Active_Guarantees__c, Temp_Key__c, Operational_Site__c, Guaranteed_amount__c, Has_cases_from_last_2_years__c, Assessment_Template_Code__c, Has_Activities__c, Assessment_Template__c, AOC_Expiry_Date__c, ACLI_ID__c, Field_Head_Office__c, Next_Financial_security_Expiry_date__c, Financial_Year_End__c, SIDRA_cases__c, Has_Financial_Review_Open_Cases__c, ID_Card_Corporate_Validation_Date__c, Number_of_open_Financial_Review_Cases__c, Fin_statements_submission_deadline__c, CCG_IRR_Distribution_list__c, Strategic_Partnership_Areas__c, BSPCountry_del__c, GSSA_Code_Cargo__c, Location_Type__c, Status__c, Airline_designator__c, Legal_name__c, CCG_Participant__c, Zuora__Active__c, Membership_status__c, Zuora__CustomerPriority__c, Zuora__NumberofLocations__c, Zuora__SLAExpirationDate__c, Zuora__SLASerialNumber__c, InvoiceWorks_Account__c, Vendor_ID__c, Search_Code__c, Inactive_Account__c, InvoiceWorks_Type_of_Customer__c, VAT_Number_2__c, Zuora__SLA__c, Zuora__UpsellOpportunity__c, Zuora_Temp_ID__c, Holds_FS_first_call_letter__c, Has_Cases__c, Has_Opportunities__c, Has_Contacts__c, Has_Campaigns__c, Is_AIMS_Account__c, Short_Name__c, Accumulated_Irregularities__c, Account_code_secondary_flag__c, Accounting_Code__c, Admission_Date__c, Airline_Model_Type__c, ID_Card_KeyAccount_features__c, Airline_Prefix__c, Area_of_Operation__c, BSP_CI_Valid__c, BSP_FOC_Valid__c, BSP_Name__c, BSP_Participant_formula__c, Branch_Type__c, CASS_CI_Valid__c, CASS_FOC_Valid__c, CASS_Name__c, Cass_Participant_formula__c, Comment_Termination__c, Comment_data_quality_feedback__c, Comments_Reason_for_creation__c, Data_quality_feedback__c, Data_quality_history__c, Date_of_most_recent_name_change__c, GSA_Type__c, IATATrainingUrl__c, IATA_ISO_Country__c, IATA_Membership_History__c, ICAO_designator__c, ICH_Member__c, IsIATATrainingAirline__c, Membership_SITA__c, Memmership_ARINC__c, Memmership_ATA__c, Merged_Account__c, Category__c, Migration_Formula__c, PAX_Cargo__c, Predecessor_Name__c, Reason_for_creation__c, Region_formula__c, Sector__c, Services_Rendered_Country_GSA__c, Services_Rendered_Country__c, Category_Other_Value__c, Termination_Reason__c, Type_of_Service__c, Type_of__c, duplicate_flag_indicato__c, BSP_Participant_value__c, CASS_Participant_value__c, Airline_Code__c, BSP_CASS_Code__c, Name_on_AOC__c, Country_ISO_Code__c, Parent_account_IATAcode__c, Quality__c, Identify_as_Last_SIDRA_Date__c, Last_SIDRA_Date__c, Partner_Authorized__c, Top_Parent__c, Site_index__c, Number_of_GDP_Billing_accounts__c, CASS_Number_Xref__c, Anti_Money_Laundering_Compliance_Date__c, Anti_Money_Laundering_Compliance__c, Contact_ICCS_Email_Activity__c, Countries_not_live_yet__c, Document_Std_Instruction__c, ICCS_Membership_Status__c, IDCard_Key_Account__c, Assessment_Performed_Date__c, Financial_Review_Result__c, Accelerated_Settlement__c, CASS_Number__c, GDP_Location_Type__c, GDP_Opt_In__c, Incorporation_Type__c, License_Number__c, Manager_First_Name__c, Manager_Last_Name__c, Passenger_And_Cargo__c, Preferred_Language__c, Profit_Center__c, TTY__c, Tax_ID_1__c, Tax_ID_2__c, Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, WebStar_ID__c, ID_Card_Key_Account_Discount__c, Due_Diligence_Remarks__c, Due_Diligence_Status__c, Level_of_risk__c, Agent_Global_HQ__c, Power_of_one__c, Sub_Region__c, Portal_Service_Report__c, Airline_BSP_Participations__c, Airline_CASS_Participations__c, HQ_Due_Dilingence_Status__c, Total_BSP_CASS_Participations__c, Billing_Address_formated__c, ASP_Effective_Date__c, HQ_ASP_Effective_Date__c, Is_Branch_Abroad__c, Ongoing_Request_for_Documents__c, Collection_Case_Indicator__c, Invoicing_and_Collection__c, Overdue_Invoices_Indicator__c, CAMP_Agreement__c, FAXNational__c, MobileNational__c, Mobile__c, PhoneNational__c, Reinstated_date__c, IATA_Membership_status_all_levels__c, SIS_Member_Code__c, ISS_SIS_TC_Accepted_Date__c, ISS_SIS_TC_Accepted_User__c, ISS_SIS_TC_Accepted__c, ACLI_SAP_Id__c, Type_of_Operations__c, BSPlink_code__c, MITA_Member__c, DDS_Last_Notification_Date__c, DDS_Last_Update_Date__c, DDS_Status__c, DDS_Status_Parent__c, ACH_Member__c, BIETA_Bilateral_Date__c, BIETA_Member__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c, BIETA_One_way_Intermodal_Participating__c, MITA_Currency__c, MITA_IATA_Interline_Art3_Excepted_Status__c, MITA_IATA_Interline_Cargo_Charges__c, MITA_IATA_Interline_Cargo_Claims__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Pass_Art3_Joined__c, MITA_IATA_Interline_Passenger_Charges__c, MITA_IATA_Interline_Passenger__c, MITA_One_way_Pass_Issuing_Airline__c, MITA_One_way_Pass_Participating__c, Company_Logo__c, Logo_File_ID__c, DSE__DS_Country_ISO_Code__c, DSE__DS_DataScout_Process__c, DSE__DS_Hierarchy_Level__c, DSE__DS_Last_Updated__c, DSE__DS_Legal_Form__c, DSE__DS_Synchronize__c, DSE__DS_Ultimate_Parent_Name__c, DSE__DS_Ultimate_Parent__c, DSE__Demo_Installed_Products__c, DSE__Domain__c, DSE__X_Internal__c, Location_Class__c, Company_PCKEY__c, Old_Airline_Prefix__c, Old_Airline_designator__c, Old_IATA_Code__c, A_Code__c, Abbreviated_address__c, Abbreviated_name__c, C_Code__c, Cargo_Agency__c, Check_Digit__c, Company_Type__c, Count_Accumulated_Irregularities__c, GDS__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, In_a_Airport__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, Last_Inspection_Date__c, Last_synchronization__c, Location_Category__c, N_Code__c, Operation__c, Organization_Last_Change_Date__c, Original_Approval_DAte__c, Phone_Number_Int__c, Phone_Number_STD__c, Phone_Number__c, Primary_address__c, SIS_Entry_Date__c, STD_Code__c, Sent_to_External_System__c, Solicitation_Flag__c, Unique_ID__c, Verification_Date__c, SUM_A_Irregularities__c, SUM_W_Irregularities__c, Location_Type_Ordered__c, Purge_Flag__c, Send_Irregularity_Email__c, AFRD_Date__c, AFRD_Status__c, Customer_Type__c, Default_Payment_Type__c, Non_Members_Sub_Category__c, Payment_Term__c, Price_Group__c, Sales_Office__c, SoldTo_Location__c, AM_Account_Manager__c, AM_Ownership_Type__c, EF_Additional_SAP_Nr__c, EF_Airline_ID__c, EF_Allow_Billing_Agreements__c, EF_Annual_Revenue_USD__c, EF_Client_Services_Specialist__c, EF_Effective_Date__c, EF_Legacy_Code__c, EF_Level__c, EF_Liquidator_Administrator__c, EF_Remitter_details__c, EF_SIS_Code_Verified__c, EF_SIS_Code__c, EF_SIS_Designator__c, EF_SIS_Location_ID__c, EF_Status_Additional_Information__c, EF_Status__c, EF_SubStatus__c, EF_Type__c, Registration_Number__c, SAP_Number__c, Last_Integration_Date__c, Higher_Level_Customer__c, SAP_BW_report_with_sales_figures__c, SAP_BW_report_without_sales_figures__c, EF_Client_Services_Specialist_Email__c, Link_agent_code__c, Link_agent_name__c, Annual_Renewal_Certificates__c, Certificate_Generated_Current_Year__c, PreviousStatus__c, Previous_Reason__c, Reason__c, state_numeric_code__c, CNS_Agency__c, AMS_PWC_INT_DEFNONPAY__c, AMS_PWC_INT_DEF__c, AMS_PWC_INT_IRRS__c, AMS_PWC_INT_OWNSHA_CHANGE__c, AMS_PWC_INT_OWNSHA_LASTDATE__c, CNS_Country__c, Country_OSCAR_Enabled__c, Has_a_Financial_Assessment_Contact_Formu__c, Has_a_Financial_Assessment_Contact_Sum__c, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal_Formula__c, Has_an_Administrator_User_Portal_Sum__c, Has_an_Administrator_User_Portal__c, PCI_DSS_Compliant__c, Opt_out_PCI_DSS__c, CNS_Account__c, Number_of_GDI_financial_securities__c, Default_date__c, Key_Customer_Reason__c, Segmentation__c, SIS_ID__c, SIS_Status__c, SIS_Sub_Status__c, ANG_Accreditation_Model__c, ANG_CashCondition__c, Airline_Search_Field__c, SanctionNotice__c, Date_Organisation_Status_attained__c, Main_Accreditation_Organization__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, ANG_IEP_Account_Number__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status_FF__c, ANG_IEP_Status__c, ANG_IsNewGenAgency__c, ANG_RiskHistoryAssessment__c, ANG_RiskStatus__c, IFG_Member__c, Record_Sharing_Criteria_AUX__c, Record_Sharing_Criteria__c, Data_Quality_Description__c, Data_Quality_Score__c, ANG_Limit_Cash_Condition__c, Remittance_frequency__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Is_DGR_Compliant__c, ANG_FA_Opt_out__c, Training_Membership__c, Global_ID__c, iiNet_Account__c, Clearance_level__c, fredp_aircraftoperator_eligibility__c, X8585_Name__c, ICAO_Iso_2_Code__c, ICAO_Iso_3_Code__c, ICAO_Member__c, Covered_Ownership__c, Account_Role__c, X8585_Code__c, Date_of_last_clearance__c, Give_SIS_Membership__c, GDI_status__c, Amount_at_Risk__c, Sales_at_Risk__c, Special_remarks__c, Baggage_Tag_Range_Code__c, Financial_Assessment_Points__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Business_Street__c, Business_City__c, Business_Postal_Code__c, Airline_PASS_Participations__c, PASS_Participant_formula__c, BSP_non_air__c, Is_General_Public_Account__c, NDC_Agent__c, PASS_Member__c, PASS_Name__c
+							  FROM Account
+							  WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
 
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testCase = [SELECT IFAP_Country_ISO__c, Reason1__c
+							 FROM  Case
+							 WHERE IFAP_Country_ISO__c = 'tp'
+							 LIMIT 1];
 
-			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase.Reason1__c = 'Cargo';
-			testCase.Customer_recovery__c = false;
-			//testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
-			testCase.BounceEmailCounter__c = 0.0;
-			testCase.Case_Language__c = 'English';
-			testCase.Subject = 'Test 006';
-			testCase.Reopened_case__c = 0.0;
-			//testCase.Continous_Feed_SAF__c = true;
-			testCase.Account_Concerned__c = parent.Id;
-			testCase.IFAP_Country_ISO__c = 'tq';
-			insert testCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c=testCase.Id;
-			newForm.IATAN_Code__c='';
-			insert newForm ;
 
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 			ctrl.isPassAccreditation = true;
-
-			Account testAccount = ISSP_ObjectFactory.createNewAccount();
-			testAccount.Website='';
-			testAccount.BillingCountry='';
-			testAccount.BillingPostalCode='';
-			testAccount.BillingCity='';
-			testAccount.BillingStreet='';
-			testAccount.TradeName__c='';
-			testAccount.Name='testName';
-			insert testAccount;
 			ctrl.hqAccount=testAccount;
 			ctrl.validateCharactersInAgencyWindow();
 
-			AMS_Accreditation_Contact__c testContact= new AMS_Accreditation_Contact__c();
-			testContact.First_name__c = '';
-			testContact.Last_name__c = 'Last_name';
-			testContact.AddressStreet__c  = '';
-			testContact.AddressCity__c  = '';
-			testContact.AddressPostcode__c  = '';
-			testContact.Job_title__c  = '';
-			testContact.Agencies_prev_worked_for__c  = '';
-			testContact.Prev_Job1_Employer__c= '';
-			testContact.Prev_Job1_Position__c= '';
-			testContact.Prev_Job1_Address__c= '';
-			testContact.Prev_Job2_Position__c= '';
-			testContact.Prev_Job2_Address__c= '';
-			testContact.Registration_number__c= '';
-			testContact.Name = 'test_';
-			testContact.Legacy_External_Id__c = 'test';
-			testContact.AMS_Pax_Accreditation_Form__c=newform.id;
-			insert testContact;
+			AMS_Accreditation_Contact__c testContact = [SELECT Id, Name, AMS_Pax_Accreditation_Form__c, Accredited_employer_1__c, Accredited_employer_2__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, AddressStreet__c, Agencies_prev_worked_for__c, Agency_owner__c, Agency_role__c, Authorised_signatory__c, Date_joined_agency__c, Email__c, FAXNational__c, FAX__c, Financial_Assessment_Contact__c, Financial_interest__c, First_name__c, IATACode__c, Job_title__c, Last_name__c, MobileNational__c, Mobile__c, Name_of_Previous_employers__c, PhoneNational__c, Phone__c, Portal_administrator__c, Prev_Job1_Address__c, Prev_Job1_Employer__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Position__c, Prev_Job2_Address__c, Prev_Job2_Employer__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Position__c, Registration_number__c, Salutation__c, Time_devoted_to_Agency_business__c, AMS_ContactId__c, AMS_OwnershipId__c, Air_cargo_transport_business_exp__c, Authorised_to_make_customs_declarations__c, CASS_contact__c, Contact_Id__c, IATA_FIATA_training_history__c, Local_First_name__c, Local_Last_Name__c, Number_Of_Shares__c, Position_trained_staff__c, Training_dangerous_goods_completed__c, Valid_until__c, Birthdate__c, Company_Name_Local__c, Duplicate_contact_exists__c, Membership_Main_Contact__c, list_Dangerous_Goods_Awareness__c, AMSPerson__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, Company__c, Contact__c, ISO_Country__c, Mailing_State__c, Person_AMS__c, Prev_Job1_To__c, Prev_Job2_To__c, Legacy_External_Id__c, AgencyRegulation__c, Certificate_Issued_on__c, Certificate_Issuer__c, Certificate_Name__c, Certificate_Validity__c, Type_Of_Certificate__c, Invoicing_Contact__c, ANG_AE_fromOnlineForm__c, ANG_contactFromAccount__c, AddressState__c, PASS_admin__c, PASS_user__c
+														FROM AMS_Accreditation_Contact__c
+														WHERE Legacy_External_Id__c =: 'test2'
+														LIMIT 1];
+
 			ctrl.newContact=testContact;
 			ctrl.validateCharactersInPersonWindow();
 			ctrl.validateCharactersInCompanyWindow();
@@ -5257,77 +5227,34 @@ Location_Type__c = 'BR');
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS6()
 	{
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',Local_language_Agency_details_required__c=true);
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',Local_language_Agency_details_required__c=true);
-		insert country2;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'Standard_Account'][0].Id;
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.Email__c='';
-		parent.IATA_ISO_Country__c = country.Id;
-		parent.Reason_for_creation__c='test';
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
-		AMS_OSCAR__c oscarTest= new AMS_OSCAR__c();
-		oscarTest.Account__c=parent.id;
-		insert oscarTest;
-
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testOscarCase = [SELECT IFAP_Country_ISO__c, Reason1__c, OSCAR__c
+								  FROM  Case
+								  WHERE IFAP_Country_ISO__c = 'tp'
+								  LIMIT 1];
 
-			Case testOscarCase = ISSP_ObjectFactory.createNewCase();
-			testOscarCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testOscarCase.Status = 'Open - EDMC';
-			testOscarCase.Customer_recovery__c = false;
-			testOscarCase.BounceEmailCounter__c = 0.0;
-			testOscarCase.Case_Language__c = 'English';
-			testOscarCase.Subject = 'Test 006';
-			testOscarCase.Reopened_case__c = 0.0;
-			testOscarCase.Account_Concerned__c = parent.Id;
-			testOscarCase.IFAP_Country_ISO__c = 'tq';
-			testOscarCase.Region__c='Europe';
-			testOscarCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
-			testOscarCase.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-			testOscarCase.OSCAR__c=oscarTest.id;
-			insert testOscarCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testOscarCase.Id;
-			newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
-			newForm.Account_Name__c ='';
-			newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
-			newForm.Accept_terms_and_conditions__c=true;
-			newForm.Solicitation_Flag__c=false;
-			insert newForm ;
 
 			ApexPages.currentPage().getParameters().put('caseId' ,testOscarCase.Id );
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
@@ -5343,94 +5270,39 @@ Location_Type__c = 'BR');
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS7()
 	{
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',Local_language_Agency_details_required__c=true);
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',Local_language_Agency_details_required__c=true);
-		insert country2;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'Standard_Account'][0].Id;
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.Email__c='';
-		parent.IATA_ISO_Country__c = country.Id;
-		parent.Reason_for_creation__c='test';
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
-		AMS_OSCAR__c oscarTest= new AMS_OSCAR__c();
-		oscarTest.Account__c=parent.id;
-		insert oscarTest;
-
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testCase = [SELECT IFAP_Country_ISO__c, Reason1__c, OSCAR__c
+							 FROM  Case
+							 WHERE IFAP_Country_ISO__c = 'tp'
+							 LIMIT 1];
 
-			Case testOscarCase = ISSP_ObjectFactory.createNewCase();
-			testOscarCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testOscarCase.Status = 'Open - EDMC';
-			testOscarCase.Customer_recovery__c = false;
-			testOscarCase.BounceEmailCounter__c = 0.0;
-			testOscarCase.Case_Language__c = 'English';
-			testOscarCase.Subject = 'Test 006';
-			testOscarCase.Reopened_case__c = 0.0;
-			testOscarCase.Account_Concerned__c = parent.Id;
-			testOscarCase.IFAP_Country_ISO__c = 'tq';
-			testOscarCase.Region__c='Europe';
-			testOscarCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
-			testOscarCase.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-			testOscarCase.OSCAR__c=oscarTest.id;
-			insert testOscarCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testOscarCase.Id;
-			newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
-			newForm.Account_Name__c ='';
-			newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
-			newForm.Accept_terms_and_conditions__c=true;
-			newForm.Solicitation_Flag__c=false;
-			insert newForm ;
-
-			AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
-			testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-			testAgencyContact.PASS_admin__c = false;
-			testAgencyContact.PASS_user__c = true;
-			testAgencyContact.Authorised_signatory__c=true;
-			testAgencyContact.Financial_interest__c=50;
-			testAgencyContact.Legacy_External_Id__c = 'test';
-			testAgencyContact.Last_name__c = 'Last_name';
-			testAgencyContact.Agency_owner__c =true;
-			insert testAgencyContact;
-
-			ApexPages.currentPage().getParameters().put('caseId' ,testOscarCase.Id );
+			ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 			ctrl.isPassAccreditation = true;
-			ctrl.newCase = testOscarCase ;
+			ctrl.newCase = testCase ;
 
 			ctrl.amsOfficeType='Branch';
 			ctrl.goToFinalStep();
@@ -5440,78 +5312,34 @@ Location_Type__c = 'BR');
 
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS12()
 	{
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',Local_language_Agency_details_required__c=true);
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',Local_language_Agency_details_required__c=true);
-		insert country2;
-
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'Standard_Account'][0].Id;
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.Email__c='';
-		parent.IATA_ISO_Country__c = country.Id;
-		parent.Reason_for_creation__c='test';
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
-		AMS_OSCAR__c oscarTest= new AMS_OSCAR__c();
-		oscarTest.Account__c=parent.id;
-		insert oscarTest;
-
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testOscarCase = [SELECT IFAP_Country_ISO__c, Reason1__c, OSCAR__c
+								  FROM  Case
+								  WHERE IFAP_Country_ISO__c = 'tp'
+								  LIMIT 1];
 
-			Case testOscarCase = ISSP_ObjectFactory.createNewCase();
-			testOscarCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testOscarCase.Status = 'Open - EDMC';
-			testOscarCase.Customer_recovery__c = false;
-			testOscarCase.BounceEmailCounter__c = 0.0;
-			testOscarCase.Case_Language__c = 'English';
-			testOscarCase.Subject = 'Test 006';
-			testOscarCase.Reopened_case__c = 0.0;
-			testOscarCase.Account_Concerned__c = parent.Id;
-			testOscarCase.IFAP_Country_ISO__c = 'tq';
-			testOscarCase.Region__c='Europe';
-			testOscarCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
-			testOscarCase.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-			testOscarCase.OSCAR__c=oscarTest.id;
-			insert testOscarCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testOscarCase.Id;
-			newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
-			newForm.Account_Name__c ='';
-			newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
-			newForm.Accept_terms_and_conditions__c=true;
-			newForm.Solicitation_Flag__c=false;
-			insert newForm ;
 
 
 			AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
@@ -5541,74 +5369,39 @@ Location_Type__c = 'BR');
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS8()
 	{
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
-
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'Standard_Account'][0].Id;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.Email__c='';
-		parent.IATA_ISO_Country__c = country.Id;
-		parent.Reason_for_creation__c='test';
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
 
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testCase = [SELECT IFAP_Country_ISO__c, Reason1__c, OSCAR__c
+							 FROM  Case
+							 WHERE IFAP_Country_ISO__c = 'tp'
+							 LIMIT 1];
 
-			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase.Status = 'Open';
-			testCase.Customer_recovery__c = false;
-			testCase.BounceEmailCounter__c = 0.0;
-			testCase.Case_Language__c = 'English';
-			testCase.Subject = 'Test 006';
-			testCase.Reopened_case__c = 0.0;
-			testCase.Account_Concerned__c = parent.Id;
-			testCase.IFAP_Country_ISO__c = 'tq';
-			testCase.Region__c='Europe';
-			testCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
-			insert testCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testCase.Id;
-			newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
-			newForm.Account_Name__c ='';
-			newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
-			newForm.Accept_terms_and_conditions__c=true;
-			newForm.Solicitation_Flag__c=false;
-			insert newForm ;
 
 			AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
 			testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+
 			testAgencyContact.PASS_admin__c = true;
 			testAgencyContact.PASS_user__c = true;
 			testAgencyContact.Authorised_signatory__c=true;
@@ -5619,6 +5412,7 @@ Location_Type__c = 'BR');
 
 			AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
 			testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+
 			testTrainedStaffContact.PASS_admin__c = true;
 			testTrainedStaffContact.PASS_user__c = true;
 			testTrainedStaffContact.Authorised_signatory__c=true;
@@ -5647,95 +5441,48 @@ Location_Type__c = 'BR');
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS9()
 	{
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',EACP_Country__c=true);
-		insert country2;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
+		IATA_ISO_Country__c country2 = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+										FROM IATA_ISO_Country__c
+										WHERE name = 'test2'
+										LIMIT 1];
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'Standard_Account'][0].Id;
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c, Website
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.Email__c='';
-		parent.IATA_ISO_Country__c = country.Id;
-		parent.Reason_for_creation__c='test';
-		parent.Sector__c=AMS_Utils.SECTOR_PASS;
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
+			Case testCase = [SELECT IFAP_Country_ISO__c, Reason1__c, OSCAR__c
+							 FROM  Case
+							 WHERE IFAP_Country_ISO__c = 'tp'
+							 LIMIT 1];
 
-			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase.Status = 'Open';
-			testCase.Customer_recovery__c = false;
-			testCase.BounceEmailCounter__c = 0.0;
-			testCase.Case_Language__c = 'English';
-			testCase.Subject = 'Test 006';
-			testCase.Reopened_case__c = 0.0;
-			testCase.Account_Concerned__c = parent.Id;
-			testCase.IFAP_Country_ISO__c = 'tq';
-			testCase.Region__c='Europe';
-			testCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
-			insert testCase;
+			AMS_Pax_Accreditation_Form__c newForm = [SELECT CurrencyIsoCode, SAAM_Case__c
+													 FROM AMS_Pax_Accreditation_Form__c
+													 LIMIT 1];
 
-			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-			newForm.IsGSA__c = 'No';
-			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-			newForm.SAAM_Case__c = testCase.Id;
-			newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
-			newForm.Account_Name__c ='';
-			newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
-			newForm.Accept_terms_and_conditions__c=true;
-			newForm.Solicitation_Flag__c=false;
-			newForm.Is_your_firm_handling_Dangerous_Goods__c='No';
-			insert newForm ;
+			AMS_Accreditation_Contact__c testAgencyContact = [SELECT AMS_Pax_Accreditation_Form__c, PASS_admin__c, PASS_user__c, Authorised_signatory__c,Financial_interest__c,Legacy_External_Id__c
+															  FROM AMS_Accreditation_Contact__c
+															  WHERE Legacy_External_Id__c =: 'test1'
+															  LIMIT 1];
 
-			AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
-			testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-			testAgencyContact.PASS_admin__c = false;
-			testAgencyContact.PASS_user__c = true;
-			testAgencyContact.Authorised_signatory__c=true;
-			testAgencyContact.Financial_interest__c=50;
-			testAgencyContact.Legacy_External_Id__c = 'test';
-			testAgencyContact.Last_name__c = 'Last_name';
-			testAgencyContact.Agency_owner__c =true;
-			insert testAgencyContact;
+			AMS_Accreditation_Contact__c testTrainedStaffContact = [SELECT AMS_Pax_Accreditation_Form__c, PASS_admin__c, PASS_user__c, Authorised_signatory__c,Financial_interest__c,Legacy_External_Id__c
+																	FROM AMS_Accreditation_Contact__c
+																	WHERE Legacy_External_Id__c =: 'test2'
+																	LIMIT 1];
 
-			AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
-			testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-			testTrainedStaffContact.PASS_admin__c = false;
-			testTrainedStaffContact.PASS_user__c = true;
-			testTrainedStaffContact.Authorised_signatory__c=true;
-			testTrainedStaffContact.Financial_interest__c=50;
-			testTrainedStaffContact.Legacy_External_Id__c = 'test';
-			testTrainedStaffContact.Last_name__c = 'Last_name';
-			testTrainedStaffContact.Agencies_prev_worked_for__c='';
-			insert testTrainedStaffContact;
 
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
@@ -5769,71 +5516,36 @@ Location_Type__c = 'BR');
 			ctrl.contactType='Company';
 			ctrl.createAgencyContact();
 
-			ctrl.contactType='Person';
-			ctrl.createAgencyContact();
-
-			Case testCase2 = ISSP_ObjectFactory.createNewCase();
-			testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase2.Status='On Hold_External';
-			testCase2.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-			insert testCase2;
-
-			ctrl.newCase = testCase2;
-			ctrl.securityCheck();
-
-			Case testCase3 = ISSP_ObjectFactory.createNewCase();
-			testCase3.BSPCountry__c = 'Hong Kong (SAR), China';
-			testCase3.Status='Closed_Disapproved';
-			testCase3.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-			insert testCase3;
-
-			ctrl.newCase = testCase3;
-			ctrl.securityCheck();
 		}
 		Test.stopTest();
 	}
 
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS10()
 	{
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'IATA_Agency'][0].Id;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
+		IATA_ISO_Country__c country2 = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+										FROM IATA_ISO_Country__c
+										WHERE name = 'test2'
+										LIMIT 1];
+
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.IATA_ISO_Country__c = country.Id;
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
-
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
+		AMS_OSCAR__c oscarTest= [SELECT Id FROM AMS_OSCAR__c LIMIT 1];
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
-
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 			ctrl.isPassAccreditation = true;
@@ -5892,64 +5604,33 @@ Location_Type__c = 'BR');
 
 	@isTest static void ISSP_AMS_Accreditation_Test_PASS11()
 	{
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-									IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-		insert country;
-		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-		insert country2;
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-		WHERE SobjectType = 'Account'
-		AND DeveloperName = 'IATA_Agency'][0].Id;
+		IATA_ISO_Country__c country = [SELECT Id, Name, AIMS_Area_ID__c, AIMS_Area_Name__c, ISO_Code__c, SLA_Type__c, Case_BSP_Country__c, Region__c, BSP_Country_free_text__c, CASS_Country_free_text__c, Pilot_Country__c, Sub_Region__c, AIMS_Region__c, IATA_COUNTRY_EN__c, IATA_Contry_KR__c, IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c, IATA_Regional_Office__c, ISO_Code_Numeric__c, Acli_Country__c, Country_Manager__c, Profit_Center__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, SAP_Sales_Org__c, BSP_Domestic_Only__c, BSP__c, CASS_Domestic__c, CASS_Export__c, CASS_Import__c, Cargo_Agency_Accreditation__c, ISS_Office_Location__c, Passenger_Agency_Accredition__c, Sanctioned_Country__c, AMS_Pilot_Country__c, EU_Country__c, Hide_Tax_Number_VAT__c, Tax_Number_label__c, Tax_number_format__c, Tax_number_help_text__c, AMS_Settlement_System_CASS__c, AMS_Settlement_System__c, Billing_Currency__c, International_dialing_code_ISD__c, MDM_Integration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, EACP_Country__c, OSCAR_enabled__c, Travel_Branch_Country__c, Travel_HO_Country__c, original_bank_details_not_required__c, DDS_Enabled__c, Prevent_Portal_Trade_Name_Change__c, Branches_abroad_not_allowed__c, Enable_Notice_of_Change__c, Local_language_Agency_details_required__c, SAAM_enable_non_IATA_Cargo_Agents__c, Disable_non_IATA_Cargo_Agents__c, AMS_Default_State__c, Enable_Minor_Changes_from_Portal__c, IEC_Zip_Postal_Code_required__c, Is_Non_Compliant__c, AMS_Max_Vouchers_Per_Year__c, AMS_Vouchers_Benchmark__c, Enable_Risk_Change_Codes__c, EBulletin_enabled__c, Due_diligence_mandatory__c, CNS_Country__c, ISO_Country_Short_Name__c, AMS_Accreditation_New_Labels__c, ANG_Enable_NewGen__c, ANG_GDI_Enabled__c, ANG_Portal_Service__c, LVA_CountryLanguage__c, Airline_EasyPay_Opt_Out_Date__c, fred_icaomemberstate__c, ANG_IEP_Model__c, Postal_Code_Format_regEx__c, Tax_Number_VAT_field_mandatory__c, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, Informatica_Value__c, Enable_NewGen_Pilot__c, Hide_Tax_Number_2_VAT_field_2__c, State_Province_Picklist__c, Tax_Number_2_Format__c, Tax_Number_2_Help_Text__c, Tax_Number_2_VAT_field_2_mandatory__c, Tax_Number_2_label__c, VAT_2_Validation_Required__c, Region_Province_and_Cities_Enabled__c, ANG_RHC_LocationType__c
+									   FROM IATA_ISO_Country__c
+									   LIMIT 1];
+
+		Account child =[SELECT Id, IATA_ISO_Country__c, sector__c
+						FROM Account
+						WHERE Name = 'childAccIcc1' and sector__c =: AMS_Utils.SECTOR_PASS LIMIT 1];
 
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = AMS_Utils.SECTOR_PASS;
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
-		parent.IATA_ISO_Country__c = country.Id;
-		insert parent;
-		System.debug('parent Id: ' + parent.Id);
+		User newUser = [SELECT Id, contactId, Email
+						FROM User
+						WHERE Email =: 'conChildIcc@test11.com'
+						LIMIT 1];
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId= parent.Id;
-		con.Email = 'Test@test11.com';
-		insert con;
+		Account testAccount= [SELECT Id
+							  FROM Account
+							  WHERE Name =: 'accountParentAccreditation'
+							  LIMIT 1];
 
-		System.debug('con Id: ' + con.Id);
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
-		con.OwnerId = newUser.Id;
-		update con;
-
-		Account testAccount = ISSP_ObjectFactory.createNewAccount();
-		testAccount.BillingCity = 'test';
-		testAccount.Name = 'test';
-		testAccount.sector__c = AMS_Utils.SECTOR_PASS;
-		testAccount.Category__c=AMS_Utils.categoryPass;
-		testAccount.ANG_Accreditation_Model__c=AMS_Utils.ACCREDITATIONMODEL_CASH;
-		testAccount.ANG_FA_Opt_out__c=true;
-		testAccount.Email__c='';
-		testAccount.Reason_for_creation__c='New agent';
-		insert testAccount;
-
-		Account testAccount2 = ISSP_ObjectFactory.createNewAccount();
-		testAccount2.BillingCity = 'test';
-		testAccount2.Name = 'test';
-		testAccount2.sector__c = AMS_Utils.SECTOR_PASS;
-		testAccount2.Category__c=AMS_Utils.categoryPass;
-		testAccount2.ANG_Accreditation_Model__c=AMS_Utils.ACCREDITATIONMODEL_CASH;
-		testAccount2.ANG_FA_Opt_out__c=false;
-		testAccount2.Email__c='';
-		testAccount2.Reason_for_creation__c='New agent';
-		insert testAccount2;
+		Account testAccount2= [SELECT Id
+							   FROM Account
+							   WHERE Name =: 'accountchildAccreditation'
+							   LIMIT 1];
 
 		Test.startTest();
+
 		System.runAs(newUser)
 		{
 
