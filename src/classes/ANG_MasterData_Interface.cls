@@ -313,8 +313,7 @@ global class ANG_MasterData_Interface{
 
 				//PASS Agency Integration
 				if(acc.location_class__c == 'L') {
-					this.externalSystems.add('PASSlink');
-					this.IMPCCode = acc.IMPC_Code__c;
+					this.externalSystems.add(AMS_Utils.passParticipation);
 				}
 
 			}

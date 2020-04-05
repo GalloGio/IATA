@@ -206,9 +206,6 @@
             }
 
             function newnAccreditationApplicationNavigateTo() {
-                /*if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
-                    $('#modalChooseAccreditationType').modal('toggle');
-                } else {*/
 					if('{!isPassAccreditation}'== 'true'){
                         navigateToUrl('/ISSP_AMS_PASS_Accreditation?accType=PASS&{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
@@ -382,40 +379,22 @@
 
                         <div class="row" style="padding-top: 20px">
                             <div class="col-md-12 padded-on-top">
-
-                                <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
                                 <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
-
                                 <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
-
                                 <br/>
-
                                 <apex:outputText value="{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_Accred_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred)))}" escape="false"/>
-
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
-
                                 <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent', AND(con.Account.Category__c == 'Domestic Agent', isoCountry.ISO_Code__c == 'CN'))}"/><br/><br/>
                             </div>
-
-                            <!--<div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
-                            </div>
-                            <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
-                            </div>-->
                         </div>
-
                         <div class="row" style="padding-bottom: 20px; {!IF(isMCAccredited, 'padding-top: 20px;', '')}">
                             <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
                                 <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
                             </div>
-
                             <div class="col-md-5" >
-
                             </div>
                         </div>
-
                             <div class="row" style="padding-bottom: 20px">
                                 <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
                                     <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
@@ -511,14 +490,6 @@
                                 <apex:pageBlock id="DraftCasespageblock">
                                     <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(AMSDraftCasesIsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                                            <!--<apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-
-                                            <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='FoP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                                        </apex:column> !-->
 										<apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&step=2&accType=PASS'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
                                         <apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2&accType=PASS'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
@@ -606,14 +577,6 @@
                             </apex:outputPanel>
                         </div>
                     </div>
-
-                    <!--<script type="text/javascript">
-                        $('[value="China_International"]').parent().append($('<apex:image/>',{id: 'dasd', value: '/img/msg_icons/info16.png',
-                                                html-data-html: 'true',
-                                                html-data-placement: 'right',
-                                                html-data-toggle: 'tooltip',
-                                                title: '{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}'}));
-                    </script>-->
 
                     <div class="modal-footer">
                         <div class="col-md-12">

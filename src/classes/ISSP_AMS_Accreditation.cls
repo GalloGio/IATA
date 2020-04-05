@@ -5771,7 +5771,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		return selectedLang;
 	}
 	private void retPASSReqments(boolean isFromValidation){
-		SYSTEM.DEBUG('Getting PASS requirements');
 
 		String selectedLang;
 

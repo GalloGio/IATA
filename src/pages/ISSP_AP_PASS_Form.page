@@ -1,138 +1,6 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
     <c:iss_ap_css />
 
-    <script>
-    function changePercentBox(myBox, myCheckBox, myPanel){
-        var thisBox = document.getElementById(myBox);
-        var thisCheckBox = document.getElementById(myCheckBox);
-        var thisPanel = document.getElementById(myPanel);
-        if (thisCheckBox.checked == true){
-            thisPanel.style.display='block';
-        }
-        else{
-            thisPanel.style.display='none';
-            thisBox.value = '';
-        }
-    }
-
-    function onlyNumbers(event) {
-        var event = event || window.event; // for trans-browser compatibility
-        var charCode = event.which || event.keyCode;
-
-        if (charCode > 31 && (charCode < 37 || charCode > 57))
-            return false;
-
-        return true;
-    }
-
-    function checkPercentage(box){
-        var thisBox = document.getElementById(box);
-        var value = thisBox.value
-        value = value.replace(/,/g, ".");
-        value = parseFloat(value);
-        if (isNaN(value)){
-            value = "";
-        }
-        else if (value < 0){
-            value = 0;
-        }
-        else if (value > 100){
-            value = 100;
-        }
-        thisBox.value = value;
-    }
-
-    </script>
-
-    <!-- Modal -->
-    <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{!strLOB} {!apcountry} - Country Requirements</h4>
-                </div>
-                <div class="modal-body">
-                    <apex:panelGrid columns="3" styleClass="countryReqsGrid" rowClasses="whiterow,bluerow" columnClasses="col1,col2,col3">
-
-                        <!-- Local Representation Mandatory -->
-                        <apex:outPutText value="Local representation mandatory:"/>
-                        <apex:outputField value="{!countryRequirement.Local_Representation_Mandatory__c}" />
-                        <apex:outPutField value="{!countryRequirement.Local_Representation_Mandatory_com__c}"/>
-
-                        <!-- Does the airline need to have a local accountant or any kind of 3rd party for taxation issues? -->
-                        <apex:outPutText value="Local accountant mandatory:"/>
-                        <apex:outPutField value="{!countryRequirement.Local_accountant_mandatory__c}" />
-                        <apex:outPutField value="{!countryRequirement.Local_accountant_mandatory_com__c}"/>
-
-                        <!-- Local VAT (or any equivalent to VAT like GST, RUC, RUT, NIT) mandatory?  -->
-                        <apex:outPutText value="Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:"/>
-                        <apex:outPutField value="{!countryRequirement.Local_VAT_Mandatory__c}" />
-                        <apex:outPutField value="{!countryRequirement.Local_VAT_Mandatory_com__c}"/>
-
-                        <!-- Foreign VAT accepted? (eg: Home country VAT of the airline)  -->
-                        <apex:outPutText value="Foreign VAT accepted:"/>
-                        <apex:outPutField value="{!countryRequirement.Foreign_VAT_accepted__c}" />
-                        <apex:outPutField value="{!countryRequirement.Foreign_VAT_accepted_com__c}"/>
-
-                        <!-- Can an airline have a special VAT status (or any special taxation status)? -->
-                        <apex:outPutText value="Airline can have a special VAT status:"/>
-                        <apex:outPutField value="{!countryRequirement.Special_VAT_status_allowed__c}" />
-                        <apex:outPutField value="{!countryRequirement.Special_VAT_status_allowed_com__c}"/>
-
-                        <!-- Does the airline need to have a Local Representation for Fiscal requirements? -->
-                        <apex:outPutText value="Airline needs Local Representation for Fiscal requirements:"/>
-                        <apex:outPutField value="{!countryRequirement.Local_Representation_for_Fiscal_requirem__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Local_Representation_for_Fiscal_req_com__c}"/>
-
-                        <!-- Currency of the Settlement which must be the same as of the bank account in case the airline select as settlement mode: Local Bank Mandate -->
-                        <apex:outPutText value="Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:"/>
-                        <apex:outPutField value="{!countryRequirement.Currency_of_the_Settlement__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Currency_of_the_Settlement_com__c}"/>
-
-                        <!-- Does this operation have dual currencies? -->
-                        <apex:outPutText value="Operation has dual currencies:"/>
-                        <apex:outPutField value="{!countryRequirement.Dual_currencies__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Dual_currencies_com__c}"/>
-
-                        <!-- Can any airline (regardless of having a local representation or not) open a local bank account in the currency of the settlement? -->
-                        <apex:outPutText value="Airline can (regardless of local representation or not) open a local bank account in the settlement currency:"/>
-                        <apex:outPutField value="{!countryRequirement.bank_account_in_of_the_settlement__c}"/>
-                        <apex:outPutField value="{!countryRequirement.bank_account_in_of_the_settlement_com__c}"/>
-
-                        <!-- Is it legally mandatory for the airlines to give commission to agencies? -->
-                        <apex:outPutText value="Legally mandatory for airlines to give commission to agencies:"/>
-                        <apex:outPutField value="{!countryRequirement.Mandatory_to_give_commission_to_agencies__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Mandatory_to_give_commission_to_agen_com__c}"/>
-
-                        <!-- Are there any government requirements that are included in the joining package? -->
-                        <apex:outPutText value="Government requirements are included in the joining package:"/>
-                        <apex:outPutField value="{!countryRequirement.Government_requirements__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Government_requirements_com__c}"/>
-
-                        <!-- Which type of address is accepted  inserted into ISS systems (BSPLink, CASSLink etc..)? -->
-                        <apex:outPutText value="Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):"/>
-                        <apex:outPutField value="{!countryRequirement.Type_of_address_accepted__c}"/>
-                        <apex:outPutField value="{!countryRequirement.Type_of_address_accepted_com__c}"/>
-
-                        <!-- VAT no. always inserted into ISS systems? (BSPLink, Casslink etc..) -->
-                        <apex:outPutText value="VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:"/>
-                        <apex:outPutField value="{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}"/>
-                        <apex:outPutField value="{!countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}"/>
-
-                        <!-- General Commment -->
-                        <apex:outPutText value="General Comment - {!StrLOB} {!apcountry}"/>
-                        <apex:outPutText escape="false" value="&nbsp;"/>
-                        <apex:outPutField value="{!countryRequirement.Comments__c}"/>
-                    </apex:panelGrid>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="pageNav" style="display:{!IF(isStep3&&isCASS,'inline-block','none')}">
         <p class="LOB">{!strLoB}</p>
         <div style="border-top: 1px #fff dotted; padding-bottom: 3px;">
@@ -212,7 +80,7 @@
                                 <div class="aplabel"> {!$Label.ISSP_PASS_Terms_Conditions}</div>
                                 <div class="aplabel" style="font-weight:bold;">{!$Label.ISSP_PASS_Checklist}</div>
                                 <div id="bankmandatelink_p">
-                                    <u><a href="{!passlink}" target="_blank">{!$Label.ISSP_PASS_Participation_Checklist}</a></u>
+                                    <u><a href="{!ISSP_PASS_Participation_Checklist}" target="_blank">{!$Label.ISSP_PASS_Participation_Checklist}</a></u>
                                 </div>
                                     
 
