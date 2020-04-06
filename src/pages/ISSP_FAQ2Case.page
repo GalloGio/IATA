@@ -1116,10 +1116,6 @@
                                                                               'CancelAndSubmit','true', 'false')}"
                                                          status="actStatusId" />
 
-                                    <apex:actionFunction name="refreshAreasOfConcernPickList"
-                                                         action="{!refreshAreasOfConcernPickList}"
-                                                         status="actStatusId" />
-
                              <apex:actionfunction name="refreshMainPbAndCreateCase" action="{!create1}"
                                                   rerender="FieldsRep,countryPnl,AirlinesPnl,actStatusId,subtopPnl_Val,
                                                   RightPanel,OPpbButton, modalWindowId" />
