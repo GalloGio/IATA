@@ -68,6 +68,10 @@
                 <field>Agency_Info_Reinstatements__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Forms_of_Payment__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>StatusDisplay__c</field>
             </layoutItems>

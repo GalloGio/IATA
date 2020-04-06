@@ -13386,6 +13386,14 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label>Ödeme Şekilleri</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Ödeme şekillerine ilişkin değişiklikler</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>

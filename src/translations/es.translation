@@ -13419,6 +13419,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label>Formas de pago</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambios en las formas de pago aplicables al programa de transporte de pasajeros y de transporte doméstico</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>
