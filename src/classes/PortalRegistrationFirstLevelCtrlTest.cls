@@ -7,24 +7,24 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 	@testSetup
 	static void setup(){
-        Portal_Applications__c pa = new Portal_Applications__c(
-            Name = 'Login T&C Checker'
-        );
-        insert pa;
+		Portal_Applications__c pa = new Portal_Applications__c(
+			Name = 'Login T&C Checker'
+		);
+		insert pa;
 
-        Term_and_Condition__c tc = new Term_and_Condition__c(
-            Name = 'GCS Private Policy',
-            Is_Latest__c = true,
-            Effective_Start_Date__c = Date.today(),
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
-        );
-        insert tc;
+		Term_and_Condition__c tc = new Term_and_Condition__c(
+			Name = 'GCS Private Policy',
+			Is_Latest__c = true,
+			Effective_Start_Date__c = Date.today(),
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
+		);
+		insert tc;
 
-        Service_Term_and_Condition__c stc = new Service_Term_and_Condition__c(
-            Portal_Service__c = pa.Id,
-            Term_Condition__c = tc.Id
-        );
-        insert stc;
+		Service_Term_and_Condition__c stc = new Service_Term_and_Condition__c(
+			Portal_Service__c = pa.Id,
+			Term_Condition__c = tc.Id
+		);
+		insert stc;
 
 		ISSP_CS__c setting = new ISSP_CS__c();
 		setting.Name = 'DefaultNewAccountOwnerId';
@@ -384,12 +384,12 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CZ' LIMIT 1];
 
-        List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
-        System.assertEquals(tcs.size(), 1);
+		List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
+		System.assertEquals(tcs.size(), 1);
 
 		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
 		params.email = 'contact2@bucketairline.com';
-        params.salutation = 'Mr';
+		params.salutation = 'Mr';
 		params.firstName = 'contact2_firstName';
 		params.lastName = 'contact2_lastName';
 		params.country = country.Id;
@@ -400,7 +400,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.isNewAccount = false;
 		params.selectedCustomerType = 'Passenger_and_Cargo';
 		params.registrationTime = string.valueOf(DateTime.now());
-        params.termsAndUsageIds = tcs[0].Id;
+		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		system.debug('result: ' + result);
@@ -416,12 +416,12 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CZ' LIMIT 1];
 
-        List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
-        System.assertEquals(tcs.size(), 1);
+		List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
+		System.assertEquals(tcs.size(), 1);
 
 		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
 		params.email = 'newcontact1@bucketairline.com';
-        params.salutation = 'Mr';
+		params.salutation = 'Mr';
 		params.firstName = 'newContactName1';
 		params.lastName = 'newContactLastName1';
 		params.country = country.Id;
@@ -432,7 +432,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.isNewAccount = true;
 		params.selectedCustomerType = 'Passenger_and_Cargo';
 		params.registrationTime = string.valueOf(DateTime.now());
-        params.termsAndUsageIds = tcs[0].Id;
+		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		system.debug('result: ' + result);
@@ -450,12 +450,12 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'XX' LIMIT 1];
 
-        List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
-        System.assertEquals(tcs.size(), 1);
+		List<Term_and_Condition__c> tcs = [SELECT Id FROM Term_and_Condition__c];
+		System.assertEquals(tcs.size(), 1);
 
 		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
 		params.email = 'newcontact1@bucketairline.com';
-        params.salutation = 'Mr';
+		params.salutation = 'Mr';
 		params.firstName = 'newContactName1';
 		params.lastName = 'newContactLastName1';
 		params.country = country.Id;
@@ -466,7 +466,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.isNewAccount = false;
 		params.selectedCustomerType = 'Passenger_and_Cargo';
 		params.registrationTime = string.valueOf(DateTime.now());
-        params.termsAndUsageIds = tcs[0].Id;
+		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		system.debug('result: ' + result);

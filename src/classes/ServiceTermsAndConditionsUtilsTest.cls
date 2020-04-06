@@ -1,28 +1,28 @@
 @isTest
 private class ServiceTermsAndConditionsUtilsTest {
 
-    @testSetup
+	@testSetup
 	public static void testSetup() {
 
-        Portal_Applications__c pa = new Portal_Applications__c(
-            Name = 'Login T&C Checker'
-        );
-        insert pa;
+		Portal_Applications__c pa = new Portal_Applications__c(
+			Name = 'Login T&C Checker'
+		);
+		insert pa;
 
-        Term_and_Condition__c tc = new Term_and_Condition__c(
-            Name = 'GCS Private Policy',
-            Custom_Label_for_Translated_Name__c = 'CSP_L2_Title',
-            Is_Latest__c = true,
-            Effective_Start_Date__c = Date.today(),
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
-        );
-        insert tc; 
+		Term_and_Condition__c tc = new Term_and_Condition__c(
+			Name = 'GCS Private Policy',
+			Custom_Label_for_Translated_Name__c = 'CSP_L2_Title',
+			Is_Latest__c = true,
+			Effective_Start_Date__c = Date.today(),
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Term_and_Condition__c', 'Bypass_Trigger_Behavior')
+		);
+		insert tc;
 
-        Service_Term_and_Condition__c stc = new Service_Term_and_Condition__c(
-            Portal_Service__c = pa.Id,
-            Term_Condition__c = tc.Id
-        );
-        insert stc;
+		Service_Term_and_Condition__c stc = new Service_Term_and_Condition__c(
+			Portal_Service__c = pa.Id,
+			Term_Condition__c = tc.Id
+		);
+		insert stc;
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			Name = 'Groland',
@@ -55,8 +55,8 @@ private class ServiceTermsAndConditionsUtilsTest {
 		);
 		insert acc;
 
-        acc.isPartner = true;
-        update acc;
+		acc.isPartner = true;
+		update acc;
 
 		Contact con = new Contact(
 			FirstName = 'Test',
@@ -66,7 +66,7 @@ private class ServiceTermsAndConditionsUtilsTest {
 			User_Portal_Status__c = 'Approved User',
 			AccountId = acc.Id
 		);
-		
+
 		insert con;
 
 		/** USER */
@@ -74,40 +74,40 @@ private class ServiceTermsAndConditionsUtilsTest {
 	}
 
 	static testMethod void testAcceptTermsAndConditionsAcceptances() {
-        Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
-        Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
+		Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
+		Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
 
-        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
+		ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
 
-        List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
-        System.assertEquals(1, tcWrappers.size());
+		List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
+		System.assertEquals(1, tcWrappers.size());
 
-        Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
-        System.assertEquals(accepted, false);
+		Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+		System.assertEquals(accepted, false);
 
-        ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances(con.Id, portalServiceId);
-        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
-        System.assertEquals(accepted, false);
+		ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances(con.Id, portalServiceId);
+		accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+		System.assertEquals(accepted, false);
 
 		ServiceTermsAndConditionsUtils.acceptServiceTermsAndConditions(con.Id, portalServiceId);
-        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
-        System.assertEquals(accepted, true);
-    }
+		accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+		System.assertEquals(accepted, true);
+	}
 
 	static testMethod void testCreateTermsConditionsAcceptancesForNewUser() {
-        Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
-        Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
+		Contact con = [SELECT Id FROM Contact WHERE FirstName = 'Test' AND LastName = 'Contact' LIMIT 1];
+		Id portalServiceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Login T&C Checker');
 
-        ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
+		ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(null, portalServiceId, 'en_US');
 
-        List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
-        System.assertEquals(1, tcWrappers.size());
+		List<ServiceTermsAndConditionsUtils.TermAndConditionWrapper> tcWrappers = ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions(con.Id, portalServiceId, 'en_US');
+		System.assertEquals(1, tcWrappers.size());
 
-        Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
-        System.assertEquals(accepted, false);
+		Boolean accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+		System.assertEquals(accepted, false);
 
 		ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.Id, tcWrappers[0].id);
-        accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
-        System.assertEquals(accepted, true);
-    }
+		accepted = ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted(con.Id, portalServiceId);
+		System.assertEquals(accepted, true);
+	}
 }
