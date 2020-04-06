@@ -2,7 +2,7 @@
 private class SAP2SF_BillOfMaterial_Test {
     
     
-    @isTest(SeeAllData=true) 
+    @isTest
     static void test_AllMethod() {
     
         //*** get product generated for order item and generate additional product
