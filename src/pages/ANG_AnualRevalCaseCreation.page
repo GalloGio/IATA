@@ -65,13 +65,46 @@
 				reRenderSearchButton();
 			});
 		}
+
+		function checkSelectAllOnCurrentPage() {
+			var foundAccounts = document.querySelector("[id$=pbTable]").children[2].children;
+			var allChecked = true;
+			
+			for (var k = 0; k < foundAccounts.length; k++) {
+				if (foundAccounts[k].firstChild.children[0].checked === false) {
+					allChecked = false;
+					break;
+				}
+			}
+
+			document.querySelector('[id$=allSelected]').checked = allChecked;
+
+			reRenderLaunchCampaignButton();
+		}
+
+		function selectAll() {
+			var foundAccounts = document.querySelector("[id$=pbTable]").children[2].children;
+			var allChecked = document.querySelector('[id$=allSelected]').checked;
+
+			for (var k = 0; k < foundAccounts.length; k++) {
+				foundAccounts[k].firstChild.children[0].checked = allChecked;
+			}
+
+			reRenderLaunchCampaignButton();
+		}
+
+		function uncheckSelectAll() {
+			document.querySelector('[id$=allSelected]').checked = false;
+			reRenderLaunchCampaignButton();
+		}
 	</script>
 
 <apex:sectionHeader title="Annual Revalidation Cases Page" />
 	<apex:form >
 
-		<apex:actionFunction name="checkAccreditationModelSelected" action="{!validateAccreditationModel}" reRender="cashOptions, informations, parameter1, parameter2, parameter3, parameter4"/>
+		<apex:actionFunction name="checkAccreditationModelSelected" action="{!validateAccreditationModel}" reRender="cashOptions, informations, parameter1, parameter2, parameter3, parameter4, buttons"/>
 		<apex:actionFunction name="reRenderSearchButton" reRender="parameter4"/>
+		<apex:actionFunction name="reRenderLaunchCampaignButton" action="{!checkSelectedRecords}" reRender="actionButton2"/>
 
 		<apex:pageBlock mode="edit" id="pageBlock">
 
@@ -130,8 +163,8 @@
 				<apex:pageblockSectionItem rendered="{!mode == 'Financial year end' && !(region == 'Select Region')}">
 					<apex:outputLabel value="Financial year end" />
 					<apex:outputPanel styleClass="requiredInput" layout="block">
-						<apex:selectList size="1" value="{!year}" id="year" styleClass="listWidth">
-							<apex:selectoptions value="{!yearobj}"/>
+						<apex:selectList size="1" value="{!month}" id="month" styleClass="listWidth">
+							<apex:selectoptions value="{!monthList}"/>
 							<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons"/>
 						</apex:selectList>
 					</apex:outputPanel>
@@ -170,7 +203,7 @@
 			<apex:pageBlockSection id="parameter4">
 				<div align="center">
 					<apex:pageBlockSectionItem >
-						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" status="blockEditing" reRender="Overview, parameter5,buttons,actionButton2"/>
+						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock" oncomplete="checkSelectAllOnCurrentPage();"/>
 					</apex:pageBlockSectionItem>
 				</div>
 
@@ -186,62 +219,66 @@
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 
-		<apex:pageBlock id="buttons">
+		<apex:outputPanel id="buttons" >
+			<apex:pageBlock rendered="{!Con != null}">
 
-			<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable">
-				<apex:column>
-					<apex:inputCheckbox value="{!a.selected}"/>
-				</apex:column>
-				<apex:column value="{!a.account.IATACode__c}"/>
-				<apex:column value="{!a.account.Name}"/>
-				<apex:column value="{!a.account.Location_Class__c}"/>
-				<apex:column value="{!a.account.Location_Type__c}"/>
-				<apex:column value="{!a.account.Status__c}"/>
-				<apex:column value="{!a.account.IATA_ISO_Country__r.Name}"/>
-				<apex:column value="{!a.account.IATA_ISO_Country__r.Region__c}"/>
-				<apex:column value="{!a.account.Financial_Year_End__c}"/>
-				<apex:column value="{!a.oscarCase.CreatedDate}"/>
-			</apex:pageblocktable>
+				<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable" >
+					<apex:column>
+						<apex:facet name="header">
+							<apex:inputCheckbox id="allSelected" value="{!selectAll}" onchange="selectAll();"/>
+						</apex:facet>
+						<apex:inputCheckbox value="{!a.selected}" onchange="checkSelectAllOnCurrentPage();"/>
+					</apex:column>
+					<apex:column value="{!a.account.IATACode__c}"/>
+					<apex:column value="{!a.account.Name}"/>
+					<apex:column value="{!a.account.Location_Class__c}"/>
+					<apex:column value="{!a.account.Location_Type__c}"/>
+					<apex:column value="{!a.account.Status__c}"/>
+					<apex:column value="{!a.account.IATA_ISO_Country__r.Name}"/>
+					<apex:column value="{!a.account.IATA_ISO_Country__r.Region__c}"/>
+					<apex:column value="{!a.account.Financial_Year_End__c}"/>
+					<apex:column headerValue="Last ARV created" value="{!a.oscarCase.CreatedDate}"/>
+				</apex:pageblocktable>
 
-			<apex:outputLabel value="Total Records Found: {!IF(Con == null , 0 ,Con.resultSize)}" rendered="{!Con != null}"/>
-	
-			<div align="Center"> 
-				<apex:commandButton value="First Page" action="{!First}" disabled="{!Con == null}" reRender="buttons" rendered="{!Con != null}"/>
-				<apex:commandButton value="Previous Page" action="{!Previous}" disabled="{!Con == null || NOT(Con.HasPrevious)}" reRender="buttons" rendered="{!Con != null}"/>
-				<apex:commandButton value="Next Page" action="{!Next}" disabled="{!Con == null || NOT(Con.HasNext)}" reRender="buttons" rendered="{!Con != null}"/>
-				<apex:commandButton value="Last Page" action="{!Last}" disabled="{!Con == null}" reRender="buttons" rendered="{!Con != null}"/>
-			</div>
-			Display records per page 
-
-			<apex:selectList value="{!size}" multiselect="false" size="1">
-				<apex:selectOptions value="{!paginationSizeOptions}"/>
-			</apex:selectList>
+				<apex:outputLabel value="Total Records Found: {!IF(Con == null , 0 ,Con.resultSize)}"/>
 		
-		</apex:pageBlock>
+				<div align="center">
+					<apex:outputPanel rendered="{!AND(Con != null, OR(Con.HasPrevious, Con.HasNext))}">
+						<apex:commandButton value="First Page" action="{!First}" disabled="{!Con == null || NOT(Con.HasPrevious)}" reRender="buttons" oncomplete="uncheckSelectAll();"/>
+						<apex:commandButton value="Previous Page" action="{!Previous}" disabled="{!Con == null || NOT(Con.HasPrevious)}" reRender="buttons" oncomplete="uncheckSelectAll();"/>
+						<apex:commandButton value="Next Page" action="{!Next}" disabled="{!Con == null || NOT(Con.HasNext)}" reRender="buttons" oncomplete="uncheckSelectAll();"/>
+						<apex:commandButton value="Last Page" action="{!Last}" disabled="{!Con == null || NOT(Con.HasNext)}" reRender="buttons" oncomplete="uncheckSelectAll();"/>
+					</apex:outputPanel>
+				</div>
+				Display records per page 
 
-		<apex:pageBlock>
-			<div align="center">
-				<apex:commandButton value="Launch Campaign" action="{!launchCampaign}" id="actionButton2" disabled="{!Con == null || shouldDisableButton || batchStatusBool}"/>
-			</div>
-		</apex:pageBlock>
+				<apex:selectList value="{!size}" multiselect="false" size="1">
+					<apex:selectOptions value="{!paginationSizeOptions}"/>
+				</apex:selectList>
 
-		<apex:pageBlock mode="edit" id="StatusPageBlock">
+				<div align="center">
+					<apex:commandButton value="Launch Campaign" action="{!launchCampaign}" id="actionButton2" disabled="{!OR(disableLaunchButton, batchStatusBool)}"/>
+				</div>
+			
+			</apex:pageBlock>
 
-			<apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+		</apex:outputPanel>
 
-				<apex:actionStatus id="act" startText="Checking..." />
+		<apex:outputPanel id="StatusPageBlock">
 
-				<apex:outputText styleClass="processText" value="Anual Revalidation Process Status: {!batchJob.Status}"/>
+			<apex:pageBlock mode="edit" rendered="{!batchStatusBool}">
+				<apex:pageBlockSection columns="1" title="Process Status">
 
-				<apex:outputText styleClass="processText" value="Anual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
+					<apex:actionStatus id="act" startText="Checking..." />
+					<apex:outputText styleClass="processText" value="Anual Revalidation Process Status: {!batchJob.Status}"/>
+					<apex:outputText styleClass="processText" value="Anual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
+					<apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+					<apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
 
-				<apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
 
-				<apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
-
-			</apex:pageBlockSection>
-
-		</apex:pageBlock>
+		</apex:outputPanel>
 
 	</apex:form>
 

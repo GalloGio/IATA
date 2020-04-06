@@ -34,12 +34,45 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		AMS_Utils.OSCAR_OPEN
 	};
 
-	public List<SelectOption> paginationSizeOptions{get;set;}
-	public Integer size{get;set;}
+	public List<SelectOption> paginationSizeOptions{
+		get {
+			return new List<SelectOption>{
+				new SelectOption('5', '5'),
+				new SelectOption('10', '10'),
+				new SelectOption('20', '20'),
+				new SelectOption('50', '50'),
+				new SelectOption('100', '100')
+			};
+		}
+		set;
+	}
+
+	public Boolean hasNext {
+		get {
+			return con.getHasNext();
+		}
+		set;
+	}
+	
+	public Boolean hasPrevious {
+		get {
+			return con.getHasPrevious();
+		}
+		set;
+	}
+	
+	public Integer pageNumber {
+		get {
+			return con.getPageNumber();
+		}
+		set;
+	}
+	
+	public Integer size{get; set;}
 	public string region{get; private set;}
 	public string mode{get; private set;}
-	public String country{get;private set;}
-	public String year{get; private set;}
+	public String country{get; private set;}
+	public String month{get; private set;}
 
 	public List<String> countriesLst{get; set;}
 	public Account account{get; set;}
@@ -55,6 +88,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				infoNote += '<li>With Status Approved or Changes processed</li>';
 				infoNote += '<li>Accredited more than 6 months ago</li>';
 				infoNote += '<li>No major change in progress or finalized in the last 6 months</li>';
+				infoNote += '<li>Without ongoing Annual Revalidation Oscars</li>';
 				infoNote += '</ul>';
 			}
 			
@@ -76,19 +110,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public List<AccountWrapper> accountsToCreate{
-		get{
-			if (con != null) {
-				accountsToCreate = new List<AccountWrapper>();
-				
-				for (Account acct : (List<Account>)con.getRecords()) {
-					AccountWrapper aw = new AccountWrapper(acct, annualRevalidationCaseOscar.get(acct.Id), false);
-					accountsToCreate.add(aw);
-				}
-			}
-			
-			return accountsToCreate;
-		}
-		set;
+		get; set;
 	}
 
 	private Map<Id, Case> annualRevalidationCaseOscar{get;set;}
@@ -148,22 +170,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		private set;
 	}
 
-	public void validateAccreditationModel() {
-		List<String> accredModelList = new List<String>();
-
-		for (SelectOption accredModel: selectedAccreditations) {
-			accredModelList.add(accredModel.getValue());
-		}
-
-		//return true;
-		multicountryAccreditationModelSelected = (accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
-		cashOrLiteAccreditationModelSelected = (!accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
-
-		if (multicountryAccreditationModelSelected) {
-			mode = 'Select Mode'; 
-			region = 'Select Region';
-		}
-	}
+	public Boolean selectAll {get; set;}
 
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
@@ -172,24 +179,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		annualRevalidationCaseOscar = new Map<Id, Case>();
 		batchStatusBool = false;
 		getBatchStatus = 0;
-		setPaginationOptions();
+		size = 1;
 		selectedAccreditations = new List<SelectOption>();
-	}
-
-	public void setPaginationOptions(){
-		size=10;
-		paginationSizeOptions = new List<SelectOption>();
-		paginationSizeOptions.add(new SelectOption('5','5'));
-		paginationSizeOptions.add(new SelectOption('10','10'));
-		paginationSizeOptions.add(new SelectOption('20','20'));
-		paginationSizeOptions.add(new SelectOption('50','50'));
-		paginationSizeOptions.add(new SelectOption('100','100'));
-	}
-
-	//Changes the size of pagination
-	public PageReference refreshPageSize() {
-		con.setPageSize(size);
-		return null;
+		disableLaunchButton = true;
 	}
 
 	public void setcountry(String value){
@@ -216,12 +208,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		mode = value;
 	}
 
-	public void setyear(String value){
-		if(year != value){
+	public void setMonth(String value){
+		if(month != value){
 			accountsToCreate = new List<AccountWrapper>();
 			con = null;
 		}
-		year = value;
+		month = value;
 	}
 
 	public List<SelectOption> getregionobj() {
@@ -244,7 +236,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		};
 	}
 
-	public list<selectoption> getyearobj() {
+	public List<selectoption> getMonthList() {
 		return new List<SelectOption>{
 			new SelectOption('Please Select a Month','Please Select a Month'),
 			new SelectOption('January','January'),
@@ -262,20 +254,13 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		};
 	}
 
-	public list<selectoption> getcountryobj(){
+	public List<SelectOption> getcountryobj() {
+		List<SelectOption> options = new List<SelectOption>{
+			new SelectOption('Select Country', 'Select Country')
+		};
 
-		list<selectoption> options= new list<selectoption>();
-
-		list<IATA_ISO_Country__c> contr= IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name');
-
-		if(contr.isEmpty()){
-			options.add(new selectoption('Select Country', 'Select Country'));
-			countriesLst.clear();
-
-		}
-
-		for (IATA_ISO_Country__c c:contr){
-			options.add(new selectoption(c.Id,c.name));
+		for (IATA_ISO_Country__c c: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name')){
+			options.add(new SelectOption(c.Id, c.name));
 		}
 
 		return options;
@@ -290,7 +275,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public Boolean validFinancialYearEndSelected() {
-		return mode == 'Financial year end' ? (year != null && year != '' && year != 'Please Select a Month') : true;
+		return mode == 'Financial year end' ? (month != null && month != '' && month != 'Please Select a Month') : true;
 	}
 
 	public Boolean validIATACodeSelected() {
@@ -301,27 +286,33 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return selectedAccreditations.isEmpty() || cashOrLiteAccreditationModelSelected && (!validRegionSelected() || !validModeSelected() || !validFinancialYearEndSelected() || !validIATACodeSelected());
 	}
 
-	private String getOscarCasesSubquery(){
-		String subQuery = 
-		'   (SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
-		'    FROM Cases ' +
-		'    WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
-		'       OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
-		' 			AND Oscar__r.ANG_Type_of_Change__c INCLUDES (:OWNERSHIP_CHG, :MAJOR_SHAREHOLDING_CHG, ' +
-		'			 :HIERARCHY_CHG, :LOC_TYPE_DIFF_LEGAL_CHG, :LEGAL_NAME_CHG, :LEGAL_STATUS_CHG)) ' +
-		'    ORDER BY OSCAR__r.Process__c, OSCAR__r.CreatedDate DESC) ';
-		return subQuery;
+	private String getOscarCasesSubquery() {
+		return '(SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
+		'FROM Cases ' +
+		'WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
+		'	OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
+		'		AND Oscar__r.ANG_Type_of_Change__c INCLUDES (:OWNERSHIP_CHG, :MAJOR_SHAREHOLDING_CHG, ' +
+		'			:HIERARCHY_CHG, :LOC_TYPE_DIFF_LEGAL_CHG, :LEGAL_NAME_CHG, :LEGAL_STATUS_CHG)) ' +
+		'ORDER BY OSCAR__r.Process__c, OSCAR__r.CreatedDate DESC) ';
 	}
 
 	private Boolean processAccountRelatedCases(Account acct) {
 		if(!acct.Cases.isEmpty()){
 			Boolean foundAnnualRevalidation = false;
 			
-			for(Case cse : acct.Cases){
-				if(cse.OSCAR__c != null){
-					if (!foundAnnualRevalidation && cse.oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
-						foundAnnualRevalidation = true;
-						annualRevalidationCaseOscar.put(acct.Id, cse);
+			for (Case cse: acct.Cases) {
+				if (cse.OSCAR__c != null) {
+					if (cse.Oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
+						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)) {
+							foundAnnualRevalidation = true;
+							annualRevalidationCaseOscar.put(acct.Id, cse);
+						} else {
+							if (annualRevalidationCaseOscar.get(acct.Id) != null) {
+								annualRevalidationCaseOscar.get(acct.Id).clear();
+							}
+							
+							return true;
+						}
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
 						&& (ON_GOING_MAJOR_CHANGES_STATUS.contains(cse.Oscar__r.Status__c)
 							|| (cse.Oscar__r.Status__c == AMS_Utils.OSCAR_CLOSED
@@ -335,9 +326,10 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return false;
 	}
 
-	public void searchAgencies(){
+	public void searchAgencies() {
 		con = null;
 		annualRevalidationCaseOscar.clear();
+		batchStatusBool = false;
 
 		Set<String> selectedAccreditationsSet = new Set<String>();
 
@@ -345,7 +337,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			selectedAccreditationsSet.add(accred.getValue());
 		}
 
-		String queryAccount =  
+		String queryAccount =
 			'SELECT Id, IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, ' + 
 			'   Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
@@ -365,98 +357,68 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 
 		if(mode == 'Financial year end') {
-			queryAccount += 'AND Financial_Year_End__c = :year ';
+			queryAccount += 'AND Financial_Year_End__c = :month ';
 		} else if(mode == 'Country') {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
 		} else if(mode == 'IATA Code') {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 		}
 
-		List<Account> queriedAccountLst = Database.query(queryAccount);
-
 		List<Account> accountLst = new List<Account>();
 		
-		for (Account acct : queriedAccountLst) {
+		for (Account acct : Database.query(queryAccount)) {
 			if (!processAccountRelatedCases(acct)) {
 				accountLst.add(acct);
 			}
 		}
 
-		con = new ApexPages.StandardSetController(accountLst);
-		con.setPageSize(size);
-	}
+		if (!accountLst.isEmpty()) {
+			con = new ApexPages.StandardSetController(accountLst);
+			con.setPageSize(size);
 
-	public Boolean hasNext
-	{
-		get
-		{
-			return con.getHasNext();
+			populateAccountsToDisplay((List<Account>)con.getRecords());
 		}
-		set;
 	}
-
-	public Boolean hasPrevious
-	{
-		get
-		{
-			return con.getHasPrevious();
-		}
-		set;
-	}
-
-	public Integer pageNumber
-	{
-		get
-		{
-			return con.getPageNumber();
-		}
-		set;
-	}
-
-	public void previous()
-	{
+	
+	public void previous() {
 		con.previous();
+		populateAccountsToDisplay((List<Account>)con.getRecords());
 	}
-
-	public void next()
-	{
+	
+	public void next() {
 		con.next();
+		populateAccountsToDisplay((List<Account>)con.getRecords());
 	}
-
-	public void last()
-	{
+	
+	public void last() {
 		con.last();
+		populateAccountsToDisplay((List<Account>)con.getRecords());
 	}
-
-	public void first()
-	{
+	
+	public void first() {
 		con.first();
+		populateAccountsToDisplay((List<Account>)con.getRecords());
 	}
 
-	public void launchCampaign(){
+	public void launchCampaign() {
+		disableLaunchButton = true;
+
 		Set<Id> accountsToCreateIds = new Set<Id>();
 
-		con.setPageSize(con.getResultSize());
-		List<Account> tempAccountsToCreate = (List<Account>)con.getRecords();
-		con.setPageSize(size);
-
-		for(Account acct: tempAccountsToCreate){
-			//Case annualRevCase = annualRevalidationCaseOscar.get(acct.Id);
-			
-			//if(annualRevCase == null){
-				accountsToCreateIds.add(acct.Id);
-			//}
+		for(AccountWrapper aw: accountsToCreate) {
+			if (aw.selected) {
+				accountsToCreateIds.add(aw.account.Id);
+			}
 		}
 
-		if(!accountsToCreateIds.isEmpty()){
+		if (!accountsToCreateIds.isEmpty()) {
 			batchStatusBool = true;
 			pollerBool = true;
 			batchId = Database.executeBatch(new ANG_AnualRevalCaseCreationBatch(accountsToCreateIds), 1);
 		}
-
 	}
 
-	public void getBatchStatus(){
+	public void getBatchStatus() {
 		if(batchId == null){
 			pollerBool = true;
 			return;
@@ -464,13 +426,50 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
-		if(batchJob.status == 'Ended' || batchJob.status == 'Completed') {
-			pollerBool = false;
-		} else {
-			pollerBool = true;
-		}
+		pollerBool = !(batchJob.status == 'Ended' || batchJob.status == 'Completed');
 
 		getBatchStatus++;
+	}
 
+	public void validateAccreditationModel() {
+		accountsToCreate.clear();
+
+		List<String> accredModelList = new List<String>();
+
+		for (SelectOption accredModel: selectedAccreditations) {
+			accredModelList.add(accredModel.getValue());
+		}
+
+		multicountryAccreditationModelSelected = (accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
+		cashOrLiteAccreditationModelSelected = (!accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
+
+		if (multicountryAccreditationModelSelected) {
+			mode = 'Select Mode'; 
+			region = 'Select Region';
+		}
+
+		con = null;
+	}
+
+	public void populateAccountsToDisplay(List<Account> retrievedAccounts) {
+		accountsToCreate = new List<AccountWrapper>();
+		
+		for (Account acct : retrievedAccounts) {
+			AccountWrapper aw = new AccountWrapper(acct, annualRevalidationCaseOscar.get(acct.Id), false);
+			accountsToCreate.add(aw);
+		}
+	}
+
+	public Boolean disableLaunchButton {get; set;}
+
+	public void checkSelectedRecords() {
+		disableLaunchButton = true;
+		
+		for(AccountWrapper aw: accountsToCreate) {
+			if (aw.selected) {
+				disableLaunchButton = false;
+				break;
+			}
+		}
 	}
 }
