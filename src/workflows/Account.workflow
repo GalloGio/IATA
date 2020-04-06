@@ -244,6 +244,16 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Airline_Designator_Backup</fullName>
+        <description>Copy the Airline Designator value to the field Airline Designator Old</description>
+        <field>Old_Airline_designator__c</field>
+        <formula>PRIORVALUE(Airline_designator__c)</formula>
+        <name>Airline Designator Backup</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AutoDDSOptIn</fullName>
         <field>DDS_Status__c</field>
         <literalValue>Opt-In</literalValue>
@@ -661,6 +671,24 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>true</active>
         <description>Sends a notification email when an airline becomes re-activated</description>
         <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Designator Backup</fullName>
+        <actions>
+            <name>Airline_Designator_Backup</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When the filed &#39;Airline Designator&#39; is changed in an Airline this process saves the old value in another field.
+Previously it was done only for ACLI process but now it applies always, including manual changes.</description>
+        <formula>AND(
+  OR(
+    RecordType.DeveloperName==&#39;IATA_Airline&#39;,
+    RecordType.DeveloperName==&#39;IATA_Airline_BR&#39;
+  ),
+  ISCHANGED(Airline_designator__c)
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
