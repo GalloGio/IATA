@@ -225,7 +225,7 @@
 				<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable" >
 					<apex:column>
 						<apex:facet name="header">
-							<apex:inputCheckbox id="allSelected" value="{!selectAll}" onchange="selectAll();"/>
+							<apex:inputCheckbox id="allSelected" onchange="selectAll();"/>
 						</apex:facet>
 						<apex:inputCheckbox value="{!a.selected}" onchange="checkSelectAllOnCurrentPage();"/>
 					</apex:column>

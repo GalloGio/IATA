@@ -170,8 +170,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		private set;
 	}
 
-	public Boolean selectAll {get; set;}
-
 	public Boolean disableLaunchButton {get; set;}
 
 	public ANG_AnualRevalCaseCreationController() {
