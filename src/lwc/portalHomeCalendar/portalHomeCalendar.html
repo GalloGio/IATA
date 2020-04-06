@@ -101,7 +101,7 @@
         
                                 </div>
                             </div>
-                            <div if:true={viewEvents} class="slds-p-horizontal_x-large slds-p-vertical_medium lightGrayBackgorund eventsList" >
+                            <div if:true={viewEvents} class="slds-p-horizontal_x-large slds-p-vertical_medium slds-scrollable_y lightGrayBackgorund eventsList" >
                                 <template for:each={lstEventsForCardFooter} for:item="eventTitle">
                                     <div key={eventTitle.className}>
                                         <span class={eventTitle.className} style="margin-right:8px;"></span>
