@@ -1,11 +1,17 @@
 import { LightningElement, track, api} from 'lwc';
+import { loadStyle } from 'lightning/platformResourceLoader';
 
+/* APEX METHODS */
 import getISOCountries              from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import searchAccounts               from '@salesforce/apex/GCS_RegistrationController.searchAccounts';
+import getCSPortalPath              from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
 
-//custom labels
+/* STATIC RESOURCES */
+import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
+
+/* LABELS*/
 import CSP_L2_Account_Selection_Message from '@salesforce/label/c.CSP_L2_Account_Selection_Message';
 import CSP_L2_Account_Information from '@salesforce/label/c.CSP_L2_Account_Information';
 import CSP_L2_Account_Information_Message from '@salesforce/label/c.CSP_L2_Account_Information_Message';
@@ -13,7 +19,6 @@ import CSP_L2_Sector from '@salesforce/label/c.CSP_L2_Sector';
 import CSP_L2_Category from '@salesforce/label/c.CSP_L2_Category';
 import CSP_L2_IATA_Codes from '@salesforce/label/c.CSP_L2_IATA_Codes';
 import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
-import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
 import CSP_L2_Search from '@salesforce/label/c.CSP_L2_Search';
 import CSP_L2_Search_Results from '@salesforce/label/c.CSP_L2_Search_Results';
 import CSP_L2_Select from '@salesforce/label/c.CSP_L2_Select';
@@ -26,7 +31,7 @@ import CSP_L2_Did_Not_Find from '@salesforce/label/c.CSP_L2_Did_Not_Find';
 import CSP_L2_Did_Not_Find_Message from '@salesforce/label/c.CSP_L2_Did_Not_Find_Message';
 import CSP_L2_Create_Account_Message from '@salesforce/label/c.CSP_L2_Create_Account_Message';
 import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_Results';
 import CSP_L2_Required from '@salesforce/label/c.CSP_L2_Required';
@@ -35,22 +40,50 @@ import CSP_L2_Search_Message from '@salesforce/label/c.CSP_L2_Search_Message';
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
 export default class PortalRegistrationAccountSelection extends LightningElement {
-    /* Images */
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
-    arrowFirst = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first.png';
-    arrowFirstLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
-    arrowPrevious = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev.png';
-    arrowPreviousLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
-    arrowNext = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next.png';
-    arrowNextLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
-    arrowLast = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last.png';
-    arrowLastLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    @track portalPath = CSP_PortalPath;
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
+
+    get arrowFirst(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first.png';
+    }
+
+    get arrowFirstLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
+    }
+
+    get arrowPrevious(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev.png';
+    }
+
+    get arrowPreviousLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
+    }
+
+    get arrowNext(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next.png';
+    }
+
+    get arrowNextLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
+    }
+
+    get arrowLast(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last.png';
+    }
+
+    get arrowLastLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    }
 
     @api customerType;
     @api countryId;
     @api accountId;
     @api isTriggeredByRequest;
     @api searchResults;
+    @api internalUser;
 
     // categorization
     @track customerTypesList;
@@ -145,24 +178,16 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     _labels = {
-        CSP_L2_Account_Selection_Message,
-        CSP_L2_Account_Information,
-        CSP_L2_Account_Information_Message,
         CSP_L2_Sector,
         CSP_L2_Category,
-        CSP_L2_Company_Name,
         CSP_L2_IATA_Codes,
-        CSP_L2_Company_Location,
-        CSP_L2_Back_to_Profile_Details,
         CSP_L2_Search,
         CSP_L2_Search_Results,
-        CSP_L2_Select_Company_Message,
         CSP_L2_Search_Results_Above_Limit,
         CSP_L2_Search_Results_Above_Limit_Link,
         CSP_L2_Select,
         CSP_L2_Create_Account_Message,
         CSP_L2_Create_New_Account,
-        CSP_L2_Next_Confirmation,
         CSP_L2_Did_Not_Find,
         CSP_L2_Did_Not_Find_Message,
         CSP_L2_No_Matching_Results,
@@ -177,6 +202,15 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         this._labels = value;
     }
     
+    // other labels
+    accountSelectionMessage;
+    accountInformation;
+    accountInformationMessage;
+    countryLabel;
+    accountLabel;
+    selectResultMessage;
+    nextButtonLabel;
+    
     performingSearch = false;
     
     renderedCallback(){
@@ -189,12 +223,46 @@ export default class PortalRegistrationAccountSelection extends LightningElement
 
     connectedCallback() {
         this.startLoading();
+
+        loadStyle(this, cspStylesheet)
+        .then(() => {
+            console.log('CSP Stylesheet loaded.');
+        });
+
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });    
+
         //if(this.customerType === 'Student' || this.customerType === 'General_Public_Category'){
         if(this.customerType === ''){
             this.setCustomerType(null);
         }
         else{
             this.setCustomerType(this.customerType);
+        }
+
+        // labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.accountSelectionMessage = 'The account you are trying to create may already exist in Salesforce. Therefore, please search for it first using the form below.';
+            this.accountInformation = 'Account Info';
+            this.accountInformationMessage = 'Fill out the information below to find the account you are searching for.';
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
+            this.accountLabel = 'Account Name';
+            this.selectResultMessage = 'Select your account from the list.';
+            this.nextButtonLabel = 'Go to Selected Account';
+        }
+        else{
+            this.accountSelectionMessage = CSP_L2_Account_Selection_Message;
+            this.accountInformation = CSP_L2_Account_Information;
+            this.accountInformationMessage = CSP_L2_Account_Information_Message;
+            this.countryLabel = CSP_L2_Company_Location;
+            this.accountLabel = CSP_L2_Company_Name;
+            this.selectResultMessage = CSP_L2_Select_Company_Message;
+            this.nextButtonLabel = CSP_L2_Next_Step;
         }
 
         this.fakeCategoryPicklist = [];
@@ -551,12 +619,8 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     /* Navigation methods */
-    previous(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'1'}));
-    }
-
     next(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'5'}));
+        this.dispatchEvent(new CustomEvent('nextselection',{detail : this.selectedAccountId}));
     }
 
     createAccount(){
@@ -575,7 +639,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
                 }
             }
 
-            this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+            this.dispatchEvent(new CustomEvent('nextcreation'));
         }
     }
 

@@ -963,9 +963,9 @@
                     <label>IATA</label>
                 </value>
                 <value>
-                    <fullName>Infrastructure Partner</fullName>
+                    <fullName>Airport</fullName>
                     <default>false</default>
-                    <label>Infrastructure Partner</label>
+                    <label>Airport</label>
                 </value>
                 <value>
                     <fullName>Internal Use</fullName>
@@ -1434,6 +1434,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -1467,10 +1471,6 @@
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1858,6 +1858,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -1891,10 +1895,6 @@
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>

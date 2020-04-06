@@ -2181,7 +2181,7 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Создать новый аккаунт</label>
+        <label>Создать нового пользователя</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2457,6 +2457,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Я прочитал и согласен со следующими условиями:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Здравствуйте!</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2553,11 +2557,11 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Вернуться к деталям профиля</label>
+        <label>Назад к подробной информации</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>Завершение заполнения профиля и выбор учетной записи</label>
+        <label>Выбор счета и подробная информация</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2565,7 +2569,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, заполните информацию о Вашем служебном адресе.</label>
+        <label>Просьба предоставить адрес вашего места работы.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2597,7 +2601,7 @@
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>Географическое расположение компании</label>
+        <label>Страна / территория вашего рабочего места</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2725,6 +2729,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Следующий шаг</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Нет</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2761,7 +2769,7 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Детали профиля</label>
+        <label>Подробная информация</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2773,7 +2781,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Но мы сохранили его в качестве черновика, чтобы вы могли позже продолжить вносить необходимые изменения. Вы уверены, что хотите выйти?</label>
+        <label>Вы уверены, что хотите выйти?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2861,12 +2869,16 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Название</label>
+        <label>приветствие</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
         <label>Торговая марка</label>
         <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Номер НДС</label>
+        <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label>Вебсайт</label>
@@ -3375,6 +3387,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>принять</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Доступ запрошен</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3495,6 +3511,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>В рамках наших регулярных обновлений мы вносим несколько изменений в наши условия. Мы рекомендуем вам ознакомиться с документами в полном объеме.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Спасибо за ваш отзыв!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3537,6 +3557,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Создание пользователя</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Добро пожаловать на клиентский портал ИАТА</label>
@@ -22124,6 +22148,14 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>ИАТА Политикой конфиденциальности</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Условиями использования</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

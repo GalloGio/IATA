@@ -2184,7 +2184,7 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>새 계정 만들기</label>
+        <label>새 사용자 만들기</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2460,6 +2460,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>본인은 다음과 같은 조건에 동의합니다 :</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>안녕하세요!</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2556,11 +2560,11 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>프로필 정보로 돌아가기</label>
+        <label>추가 세부 사항으로 돌아가기</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>프로필 완성 &amp; 계정 선택</label>
+        <label>계정 선택 및 추가 정보</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2568,7 +2572,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>사업장 주소 정보를 작성하십시오.</label>
+        <label>근무지 주소를 알려주시기 바랍니다.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2600,7 +2604,7 @@
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>회사 위치</label>
+        <label>근무지 국가/지역</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2728,6 +2732,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>다음 단계</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>아니요</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2764,7 +2772,7 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>프로필 정보</label>
+        <label>추가 세부 사항</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2776,7 +2784,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>하지만 나중에 계속하실 수 있도록 임시 보관함에 저장했습니다. 종료하시겠습니까?</label>
+        <label>종료 하시겠습니까?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2864,12 +2872,16 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>제목</label>
+        <label>인사말</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
         <label>상표명</label>
         <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>VAT 번호</label>
+        <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label>웹사이트</label>
@@ -3376,6 +3388,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>동의하기</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>요청된 액세스</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3496,6 +3512,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>우리의 정기적 인 업데이트의 일환으로, 우리는 우리의 관점에서 몇 가지 사항을 변경하고 있습니다. 우리는 전체의 문서를 읽어 보시기 바랍니다.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>의견을 보내 주셔서 감사합니다.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3538,6 +3558,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>사용자 생성</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>국제항공운송협회 (IATA) 고객 포털에 오신 것을 환영합니다</label>
@@ -22110,6 +22134,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>개인 정보 보호 정책</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>이용 약관</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

@@ -2184,7 +2184,7 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>新しいアカウントを作成する</label>
+        <label>新規ユーザを作成</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2460,6 +2460,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>以下すべて確認しました　内容につきすべて同意します</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>こんにちは</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2556,11 +2560,11 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>プロフィールの詳細に戻る</label>
+        <label>詳細追加に戻ります</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>プロフィールの完了&amp;アカウントの選択</label>
+        <label>アカウントの選択＆詳細追加</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2568,7 +2572,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>会社の住所を記入してください。</label>
+        <label>貴社の所在地を入力してください</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2600,7 +2604,7 @@
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>会社の所在地</label>
+        <label>貴社の所在する国/地域</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2728,6 +2732,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>次へ</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>いいえ</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2764,7 +2772,7 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>プロフィールの詳細</label>
+        <label>詳細追加</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2776,7 +2784,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>ただし、後で続行できるように、下書きとして保存しました。本当にやめますか？</label>
+        <label>本当に中断しますか？</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2864,12 +2872,16 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>敬称</label>
+        <label>挨拶</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
         <label>企業名</label>
         <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>VAT番号</label>
+        <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label>ウェブサイト</label>
@@ -3377,6 +3389,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>受領</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>アクセスが要求されました</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3497,6 +3513,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>定期的な更新の一環として、当社の規約にいくつかの変更を加えています。この文書を完全にお読みになることをお勧めします。</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>ご意見をお寄せいただきありがとうございました。</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3539,6 +3559,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>ユーザー作成</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>IATAカスタマーポータルへようこそ</label>
@@ -22114,6 +22138,14 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>プライバシーポリシー</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>利用規約</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

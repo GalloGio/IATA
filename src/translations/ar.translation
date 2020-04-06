@@ -2181,7 +2181,7 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>إنشاء حساب جديد</label>
+        <label>إنشاء مستخدم جديد</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2457,6 +2457,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>:لقد قرأت ووافقت على الشروط التالية</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>مرحباً!</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2553,11 +2557,11 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>العودة إلى تفاصيل الملف الشخصي</label>
+        <label>العودة إلى تفاصيل إضافية</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>استكمال الملف الشخصي &amp; اختيار الحساب</label>
+        <label>اختيار الحساب وتفاصيل إضافية</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2565,7 +2569,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>.يرجى ملء بيانات عنوان عملكم</label>
+        <label>يرجى ادخال عنوان  الحالي للمقر الخاص بكم</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2597,7 +2601,7 @@
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>موقع الشركة</label>
+        <label>البلد / الإقليم من موقع عملك</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2725,6 +2729,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>الخطوة التالية</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>لا</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2761,7 +2769,7 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>تفاصيل الملف الشخصي</label>
+        <label>تفاصيل اضافية</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2773,7 +2781,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>لكننا حفظناه كمسودة حتى تتمكن من المتابعة لاحقًا. هل أنت متأكد من أنك تريد الخروج؟</label>
+        <label>هل أنت متأكد من أنك تريد الخروج؟</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2861,12 +2869,16 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>العنوان</label>
+        <label>تحية</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
         <label>الاسم التجاري</label>
         <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>ظريبه الشراء</label>
+        <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label> الموقع الإلكتروني</label>
@@ -3373,6 +3385,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>قبول</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>الوصول مطلوب</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3493,6 +3509,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>.كجزء من التحديثات العادية، ونحن جعل بعض التغييرات على شروطنا. نحن نشجعك على قراءة الوثائق بالكامل</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>نشكركم على ملاحظاتكم.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3535,6 +3555,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء اسم المستخدم</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>مرحبًا بكم في بوابة عملاء إياتا</label>
@@ -22096,6 +22120,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>سياسة الخصوصية</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>شروط الاستخدام</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

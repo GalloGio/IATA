@@ -6,18 +6,19 @@ import getAccountInfo                       from '@salesforce/apex/PortalRegistr
 import createIsoCity                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.createIsoCity';
 import registrationWithNewAccount           from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithNewAccount';
 import registrationWithExistingAccount      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount';
+import createNewAccount                     from '@salesforce/apex/AccountCreationCtrl.createNewAccount';
+import getCSPortalPath                      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-import ISSP_CompanyName      from '@salesforce/label/c.ISSP_CompanyName';
-
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
-import CSP_L2_Personal_Details from '@salesforce/label/c.CSP_L2_Personal_Details';
+import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
 import CSP_L2_Company_Account from '@salesforce/label/c.CSP_L2_Company_Account';
 import CSP_L2_Company_Account_Message from '@salesforce/label/c.CSP_L2_Company_Account_Message';
+import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
 import CSP_L2_Back_to_Business_Address_Information from '@salesforce/label/c.CSP_L2_Back_to_Business_Address_Information';
 import CSP_L2_Submit from '@salesforce/label/c.CSP_L2_Submit';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
@@ -26,7 +27,6 @@ import CSP_L2_Is_PO_Box_Address from '@salesforce/label/c.CSP_L2_Is_PO_Box_Addre
 import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
 
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
-import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
 import CSP_L2_Job_Function from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title from '@salesforce/label/c.CSP_L2_Job_Title';
 import CSP_L2_Back_to_Account_Selection from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
@@ -35,10 +35,7 @@ import CSP_L2_Sector from '@salesforce/label/c.CSP_L2_Sector';
 import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L2_PO_Box_Number from '@salesforce/label/c.CSP_L2_PO_Box_Number';
 import CSP_L2_Country from '@salesforce/label/c.CSP_L2_Country';
-import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Legal_Name from '@salesforce/label/c.CSP_L2_Legal_Name';
-import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
+import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_State from '@salesforce/label/c.CSP_L2_State';
 import CSP_L2_City from '@salesforce/label/c.CSP_L2_City';
@@ -59,9 +56,16 @@ import CSP_L2_Go_Back from '@salesforce/label/c.CSP_L2_Go_Back';
 import CSP_L2_Contact_Support from '@salesforce/label/c.CSP_L2_Contact_Support';
 
 export default class PortalRegistrationConfirmation extends LightningElement {
+    @track portalPath = CSP_PortalPath;
+
     /* Images */
-    successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    get successIcon(){
+        return this.portalPath + 'CSPortal/Images/Icons/youaresafe.png';
+    }
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
 
     @api trigger;
     @api isTriggeredByRequest;
@@ -70,6 +74,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     @api address;
     @api searchResults;
     @api selectedAccountId;
+    @api internalUser;
 
     selectedAccount;
 
@@ -83,18 +88,23 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
     @track selectedAccountSet = false;
 
+    // pop-ups variables
     @track openSuccessModal = false;
+    @track openErrorModal = false;
+    successModalTitle;
     successModalMessage;
     successModalButton1Label;
     successModalButton2Label;
 
-    @track openErrorModal = false;
-
+    // flag to display warning message
     @track isCategorizationModified = false;
+
+    accountId;
 
     // label variables
     _labels = {
         CSP_L2_Back_to_Account_Selection,
+        CSP_L2_Back_to_Profile_Details,
         CSP_L2_Back_to_Business_Address_Information,
         CSP_L2_Back_to_Edit,
         CSP_L2_Business_Address_Information,
@@ -104,18 +114,14 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Company_Information,
         CSP_L2_Confirmation_Message,
         CSP_L2_Country,
-        CSP_L2_Date_of_Birth,
         CSP_L2_Details_Saved,
         CSP_L2_Details_Saved_Message,
-        CSP_L2_Email_Address,
         CSP_L2_Go_To_Homepage,
         CSP_L2_Go_To_Service,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Legal_Name,
-        CSP_L2_Personal_Details,
+        CSP_L2_Profile_Details,
         CSP_L2_Personal_Details_Message,
-        CSP_L2_Phone_Number,
         CSP_L2_Postal_Code,
         CSP_L2_Is_PO_Box_Address,
         CSP_L2_State,
@@ -123,9 +129,8 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_PO_Box_Number,
         CSP_L2_Submit,
         CSP_L2_Title,
-        CSP_L2_Trade_Name,
         CSP_L2_Website,
-        ISSP_CompanyName,
+        CSP_L2_Company_Name,
         CSP_L2_Category,
         CSP_L2_Sector,
         CSP_L2_Change_Categorization_Warning,
@@ -141,29 +146,39 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         this._labels = value;
     }
 
-    connectedCallback(){
+    // labels depending on the origin (internal vs portal)
+    confirmationMessage;
+    companyInformation;
+    companyName;
+    countryLabel;
 
-        if(this.trigger === 'homepage'){
-            this.successModalMessage = CSP_L2_Details_Saved_Message;
-            this.successModalButton1Label = '';
-            this.successModalButton2Label = CSP_L2_Go_To_Homepage;
+    get hasContactInfo(){
+        return this.contactInfo !== undefined;
+    }
+
+    connectedCallback(){
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.confirmationMessage = 'Please check the summary below before submitting.';
+            this.companyInformation = 'Account Information';
+            this.companyName = 'Account Name';
+            this.countryLabel = CSP_L2_Country;
         }
-        else if(this.trigger === 'profile'){
-            this.successModalMessage = CSP_L2_Details_Saved_Message;
-            this.successModalButton1Label = CSP_L2_Go_To_Homepage;
-            this.successModalButton2Label = CSP_L2_Go_To_Profile;
+        else{
+            this.confirmationMessage = CSP_L2_Confirmation_Message;
+            this.companyInformation = CSP_L2_Company_Information;
+            this.companyName = CSP_L2_Company_Name;
+            this.countryLabel = CSP_L2_Country;
         }
-        else if(this.trigger === 'service'){
-            this.successModalMessage = CSP_L2_Details_Saved_Service_Message;
-            this.successModalButton1Label = CSP_L2_Go_To_Homepage;
-            this.successModalButton2Label = CSP_L2_Go_To_Service;
-        }
-        else if(this.trigger === 'topic'){
-            this.successModalMessage = CSP_L2_Details_Saved_Topic_Message;
-            this.successModalButton1Label = CSP_L2_Go_To_Homepage;
-            this.successModalButton2Label = CSP_L2_Go_To_Topic;
-        }
-    
+
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });
+
 
         if(this.selectedAccountId){
             getAccountInfo({accountId : this.selectedAccountId})
@@ -192,10 +207,10 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                         // 3. Country + separator
                         selectedAcc.push({ 'label': CSP_L2_Company_Location, 'value': country, 'addSeparator' : true });
 
-                        // 2. Sector
+                        // 4. Sector
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[1], 'value': this.searchResults.wrappedResults[i].fields[1], 'addSeparator' : false });
 
-                        // 3. Category + separator
+                        // 5. Category + separator
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[2], 'value': this.searchResults.wrappedResults[i].fields[2], 'addSeparator' : true });
 
                         for(let j = 4; j < this.searchResults.fieldLabels.length; j++){
@@ -240,7 +255,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     }
 
     get isExistingAccountSelected(){
-        return this.selectedAccountId !== '';
+        return this.selectedAccountId !== '' && this.selectedAccountId !== undefined;
     }
 
     startLoading(){
@@ -253,7 +268,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
     submit(){
         // The user selected an existing account
-        if(this.selectedAccountId != ''){
+        if(this.selectedAccountId !== '' && this.selectedAccountId !== undefined){
             this.startLoading();
 
             let account = { 'sobjectType': 'Account' };
@@ -261,23 +276,22 @@ export default class PortalRegistrationConfirmation extends LightningElement {
 
             registrationWithExistingAccount({acc : account, con: this.contactInfo})
                 .then(result => {
-                    if(result == true){
-                        this.openSuccessModal = true;
+                let res = JSON.parse(JSON.stringify(result));
+                    if(res === true){
+                        this.configureAndOpenSuccessModal();
                     }
                     else{
-                        this.openErrorModal = true;
+                        this.configureAndOpenErrorModal('Error');
                     }
                     this.stopLoading();
                 })
                 .catch(error => {
-                    console.log('Error: ', JSON.parse(JSON.stringify(error)));
-                    this.openErrorModal = true;
+                    this.configureAndOpenErrorModal(error);
                     this.stopLoading();
                 });
         }
         // If the selectedAccountId is null and the submit method is called, it means that the user is willing to create an account
         else{
-   
             this.startLoading();
 
             // Check first if we need to create a Geoname city
@@ -288,8 +302,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                     this.registerNewAccount();
                 })
                 .catch(error => {
-                    console.log('Error: ', JSON.parse(JSON.stringify(error)));
-                    this.openErrorModal = true;
+                    this.configureAndOpenErrorModal(error);
                     this.stopLoading();
                 });
             }
@@ -304,14 +317,12 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         // otherwise it should contain the account information
 
         let account = { 'sobjectType': 'Account' };
-        account.Name = this.account.legalName;
-        account.Legal_name__c = this.account.legalName;
-        account.TradeName__c = this.account.tradeName;
-        account.Phone = this.account.phone;
-        account.Email__c = this.account.email;
+        account.Name = this.account.name;
+        account.VAT_Number__c = this.account.vatNumber;
         account.Website = this.account.website;
         account.Sector__c = this.account.customerTypeSector;
         account.Category__c = this.account.customerTypeCategory;
+        account.Reason_for_creation__c = 'Created by customer';
 
         // business address
 
@@ -368,21 +379,81 @@ export default class PortalRegistrationConfirmation extends LightningElement {
             account.ShippingState = this.state;
         }
 
-        registrationWithNewAccount({acc: account, con: this.contactInfo})
-            .then(result => {
-                if(result){
-                    this.openSuccessModal = true;
-                }
-                else{
-                    this.openErrorModal = true;
-                }
-                this.stopLoading();
-            })
-            .catch(error => {
-                console.log('Error: ', JSON.parse(JSON.stringify(error)));
-                this.openErrorModal = true;
-                this.stopLoading();
-            });
+        if(this.hasContactInfo){
+	        registrationWithNewAccount({acc: account, con: this.contactInfo})
+	            .then(result => {
+	                if(result){
+	                    this.configureAndOpenSuccessModal();
+	                }
+                	else{
+                    	this.configureAndOpenErrorModal('Error');
+                	}
+                	this.stopLoading();
+            	})
+            	.catch(error => {
+                	this.configureAndOpenErrorModal(error);
+                	this.stopLoading();
+            	});	
+		}
+        else{
+            createNewAccount({ acc: account})
+                .then(result => {
+
+                    let res = JSON.parse(JSON.stringify(result));
+                    if(res.startsWith('accountId')){
+                        this.accountId = res.replace('accountId', '');
+                        this.configureAndOpenSuccessModal();
+                    }
+                    else{
+                        this.configureAndOpenErrorModal(res);
+                    }
+
+                    this.stopLoading();                
+                })
+                .catch(error => {
+                    this.configureAndOpenErrorModal(error);
+                    this.stopLoading();
+                });            
+        }
+    }
+
+    configureAndOpenErrorModal(message){
+        this.errorModalMessage = message;
+        this.openErrorModal = true;    
+    }
+
+    configureAndOpenSuccessModal(){
+        if(this.hasContactInfo){
+            this.successModalTitle = CSP_L2_Details_Saved;
+
+            if (this.trigger === 'homepage') {
+                this.successModalMessage = CSP_L2_Details_Saved_Message;
+                this.successModalButton1Label = '';
+                this.successModalButton2Label = CSP_L2_Go_To_Homepage;
+            }
+            else if (this.trigger === 'profile') {
+                this.successModalMessage = CSP_L2_Details_Saved_Message;
+                this.successModalButton1Label = CSP_L2_Go_To_Homepage;
+                this.successModalButton2Label = CSP_L2_Go_To_Profile;
+            }
+            else if (this.trigger === 'service') {
+                this.successModalMessage = CSP_L2_Details_Saved_Service_Message;
+                this.successModalButton1Label = CSP_L2_Go_To_Homepage;
+                this.successModalButton2Label = CSP_L2_Go_To_Service;
+            }
+            else if (this.trigger === 'topic') {
+                this.successModalMessage = CSP_L2_Details_Saved_Topic_Message;
+                this.successModalButton1Label = CSP_L2_Go_To_Homepage;
+                this.successModalButton2Label = CSP_L2_Go_To_Topic;
+            }
+        }
+        else{
+            this.successModalTitle = undefined;
+            this.successModalMessage = 'Account created succesfully!';
+            this.successModalButton1Label = '';
+            this.successModalButton2Label = 'Go to Account';
+        }
+        this.openSuccessModal = true;
     }
 
     button1Action(){
@@ -390,7 +461,12 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     }
 
     button2Action(){
-        this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
+        if(this.hasContactInfo){
+        	this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
+    	}
+        else{
+            this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo',{detail : this.accountId}));
+        }
     }
 
     closeSuccessModal(){
@@ -410,19 +486,23 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         navigateToPage(page);
     }
 
-    toProfileDetails(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'1'}));
-    }
-
     toAccountSelection(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'accountSelection' }));
     }
 
     toCompanyInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'companyInformation' }));
     }
 
     toAddressInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'addressInformation' }));
+    }
+
+    toDuplicateCheckTool() {
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'duplicateCheckTool' }));
+    }
+
+    toProfileDetails() {
+        this.dispatchEvent(new CustomEvent('gobackfromconfirmation', { detail: 'profileDetails' }));
     }
 }

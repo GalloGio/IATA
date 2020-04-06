@@ -56,6 +56,10 @@
             <translation>Havayolu Tedarikçisi</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Havalimanı</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Ortaklık</translation>
         </picklistValues>

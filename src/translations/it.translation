@@ -2185,7 +2185,7 @@ la seguente procedura per completarlo :
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Crei un nuovo account</label>
+        <label>Creare un nuovo utente</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -2461,6 +2461,10 @@ la seguente procedura per completarlo :
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Ho letto e accetto i seguenti termini:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Salve [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2557,11 +2561,11 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Torni ai dettagli del profilo</label>
+        <label>Torna a Dettagli aggiuntivi</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>Completamento del profilo e selezione account</label>
+        <label>Selezione del conto e dettagli aggiuntivi</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2569,7 +2573,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>La preghiamo di compilare le informazioni relative all&apos;indirizzo della società.</label>
+        <label>Si prega di fornire l&#39;indirizzo della sede di lavoro.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2601,7 +2605,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Company_Information_Message</name>
     </customLabels>
     <customLabels>
-        <label>Località dell&apos;azienda</label>
+        <label>Paese/Territorio della vostra sede di lavoro</label>
         <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
@@ -2729,6 +2733,10 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Prossimo passo</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>No</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2765,7 +2773,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Dettagli del profilo</label>
+        <label>Ulteriori dettagli</label>
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
@@ -2777,7 +2785,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Ma l&apos;abbiamo salvato come bozza in modo che possa continuare in seguito. È sicuro di voler uscire?</label>
+        <label>Sei sicuro di voler smettere?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2865,12 +2873,16 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Titolo</label>
+        <label>Saluto</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
         <label>Nome commerciale</label>
         <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Partita IVA</label>
+        <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label>Sito web</label>
@@ -3378,6 +3390,10 @@ la seguente procedura per completarlo :
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Accettare</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Accesso richiesto</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3498,6 +3514,10 @@ la seguente procedura per completarlo :
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Come parte dei nostri aggiornamenti regolari, stiamo apportando alcune modifiche alle nostre condizioni. Vi invitiamo a leggere i documenti per intero.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Grazie per il feedback.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3540,6 +3560,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Creazione dell&#39;utente</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Benvenuto nel Portale Clienti IATA</label>
@@ -22118,6 +22142,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Informativa sulla privacy</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Termini di utilizzo</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

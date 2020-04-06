@@ -6,27 +6,23 @@ import getContactJobFunctionValues      from '@salesforce/apex/OneId_Registratio
 import ISSP_Registration_MR             from '@salesforce/label/c.ISSP_Registration_MR';
 import ISSP_Registration_MRS            from '@salesforce/label/c.ISSP_Registration_MRS';
 import ISSP_Registration_MS             from '@salesforce/label/c.ISSP_Registration_MS';
+import CSP_L2_Back_to_Account_Selection from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Profile_Details_Message   from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 import CSP_L2_Profile_Details           from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Title                     from '@salesforce/label/c.CSP_L2_Title';
-import CSP_L2_Date_of_Birth             from '@salesforce/label/c.CSP_L2_Date_of_Birth';
 import CSP_L2_Job_Function              from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title                 from '@salesforce/label/c.CSP_L2_Job_Title';
-import CSP_L2_Next_Account_Selection    from '@salesforce/label/c.CSP_L2_Next_Account_Selection';
+import CSP_L2_Next_Step                 from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationProfileDetails extends LightningElement {
     @api contactInfo;
     @track localContactInfo;
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
-    calendarIcon = CSP_PortalPath + 'CSPortal/Images/Icons/calendar.svg';
 
     /* Picklist options */
     @track salutationPicklistOptions;
     @track jobFunctionsPicklistOptions;
-
-    // max birthdate
-    today;
 
     @track isNextDisabled;
 
@@ -35,13 +31,13 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         ISSP_Registration_MR,
         ISSP_Registration_MRS,
         ISSP_Registration_MS,
+        CSP_L2_Back_to_Account_Selection,
         CSP_L2_Profile_Details,
         CSP_L2_Profile_Details_Message,
         CSP_L2_Title,
-        CSP_L2_Date_of_Birth,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Next_Account_Selection
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -53,7 +49,8 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
     checkCompletion(){
         var currentCompletionStatus = this.isNextDisabled;
         
-        this.isNextDisabled = (this.localContactInfo.Membership_Function__c === '' || this.localContactInfo.Membership_Function__c === null || this.localContactInfo.Membership_Function__c === undefined) 
+        this.isNextDisabled = (this.localContactInfo.Salutation === '' || this.localContactInfo.Salutation === null || this.localContactInfo.Salutation === undefined)
+                                || (this.localContactInfo.Membership_Function__c === '' || this.localContactInfo.Membership_Function__c === null || this.localContactInfo.Membership_Function__c === undefined) 
                                 || (this.localContactInfo.Title === '' || this.localContactInfo.Title === null || this.localContactInfo.Title === undefined);
 
         if(this.isNextDisabled !== currentCompletionStatus){
@@ -63,6 +60,8 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
 
 
     connectedCallback() {
+        this.startLoading();
+
         if (!String.prototype.padStart) {
             String.prototype.padStart = function padStart(targetLength,padString) {
                 targetLength = targetLength>>0; //truncate if number or convert non-number to 0;
@@ -89,14 +88,6 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         salutationList.push({ label: this.labels.ISSP_Registration_MS, value: 'Ms.' });
         this.salutationPicklistOptions = salutationList;
 
-        // define max birthdate as today
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        
-        this.today = yyyy + '-' + mm + '-' + dd;
-        
         // Retrieve Job Functions list
         getContactJobFunctionValues()
             .then(result => {
@@ -121,9 +112,11 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
                 }
 
                 this.checkCompletion();
+                this.stopLoading();
             })
             .catch((error) => {
                 console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.stopLoading();
             });
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }
@@ -131,11 +124,6 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
     // Events handling
     changeSalutation(event){
         this.localContactInfo.Salutation = event.target.value;
-        this.checkCompletion();
-    }
-
-    changeDateOfBirth(event){
-        this.localContactInfo.Birthdate = event.target.value;
         this.checkCompletion();
     }
 
@@ -149,8 +137,12 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         this.checkCompletion();
     }
 
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
+    }
+
     next(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     startLoading(){
