@@ -5,8 +5,6 @@ global without sharing class SAP2SF_BillOfMaterial{
 	****************************************************************************************************/
 	webService static void insertBOM(String BillOfMaterial, List<String> RelatedProducts){
 		List<Product_Component__c> productComponentToInsert = new List<Product_Component__c>();
-		System.debug('SAP2SF_BillOfMaterial.insertBOM - BillOfMaterial: ' + BillOfMaterial);
-		System.debug('SAP2SF_BillOfMaterial.insertBOM - RelatedProducts: ' + RelatedProducts);
 		try{
 			Set<String> sSAPMaterialNumber = new Set<String>();
 			Map<String,String> mSFID_vs_SAPMaterialNumber = new Map<String,String>();
