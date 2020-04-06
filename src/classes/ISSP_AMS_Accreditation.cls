@@ -6436,6 +6436,19 @@ public without sharing class ISSP_AMS_Accreditation {
 								WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id
 									AND CASS_contact__c = true];
 
+
+		if(isCNSAgency && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
+			Boolean haveOneFinancialAssessmentContact = false;
+			for(AMS_Accreditation_Contact__c aac: List_AgencyContacts){
+				if(aac.Financial_Assessment_Contact__c){
+					haveOneFinancialAssessmentContact = true;
+				}
+			}
+			if(!haveOneFinancialAssessmentContact){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Required_Financial_Assessment_Contact));
+			}
+		}							
+
 		if (isNoticeOfChange && !isBankAccountChange) {
 			if (newform.Is_change_legal_name__c && newForm.Notify_Change_Legal_Details__c) {
 				if(newForm.Account_Name__c == null) {

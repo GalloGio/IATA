@@ -1451,7 +1451,7 @@
                      <apex:pageBlockSectionItem >
                          <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>
 
-                            <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
+                            <apex:commandLink action="{!redirectToPDF}" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Download_PDF_Copy_CNS, $Label.ISSP_AMS_Download_PDF_Copy)}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
                      </apex:pageBlockSectionItem>
                  </apex:pageBlockSection>
 

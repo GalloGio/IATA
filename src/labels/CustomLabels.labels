@@ -19293,6 +19293,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Download Accreditation Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Download_PDF_Copy_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Download_PDF_Copy_CNS</shortDescription>
+        <value>Download Endorsement Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Download_PDF_NOC</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22751,6 +22759,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Rejected_File</shortDescription>
         <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with an &lt;span style=&quot;color:red;font-weight:bold;font-size:110%&quot;&gt;X&lt;/span&gt;). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Required_Financial_Assessment_Contact</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Required Financial Assessment Contact</shortDescription>
+        <value>You need to select one Financial Assessment contact!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Roles_and_Responsibilities</fullName>
