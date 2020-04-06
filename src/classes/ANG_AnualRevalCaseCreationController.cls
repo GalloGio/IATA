@@ -172,6 +172,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public Boolean selectAll {get; set;}
 
+	public Boolean disableLaunchButton {get; set;}
+
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
 		account = new Account();
@@ -459,8 +461,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			accountsToCreate.add(aw);
 		}
 	}
-
-	public Boolean disableLaunchButton {get; set;}
 
 	public void checkSelectedRecords() {
 		disableLaunchButton = true;
