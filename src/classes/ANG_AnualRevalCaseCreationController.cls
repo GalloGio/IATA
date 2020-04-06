@@ -122,10 +122,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public Integer getBatchStatus{get;set;}
 
 	public ApexPages.StandardSetController con{get; set;}
-
-	public String accredModel {
-		get; set;
-	}
 	
 	public List<SelectOption> accredModelOptions {
 		get {
