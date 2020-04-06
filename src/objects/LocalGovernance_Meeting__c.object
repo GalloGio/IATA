@@ -495,10 +495,16 @@ NOT($Permission.Modify_Local_Group_Owners)
         <fullName>Date_Legal_Signed_off_Agenda</fullName>
         <active>true</active>
         <description>The date that legal signed off the agenda can&apos;t be before date legal requested to sign off the agenda</description>
-        <errorConditionFormula>AND(
- NOT(ISBLANK(Date_Legal_Requested_to_Sign_off_Agenda__c)),
- NOT(ISBLANK(Date_Legal_Signed_off_Agenda__c)),
- Date_Legal_Requested_to_Sign_off_Agenda__c &gt;Date_Legal_Signed_off_Agenda__c
+        <errorConditionFormula>OR(
+  AND(
+    NOT(ISBLANK(Date_Legal_Requested_to_Sign_off_Agenda__c)),
+    NOT(ISBLANK(Date_Legal_Signed_off_Agenda__c)),
+    Date_Legal_Requested_to_Sign_off_Agenda__c&gt;Date_Legal_Signed_off_Agenda__c
+  ),
+  AND(
+    ISBLANK(Date_Legal_Requested_to_Sign_off_Agenda__c),
+    NOT(ISBLANK(Date_Legal_Signed_off_Agenda__c))
+  )
 )</errorConditionFormula>
         <errorMessage>The date when Legal Signed off the Agenda can&apos;t be before Legal Requested to Sign Off the agenda</errorMessage>
     </validationRules>
@@ -506,10 +512,16 @@ NOT($Permission.Modify_Local_Group_Owners)
         <fullName>Date_Legal_Signed_off_minutes</fullName>
         <active>true</active>
         <description>The date that legal signed off the minutes can&apos;t be before legal requested the sign to sign off the minutes</description>
-        <errorConditionFormula>AND(
-NOT(ISBLANK(Date_Legal_Requested_to_Sign_Off_Minutes__c )),
-NOT(ISBLANK(Date_Legal_Signed_Off_the_Minutes__c )),
-Date_Legal_Requested_to_Sign_Off_Minutes__c &gt;Date_Legal_Signed_Off_the_Minutes__c 
+        <errorConditionFormula>OR(
+  AND(
+    NOT(ISBLANK(Date_Legal_Requested_to_Sign_Off_Minutes__c )),
+    NOT(ISBLANK(Date_Legal_Signed_Off_the_Minutes__c )),
+    Date_Legal_Requested_to_Sign_Off_Minutes__c&gt;Date_Legal_Signed_Off_the_Minutes__c 
+  ),
+  AND(
+    ISBLANK(Date_Legal_Requested_to_Sign_Off_Minutes__c ),
+    NOT(ISBLANK(Date_Legal_Signed_Off_the_Minutes__c ))
+  )
 )</errorConditionFormula>
         <errorMessage>The date when Legal Signed off the Minutes can&apos;t be before Legal Requested to Sign Off the Minutes</errorMessage>
     </validationRules>
