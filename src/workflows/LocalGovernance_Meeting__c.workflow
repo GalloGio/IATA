@@ -653,6 +653,6 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         </actions>
         <active>true</active>
         <formula>NOT(CONTAINS( Name , Local_Governance__r.Name ))</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
