@@ -207,7 +207,6 @@ global  class AcliAccount  {
 
 		if (nvl(account.Airline_designator__c) != nvl(this.TwoCaracterCode)) {
 			isUpdated = true;
-			account.Old_Airline_designator__c = account.Airline_designator__c;
 			account.Airline_designator__c=this.TwoCaracterCode;
 		}
 
