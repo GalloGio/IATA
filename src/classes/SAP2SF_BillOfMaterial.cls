@@ -5,6 +5,7 @@ global without sharing class SAP2SF_BillOfMaterial{
 	****************************************************************************************************/
 	webService static void insertBOM(String BillOfMaterial, List<String> RelatedProducts){
 		List<Product_Component__c> productComponentToInsert = new List<Product_Component__c>();
+		
 		try{
 			Set<String> sSAPMaterialNumber = new Set<String>();
 			Map<String,String> mSFID_vs_SAPMaterialNumber = new Map<String,String>();
@@ -17,17 +18,28 @@ global without sharing class SAP2SF_BillOfMaterial{
 
 			//Get the product Id based on the SAP_Material_Number sent on the parameters
 			List<Product2> prodInfo = [SELECT Id, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c in :sSAPMaterialNumber];
-
+			
 			//Map all results for easy association between SAP_Material_Number and SFDC Id
 			for(Product2 prod : prodInfo){
 				mSFID_vs_SAPMaterialNumber.put(prod.SAP_Material_Number__c, prod.Id);
 			}
-
+		
 			//Get the main Product SFDC ID
 			String mainProdId = mSFID_vs_SAPMaterialNumber.get(BillOfMaterial);
+			//Checks if the SFDC id are not null, if soo a exception is raised
+			if(mainProdId == null){
+				throw new DmlException('Product not existing in SF - ' + BillOfMaterial);
+			}
+
 			
 			//Prepare Product Component Records for insertion
 			for(String pc : RelatedProducts){
+
+				//Checks if the SFDC id are not null, if soo a exception is raised
+				if(mSFID_vs_SAPMaterialNumber.get(pc) == null){
+					throw new DmlException('Product not existing in SF - ' + pc);
+				}
+				
 				Product_Component__c pcToInsert = new Product_Component__c();
 				pcToInsert.Product__c = mainProdId;
 				pcToInsert.Related_Product__c =  mSFID_vs_SAPMaterialNumber.get(pc);
