@@ -1,4 +1,4 @@
-<aura:component controller="LookupSObjectController" >
+<aura:component controller="LookupSObjectController" access="public">
     <!-- Required Scripts/Styles -->
     <!-- Salesforce Lightning Design System : https://www.lightningdesignsystem.com/ -->
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />

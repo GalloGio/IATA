@@ -6,7 +6,7 @@ private class SFDC_ProductCatalog_Test
 	static void test_GET()
 	{
 		//-- Generate Products with Prices
-		List<Product2> products = TestDataGenerator.generateProductsWithPrice(10);
+		List<Product2> products = TestDataGenerator.generateProductsWithPrice(5);
 
 		//-- Update Product Properties
 		Integer x =0;

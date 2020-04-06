@@ -502,12 +502,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
-		String userName = UserInfo.getUserName();
-		User activeUser = [Select Email From User where Username = : userName limit 1];
-		String userEmail = activeUser.Email;
-
 		//below code will send an email to User about the status
-		mail.setToAddresses( new String[] {userEmail} );
+		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSenderDisplayName('Apex Newgen - Rollback process');
 		mail.setSubject('Apex Newgen - Rollback process');
 
@@ -523,6 +519,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 		}
 
 		mail.setPlainTextBody(toReturnBody);
+		mail.setSaveAsActivity(false);
 
 		 if(Test.isRunningTest()){
 			return;

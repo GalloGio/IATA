@@ -410,6 +410,12 @@ public class IfapProcessTest {
 
 		insert country;
 
+		SalesforceSupportEmails__c sEmail = new SalesforceSupportEmails__c(
+			Name = 'test', 
+			Support_Email__c = 'test@test.com', 
+			Support_User_Id__c = UserInfo.getUserId());
+		insert sEmail;
+
 		// prepare json String
 		list<String> listJson = new list<String>();
 
@@ -440,7 +446,6 @@ public class IfapProcessTest {
 		response.responses[0].xml = null;
 		IfapProcessResultsBatch emptyXMLBatch = new IfapProcessResultsBatch(response);
 		Database.executeBatch(emptyXMLBatch);
-
 		Test.stopTest();
 
 		//Method call just to increase coverage

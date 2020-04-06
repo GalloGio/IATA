@@ -1,4 +1,4 @@
-<aura:component controller="AWW_CoreRelationshipCtrl">
+<aura:component controller="AWW_CoreRelationshipCtrl" access="public">
     <aura:attribute name="record" type="Object"/>
     <aura:attribute name="errorMessage" type="String"/>
     <aura:attribute name="selectedTab" type="String" default="iata"/>

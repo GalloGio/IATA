@@ -1,4 +1,4 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
+<aura:component access="public" implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
 
     <aura:attribute type="String" name="serviceName" />
 

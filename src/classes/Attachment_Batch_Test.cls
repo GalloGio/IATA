@@ -27,6 +27,20 @@ private class Attachment_Batch_Test {
 		System.assertEquals(attachments.size(),10);
 
 	}
+	@isTest static void test_Attachment_case() {
 
+		//Create Case
+		Case case1 = new Case(Status = 'Open');
+        insert case1;
+        
+        //Close the case
+		case1.Status = 'Closed';
+        update case1;
+        
+		Test.startTest();
+        //Create Attachment to reopening the case
+		Attachment attachment = TestDataGenerator.createAttachment(case1.Id, 'attachmentCase', 'test content');
+		Test.stopTest();
+	}
 
 }
