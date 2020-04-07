@@ -13,7 +13,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 				);
 		}
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-		insert new User(FirstName = 'Test1 User', Division = 'UnitTest', License_Cost_Center__c = 'AAA000AA00', Username = 'test1@iata.org.amsdev1', LastName = 'Test1', Email = 'test1@iata.org', Alias = 'Test1', CommunityNickname = 'Test1', TimeZoneSidKey = 'Europe/Brussels', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US');
+		insert new User(FirstName = 'Test1 User', Division = 'UnitTest', License_Cost_Center__c = 'AAA000AA00', Username = 'test1@teste.org.amsdev1', LastName = 'Test1', Email = 'test1@teste.org', Alias = 'Test1', CommunityNickname = 'Test1', TimeZoneSidKey = 'Europe/Brussels', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US');
 
 		insert new Notification_template__c (
 			Subject__c = 'Some subject',
@@ -834,7 +834,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		//NEWGEN-2005
 		insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
 		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
-		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@iata.org', Active__c = true);
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@teste.org', Active__c = true);
 
 
 		test.StartTest();
@@ -848,5 +848,113 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		test.StopTest();
 	}
-
+	
+	private static testmethod void testAlertCreationToSeniors() {
+		// no configuration for the account country found, so it will use the default one
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
+		insert iss;
+		
+		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', AMS_Settlement_System__c = iss.id,
+			ANG_Enable_NewGen__c = true, Region__c = 'Europe');
+		
+		insert country2;
+		
+		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = [SELECT id
+																											 FROM IATA_ISO_Country__c
+																											 WHERE iso_code__C = 'WW'].id,
+			ANG_Create_Sidra_Lite__c = true, ANG_Remove_Ticketing_Authority__c = false, ANG_Send_Email_Agent__c = false, ANG_RTS_Severity__c = 'Orange',
+			recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'RTS_Risk_Alert_Notification'));
+		
+		insert csa;
+		
+		Account a = new Account(name = 'acc1', Location_Type__c = 'HE', Location_Class__c = 'P', IATAcode__c = '0000', Remittance_frequency__c = 'M',
+			ANG_Accreditation_Model__c = 'Cash', IATA_ISO_Country__c = country2.id, IATA_ISO_Country__r = country2, RecordTypeId = RecordTypeSingleton
+				.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
+		insert a;
+		
+		operational_Calendar__c op = new operational_Calendar__c(ISS_Operation__c = iss.id, First_Day__c = Date.today(), Last_Day__c = Date
+			.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today());
+		
+		insert op;
+		
+		Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
+		insert con;
+		
+		insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.200321123@yopmail.com');
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true, Region__c = 'Americas');
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test4', Email__c = 'test1@teste.org', Active__c = true, Region__c = 'Europe');
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1321321@iata.org', Active__c = true, Region__c = 'ALL');
+		
+		test.StartTest();
+		ANG_Risk_Alert__c oa = new ANG_Risk_Alert__c(Recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c',
+			'Risk_Alert_RTS'), ang_Severity__c = 'Orange', ANG_Account__c = a.Id);
+		insert oa;
+		
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(Recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c',
+			'Risk_Alert_RTS'), ang_Severity__c = 'Red', ANG_Account__c = a.Id);
+		insert ra;
+		
+		test.StopTest();
+		List<Account> accountRisk = [SELECT Id, Name, Guaranteed_amount__c, IATA_ISO_Country__r.Name, Short_Name__c, IATACode__c,
+										 ANG_IsNewGenAgency__c, Region_formula__c, BillingCountry, IATA_ISO_Country__c, ANG_Accreditation_Model__c,
+										 Multicountry_Key_Hierarchy__c
+									 FROM Account
+									 WHERE Id = :a.Id];
+		
+		Id userIdforEmail = [SELECT id
+							 FROM User
+							 WHERE Email = 'test1@teste.org'].Id;
+		
+		ANG_RHCAlertTriggerHandler handler = new ANG_RHCAlertTriggerHandler();
+		handler.raAccMap = new map<id, account>();
+		handler.raAccMap.put(oa.Id, accountRisk[0]);
+		
+		List<ANG_Risk_Alert__c> orangeRiskAlerts = new List<ANG_Risk_Alert__c>();
+		orangeRiskAlerts.add(oa);
+		List<String> ListAdressOrange = new List<String>();
+		List<String> emailSubjectOrange = new List<String>();
+		List<Id> userIdsOrange = new List<Id>();
+		assertDataCreation(handler.createNotificationToSeniors(orangeRiskAlerts, 'RTS_Notification_Manager_orange', false),
+			ListAdressOrange, emailSubjectOrange, userIdsOrange);
+		
+		System.assert(ListAdressOrange.contains('test1321321@iata.org'), 'Non user email error');
+		System.assertEquals(1, ListAdressOrange.size(), 'Non user email error');
+		
+		System.assert(userIdsOrange.contains(userIdforEmail), 'User email error');
+		System.assert((emailSubjectOrange.contains('RTSM – ORANGE Alert (Portugal, acc1, 0000)')), 'Wrong subject format');
+		
+		insert new RTS_Senior_Manager__c(Name = 'RedAlertnonuser', Email__c = 'test.nonuser@yopmail.com');
+		insert new RTS_Senior_Manager__c(Name = 'RedAlertuser', Email__c = 'test1@teste.org');
+		
+		handler = new ANG_RHCAlertTriggerHandler();
+		handler.raAccMap = new map<id, account>();
+		handler.raAccMap.put(ra.Id, accountRisk[0]);
+		
+		List<ANG_Risk_Alert__c> redRiskAlerts = new List<ANG_Risk_Alert__c>();
+		redRiskAlerts.add(ra);
+		List<String> ListAdressRed = new List<String>();
+		List<String> emailSubjectRed = new List<String>();
+		List<Id> userIdsRed = new List<Id>();
+		assertDataCreation(handler.createNotificationToSeniors(redRiskAlerts, 'RTS_Notification_Manager_orange', true), ListAdressRed,
+			emailSubjectRed, userIdsRed);
+		
+		System.assert(ListAdressRed.contains('test.200321123@yopmail.com'), 'Non user email error');
+		System.assert(ListAdressRed.contains('test.nonuser@yopmail.com'), 'Non user email error');
+		System.assertEquals(2, ListAdressRed.size(), 'Non user email error');
+		
+		System.assert(userIdsRed.contains(userIdforEmail), 'User email error');
+		System.assert((emailSubjectRed.contains('RTSM – RED Alert (Portugal, acc1, 0000)')), 'Wrong subject format');
+	}
+	
+	private static void assertDataCreation(List<Messaging.SingleEmailMessage> singleEmailList, List<String> addressList, List<String> subjectList,
+		List<Id> userids) {
+		for (Messaging.SingleEmailMessage i : singleEmailList) {
+			subjectList.add(i.getSubject());
+			if (i.getToAddresses() != null) {
+				addressList.addAll(i.getToAddresses());
+			} else {
+				userids.add(i.getTargetObjectId());
+			}
+		}
+	}
 }
