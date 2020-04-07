@@ -806,10 +806,8 @@ public class AmazonFileTrgHelper {
 												Where DeveloperName = :ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports];
 
 
-				for(Id key : contactFileMap.keySet()) {
+				for(Id key : contactUserMap.keySet()) {
 					List<AmazonFile__c> files = contactFileMap.get(key);
-
-					Id userId = contactUserMap.get(key);
 
 					// process the merge fields
 					String subject = emailTemplate.Subject;
@@ -838,10 +836,7 @@ public class AmazonFileTrgHelper {
 						//build the email message
 					Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
 
-					if(userId != null)
-						email.setTargetObjectId(userId);
-					else
-						email.setTargetObjectId(key);
+					email.setTargetObjectId(key);
 
 					if ( owea.size() > 0 ) {
 						email.setOrgWideEmailAddressId(owea[0].Id);
