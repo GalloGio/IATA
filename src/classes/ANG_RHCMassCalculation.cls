@@ -82,7 +82,7 @@ public class ANG_RHCMassCalculation {
 			countries = new List<SelectOption>();
 			countries.add(new SelectOption(NONE, 'Select country'));
 			if (userRegion != null) {
-				for (IATA_ISO_Country__c c : [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE region__c = :userRegion])
+				for (IATA_ISO_Country__c c : [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE region__c = :userRegion ORDER BY Name ASC])
 					countries.add(new SelectOption(c.Id, c.Name));
 			}
 			return countries;
