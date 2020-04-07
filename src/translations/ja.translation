@@ -2185,7 +2185,7 @@
     </customLabels>
     <customLabels>
         <label>新規ユーザを作成</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>パスワードの作成</label>
@@ -2532,6 +2532,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>詳細追加</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>住所が見つかりませんでした。 次のステップボタンをクリックして、住所が正しいことを確認してください。</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2548,6 +2552,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>詳細追加に戻ります</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>会社の住所に戻ります</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2558,10 +2566,6 @@
     <customLabels>
         <label>編集に戻る</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>詳細追加に戻ります</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>アカウントの選択＆詳細追加</label>
@@ -2602,10 +2606,6 @@
     <customLabels>
         <label>企業アカウントを登録すると、カスタマイズされたIATAサービスにアクセスできます。 2つのステップで簡単に会社のアカウントを作成できます。</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>貴社の所在する国/地域</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>会社名</label>
@@ -2772,10 +2772,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>詳細追加</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>個人情報を追加して、IATAがパーソナライズされたコンテンツとサービスを提案できるようにしましょう。</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2886,6 +2882,10 @@
     <customLabels>
         <label>ウェブサイト</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>貴社の所在する国/地域</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>はい</label>

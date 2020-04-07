@@ -28,10 +28,10 @@
                             <img src={additionalDetailsLogo} class={additionalDetailsLogoCssClass}>
                         </div>
                         <template if:true={isAdditionalDetailsReachable}>
-                            <div class={additionalDetailsTitleCssClass} onclick={goToProfileDetails}><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            <div class={additionalDetailsTitleCssClass} onclick={goToProfileDetails}><span>{labels.CSP_L2_Additional_Details}</span></div>
                         </template>
                         <template if:false={isAdditionalDetailsReachable}>
-                            <div class={additionalDetailsTitleCssClass}><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            <div class={additionalDetailsTitleCssClass}><span>{labels.CSP_L2_Additional_Details}</span></div>
                         </template>
                     </div>
                     <div class="progressItem">

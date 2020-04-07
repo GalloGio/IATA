@@ -2182,7 +2182,7 @@
     </customLabels>
     <customLabels>
         <label>Yeni kullanıcı oluştur</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Şifre oluşturun</label>
@@ -2529,6 +2529,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Ek Detaylar</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Adresinizi bulamadık. Adresinizin doğru olduğunu onaylamak için lütfen Sonraki Adım düğmesini tıklayın.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2545,6 +2549,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Ek Detaylara Dön</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>İş Adres Bilgisi&apos;ne Geri Dönün</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2555,10 +2563,6 @@
     <customLabels>
         <label>Düzenlemeye geri dönün</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Ek Detaylara Dön</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Hesap Seçme ve Ek Detaylar</label>
@@ -2599,10 +2603,6 @@
     <customLabels>
         <label>Şirket hesabınızı kaydetmek, özelleştirilmiş IATA servislerine erişiminizi sağlayacaktır. Şirket hesabınızı iki adımda kolayca oluşturabilirsiniz.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>İş yerinizin Bölgesi/Ülkesi</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Şirket Adı</label>
@@ -2769,10 +2769,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Ek Detaylar</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2883,6 +2879,10 @@
     <customLabels>
         <label>Web Sitesi</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>İş yerinizin Bölgesi/Ülkesi</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Evet</label>

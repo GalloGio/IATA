@@ -1,51 +1,36 @@
-public without sharing class PortalServiceTermAndConditionHandler
-{
-
-	/****************************************************************************************************
-			Call trigger method corresponding to trigger event
-	****************************************************************************************************/
-	public static void triggerHandler() {
-		if (trigger.isBefore){
-			if (trigger.isInsert){
-				onBeforeInsert();
-			}
-			else if (trigger.isUpdate){
-				onBeforeUpdate();
-			}
-		}
-		if (trigger.isAfter){
-			if (trigger.isInsert){
-				onAfterInsert();
-			}
-			else if (trigger.isUpdate){
-				onAfterUpdate();
-			}
-		}
-	}
-
-	private static void onBeforeInsert() {
+public without sharing class PortalServiceTermAndConditionHandler{
+	public static void onBeforeInsert() {
 		setInitialVersion();
 	}
 
-	private static void onBeforeUpdate(){
+	public static void onBeforeUpdate(){
 		setInitialVersion();
 	}
 
-	private static void onAfterInsert() {
+	public static void onAfterInsert() {
 		updateRelatedTermsAndConditions();
 	}
 
-	private static void onAfterUpdate(){
+	public static void onAfterUpdate(){
 		updateRelatedTermsAndConditions();
 	}
 
 	private static void setInitialVersion(){
+
+		List<Id> previousVersionIds = new List<Id>();
+		for(Term_And_Condition__c tc : (List<Term_And_Condition__c>) trigger.new){
+			if(tc.Previous_Version__c != null){
+				previousVersionIds.add(tc.Previous_Version__c);
+			}
+		}
+		Map<Id, Term_And_Condition__c> previousVersions = new Map<Id, Term_And_Condition__c>([SELECT Id, Initial_Version__c FROM Term_And_Condition__c WHERE Id IN : previousVersionIds]);
+
 		for(Term_And_Condition__c tc : (List<Term_And_Condition__c>) trigger.new){
 			if(tc.Previous_Version__c == null){
 				tc.Initial_Version__c = null;
 			}
 			else{
-				Term_And_Condition__c previousVersion = [SELECT Initial_Version__c FROM Term_And_Condition__c WHERE Id =: tc.Previous_Version__c];
+				Term_And_Condition__c previousVersion = previousVersions.get(tc.Previous_Version__c);
 				if(previousVersion.Initial_Version__c == null){
 					tc.Initial_Version__c = tc.Previous_Version__c;
 				}

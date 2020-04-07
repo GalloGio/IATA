@@ -2186,7 +2186,7 @@
     </customLabels>
     <customLabels>
         <label>Neuen Benutzer anlegen</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Passwort erstellen</label>
@@ -2533,6 +2533,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Weitere Einzelheiten</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Wir konnten Ihre Adresse nicht finden. Klicken Sie auf die Schaltfläche Nächster Schritt, um zu bestätigen, dass Ihre Adresse korrekt ist.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2549,6 +2553,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Zurück zu weiteren Details</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Zurück zur „Geschäftsadresse“</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2559,10 +2567,6 @@
     <customLabels>
         <label>Gehen Sie zurück zum Bearbeiten</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Zurück zu weiteren Details</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Kontenauswahl &amp; zusätzliche Details</label>
@@ -2603,10 +2607,6 @@
     <customLabels>
         <label>Wenn Sie Ihr Unternehmenskonto registrieren, erhalten Sie Zugriff auf maßgeschneiderte Dienstleistungen von International Air Transport Association (IATA). Sie können Ihr Unternehmenskonto ganz einfach in zwei Schritten erstellen.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Land/Gebiet Ihres Arbeitsortes</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Name des Unternehmens</label>
@@ -2773,10 +2773,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Weitere Einzelheiten</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Fügen Sie Ihre persönlichen Daten hinzu, um Vorschläge über personalisierte Inhalte und Dienste von International Air Transport Association (IATA) zu erhalten.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2887,6 +2883,10 @@
     <customLabels>
         <label>Webseite</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Land/Gebiet Ihres Arbeitsortes</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Ja</label>
