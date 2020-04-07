@@ -105,6 +105,7 @@
 		<apex:actionFunction name="checkAccreditationModelSelected" action="{!validateAccreditationModel}" reRender="cashOptions, informations, parameter1, parameter2, parameter3, parameter4, buttons"/>
 		<apex:actionFunction name="reRenderSearchButton" reRender="parameter4"/>
 		<apex:actionFunction name="reRenderLaunchCampaignButton" action="{!checkSelectedRecords}" reRender="actionButton2"/>
+		<apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" status="blockEditing" reRender="buttons" oncomplete="uncheckSelectAll();"/>
 
 		<apex:pageBlock mode="edit" id="pageBlock">
 
@@ -190,7 +191,7 @@
 
 				<apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' && !(region == 'Select Region')}">
 					<apex:outputLabel >IATA Code</apex:outputLabel>
-					<apex:inputText id="iataCode" label="IATA Code" value="{!account.IATACode__c}" styleClass="inputWidth">
+					<apex:inputText id="iataCode" label="IATA Code" value="{!iataCode}" styleClass="inputWidth">
 						<apex:actionSupport event="onkeyup" reRender="parameter4,parameter5,Overview,buttons"/>
 						<script>
 							setPasteListeners();
@@ -252,7 +253,7 @@
 				</div>
 				Display records per page 
 
-				<apex:selectList value="{!size}" multiselect="false" size="1">
+				<apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
 					<apex:selectOptions value="{!paginationSizeOptions}"/>
 				</apex:selectList>
 

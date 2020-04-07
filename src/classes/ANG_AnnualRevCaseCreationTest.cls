@@ -35,7 +35,8 @@ private class ANG_AnnualRevCaseCreationTest {
 			ANG_HE_RiskStatus__c = 'Not Applicable',
 			RecordTypeId = accountAgencyRT,
 			Status__c = 'Approved',
-			Accreditation_date__c = system.today().addMonths(-9));
+			Accreditation_date__c = system.today().addMonths(-9),
+			Financial_Year_End__c = 'December');
 
 		insert account;
 
@@ -61,6 +62,158 @@ private class ANG_AnnualRevCaseCreationTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
 
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+
+		ac1.Accreditation_date__c = System.today().addMonths(-9);
+		ac1.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		ac1.RecordTypeId = accountAgencyRT;
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			ac1, ac2
+		});
+
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000002');
+		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 2 HE GB', ac3.Id, ac3.Id, AMS_Utils.HE, gb, '10000003');
+
+		ac3.Accreditation_date__c = System.today().addMonths(-9);
+		ac3.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		ac3.RecordTypeId = accountAgencyRT;
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			ac3, ac4
+		});
+
+		update new List<Account>{
+			ac1, 
+			ac3
+		};
+
+		Contact co2 = new Contact(AccountId = ac1.Id, 
+			Lastname='John2',
+			Email = 'secondj@test.com', 
+			Financial_Assessment_Contact__c = true);
+		
+		insert co2;
+
+		Database.executeBatch(new ANG_AnualRevalCaseCreationBatch(new Set<Id>{ac1.Id}), 1);
+
+		Test.stopTest();
+	}
+
+	@isTest 
+	static void createOscarFromBatchTest() {
+		List<Account> retrievedAccount = [SELECT Id FROM Account LIMIT 1];
+		
+		Test.startTest();
+
+		Database.executeBatch(new ANG_AnualRevalCaseCreationBatch(new Set<Id>{retrievedAccount[0].Id}), 1);
+
+		Test.stopTest();
+
+		List<Account> updatedAccount = [SELECT Id,
+											(SELECT Id FROM Cases)
+										FROM Account
+										LIMIT 1];
+
+		System.assertEquals(1, updatedAccount[0].Cases.size(), 'Should have created a case');
+	}
+
+	@isTest 
+	static void createAnualRevalCaseCreationController() {
+		IATA_ISO_Country__c country = [SELECT Id, Name, Region__c FROM IATA_ISO_Country__c LIMIT 1];
+		
+		Test.startTest();
+		ANG_AnualRevalCaseCreationController ctrl = new ANG_AnualRevalCaseCreationController();
+
+		System.assertEquals(ctrl.nonSelectedAccreditations.size(), ctrl.accredModelOptions.size(), 'At start, both lists should have the same elements');
+		
+		ctrl.selectedAccreditations = new List<SelectOption>{
+			new SelectOption('Multicountry', 'Multicountry')
+		};
+		ctrl.validateAccreditationModel();
+
+		System.assert(ctrl.multicountryAccreditationModelSelected, 'Multicountry selected variable should be true');
+		System.assert(ctrl.infoNote.contains(AMS_Utils.GE), 'Info note should contain \'GE\'');
+
+		ctrl.searchAgencies();
+
+		System.assertEquals(1, ctrl.accountsToCreate.size(), 'Should only find account without change cases');
+
+		ctrl.selectedAccreditations = new List<SelectOption>{
+			new SelectOption('Cash', 'Cash'),
+			new SelectOption('Cashless', 'Cashless')
+		};
+		ctrl.validateAccreditationModel();
+
+		System.assert(ctrl.cashOrLiteAccreditationModelSelected, 'Multicountry selected variable should be false');
+		System.assert(ctrl.infoNote.contains(AMS_Utils.HE), 'Info note should contain \'HE\'');
+
+		System.assert(ctrl.getshouldDisableButton(), 'Button should be disbaled at this point');
+
+		ctrl.getregionobj();
+		ctrl.setregion('Europe');
+
+		ctrl.getmodeObj();
+
+		ctrl.setmode('Country');
+		ctrl.getcountryobj();
+		ctrl.setcountry(country.Id);
+		ctrl.searchAgencies();
+
+		System.assertEquals(1, ctrl.accountsToCreate.size(), 'Should find Parent Account');
+
+		ctrl.setmode('IATA Code');
+		ctrl.iataCode = '12345678';
+		ctrl.searchAgencies();
+
+		System.assertEquals(1, ctrl.accountsToCreate.size(), 'Should find Parent Account');
+
+		ctrl.setmode('Financial year end');
+		ctrl.getMonthList();
+		ctrl.setMonth(ANG_AnualRevalCaseCreationController.DECEMBER);
+		ctrl.searchAgencies();
+
+		List<SelectOption> paginationOptions = ctrl.paginationSizeOptions;
+
+		System.assertEquals(1, ctrl.accountsToCreate.size(), 'Should find Parent Account');
+
+		Boolean hasNext = ctrl.hasNext;
+		Boolean hasPrevious = ctrl.hasPrevious;
+		Integer pageNumber = ctrl.pageNumber;
+		ctrl.next();
+		ctrl.previous();
+		ctrl.last();
+		ctrl.first();
+
+		ctrl.refreshPageSize();
+
+		for(ANG_AnualRevalCaseCreationController.AccountWrapper aw: ctrl.accountsToCreate) {
+			aw.selected = true;
+		}
+
+		ctrl.checkSelectedRecords();
+		System.assertEquals(false, ctrl.disableLaunchButton, 'Should find Parent Account');
+
+		ctrl.launchCampaign();
+
+		ctrl.getBatchStatus();
+
+		Test.stopTest();
+
+		List<Account> updatedAccount = [SELECT Id,
+											(SELECT Id FROM Cases)
+										FROM Account
+										LIMIT 1];
+
+		System.assertEquals(1, updatedAccount[0].Cases.size(), 'Should have created a case');
+	}
+
+	@isTest 
+	static void createAnualRevalCaseCreationForMajorChanges(){
 		insert new ANG_AgencyChangesConfig__c(Name = 'ChangeName', 
 			TC_Location_type__c = false, TC_Legal_status__c = false, TC_Location__c = false,
 			TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
@@ -68,110 +221,7 @@ private class ANG_AnnualRevCaseCreationTest {
 			Valid_Accreditation_Models__c = 'ALL');
 
 		insert new Portal_Applications__c(name = 'Risk Profile and RHC');
-
-		Test.stopTest();
-	}
-
-	@isTest 
-	static void createOscarFromBatchTest() {
-		Test.startTest();
-
-		ANG_AnualRevalCaseCreationBatch anualRevalCaseCreationBatch = new ANG_AnualRevalCaseCreationBatch(new Set<Id>{[Select Id from Account LIMIT 1].Id});
-		Id anualRevalCaseCreationBatchId = Database.executeBatch(anualRevalCaseCreationBatch,1);
-
-		Test.stopTest();
-	}
-
-	@isTest 
-	static void createAnualRevalCaseCreationController(){
-		Test.startTest();
-
-		List<String> fieldListAcct = new List<String>();
-
-		Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
-
-		for (String field : schemaFieldMapAccounts.keySet()){
-			fieldListAcct.add(field);
-		}
-
-		List<String> fieldListContact = new List<String>();
-
-		Map<String, Schema.SObjectField> schemaFieldMapContacts = Contact.sObjectType.getDescribe().fields.getMap();
-
-		for (String field : schemaFieldMapContacts.keySet()){
-			fieldListContact.add(field);
-		}
-
-		List<Account> accts = Database.query('SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts) FROM Account');
-
-		Account acct = accts.get(0);
-
-		ANG_OscarProcessHelper.createRevalidationOscar(acct, acct.Contacts, true);
-
-		ANG_AnualRevalCaseCreationController annualRevalCaseCtrl = new ANG_AnualRevalCaseCreationController();
-
-		annualRevalCaseCtrl.setmode('Country');
-		annualRevalCaseCtrl.setregion('Europe');
-		annualRevalCaseCtrl.setcountry([select Id, Name, Region__c from IATA_ISO_Country__c].Id);
-		annualRevalCaseCtrl.searchAgencies();
-
-		annualRevalCaseCtrl.getregionobj();
-		annualRevalCaseCtrl.getmodeObj();
-		annualRevalCaseCtrl.getyearobj();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.getshouldDisableButton();
-		annualRevalCaseCtrl.launchCampaign();
-
-		annualRevalCaseCtrl.refreshPageSize();
-
-		Boolean hasNext = annualRevalCaseCtrl.hasNext;
-		Boolean hasPrevious = annualRevalCaseCtrl.hasPrevious;
-		Integer pageNumber = annualRevalCaseCtrl.pageNumber;
-		annualRevalCaseCtrl.next();
-		annualRevalCaseCtrl.last();
-		annualRevalCaseCtrl.first();
-
-		Test.stopTest();
-	}
-
-	@isTest 
-	static void createAnualRevalCaseCreationController2(){
-		Test.startTest();
-
-		ANG_AnualRevalCaseCreationController annualRevalCaseCtrl = new ANG_AnualRevalCaseCreationController();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.setyear('January');
-
-		annualRevalCaseCtrl.setmode('Country');
-		annualRevalCaseCtrl.setregion('Europe');
-		annualRevalCaseCtrl.setcountry([select Id from IATA_ISO_Country__c].Id);
-		annualRevalCaseCtrl.searchAgencies();
-
-		annualRevalCaseCtrl.getregionobj();
-		annualRevalCaseCtrl.getmodeObj();
-		annualRevalCaseCtrl.getyearobj();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.getshouldDisableButton();
-
-		annualRevalCaseCtrl.launchCampaign();
-
-		annualRevalCaseCtrl.refreshPageSize();
-
-		Boolean hasNext = annualRevalCaseCtrl.hasNext;
-		Boolean hasPrevious = annualRevalCaseCtrl.hasPrevious;
-		Integer pageNumber = annualRevalCaseCtrl.pageNumber;
-		annualRevalCaseCtrl.next();
-		annualRevalCaseCtrl.last();
-		annualRevalCaseCtrl.first();
-		annualRevalCaseCtrl.previous();
-
-		Test.stopTest();
-
-		annualRevalCaseCtrl.getBatchStatus();
-	}
-
-	@isTest 
-	static void createAnualRevalCaseCreationForMajorChanges(){
+		
 		Account he = null;
 		Account ae1 = null;
 		Account ae2 = null;
@@ -260,32 +310,29 @@ private class ANG_AnnualRevCaseCreationTest {
 		Test.startTest();
 		ANG_AnualRevalCaseCreationController annualRevalCaseCtrl = new ANG_AnualRevalCaseCreationController();
 
+		annualRevalCaseCtrl.selectedAccreditations = new List<SelectOption>{
+			new SelectOption('Cash', 'Cash'),
+			new SelectOption('Cashless', 'Cashless')
+		};
+		annualRevalCaseCtrl.validateAccreditationModel();
+
 		annualRevalCaseCtrl.setmode('Country');
 		annualRevalCaseCtrl.setregion('Europe');
-		annualRevalCaseCtrl.setcountry([select Id, Name, Region__c from IATA_ISO_Country__c].Id);
+		annualRevalCaseCtrl.setcountry(he.IATA_ISO_Country__c);
 		annualRevalCaseCtrl.searchAgencies();
 
-		annualRevalCaseCtrl.getregionobj();
-		annualRevalCaseCtrl.getmodeObj();
-		annualRevalCaseCtrl.getyearobj();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.getshouldDisableButton();
+		for(ANG_AnualRevalCaseCreationController.AccountWrapper aw: annualRevalCaseCtrl.accountsToCreate) {
+			aw.selected = true;
+		}
+
 		annualRevalCaseCtrl.launchCampaign();
 
-		annualRevalCaseCtrl.refreshPageSize();
+		Boolean flag = false;
+		ANG_AnualRevalCaseCreationController.AccountWrapper validateAcc = new ANG_AnualRevalCaseCreationController.AccountWrapper(he, null, true);
 
-		Boolean hasNext = annualRevalCaseCtrl.hasNext;
-		Boolean hasPrevious = annualRevalCaseCtrl.hasPrevious;
-		Integer pageNumber = annualRevalCaseCtrl.pageNumber;
-		annualRevalCaseCtrl.next();
-		annualRevalCaseCtrl.last();
-		annualRevalCaseCtrl.first();
-
-		boolean flag = false;
-		ANG_AnualRevalCaseCreationController.AccountWrapper validateAcc = new ANG_AnualRevalCaseCreationController.AccountWrapper(he, null);
-
-		for (ANG_AnualRevalCaseCreationController.AccountWrapper a :annualRevalCaseCtrl.accountsToCreate){
-			flag = flag || a.account.Id == he.Id;
+		for (ANG_AnualRevalCaseCreationController.AccountWrapper a: annualRevalCaseCtrl.accountsToCreate) {
+			flag = true;
+			break;
 		}
 		
 		System.assert(flag, 'Its expected that the account map contains the account he for the filter criteria');

@@ -1,8 +1,5 @@
 public without sharing class ANG_AnualRevalCaseCreationController {
 
-	private static final String HE_LOCATION_TYPE = AMS_Utils.HE;
-	private static final String GE_LOCATION_TYPE = AMS_Utils.GE;
-	private static final String ACCRED_MODEL_MULTICOUNTRY = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 	private static final String ANNUAL_REV_PROCESS = AMS_Utils.NGANNUALREVAL;
 	private static final String MAJOR_CHANGES_PROCESS = AMS_Utils.NGCHANGES;
 	private static final String OWNERSHIP_CHG = AMS_Utils.ANG_OWNERSHIP;
@@ -11,6 +8,32 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private static final String LOC_TYPE_DIFF_LEGAL_CHG = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
 	private static final String LEGAL_NAME_CHG = AMS_Utils.ANG_LEGAL_NAME;
 	private static final String LEGAL_STATUS_CHG = AMS_Utils.ANG_LEGAL_STATUS;
+
+	public static final String MONTH_QUESTION = 'Please Select a Month';
+	public static final String JANUARY = 'January';
+	public static final String FEBRUARY = 'February';
+	public static final String MARCH = 'March';
+	public static final String APRIL = 'April';
+	public static final String MAY = 'May';
+	public static final String JUNE = 'June';
+	public static final String JULY = 'July';
+	public static final String AUGUST = 'August';
+	public static final String SEPTEMBER = 'September';
+	public static final String OCTOBER = 'October';
+	public static final String NOVEMBER = 'November';
+	public static final String DECEMBER = 'December';
+
+	public static final String REGION_QUESTION = 'Select Region';
+	public static final String REGION_EUROPE = 'Europe';
+	public static final String REGION_AFRICA = 'Africa & Middle East';
+	public static final String REGION_AMERICAS = 'Americas';
+	public static final String REGION_ASIA = 'Asia & Pacific';
+	public static final String REGION_CHINA = 'China & North Asia';
+
+	public static final String MODE_QUESTION = 'Select Mode';
+	public static final String MODE_FINANCIAL_YEAR = 'Financial year end';
+	public static final String MODE_COUNTRY = 'Country';
+	public static final String MODE_IATA_CODE = 'IATA Code';
 
 	private static final List<String> TARGET_ACCOUNT_STATUS = new List<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED};
 	private static final List<String> INVALID_OSCAR_STATUS = new List<String>{
@@ -75,7 +98,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public String month{get; private set;}
 
 	public List<String> countriesLst{get; set;}
-	public Account account{get; set;}
+	public String iataCode {get; set;}
 	public boolean shouldDisableButton;
 
 	public String infoNote {
@@ -127,9 +150,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		get {
 			if (accredModelOptions == null) {
 				return new List<SelectOption> {
-					new SelectOption('Cash','Cash'),
-					new SelectOption('Cashless','Cashless'),
-					new SelectOption('Multicountry','Multicountry')
+					new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.ACCREDITATIONMODEL_CASH),
+					new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, AMS_Utils.ACCREDITATIONMODEL_CASHLESS),
+					new SelectOption(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 				};
 			}
 
@@ -170,12 +193,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
-		account = new Account();
 		accountsToCreate = new List<AccountWrapper>();
 		annualRevalidationCaseOscar = new Map<Id, Case>();
 		batchStatusBool = false;
 		getBatchStatus = 0;
-		size = 1;
+		size = 5;
 		selectedAccreditations = new List<SelectOption>();
 		disableLaunchButton = true;
 	}
@@ -214,39 +236,39 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public List<SelectOption> getregionobj() {
 		return new List<SelectOption>{
-			new SelectOption('Select Region', 'Select Region'),
-			new SelectOption('Africa & Middle East','Africa & Middle East'),
-			new SelectOption('Americas','Americas'),
-			new SelectOption('Asia & Pacific','Asia & Pacific'),
-			new SelectOption('China & North Asia','China & North Asia'),
-			new SelectOption('Europe','Europe')
+			new SelectOption(REGION_QUESTION, REGION_QUESTION),
+			new SelectOption(REGION_AFRICA, REGION_AFRICA),
+			new SelectOption(REGION_AMERICAS, REGION_AMERICAS),
+			new SelectOption(REGION_ASIA, REGION_ASIA),
+			new SelectOption(REGION_CHINA, REGION_CHINA),
+			new SelectOption(REGION_EUROPE, REGION_EUROPE)
 		};
 	}
 
 	public List<SelectOption> getmodeObj() {
 		return new List<SelectOption>{
-			new SelectOption('Select Mode', 'Select Mode'),
-			new SelectOption('Financial year end','Financial year end'),
-			new SelectOption('Country','Country'),
-			new SelectOption('IATA Code','IATA Code')
+			new SelectOption(MODE_QUESTION, MODE_QUESTION),
+			new SelectOption(MODE_FINANCIAL_YEAR, MODE_FINANCIAL_YEAR),
+			new SelectOption(MODE_COUNTRY, MODE_COUNTRY),
+			new SelectOption(MODE_IATA_CODE, MODE_IATA_CODE)
 		};
 	}
 
 	public List<selectoption> getMonthList() {
 		return new List<SelectOption>{
-			new SelectOption('Please Select a Month','Please Select a Month'),
-			new SelectOption('January','January'),
-			new SelectOption('February','February'),
-			new SelectOption('March','March'),
-			new SelectOption('April','April'),
-			new SelectOption('May','May'),
-			new SelectOption('June','June'),
-			new SelectOption('July','July'),
-			new SelectOption('August','August'),
-			new SelectOption('September','September'),
-			new SelectOption('October','October'),
-			new SelectOption('November','November'),
-			new SelectOption('December','December')
+			new SelectOption(MONTH_QUESTION, MONTH_QUESTION),
+			new SelectOption(JANUARY, JANUARY),
+			new SelectOption(FEBRUARY, FEBRUARY),
+			new SelectOption(MARCH, MARCH),
+			new SelectOption(APRIL, APRIL),
+			new SelectOption(MAY, MAY),
+			new SelectOption(JUNE, JUNE),
+			new SelectOption(JULY, JULY),
+			new SelectOption(AUGUST, AUGUST),
+			new SelectOption(SEPTEMBER, SEPTEMBER),
+			new SelectOption(OCTOBER, OCTOBER),
+			new SelectOption(NOVEMBER, NOVEMBER),
+			new SelectOption(DECEMBER, DECEMBER)
 		};
 	}
 
@@ -271,11 +293,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public Boolean validFinancialYearEndSelected() {
-		return mode == 'Financial year end' ? (month != null && month != '' && month != 'Please Select a Month') : true;
+		return mode == 'Financial year end' ? (String.isNotBlank(month) && month != 'Please Select a Month') : true;
 	}
 
 	public Boolean validIATACodeSelected() {
-		return mode == 'IATA Code' ? (account.IATACode__c != null && account.IATACode__c != '') : true;
+		return mode == 'IATA Code' ? String.isNotBlank(iataCode) : true;
 	}
 
 	public Boolean getshouldDisableButton() {
@@ -300,8 +322,10 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				if (cse.OSCAR__c != null) {
 					if (cse.Oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
 						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)) {
-							foundAnnualRevalidation = true;
-							annualRevalidationCaseOscar.put(acct.Id, cse);
+							if (!foundAnnualRevalidation) {
+								foundAnnualRevalidation = true;
+								annualRevalidationCaseOscar.put(acct.Id, cse);
+							}
 						} else {
 							if (annualRevalidationCaseOscar.get(acct.Id) != null) {
 								annualRevalidationCaseOscar.get(acct.Id).clear();
@@ -329,7 +353,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		Set<String> selectedAccreditationsSet = new Set<String>();
 
-		for(SelectOption accred: selectedAccreditations) {
+		for (SelectOption accred: selectedAccreditations) {
 			selectedAccreditationsSet.add(accred.getValue());
 		}
 
@@ -343,25 +367,23 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			'AND Status__c IN :TARGET_ACCOUNT_STATUS ' + 
 			'AND Accreditation_date__c < LAST_N_MONTHS:6 ';
 
-		String iataCode = account.IATACode__c;
-
 		if (cashOrLiteAccreditationModelSelected) {
 			queryAccount += 'AND IATA_ISO_Country__r.Region__c = :region ' +
-			'AND Location_Type__c = :HE_LOCATION_TYPE ';
+			'AND Location_Type__c = \'' + AMS_Utils.HE + '\' ';
 		} else {
-			queryAccount += 'AND Location_Type__c = :GE_LOCATION_TYPE ';
+			queryAccount += 'AND Location_Type__c = \'' + AMS_Utils.GE + '\' ';
 		}
 
-		if(mode == 'Financial year end') {
+		if (mode == 'Financial year end') {
 			queryAccount += 'AND Financial_Year_End__c = :month ';
-		} else if(mode == 'Country') {
+		} else if (mode == 'Country') {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
-		} else if(mode == 'IATA Code') {
+		} else if (mode == 'IATA Code') {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 		}
 
 		List<Account> accountLst = new List<Account>();
-		
+
 		for (Account acct : Database.query(queryAccount)) {
 			if (!processAccountRelatedCases(acct)) {
 				accountLst.add(acct);
@@ -396,12 +418,17 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		populateAccountsToDisplay((List<Account>)con.getRecords());
 	}
 
+	public void refreshPageSize() {
+		con.setPageSize(size);
+		populateAccountsToDisplay((List<Account>)con.getRecords());
+	}
+
 	public void launchCampaign() {
 		disableLaunchButton = true;
 
 		Set<Id> accountsToCreateIds = new Set<Id>();
 
-		for(AccountWrapper aw: accountsToCreate) {
+		for (AccountWrapper aw: accountsToCreate) {
 			if (aw.selected) {
 				accountsToCreateIds.add(aw.account.Id);
 			}
@@ -415,14 +442,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public void getBatchStatus() {
-		if(batchId == null){
+		if (batchId == null) {
 			pollerBool = true;
 			return;
 		}
 
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
-		pollerBool = !(batchJob.status == 'Ended' || batchJob.status == 'Completed');
+		pollerBool = batchJob.Status != 'Ended' && batchJob.Status != 'Completed';
 
 		getBatchStatus++;
 	}
@@ -436,8 +463,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			accredModelList.add(accredModel.getValue());
 		}
 
-		multicountryAccreditationModelSelected = (accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
-		cashOrLiteAccreditationModelSelected = (!accredModelList.contains('Multicountry') && !accredModelList.isEmpty());
+		multicountryAccreditationModelSelected = (accredModelList.contains(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) && !accredModelList.isEmpty());
+		cashOrLiteAccreditationModelSelected = (!accredModelList.contains(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) && !accredModelList.isEmpty());
 
 		if (multicountryAccreditationModelSelected) {
 			mode = 'Select Mode'; 
@@ -459,7 +486,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public void checkSelectedRecords() {
 		disableLaunchButton = true;
 		
-		for(AccountWrapper aw: accountsToCreate) {
+		for (AccountWrapper aw: accountsToCreate) {
 			if (aw.selected) {
 				disableLaunchButton = false;
 				break;
