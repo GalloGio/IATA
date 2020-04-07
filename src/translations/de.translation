@@ -2537,6 +2537,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Zurück zu weiteren Details</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Zurück zur „Geschäftsadresse“</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2547,10 +2551,6 @@
     <customLabels>
         <label>Gehen Sie zurück zum Bearbeiten</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Zurück zu weiteren Details</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Kontenauswahl &amp; zusätzliche Details</label>
@@ -2591,10 +2591,6 @@
     <customLabels>
         <label>Wenn Sie Ihr Unternehmenskonto registrieren, erhalten Sie Zugriff auf maßgeschneiderte Dienstleistungen von International Air Transport Association (IATA). Sie können Ihr Unternehmenskonto ganz einfach in zwei Schritten erstellen.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Land/Gebiet Ihres Arbeitsortes</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Name des Unternehmens</label>
@@ -2867,6 +2863,10 @@
     <customLabels>
         <label>Webseite</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Land/Gebiet Ihres Arbeitsortes</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Ja</label>

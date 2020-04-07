@@ -2533,6 +2533,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>العودة إلى تفاصيل إضافية</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>العودة إلى معلومات عنوان العمل</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2543,10 +2547,6 @@
     <customLabels>
         <label>العودة إلى التعديل</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>العودة إلى تفاصيل إضافية</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>اختيار الحساب وتفاصيل إضافية</label>
@@ -2587,10 +2587,6 @@
     <customLabels>
         <label>.تسجيل حساب شركتك سيسمح لك بالحصول علي خدمات الاتحاد الدولي للنقل الجوي (إياتا) المخصصة.يمكنك بسهولة إنشاء حساب شركتك في خطوتين</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>البلد / الإقليم من موقع عملك</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>اسم الشركة</label>
@@ -2863,6 +2859,10 @@
     <customLabels>
         <label> الموقع الإلكتروني</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد / الإقليم من موقع عملك</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>نعم</label>
