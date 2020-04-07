@@ -32,12 +32,12 @@
                     <div if:false={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12 slds-grid_align-end slds-grid_vertical-align-center">
                         <div if:false={renderRequest} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
                             <div if:true={serviceRecord.accessGranted}>
-                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth" label={label.goToServicelb} onclick={handleTopAction}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={label.goToServicelb} onclick={handleTopAction}>
                                 </lightning-button>
                             </div>
 
                             <div if:false={serviceRecord.accessGranted}>
-                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidt" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidt wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
                                 </lightning-button>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div if:true={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12  slds-grid_align-end slds-grid_vertical-align-center">
                         <div if:true={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
-                            <lightning-button class="baseButton outlinedButtonBorderBlue  text-xsmall fullWidth"
+                            <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal"
                                 label={label.goToServicelb} onclick={handleTopAction}>
                             </lightning-button>
                         </div>
@@ -57,12 +57,12 @@
 
                         <div if:false={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
                             <div if:true={isIFG_Service}>
-                                <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton ">
+                                <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton wordBreakNormal">
                                     {serviceRecord.btnLabel}
                                 </span>
                             </div>
                             <div if:false={isIFG_Service}>
-                                <lightning-button class=" slds-grid_align-end baseButton outlinedButtonBorderBlue text-xsmall fullWidth" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                <lightning-button class=" slds-grid_align-end baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
                                 </lightning-button>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                                 <img src={searchIconUrl}>
                                                 <lightning-input name="newRecipientTextInput"
                                                     placeholder={label.searchContactPlaceholder}
-                                                    class="hideInputLabel grayInputPlaceholder"
+                                                    class="hideInputLabel grayInputPlaceholder titleTruncation"
                                                     onchange={searchRecord}
                                                     value={searchText}>
                                                 </lightning-input>

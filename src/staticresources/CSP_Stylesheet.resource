@@ -2648,6 +2648,13 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     display:none;
 }
 
+.titleTruncation input{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.wordBreakNormal, .wordBreakNormal button{
+    word-break: normal;
+}
 /*#################################*/
 
 /*RS - START - Needed for IFTP app */
