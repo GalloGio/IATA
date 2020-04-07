@@ -13,6 +13,21 @@ trigger Term_And_Conditions on Term_And_Condition__c (before insert, before upda
         Term_And_Condition_Dom.triggerHandler();
     }
     else{
-        PortalServiceTermAndConditionHandler.triggerHandler();
-    }
+		if (trigger.isBefore){
+			if (trigger.isInsert){
+				PortalServiceTermAndConditionHandler.onBeforeInsert();
+			}
+			else if (trigger.isUpdate){
+				PortalServiceTermAndConditionHandler.onBeforeUpdate();
+			}
+		}
+		if (trigger.isAfter){
+			if (trigger.isInsert){
+				PortalServiceTermAndConditionHandler.onAfterInsert();
+			}
+			else if (trigger.isUpdate){
+				PortalServiceTermAndConditionHandler.onAfterUpdate();
+			}
+		}
+	}
 }
