@@ -2169,7 +2169,7 @@
     </customLabels>
     <customLabels>
         <label>Buat Pengguna Baru</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Buat Kata Sandi.</label>
@@ -2516,6 +2516,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Detil tambahan</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Kami tidak dapat menemukan alamat Anda. Silakan klik tombol Langkah Berikutnya untuk mengonfirmasi bahwa alamat Anda benar.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2532,6 +2536,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Kembali ke Detail Tambahan</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Kembali ke Informasi Alamat Bisnis</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2542,10 +2550,6 @@
     <customLabels>
         <label>Kembali mengedit</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Kembali ke Detail Tambahan</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Seleksi akun &amp; Rincian Tambahan</label>
@@ -2586,10 +2590,6 @@
     <customLabels>
         <label>Mendaftarkan akun perusahaan Anda akan memberi Anda akses ke layanan IATA (International Air Transport Association) yang disesuaikan. Anda dapat dengan mudah membuat akun perusahaan dalam dua langkah.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Negara / Wilayah lokasi pekerjaan Anda</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Nama Perusahaan</label>
@@ -2756,10 +2756,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Detil tambahan</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Tambahkan detail pribadi Anda untuk mengizinkan IATA (International Air Transport Association) menyarankan konten dan layanan yang dipersonalisasi.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2866,6 +2862,10 @@
     <customLabels>
         <label>Situs web</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara / Wilayah lokasi pekerjaan Anda</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Ya</label>

@@ -2166,7 +2166,7 @@
     </customLabels>
     <customLabels>
         <label>Создать нового пользователя</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Создать пароль</label>
@@ -2513,6 +2513,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Подробная информация</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Мы не смогли найти ваш адрес. Пожалуйста, нажмите кнопку «Следующий шаг», чтобы подтвердить, что адрес является правильным.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2529,6 +2533,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Назад к подробной информации</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Вернуться к информации о адресе организации</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2539,10 +2547,6 @@
     <customLabels>
         <label>Вернуться к редактированию</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Назад к подробной информации</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Выбор счета и подробная информация</label>
@@ -2583,10 +2587,6 @@
     <customLabels>
         <label>Регистрация корпоративной учетной записи предоставит вам доступ к персонализированным услугам ИАТА. Вы можете легко создать учетную запись вашей компании в два шага.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Страна / территория вашего рабочего места</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Название компании</label>
@@ -2753,10 +2753,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Подробная информация</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Добавьте свои личные данные, чтобы ИАТA могла предлагать вам персонализированный контент и услуги.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2863,6 +2859,10 @@
     <customLabels>
         <label>Вебсайт</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Страна / территория вашего рабочего места</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Да</label>

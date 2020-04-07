@@ -2166,7 +2166,7 @@
     </customLabels>
     <customLabels>
         <label>إنشاء مستخدم جديد</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>إنشاء كلمة مرور</label>
@@ -2513,6 +2513,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>تفاصيل اضافية</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>.لم نتمكن من العثور على عنوانك.الرجاء النقر على زر &quot;الخطوة التالية&quot; لتأكيد صحة عنوانك</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2751,10 +2755,6 @@
     <customLabels>
         <label>الرمز البريدي</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>تفاصيل اضافية</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>.أضف بياناتك الشخصية للسماح للاتحاد الدولي للنقل الجوي (إياتا) باقتراح محتوى وخدمات مخصصة</label>

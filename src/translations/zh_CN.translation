@@ -2166,7 +2166,7 @@
     </customLabels>
     <customLabels>
         <label>创建新用户</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>创建密码</label>
@@ -2513,6 +2513,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>其他详细信息</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>我们找不到您的地址。请点击下一步按钮以确认您的地址是否正确。</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2529,6 +2533,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>返回其他详细信息</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>返回公司地址信息</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2539,10 +2547,6 @@
     <customLabels>
         <label>返回编辑</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>返回其他详细信息</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>帐户选择与其他详细信息</label>
@@ -2583,10 +2587,6 @@
     <customLabels>
         <label>注册公司账户将使您能够访问定制的 IATA 服务。 您可以使用两个步骤轻松创建公司账户。</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>你的工作地点所在的国家/地区</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>公司名</label>
@@ -2753,10 +2753,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>其他详细信息</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>添加个人详细信息，以使 IATA 提供个性化的内容和服务。</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2863,6 +2859,10 @@
     <customLabels>
         <label>网站</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>你的工作地点所在的国家/地区</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>是</label>

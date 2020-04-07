@@ -18,7 +18,7 @@ import CSP_L2_Account_Information_Message from '@salesforce/label/c.CSP_L2_Accou
 import CSP_L2_Sector from '@salesforce/label/c.CSP_L2_Sector';
 import CSP_L2_Category from '@salesforce/label/c.CSP_L2_Category';
 import CSP_L2_IATA_Codes from '@salesforce/label/c.CSP_L2_IATA_Codes';
-import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
+import CSP_L2_Work_Location from '@salesforce/label/c.CSP_L2_Work_Location';
 import CSP_L2_Search from '@salesforce/label/c.CSP_L2_Search';
 import CSP_L2_Search_Results from '@salesforce/label/c.CSP_L2_Search_Results';
 import CSP_L2_Select from '@salesforce/label/c.CSP_L2_Select';
@@ -201,7 +201,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     set labels(value) {
         this._labels = value;
     }
-    
+
     // other labels
     accountSelectionMessage;
     accountInformation;
@@ -259,7 +259,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
             this.accountSelectionMessage = CSP_L2_Account_Selection_Message;
             this.accountInformation = CSP_L2_Account_Information;
             this.accountInformationMessage = CSP_L2_Account_Information_Message;
-            this.countryLabel = CSP_L2_Company_Location;
+            this.countryLabel = CSP_L2_Work_Location;
             this.accountLabel = CSP_L2_Company_Name;
             this.selectResultMessage = CSP_L2_Select_Company_Message;
             this.nextButtonLabel = CSP_L2_Next_Step;
@@ -622,11 +622,11 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     next(){
         this.dispatchEvent(new CustomEvent('nextselection',{detail : this.selectedAccountId}));
     }
-
+ 
     createAccount(){
         this.isIATANAccount = false;
         if(this.selectedCustomerType == 'IATAN_Passenger_Sales_Agent_USA_Only' ||
-           this.selectedCustomerType == 'TSI_USA_Only'){
+            this.selectedCustomerType == 'TSI_USA_Only'){
             this.isIATANAccount = true;
         }
         else {
