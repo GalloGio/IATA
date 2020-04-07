@@ -4,10 +4,18 @@ public class ANG_RHCAlertTriggerHandler {
 		public String region;
 		public List<Id> userIdLst;
 		public List<String> emailAddressLst;
+		
 		public RegionNotificationWrapper(String region){
 			this.region = region;
 			this.userIdLst = new List<Id>();
 			this.emailAddressLst = new List<String>();
+		}
+
+		public void copy(RegionNotificationWrapper fromNotificationWrapper){
+			if(fromNotificationWrapper != null){
+				this.userIdLst.addAll(fromNotificationWrapper.userIdLst);
+				this.emailAddressLst.addAll(fromNotificationWrapper.emailAddressLst);
+			}
 		}
 	}
 
@@ -914,15 +922,14 @@ public class ANG_RHCAlertTriggerHandler {
 	}
 
 	// NEWGEN-2005
-	@TestVisible private List<Messaging.SingleEmailMessage> createNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
+	@TestVisible 
+	private List<Messaging.SingleEmailMessage> createNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
 
 		List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
 
 		Set<String> toAddresses = new Set<String>();
 		List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
 		List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
-
-		Map<String, RegionNotificationWrapper> regionNotificationMap = new Map<String, RegionNotificationWrapper>();
 
 		if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCAlertTriggerHandler - createNotificationToSeniors] Warning: No RTS Senior Managers found');
@@ -933,26 +940,27 @@ public class ANG_RHCAlertTriggerHandler {
 
 		if(isRedAlert) {
 			for (RTS_Senior_Manager__c sManager: sManagersRed) {
-				if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
+				if (sManager.Active__c && String.isNotBlank(sManager.Email__c)){
 					toAddresses.add(sManager.Email__c);
+				}
 			}
 			// Senior Manager configuration does not have region and
 			// therefore we consider it has having the region 'ALL'
 			// Meaning that all the emails will be sent for all the possible regions
 			regionEmailAddressesMap.put(REGION_ALL, toAddresses);
 		} else {
-
 			for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
 				if (sManager.Active__c && String.isNotBlank(sManager.Email__c)){
 					toAddresses.add(sManager.Email__c);
+
+					String region = sManager.Region__c.toUpperCase();
 					
-					Set<String> addressesLst = regionEmailAddressesMap.get(sManager.Region__c);
+					Set<String> addressesLst = regionEmailAddressesMap.get(region);
 					if(addressesLst == null) {
 						addressesLst = new Set<String>();
 					}
 					addressesLst.add(sManager.Email__c);
-
-					regionEmailAddressesMap.put(sManager.Region__c, addressesLst);
+					regionEmailAddressesMap.put(region, addressesLst);
 				}
 			}
 		}
@@ -961,7 +969,9 @@ public class ANG_RHCAlertTriggerHandler {
 		for(User u : [SELECT Id, Email FROM User WHERE Email IN :toAddresses AND Contact.isEmailBounced = false AND isActive = true]) {
 			emailAddressUserIdMap.put(u.Email, u.Id);
 		}
-		
+
+		Map<String, RegionNotificationWrapper> regionNotificationMap = new Map<String, RegionNotificationWrapper>();
+
 		for(String region : regionEmailAddressesMap.keySet()){
 
 			RegionNotificationWrapper wrapper = new RegionNotificationWrapper(region);
@@ -975,6 +985,7 @@ public class ANG_RHCAlertTriggerHandler {
 					wrapper.emailAddressLst.add(email);
 				}
 			}
+
 			regionNotificationMap.put(region, wrapper);
 
 		}
@@ -1000,20 +1011,6 @@ public class ANG_RHCAlertTriggerHandler {
 		for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
 
 			Account acct = raAccMap.get(riskAlert.Id);
-
-			RegionNotificationWrapper notificationWrapper = regionNotificationMap.get(REGION_ALL);
-
-			if(notificationWrapper == null){
-				notificationWrapper = new RegionNotificationWrapper(REGION_ALL);
-			}
-
-			if(!isRedAlert){
-				RegionNotificationWrapper regionWrapper = regionNotificationMap.get(acct.Region_formula__c);
-				if(regionWrapper != null){
-					notificationWrapper.userIdLst.addAll(regionWrapper.userIdLst);
-					notificationWrapper.emailAddressLst.addAll(regionWrapper.emailAddressLst);
-				}
-			}
 			
 			String tBody = template.Body;
 			String subjectName = String.isNotBlank(acct.Name) ? acct.Name : '';
@@ -1031,6 +1028,8 @@ public class ANG_RHCAlertTriggerHandler {
 
 			String emailSubject = 'RTSM – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectCountry + ', ' + subjectName + ', ' + subjectIATACode + ')';
 
+			RegionNotificationWrapper notificationWrapper = collectNotificationWrapper(acct.Region_formula__c.toUpperCase(), regionNotificationMap);
+
 			if(!notificationWrapper.emailAddressLst.isEmpty()){
 				emailLst.add(createNotificationEmailMessage(tBody, null, orgWideEmailId, emailSubject , notificationWrapper.emailAddressLst));
 			}
@@ -1046,8 +1045,14 @@ public class ANG_RHCAlertTriggerHandler {
 	}
 	// END - NEWGEN-2005
 
+	private RegionNotificationWrapper collectNotificationWrapper(String currentRegion, Map<String, RegionNotificationWrapper> regionNotificationMap){
+		RegionNotificationWrapper notificationWrapper = new RegionNotificationWrapper(currentRegion);
+		notificationWrapper.copy(regionNotificationMap.get(REGION_ALL));
+		notificationWrapper.copy(regionNotificationMap.get(currentRegion));
+		return notificationWrapper;
+	}
+
 	private Messaging.SingleEmailMessage createNotificationEmailMessage(String tBody, Id targetUser, Id orgWideEmailId, String emailSubject, List<String> addressesList) {
-		
 		Messaging.SingleEmailMessage targetEmail = new Messaging.SingleEmailMessage();
 		if (targetUser != null) {
 			targetEmail.setTargetObjectId(targetUser);
@@ -1059,11 +1064,9 @@ public class ANG_RHCAlertTriggerHandler {
 		targetEmail.setSubject(emailSubject);
 		targetEmail.setPlainTextBody(tBody);
 		return targetEmail;
-
 	}
 
 	//ACAMBAS - NEWGEN-4466 - Start
-
 	//Returns a list of emails configured in a specific custom setting
 	private List<String> getMailingListFromCustomSetting(String customSettingAPIName) {
 		List<String> toAddresses = new List<String>();
