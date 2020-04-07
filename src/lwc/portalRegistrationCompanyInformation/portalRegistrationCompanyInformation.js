@@ -12,7 +12,7 @@ import CSP_L2_Create_New_Account            from '@salesforce/label/c.CSP_L2_Cre
 import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
-import CSP_L2_Company_Location              from '@salesforce/label/c.CSP_L2_Company_Location';
+import CSP_L2_Work_Location                 from '@salesforce/label/c.CSP_L2_Work_Location';
 import CSP_L2_VAT_Number                    from '@salesforce/label/c.CSP_L2_VAT_Number';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
@@ -161,7 +161,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         else{
             this.companyInformation = CSP_L2_Company_Information;            
             this.companyName = CSP_L2_Company_Name;
-            this.countryLabel = CSP_L2_Company_Location;
+            this.countryLabel = CSP_L2_Work_Location;
             this.backToAccountSelection = CSP_L2_Back_to_Account_Selection;
         }
 

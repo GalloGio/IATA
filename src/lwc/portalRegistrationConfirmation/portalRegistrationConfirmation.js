@@ -13,18 +13,18 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
-import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
+import CSP_L2_Additional_Details from '@salesforce/label/c.CSP_L2_Additional_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
 import CSP_L2_Company_Account from '@salesforce/label/c.CSP_L2_Company_Account';
 import CSP_L2_Company_Account_Message from '@salesforce/label/c.CSP_L2_Company_Account_Message';
-import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
+import CSP_L2_Back_to_Additional_Details from '@salesforce/label/c.CSP_L2_Back_to_Additional_Details';
 import CSP_L2_Back_to_Business_Address_Information from '@salesforce/label/c.CSP_L2_Back_to_Business_Address_Information';
 import CSP_L2_Submit from '@salesforce/label/c.CSP_L2_Submit';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information';
 import CSP_L2_Is_PO_Box_Address from '@salesforce/label/c.CSP_L2_Is_PO_Box_Address';
-import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
+import CSP_L2_Work_Location from '@salesforce/label/c.CSP_L2_Work_Location';
 
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Job_Function from '@salesforce/label/c.CSP_L2_Job_Function';
@@ -104,7 +104,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     // label variables
     _labels = {
         CSP_L2_Back_to_Account_Selection,
-        CSP_L2_Back_to_Profile_Details,
+        CSP_L2_Back_to_Additional_Details,
         CSP_L2_Back_to_Business_Address_Information,
         CSP_L2_Back_to_Edit,
         CSP_L2_Business_Address_Information,
@@ -120,7 +120,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Go_To_Service,
         CSP_L2_Job_Function,
         CSP_L2_Job_Title,
-        CSP_L2_Profile_Details,
+        CSP_L2_Additional_Details,
         CSP_L2_Personal_Details_Message,
         CSP_L2_Postal_Code,
         CSP_L2_Is_PO_Box_Address,
@@ -205,7 +205,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[3], 'value': this.searchResults.wrappedResults[i].fields[3], 'addSeparator' : false });
 
                         // 3. Country + separator
-                        selectedAcc.push({ 'label': CSP_L2_Company_Location, 'value': country, 'addSeparator' : true });
+                        selectedAcc.push({ 'label': CSP_L2_Work_Location, 'value': country, 'addSeparator': true });
 
                         // 4. Sector
                         selectedAcc.push({ 'label': this.searchResults.fieldLabels[1], 'value': this.searchResults.wrappedResults[i].fields[1], 'addSeparator' : false });
@@ -218,7 +218,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                             // insert the country after the street
                             if(j === 3){
                                 moduloToInsertSeparator = 0;
-                                selectedAcc.push({ 'label': CSP_L2_Company_Location, 'value': country, 'addSeparator' : (j%2 === moduloToInsertSeparator) });
+                                selectedAcc.push({ 'label': CSP_L2_Work_Location, 'value': country, 'addSeparator' : (j%2 === moduloToInsertSeparator) });
                             }
                         }
                         this.selectedAccountFields = selectedAcc;

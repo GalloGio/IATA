@@ -8,15 +8,15 @@ import ISSP_Registration_MRS            from '@salesforce/label/c.ISSP_Registrat
 import ISSP_Registration_MS             from '@salesforce/label/c.ISSP_Registration_MS';
 import CSP_L2_Back_to_Account_Selection from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Profile_Details_Message   from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
-import CSP_L2_Profile_Details           from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Title                     from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Job_Function              from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title                 from '@salesforce/label/c.CSP_L2_Job_Title';
 import CSP_L2_Next_Step                 from '@salesforce/label/c.CSP_L2_Next_Step';
-import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
+import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationProfileDetails extends LightningElement {
     @api contactInfo;
+
     @track localContactInfo;
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
 
@@ -32,7 +32,6 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
         ISSP_Registration_MRS,
         ISSP_Registration_MS,
         CSP_L2_Back_to_Account_Selection,
-        CSP_L2_Profile_Details,
         CSP_L2_Profile_Details_Message,
         CSP_L2_Title,
         CSP_L2_Job_Function,

@@ -7,7 +7,7 @@ import { navigateToPage} from'c/navigationUtils';
 
 //custom labels
 import CSP_L2_Banner_Title                  from '@salesforce/label/c.CSP_L2_Banner_Title';
-import CSP_L2_Profile_Details               from '@salesforce/label/c.CSP_L2_Profile_Details';
+import CSP_L2_Additional_Details            from '@salesforce/label/c.CSP_L2_Additional_Details';
 import CSP_L2_Account_Selection             from '@salesforce/label/c.CSP_L2_Account_Selection';
 import CSP_L2_Confirmation                  from '@salesforce/label/c.CSP_L2_Confirmation';
 import CSP_L2_Profile_Incomplete            from '@salesforce/label/c.CSP_L2_Profile_Incomplete';
@@ -220,7 +220,7 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     // label variables
     _labels = {
         CSP_L2_Banner_Title,
-        CSP_L2_Profile_Details,
+        CSP_L2_Additional_Details,
         CSP_L2_Account_Selection,
         CSP_L2_Confirmation,
         CSP_L2_Profile_Incomplete,

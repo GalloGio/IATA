@@ -2168,7 +2168,7 @@
     </customLabels>
     <customLabels>
         <label>Tạo tài khoản mới</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Tạo mật khẩu</label>
@@ -2515,6 +2515,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Chi tiết bổ sung</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi không thể tìm thấy địa chỉ của doanh nghiệp này. Xin quý khách vui lòng nhấn vào nút Bước tiếp theo để xác nhận địa chỉ mà quý khách cung cấp trên đây là một địa chỉ hợp lệ.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2531,6 +2535,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Trở về phần Chi tiết bổ sung</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Quay lại Thông tin Địa chỉ Doanh nghiệp</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2541,10 +2549,6 @@
     <customLabels>
         <label>Quay lại để chỉnh sửa</label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label>Trở về phần Chi tiết bổ sung</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Lựa chọn tài khoản &amp; Chi tiết bổ sung</label>
@@ -2585,10 +2589,6 @@
     <customLabels>
         <label>Việc đăng ký tài khoản doanh nghiệp trên IATA sẽ cung cấp cho doanh nghiệp của quý khách một số quyền truy cập vào các dịch vụ của IATA được thiết kế riêng cho doanh nghiệp của quý khách. Quý khách có thể dễ dàng tạo một tài khoản doanh nghiệp mới chỉ bằng hai bước.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Quốc gia/ lãnh thổ của nơi làm việc của bạn</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Tên doanh nghiệp</label>
@@ -2755,10 +2755,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Chi tiết bổ sung</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Bổ sung những thông tin còn thiếu trên Hồ sơ cá nhân của quý khách để IATA có thể đề xuất các nội dung và dịch vụ được cá nhân hóa dành riêng cho quý khách.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2869,6 +2865,10 @@
     <customLabels>
         <label>Địa chỉ Trang web doanh nghiệp</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc gia/ lãnh thổ của nơi làm việc của bạn</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Có</label>
