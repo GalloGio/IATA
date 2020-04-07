@@ -680,15 +680,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>When the filed &#39;Airline Designator&#39; is changed in an Airline this process saves the old value in another field.
+        <description>When the filed &apos;Airline Designator&apos; is changed in an Airline this process saves the old value in another field.
 Previously it was done only for ACLI process but now it applies always, including manual changes.</description>
-        <formula>AND(
-  OR(
-    RecordType.DeveloperName==&#39;IATA_Airline&#39;,
-    RecordType.DeveloperName==&#39;IATA_Airline_BR&#39;
-  ),
-  ISCHANGED(Airline_designator__c)
-)</formula>
+        <formula>AND(   OR(     RecordType.DeveloperName==&apos;IATA_Airline&apos;,     RecordType.DeveloperName==&apos;IATA_Airline_BR&apos;   ),   ISCHANGED(Airline_designator__c) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
