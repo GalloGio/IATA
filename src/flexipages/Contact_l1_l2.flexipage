@@ -91,6 +91,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>runtime_sales_activities:activityPanel</componentName>
+        </componentInstances>
+        <componentInstances>
             <componentName>console:lastViewedInCommunity</componentName>
         </componentInstances>
         <name>sidebar</name>
