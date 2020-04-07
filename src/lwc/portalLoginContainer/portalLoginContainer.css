@@ -21,7 +21,7 @@
 
 @media only screen and (min-width: 961px) {
    .customPadding {
-       padding-top: 40px !important;
+       padding-top: 5px !important;
    }
    .customPaddingHeader{
        /*padding-top: 2rem !important;
@@ -44,7 +44,7 @@
    }
 
    .welcomePanelContainer{
-    max-width: 550px;
+	    width: 40%;
     }
 }
 
@@ -75,10 +75,8 @@
 }
 
 .fixedPosition{
-    position: fixed;
     left: 0;
-    width: inherit;
-    max-width: inherit;
+    height:100%;
 }
 
 
@@ -89,14 +87,13 @@
     justify-content: flex-end;
     flex-grow: 1;
     align-items: flex-end;
-    padding-top: 10px;
 }
 
 .footerlinks{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 10px 20px;
     font-size: 14px;
 }
 
