@@ -142,7 +142,7 @@ global class AMS_OSCAR_Webservice {
 
 				if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
-					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
 				}
 
 				insert ifapCase;
