@@ -18,7 +18,7 @@ import register                                 from '@salesforce/apex/PortalReg
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
 import isGuest                                  from '@salesforce/user/isGuest';
-import getPortalServiceId						from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
 
 /* ==============================================================================================================*/
@@ -293,7 +293,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							}
 						}
 
-						getPortalServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
+						getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
 							var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
 							this.gcsPortalServiceId = gcsPortalServiceId;
 				
