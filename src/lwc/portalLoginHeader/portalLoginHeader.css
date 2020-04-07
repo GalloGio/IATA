@@ -46,6 +46,10 @@
     }
 
     .selectorContainer{
-        padding-bottom: 1rem; 
+        padding-bottom: 1rem;
     }
+}
+
+.selectorContainer{
+    padding-bottom: 1rem !important;
 }
