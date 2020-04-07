@@ -285,19 +285,19 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public Boolean validRegionSelected() {
-		return region != 'Select Region' && region != null;
+		return region != REGION_QUESTION && region != null;
 	}
 
 	public Boolean validModeSelected() {
-		return mode != 'Select Mode' && mode != null;
+		return mode != MODE_QUESTION && mode != null;
 	}
 
 	public Boolean validFinancialYearEndSelected() {
-		return mode == 'Financial year end' ? (String.isNotBlank(month) && month != 'Please Select a Month') : true;
+		return mode == MODE_FINANCIAL_YEAR ? (String.isNotBlank(month) && month != MONTH_QUESTION) : true;
 	}
 
 	public Boolean validIATACodeSelected() {
-		return mode == 'IATA Code' ? String.isNotBlank(iataCode) : true;
+		return mode == MODE_IATA_CODE ? String.isNotBlank(iataCode) : true;
 	}
 
 	public Boolean getshouldDisableButton() {
@@ -374,11 +374,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			queryAccount += 'AND Location_Type__c = \'' + AMS_Utils.GE + '\' ';
 		}
 
-		if (mode == 'Financial year end') {
+		if (mode == MODE_FINANCIAL_YEAR) {
 			queryAccount += 'AND Financial_Year_End__c = :month ';
-		} else if (mode == 'Country') {
+		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
-		} else if (mode == 'IATA Code') {
+		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 		}
 
@@ -467,8 +467,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		cashOrLiteAccreditationModelSelected = (!accredModelList.contains(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) && !accredModelList.isEmpty());
 
 		if (multicountryAccreditationModelSelected) {
-			mode = 'Select Mode'; 
-			region = 'Select Region';
+			mode = MODE_QUESTION; 
+			region = REGION_QUESTION;
 		}
 
 		con = null;
