@@ -7,6 +7,26 @@ private class ANG_MulticountryFinancialAssessmentTest {
 	@TestSetup
 	static void setup(){
 
+		insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
+
+		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(
+			name = IfapToolManager.IFAPCONFIGARATIONNAME,
+			Prod_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME,
+			Dev_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME
+		);
+		insert Amazon_Cred;
+
+		AWSKey__c credential = new AWSKey__c(
+			name = IfapToolManager.IFAPCONFIGARATIONNAME,
+			Key__c = 'asd',
+			Secret__c = 'asd',
+			IAS_configuration_name__c = 'asdas',
+			IAS_Access_Point__c = 'asd',
+			Bucket__c = 'asd',
+			AWS_ENDPOINT_URL__c = 'asd'
+		);
+		insert credential;
+
 		ANG_RME_Alert_Service_Test.createRMEMappings();
 
 		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
@@ -922,6 +942,35 @@ private class ANG_MulticountryFinancialAssessmentTest {
 		}
 		
 		System.assert(exceptionThrown, 'Exception should have been thrown');
+
+		Test.stopTest();
+
+	}
+
+	@isTest
+	static void uploadFinancialStatementsTest(){
+	
+		List<Case> ifapCaseLst = [SELECT Id, AccountId, Account.Financial_Assessment_Points__c, Account.Financial_Review_Result__c,
+									  Account.Assessment_Performed_Date__c
+								  FROM Case
+								  WHERE Financial_Review_Type__c IN :AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES];
+		
+		Test.startTest();
+
+		PageReference pageRef = Page.AmazonFinancial;
+		Test.setCurrentPage(pageRef);
+		
+		ApexPages.StandardController standardCtrl = null;
+		AmazonFinancialCtrl amazonCtrl = null; 
+
+		for(Case cse : ifapCaseLst){
+			standardCtrl = new ApexPages.StandardController(cse);
+			amazonCtrl = new AmazonFinancialCtrl(standardCtrl);
+			System.assert(amazonCtrl.canUploadAndDelete, 'For multicountry agents the user must be able to submit documents internally');
+			//Simulate request from portal
+			AmazonFinancialCtrl.isInternalSfdcRequest = false;
+			System.assert(!amazonCtrl.canUploadAndDelete, 'For multicountry agents the user must NOT be able to submit documents from the portal');
+		}
 
 		Test.stopTest();
 
