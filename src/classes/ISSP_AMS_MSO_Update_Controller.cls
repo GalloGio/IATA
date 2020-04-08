@@ -376,9 +376,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 				oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
 				insert oscarCase;
 
-				if(!Test.isRunningTest()) {
-					closeOscar(String.valueOf(oscar.Id));
-				}
+				closeOscar(String.valueOf(oscar.Id));
 
 		} catch (Exception ex) {
 			ApexPages.addMessages(ex);
