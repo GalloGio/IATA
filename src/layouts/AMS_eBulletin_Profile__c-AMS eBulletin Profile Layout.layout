@@ -69,7 +69,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Forms_of_Payment__c</field>
+                <field>Agency_Info_Forms_of_Payment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
