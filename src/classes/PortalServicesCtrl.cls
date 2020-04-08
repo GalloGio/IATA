@@ -222,7 +222,6 @@ public with sharing class PortalServicesCtrl {
 									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 	
-		System.debug('getPortalApplications finalQuery : ' + finalQuery);
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
 	
 		// Second search based in Custom Metadata for all those remaining apps
@@ -373,15 +372,12 @@ public with sharing class PortalServicesCtrl {
 															   where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
 	
 	
-		System.debug('get Users '+contactToUserIds.values());
 		Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
 	
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		for(Portal_Application_Right__c accessRight : usersGrantedList) {
 	
 			String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
-			System.debug('get User '+accessRight.Contact__c);
-			System.debug('get User2 '+userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
 	
 			Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
 	
@@ -1017,7 +1013,6 @@ public with sharing class PortalServicesCtrl {
 													 FROM Portal_Application_Right__c
 													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 	
-		System.debug('psaList: ' + psaList);
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
@@ -1354,19 +1349,20 @@ public with sharing class PortalServicesCtrl {
 	
 			Boolean requiredDataPopulated = true;
 			Boolean latestToSAccepted = true;
+			Boolean serviceExists = true;
 	
 			String resURL = '';
 	
 			User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
 	
 			Set<String> l3MandatoryFieldsContact = new Set<String>{
-				'Birthdate'
+				'Additional_Email__c','Birthdate'
 			};
 			Set<String> l3MandatoryFieldsTCRD = new Set<String>{
 				'City_Name__c','Country_Reference__c','PO_Box_Address__c','Street__c'
 			};
 	
-			Contact c = [SELECT Id, Name, Birthdate , Shipping_Address__c FROM Contact WHERE Id =: userAux.ContactId];
+			Contact c = [SELECT Id, Name, Additional_Email__c, Birthdate FROM Contact WHERE Id =: userAux.ContactId];
 			for(String apiName: l3MandatoryFieldsContact){
 				if(c.get(apiName) == null){
 					requiredDataPopulated = false;
@@ -1410,11 +1406,20 @@ public with sharing class PortalServicesCtrl {
 				}
 				
 			}
+
+			List<Portal_Application_Right__c> parList = [SELECT Id FROM Portal_Application_Right__c 
+															WHERE Contact__c =: userAux.ContactId 
+															AND Portal_Application__c =: serviceId 
+															AND Right__c = 'Access Granted'];
+	
+			if(parList.isEmpty()){
+				serviceExists = false;
+			}
 	
 			String baseUrl = Site.getBaseSecureUrl();
 			String pathPrefix = Site.getPathPrefix().replace('/s', '');
 	
-			if(requiredDataPopulated && latestToSAccepted){
+			if(requiredDataPopulated && latestToSAccepted && serviceExists){
 		
 				List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
 		

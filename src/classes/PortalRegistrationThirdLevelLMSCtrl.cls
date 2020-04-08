@@ -455,13 +455,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							delete ycdNew;
 						}
 
-
 						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
 						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
 						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
 						ycdOld.OwnerId = loggedUser.Id;
 						update ycdOld;
-
 
 					}else{
 						ycdNew.Account_Contact_Role__c = acrOld.Id;
@@ -548,8 +546,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						delete acrNew;
 					}
 
-
-
 					//Create Yardstick Contact Role Detail
 					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
 																	FROM Training_Contact_Role_Details__c
@@ -579,7 +575,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						conToInactivate.Additional_Email__c = '';
 					}
 
-					// conToInactivate.status__c = 'Inactive';
+					conToInactivate.status__c = 'Inactive';
 					update conToInactivate;
 
 					Set<String> conIdSet = new Set<String>();
@@ -741,63 +737,79 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String plainBody = message.getPlainTextBody();
 
 			if(plainBody != null) {
+				String headerImageName = Label.CSP_Email_Header_Image_LMS;
+				String footerImageName = Label.CSP_Email_Footer_Image;
+				String headerImageUrl;
+				String footerImageUrl;
+				Map<String,Id> docNameIdMap = new Map<String,Id>();
+
+				String sEmail_Confirmation_Body = '';
+
 				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
 					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
-					String headerImageName = Label.CSP_Email_Header_Image;
-					String footerImageName = Label.CSP_Email_Footer_Image;
-					String headerImageUrl;
-					String footerImageUrl;
-					Map<String,Id> docNameIdMap = new Map<String,Id>();
 
-					String sEmail_Confirmation_Body = '';
 					if(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail)){
 						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
 													Label.CSP_Verification_L3_Email_PE_2_LMS;
 					}else{
 						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
-													Label.CSP_Verification_L3_Email_UE_2_LMS +
-													Label.CSP_Verification_L3_Email_UE_3_LMS;
+													Label.CSP_Verification_L3_Email_UE_2_LMS;
+													// + Label.CSP_Verification_L3_Email_UE_3_LMS;
 					}
+				}else{
+					//All other Flows that don't match a email or Aditional Email
+					sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_LMS;
+				}
 
+				for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+					docNameIdMap.put(doc.name,doc.id);
+				}
 
-					for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
-						docNameIdMap.put(doc.name,doc.id);
+				if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
+				if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+
+				Map<String, String> mapBodyParams = new map<String, String>{
+						'{!HeaderUrl}'                                   => headerImageUrl,
+						'{!FooterUrl}'                                   => footerImageUrl,
+						'{!Receiving_User.FirstName}'                    => contactName,
+						'{!Community_Url}'                               => sURL,
+						'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
+						'{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
+						'{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
+						'{!$Label.CSP_Email_Welcome_Part_1}'             => Label.CSP_Email_Welcome_Part_1,
+						'{!$Label.CSP_Email_Welcome_Part_2}'             => Label.CSP_Email_Welcome_Part_2,
+						'{!$Label.CSP_Email_Welcome_Part_3}'             => Label.CSP_Email_Welcome_Part_3,
+						'{!$Label.CSP_Email_Welcome_Part_4}'             => Label.CSP_Email_Welcome_Part_4,
+						'{!$Label.CSP_Email_Welcome_Part_5}'             => Label.CSP_Email_Welcome_Part_5,
+						'{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
+						'{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2,
+						'{!ExistingContactName}'                         => wUserInfo.existingContactName,
+						'{!ExistingContactEmail}'                        => wUserInfo.existingContactEmail,
+						'{!ExistingContactAccount}'                      => wUserInfo.existingContactAccount,
+						'{!ExistingContactUsername}'                     => sEmail_Confirmation_Body
+
+				};
+
+				for(String key : mapBodyParams.keySet()) {
+					plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
+				}
+
+				plainBody = plainBody.replace('[URL]',sURL);
+
+				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
+					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
+
+					if(flow == 'flow6'){
+						plainBody = plainBody.replace('[Email]',address);
+						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
+					}else{
+						plainBody = plainBody.replace('[Email]',wUserInfo.Email);
+						plainBody = plainBody.replace('[ExistingEmail]',wUserInfo.existingContactEmail);
 					}
-
-					if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
-					if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
-
-					Map<String, String> mapBodyParams = new map<String, String>{
-							'{!HeaderUrl}'                                   => headerImageUrl,
-							'{!FooterUrl}'                                   => footerImageUrl,
-							'{!Receiving_User.FirstName}'                    => contactName,
-							'{!Community_Url}'                               => sURL,
-							'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
-							'{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
-							'{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
-							'{!$Label.CSP_Email_Welcome_Part_1}'             => Label.CSP_Email_Welcome_Part_1,
-							'{!$Label.CSP_Email_Welcome_Part_2}'             => Label.CSP_Email_Welcome_Part_2,
-							'{!$Label.CSP_Email_Welcome_Part_3}'             => Label.CSP_Email_Welcome_Part_3,
-							'{!$Label.CSP_Email_Welcome_Part_4}'             => Label.CSP_Email_Welcome_Part_4,
-							'{!$Label.CSP_Email_Welcome_Part_5}'             => Label.CSP_Email_Welcome_Part_5,
-							'{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
-							'{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2,
-							'{!ExistingContactName}'                         => wUserInfo.existingContactName,
-							'{!ExistingContactEmail}'                        => wUserInfo.existingContactEmail,
-							'{!ExistingContactAccount}'                      => wUserInfo.existingContactAccount,
-							'{!ExistingContactUsername}'                     => sEmail_Confirmation_Body
-
-					};
-
-					for(String key : mapBodyParams.keySet()) {
-						plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
-					}
-					plainBody = plainBody.replace('[URL]',sURL);
-					plainBody = plainBody.replace('[Email]',wUserInfo.Email);
-					plainBody = plainBody.replace('[ExistingEmail]',wUserInfo.existingContactEmail);
 
 				}else{
-					plainBody = plainBody.replace('[CustomerName]', contactName).replace('[URL]',sURL);
+					//All other Flows that don't match a email or Aditional Email
+					plainBody = plainBody.replace('[Email]',address);
 				}
 
 			}
@@ -825,7 +837,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled(cacheable=false)
 	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
-
 		String sRes = '';
 		String fullName = firstname + lastname;
 		String fullNameReverse = lastname + firstname;

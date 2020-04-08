@@ -16,34 +16,50 @@
                     <div class="progressBar">
                         <div class="progressItem">
                             <div class="itemIcon">
-                                <template if:true={isProfileInformationStep}>
+                                <template if:false={hasStep1Link}>
                                     <img src={step1Active} height="24" width="24">
                                 </template>
-                                <template if:false={isProfileInformationStep}>
+                                <template if:true={hasStep1Link}>
                                     <img src={stepValid} height="24" width="24">
                                 </template>
                             </div>
-                            <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            <template if:true={hasStep1Link}>
+                                <div class="itemTitle itemClickable" onclick={goToProfileDetailsFromBanner}><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            </template>
+                            <template if:false={hasStep1Link}>
+                                <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            </template>  
                         </div>
                         <div class="progressItem">
                             <div class="itemIcon">
                                 <template if:true={isStep2Inactive}>
                                     <img src={step2Inactive} height="24" width="24">
                                 </template>
-                                <template if:true={isEmailValidationStep}>
+                                <template if:true={isStep2Active}>
                                     <img src={step2Active} height="24" width="24">
                                 </template>
                                 <template if:true={isStep2Valid}>
                                     <img src={stepValid} height="24" width="24">
                                 </template>
                             </div>
-                            <div class="itemTitle"><span>{labels.OneId_Contact_Association_Validation}</span></div>
+                            
+                            <template if:true={hasStep2Link}>
+                                <div class="itemTitle itemClickable" onclick={goToEmailValidationStepFromBanner}><span>{labels.CSP_L3_Email_Validation_LMS}</span></div>
+                            </template>
+                            <template if:false={hasStep2Link}>
+                                <div class="itemTitle"><span>{labels.CSP_L3_Email_Validation_LMS}</span></div>
+                            </template>
                         </div>
                         <div class="progressItem">
                             <div class="itemIcon">
                                 <img src={step3Inactive} height="24" width="24">
                             </div>
-                            <div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
+                            <template if:true={hasStep3Link}>
+                                <div class="itemTitle itemClickable" onclick={goToConfirmationFromBanner}><span>{labels.CSP_L2_Confirmation}</span></div>
+                            </template>
+                            <template if:false={hasStep3Link}>
+                                <div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
+                            </template>
                         </div>
                     </div>
                 </div>

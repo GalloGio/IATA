@@ -229,10 +229,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 		}
 
-		console.log('portalHeader - connectedCallback - Start L3' );
-		console.log('portalHeader - connectedCallback - pageParams:' + pageParams);
-		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
-		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
 		// FOR LMS L3
 		if(pageParams !== undefined &&
 			(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
@@ -250,14 +246,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 		
 							verifyCompleteL3Data({serviceId: serviceId})
 							.then(result => {
-console.log('result1: ', result );								
 								if(result !== 'not_complete'){
-console.log('pageParams.RelayState: ', pageParams.RelayState );
 									if(pageParams.RelayState !== ''){
 										let sURL = result.split('RelayState');
-console.log('sURL: ', sURL );
-										result = sURL[0] + 'RelayState=' + pageParams.RelayState;
-console.log('result2: ', result );
+										result = sURL[0] + '&RelayState=' + pageParams.RelayState;
 									}
 
 									window.open(result);
@@ -280,7 +272,6 @@ console.log('result2: ', result );
 				}
 
 			}else if(pageParams.lmsflow.indexOf('flow') > -1){
-				console.log('portalHeader - connectedCallback - IF LMS FLOW' );
 				this.thirdLoginLMS = true;
 				this.registrationlevel = '3';
 				this.displayFirstLogin = false;
@@ -288,12 +279,6 @@ console.log('result2: ', result );
 			}
 
 		}
-		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
-		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
-		console.log('portalHeader - connectedCallback - pageParams.lmsflow:' + pageParams.lmsflow);
-		console.log('portalHeader - connectedCallback - this.firstLogin:' + this.firstLogin);
-		console.log('portalHeader - connectedCallback - this.thirdLoginLMS:' + this.thirdLoginLMS);
-		console.log('portalHeader - connectedCallback - this.registrationlevel:' + this.registrationlevel);
 		this.redirectChangePassword();
 
 		getNotifications().then(result => {

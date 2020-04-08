@@ -4072,7 +4072,15 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Email Header Image</shortDescription>
         <value>CSP Email Header Image</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_Email_Header_Image_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Email Header Image LMS</shortDescription>
+		<value>CSP Email Header Image LMS</value>
+	</labels>
+	<labels>
         <fullName>CSP_Email_Here</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4120,7 +4128,15 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Email Signature Part 1</shortDescription>
         <value>Thanks for being part of IATA.</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_Email_Signature_Part_1_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Email Signature Part 1 LMS</shortDescription>
+		<value>Thank you again for your interest in IATA Training!</value>
+	</labels>
+	<labels>
         <fullName>CSP_Email_Signature_Part_2</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4128,7 +4144,15 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Email Signature Part 2</shortDescription>
         <value>IATA</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_Email_Signature_Part_2_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Email Signature Part 2 LMS</shortDescription>
+		<value>Your IATA Training team</value>
+	</labels>
+	<labels>
         <fullName>CSP_Email_Welcome_Part_1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -45652,7 +45676,15 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
         <value>Successfully updated your profile information.&lt;br/&gt;&lt;b&gt; From now, please only use your current Work Email [Email] to login to the IATA Customer Portal&lt;/b&gt;.</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_L2_SucessUpdateOnly_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
+		<value>Successfully updated your profile information.&lt;br/&gt;Please continue to use your email [Email] to login to the IATA customer portal.</value>
+	</labels>
+	<labels>
         <fullName>CSP_L2_VerificationToP1_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -45700,7 +45732,15 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Existing User</shortDescription>
         <value>The Work email you have provided is already associated with an existing user. Please check that the work email address you provided is correct. If so please click next. Once you confirm you have access to this work email address, the user you are currently logged in with (associated with your personal email) will be merged with the existing user associated with your work email address. From now on you will only be able to login with your work email address.</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_L3_Have_Work_Email</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP_L3_Have_Work_Email</shortDescription>
+		<value>Do you have an individual Work Email Address?</value>
+	</labels>
+	<labels>
         <fullName>CSP_L3_HomePage_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -45802,7 +45842,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Profile Updating P1</shortDescription>
-        <value>Updating your profile informattion.</value>
+        <value>Updating your profile information.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_UpdatingProfileP2_LMS</fullName>
@@ -45828,13 +45868,21 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Username</shortDescription>
         <value>Username</value>
     </labels>
+	<labels>
+		<fullName>CSP_L3_VerificationMailTitle_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Verification Mail Title</shortDescription>
+		<value>Verification Mail</value>
+	</labels>
     <labels>
         <fullName>CSP_L3_WorkEmail_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Work Email</shortDescription>
-        <value>Work Email</value>
+        <value>Login Email</value>
     </labels>
     <labels>
         <fullName>CSP_L3_WorkPhone_LMS</fullName>
@@ -45925,7 +45973,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Business_Address_Information_Message_LMS</shortDescription>
-        <value>Please add your Shipping address information.</value>
+        <value>Please enter your shipping address so we can send you study material and/or course certificates. Please note that we cannot ship to PO Box addresses.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Profile_Details_Message_LMS</fullName>
@@ -46013,7 +46061,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Validation</shortDescription>
-        <value>Email Validation</value>
+        <value>Email addresses</value>
     </labels>
     <labels>
         <fullName>CSP_L3_ExistTrainNameMatch_LMS</fullName>
@@ -46062,7 +46110,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_Note_F6_LMS</shortDescription>
-        <value>Please note that we have merged your accounts. &lt;b&gt;From now, please only use your Work Email to login to the IATA Customer Portal&lt;/b&gt;.</value>
+        <value>Please note that we have merged your accounts. From now, please only use your Work Email to login to the IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Note_F7_LMS</fullName>
@@ -46086,7 +46134,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Work Email</shortDescription>
-        <value>Please also provide your Work Email</value>
+        <value>Please also provide your Login Email</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Salutation_LMS</fullName>
@@ -46118,7 +46166,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Training Validation Description</shortDescription>
-        <value>IATA needs your Training Information to maintain your lifelong Training record with us. We also need your Training Information access directly to your Exams and Courses.</value>
+        <value>IATA needs your Training Information to maintain your lifelong Training record with us, and for you to access to your Exams and Courses.</value>
     </labels>
 	<labels>
 		<fullName>CSP_L3_Zip_Mandatory_LMS</fullName>
@@ -46150,7 +46198,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_UE_1_LMS</shortDescription>
-        <value>Please click on this &lt;b&gt;&lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this personal email.&lt;br/&gt;&lt;br/&gt;</value>
+        <value>Please click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this personal email [Email].&lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>
@@ -46158,7 +46206,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_UE_2_LMS</shortDescription>
-        <value>The user associated with your work email [Email] will then be merged with the existing user associated with this personal email address.&lt;br/&gt;</value>
+        <value>The Training record associated with your personal email will be merged with the one associated with your work email [LoginEmail]. From now, please only use this work email to login to the IATA customer portal.&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_3_LMS</fullName>
@@ -46176,7 +46224,15 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Registration Existing work Message</shortDescription>
         <value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to this work email address, the user you are currently logged in with (associated with your personal email) will be merged with the existing user associated with your work email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
     </labels>
-    <labels>
+	<labels>
+		<fullName>CSP_Registration_Existing_Work_Message_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Registration Existing work Message</shortDescription>
+		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above personal email address, we will merge your training accounts. From now on, please continue to login with [Email] only.</value>
+	</labels>
+	<labels>
         <fullName>Contact_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46231,12 +46287,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LMS verification email</shortDescription>
-        <value>
-            &lt;p&gt;Dear [CustomerName],&lt;/p&gt;
-            &lt;p&gt;Thank you for updating your profile on the IATA Customer Portal.&lt;/p&gt;
-            &lt;p&gt;Please confirm your email address by clicking on this &lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;.&lt;/p&gt;
-            &lt;p&gt;Thank you for your interest in IATA&lt;/p&gt;
-        </value>
+        <value>&lt;p&gt;Thank you for choosing IATA Training. In order to validate your [Email] email address please click on this &lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;. This way IATA Training will be able to maintain your lifelong training record.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Training_Section</fullName>
