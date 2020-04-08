@@ -25,15 +25,13 @@ public with sharing class DataSubmissionTriggerHandler {
 			}
 		}
 
-		Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, Email FROM Contact WHERE Id =: allContacts]);
+		Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, Email FROM Contact WHERE Id =: allContacts AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')]);
 
 		List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
 		for(Id dataSubm: dsWithContacts.keySet()){
-			Set<Id> contacts = dsWithContacts.get(dataSubm);
-			if(contacts != null){
-				for (Id cId: contacts){
+			for (Id cId: dsWithContacts.get(dataSubm)){
+				if(contactsMap.containsKey(cId))
 					allmsg.add(createNotification(dataSubm, contactsMap.get(cId)));
-				}
 			}
 		}
 

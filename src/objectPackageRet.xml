@@ -35,10 +35,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomPermission</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -57,5 +53,5 @@
         <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>45.0</version>
+    <version>47.0</version>
 </Package>

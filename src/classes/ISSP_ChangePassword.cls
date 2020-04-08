@@ -194,21 +194,6 @@ public without sharing class ISSP_ChangePassword {
 	}
 
 	public void provisioning(){
-	/*
-		provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
-		PermissionSetAssignment[] lstcurrentUserPerSet = [SELECT Id, PermissionSet.Name,AssigneeId
-																FROM PermissionSetAssignment
-																WHERE AssigneeId = :Userinfo.getUserId() AND PermissionSet.Name = 'FRED_Provisioning'];
-
-		List <PermissionSet> fredprovisioning = [SELECT Id FROM PermissionSet WHERE Name = 'FRED_Provisioning'];
-		if(!fredprovisioning.isEmpty() && lstcurrentUserPerSet.size() == 0){
-			PermissionSetAssignment assignPset = new PermissionSetAssignment();
-				assignPset.AssigneeId = provUser.Id;
-				assignPset.PermissionSetId = fredprovisioning[0].Id;
-			insert assignPset;
-		}
-		*/
-
 		LightningConnectedAppHelper.submit('FRED', 'FRED Primary User');
 	}
 
@@ -285,7 +270,8 @@ public without sharing class ISSP_ChangePassword {
 			String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 			// String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
 
-			User userInfo = [SELECT id, accountId, ContactId FROM USER WHERE id=: UserInfo.getUserId()];
+			User userInfo = [SELECT id, accountId, ContactId, contact.user_portal_status__c FROM USER WHERE id=: UserInfo.getUserId()];
+			
 
 			List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
 
@@ -322,37 +308,16 @@ public without sharing class ISSP_ChangePassword {
 					accContRoleToInsert.Service_Rendered__c = 'IFTP';
 					accContRoleToInsert.Status__c = 'Active';
 					accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+					accContRoleToInsert.company_code__c='TC';//temporary employee code
 					if(bAccRole){
 						accContRoleToInsert.Account_Role__c = accRole.Id;
 					}
 
 					accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-
 					accContRoleToInsert.Details__c = '';
 					accContRoleToInsert.Contact__c = userInfo.ContactId;
 
 					insert accContRoleToInsert;
-
-					Account_Contact_Role__c accContRoleToInserted = [SELECT Name FROM Account_Contact_Role__c WHERE id = :accContRoleToInsert.Id LIMIT 1];
-
-					String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
-					accContRoleToInserted.Company_Code__c = newEmployeeCode;
-
-					update accContRoleToInserted;
-
-					Contact cont = [SELECT id, FirstName, LastName FROM Contact WHERE Id = :userInfo.ContactId LIMIT 1];
-
-					List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-					IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																		accContRoleToInserted.Company_Code__c,
-																		cont.FirstName,
-																		cont.LastName);
-					IftpHistoryRecordsToBeInserted.add(ihrec);
-
-					if(IftpHistoryRecordsToBeInserted.size() > 0){
-						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-					}
-
 					Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
 						Portal_Application__c = pa.id,
 						Right__c = 'Access Requested',

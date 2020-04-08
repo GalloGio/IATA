@@ -11,6 +11,7 @@ import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.g
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
 import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
 import createCaseTD from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCaseTreasuryDashboard';
+import getUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 // Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
@@ -130,6 +131,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track relatedAccounts;
 
     @track relatedContacts;
+	
+    get relatedAccountsShow(){
+        return (this.agentProfile && this.relatedAccounts.length); 
+    }
 
     //is the user a Level1 user? If he has not completed level 2 registration he is not
     @track Level1User = false;
@@ -142,6 +147,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     topicLabel;
     @track subtopicLabel;
     countryISO;
+	userContact;
 
     //for Treasury Dashboard
     recordTypeId;
@@ -165,6 +171,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.validateEntryParameters();
         this.getRelatedAccounts();
         this.getRelatedContacts();
+		this.getUser();
 
     }
 
@@ -347,6 +354,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 					this.setPortalUserIATACode();
             });
     }
+	
+	getUser() {
+        getUser()
+            .then(result => {
+                this.userContact = JSON.parse(JSON.stringify(result.ContactId));
+            });
+    }
 
     setPortalUserIATACode() {
         getContact()
@@ -363,6 +377,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.userContact);
                 //deactivate spinner
                 this.loading = false;
             });
@@ -382,6 +397,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     handleContactSearch(event) {
         searchContacts(event.detail)
             .then(results => {
+				results = results.filter(obj => obj.id !== this.userContact);
                 this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
                 this.requiredClass = '';
             })

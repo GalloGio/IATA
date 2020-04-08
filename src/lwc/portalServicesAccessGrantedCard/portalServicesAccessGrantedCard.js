@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
 
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
@@ -90,34 +89,26 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 				if (openWindowData) {
 					//open new tab with the redirection
 
-					if (myUrl.startsWith('/')) {
-						goToOldPortalService({ myurl: myUrl })
-							.then(result => {
-								//open new tab with the redirection
-								window.open(result);
-								this.toggleSpinner();
-							})
-							.catch(error => {
-								//throws error
-								this.error = error;
-							});
+                    if (myUrl.startsWith('/')) {
+                                //open new tab with the redirection
+                                window.open(myUrl);
+                                this.toggleSpinner();       
+                    } else {
+                        if (appName === 'Payment Link' || appName === 'Paypal') {
+                            paymentLinkRedirect()
+                                .then(result => {
+                                    if (result !== undefined && result !== '') {
+                                        myUrl = result;
+                                        if (!myUrl.startsWith('http')) {
+                                            myUrl = window.location.protocol + '//' + myUrl;
+                                        }
+                                    }
+                                    window.open(myUrl);
+                                    this.toggleSpinner();
+                                });
 
-					} else {
-						if (appName === 'Payment Link' || appName === 'Paypal') {
-							paymentLinkRedirect()
-								.then(result => {
-									if (result !== undefined && result !== '') {
-										myUrl = result;
-										if (!myUrl.startsWith('http')) {
-											myUrl = window.location.protocol + '//' + myUrl;
-										}
-									}
-									window.open(myUrl);
-									this.toggleSpinner();
-								});
-
-						}
-						else if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
+                        } 
+                        else if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
 							getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
 								.then(serviceId => {
 									verifyCompleteL3Data({serviceId: recordId})
@@ -139,29 +130,24 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 							});
 
 						}
-						else {
-							if (!myUrl.startsWith('http')) {
-								myUrl = window.location.protocol + '//' + myUrl;
-							}
-							window.open(myUrl);
-							this.toggleSpinner();
-						}
-					}
+                        else {
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
+                        }
+                    }
 
 
-				} else if (myUrl !== '') {
-					//redirects on the same page
-					//method that redirects the user to the old portal maintaing the same loginId
-					goToOldPortalService({ myurl: myUrl })
-						.then(result => {
-							//open new tab with the redirection
-							window.location.href = result;
-							this.toggleSpinner();
-						})
-						.catch(error => {
-							//throws error
-							this.error = error;
-						});
+                } else if (myUrl !== '') {
+                    //redirects on the same page
+                    //method that redirects the user to the old portal maintaing the same loginId
+ 
+                    //open with the redirection
+                    window.open(myUrl,"_self");
+                    this.toggleSpinner();
+                        
 
 				}
 			}

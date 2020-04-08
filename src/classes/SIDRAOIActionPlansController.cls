@@ -21,17 +21,6 @@ public with sharing class SIDRAOIActionPlansController {
 			strPreviousSortField = (page.getParameters().get('strPreviousSortField') == null) ? 'CreatedDate' : page.getParameters().get('strPreviousSortField');
 			isSortASC = (page.getParameters().get('isSortASC') == null) ? true : Boolean.valueOf(page.getParameters().get('isSortASC'));
 
-			//system.debug('### strSortField dp: ' + strSortField);
-			//system.debug('### strPreviousSortField dp: ' + strPreviousSortField);
-			//system.debug('### isSortASC dp: ' + isSortASC);
-
-			// Get the Operational_Improvements__c related to this case
-			/*this.listOIActionPlans = [
-				Select OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c
-				From OI_Action_Plan__c
-				where OI__c = :this.parent.Id
-				order by CreatedDate ASC, Id ASC];*/
-
 			getOIActionPlans();
 
 			//ACAMBAS - WMO-421 - End
@@ -146,9 +135,9 @@ public with sharing class SIDRAOIActionPlansController {
 
 	public void getOIActionPlans() {
 		String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c ' +
-							  'FROM OI_Action_Plan__c ' +
-							  'WHERE OI__c = \'' + this.parent.Id + '\' ' +
-							  'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
+								'FROM OI_Action_Plan__c ' +
+								'WHERE OI__c = \'' + this.parent.Id + '\' ' +
+								'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
 
 		this.listOIActionPlans = (list<OI_Action_Plan__c>) Database.query(queryStr);
 	}

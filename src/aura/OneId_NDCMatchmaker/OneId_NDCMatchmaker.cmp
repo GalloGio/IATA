@@ -1,4 +1,4 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
+<aura:component access="public" implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
 
     <aura:attribute type="String" name="serviceName" />
 
@@ -58,6 +58,10 @@
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <ui:outputText class="slds-form-element__label" value="Website" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <ui:outputText class="slds-form-element__label" value="Travel Agents on-boarding portal" /><br />
+                            <ui:outputText class="slds-form-element__static" value="{!v.ndcCapabilities.NDC_Travel_Agents_on_boarding_portal__c}" />
                         </lightning:layoutItem>
                         <aura:set attribute="else">
                             <lightning:layoutItem size="6" padding="horizontal-small">
@@ -208,6 +212,9 @@
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <ui:outputText class="slds-form-element__label" value="Website" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Travel_Agents_on_boarding_portal__c" fieldName="NDC_Travel_Agents_on_boarding_portal__c" />
                         </lightning:layoutItem>
                         <aura:set attribute="else">
                             <lightning:layoutItem size="6" padding="horizontal-small">

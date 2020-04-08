@@ -20,9 +20,12 @@ public without sharing class ISSP_Financial_Institutions {
 	}
 	private String gdiPortalAppId {get; set;}
 	public String gdiPortalAppURL {get; private set;}
+	private String gdiPortalAppAgentCategory {get; set;}
 	private String conId {get; set;}
 	private String agencyCountry {get; set;}
 	private String agencyRegion {get; set;}
+	private String agencyCategory {get; set;}
+	private Boolean agencyIsGdi {get; set;}
 	public Boolean countryIsGDIEnabled {get; private set;}
 	public Boolean countryIsMulticountryEnabled {get; private set;}
 	public Boolean gdiAppRightGranted {
@@ -119,7 +122,7 @@ public without sharing class ISSP_Financial_Institutions {
 	public ISSP_Financial_Institutions() {}
 
 	private List<Financial_Institution__c> fetchFinancialInstitutions() {
-		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c, Contact__r.Account.Region_formula__c,
+		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, ANG_Restrict_by_Agency_Category__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c, Contact__r.Account.Region_formula__c,
 																						Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact__r.Account.Category__c,
 																						Contact__r.Account.IATA_ISO_Country__r.Multicountry_Enabled__c, Contact__r.Account.ANG_Accreditation_Model__c
 																						FROM Portal_Application_Rights__r
@@ -137,6 +140,7 @@ public without sharing class ISSP_Financial_Institutions {
 
 			gdiPortalAppId = gdiPortalApp.Id;
 			gdiPortalAppURL = gdiPortalApp.Application_URL__c;
+			gdiPortalAppAgentCategory = gdiPortalApp.ANG_Restrict_by_Agency_Category__c;
 
 			if (!gdiPortalApp.Portal_Application_Rights__r.isEmpty()) {
 				Portal_Application_Right__c existingGDIPortalAppRight = gdiPortalApp.Portal_Application_Rights__r[0];
@@ -145,7 +149,9 @@ public without sharing class ISSP_Financial_Institutions {
 				countryIsMulticountryEnabled = existingGDIPortalAppRight.Contact__r.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 				agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
 				agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
-				countryIsGDIEnabled = (existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && existingGDIPortalAppRight.Contact__r.Account.Category__c == 'IATA Passenger Sales Agent');
+				agencyCategory = existingGDIPortalAppRight.Contact__r.Account.Category__c;
+				agencyIsGdi = existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c;
+				countryIsGDIEnabled = (agencyIsGdi && ((gdiPortalAppAgentCategory != null && gdiPortalAppAgentCategory.CONTAINS(agencyCategory)) || (gdiPortalAppAgentCategory == null && agencyCategory == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || agencyCategory == AMS_Utils.CATEGORY_DOMESTIC_AGENT)));
 
 				if (existingGDIPortalAppRight.Right__c == AMS_Utils.PORTAL_APP_ACCESS_DENIED)
 					gdiAppRightDenied = true;
@@ -170,9 +176,9 @@ public without sharing class ISSP_Financial_Institutions {
 				countryIsMulticountryEnabled = userAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 				agencyCountry = userAcc.Country_ISO_Code__c;
 				agencyRegion = userAcc.Region_formula__c;
-				countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT);
+				countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT));
 				userCanRequestGDI = (!gdiAppRightDenied && !gdiAppRightGranted && !gdiAppRightRequested
-					&& userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+					&& (userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || userAcc.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT)
 					&& userAcc.Sector__c == AMS_Utils.SECTOR_PASSENGER
 					&& (AMS_Utils.ACTIVEAGENCYSTATUS.contains(userAcc.Status__c) || userAcc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 					&& (currentPortalUser.Contact.Financial_Assessment_Contact__c || currentPortalUser.Contact.User_Portal_Status__c == 'Approved Admin'));
@@ -200,9 +206,10 @@ public without sharing class ISSP_Financial_Institutions {
 				}
 			}
 			else {
+				List<Financial_Institution__c> finalFinancialInstitutionList = orderFinancialInstitutions(new Set<Financial_Institution__c>(financialInstitutions));
 				financialInstitutionsFound = true;
-				ssController = new ApexPages.StandardSetController(financialInstitutions);
-				ssController.setPageSize(financialInstitutions.size() > listSize ? listSize : financialInstitutions.size());
+				ssController = new ApexPages.StandardSetController(finalFinancialInstitutionList);
+				ssController.setPageSize(finalFinancialInstitutionList.size() > listSize ? listSize : finalFinancialInstitutionList.size());
 			}
 		}
 
@@ -218,6 +225,20 @@ public without sharing class ISSP_Financial_Institutions {
 		}
 
 		return new List<Financial_Institution__c>(financialInstitutions);
+	}
+
+	private List<Financial_Institution__c> orderFinancialInstitutions(Set<Financial_Institution__c> financialInstitutions) {
+		List<Financial_Institution__c> finalFinancialInstitutionList = new List<Financial_Institution__c>();
+		for (Financial_Institution__c fi: financialInstitutions) {
+			if (fi.Name.contains(GDI_FINANCIAL_INSTITUTION)) {
+				finalFinancialInstitutionList.add(fi);
+				financialInstitutions.remove(fi);
+				break;
+			}
+		}
+		finalFinancialInstitutionList.addAll(financialInstitutions);
+		
+		return new List<Financial_Institution__c>(finalFinancialInstitutionList);
 	}
 
 	public void startGDIPortalAppRightCreation() {

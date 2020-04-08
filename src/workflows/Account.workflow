@@ -105,6 +105,14 @@
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -120,6 +128,14 @@
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>amerz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bricenoa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
@@ -223,6 +239,16 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
   )
 )</formula>
         <name>Account site update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Airline_Designator_Backup</fullName>
+        <description>Copy the Airline Designator value to the field Airline Designator Old</description>
+        <field>Old_Airline_designator__c</field>
+        <formula>PRIORVALUE(Airline_designator__c)</formula>
+        <name>Airline Designator Backup</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -645,6 +671,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>true</active>
         <description>Sends a notification email when an airline becomes re-activated</description>
         <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Designator Backup</fullName>
+        <actions>
+            <name>Airline_Designator_Backup</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When the filed &apos;Airline Designator&apos; is changed in an Airline this process saves the old value in another field.
+Previously it was done only for ACLI process but now it applies always, including manual changes.</description>
+        <formula>AND(   OR(     RecordType.DeveloperName==&apos;IATA_Airline&apos;,     RecordType.DeveloperName==&apos;IATA_Airline_BR&apos;   ),   ISCHANGED(Airline_designator__c) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

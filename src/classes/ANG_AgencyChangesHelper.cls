@@ -1679,7 +1679,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
 		,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
 		,'Link_agent_name__c' => 'Link_agent_name__c'
-		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'};
+		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'
+		,'Geoname_Billing_City__c' => 'Geoname_Billing_City__c'
+		,'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'};
 
 		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
 			Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -1787,7 +1789,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
 		Set<Id> accountIdsToProcess = new Set<Id>();
 
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
 			rhcInfoList.add(r);
 			accountIdsToProcess.add(r.ANG_AccountId__c);
 		}
@@ -2059,27 +2061,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
-
-		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
-
-		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
-				Active__c = true
-		, Account__c = accId
-		, Change_Code__c = changeCodeDefinition.name
-		, OSCAR__c = oscar.Id
-		, Bulletin_Information__c = (changeCodeDefinition.memoText == null) ? '' : changeCodeDefinition.memoText.toUpperCase()
-		, Reason_Code__c = changeCodeDefinition.reasonCode
-		, Reason_Description__c = changeCodeDefinition.reasonDesc
-		, Source__c = source
-		, CreatedDate_User__c = convertToHubEffectiveDate(system.today())
-				//, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-		);
-
-		return aacNEW;
-
-	}
-
 	public static boolean sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
 		if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){
@@ -2105,7 +2086,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c,
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
 		FROM AMS_Pax_Accreditation_Form__c
 		WHERE Id =: oscarOnlineAccredId limit 1];
 	}

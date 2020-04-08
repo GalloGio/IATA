@@ -217,6 +217,8 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void handleAfterUpdate() {
 
+		//INC498146 - Sent ARV email 
+		handleAnnualRevalidationEmailNotification((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
 		updateCaseKPIFields();
 		updateCaseInfo();
 		createHoAdminNotifications();
@@ -258,13 +260,13 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		if(!accountIdSet.isEmpty()){
-
+			
 			//Fetch all the accounts from the hierarchies
 			List<Account> acctLst = new List<Account>(
 				[SELECT
 					Id,
 					ANG_FA_Opt_out__c
-				FROM
+				FROM  
 					Account
 				WHERE
 					Id IN :accountIdSet
@@ -2895,7 +2897,8 @@ public class AMS_OSCARTriggerHandler {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name,
+				NDC_Transactions__c
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 	}
@@ -3244,8 +3247,13 @@ public class AMS_OSCARTriggerHandler {
 				/*** AMSU-161 End ***/
 
 				//INC482850 - GDS Mandatory field - New Accreditation & Newgen Changes & Corrections
-				if((isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && String.isEmpty(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)){
-					oscar.addError('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check');
+				if (isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION)
+				{
+					allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+					if (! isValidGDSConfiguration(oscar, allOnlineAccr))
+						oscar.addError('You cannot set NDC to "Yes" and GDS at the same time');
+					else if (! isValidGDS(oscar, allOnlineAccr))
+						oscar.addError('The GDS or NDC should be populated. Please fill the GDS or NDC on the OSCAR central panel before passing the sanity check');
 				}
 
 				//ACAMBAS - NEWGEN-4784 - Start
@@ -3270,6 +3278,19 @@ public class AMS_OSCARTriggerHandler {
 			}
 		}
 	}
+
+	private static boolean isValidGDSConfiguration(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return ! (String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+				  && accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes');
+	}
+
+	private static boolean isValidGDS(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations)
+	{
+		return String.isNotEmpty(accreditations.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)
+			|| accreditations.get(oscar.AMS_Online_Accreditation__c).NDC_Transactions__c == 'Yes';
+	}
+
 	/*** AMSU-121 Start ***/
 	private static void validateShippingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
 		AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
@@ -4733,8 +4754,21 @@ public class AMS_OSCARTriggerHandler {
 			update casesToUpdate;
 	}
 
-	public static void handleAnnualRevalidation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+	/**
+	 * Handel Email notification when Anual Revalidation process
+	 * Step Administrative non-compliance is Passed
+	 */
+	public static void handleAnnualRevalidationEmailNotification(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+	
+		Map<Id, AMS_Oscar__c> oscarsToProcess = getAdministrativeNonCompliancePassedCases(oscars, oldOscars);
 
+		for(AMS_Oscar__c oscar : oscarsToProcess.values()) sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
+	}
+
+	/**
+	 * Get Oscars when Administrative non-compliance step is Passed
+	 */
+	public static Map<Id, AMS_Oscar__c> getAdministrativeNonCompliancePassedCases(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
 		Set<Id> oscarsIdsToProcess = new Set<Id>();
 
 		for (AMS_OSCAR__c oscar : oscars){
@@ -4742,33 +4776,42 @@ public class AMS_OSCARTriggerHandler {
 			if(oscar.Process__c == AMS_utils.NGANNUALREVAL && oldOscars.get(oscar.Id).Status__c <> oscar.Status__c && oscar.Status__c == 'Closed' && oscar.Step6__c <> AMS_Utils.PASSED && oscar.Step6__c <> AMS_Utils.FAILED) {
 				oscar.addError('The case cannot be closed if the sanity check is not passed or failed.');
 			}
-
 			if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != oscar.STEP43__c){
 				oscarsIdsToProcess.add(oscar.Id);
 			}
 		}
+		if (oscarsIdsToProcess.isEmpty()) return new Map<Id, AMS_Oscar__c>();
 
-		if (oscarsIdsToProcess.isEmpty())
-			return;
+		Map<Id, AMS_Oscar__c> oscarsToProcess = new Map<Id, AMS_Oscar__c>([SELECT Id, Account__c, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
+																	FROM AMS_Oscar__c
+																	WHERE Id IN :oscarsIdsToProcess]);
+		return oscarsToProcess;
+	}
+
+	public static void handleAnnualRevalidation(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldOscars){
+
+		Map<Id, AMS_Oscar__c> oscarsToProcess = getAdministrativeNonCompliancePassedCases(oscars, oldOscars);
+		Set<ID> oscarsIdsToProcess = new Set<ID>();
+
+		for(ID oscarID : oscarsToProcess.keySet()) oscarsIdsToProcess.add(oscarID);
 
 		List<Agency_Applied_Change_code__c> listNewCCs = new List<Agency_Applied_Change_code__c>();
 		List<String> splittedReason = new List<String>();
 
-		List<AMS_Oscar__c> oscarsToProcess = [SELECT Id, Account__c, Account__r.Reason__c, Account__r.Status__c, Oscar_Communication_Case_Id__c, Process__c
-											FROM AMS_Oscar__c
-											WHERE Id IN :oscarsIdsToProcess ];
+		for (AMS_Oscar__c osc: oscars){
+			//INC498146
+			if(oscarsIdsToProcess.contains(osc.Id)){
+				AMS_Oscar__c oscar = oscarsToProcess.get(osc.Id);
+				
+				osc.OSCAR_Deadline__c = Date.today().addDays(30);
 
-
-		for (AMS_Oscar__c oscar: oscarsToProcess){
-			oscar.OSCAR_Deadline__c = Date.today().addDays(30);
-			sendEmailAlert(oscar.Id, oscar.Oscar_Communication_Case_Id__c, oscar.Process__c, AMS_Utils.FAILED, false);
-
-			AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('ARV');
-			splittedReason = oscar.Account__r.Reason__c.split('-',2);
-			listNewCCs.add(new Agency_Applied_Change_Code__c(Change_Code__c = config.Change_Code__c, OSCAR__c = oscar.Id,  Account__c = oscar.Account__c,
-							Bulletin_Information__c = config.Bulletin_Memo_Text__c, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c,
-							Reason_Code__c = (splittedReason.size() == 2 ? splittedReason[0].trim() : ''), Reason_Description__c = (splittedReason.size() == 2 ? splittedReason[1].trim() : ''),
-							AccountNewStatus__c = oscar.Account__r.Status__c ));
+				AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('ARV');
+				splittedReason = oscar.Account__r.Reason__c.split('-',2);
+				listNewCCs.add(new Agency_Applied_Change_Code__c(Change_Code__c = config.Change_Code__c, OSCAR__c = oscar.Id,  Account__c = oscar.Account__c,
+								Bulletin_Information__c = config.Bulletin_Memo_Text__c, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c,
+								Reason_Code__c = (splittedReason.size() == 2 ? splittedReason[0].trim() : ''), Reason_Description__c = (splittedReason.size() == 2 ? splittedReason[1].trim() : ''),
+								AccountNewStatus__c = oscar.Account__r.Status__c ));
+			}
 		}
 
 		if(!listNewCCs.isEmpty())
@@ -4877,357 +4920,6 @@ public class AMS_OSCARTriggerHandler {
 
 		for(String key : iataCodes.keySet())
 			ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
-
+		
 	}
-
-	// to be removed
-	public void fakeMethod(){
-	Integer i = 0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	}
-
-
 }

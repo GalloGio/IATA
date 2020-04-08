@@ -265,6 +265,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>IRIS_Integration</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IRIS Integration</label>
+        <sharedTo>
+            <group>IRIS_Integration</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>ISSP_Kale_Visibility</fullName>
         <accessLevel>Read</accessLevel>
         <label>ISSP - Kale Visibility</label>
@@ -303,6 +316,20 @@
             <field>Subject</field>
             <operation>startsWith</operation>
             <value>KPI Values Reporting</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>L3_Complaints</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share complaints with L3 users</description>
+        <label>L3 Complaints</label>
+        <sharedTo>
+            <group>L3_All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Complaint (IDFS ISS)</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -359,20 +386,6 @@
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>SIDRA</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>share all sidra cases with integration user</description>
-        <label>SIDRA</label>
-        <sharedTo>
-            <group>SIDRA_All_Cases</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA Lite,SIDRA</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>APCS</fullName>
         <accessLevel>Edit</accessLevel>
@@ -406,6 +419,94 @@
         </sharedTo>
         <sharedFrom>
             <group>CentralBilling</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCA_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCA Queue</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_ACCA</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCA_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCA Role</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCELYA_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCELYA Queue</label>
+        <sharedTo>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Accelya</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCELYA_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCELYA Role</label>
+        <sharedTo>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Deutsche_Bank_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Deutsche Bank Queue</label>
+        <sharedTo>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Deutsche_Bank</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Deutsche_Bank_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Deutsche Bank Role</label>
+        <sharedTo>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Multicarta_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Multicarta Queue</label>
+        <sharedTo>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Multicarta</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Multicarta_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Multicarta Role</label>
+        <sharedTo>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

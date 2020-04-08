@@ -160,7 +160,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Operator,Airline Branch,General Sales Agent Headquarters,Airline Headquarters</value>
+            <value>Operator,Airline Branch,General Sales Agent Headquarters,Agency WW HQ,Airline Headquarters</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>

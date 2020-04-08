@@ -7,6 +7,7 @@ import { getParamsFromPage } from'c/navigationUtils';
 export default class PortalFAQPage extends NavigationMixin(LightningElement) {
 
     @track faqObject = {};
+    @track redirectObject = {};
 
     connectedCallback() {
         let _faqObject = { category: '', topic: '', subtopic: '' };
@@ -23,5 +24,9 @@ export default class PortalFAQPage extends NavigationMixin(LightningElement) {
 
     categoriesChange(event) {
         this.faqObject = event.detail;
+    }
+
+    redirectChange(event){
+        this.redirectObject = event.detail; 
     }
 }

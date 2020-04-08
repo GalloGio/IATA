@@ -128,16 +128,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Address_Record_Page</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Address_Record_Page</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -147,197 +153,174 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <fields>
         <fullName>City_Name__c</fullName>
-        <description>Populated by a workflow rule when the City Reference is changed.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Populated by a workflow rule when the City Reference is changed.</inlineHelpText>
         <label>City</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>City_Reference__c</fullName>
+        <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>City Reference</description>
         <externalId>false</externalId>
-        <inlineHelpText>City Reference</inlineHelpText>
-        <label>City Reference</label>
-        <referenceTo>IATA_ISO_City__c</referenceTo>
-        <relationshipLabel>Addresses City</relationshipLabel>
-        <relationshipName>Addresses_City</relationshipName>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Country_Reference__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Country Reference</description>
+        <fullName>Count_Roles_Billing__c</fullName>
+        <description>Count the number of address role where the type is Billing.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Country Reference</inlineHelpText>
-        <label>Country Reference</label>
-        <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>Addresses Country</relationshipLabel>
-        <relationshipName>Addresses_Country</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
+        <label>Count_Roles_Billing</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Billing</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Summary</type>
     </fields>
     <fields>
-        <fullName>Country__c</fullName>
-        <description>Populated by a workflow rule when the Country Reference is changed.</description>
+        <fullName>Count_Roles_Business__c</fullName>
+        <description>Count the number of address role where the type is Business.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Populated by a workflow rule when the Country Reference is changed.</inlineHelpText>
-        <label>Country</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
+        <label>Count_Roles_Business</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Business</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Summary</type>
     </fields>
     <fields>
-        <fullName>Geolocation__c</fullName>
-        <description>Geolocation</description>
+        <fullName>Count_Roles_Shipping__c</fullName>
+        <description>Count the number of address role where the type is Shipping.</description>
+        <externalId>false</externalId>
+        <label>Count_Roles_Shipping</label>
+        <summaryFilterItems>
+            <field>Address_Role__c.Role_Type__c</field>
+            <operation>equals</operation>
+            <value>Shipping</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Address_Role__c.Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Coordinates__c</fullName>
         <displayLocationInDecimal>false</displayLocationInDecimal>
         <externalId>false</externalId>
-        <inlineHelpText>Geolocation</inlineHelpText>
-        <label>Geolocation</label>
+        <label>Geo-Coordinates</label>
         <required>false</required>
-        <scale>3</scale>
-        <trackHistory>false</trackHistory>
+        <scale>2</scale>
         <trackTrending>false</trackTrending>
         <type>Location</type>
     </fields>
     <fields>
-        <fullName>Is_PO_Box__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>check if address is PO Box</description>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Populated by a workflow rule when the Country Reference is changed.</description>
         <externalId>false</externalId>
-        <inlineHelpText>check if address is PO Box</inlineHelpText>
-        <label>Is PO Box</label>
-        <trackHistory>false</trackHistory>
+        <inlineHelpText>Populated by a workflow rule when the Country Reference is changed.</inlineHelpText>
+        <label>Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Addresses</relationshipLabel>
+        <relationshipName>Addresses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Is_Business_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Business Address</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>PO_Box_Address__c</fullName>
-        <description>PO Box Address</description>
+        <description>check if address is PO Box</description>
         <externalId>false</externalId>
-        <inlineHelpText>PO Box Address</inlineHelpText>
+        <inlineHelpText>check if address is PO Box</inlineHelpText>
         <label>PO Box</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Postal_Code__c</fullName>
-        <description>Postal Code</description>
         <externalId>false</externalId>
-        <inlineHelpText>Postal Code</inlineHelpText>
         <label>Postal Code</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>State_Name__c</fullName>
-        <description>Populated by a workflow rule when the State Reference is changed.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Populated by a workflow rule when the State Reference is changed.</inlineHelpText>
         <label>State</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>State_Reference__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>State Reference</description>
-        <externalId>false</externalId>
-        <inlineHelpText>State Reference</inlineHelpText>
-        <label>State Reference</label>
-        <referenceTo>IATA_ISO_State__c</referenceTo>
-        <relationshipLabel>Addresses State</relationshipLabel>
-        <relationshipName>Addresses</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Street2__c</fullName>
-        <externalId>false</externalId>
-        <label>Street 2</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Street__c</fullName>
-        <description>Street</description>
         <externalId>false</externalId>
-        <inlineHelpText>Street</inlineHelpText>
         <label>Street</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Type__c</fullName>
-        <description>Type</description>
+        <fullName>TechUpdate_AddressFlow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to bypass VR when update is done by addresscreation flow</description>
         <externalId>false</externalId>
-        <inlineHelpText>Type</inlineHelpText>
-        <label>Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
+        <label>Tech Update Address Flow</label>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Billing</fullName>
-                    <default>false</default>
-                    <label>Billing</label>
-                </value>
-                <value>
-                    <fullName>Shipping</fullName>
-                    <default>false</default>
-                    <label>Shipping</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>Checkbox</type>
     </fields>
     <label>Address</label>
     <listViews>
@@ -348,11 +331,83 @@
     <nameField>
         <displayFormat>Address-{00000000}</displayFormat>
         <label>Address Number</label>
-        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Addresses</pluralLabel>
+    <recordTypes>
+        <fullName>MASTER</fullName>
+        <active>true</active>
+        <label>MASTER</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>AirportOneRoleShipTo</fullName>
+        <active>true</active>
+        <description>airport can have only one shipping role per address</description>
+        <errorConditionFormula>and( Count_Roles_Shipping__c &gt;1,
+ Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;)</errorConditionFormula>
+        <errorMessage>airport can have only one shipping role per address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BranchAccount_cant_create_AnotherAddress</fullName>
+        <active>true</active>
+        <description>Branch account can not create another address than the main address.</description>
+        <errorConditionFormula>AND( 
+     ISPICKVAL( Account__r.Hierarchy_Level__c ,&apos;Branch&apos;),
+     (Is_Business_Address__c =False)
+)</errorConditionFormula>
+        <errorMessage>For Branch account you can&apos;t create another address than the main address (Business address).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BusinessAddressModification</fullName>
+        <active>true</active>
+        <description>The Main Address must be edit only on Account</description>
+        <errorConditionFormula>AND(
+    ( TechUpdate_AddressFlow__c =FALSE),
+    (Is_Business_Address__c =TRUE),
+    or(ISCHANGED( Street__c),
+       ISCHANGED( Postal_Code__c ),
+       ISCHANGED( City_Name__c ),
+       ISCHANGED( IATA_ISO_Country__c ),
+       ISCHANGED( State_Name__c ),
+       ISCHANGED( Geo_Coordinates__Latitude__s ),
+       ISCHANGED( Geo_Coordinates__Longitude__s )
+    )
+)</errorConditionFormula>
+        <errorMessage>Modification of business account fields needs to be done on the related account</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleBilling</fullName>
+        <active>true</active>
+        <description>Only one Billing role per address is allowed</description>
+        <errorConditionFormula>Count_Roles_Billing__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Billing role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleBusiness</fullName>
+        <active>true</active>
+        <description>Only one Business role per address is allowed</description>
+        <errorConditionFormula>Count_Roles_Business__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Business role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OneRoleShipping</fullName>
+        <active>true</active>
+        <description>Only one Shipping role per address is allowed</description>
+        <errorConditionFormula>Count_Roles_Shipping__c &gt;1</errorConditionFormula>
+        <errorMessage>Only one Shipping role per address is allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Street_POnumber</fullName>
+        <active>true</active>
+        <description>You can not fill Street and PO Number fields at the same time</description>
+        <errorConditionFormula>AND(
+ Is_Business_Address__c =false,
+NOT(ISBLANK(Street__c)),
+NOT(ISBLANK(PO_Box_Address__c))
+)</errorConditionFormula>
+        <errorMessage>You can not fill Street and PO Number fields at the same time</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

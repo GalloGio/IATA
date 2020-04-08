@@ -29,10 +29,10 @@
     <table class="list"  border="0" cellpadding="0" cellspacing="0">
         <thead class="rich-table-thead">
             <tr class="headerRow" >
-                <th class="headerRow" scope="col" colspan="10" ><div>Account Issues and Priorities</div></th>
+                <th class="headerRow" scope="col" colspan="{!if(recordTypeName =='Agency_WW_HQ','11', '10')}" ><div>Account Issues and Priorities</div></th>
             </tr>
             <tr class="headerRow" >
-                <th class="headerRow" scope="col" colspan="10" ><div>Account: {!accountName}</div></th><!-- -->
+                <th class="headerRow" scope="col" colspan="{!if(recordTypeName =='Agency_WW_HQ','11;', '10')}" ><div>Account: {!accountName}</div></th><!-- -->
             </tr>
             <!-- <tr class="headerRow" >
                 <th class="headerRow" scope="col" colspan="3" ><div>Group Information</div></th>
@@ -41,6 +41,7 @@
             </tr> -->
             <tr class="headerRow" >
                 <th class="headerRow" ><div>Name</div></th>
+                <th class="headerRow" style="{!if(OR(recordTypeName =='Agency_WW_HQ',recordTypeName =='IATA_Airline'),'', 'display:None;')}"><div>Division</div></th>
                 <th class="headerRow" ><div>Source</div></th>
                 <th class="headerRow" ><div>Description</div></th>
                 <th class="headerRow" ><div>Importance</div></th>
@@ -56,8 +57,8 @@
 
         <apex:repeat value="{!lsIssuesAndPriorities}" var="i">
             <tr class="dataRow" >
-
                 <td class="dataCell " >{!i.Name}</td>
+                <td class="dataCell "  style="{!if(OR(recordTypeName =='Agency_WW_HQ',recordTypeName =='IATA_Airline'),'', 'display:None;')}">{!i.Division__c}</td>
                 <td class="dataCell " >{!i.AM_Source_Text__c}</td>
                 <td class="dataCell " >{!i.Details__c}</td>
                 <td class="dataCell " >{!i.AM_Level_of_importance__c}</td>
@@ -67,7 +68,6 @@
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Local__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Issue_with_IATA__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Public__c}"/></td>
-
             </tr>
         </apex:repeat>
 
