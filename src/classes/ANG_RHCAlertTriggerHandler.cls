@@ -952,15 +952,17 @@ public class ANG_RHCAlertTriggerHandler {
 			for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
 				if (sManager.Active__c && String.isNotBlank(sManager.Email__c)){
 					toAddresses.add(sManager.Email__c);
-
 					String region = sManager.Region__c.toUpperCase();
-					
-					Set<String> addressesLst = regionEmailAddressesMap.get(region);
-					if(addressesLst == null) {
-						addressesLst = new Set<String>();
+
+					for(String str :region.split(';')){
+						Set<String> addressesLst = regionEmailAddressesMap.get(str.trim());
+						if(addressesLst == null) {
+							addressesLst = new Set<String>();
+						}
+						addressesLst.add(sManager.Email__c);
+						regionEmailAddressesMap.put(str.trim(), addressesLst);
 					}
-					addressesLst.add(sManager.Email__c);
-					regionEmailAddressesMap.put(region, addressesLst);
+					
 				}
 			}
 		}

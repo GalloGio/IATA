@@ -25,7 +25,7 @@
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <length>20</length>
+        <length>80</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
