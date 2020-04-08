@@ -31,6 +31,10 @@
 	</style>
 
 	<script>
+		const MULTICOUNTRY = "Multicountry";
+		const CASH = "Cash";
+		const CASHLESS = "Cashless";
+
 		function setArrowListeners() {
 			document.querySelector("[id$=rightList]").removeAttribute("multiple");
 			document.querySelector("[id$=leftList]").removeAttribute("multiple");
@@ -40,8 +44,8 @@
 				var unselectedAccredModels = document.querySelector("[id$=leftList]");
 				
 				for(var k = selectedAccredModels.length -1; k >=0 ; k--) {
-					if ((selectedAccredModels[k].value == "Multicountry" && (e.target.value == "Cash" || e.target.value == "Cashless")) || 
-						(e.target.value == "Multicountry" && (selectedAccredModels[k].value == "Cash" || selectedAccredModels[k].value == "Cashless"))) {
+					if ((selectedAccredModels[k].value == MULTICOUNTRY && (e.target.value == CASH || e.target.value == CASHLESS)) || 
+						(e.target.value == MULTICOUNTRY && (selectedAccredModels[k].value == CASH || selectedAccredModels[k].value == CASHLESS))) {
 						unselectedAccredModels.insertBefore(selectedAccredModels[k], unselectedAccredModels[0]);
 					}
 				}
@@ -204,7 +208,7 @@
 			<apex:pageBlockSection id="parameter4">
 				<div align="center">
 					<apex:pageBlockSectionItem >
-						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock" oncomplete="checkSelectAllOnCurrentPage();"/>
+						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableSearchButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock" oncomplete="checkSelectAllOnCurrentPage();"/>
 					</apex:pageBlockSectionItem>
 				</div>
 

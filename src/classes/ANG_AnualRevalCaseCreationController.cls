@@ -9,31 +9,36 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private static final String LEGAL_NAME_CHG = AMS_Utils.ANG_LEGAL_NAME;
 	private static final String LEGAL_STATUS_CHG = AMS_Utils.ANG_LEGAL_STATUS;
 
-	public static final String MONTH_QUESTION = 'Please Select a Month';
-	public static final String JANUARY = 'January';
-	public static final String FEBRUARY = 'February';
-	public static final String MARCH = 'March';
-	public static final String APRIL = 'April';
-	public static final String MAY = 'May';
-	public static final String JUNE = 'June';
-	public static final String JULY = 'July';
-	public static final String AUGUST = 'August';
-	public static final String SEPTEMBER = 'September';
-	public static final String OCTOBER = 'October';
-	public static final String NOVEMBER = 'November';
-	public static final String DECEMBER = 'December';
+	private static final String MONTH_QUESTION = 'Please Select a Month';
+	private static final String JANUARY = 'January';
+	private static final String FEBRUARY = 'February';
+	private static final String MARCH = 'March';
+	private static final String APRIL = 'April';
+	private static final String MAY = 'May';
+	private static final String JUNE = 'June';
+	private static final String JULY = 'July';
+	private static final String AUGUST = 'August';
+	private static final String SEPTEMBER = 'September';
+	private static final String OCTOBER = 'October';
+	private static final String NOVEMBER = 'November';
+	@TestVisible
+	private static final String DECEMBER = 'December';
 
-	public static final String REGION_QUESTION = 'Select Region';
-	public static final String REGION_EUROPE = 'Europe';
-	public static final String REGION_AFRICA = 'Africa & Middle East';
-	public static final String REGION_AMERICAS = 'Americas';
-	public static final String REGION_ASIA = 'Asia & Pacific';
-	public static final String REGION_CHINA = 'China & North Asia';
+	private static final String REGION_QUESTION = 'Select Region';
+	private static final String REGION_EUROPE = 'Europe';
+	private static final String REGION_AFRICA = 'Africa & Middle East';
+	private static final String REGION_AMERICAS = 'Americas';
+	private static final String REGION_ASIA = 'Asia & Pacific';
+	private static final String REGION_CHINA = 'China & North Asia';
 
-	public static final String MODE_QUESTION = 'Select Mode';
-	public static final String MODE_FINANCIAL_YEAR = 'Financial year end';
-	public static final String MODE_COUNTRY = 'Country';
-	public static final String MODE_IATA_CODE = 'IATA Code';
+	private static final String MODE_QUESTION = 'Select Mode';
+	private static final String MODE_FINANCIAL_YEAR = 'Financial year end';
+	private static final String MODE_COUNTRY = 'Country';
+	private static final String MODE_IATA_CODE = 'IATA Code';
+
+	private static final String SELECT_COUNTRY = 'Select Country';
+	private static final String ENDED = 'Ended';
+	private static final String COMPLETED = 'Completed';
 
 	private static final List<String> TARGET_ACCOUNT_STATUS = new List<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED};
 	private static final List<String> INVALID_OSCAR_STATUS = new List<String>{
@@ -90,15 +95,15 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 		set;
 	}
-	
-	public Integer size{get; set;}
-	public string region{get; private set;}
-	public string mode{get; private set;}
-	public String country{get; private set;}
-	public String month{get; private set;}
 
-	public List<String> countriesLst{get; set;}
-	public String iataCode {get; set;}
+	public Integer size { get; set; }
+	public string region { get; private set; }
+	public string mode { get; private set; }
+	public String country { get; private set; }
+	public String month { get; private set; }
+	
+	public List<String> countriesLst { get; set; }
+	public String iataCode { get; set; }
 	public boolean shouldDisableButton;
 
 	public String infoNote {
@@ -138,13 +143,13 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	private Map<Id, Case> annualRevalidationCaseOscar{get;set;}
 
-	public boolean batchStatusBool{get;set;}
-	public Id batchId {get;set;}
-	public AsyncApexJob batchJob{get;set;}
-	public boolean pollerBool{get;set;}
-	public Integer getBatchStatus{get;set;}
-
-	public ApexPages.StandardSetController con{get; set;}
+	public boolean batchStatusBool { get; set; }
+	public Id batchId { get; set; }
+	public AsyncApexJob batchJob { get; set; }
+	public boolean pollerBool { get; set; }
+	public Integer getBatchStatus { get; set; }
+	
+	public ApexPages.StandardSetController con { get; set; }
 	
 	public List<SelectOption> accredModelOptions {
 		get {
@@ -274,7 +279,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public List<SelectOption> getcountryobj() {
 		List<SelectOption> options = new List<SelectOption>{
-			new SelectOption('Select Country', 'Select Country')
+			new SelectOption(SELECT_COUNTRY, SELECT_COUNTRY)
 		};
 
 		for (IATA_ISO_Country__c c: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name')){
@@ -300,8 +305,10 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return mode == MODE_IATA_CODE ? String.isNotBlank(iataCode) : true;
 	}
 
-	public Boolean getshouldDisableButton() {
-		return selectedAccreditations.isEmpty() || cashOrLiteAccreditationModelSelected && (!validRegionSelected() || !validModeSelected() || !validFinancialYearEndSelected() || !validIATACodeSelected());
+	public Boolean getshouldDisableSearchButton() {
+		return selectedAccreditations.isEmpty() || cashOrLiteAccreditationModelSelected
+			&& (!validRegionSelected() || !validModeSelected() || !validFinancialYearEndSelected()
+				|| !validIATACodeSelected());
 	}
 
 	private String getOscarCasesSubquery() {
@@ -315,14 +322,18 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	private Boolean processAccountRelatedCases(Account acct) {
-		if(!acct.Cases.isEmpty()){
+		if (!acct.Cases.isEmpty()) {
 			Boolean foundAnnualRevalidation = false;
 			
-			for (Case cse: acct.Cases) {
+	-		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing cases for account: ' + acct);
+
+			for (Case cse : acct.Cases) {
 				if (cse.OSCAR__c != null) {
+			-		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing Case: ' + cse);
+
 					if (cse.Oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
-						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)) {
-							if (!foundAnnualRevalidation) {
+						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)){ 
+							if(!foundAnnualRevalidation) {
 								foundAnnualRevalidation = true;
 								annualRevalidationCaseOscar.put(acct.Id, cse);
 							}
@@ -330,7 +341,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 							if (annualRevalidationCaseOscar.get(acct.Id) != null) {
 								annualRevalidationCaseOscar.get(acct.Id).clear();
 							}
-							
 							return true;
 						}
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
@@ -376,13 +386,18 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		if (mode == MODE_FINANCIAL_YEAR) {
 			queryAccount += 'AND Financial_Year_End__c = :month ';
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Financial year end with value: '+ month);
 		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country);
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
+	-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);
 		}
 
 		List<Account> accountLst = new List<Account>();
+
+-		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Performing Query: ' + queryAccount);
 
 		for (Account acct : Database.query(queryAccount)) {
 			if (!processAccountRelatedCases(acct)) {
@@ -390,10 +405,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			}
 		}
 
+-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Size of account list is: ' + accountLst.size());
+
 		if (!accountLst.isEmpty()) {
 			con = new ApexPages.StandardSetController(accountLst);
 			con.setPageSize(size);
-
 			populateAccountsToDisplay((List<Account>)con.getRecords());
 		}
 	}
@@ -428,11 +444,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		Set<Id> accountsToCreateIds = new Set<Id>();
 
-		for (AccountWrapper aw: accountsToCreate) {
+		for (AccountWrapper aw : accountsToCreate) {
 			if (aw.selected) {
 				accountsToCreateIds.add(aw.account.Id);
 			}
 		}
+
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - launchCampaign] accountsToCreateIds: ' + accountsToCreateIds);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - launchCampaign] total size of accountsToCreateIds: ' + accountsToCreateIds.size());
 
 		if (!accountsToCreateIds.isEmpty()) {
 			batchStatusBool = true;
@@ -449,7 +468,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
-		pollerBool = batchJob.Status != 'Ended' && batchJob.Status != 'Completed';
+		pollerBool = batchJob.Status != ENDED && batchJob.Status != COMPLETED;
 
 		getBatchStatus++;
 	}
@@ -485,7 +504,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public void checkSelectedRecords() {
 		disableLaunchButton = true;
-		
+
 		for (AccountWrapper aw: accountsToCreate) {
 			if (aw.selected) {
 				disableLaunchButton = false;
