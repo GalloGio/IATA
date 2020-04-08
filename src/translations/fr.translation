@@ -13430,6 +13430,14 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label>Moyens de paiement</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Modifications des moyens de paiement applicables au programme passagers et domestique</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>

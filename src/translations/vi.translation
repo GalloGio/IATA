@@ -13391,6 +13391,14 @@ and
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label>Hình thức thanh toán</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label>Thay đổi về hình thức thanh toán áp dụng đối với hành khách và chương trình nội địa</label>
+        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>
