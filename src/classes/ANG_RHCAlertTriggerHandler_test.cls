@@ -868,12 +868,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert csa;
 		
 		Account a = new Account(name = 'acc1', Location_Type__c = 'HE', Location_Class__c = 'P', IATAcode__c = '0000', Remittance_frequency__c = 'M',
-			ANG_Accreditation_Model__c = 'Cash', IATA_ISO_Country__c = country2.id, IATA_ISO_Country__r = country2, RecordTypeId = RecordTypeSingleton
-				.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
+			ANG_Accreditation_Model__c = 'Cash', IATA_ISO_Country__c = country2.id, IATA_ISO_Country__r = country2, RecordTypeId = RecordTypeSingleton.getInstance()
+				.getRecordTypeId('Account', 'IATA_Agency'));
 		insert a;
 		
-		operational_Calendar__c op = new operational_Calendar__c(ISS_Operation__c = iss.id, First_Day__c = Date.today(), Last_Day__c = Date
-			.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today());
+		operational_Calendar__c op = new operational_Calendar__c(ISS_Operation__c = iss.id, First_Day__c = Date.today(), Last_Day__c = Date.today(),
+			Frequency_code__c = 'M', Remittance_Day__c = Date.today());
 		
 		insert op;
 		

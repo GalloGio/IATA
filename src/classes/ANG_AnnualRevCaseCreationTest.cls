@@ -152,7 +152,7 @@ private class ANG_AnnualRevCaseCreationTest {
 		System.assert(ctrl.cashOrLiteAccreditationModelSelected, 'Multicountry selected variable should be false');
 		System.assert(ctrl.infoNote.contains(AMS_Utils.HE), 'Info note should contain \'HE\'');
 
-		System.assert(ctrl.getshouldDisableButton(), 'Button should be disbaled at this point');
+		System.assert(ctrl.getshouldDisableSearchButton(), 'Button should be disabled at this point');
 
 		ctrl.getregionobj();
 		ctrl.setregion('Europe');
