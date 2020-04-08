@@ -178,6 +178,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>saremyt@iata.org</recipient>
             <type>user</type>
         </recipients>
