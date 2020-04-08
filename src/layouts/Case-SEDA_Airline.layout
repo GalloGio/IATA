@@ -319,6 +319,10 @@
                 <behavior>Readonly</behavior>
                 <field>ClosedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Process_Age__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

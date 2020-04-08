@@ -8,13 +8,8 @@
 				<span class="text-medium">{labels.CSP_L3_Training_Validation_LMS}</span>
 			</lightning-layout-item>
 
-
 			<lightning-layout-item size="12">
-				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
-				<div class="sectionDescription">{labels.CSP_L3_TrainValidationDescri_LMS}
-				</div>
-
-				<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
+				<div class="sectionDescription">{labels.CSP_L3_TrainValidationDescri_LMS}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
@@ -25,10 +20,7 @@
 			</lightning-layout-item>
 
 			<lightning-layout-item size="12">
-				<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
 				<div class="sectionTitle">{labels.CSP_L3_Training_Information_LMS}</div>
-				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
-				<div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12">
@@ -182,7 +174,6 @@
 					</lightning-layout-item>
 				</template>
 
-
 				<div data-id="emailDiv" class="slds-form-element">
 					<div class="formElementSpacer">
 						<div if:true={displayError}>
@@ -197,23 +188,25 @@
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
 
-			<lightning-layout-item size="6" class="IEFixDisplay">
-				<template if:false={searchPerformed}>
-					<div class="text-xxsmall">
-						<lightning-button variant="base" label={labels.CSP_L3_Back_to_Email_Validation_LMS}
-							title={labels.CSP_L3_Back_to_Email_Validation_LMS} onclick={previous}
-							class="blueCustomButtonLinkSmall" icon-name="utility:back" icon-position="left">
-						</lightning-button>
-					</div>
-				</template>
-			</lightning-layout-item>
+			<div class="buttonsContainer">
+				<lightning-layout-item size="6" class="IEFixDisplay">
+					<template if:false={searchPerformed}>
+						<div class="text-xxsmall">
+							<lightning-button variant="base" label={labels.CSP_L3_Back_to_Email_Validation_LMS}
+								title={labels.CSP_L3_Back_to_Email_Validation_LMS} onclick={previous}
+								class="blueCustomButtonLinkSmall" icon-name="utility:back" icon-position="left">
+							</lightning-button>
+						</div>
+					</template>
+				</lightning-layout-item>
 
-			<lightning-layout-item size="6" class="IEFixDisplay">
-				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
-					label={labels.CSP_L3_Next_Confirmation_LMS} disabled={blockConfirmation} variant="brand"
-					onclick={next}>
-				</lightning-button>
-			</lightning-layout-item>
+				<lightning-layout-item size="6" class="IEFixDisplay">
+					<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
+						label={labels.CSP_Next_LMS} disabled={blockConfirmation} variant="brand"
+						onclick={next}>
+					</lightning-button>
+				</lightning-layout-item>
+			</div>
 
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>

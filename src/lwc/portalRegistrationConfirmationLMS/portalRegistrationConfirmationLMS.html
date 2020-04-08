@@ -117,21 +117,27 @@
 			<lightning-layout-item size="12" class="IEFixDisplay">
 			</lightning-layout-item>
 
-			<lightning-layout-item size="6" class="IEFixDisplay">
-				<div class="text-xxsmall">
-					<lightning-button variant="base" label={labels.CSP_L2_Back_to_Edit}
-						title={labels.CSP_L2_Back_to_Edit} onclick={toProfileDetails} class="blueCustomButtonLinkSmall"
-						icon-name="utility:back" icon-position="left">
-					</lightning-button>
-				</div>
-			</lightning-layout-item>
-			
-			<lightning-layout-item size="6" class="IEFixDisplay">
-				<lightning-button disabled data-id="submitButton" class="slds-float_right containedButton customBtn"
+
+			<div class="buttonsContainer">
+				<lightning-layout-item size="6" class="backButtonWrapper">
+					<div class="text-xxsmall">
+						<lightning-button variant="base"
+							label={labels.CSP_L2_Back_to_Edit}
+							title={labels.CSP_L2_Back_to_Edit}
+							onclick={toProfileDetails}
+							class="blueCustomButtonLinkSmall"
+							icon-name="utility:back" 
+							icon-position="left">
+						</lightning-button>
+					</div>
+				</lightning-layout-item>
+		
+				<lightning-layout-item size="6">
+					<lightning-button disabled data-id="submitButton" class="slds-float_right containedButton customBtn" 
 					label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
-				</lightning-button>
-				
-			</lightning-layout-item>
+					</lightning-button>
+				</lightning-layout-item>
+			</div>
 
 			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
@@ -139,17 +145,16 @@
 		</div>
 	</lightning-layout>
 
-
 	<template id="SuccessModal" if:true={openSuccessModal}>
-		<c-portal-registration-generic-modal icon={successIcon} title={labels.CSP_L2_Details_Saved}
-			message={labels.CSP_L2_Details_Saved_Message_LMS} button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
+		<c-portal-registration-generic-modal icon={successIcon} title={successModalTitle}
+			message={successModalMessage} button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
 			button2-label={labels.CSP_L2_Go_To_Service_LMS} onbuttononeaction={button1Action}
 			onbuttontwoaction={goToService}>
 		</c-portal-registration-generic-modal>
 	</template>
 
 	<template if:true={openVerificationMailSuccessModal}>
-		<c-portal-registration-generic-modal icon={successIcon} title={successModalTitle} message={successModalMessage}
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
 			button1-label="" button2-label={labels.CSP_L2_Go_To_Homepage_LMS} 
 			onbuttontwoaction={button1Action}>
 		</c-portal-registration-generic-modal>

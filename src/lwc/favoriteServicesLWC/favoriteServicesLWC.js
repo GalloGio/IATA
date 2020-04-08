@@ -76,6 +76,11 @@ export default class FavoriteServicesLWC extends LightningElement {
                     if (this.auxResult[i].Portal_Application__r.Application_URL__c === undefined || this.auxResult[i].Portal_Application__r.Application_URL__c === '') {
                         this.auxResult[i].Portal_Application__r.Application_URL__c = '';
                     }
+                    if(this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== undefined && this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== ''){
+                        this.auxResult[i].imageCSS = 'background: url(' + this.auxResult[i].Portal_Application__r.Application_icon_URL__c + ');';
+                    }else{
+                        this.auxResult[i].imageCSS = '';
+                    }
                 }
 
 
@@ -121,6 +126,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
                         this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_x-small aroundLightGrayBorder';
+                        this.globaList[i][j][k].imageCSS += 'margin:1.5rem;';
                     }
                     if (this.globaList[i][j].length === 2) {
                         this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';

@@ -31,6 +31,12 @@ body {
   	background-color: #f7f8fa;
 }
 
+.cardImageProperties{
+    background-size: contain !important; 
+    background-position: 50% 50% !important; 
+    background-repeat: no-repeat !important;
+}
+
 /*used to display the cards for the portal with opaque background */
 .customCard{
     box-shadow: 5px 5px 20px #e2e2e2;
@@ -398,9 +404,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -419,9 +425,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -434,9 +440,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -448,9 +454,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 /* ############################################## */
 @media only screen and (max-device-width: 480px){
@@ -1342,9 +1348,29 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
-/***** HP Recent Casses Table ******/
+/***** HP Recent Cases Table ******/
 .hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
     border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
+.hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 1500px) {
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: hidden;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .cardBodyContentSmall {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    overflow-x: auto;
+  }
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: auto;
+  }
 }
 
 /*       New Documents Button Overrides*/
@@ -1525,6 +1551,7 @@ lightning-datatable .slds-th__action {
     color: #525252;
     padding-top: 5%;
 	display: contents;
+    max-width: none;
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {

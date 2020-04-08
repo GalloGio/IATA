@@ -98,12 +98,9 @@ global class ANG_MassiveFOPCaseCreationBatch implements Database.Batchable<sObje
 		//Below code will fetch the job Id
 		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
 
-		String userName = UserInfo.getUserName();
-		User activeUser = [Select Email From User where Username = : userName limit 1];
-		String userEmail = activeUser.Email;
-
 		//below code will send an email to User about the status
-		mail.setToAddresses( new String[] {userEmail} );
+		mail.setTargetObjectId(UserInfo.getUserId());
+		mail.setSaveAsActivity(false);
 		mail.setSenderDisplayName('Apex Newgen Forms Of Payment  Module');
 		mail.setSubject('Batch Processing '+a.Status);
 

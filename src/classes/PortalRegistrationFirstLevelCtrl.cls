@@ -321,7 +321,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userInfo.existingContactName = conList.get(0).Name;
 			userInfo.existingContactEmail = conList.get(0).Email;
 			userInfo.existingContactAccount = conList.get(0).Account.Name;
-			userInfo.existingContactUsername = userList.get(0).Username;
+			if(!userList.isEmpty()){
+				userInfo.existingContactUsername = userList.get(0).Username;
+			}
+
 		}
 
 		if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
@@ -339,7 +342,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static List<Contact> returnExistingContact(String email) {
 		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Email =: email];
+		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Email = :email];
 		return conList;
 	}
 
@@ -379,6 +382,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		FROM Profile
 		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
+		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
+
+		if(recordCont.isEmpty()) {
+			Database.rollback(sp);
+			return false;
+		}
+
 		try {
 			User testingUser = new User(LastName = 'DUMMY',
 					FirstName='DUMMY',
@@ -387,7 +397,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 					Email = email,
 					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
 					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : recordCont.get(0).Id,
 					TimeZoneSidKey = 'GMT',
 					LanguageLocaleKey = 'en_US',
 					EmailEncodingKey = 'UTF-8',
@@ -406,6 +416,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			return false;
 		}
 	}
+	
 
 	public static boolean sendConfirmationEmailVF(RegistrationParameters params, string lang){
 		Boolean result = false;
@@ -499,7 +510,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
 			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
-			
 			params.emailConfirmationTemplate = (params.lms == 'yas' && params.existingContactId != '') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
 
 			if(params.contactId.length() < 1){
@@ -543,7 +553,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//Create User
 			OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
 			NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false, true);
-			system.debug('usr: ' + usr);
 			if(usr.userId!= null) {
 				Database.rollback(sp);
 				result.isSuccess = true;
@@ -971,7 +980,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				u.localesidkey = 'en_US';
 				u.emailencodingkey = 'UTF-8';
 				DataBase.SaveResult sr = DataBase.insert(u);
-				system.debug('sr: ' + sr);
 				usr.userId = u.Id;
 			}
 			usr.userName = u.username;
@@ -991,6 +999,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		} catch (exception e) {
 			system.debug('Portal Level 1 registration - createNewUser: ' + e.getMessage());
+			system.debug('Portal Level 1 registration - createNewUser: ' + e.getstackTraceString());
 			//transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
 			return usr;
 		}
@@ -1099,6 +1108,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
+
 			if(orgWideEmail != null){
 				mail.setOrgWideEmailAddressId(orgWideEmail.Id);
 			}
@@ -1151,7 +1161,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
 		oPermissionSetAssignment.AssigneeId = userId;
 		oPermissionSetAssignment.PermissionSetId = permissionSetId;
-		system.debug('oPermissionSetAssignment: ' + oPermissionSetAssignment);
 		insert oPermissionSetAssignment;
 	}
 
@@ -1333,7 +1342,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			insert acr;
 		}
 
-        if(existingTrainingId != ''){
+		if(existingTrainingId != ''){
 
 			//Inactivate the registering Contact
 			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
@@ -1345,7 +1354,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 			conToInactivate.Email = conToInactivate.Email + '.inactive';
 			if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-				// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 				conToInactivate.Additional_Email__c = '';
 			}
 
@@ -1356,7 +1364,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		//deactivate user
 		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
 			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
-    }
+
+	}
 
 	public class AsyncDeactivateUser implements Queueable {
 

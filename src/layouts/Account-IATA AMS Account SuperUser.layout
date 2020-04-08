@@ -281,6 +281,14 @@
                 <field>ANG_RiskStatus__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_HE_RiskStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_HE_RiskHistoryAssessment__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RiskHistoryAssessment__c</field>
             </layoutItems>
