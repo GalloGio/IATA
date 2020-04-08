@@ -21548,7 +21548,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC StepD ProgressBar</shortDescription>
-        <value>D. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_StepD_ProgressBar_CNS</fullName>
@@ -22331,7 +22331,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepA</shortDescription>
-        <value>A. Select Type of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Type of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_StepB_message</fullName>
@@ -22347,7 +22347,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepC</shortDescription>
-        <value>C. Details of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Details of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Summary_Current_Ownership</fullName>
@@ -24543,7 +24543,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
-        <value>E. Validate details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Validate details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>

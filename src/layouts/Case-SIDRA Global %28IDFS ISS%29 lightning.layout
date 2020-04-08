@@ -1250,11 +1250,6 @@
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>CaseHierarchy</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>9</sortOrder>
@@ -1268,6 +1263,11 @@
             <actionName>EasyUpload</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -1387,6 +1387,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Tracked_Email__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
