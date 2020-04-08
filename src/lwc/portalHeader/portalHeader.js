@@ -23,7 +23,7 @@ import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
-import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getGCSServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 import createPendingTermsAndConditionsAcceptances from '@salesforce/apex/ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances';
 
@@ -373,7 +373,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.userInfo = JSON.parse(JSON.stringify(result));
             this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
 
-            getPortalServiceId({portalServiceName:'Login T&C Checker'}).then(result2 => {
+            getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result2 => {
                 var gcsPortalServiceId = JSON.parse(JSON.stringify(result2));
                 this.gcsPortalServiceId = gcsPortalServiceId;
 
