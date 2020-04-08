@@ -469,6 +469,12 @@ export default class PortalAddressFormLMS extends LightningElement {
 		// - a suggested address is selected
 
 		let addressSelected = false;
+		for(var i = 0 ; i < this.localAddress.addressSuggestions.length; i++){
+			if(this.localAddress.addressSuggestions[i].isSelected){
+				addressSelected = true;
+				break;
+			}
+		}
 
 		let status = (this.localAddress.validationStatus !== 0 && !this.localAddress.inputModified)
 								|| addressSelected;

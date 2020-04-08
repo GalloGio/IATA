@@ -646,7 +646,12 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 				}
 			}
 			/*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
-
+			
+			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+                System.enqueueJob(new AccountRolesAlignBatch(trigger.isDelete?trigger.OldMap:Trigger.newMap));
+            }else{
+                AccountRolesAlignBatch.switchAccountRoles(trigger.isDelete?trigger.OldMap:Trigger.newMap);
+            }
 		}
 		/*Trigger.AfterUpdate*/
 

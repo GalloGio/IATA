@@ -34,6 +34,10 @@ import CSP_L3_Note_F5_LMS                   from '@salesforce/label/c.CSP_L3_Not
 import CSP_L3_Note_F6_LMS                   from '@salesforce/label/c.CSP_L3_Note_F6_LMS';
 import CSP_L3_Note_F7_LMS                   from '@salesforce/label/c.CSP_L3_Note_F7_LMS';
 import CSP_L2_Go_To_Service_LMS                   from '@salesforce/label/c.CSP_L2_Go_To_Service_LMS';
+import CSP_L2_SucessUpdateOnly_LMS                   from '@salesforce/label/c.CSP_L2_SucessUpdateOnly_LMS';
+import CSP_L3_Email_Validation_LMS                   from '@salesforce/label/c.CSP_L3_Email_Validation_LMS';
+
+
 
 
 
@@ -61,17 +65,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	@track message;
 	@track button1Label;
 	@track isResLoading = false;
-	// @api serviceid;
-	/*
-		1 : Profile Details
-		2 : Account Selection
-		3 : Account Creation - Company Information
-		4 : Account Creation - Address Information
-		5 : Confirmation
-	*/
-   @track currentStep = 1;
 
-   @track isLoading = false;
+   	@track currentStep = 1;
+
+   	@track isLoading = false;
 
 	// Collected information
 	selectedAccountId = '';
@@ -128,28 +125,17 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L3_Note_F5_LMS,
 		CSP_L3_Note_F6_LMS,
 		CSP_L3_Note_F7_LMS,
-		CSP_L2_Go_To_Service_LMS
+		CSP_L2_Go_To_Service_LMS,
+		CSP_L2_SucessUpdateOnly_LMS,
+		CSP_L3_Email_Validation_LMS
 	}
+	
 	get labels() {
 		return this._labels;
 	}
 	set labels(value) {
 		this._labels = value;
 	}
-
-	// @track isIE = this.checkIE;
-	// get checkIE(){
-
-	// 	let ua= navigator.userAgent;
-	// 	let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-	// 	let ret;
-	// 	if(/trident/i.test(M[1])){
-	// 		ret = true;
-	// 	}else{
-	// 		ret = false;
-	// 	}
-	// 	return ret;
-	// }
 
 	scrollToTop(){
 		let scrollobjective = this.template.querySelector('[data-name="top"]');
@@ -161,7 +147,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
         document.body.style.overflow = 'hidden';
 		
 		var pageParams = getParamsFromPage();
-
 		// Retrieve Contact information
 		getContactInfo()
 			.then(result => {
@@ -288,8 +273,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.registerData = false;
 
 					this.title=CSP_L3_ProfileUpdate_LMS;
-					// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
-
+			
 					if(pageParams.lmsflow === 'flow3'){
 						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
 					}
@@ -328,12 +312,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
 						}
 						if(pageParams.lmsflow === 'flow5'){
-							// boldStr ='<b>' + CSP_L3_Note_F5_LMS + '</b>';
 							this.message=CSP_L3_UpdatingProfileP1_LMS ;
 						}
 						if(pageParams.lmsflow === 'flow6'){
-							boldStr =  CSP_L3_Note_F6_LMS;
-							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + CSP_L3_Note_F6_LMS + '<br>';
 						}
 						if(pageParams.lmsflow === 'flow7'){
 							boldStr = CSP_L3_Note_F7_LMS;
@@ -350,7 +332,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 								this.sleep(6000)
 								.then(() => { 
 								
-									if(pageParams.lmsflow === 'flow7'){
+									if(pageParams.lmsflow === 'flow5'){
+										this.message = this.message + '<br><br>' + CSP_L2_SucessUpdateOnly_LMS;
+										this.message = this.message.replace('[Email]',this.contactInfo.Email);
+									}else if(pageParams.lmsflow === 'flow7'){
 										let msgF7 = CSP_L2_SucessUpdate_LMS.replace('[Email]',this.contactInfo.Email);
 										this.message = this.message + '<br><br>' + msgF7;
 									}else{
@@ -391,10 +376,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			console.log('Error1: ', error);
 			console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
-		// .finally(() => {
-			
-			
-		// });
+
 	}
 
 	startLoading(){
@@ -417,6 +399,18 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 
 	/* NAVIGATION METHODS */
+
+	@track step1Complete = false;
+	@track step2Complete = false;
+	
+	step1CompletionStatus(event){
+		this.step1Complete = event.detail;
+	}
+ 
+	step2CompletionStatus(event){
+		this.step2Complete = event.detail;
+	}
+
 	getCurrentStepData(){
 
 		let contactInfo = '';
@@ -459,15 +453,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this.currentStep = futureStep;
 	}
 
-
-	/*
-	ProfileDetails 		- 1
-	AddressInformation	- 2
-	EmailInformation	- 3
-	TrainingInformation	- 4
-	Confirmation		- 5
-	*/
-
 	fromProfileDetailsToAddressInformation(){
 		// retrieve profile details
 		var contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
@@ -487,6 +472,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this.address = JSON.parse(JSON.stringify(addressInformation));
 		// go to next step
 		this.currentStep = 3;
+		this.step1Complete = true;
 	}
 
 	fromEmailInformationToAddressInformation(){
@@ -500,6 +486,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.flow = flow;
 		this.currentStep = 4;
+		this.step2Complete = true;
 	}
 
 	fromTrainingInformationToEmailInformation(){
@@ -549,12 +536,67 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	}
 
 	get isStep2Inactive(){
+		if(this.step2Complete){
+			return false;
+		}
 		return this.isProfileInformationStep || this.isAddressInformationStep;
 	}
 
+	get isStep2Active(){
+		if(this.step2Complete){
+			return false;
+		}
+		return this.isEmailValidationStep;
+	}
+
 	get isStep2Valid(){
+		if(this.step2Complete){
+			return true;
+		}
 		return this.isTrainingValidationStep || this.isConfirmationStep;
 	}
+
+	get hasStep1Link(){
+		if(this.step1Complete){
+			return true;
+		}
+		if(this.currentStep !== 1 && this.currentStep !== 2){
+			return false;
+		}
+        return false;
+	}
+	
+	get hasStep2Link(){
+		if(this.step2Complete){
+			return true;
+		}
+        if( (this.currentStep === 1 && !this.step1Complete) || this.currentStep === 2 || this.currentStep === 3){
+            return false;
+        }
+        if(this.currentStep === 4 || this.currentStep === 5 || ((this.currentStep === 1 || this.currentStep === 2) && this.step1Complete)){
+            return true;
+        }
+        return false;
+	}
+	
+	get hasStep3Link(){
+        return this.step1Complete && this.step2Complete;
+	}
+	
+	goToProfileDetailsFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = 1;
+    }
+
+    goToEmailValidationStepFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = 3;
+    }
+
+    goToConfirmationFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = 5;
+    }
 
 	landingPage;
 
@@ -570,8 +612,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	saveAndClose(){
 		// To do save contact info
-
-
 		this.openMessageModal = false;
 		if(this.landingPage == 'same'){
 			this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));
@@ -620,9 +660,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				this.error = error;
 		});
 	}
-	
-
-		
+			
 	browserType(){
 		let ua= navigator.userAgent;
 		let tem;
@@ -641,9 +679,5 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
 		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
 		return M.join(' ');
-	}
-
-		
-
-	
+	}	
 }

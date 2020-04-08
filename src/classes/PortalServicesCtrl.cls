@@ -236,7 +236,7 @@ public with sharing class PortalServicesCtrl {
 		String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, '+
 									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
-
+	
 		System.debug('getPortalApplications finalQuery : ' + finalQuery);
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
 
@@ -386,20 +386,20 @@ public with sharing class PortalServicesCtrl {
 		Map<Id,List<ServiceWrapper> > contactToServices = new Map<Id,List<ServiceWrapper> >();
 
 		List<Portal_Application_Right__c > usersGrantedList = [select id,IsSCIMIFG__c,Application_Name__c,Right__c,Portal_Application__r.ServiceName__c,Portal_Application__r.Id,Portal_Application__r.Application_URL__c,Contact__r.Account.ANG_IEP_Status_FF__c
-																from Portal_Application_Right__c
-																where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
-
-
+															   from Portal_Application_Right__c
+															   where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
+	
+	
 		System.debug('get Users '+contactToUserIds.values());
-		Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId,Contact.Preferred_Language__c from User WHERE Id in: contactToUserIds.values()]);
-
+		Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
+	
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		for(Portal_Application_Right__c accessRight : usersGrantedList) {
 
 			String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
 			System.debug('get User '+accessRight.Contact__c);
 			System.debug('get User2 '+userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
-
+	
 			Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
 
 			Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
@@ -1109,7 +1109,7 @@ public with sharing class PortalServicesCtrl {
 		List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
 													 FROM Portal_Application_Right__c
 													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
-
+	
 		System.debug('psaList: ' + psaList);
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
@@ -1573,5 +1573,114 @@ public with sharing class PortalServicesCtrl {
 			}
 		}
 		return toReturn;
+	}
+
+
+	@AuraEnabled (cacheable=false)
+	public static String verifyCompleteL3Data(String serviceId){
+		return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, false);
+	}
+
+	@AuraEnabled (cacheable=false)
+	public static String verifyCompleteL3DataWithCourse(String serviceId){
+		return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, true);
+	}
+
+	public static String verifyCompleteL3DataInternal(String serviceId, Boolean preferedCourse){
+	
+		Boolean requiredDataPopulated = true;
+		Boolean latestToSAccepted = true;
+		Boolean serviceExists = true;
+	
+		String resURL = '';
+	
+		User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+
+		Set<String> l3MandatoryFieldsContact = new Set<String>{
+			'Additional_Email__c','Birthdate'
+		};
+		Set<String> l3MandatoryFieldsTCRD = new Set<String>{
+			'City_Name__c','Country_Reference__c','PO_Box_Address__c','Street__c'
+		};
+
+		Contact c = [SELECT Id, Name, Additional_Email__c, Birthdate FROM Contact WHERE Id =: userAux.ContactId];
+		for(String apiName: l3MandatoryFieldsContact){
+			if(c.get(apiName) == null){
+				requiredDataPopulated = false;
+			}
+		}
+
+		List<Training_Contact_Role_Details__c> tcrdLst = [SELECT City_Name__c, Country_Reference__c, Id, Name, PO_Box_Address__c, Street__c, Preferred_Course__c
+												FROM Training_Contact_Role_Details__c
+												WHERE Account_Contact_Role__r.Contact__r.Id =: userAux.ContactId
+												LIMIT 1];
+			Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
+		if(!tcrdLst.isEmpty()){
+			tcrd = tcrdLst[0];
+		}
+
+		for(String apiName: l3MandatoryFieldsTCRD){
+			if(tcrd.get(apiName) == null){
+				if(apiName == 'Street__c' || apiName == 'PO_Box_Address__c'){
+					if(tcrd.get('Street__c') == null && tcrd.get('PO_Box_Address__c') == null){
+						requiredDataPopulated = false;
+						break;
+					}
+				}else{
+					requiredDataPopulated = false;
+					break;
+				}
+			}
+		}
+
+		//BUGFIX PI2019-801 - Added code from CoreJune
+		List<Term_and_Condition__c> tosList = [SELECT Id, (SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptances__r WHERE Is_Accepted__c = true AND Contact__c =: userAux.ContactId) FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+
+		if(tosList != null && !tosList.isEmpty()){
+			
+			for(Term_and_Condition__c tos: tosList){
+				if(tos.Term_and_Condition_Acceptances__r.IsEmpty()){
+					latestToSAccepted = false;
+					break;
+				}
+			}
+			
+		}
+			List<Portal_Application_Right__c> parList = [SELECT Id FROM Portal_Application_Right__c 
+														WHERE Contact__c =: userAux.ContactId 
+														AND Portal_Application__c =: serviceId 
+														AND Right__c = 'Access Granted'];
+
+		if(parList.isEmpty()){
+			serviceExists = false;
+		}
+
+		String baseUrl = Site.getBaseSecureUrl();
+		String pathPrefix = Site.getPathPrefix().replace('/s', '');
+
+		if(requiredDataPopulated && latestToSAccepted && serviceExists){
+	
+			List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
+	
+			if(ami != null && !ami.isEmpty()){
+				resURL = baseUrl + pathPrefix + ami[0].StartUrl;
+				if(preferedCourse && tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
+					resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
+				}
+			}
+		}else{
+			resURL = 'not_complete';
+		}
+
+		return resURL;
+	}
+
+	@AuraEnabled(cacheable=false)
+	public static String getPortalServiceId(string serviceName){
+
+		List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
+		system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
+
+		return pas[0].Id;
 	}
 }

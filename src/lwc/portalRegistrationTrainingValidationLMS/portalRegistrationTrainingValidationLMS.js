@@ -6,11 +6,8 @@ import { LightningElement, track, api} from 'lwc';
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
-// import { getParamsFromPage }			from 'c/navigationUtils';
-// import RegistrationUtils				from 'c/registrationUtils';
-import { navigateToPage } from'c/navigationUtils';
+import { navigateToNewPage } from'c/navigationUtils';
 
-// import getUserInformationFromEmail		from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
 import validateYasUserId				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
 import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
@@ -59,6 +56,8 @@ import CSP_L3_ContactSupport_LMS from '@salesforce/label/c.CSP_L3_ContactSupport
 import CSP_L3_NumericError_LMS from '@salesforce/label/c.CSP_L3_NumericError_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L3_ExistTrainUserId_LMS from '@salesforce/label/c.CSP_L3_ExistTrainUserId_LMS';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
+
 
 
 
@@ -174,7 +173,8 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 		CSP_L3_ContactSupport_LMS,
 		CSP_L3_NumericError_LMS,
 		CSP_L2_RegistrationFailed_LMS,
-		CSP_L3_ExistTrainUserId_LMS
+		CSP_L3_ExistTrainUserId_LMS,
+		CSP_Next_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -185,7 +185,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-
+	
 		//If Training information already exist from existing user to Merge, can happen on Flows 4,6 and 7
 		if(this.localContactInfo.Username !== '' && this.localContactInfo.Username !== null && this.localContactInfo.Username !== undefined
 		&& this.localContactInfo.UserId !== '' && this.localContactInfo.UserId !== null && this.localContactInfo.UserId !== undefined ){
@@ -242,6 +242,13 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 	changeHaveTrainingUser(event) {
 		this.haveTrainingUser = event.target.value;
 		this.inputModified = true;
+		this.localContactInfo.UserId = '';
+		this.localContactInfo.Username = ''
+		this.validated = false;
+		this.existingUsernameVisibility = false;
+		this.notMatchingVisibility = false;
+		this.alreadyMatchingUseridVisibility = false;
+		this.matchingVisibility = false;
 	}
 
 	changeUsername(event){
@@ -375,7 +382,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 		params.category = 'Training';
 		params.topic = 'Self_study_courses';
 		params.subtopic = 'Sign_Up_Join_ssc';
-		navigateToPage(CSP_PortalPath + 'support-reach-us',params);
+		navigateToNewPage(CSP_PortalPath + 'support-reach-us',params);
 	}
 	
 	@api

@@ -321,7 +321,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userInfo.existingContactName = conList.get(0).Name;
 			userInfo.existingContactEmail = conList.get(0).Email;
 			userInfo.existingContactAccount = conList.get(0).Account.Name;
-			userInfo.existingContactUsername = userList.get(0).Username;
+			if(!userList.isEmpty()){
+				userInfo.existingContactUsername = userList.get(0).Username;
+			}
+
 		}
 
 		if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
@@ -339,7 +342,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static List<Contact> returnExistingContact(String email) {
 		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Email =: email];
+		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Email = :email];
 		return conList;
 	}
 
@@ -507,7 +510,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
 			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
-
 			params.emailConfirmationTemplate = (params.lms == 'yas' && params.existingContactId != '') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
 
 			if(params.contactId.length() < 1){
@@ -551,7 +553,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//Create User
 			OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
 			NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false, true);
-			system.debug('usr: ' + usr);
 			if(usr.userId!= null) {
 				Database.rollback(sp);
 				result.isSuccess = true;
@@ -637,7 +638,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				result.isSuccess = sendRegistrationEmailVF(params, usr.userId);
 				if(result.isSuccess == false){
 					result.message = 'Error sending Registration Email';
-					}
+				}
 				return result;
 			}else{
 				Database.rollback(sp);
@@ -979,7 +980,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				u.localesidkey = 'en_US';
 				u.emailencodingkey = 'UTF-8';
 				DataBase.SaveResult sr = DataBase.insert(u);
-				system.debug('sr: ' + sr);
 				usr.userId = u.Id;
 			}
 			usr.userName = u.username;
@@ -999,6 +999,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		} catch (exception e) {
 			system.debug('Portal Level 1 registration - createNewUser: ' + e.getMessage());
+			system.debug('Portal Level 1 registration - createNewUser: ' + e.getstackTraceString());
 			//transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
 			return usr;
 		}
@@ -1104,8 +1105,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
 			Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
+
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
+
 			if(orgWideEmail != null){
 				mail.setOrgWideEmailAddressId(orgWideEmail.Id);
 			}
@@ -1122,6 +1125,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			mail.setSubject(emailTemplate.Subject);
 
 			String plainBody = message.getPlainTextBody();
+
 
 			for(String key : mapBodyParams.keySet()) {
 				if(plainBody <> null){
@@ -1157,7 +1161,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
 		oPermissionSetAssignment.AssigneeId = userId;
 		oPermissionSetAssignment.PermissionSetId = permissionSetId;
-		system.debug('oPermissionSetAssignment: ' + oPermissionSetAssignment);
 		insert oPermissionSetAssignment;
 	}
 
@@ -1361,6 +1364,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		//deactivate user
 		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
 			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
+
 	}
 
 	public class AsyncDeactivateUser implements Queueable {

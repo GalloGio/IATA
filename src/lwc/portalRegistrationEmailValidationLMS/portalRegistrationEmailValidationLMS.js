@@ -50,6 +50,9 @@ import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import CSP_Registration_Existing_Work_Message from '@salesforce/label/c.CSP_Registration_Existing_Work_Message';
 import CSP_Registration_Existing_User_Message_Not_Matching_F4 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F4';
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
+import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS';
+import CSP_L3_Have_Work_Email from '@salesforce/label/c.CSP_L3_Have_Work_Email';
+import Trust_Weaver from '@salesforce/label/c.Trust_Weaver';
 
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
@@ -66,6 +69,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track displaySubmitError = false;
 	@track localContactInfo;
 	@track userInfo = {}
+	@track messageFlow6;
 	@track messageFlow7;
 
 	@track lms;
@@ -84,9 +88,11 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	@track isPersonalEmail;
 	@track isReverseEmail;
+	@track haveWorkEmail;
 	
 	@track isPersonalEmailVisibility = true;
 	@track reverseEmailVisibility = false;
+	@track haveWorkEmailVisibility = false;
 
 	// search inputs
 	@track personalEmailInput ='';
@@ -102,8 +108,8 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		}else{
 			if(
 				(this.isPersonalEmail === 'no' && this.personalEmailInput !== '' && this.isFullNameMatching) ||
-				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true) ||
-				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== '' && this.isFullNameMatching)
+				(this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'no') ||
+				(this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'yes' && this.workEmailInput !== '' && this.isFullNameMatching)
 			){
 				res = false;
 			}
@@ -121,19 +127,27 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	get personalEmailVisibility(){
-		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
+		if(this.localContactInfo.Additional_Email__c !== '' && 
+			(this.haveWorkEmail === '' || this.haveWorkEmail === 'no') && 
+			(this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			return true;
 		}
 		return this.isPersonalEmail === 'no'? true : false;
+	}
+
+	get hasWorkEmailVisibility(){
+		return this.isPersonalEmail === 'yes' ? true : false;
+		
 	}
 
 	get workEmailVisibility(){
 		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			return true;
 		}
-		return this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false ? true : false;
+		return this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'yes' ? true : false;
 		
 	}
+
 
 	@track inputModified = true;
 
@@ -174,7 +188,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_Next_LMS,
 		CSP_Registration_Existing_Work_Message,
 		CSP_Registration_Existing_User_Message_Not_Matching_F4,
-		CSP_Registration_Existing_User_Message_Not_Matching_F6
+		CSP_Registration_Existing_User_Message_Not_Matching_F6,
+		CSP_Registration_Existing_Work_Message_LMS,
+		CSP_L3_Have_Work_Email
 	}
 	get labels() {
 		return this._labels;
@@ -186,10 +202,46 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
 
-		//Clean in case of the user comes back and try to insert another option or email!
+		//Clean in case of the user comes back and try to insert another option or email
 		this.localContactInfo.Username = '';
 		this.localContactInfo.UserId = '';
 
+		if(this.localContactInfo.initialEmail === undefined || this.localContactInfo.initialEmail === '' ){
+			this.localContactInfo.initialEmail = this.localContactInfo.Email;
+		}
+		if(this.localContactInfo.initialAdditionalEmail !== undefined && this.localContactInfo.initialAdditionalEmail !== '' ){
+			this.localContactInfo.initialAdditionalEmail = this.localContactInfo.Additional_Email__c;
+		}
+
+		if(this.localContactInfo.flow !== undefined && this.localContactInfo.flow !== '' ){
+			this.flow = this.localContactInfo.flow;
+
+			//Set form fields to their previous values when coming back from other form
+			if(this.flow === 'flow2'){
+				this.isPersonalEmail = 'yes';
+				this.haveWorkEmail = 'no';
+				this.isPersonalEmailVisibility = true;
+				this.personalEmailInput = '';
+				this.workEmailInput = '';
+				this.validated = true;
+			}else if(this.flow === 'flow3' || this.flow === 'flow4'){
+				this.isPersonalEmail = 'yes';
+				this.haveWorkEmail = 'yes';
+				this.isPersonalEmailVisibility = true;
+				this.personalEmailInput = this.localContactInfo.Additional_Email__c;
+				this.workEmailInput = this.localContactInfo.Email;
+				this.validated = true;
+			}else if(this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7'){
+				this.isPersonalEmail = 'no';
+				this.isPersonalEmailVisibility = true;
+				
+				this.personalEmailInput = this.localContactInfo.Additional_Email__c;
+				this.workEmailInput = this.localContactInfo.Email;
+				this.validated = true;
+			}
+
+		}
+		
 		let pageParams = getParamsFromPage();// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lms !== undefined){
 			this.lms = pageParams.lms;
@@ -241,7 +293,31 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		this.existingUsernameVisibility = false;
 		this.existingUsernameNotMatchingF4Visibility = false;
 		this.existingUsernameNotMatchingF6Visibility = false;
+		this.inputModified = true;		
+		this.haveWorkEmail = '';
+		this.validated = false;
+		this.localContactInfo.Email = this.localContactInfo.initialEmail;
+		if(this.localContactInfo.initialAdditionalEmail !== undefined && this.localContactInfo.initialAdditionalEmail !== '' ){
+			this.localContactInfo.Additional_Email__c = this.localContactInfo.initialAdditionalEmail;
+		}
+		
+	}
+
+	
+	changeHaveWorkEmail(event) {
+		this.haveWorkEmail = event.target.value;
+		this.workEmailInput = '';
+		this.personalEmailInput = '';
+		this.existingPersonalUsernameVisibility = false;
+		this.existingUsernameVisibility = false;
+		this.existingUsernameNotMatchingF4Visibility = false;
+		this.existingUsernameNotMatchingF6Visibility = false;
 		this.inputModified = true;
+		this.validated = false;
+		this.localContactInfo.Email = this.localContactInfo.initialEmail;
+		if(this.localContactInfo.initialAdditionalEmail !== undefined && this.localContactInfo.initialAdditionalEmail !== '' ){
+			this.localContactInfo.Additional_Email__c = this.localContactInfo.initialAdditionalEmail;
+		}
 	}
 
 	changeReverseEmail(event) {
@@ -258,6 +334,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		this.isFullNameMatching = true;
 		this.validated = false;
 		this.inputModified = true;
+		this.validated = false;
 	}
 
 	changeWorkEmail(event){
@@ -269,6 +346,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		this.isFullNameMatching = true;
 		this.validated = false;
 		this.inputModified = true;
+		this.validated = false;
 	}
 
 
@@ -284,6 +362,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
 			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
 			this.localContactInfo.ExistingTrainingInfo = true;
+			this.localContactInfo.flow = this.flow;
 
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
@@ -293,13 +372,16 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 					this.flow = 'flow0';
 					this.localContactInfo.Email = this.personalEmailInput;
 					this.localContactInfo.Additional_Email__c = this.workEmailInput;
-				}
+				}this.localContactInfo.flow = this.flow;
+
 				this.dispatchEvent(new CustomEvent('next'));
 			}else{
 
-				if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true){
+				if(this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'no'){
 					this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
 					this.flow = 'flow2';
+					this.localContactInfo.flow = this.flow;
+
 					this.dispatchEvent(new CustomEvent('next'));
 				}else{
 
@@ -312,7 +394,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 						auxEmail = this.personalEmailInput;
 					}
 
-					if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== ''){
+					if(this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'yes' && this.workEmailInput !== ''){
 						this.localContactInfo.Additional_Email__c = this.workEmailInput;
 						auxEmail = this.workEmailInput;
 					}
@@ -323,10 +405,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 							this.flow = 'flow5';
 						}
 
-						if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== ''){
+						if(this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'yes' && this.workEmailInput !== ''){							
 							this.flow = 'flow3';
 						}
-
 
 						this.startLoading();
 						RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
@@ -355,8 +436,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 											this.userInfo = userInfo;
 														
 											if(userInfo.hasExistingContact == true){
-												if(userInfo.hasExistingUser == true){
-
+												// if(userInfo.hasExistingUser == true){
 													if(this.flow === 'flow3'){
 														this.flow = 'flow4';
 
@@ -391,6 +471,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 																this.localContactInfo.existingContactName = userInfo.existingContactName;
 																this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+																
+																this.messageFlow6 = CSP_Registration_Existing_Work_Message_LMS;
+																this.messageFlow6 = this.messageFlow6.replace('[Email]',this.localContactInfo.Email);
 															}
 														})
 														.catch((error) => {
@@ -399,8 +482,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 														});
 
 													this.stopLoading();
-													
-												}
+												// }
 											}else{
 												//Don't validate the personal email for this flow
 												if(this.flow === 'flow3'){
@@ -408,9 +490,11 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 													this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
 													this.localContactInfo.Email = this.workEmailInput;
 													this.stopLoading();
+													this.localContactInfo.flow = this.flow;
+
 													this.dispatchEvent(new CustomEvent('next'));
 												}else if(userInfo.hasExistingContactPersonalEmail == true){
-													if(userInfo.hasExistingUserPersonalEmail == true){
+													// if(userInfo.hasExistingUserPersonalEmail == true){
 
 														if(this.flow === 'flow5'){
 															this.flow = 'flow7';
@@ -448,33 +532,37 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 															console.log('Error: ', JSON.parse(JSON.stringify(error)));
 														});
 														this.stopLoading();
-													}
+													// }
 													//Send Verification email
 													this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 													this.stopLoading();
 												}else{
 
 													this.stopLoading();
+													this.localContactInfo.flow = this.flow;
+
 													this.dispatchEvent(new CustomEvent('next'));
 												}
 											}
 											this.validated = true;
 										})
 										.catch(error => {
-											console.log('Error: ', error);
-											this.isLoading = false;
+											console.log('Error: ', JSON.parse(JSON.stringify(error)));
+											this.stopLoading();
+											
 										});
 									}
 								});
 							}
 						});
 					}else{
+						this.localContactInfo.flow = this.flow;
 						this.dispatchEvent(new CustomEvent('next'));
 					}
 				}
 			}
 		}
-
+		this.localContactInfo.flow = this.flow;
 	}
 
 
