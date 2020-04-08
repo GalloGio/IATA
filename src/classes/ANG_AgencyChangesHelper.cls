@@ -542,7 +542,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-
 				Boolean applyOptOutFA =
 					containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
 					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) &&
@@ -550,7 +549,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c, (SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE ANG_FormOfPayment_ID__c IN ('CA', 'EP','CC')) FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+					hierarchyAccs = new Map<Id, Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c,
+															  (SELECT Id, ANG_FormOfPayment_ID__c, Status__c
+															   FROM Agency_Authorizations__r
+															   WHERE ANG_FormOfPayment_ID__c IN (:AMS_Utils.CA, :AMS_Utils.EP, :AMS_Utils.CC))
+														  FROM Account
+														  WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
 
 					Account newParent;
 					if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
@@ -559,7 +563,7 @@ public with sharing class ANG_AgencyChangesHelper {
 						newParent = hierarchyAccs.get(oscar.New_parent__c);
 
 					// If opt-out is not applicable we'll put the value of the new parent
-					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){
+					if(oscar.ANG_FA_Opt_out__c == AMS_Utils.NOT_APPLICABLE){
 						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
 					//else we'll get the value input on the oscar AND apply it to all the accounts involved + the new parent's entire hierarchy
 					}else {
@@ -572,27 +576,38 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 					// if it is a ST to MC acquisition
-					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) {
-						// recalculate the FoP aligned with the GE
-						Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(newParent);
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) || 
+						AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD)){
+						// recalculate the FoP aligned with the new parent
+						Agency_Authorization__c newParentCashMethodFoP = getAccountCashFoP(newParent);
 						
 						for (Account acct : changesContainer.accountsMap.values()) {
-							// Update cash form of payments according to the GE cash FoP status
-							if (acct.Id != newParent.Id && geCashMethodFoP != null)
-								updateAccountCashFoP(acct, geCashMethodFoP);
+							// Update cash form of payments according to the new parent (GE or HE) cash FoP status
+							if (acct.Id != newParent.Id && newParentCashMethodFoP != null)
+								updateAccountCashFoP(acct, newParentCashMethodFoP);
 						}
 						
-						// recalculate risk
-						changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
+						if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)){
+							// recalculate risk
+							changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
+						}
+					}
+
+					if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT)){
+						for(Account acct : changesContainer.accountsMap.values()){
+							Agency_Authorization__c cashMethodFoP = getAccountCashFoP(acct);
+							if(cashMethodFoP != null){
+								cashMethodFoP.Status__c = AMS_Utils.ACTIVE;
+								changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoP);
+							}
+						}
 					}
 
 				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
-				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && !applyOptOutFA) {
-
-					changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), FALSE);
-
+				} else if (containsChange(new List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && !applyOptOutFA) {
+					changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), false);
 				//all other major changes
-				}else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
+				} else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
 
 					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
 					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
