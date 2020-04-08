@@ -275,8 +275,8 @@
 				<apex:pageBlockSection columns="1" title="Process Status">
 
 					<apex:actionStatus id="act" startText="Checking..." />
-					<apex:outputText styleClass="processText" value="Anual Revalidation Process Status: {!batchJob.Status}"/>
-					<apex:outputText styleClass="processText" value="Anual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
+					<apex:outputText styleClass="processText" value="Annual Revalidation Process Status: {!batchJob.Status}"/>
+					<apex:outputText styleClass="processText" value="Annual Revalidation Cases Proccessed: {!batchJob.JobItemsProcessed}"/>
 					<apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
 					<apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="StatusPageBlock" status="act"/>
 
