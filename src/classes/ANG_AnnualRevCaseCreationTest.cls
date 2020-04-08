@@ -174,7 +174,7 @@ private class ANG_AnnualRevCaseCreationTest {
 
 		ctrl.setmode('Financial year end');
 		ctrl.getMonthList();
-		ctrl.setMonth(ANG_AnualRevalCaseCreationController.DECEMBER);
+		ctrl.setMonth('December');
 		ctrl.searchAgencies();
 
 		List<SelectOption> paginationOptions = ctrl.paginationSizeOptions;

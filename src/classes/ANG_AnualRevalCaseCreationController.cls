@@ -10,26 +10,29 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private static final String LEGAL_STATUS_CHG = AMS_Utils.ANG_LEGAL_STATUS;
 
 	private static final String MONTH_QUESTION = 'Please Select a Month';
-	private static final String JANUARY = 'January';
-	private static final String FEBRUARY = 'February';
-	private static final String MARCH = 'March';
-	private static final String APRIL = 'April';
-	private static final String MAY = 'May';
-	private static final String JUNE = 'June';
-	private static final String JULY = 'July';
-	private static final String AUGUST = 'August';
-	private static final String SEPTEMBER = 'September';
-	private static final String OCTOBER = 'October';
-	private static final String NOVEMBER = 'November';
-	@TestVisible
-	private static final String DECEMBER = 'December';
+	private static final Set<String> MONTHS = new Set<String>{
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	};
 
 	private static final String REGION_QUESTION = 'Select Region';
-	private static final String REGION_EUROPE = 'Europe';
-	private static final String REGION_AFRICA = 'Africa & Middle East';
-	private static final String REGION_AMERICAS = 'Americas';
-	private static final String REGION_ASIA = 'Asia & Pacific';
-	private static final String REGION_CHINA = 'China & North Asia';
+	private static final Set<String> REGIONS = new Set<String>{
+		'Europe',
+		'Africa & Middle East',
+		'Americas',
+		'Asia & Pacific',
+		'China & North Asia'
+	};
 
 	private static final String MODE_QUESTION = 'Select Mode';
 	private static final String MODE_FINANCIAL_YEAR = 'Financial year end';
@@ -240,14 +243,15 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public List<SelectOption> getregionobj() {
-		return new List<SelectOption>{
-			new SelectOption(REGION_QUESTION, REGION_QUESTION),
-			new SelectOption(REGION_AFRICA, REGION_AFRICA),
-			new SelectOption(REGION_AMERICAS, REGION_AMERICAS),
-			new SelectOption(REGION_ASIA, REGION_ASIA),
-			new SelectOption(REGION_CHINA, REGION_CHINA),
-			new SelectOption(REGION_EUROPE, REGION_EUROPE)
+		List<SelectOption> options = new List<SelectOption>{
+			new SelectOption(REGION_QUESTION, REGION_QUESTION)
 		};
+
+		for (String region: REGIONS) {
+			options.add(new SelectOption(region, region));
+		}
+		
+		return options;
 	}
 
 	public List<SelectOption> getmodeObj() {
@@ -260,21 +264,15 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public List<selectoption> getMonthList() {
-		return new List<SelectOption>{
-			new SelectOption(MONTH_QUESTION, MONTH_QUESTION),
-			new SelectOption(JANUARY, JANUARY),
-			new SelectOption(FEBRUARY, FEBRUARY),
-			new SelectOption(MARCH, MARCH),
-			new SelectOption(APRIL, APRIL),
-			new SelectOption(MAY, MAY),
-			new SelectOption(JUNE, JUNE),
-			new SelectOption(JULY, JULY),
-			new SelectOption(AUGUST, AUGUST),
-			new SelectOption(SEPTEMBER, SEPTEMBER),
-			new SelectOption(OCTOBER, OCTOBER),
-			new SelectOption(NOVEMBER, NOVEMBER),
-			new SelectOption(DECEMBER, DECEMBER)
+		List<SelectOption> options = new List<SelectOption>{
+			new SelectOption(MONTH_QUESTION, MONTH_QUESTION)
 		};
+
+		for (String month: MONTHS) {
+			options.add(new SelectOption(month, month));
+		}
+		
+		return options;
 	}
 
 	public List<SelectOption> getcountryobj() {
@@ -325,11 +323,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		if (!acct.Cases.isEmpty()) {
 			Boolean foundAnnualRevalidation = false;
 			
-	-		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing cases for account: ' + acct);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing cases for account: ' + acct);
 
 			for (Case cse : acct.Cases) {
 				if (cse.OSCAR__c != null) {
-			-		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing Case: ' + cse);
+					System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - processAccountRelatedCases] Processing Case: ' + cse);
 
 					if (cse.Oscar__r.Process__c == AMS_Utils.NGANNUALREVAL) {
 						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)){ 
@@ -392,12 +390,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country);
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
-	-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);
 		}
 
 		List<Account> accountLst = new List<Account>();
 
--		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Performing Query: ' + queryAccount);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Performing Query: ' + queryAccount);
 
 		for (Account acct : Database.query(queryAccount)) {
 			if (!processAccountRelatedCases(acct)) {
@@ -405,7 +403,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			}
 		}
 
--		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Size of account list is: ' + accountLst.size());
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Size of account list is: ' + accountLst.size());
 
 		if (!accountLst.isEmpty()) {
 			con = new ApexPages.StandardSetController(accountLst);
