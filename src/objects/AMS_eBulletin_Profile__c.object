@@ -617,7 +617,8 @@
      Agency_Info_Defaults__c == false, 
      Agency_Info_Termination_Closures__c == false,
      Agency_Info_Reviews__c == false, 
-    Agency_Info_Reinstatements__c == false 
+     Agency_Info_Reinstatements__c == false,
+     Agency_Info_Forms_of_Payment__c == false
   ),false
   )</errorConditionFormula>
         <errorMessage>DAILY Bulletin - Please select at least the Agency Information of interest</errorMessage>
@@ -691,7 +692,8 @@ Agency_Info_Termination_Closures__c == false,
 Agency_Info_Reviews__c == false,
 Agency_Info_New_Aplication_Processes__c == false,
 Agency_Info_Agency_Changes__c == false, 
-Agency_Info_Reinstatements__c == false 
+Agency_Info_Reinstatements__c == false,
+Agency_Info_Forms_of_Payment__c == false
 ),false 
 )</errorConditionFormula>
         <errorMessage>WEEKLY Bulletin - Please select the Agency Information of interest</errorMessage>
