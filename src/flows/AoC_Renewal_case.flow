@@ -268,7 +268,7 @@ BR()&amp;
         </outputAssignments>
     </recordLookups>
     <startElementReference>Start_flow_3_days_before_expiry_date</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AccountID</name>
         <dataType>String</dataType>
