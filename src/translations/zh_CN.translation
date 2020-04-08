@@ -22701,7 +22701,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>您的查询是紧急的吗？</label>
+        <label>您的问询是紧急的吗？紧急问询只支持英文回答。</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

@@ -43350,7 +43350,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Is your query an emergency?</value>
+        <value>Is your query an emergency? Emergency queries are only replied to in English.</value>
     </labels>
     <labels>
         <fullName>csp_LastLoginDate</fullName>
