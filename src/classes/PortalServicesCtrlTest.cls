@@ -370,31 +370,21 @@ public class PortalServicesCtrlTest {
 
 		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest3'];
 
-		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-
-		System.runAs(portalUser) {
-			Test.StartTest();
-
-			List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
-			System.assertEquals(lstResults.size() >= 0, true);
-
-			Test.StopTest();
-		}
-	}
-
-	@isTest
-	public static void PortalServicesCtrlTest_goToOldPortalService() {
-		Test.StartTest();
-
-		PortalServicesCtrl.goToOldPortalService('');
-
-		Test.StopTest();
-
-	}
-
-	@isTest
-	public static void PortalServicesCtrlTest_getServiceInformation() {
-		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        System.runAs(portalUser) {
+            Test.StartTest();
+            
+            List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
+            System.assertEquals(lstResults.size() >= 0, true);
+            
+            Test.StopTest();
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_getServiceInformation() {
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
 
 		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
 
@@ -509,6 +499,8 @@ public class PortalServicesCtrlTest {
 	@isTest
 	public static void PortalServicesCtrlTest_grantAccessToContactWithoutUser() {
 
+		Test.StartTest();
+		
 		Account  acc =[select id from account where name='AccountTest'];
 
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -521,17 +513,13 @@ public class PortalServicesCtrlTest {
 
 		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
 
-
+		Test.StartTest();
 		portal_Application_Right__c appRight = new Portal_Application_Right__c(
 				Portal_Application__c = portalServicelist[0].id,
 				Right__c = 'Access Requested',
 				Contact__c = con.Id
 			);
-
 		insert appRight;
-
-
-		Test.StartTest();
 		Boolean isReq =PortalServicesCtrl.grantAccess(con.id, portalServicelist[0].id, 'Test');
 		Test.StopTest();
 	}
