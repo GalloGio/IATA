@@ -1,4 +1,4 @@
-<aura:component controller="AMP_AccountNewsFeedExtension">
+<aura:component controller="AMP_AccountNewsFeedExtension" access="public">
     <aura:attribute name="account" type="Account" />
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="searchTerm" type="String" />

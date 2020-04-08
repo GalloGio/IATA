@@ -1,4 +1,4 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCRelationsController">
+<aura:component access="public" implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCRelationsController">
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <aura:attribute type="String" name="recId"/>
     <aura:attribute name="columns" type="List"/>

@@ -275,7 +275,7 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			ctrl.countrySelected = isoc.Id;
 			ctrl.billingState = isos.Id;
 			ctrl.accreditationForm.Branch_Office_Email__c = 'abc@abc.com';
-			String cities = ctrl.billingCityListStr;
+			String cities = ISSP_AMS_MSO_Update_Controller.billingCityListStr;
 
 			Test.startTest();
 				PageReference step2 = ctrl.save();

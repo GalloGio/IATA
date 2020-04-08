@@ -1,10 +1,11 @@
-<aura:component controller="AMP_KeyAccountPlanExtension">
+<aura:component controller="AMP_KeyAccountPlanExtension" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="accountPlanId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="activityName" type="String"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="haveUserAMPIssuesAndPriorities" type="Boolean" default="fasle"/>
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
 
@@ -26,13 +27,14 @@
                         <div class="slds-col">
                             <lightning:button variant="Neutral" iconName="utility:left" label="Back to Activities" title="Back to Activities" onclick="{!c.back}"/>
                         </div>
-                        <div class="{!'slds-col ' + if(v.canEdit,'','slds-hide')}">
+                        <div class="{!'slds-col ' + if(v.canEdit || v.haveUserAMPIssuesAndPriorities,'','slds-hide')}">
                             <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
                         </div>
                     </div>
                 </aura:set>
                 <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
                     <lightning:datatable
+					    class="no-truncate"
                         keyField="Id"
                         data="{!v.data}"
                         columns="{!v.columns}"

@@ -178,7 +178,7 @@ public class ANG_RHCAlertTriggerHandler{
 					if(String.isNotEmpty(config.ANG_EmailTemplate_Legacy__c)) emailTemplateNames.add(config.ANG_EmailTemplate_Legacy__c);
 					if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
 				}
-			}
+			}	
 
 			if(!orangeRiskAlerts.isEmpty()){
 				List<Messaging.SingleEmailMessage> emailLst = createNotificationToSeniors(orangeRiskAlerts, RTS_NOTIFICATION_MANAGER_ORANGE, false);
@@ -218,7 +218,7 @@ public class ANG_RHCAlertTriggerHandler{
 			Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
 
 			Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
-			for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
+			for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND ( NOT Email LIKE '%.inactive' ) AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
 
 				Id accId;
 				if(legacyAccounts.contains(c.AccountId)) accId = c.AccountId;
@@ -865,7 +865,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 			//Set To Address
 			for(Contact con : listContacts){
-				if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM && con.IsEmailBounced == false){
+				if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM && con.IsEmailBounced == false && con.Email != null && !con.Email.endsWithIgnoreCase('.inactive')){
 					toAddresses.add(String.valueOf(con.email));
 					targetObjectId = con.Id;
 					System.debug('::: toAddresses : ' + toAddresses);
@@ -905,49 +905,48 @@ public class ANG_RHCAlertTriggerHandler{
 	private List<Messaging.SingleEmailMessage> createNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
 
 		List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
-
+		List<String> toAddressesNoUsers = new List<String>();
 		Set<String> toAddresses = new Set<String>();
 		List<Id> toAddressesUsers = new List<Id>();
 		List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
 		List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
+		
 
 		if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
-			System.debug('Warning: No RTS Senior Managemrs found');
 			return emailLst;
 		}
 
 		if(isRedAlert) {
 			for (RTS_Senior_Manager__c sManager: sManagersRed) {
-				if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
-					toAddresses.add(sManager.Email__c);
+				if(sManager.Active__c){
+					if (String.isNotBlank(sManager.User_Id__c))
+						toAddressesUsers.add(sManager.User_Id__c);
+					else
+						toAddressesNoUsers.add(sManager.Email__c);
+				}
 			}
 
 		} else {
-
 			for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
-				if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
-					toAddresses.add(sManager.Email__c);
+				if(sManager.Active__c){
+					if (String.isNotBlank(sManager.User_Id__c))
+						toAddressesUsers.add(sManager.User_Id__c);
+					else
+						toAddressesNoUsers.add(sManager.Email__c);
+				}
 			}
 		}
 
-		for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
-			toAddressesUsers.add(u.Id);
-			toAddresses.remove(u.Email);
-		}
-		List<String> toAddressesNoUsers = new List<String>(toAddresses);
 		if(String.isEmpty(emailTemplate)){
-			System.debug('Warning: No email Template defined');
 			return emailLst;
 		}
 
 		EmailTemplate template = emailTemplateMap.get(emailTemplate);
 
 		if (template == NULL || orgWideEmail.isEmpty()) {
-			System.debug('Warning: No email template or org wide email found');
 			return emailLst;
 		}
-		if(toAddressesNoUsers.isEmpty() || toAddressesUsers.isEmpty()){
-			 System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
+		if(toAddressesNoUsers.isEmpty() && toAddressesUsers.isEmpty()){
 			 return emailLst;
 		}
 
@@ -966,16 +965,13 @@ public class ANG_RHCAlertTriggerHandler{
 			tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
 			tbody = tBody.replace('{{fsAmount}}', gAmount);
 
-			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			mail.setToAddresses(toAddressesNoUsers);
-			mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
-			mail.setPlainTextBody(tBody);
-			mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')');
-
-			emailLst.add(mail);
-
+			Boolean aux = true;
 			for(Id targetUser: toAddressesUsers) {
 				Messaging.SingleEmailMessage targetEmail = new Messaging.SingleEmailMessage();
+				if(aux && !toAddressesNoUsers.isEmpty()){
+					targetEmail.setToAddresses(toAddressesNoUsers);
+					aux = false;
+				}
 				targetEmail.setTargetObjectId(targetUser);
 				targetEmail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
 				targetEmail.saveAsActivity = false;

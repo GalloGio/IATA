@@ -1,4 +1,4 @@
-<aura:component controller="AWW_KeyContactsCtrl">
+<aura:component controller="AWW_KeyContactsCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="List"/>
     <aura:attribute name="filteredData" type="List"/>
@@ -61,6 +61,9 @@
                                             <lightning:formattedText value="{!item.contactName}"/>
                                         </a>
                                     </th>
+                                    <th data-label="Type" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedRichText value="{!item.accountName}"/>
+                                    </th>  
                                     <th data-label="Type" scope="row" class="slds-cell-wrap">
                                         <lightning:formattedRichText value="{!item.contactType}"/>
                                     </th>  

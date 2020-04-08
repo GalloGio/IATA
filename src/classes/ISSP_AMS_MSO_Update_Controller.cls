@@ -8,7 +8,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 	public String step {get; set;}
 	public String applyLanguage {get; set;}
 
-	private User currentUser;
+	private static User currentUser;
 
 	public Account msoAccount {get; set;}
 	public Contact currentUserContact {get; set;}
@@ -22,11 +22,11 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 	public List<SelectOption> countryISOCodeList {get;set;}
 	public List<SelectOption> billingStatesList {get; set; }
 
-	public List<IATA_ISO_City__c> billingCityList;
+	public static List<IATA_ISO_City__c> billingCityList;
 
 	public String billingCity{get;set;}
 
-	public String billingCityListStr {get { return JSON.serialize(billingCityList); } set;}
+	public static String billingCityListStr {get { return JSON.serialize(billingCityList); } set;}
 
 	private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
 
@@ -44,7 +44,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 		step = ApexPages.currentPage().getParameters().get('step');
 		if (step == null) step = 'form';
 
-		currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+		currentUser = [SELECT Id, ContactId, Contact.isEmailBounced, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
 		currentUserContact = [SELECT Id, AccountId, Account.Name, Account.RecordType.DeveloperName FROM Contact WHERE Id = :currentUser.ContactId];
 
 		applyLanguage = UserInfo.getLanguage();
@@ -201,7 +201,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
 		billingCityList = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c, GeonameAlternateNames__c
 													  FROM Iata_Iso_City__c
-													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected]);
+													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected AND Status__c <> 'Pending']);
 	}
 
 	public Pagereference securityCheck() {
@@ -475,33 +475,35 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
 
 	private static void sendConfirmationEmail(Id caseId, Id contactId, Boolean isCorrection) {
-		String emailTemplateName = isCorrection ? 'IDFS_Case confirmation - MSO Correction self-service' : 'IDFS_Case confirmation - MSO Termination self-service';
+		if(!currentUser.Contact.IsEmailBounced && String.isNotBlank(currentUser.Contact.Email) && !currentUser.Contact.Email.endsWithIgnoreCase('.inactive')) {
+			String emailTemplateName = isCorrection ? 'IDFS_Case confirmation - MSO Correction self-service' : 'IDFS_Case confirmation - MSO Termination self-service';
 
-		SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
+			SYSTEM.DEBUG('Selected template: ' + emailTemplateName);
 
-		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-		List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
+			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+			List<EmailTemplate> ets = [SELECT Name, Id FROM EmailTemplate WHERE Name = :emailTemplateName];
 
-		if (ets.isEmpty()) return;
+			if (ets.isEmpty()) return;
 
-		EmailTemplate et = ets[0];
+			EmailTemplate et = ets[0];
 
-		OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+			OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setTemplateID(et.Id);
-		if ( owea.size() > 0 ) {
-			mail.setOrgWideEmailAddressId(owea[0].Id);
-		}
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTemplateID(et.Id);
+			if ( owea.size() > 0 ) {
+				mail.setOrgWideEmailAddressId(owea[0].Id);
+			}
 
-		mail.setTargetObjectId(contactId);
-		mail.setWhatId(caseId);
-		mail.setSaveAsActivity(true);
+			mail.setTargetObjectId(contactId);
+			mail.setWhatId(caseId);
+			mail.setSaveAsActivity(true);
 
-		emails.add(mail);
-		if (!Test.IsRunningTest()) {
-			//SYSTEM.DEBUG('Sending confirmation email');
-			Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+			emails.add(mail);
+			if (!Test.IsRunningTest()) {
+				//SYSTEM.DEBUG('Sending confirmation email');
+				Messaging.SendEmailResult [] r = Messaging.sendEmail(emails);
+			}
 		}
 	}
 

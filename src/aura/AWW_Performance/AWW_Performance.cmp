@@ -1,4 +1,4 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AWW_PerformanceCtrl" access="public">
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="accountId" type="Id"/>
@@ -26,6 +26,7 @@
             </lightning:card>
             <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
                 <lightning:datatable
+					class="no-truncate"
                     keyField="Id"
                     data="{!v.data}"
                     columns="{!v.columns}"

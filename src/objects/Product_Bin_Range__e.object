@@ -44,4 +44,5 @@
     </fields>
     <label>Product Bin Range</label>
     <pluralLabel>Product Bin Ranges</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

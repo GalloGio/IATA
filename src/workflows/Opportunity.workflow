@@ -118,7 +118,6 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
@@ -153,7 +152,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>barrocasb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>charkovad@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -193,7 +200,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>odelej@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siouffis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siponenp@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>walkers@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

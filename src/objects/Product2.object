@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Add</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Add</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,11 +89,41 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Tab</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
@@ -2391,6 +2481,11 @@ SIS Charge Code Type.</description>
                     <label>City Code Directory</label>
                 </value>
                 <value>
+                    <fullName>Dangerous Goods Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods Regulations ES</label>
+                </value>
+                <value>
                     <fullName>DGR Compliance Kits - Combos</fullName>
                     <default>false</default>
                     <label>DGR Compliance Kits - Combos</label>
@@ -2444,6 +2539,11 @@ SIS Charge Code Type.</description>
                     <fullName>Emergency Response Handbook</fullName>
                     <default>false</default>
                     <label>Emergency Response Handbook</label>
+                </value>
+                <value>
+                    <fullName>EPIC</fullName>
+                    <default>false</default>
+                    <label>EPIC</label>
                 </value>
                 <value>
                     <fullName>Essential Documents on International Air Carrier Liability</fullName>
@@ -2551,6 +2651,11 @@ SIS Charge Code Type.</description>
                     <label>Live Animals Regulations</label>
                 </value>
                 <value>
+                    <fullName>Live Animals Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Live Animals Regulations ES</label>
+                </value>
+                <value>
                     <fullName>Load Control XML Messaging Toolkit</fullName>
                     <default>false</default>
                     <label>Load Control XML Messaging Toolkit</label>
@@ -2646,6 +2751,11 @@ SIS Charge Code Type.</description>
                     <label>Perishable Cargo Regulations</label>
                 </value>
                 <value>
+                    <fullName>Perishable Cargo Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Perishable Cargo Regulations ES</label>
+                </value>
+                <value>
                     <fullName>Publications Online</fullName>
                     <default>false</default>
                     <label>Publications Online</label>
@@ -2689,6 +2799,11 @@ SIS Charge Code Type.</description>
                     <fullName>Temperature Control Regulations</fullName>
                     <default>false</default>
                     <label>Temperature Control Regulations</label>
+                </value>
+                <value>
+                    <fullName>Temperature Control Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Temperature Control Regulations ES</label>
                 </value>
                 <value>
                     <fullName>The Combined Cargo Conference Manual</fullName>
@@ -8102,6 +8217,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -8182,6 +8305,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -8250,6 +8377,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -8275,6 +8406,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11214,6 +11349,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -11290,6 +11433,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -11358,6 +11505,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
@@ -11379,6 +11530,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14398,6 +14553,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -14486,6 +14649,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -14562,6 +14729,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -14595,6 +14766,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17382,6 +17557,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -17470,6 +17653,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -17546,6 +17733,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -17575,6 +17766,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20613,6 +20808,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </values>
@@ -20689,6 +20892,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -20753,6 +20960,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
@@ -20774,6 +20985,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>

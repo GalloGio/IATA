@@ -1,9 +1,6 @@
 @isTest
 public class portalIftpTestClass {
 
-
-//    @testSetup
-//    static void setup() {
 	public static void test_config(){
 
 		//Create Country
@@ -18,11 +15,21 @@ public class portalIftpTestClass {
 		countryList.add(ctr4);
 		insert countryList;
 
+		// get Airport record type Id for Accounts needed for Airport Detail records
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Airport');
+		// create Account for Airport Detail records
+		Map<String, Account> accountMap = new Map<String,Account> {
+			'LisbonX' => new Account(Name = 'LisbonX', RecordTypeId = recordTypeId),
+			'GenevaX' => new Account(Name = 'GenevaX', RecordTypeId = recordTypeId),
+			'ParisX' => new Account(Name = 'ParisX', RecordTypeId = recordTypeId)
+		};
+		insert accountMap.values();
+
 		//Create Address
 		List<Airport_Detail__c> addressList = new List<Airport_Detail__c>();
-		Airport_Detail__c add1 = new Airport_Detail__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id);
-		Airport_Detail__c add2 = new Airport_Detail__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id);
-		Airport_Detail__c add3 = new Airport_Detail__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id);
+		Airport_Detail__c add1 = new Airport_Detail__c(City__c = 'LisbonX', Code__c = 'PTX', IATA_ISO_Country__c = ctr1.Id, Account__c = accountMap.get('LisbonX').Id);
+		Airport_Detail__c add2 = new Airport_Detail__c(City__c = 'GenevaX', Code__c = 'GVX', IATA_ISO_Country__c = ctr2.Id, Account__c = accountMap.get('GenevaX').Id);
+		Airport_Detail__c add3 = new Airport_Detail__c(City__c = 'ParisX', Code__c = 'FRX', IATA_ISO_Country__c = ctr4.Id, Account__c = accountMap.get('ParisX').Id);
 		addressList.add(add1);
 		addressList.add(add2);
 		addressList.add(add3);
@@ -110,10 +117,8 @@ public class portalIftpTestClass {
 		List<Contact_Roles__c> contactRolesList = new List<Contact_Roles__c>();
 		Contact_Roles__c contactRolesITPAdmin = new Contact_Roles__c(Name = 'ITP Administrator', Service__c = portalApp.Id);
 		Contact_Roles__c contactRolesITPCoord = new Contact_Roles__c(Name = 'ITP Training Coordinator', Service__c = portalApp.Id);
-		Contact_Roles__c contactRolesITPMaster = new Contact_Roles__c(Name = 'ITP Master', Service__c = portalApp.Id);
 		contactRolesList.add(contactRolesITPAdmin);
 		contactRolesList.add(contactRolesITPCoord);
-		contactRolesList.add(contactRolesITPMaster);
 		insert contactRolesList;
 
 		//Create Contacts - ITP / Airline
@@ -235,17 +240,13 @@ public class portalIftpTestClass {
 		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 		List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>();
-		Account_Contact_Role__c accountContactRoleITPMaster = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPMaster.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont1.Id, Contact_Role__c = 'ITP Master');
-		Account_Contact_Role__c accountContactRoleITPAdmin = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPAdmin.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont2.Id, Contact_Role__c = 'ITP Administrator');
-		Account_Contact_Role__c accountContactRoleITPCoord = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPCoord.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont3.Id, Contact_Role__c = 'ITP Training Coordinator');
-		Account_Contact_Role__c accountContactRoleAirline = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleAirline.Id, Contact__c = cont4.Id);
+		Account_Contact_Role__c accountContactRoleITPAdmin = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPAdmin.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont2.Id, Contact_Role__c = 'ITP Training Coordinator',Company_Code__c='TC');
+		Account_Contact_Role__c accountContactRoleITPCoord = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Contact_Roles__c = contactRolesITPCoord.Id, Account_Role__c = accRoleITP.Id, Contact__c = cont3.Id, Contact_Role__c = 'ITP Training Coordinator', Company_Code__c='TC');
 		Account_Contact_Role__c accountContactRoleITPStudent = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont5.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc');
 		Account_Contact_Role__c accountContactRoleITPStudent2 = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont50.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc2');
 		Account_Contact_Role__c accountContactRoleITPStudent3 = new Account_Contact_Role__c(Status__c = 'Active', RecordTypeId = accContactRole_RT, Service_Rendered__c = 'IFTP', Account_Role__c = accRoleITP.Id, Contact__c = cont5S3.Id, Contact_Role__c = 'ITP Trainee', Company_Code__c = 'Abc3');
-		accountContactRoleList.add(accountContactRoleITPMaster);
 		accountContactRoleList.add(accountContactRoleITPAdmin);
 		accountContactRoleList.add(accountContactRoleITPCoord);
-		accountContactRoleList.add(accountContactRoleAirline);
 		accountContactRoleList.add(accountContactRoleITPStudent);
 		accountContactRoleList.add(accountContactRoleITPStudent2);
 		accountContactRoleList.add(accountContactRoleITPStudent3);
@@ -268,7 +269,6 @@ public class portalIftpTestClass {
 		Role_Address__c roleAddressITPTrainee3 = new Role_Address__c(Account_Contact_Role__c = accountContactRoleITPStudent3.Id, Address__c = add1.Id, Name = 'Role Address ITP Trainee', Primary__c = true);
 		Role_Address__c roleAddressITPTrainee32 = new Role_Address__c(Account_Contact_Role__c = accountContactRoleITPStudent3.Id, Address__c = add2.Id, Name = 'Role Address ITP Trainee');
 		Role_Address__c roleAddressITP = new Role_Address__c(Account_Role_Service__c = accRoleServiceITP.Id, Address__c = add1.Id, Name = 'Role Address ITP', OJT_File_Id__c = OJTdocument.Id, OJT_file_validated__c=true);
-		Role_Address__c roleAddressAirlineUser = new Role_Address__c(Account_Contact_Role__c = accountContactRoleAirline.Id, Address__c = add1.Id, Name = 'Role Address Airline User');
 		Role_Address__c roleAddressAirline = new Role_Address__c(Account_Role_Service__c = accRoleServiceAirline.Id, Address__c = add1.Id, Name = 'Role Address Airline');
 		Role_Address__c roleAddressRelationAirlineITP = new Role_Address__c(Account_Role_Relationship__c = accountRoleRelatAirlineITP.Id, Address__c = add1.Id, Name = 'Role Address Airline vs ITP');
 		roleAddressList.add(roleAddressITPUser);
@@ -279,7 +279,6 @@ public class portalIftpTestClass {
 		roleAddressList.add(roleAddressITPTrainee3);
 		roleAddressList.add(roleAddressITPTrainee32);
 		roleAddressList.add(roleAddressITP);
-		roleAddressList.add(roleAddressAirlineUser);
 		roleAddressList.add(roleAddressAirline);
 		roleAddressList.add(roleAddressRelationAirlineITP);
 		insert roleAddressList;

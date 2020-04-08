@@ -1,3 +1,4 @@
+@isTest
 public class vfIECEBC_TestSuite {
 	public static Account IECTestUtil_Account;
 	public static Contact IECTestUtil_Contact;
@@ -246,6 +247,16 @@ public class vfIECEBC_TestSuite {
 			System.assertNotEquals(null, campaignExtCon.con.getId());
 			System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
 			System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
+
+			//pr = campaignExtCon.saveAsTemplate(); //need template and get id to be filtered on the call
+			pr = campaignExtCon.previous();
+			pr = campaignExtCon.next();
+			pr = campaignExtCon.pageLoad();
+			pr = campaignExtCon.saveAndContinue();
+			//INC529509: Code Coverage Increase
+			campaignExtCon.numberOfRecipients = 2;
+			Integer numRecep = campaignExtCon.numberOfRecipients;
+			
 		}
 	}
 	public static void testCampaignCreateAndExit() {
@@ -422,84 +433,6 @@ public class vfIECEBC_TestSuite {
 		}
 	}
 
-	public static void testCampaignScheduling() {
-
-		PageReference pageRef = Page.IECEBC_CampaignSchedule;
-		Test.setCurrentPage(pageRef);
-
-		Test.startTest();
-
-		User usr = initPreRunAs(true);
-
-		EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency');
-		insert masterFilter;
-
-		EBC_Template__c tpl = new EBC_Template__c();
-		insert tpl;
-
-		System.debug(IECTestUtil_Account.Id);
-
-		EBC_Campaign__c camp = new EBC_Campaign__c(
-			Name = 'Foo Bar',
-			Subject__c = 'Foo Subject',
-			From_Name__c = 'Foo From Name',
-			Is_Google_Analytics_Tracker_Active__c = true,
-			Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
-			Billing_Account__c = oBillingAccount.Id,
-			EBC_Master_Filter__c = masterFilter.Id,
-			EBC_Design__c = tpl.Id
-		);
-		insert camp;
-
-		System.runAs(usr) {
-			initPostRunAs();
-
-			// Layout PageLoad
-			vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
-			System.assertEquals(null, layoutController.pageLoad());
-
-			ApexPages.StandardController sc = new ApexPages.StandardController(camp);
-			vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-
-			//saveAsTemplate() coverage
-			PageReference pref = campaignExtCon.saveAsTemplate();
-
-			System.debug(campaignExtCon.campaign);
-			vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
-
-			System.assert(scheduleExtCon.getUserTimezoneOffset() == '-04:00' || scheduleExtCon.getUserTimezoneOffset() == '-05:00');
-			System.assertEquals('Eastern Standard Time', scheduleExtCon.getUserTimezoneDisplayName());
-			System.assertEquals(null, scheduleExtCon.validationMessage);
-
-			Datetime dt = Datetime.now().addDays(1);
-			scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
-			scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
-			scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
-			scheduleExtCon.campaignMinutes = dt.minute();
-			scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
-			scheduleExtCon.validate();
-			//System.assertNotEquals(null, scheduleExtCon.validationMessage);
-			System.debug(scheduleExtCon.validationMessage);
-			System.assert(scheduleExtCon.validationMessage.contains('2 business days'));
-
-			dt = Datetime.now().addDays(5);
-			scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
-			scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
-			scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
-			scheduleExtCon.campaignMinutes = dt.minute();
-			scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
-			//camp.Scheduled_Date__c = Datetime.now().addDays(5);
-			scheduleExtCon.validate();
-			System.assertEquals(null, scheduleExtCon.validationMessage);
-
-			PageReference pr = campaignExtCon.saveAndContinue();
-
-			System.assertEquals(0, ApexPages.getMessages().size());
-
-			System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
-			System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
-		}
-	}
 	public static void testCampaignConfirmUpdateCount() {
 
 		User usr = initPreRunAs(true);
@@ -527,28 +460,28 @@ public class vfIECEBC_TestSuite {
 		Test.setCurrentPage(pageRef);
 
 		camp = [
-					   SELECT
-					   Id,
-					   Name,
-					   EBC_Master_Filter__c,
-					   Audience__c,
-					   EBC_Design__c,
-					   From_Name__c,
-					   Google_Analytics_Tracking_Code__c,
-					   Is_Google_Analytics_Tracker_Active__c,
-					   Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-					   Maximum_Allowed_Step__c,
-					   Billing_Account__c,
-					   Number_of_Recipients__c,
-					   Scheduled_Date__c,
-					   Scheduled_Date_Valid_Until__c,
-					   Status__c,
-					   Subject__c
-					   FROM
-					   EBC_Campaign__c
-					   WHERE
-					   Id = :camp.Id
-				   ];
+						 SELECT
+						 Id,
+						 Name,
+						 EBC_Master_Filter__c,
+						 Audience__c,
+						 EBC_Design__c,
+						 From_Name__c,
+						 Google_Analytics_Tracking_Code__c,
+						 Is_Google_Analytics_Tracker_Active__c,
+						 Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+						 Maximum_Allowed_Step__c,
+						 Billing_Account__c,
+						 Number_of_Recipients__c,
+						 Scheduled_Date__c,
+						 Scheduled_Date_Valid_Until__c,
+						 Status__c,
+						 Subject__c
+						 FROM
+						 EBC_Campaign__c
+						 WHERE
+						 Id = :camp.Id
+					 ];
 
 		Test.startTest();
 
@@ -665,10 +598,10 @@ public class vfIECEBC_TestSuite {
 		List<ID_CARD__c> gidcard = createIDCARD(gpavs[0].Id);
 
 		EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id,
-												  New_Balance__c = 1000,
-												  Total_Count__c = 1000,
-												  Activity_Type__c = 'Credit',
-												  Activity_Date_Time__c = Datetime.now());
+													New_Balance__c = 1000,
+													Total_Count__c = 1000,
+													Activity_Type__c = 'Credit',
+													Activity_Date_Time__c = Datetime.now());
 		insert act;
 		EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agent',
 																	 Search_Level__c = null,
@@ -689,24 +622,24 @@ public class vfIECEBC_TestSuite {
 																		 OwnerId = usr.Id);
 			insert masterFilter;
 			EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id,
-																   EBC_Application_Filter__c = af.Id,
-																   Field_Operator__c = '=',
-																   Field_Value__c = 'IATA');
+																	 EBC_Application_Filter__c = af.Id,
+																	 Field_Operator__c = '=',
+																	 Field_Value__c = 'IATA');
 			insert cf;
 			EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
 			insert tpl;
 			EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar',
-													   Number_of_Recipients__c = 4,
-													   Subject__c = 'Foo Subject',
-													   From_Name__c = 'Foo From Name',
-													   Is_Google_Analytics_Tracker_Active__c = true,
-													   Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
-													   Billing_Account__c = oBillingAccount.Id,
-													   EBC_Master_Filter__c = masterFilter.Id,
-													   EBC_Design__c = tpl.Id,
-													   OwnerId = usr.Id,
-													   Status__c = 'APPROVED',
-													   Send_Datetime__c = Datetime.now());
+														 Number_of_Recipients__c = 4,
+														 Subject__c = 'Foo Subject',
+														 From_Name__c = 'Foo From Name',
+														 Is_Google_Analytics_Tracker_Active__c = true,
+														 Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
+														 Billing_Account__c = oBillingAccount.Id,
+														 EBC_Master_Filter__c = masterFilter.Id,
+														 EBC_Design__c = tpl.Id,
+														 OwnerId = usr.Id,
+														 Status__c = 'APPROVED',
+														 Send_Datetime__c = Datetime.now());
 			insert camp;
 
 			//SchdlIECEBCStartCampaign.prepare(camp, 'test', 'test', 'test', 'test', 'test');
@@ -760,28 +693,28 @@ public class vfIECEBC_TestSuite {
 			Test.setCurrentPage(pageRef);
 
 			camp = [
-					   SELECT
-					   Id,
-					   Name,
-					   EBC_Master_Filter__c,
-					   Audience__c,
-					   EBC_Design__c,
-					   From_Name__c,
-					   Google_Analytics_Tracking_Code__c,
-					   Is_Google_Analytics_Tracker_Active__c,
-					   Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-					   Maximum_Allowed_Step__c,
-					   Billing_Account__c,
-					   Number_of_Recipients__c,
-					   Scheduled_Date__c,
-					   Scheduled_Date_Valid_Until__c,
-					   Status__c,
-					   Subject__c
-					   FROM
-					   EBC_Campaign__c
-					   WHERE
-					   Id = :camp.Id
-				   ];
+						 SELECT
+						 Id,
+						 Name,
+						 EBC_Master_Filter__c,
+						 Audience__c,
+						 EBC_Design__c,
+						 From_Name__c,
+						 Google_Analytics_Tracking_Code__c,
+						 Is_Google_Analytics_Tracker_Active__c,
+						 Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+						 Maximum_Allowed_Step__c,
+						 Billing_Account__c,
+						 Number_of_Recipients__c,
+						 Scheduled_Date__c,
+						 Scheduled_Date_Valid_Until__c,
+						 Status__c,
+						 Subject__c
+						 FROM
+						 EBC_Campaign__c
+						 WHERE
+						 Id = :camp.Id
+					 ];
 
 			Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
 
@@ -846,28 +779,28 @@ public class vfIECEBC_TestSuite {
 			Test.setCurrentPage(pageRef);
 
 			camp = [
-					   SELECT
-					   Id,
-					   Name,
-					   EBC_Master_Filter__c,
-					   Audience__c,
-					   EBC_Design__c,
-					   From_Name__c,
-					   Google_Analytics_Tracking_Code__c,
-					   Is_Google_Analytics_Tracker_Active__c,
-					   Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-					   Maximum_Allowed_Step__c,
-					   Billing_Account__c,
-					   Number_of_Recipients__c,
-					   Scheduled_Date__c,
-					   Scheduled_Date_Valid_Until__c,
-					   Status__c,
-					   Subject__c
-					   FROM
-					   EBC_Campaign__c
-					   WHERE
-					   Id = :camp.Id
-				   ];
+						 SELECT
+						 Id,
+						 Name,
+						 EBC_Master_Filter__c,
+						 Audience__c,
+						 EBC_Design__c,
+						 From_Name__c,
+						 Google_Analytics_Tracking_Code__c,
+						 Is_Google_Analytics_Tracker_Active__c,
+						 Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+						 Maximum_Allowed_Step__c,
+						 Billing_Account__c,
+						 Number_of_Recipients__c,
+						 Scheduled_Date__c,
+						 Scheduled_Date_Valid_Until__c,
+						 Status__c,
+						 Subject__c
+						 FROM
+						 EBC_Campaign__c
+						 WHERE
+						 Id = :camp.Id
+					 ];
 
 			Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
 
@@ -933,28 +866,28 @@ public class vfIECEBC_TestSuite {
 			Test.setCurrentPage(pageRef);
 
 			camp = [
-					   SELECT
-					   Id,
-					   Name,
-					   EBC_Master_Filter__c,
-					   Audience__c,
-					   EBC_Design__c,
-					   From_Name__c,
-					   Google_Analytics_Tracking_Code__c,
-					   Is_Google_Analytics_Tracker_Active__c,
-					   Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-					   Maximum_Allowed_Step__c,
-					   Billing_Account__c,
-					   Number_of_Recipients__c,
-					   Scheduled_Date__c,
-					   Scheduled_Date_Valid_Until__c,
-					   Status__c,
-					   Subject__c
-					   FROM
-					   EBC_Campaign__c
-					   WHERE
-					   Id = :camp.Id
-				   ];
+						 SELECT
+						 Id,
+						 Name,
+						 EBC_Master_Filter__c,
+						 Audience__c,
+						 EBC_Design__c,
+						 From_Name__c,
+						 Google_Analytics_Tracking_Code__c,
+						 Is_Google_Analytics_Tracker_Active__c,
+						 Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
+						 Maximum_Allowed_Step__c,
+						 Billing_Account__c,
+						 Number_of_Recipients__c,
+						 Scheduled_Date__c,
+						 Scheduled_Date_Valid_Until__c,
+						 Status__c,
+						 Subject__c
+						 FROM
+						 EBC_Campaign__c
+						 WHERE
+						 Id = :camp.Id
+					 ];
 
 			Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
 
@@ -1554,16 +1487,16 @@ public class vfIECEBC_TestSuite {
 
 			// Schedule the test job
 			String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation'+System.now(),
-										   CRON_EXP,
-										   new SchdlIECEBCEmailExclusionRelation());
+											 CRON_EXP,
+											 new SchdlIECEBCEmailExclusionRelation());
 
 			// Get the information from the CronTrigger API object
 			CronTrigger ct = [SELECT Id
-							  , CronExpression
-							  , TimesTriggered
-							  , NextFireTime
-							  FROM CronTrigger
-							  WHERE id = :jobId];
+								, CronExpression
+								, TimesTriggered
+								, NextFireTime
+								FROM CronTrigger
+								WHERE id = :jobId];
 
 			// Verify the expressions are the same
 			System.assertEquals(CRON_EXP, ct.CronExpression);
@@ -1611,7 +1544,7 @@ public class vfIECEBC_TestSuite {
 			new EBC_Email_Exclusion_Relation__c(Billing_Account__c  = oBillingAccount.Id, EBC_Email_Exclusion__c = ee.Id, External_Id__c = ee.Email__c.toLowerCase() + '_' + gpavs[8].Id + '_' + ee.Unsubscribe_From__c, GDP_Products_Account_View__c = gpavs[8].Id, Is_Global__c = false),
 			new EBC_Email_Exclusion_Relation__c(Billing_Account__c  = oBillingAccount.Id, EBC_Email_Exclusion__c = ee.Id, External_Id__c = ee.Email__c.toLowerCase() + '_' + gpavs[9].Id + '_' + ee.Unsubscribe_From__c, GDP_Products_Account_View__c = gpavs[9].Id, Is_Global__c = false)
 			};
-	   	insert eers;
+		 	insert eers;
 
 		Test.startTest();
 

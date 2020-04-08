@@ -110,6 +110,9 @@ private class IECApplicationsManager_tst {
 
 		// create ID_Card records
 		oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Valid ID Card');
+		oIDCard.FirstName__c = 'John';
+		oIDCard.LastName__c = 'Doe';
+		oIdCard.Duties__c = 'OPERATIONS';
 		oIDCard.Valid_To_Date__c = Date.today().addYears(1);
 		oIDCard.Valid_From_Date__c = Date.today();
 		insert oIDCard;
@@ -248,6 +251,10 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// test customer search functionality: part 1
 	// test the product access consumption
+	/**
+	 * A test method that requires a Zuora Object must contain SeeAllData equals true, due to platform limitations. 
+	 * (https://knowledgecenter.zuora.com/CA_Commerce/I_Development_Resources/B_Order_Builder/D_Programming_with_Order_Builder#Unit_Tests_and_Code_Coverage) 
+	*/
 	@isTest(SeeAllData=true)
 	static void testCustomerSearch1_Count() {
 		initDataForCustomerSearch();
@@ -286,6 +293,10 @@ private class IECApplicationsManager_tst {
 	// test customer search functionality: part 2.1
 	// customerSearchAgencyByIATACode
 	// customerSearchAgentByVER
+	/**
+	 * A test method that requires a Zuora Object must contain SeeAllData equals true, due to platform limitations. 
+	 * (https://knowledgecenter.zuora.com/CA_Commerce/I_Development_Resources/B_Order_Builder/D_Programming_with_Order_Builder#Unit_Tests_and_Code_Coverage) 
+	*/
 	@isTest(SeeAllData=true)
 	static void testCustomerSearch2() {
 		initDataForCustomerSearch();
@@ -320,40 +331,17 @@ private class IECApplicationsManager_tst {
 			// usage should be consumed
 			lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
 
-			//system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 2, 'Product Access should reflect 2 search consumption');
-
-			// make sure the search was tracked in the global counter
-			/* List<IEC_Usage_Tracker_Live__c> lstTracker =
-				[SELECT Counter__c, Search_Status__c, Search_Target__c, Related_Application_Type__c, RelatedContact__c
-				 FROM IEC_Usage_Tracker_Live__c
-				 WHERE RelatedContact__c = :oContact.Id
-					AND Search_Status__c = :IECConstants.IECUsageTrackerSearchStatus_Success
-					AND Search_Target__c = :IECConstants.IECUsageTrackerSearchTarget_Agency
-					AND Related_Application_Type__c = :IECConstants.ProductCategory_SF_CACPRO];*/
-		   // system.assert(lstTracker != null && lstTracker.size() > 0, 'There should be at least 1 IEC_Usage_Tracker_Live__c created');
-
 			// Test #4 - search for invalid ID Card
 			oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER('3213211', IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
 			system.assert(oSearchedIDCard == null, 'The ID Card should not be found for unknown VER number');
 
 			// Test #5 - search for valid ID Card
 			oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER(AGENT_VER_NUMBER, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-		 //   system.assert(oSearchedIDCard != null, 'The ID Card should be found');
-
-			// Test #6 - search for a known agency with a check code
-		 /*   lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode(AGENCY1_CODE, null, AGENCY_CHECK_DIGIT, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-			system.assert(lstSearchResult != null, 'Test 6: The Agency List should not be null');
-			system.assert(lstSearchResult.size() == 1, 'Test 6: Exactly One Agency should be found instead of ' + lstSearchResult.size() + ':' + lstSearchResult);
-			system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
-			*/
 		}
 		test.stopTest();
 	} // testCustomerSearch2
 
-
-
-	@isTest(SeeAllData=true)
-	static void testCustomerSearch3Pre() {
+	@isTest public static void testCustomerSearch3Pre() {
 
 		initDataForCustomerSearch();
 
@@ -364,20 +352,8 @@ private class IECApplicationsManager_tst {
 		insert oISOCountry;
 		GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
 		insert oGEODetail;
-		/*oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
-		oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
 
-		insert oGDPAccount3;
-		*/
-
-		/*oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
-		oAccreditation3.Status__c = oRefAgencyStatus.Id;
-		insert oAccreditation3;
-		oGDPAccount3.Related_Accreditation_Class__c = oAccreditation3.Id;
-		update oGDPAccount3;
-		*/
 		//account 3 - end
-
 		GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
 		oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
 		oGDPAddress3.Address_Type__c = 'Location';
@@ -388,36 +364,6 @@ private class IECApplicationsManager_tst {
 		oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
 		update oGDPAccount3;
 		SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-
-		/*
-		List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
-		bat.execute(null, gpav);
-
-		IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
-		oFilter.Zip_Code__c = '0H 0';
-		oFilter.City__c = oGDPAddress3.Address_City__c;
-		oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-		oFilter.Country__c = oGDPAddress3.Address_ISO_Country_Code__c;
-
-
-		System.runAs(oCommunityUser) {
-
-			lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-
-			system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount3.Id == lstSearchResult.get(0).Id, 'The Agency #3 should be found based on the zip/postal code');
-			//
-			// Test #11 - search by agency trade name (starts with) and city (exact match)
-			oFilter = new IEC_Application_Filter__c(); // reset filter
-			oFilter.Agency_Name__c = 'Chillwave Agency';
-			oFilter.Agency_Name_Search_Condition__c = IECConstants.GADAgencyNameSearchBy.TradingName.name();
-			oFilter.Agency_Name_Search_Type__c = IECConstants.GADSearchType.StartsWith.name();
-			oFilter.City__c = oGDPAddress3.Address_City__c;
-			oFilter.City_Search_Type__c = IECConstants.GADSearchType.ExactMatch.name();
-
-			lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-			//system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
-		}
-		*/
 	}
 
 
@@ -484,75 +430,70 @@ private class IECApplicationsManager_tst {
 					 + ', lstSearchResult:' + lstSearchResult);
 		System.assert(lstSearchResult != null && lstSearchResult.size() > 0, 'The Agency #3 should be found.');
 		System.assert(lstSearchResult != null && lstSearchResult.size() == 1
-					  && oGDPAccount3New.Id == lstSearchResult.get(0).Id
-					  , 'The Agency #3 should be found based on agency name and city');
+						&& oGDPAccount3New.Id == lstSearchResult.get(0).Id
+						, 'The Agency #3 should be found based on agency name and city');
 	} // end of testCustomerSearch4_Address
 
 	// test testLiveUsageTracking
-	 @isTest(SeeAllData=true)
-	static void testLiveUsageTracking() {
+	@isTest public static void testLiveUsageTracking() {
+
 		setupData();
 
-		//User usr = IECTestUtil.createSampleGuestUserAndLogin();
-		//System.runAs(usr) {
+		Test.startTest();
 
-			Test.startTest();
+		initSubscription();
 
-			initSubscription();
+		// trigger the Product Access creation (why only on Subscription trigger After Update ?)
+		update oSubscription;
 
-			// trigger the Product Access creation (why only on Subscription trigger After Update ?)
-			update oSubscription;
+		Test.stopTest();
 
-			Test.stopTest();
+		// Test #1 - missing mandatory parameters
+		try {
+			IECApplicationsManager.trackLiveUsage(null, null, null, null, null);
+			system.assert(false, 'Should throw exception because of missing parameters');
+		}
+		catch(Exception ex) {
+			system.assert(true, 'Should throw exception because of missing parameters');
+		}
 
-			// Test #1 - missing mandatory parameters
-			try {
-				IECApplicationsManager.trackLiveUsage(null, null, null, null, null);
-				system.assert(false, 'Should throw exception because of missing parameters');
-			}
-			catch(Exception ex) {
-				system.assert(true, 'Should throw exception because of missing parameters');
-			}
+		// Test #2 - create anonymous usage tracking for CAC Free
+		Id idUsageTracker = IECApplicationsManager.trackLiveUsage(IECConstants.ProductCategory_SF_CACFREE, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agent, null, null);
+		IEC_Usage_Tracker_Live__c oUsageTracker = [SELECT Counter__c, RelatedContact__c, Search_Status__c, Search_Target__c, Related_Subscription_History__c, Related_Application_Type__c, Date__c
+													FROM IEC_Usage_Tracker_Live__c
+													WHERE Id =: idUsageTracker limit 1];
+		system.assert(oUsageTracker != null, 'The Usage Tracking record should be found');
+		system.assertEquals(IECConstants.ProductCategory_SF_CACFREE, oUsageTracker.Related_Application_Type__c, 'The Product Category should be CAC Free');
+		system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Success, oUsageTracker.Search_Status__c, 'The Search Status should be Valid');
+		system.assertEquals(IECConstants.IECUsageTrackerSearchTarget_Agent, oUsageTracker.Search_Target__c, 'The Search Target should be Agent');
+		system.assertEquals(Date.today(), oUsageTracker.Date__c.date(), 'The Date should be set to today');
+		system.assertEquals(1, oUsageTracker.Counter__c, 'The Counter should be set to 1');
+		system.assertEquals(null, oUsageTracker.RelatedContact__c, 'The Related Contact should be set to null');
+		system.assertEquals(null, oUsageTracker.Related_Subscription_History__c, 'The Related Subscription History should be set to null');
 
-			// Test #2 - create anonymous usage tracking for CAC Free
-			Id idUsageTracker = IECApplicationsManager.trackLiveUsage(IECConstants.ProductCategory_SF_CACFREE, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agent, null, null);
-			IEC_Usage_Tracker_Live__c oUsageTracker = [SELECT Counter__c, RelatedContact__c, Search_Status__c, Search_Target__c, Related_Subscription_History__c, Related_Application_Type__c, Date__c
-														FROM IEC_Usage_Tracker_Live__c
-														WHERE Id =: idUsageTracker limit 1];
-			system.assert(oUsageTracker != null, 'The Usage Tracking record should be found');
-			system.assertEquals(IECConstants.ProductCategory_SF_CACFREE, oUsageTracker.Related_Application_Type__c, 'The Product Category should be CAC Free');
-			system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Success, oUsageTracker.Search_Status__c, 'The Search Status should be Valid');
-			system.assertEquals(IECConstants.IECUsageTrackerSearchTarget_Agent, oUsageTracker.Search_Target__c, 'The Search Target should be Agent');
-			system.assertEquals(Date.today(), oUsageTracker.Date__c.date(), 'The Date should be set to today');
-			system.assertEquals(1, oUsageTracker.Counter__c, 'The Counter should be set to 1');
-			system.assertEquals(null, oUsageTracker.RelatedContact__c, 'The Related Contact should be set to null');
-			system.assertEquals(null, oUsageTracker.Related_Subscription_History__c, 'The Related Subscription History should be set to null');
+		// Test #3 - create non-anonymous usage tracking for CAC Pro
+		idUsageTracker = IECApplicationsManager.trackLiveUsage(IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Fail, IECConstants.IECUsageTrackerSearchTarget_Agent, oContact, oSubscriptionHist);
+		oUsageTracker = [SELECT Counter__c, RelatedContact__c, Search_Status__c, Search_Target__c, Related_Subscription_History__c, Related_Application_Type__c, Date__c
+							FROM IEC_Usage_Tracker_Live__c
+							WHERE Id =: idUsageTracker limit 1];
+		system.assert(oUsageTracker != null, 'The Usage Tracking record should be found');
+		system.assertEquals(IECConstants.ProductCategory_SF_CACPRO, oUsageTracker.Related_Application_Type__c, 'The Product Category should be CAC Pro');
+		system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Fail, oUsageTracker.Search_Status__c, 'The Search Status should be Fail');
+		system.assertEquals(oContact.Id, oUsageTracker.RelatedContact__c, 'The Related Contact should be assigned');
+		system.assertEquals(oSubscriptionHist.Id, oUsageTracker.Related_Subscription_History__c, 'The Related Subscription History should be assigned');
 
-			// Test #3 - create non-anonymous usage tracking for CAC Pro
-			idUsageTracker = IECApplicationsManager.trackLiveUsage(IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Fail, IECConstants.IECUsageTrackerSearchTarget_Agent, oContact, oSubscriptionHist);
-			oUsageTracker = [SELECT Counter__c, RelatedContact__c, Search_Status__c, Search_Target__c, Related_Subscription_History__c, Related_Application_Type__c, Date__c
-								FROM IEC_Usage_Tracker_Live__c
-								WHERE Id =: idUsageTracker limit 1];
-			system.assert(oUsageTracker != null, 'The Usage Tracking record should be found');
-			system.assertEquals(IECConstants.ProductCategory_SF_CACPRO, oUsageTracker.Related_Application_Type__c, 'The Product Category should be CAC Pro');
-			system.assertEquals(IECConstants.IECUsageTrackerSearchStatus_Fail, oUsageTracker.Search_Status__c, 'The Search Status should be Fail');
-			system.assertEquals(oContact.Id, oUsageTracker.RelatedContact__c, 'The Related Contact should be assigned');
-			system.assertEquals(oSubscriptionHist.Id, oUsageTracker.Related_Subscription_History__c, 'The Related Subscription History should be assigned');
-
-			// Other tests
-			// Test #4 - test subscription end date and number of days left
-			Date enddate = IECApplicationsManager.getLastEnddateOfProductAccess(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-			//system.assertEquals(dtSubscriptionEnddate, enddate, 'The appropriate End date should be returned');
-			Integer iDaysLeft = IECApplicationsManager.getDaysLeftForAccessByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-			system.assertEquals(Date.today().daysBetween(enddate), iDaysLeft, 'Days between error');
-			system.assertEquals(0, IECApplicationsManager.getDaysLeftForAccessByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_GAD), 'Should have 0 days left for a product not purchased');
-		//}
+		// Other tests
+		// Test #4 - test subscription end date and number of days left
+		Date enddate = IECApplicationsManager.getLastEnddateOfProductAccess(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+		//system.assertEquals(dtSubscriptionEnddate, enddate, 'The appropriate End date should be returned');
+		Integer iDaysLeft = IECApplicationsManager.getDaysLeftForAccessByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+		system.assertEquals(Date.today().daysBetween(enddate), iDaysLeft, 'Days between error');
+		system.assertEquals(0, IECApplicationsManager.getDaysLeftForAccessByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_GAD), 'Should have 0 days left for a product not purchased');
 	} // end of testLiveUsageTracking
 
 	// ====================================================================
 	// testAnonymousSearch
-	@isTest(SeeAllData=true)
-	static void testAnonymousSearch() {
+	@isTest public static void testAnonymousSearch() {
 
 		List<GDP_Products_Account_View__c> lstSearchResult = null;
 		List<IEC_Usage_Tracker_Live__c> lstUsageLive = null;
@@ -604,8 +545,7 @@ private class IECApplicationsManager_tst {
 
 	// ====================================================================
 	// testOtherStuff
-	@isTest(SeeAllData=true)
-	static void testOtherStuff() {
+	@isTest public static void testOtherStuff() {
 
 		// Test #1 - test string representation of filter
 
@@ -653,8 +593,8 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// testOtherStuff part 2
 	// just some extra calls just to increase the coverage
-	@isTest(SeeAllData=true)
-	static void testOtherStuff2() {
+	@isTest public static void testOtherStuff2() {
+
 		initDataForCustomerSearch();
 
 		Test.startTest();
@@ -696,8 +636,8 @@ private class IECApplicationsManager_tst {
 	// ====================================================================
 	// test isEbcAccessGrantedForContact()
 	// this method only check based on the value of related Zuora__CustomerAccount__c.eBroadcast_Product_Access__c
-	@isTest(SeeAllData=false)
-	static void testIsEbcAccessGrantedForContact() {
+	@isTest public static void testIsEbcAccessGrantedForContact() {
+		
 		// simplified data preparation
 		Account oTestAccount = IECTestUtil.createSampleAccount();
 		insert oTestAccount;

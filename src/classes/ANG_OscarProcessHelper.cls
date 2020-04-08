@@ -74,7 +74,7 @@ global class ANG_OscarProcessHelper {
 					Link_agent_name__r.Link_agent_code__c, Link_agent_name__r.IATACode__c,Chk_Dgt__c,SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c,
 					Branch_Office_Country__c, Branch_Office_Country__r.AMS_Default_State__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c,
 					SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, ISO_country__c, N_Code__c, A_Code__c, C_Code__c,
-					SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c,Branch_Office_Country__r.Due_diligence_mandatory__c
+					SAAM_Case__r.OSCAR__r.Process__c, ANG_IsNewGenAgency__c, SAAM_Case__r.OSCAR__r.STEP6__c,Branch_Office_Country__r.Due_diligence_mandatory__c, NDC_Transactions__c
 					FROM AMS_Pax_Accreditation_Form__c
 					WHERE Id = :onlineAccreditationId FOR UPDATE];
 
@@ -502,6 +502,7 @@ global class ANG_OscarProcessHelper {
 			acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
 			acc.Company_Type__c = AMS_Utils.transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
 			acc.GDS__c = AMS_Utils.transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
+			acc.NDC_Agent__c = onlineAcc.NDC_Transactions__c;
 			acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
 			acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
 			acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
@@ -1682,17 +1683,16 @@ global class ANG_OscarProcessHelper {
 			casesToInsert.add(cse);
 		}
 
-		if (!casesToInsert.isEmpty())
-		 		insert casesToInsert;
+		if (!casesToInsert.isEmpty()) insert casesToInsert;
 
-		 	Set<Id> casesIds = new Set<Id>();
+		Set<Id> casesIds = new Set<Id>();
 		for (Case cse : casesToInsert){
 			casesIds.add(cse.Id);
 		}
 
-		 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
-		 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
-		 	}
+		for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+			accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+		}
 
 		//AMS_OSCAR__c:
 		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>();
@@ -1716,9 +1716,7 @@ global class ANG_OscarProcessHelper {
 
 		OrgWideEmailAddress[] owea;
 
-		if(!accsToSendEmail.isEmpty()){
-			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
-		}
+		if(!accsToSendEmail.isEmpty()) owea = [select Id, Address, DisplayName from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		List<Case> casesToUpdate = new List<Case>();
 
@@ -1742,6 +1740,8 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP || origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
 			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
+		Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend = new Map<ID,List<Messaging.SingleEmailMessage>>();
+		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 		for (Account acc: accs){
 
 			if(accsToSendEmail.contains(acc.Id)){
@@ -1767,11 +1767,40 @@ global class ANG_OscarProcessHelper {
 
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
+				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments, false);
+				mailsToSend.put(accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, mailListAux);
+				emailsToSend.addAll(mailListAux);
 
-				 	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);
 			}
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
+		}
+
+		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
+		if(!mailsToSend.isEmpty()) {
+			if(!Test.isRunningTest()) Messaging.sendEmail(emailsToSend);
+			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
+
+			for(Id oscarCommCaseId : mailsToSend.keySet()){
+				for(Messaging.SingleEmailMessage mail : mailsToSend.get(oscarCommCaseId)){
+					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
+					emailMsg.FromAddress = owea[0].Address;
+					emailMsg.FromName = owea[0].DisplayName;
+					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
+						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					}
+					if(!String.isBlank(mail.getTargetObjectId())) {
+						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
+					}
+					emailMsg.Subject = mail.getSubject();
+					emailMsg.HtmlBody = mail.getHtmlBody();
+					emailMsg.ParentId = oscarCommCaseId; //Attach with the case
+					emailMsg.MessageDate = system.now();
+					emailMsg.Status = '0';
+					mailsToTrackInCase.add(emailMsg);
+				}
+			}
+			insert mailsToTrackInCase;
 		}
 
 		if(notificationTemplate <> null)
@@ -1920,6 +1949,7 @@ global class ANG_OscarProcessHelper {
 			nt.Subject__c = nt.Subject__c
 				.replace('#IATACODE', acct.IataCode__c)
 				.replace('#ACCOUNTNAME', acct.Name);
+			nt.Subject__c = nt.Subject__c.length() > 140 ? nt.Subject__c.substring(0,140) : nt.Subject__c; //Notification__c.Subjec -> max size 140
 
 			notifications.add(nt);
 		}
@@ -2271,355 +2301,6 @@ global class ANG_OscarProcessHelper {
 		return oscarsToInsert;
 	}
 
-	// to be removed
-	public void fakeMethod(){
-	Integer i = 0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	}
-
 	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
 
 		Set<String> optOutCountryConfig = new Set<String>();
@@ -2646,12 +2327,11 @@ global class ANG_OscarProcessHelper {
 			[SELECT
 				Id,
 				Status
-				FROM
-				Case
-				WHERE
-					AccountId IN :accountIdSet
-				AND RecordTypeId = :recordTypeId
-				AND Status != :newCaseStatus
+			FROM Case
+			WHERE
+				AccountId IN :accountIdSet
+			AND RecordTypeId = :recordTypeId
+			AND Status != :newCaseStatus
 			]
 		);
 

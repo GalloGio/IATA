@@ -2,6 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <customObject>true</customObject>
     <description>Definition of the Area and the Countries composing an area</description>
-    <mobileReady>false</mobileReady>
     <motif>Custom68: Globe</motif>
 </CustomTab>

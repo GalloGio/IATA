@@ -96,7 +96,7 @@ global class AutoAssignmentEngine
 		List<ID> regionUserIDs =  new List<ID>();
 		List<ID> supportUserIDs = new List<ID>();
 
-		supportUserIDs = getUserIds(getSupportEmails());
+		supportUserIDs = getSupportEmails();
 		// ******************************
 		// 1) Calculate Case Skills
 		// ******************************
@@ -515,13 +515,12 @@ global class AutoAssignmentEngine
 		return userIDs;
 	}
 
-	private static List<String> getSupportEmails()
-	{
-			List<String> supEmails = new List<String>();
-			for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-				supEmails.add(email.Support_Email__c);
+	private static List<String> getSupportEmails() {
+		List<String> supEmails = new List<String>();
+		for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
+			supEmails.add(email.Support_User_Id__c);
 
-			return supEmails;
+		return supEmails;
 	}
 
 }

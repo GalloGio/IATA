@@ -10,7 +10,7 @@
             {label: 'Comments', fieldName: 'Description', type: 'text', sortable : true}
         ];
 
-        if(component.get('v.canEdit') == true) {
+        if(component.get('v.canEdit') == true || component.get('v.haveUserAMPIssuesAndPriorities') == true) {
             var actions = [
                 {label: 'Edit', name: 'edit_milestone', 'iconName': 'utility:edit'},
                 {label: 'Delete', name: 'delete_milestone', 'iconName': 'utility:delete'}
@@ -20,6 +20,7 @@
 
         component.set('v.columns', columns);
     },
+
     fetchData : function(component) {
         var action = component.get('c.getTasks');
         action.setParams({

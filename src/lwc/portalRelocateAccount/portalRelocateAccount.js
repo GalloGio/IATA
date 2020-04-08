@@ -64,6 +64,10 @@ export default class ChangeUserPortalStatus extends LightningElement {
 
         //Auxiliary Map
         const map = new Map();
+
+        //sort list of results by Country in Alphabetical order
+        this.myResult.sort((a, b) => { return (a.IATA_ISO_Country__r.Name).localeCompare(b.IATA_ISO_Country__r.Name) });
+       
         //Array to consume SubTopic Options
         //first element on the picklist
         for (const item of this.myResult) {
