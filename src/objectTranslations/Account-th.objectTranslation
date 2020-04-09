@@ -96,10 +96,6 @@
             <translation>บริษัทผู้ถือหุ้น</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>พันธมิตรโครงสร้างพื้นฐาน</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>สื่อ</translation>
         </picklistValues>

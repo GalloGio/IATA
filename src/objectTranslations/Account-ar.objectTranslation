@@ -92,10 +92,6 @@
             <translation>الشركة القابضة</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>شريك البنية التحتية</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>وسائل الإعلام</translation>
         </picklistValues>

@@ -92,10 +92,6 @@
             <translation>Holding</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Altyapı Ortağı</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Medya</translation>
         </picklistValues>
