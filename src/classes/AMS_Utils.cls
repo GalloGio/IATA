@@ -357,6 +357,8 @@ public without sharing class AMS_Utils {
 	public static final Id AccreditationContactTrainedStaffRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
 	public static final Id AccountRoleOwnershipRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
+	public static final String CONTACT_TYPE_ADMIN = 'Approved Admin';
+
 	public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
 	public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
 	public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};

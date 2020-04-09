@@ -151,16 +151,22 @@ public class ANG_TestDataHelper
 	public static Contact insertContact(Id accountId) {
 		return insertContact(accountId, false);
 	}
-
+	
 	public static Contact insertContact(Id accountId, Boolean financialContact) {
+		return insertContact(accountId, financialContact, null);
+	}
+
+	public static Contact insertContact(Id accountId, Boolean financialContact, String contactType) {
+		
 		Contact cont = new Contact(
 			AccountId = accountId,
 			Firstname = 'Richard',
 			Lastname = 'Vaughan',
 			Phone = '666123456',
 			MobilePhone = '911111111',
-			Email = 'contact_for_' + accountId + '@test.com',
-			Financial_Assessment_Contact__c = financialContact
+			Email = 'contact_for_' + accountId + Math.random() + '@test.com',
+			Financial_Assessment_Contact__c = financialContact,
+			User_Portal_Status__c = contactType
 		);
 		insert cont;
 
@@ -169,7 +175,7 @@ public class ANG_TestDataHelper
 
 	public static AMS_Account_Role__c insertAccountOwner(Id accountId) {
 		AMS_Account_Role__c owner = new AMS_Account_Role__c();
-		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		owner.RecordTypeId = AMS_Utils.AccountRoleOwnershipRT;
 		owner.Account__c = accountId;
 		owner.Duty__c = 'number 2';
 		owner.Employee_Name__c = 'name for ' + accountId;

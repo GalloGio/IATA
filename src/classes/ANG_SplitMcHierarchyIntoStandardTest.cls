@@ -259,6 +259,25 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
 	}
 
+	@isTest
+	public static void testBatch_contact()
+	{
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
+		ANG_TestDataHelper.insertContact(accountGE, false, AMS_Utils.CONTACT_TYPE_ADMIN);
+
+		Test.startTest();
+		
+		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE FR'].Id;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		Database.executeBatch(myBatchObject, 1);
+		
+		Test.stopTest();
+		
+		Case c = [SELECT Id, Contact.User_Portal_Status__c FROM Case WHERE Account.Name = 'MC Account 1 HE FR'];
+		System.assertEquals(AMS_Utils.CONTACT_TYPE_ADMIN, c.Contact.User_Portal_Status__c);
+	}
+
 	private static void simulateBatchRun(Id oscarId, Id accountGE, Boolean processSingleBsp) {
 		ANG_SplitMcHierarchyIntoStandardBatch batch = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, processSingleBsp);
 		Database.QueryLocator q = batch.start(null);
