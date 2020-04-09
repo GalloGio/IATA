@@ -21,7 +21,8 @@ private class AccountRolesAlignBatch_Test {
 		Contact c2 = new Contact(LastName = 'Don', AccountId = acc.Id, Email = 'dontest@test.com');
 		insert c2;
 
-		Account_Role__c accRole = new Account_Role__c(Account__c = acc.Id, Account_Role_Name__c = 'Training',Functional_Role__c =  'Training' );
+		String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+		Account_Role__c accRole = new Account_Role__c(Account__c = acc.Id, Account_Role_Name__c = 'Training',Functional_Role__c = 'Training', RecordTypeId = RECTYPE_Master_AccRole );
 		insert accRole;
 
 		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
@@ -63,7 +64,7 @@ private class AccountRolesAlignBatch_Test {
 		test.startTest();
 
 		contact.AccountId = acc2.Id;
-
+		
 		Map<Id,sObject> contactMap = new Map<Id,sObject>();
 		contactMap.put(contact.Id, contact);
 
