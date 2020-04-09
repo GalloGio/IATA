@@ -22708,7 +22708,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 질문사항이 응급 상황입니까?</label>
+        <label>긴급한 질의 입니까? 긴급 질의는 영어로 답변드립니다.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>
