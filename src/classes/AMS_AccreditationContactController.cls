@@ -594,14 +594,12 @@ public with sharing class AMS_AccreditationContactController {
 			}
 		}
 
-		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {
-			if((totalOwnership < 99.99 || totalOwnership > 100) && hasOwner) {
-				errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
-			}
+		if((totalOwnership < 99.99 || totalOwnership > 100) && hasOwner) {
+			errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
+		}
 
-			if(!validRange) {
-				errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
-			}
+		if(!validRange) {
+			errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
 		}
 
 		return errors;
