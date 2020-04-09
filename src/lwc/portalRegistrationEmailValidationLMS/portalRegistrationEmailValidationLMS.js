@@ -52,7 +52,6 @@ import CSP_Registration_Existing_User_Message_Not_Matching_F4 from '@salesforce/
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
 import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS';
 import CSP_L3_Have_Work_Email from '@salesforce/label/c.CSP_L3_Have_Work_Email';
-import Trust_Weaver from '@salesforce/label/c.Trust_Weaver';
 
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
@@ -131,6 +130,8 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			(this.haveWorkEmail === '' || this.haveWorkEmail === 'no') && 
 			(this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			return true;
+		}else if(this.reverseEmailVisibility){
+			return true;
 		}
 		return this.isPersonalEmail === 'no'? true : false;
 	}
@@ -141,13 +142,20 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	get workEmailVisibility(){
-		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
+		if(this.reverseEmailVisibility){
 			return true;
 		}
 		return this.isPersonalEmail === 'yes' && this.haveWorkEmail === 'yes' ? true : false;
 		
 	}
 
+	get isReverseEmailVisible(){
+		return this.reverseEmailVisibility;
+	}
+
+	get isPersonalEmailVisible(){
+		return this.isPersonalEmailVisibility;
+	}
 
 	@track inputModified = true;
 
@@ -259,8 +267,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.flow = 'flow1';
 			this.isPersonalEmailVisibility = false;
 			this.reverseEmailVisibility = true;
-			this.isPersonalEmail = 'yes';
-
+			
 			this.workEmailInput = this.localContactInfo.Email;
 			this.personalEmailInput = this.localContactInfo.Additional_Email__c;
 
@@ -268,7 +275,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 				this.isReverseEmail = 'no';
 			}
 		}
-
 	}
 
 	startLoading(){

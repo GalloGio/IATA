@@ -17,7 +17,7 @@
 			</lightning-layout-item>
 
 			<!-- ----------------------------------------      Work Email info     ------------------------------------------ -->
-			<template if:false={reverseEmailVisibility}>
+			<template if:false={isReverseEmailVisible}>
 				<div class="infoItemLine">
 
 					<lightning-layout-item size="12">
@@ -55,7 +55,7 @@
 			<div class="companyInfoContainer">
 				
 				<!------------------------------------------      Is your user email your personal email ?      -------------------------------------------->
-				<template if:true={isPersonalEmailVisibility}>
+				<template if:true={isPersonalEmailVisible}>
 					<div class="infoItem">
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
@@ -101,7 +101,7 @@
 				</template>
 
 				<!-- ----------------------------------------      Personal and Work Email Reversed      ------------------------------------------ -->
-				<template if:true={reverseEmailVisibility}>
+				<template if:true={isReverseEmailVisible}>
 					<div class="infoItem">
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
@@ -129,11 +129,11 @@
 
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
-								<div class="text-xxsmall" if:false={reverseEmailVisibility}>
+								<div class="text-xxsmall" if:false={isReverseEmailVisible}>
 									<abbr class="slds-required" title="required">*</abbr>
 									{labels.CSP_L3_ProvideWorkEmail_LMS}
 								</div>
-								<div class="text-xxsmall" if:true={reverseEmailVisibility}>
+								<div class="text-xxsmall" if:true={isReverseEmailVisible}>
 									<abbr class="slds-required" title="required">*</abbr>
 									{labels.CSP_L3_WorkEmail_LMS}
 								</div>
