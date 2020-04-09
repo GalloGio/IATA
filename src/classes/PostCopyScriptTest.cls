@@ -97,7 +97,7 @@ public class PostCopyScriptTest {
 			RTS_Orange_Senior_Manager__c rec9 = new RTS_Orange_Senior_Manager__c(
 				Name = 'Test RTS_Orange_Senior_Manager',
 				Email__c = 'postcopyscript@iata.org',
-                Region__c = 'Europe'
+				Region__c = 'Europe'
 			);
 			insert rec9;
 
