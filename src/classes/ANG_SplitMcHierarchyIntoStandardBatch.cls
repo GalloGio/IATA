@@ -259,6 +259,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 		addAeAccountInformationToOscar(allGeAndHe, oscars);
 		Map<Id, Case> cases = createOscarCase(allHe, c, oscars);
+		addCaseComments(cases);
 		Map<Id, AMS_Pax_Accreditation_Form__c> paxs = createStagingArea(allHe, cases);
 		createOwners(allHe, paxs);
 		finalOscarUpdate(allHe, oscars, cases, paxs);
@@ -360,6 +361,20 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		if (!casesToInsert.isEmpty())
 			insert casesToInsert.values();
 		return casesToInsert;
+	}
+
+	private void addCaseComments(Map<Id, Case> cases) {
+		if (!processSingleBsp)
+			return;
+
+		List<CaseComment> comments = new List<CaseComment>();
+
+		for (Case c : cases.values())
+			comments.add(new CaseComment(ParentId = c.Id, CommentBody = 'Please note that this case was automatically created. The conversion from GoGlobal to GoStandard needs to be processed on these locations'));
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - addCaseComments] Created comments: ' + comments);
+		if (!comments.isEmpty())
+			insert comments;
 	}
 
 	/**
