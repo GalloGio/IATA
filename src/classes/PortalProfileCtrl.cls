@@ -728,6 +728,9 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public String className;
 
+		@AuraEnabled 
+		public String gridClassName;
+
 		@AuraEnabled
 		public String label;
 
@@ -874,12 +877,19 @@ public static Contact contactInfo = new Contact();
 		String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
 
-		List<String> toRow;
+		Map<String,String> toRowWithGridClasses = new Map<String,String>();
 
 		if(rType == 'IATA_Agency' && myContact.Account.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) {
-			toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','PortalStatus'};
+			toRowWithGridClasses.put('Name', 'slds-col slds-size_1-of-6 slds-has-flexi-truncate');
+			toRowWithGridClasses.put('Email', 'slds-col slds-size_2-of-6 slds-has-flexi-truncate');
+			toRowWithGridClasses.put('Type_of_Contact__c', 'slds-col slds-size_1-of-6 slds-has-flexi-truncate');
+			toRowWithGridClasses.put('LocationCode', 'slds-col slds-size_1-of-6 slds-has-flexi-truncate');
+			toRowWithGridClasses.put('PortalStatus', 'slds-col slds-size_1-of-6 slds-has-flexi-truncate');
 		}else{
-			toRow = new List<String>{'Name','Email','Type_of_Contact__c','PortalStatus'};
+			toRowWithGridClasses.put('Name', 'slds-col slds-size_2-of-6');
+			toRowWithGridClasses.put('Email', 'slds-col slds-size_2-of-6');
+			toRowWithGridClasses.put('Type_of_Contact__c', 'slds-col slds-size_1-of-6');
+			toRowWithGridClasses.put('PortalStatus', 'slds-col slds-size_1-of-6');
 		}
 
 		Map<String,String> fieldLabels = new Map<String,String>();
@@ -894,7 +904,7 @@ public static Contact contactInfo = new Contact();
 		fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
 		fieldLabels.put('PortalStatus',LABEL_PORTAL_STATUS);
 
-		for(String fieldName: toRow){
+		for(String fieldName: toRowWithGridClasses.keySet()){
 			if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
 		}
 
@@ -902,8 +912,10 @@ public static Contact contactInfo = new Contact();
 		Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
 		wrapperMap.put(rowsFields,new List<FieldWrapper>());
-		for(String fieldName : toRow){
-			wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
+		for(String fieldName : toRowWithGridClasses.keySet()){
+			FieldWrapper fieldWrapperAux = new FieldWrapper(fieldName,true,true,'inactive cursorPointer slds-truncate',fieldLabels.get(fieldName));
+			fieldWrapperAux.gridClassName = toRowWithGridClasses.get(fieldName);
+			wrapperMap.get(rowsFields).add(fieldWrapperAux);
 		}
 
 		wrapperMap.put(viewFields,new List<FieldWrapper>());
@@ -975,7 +987,12 @@ public static Contact contactInfo = new Contact();
 		String rType = myContact.Account.RecordType.DeveloperName;
 
 		List<String> toView = new List<String>{'Name','Status__c'};
-		List<String> toRow = new List<String>{'TradeName__c','LocationCode','IsoCountry','BillingCity','Status__c'};
+		Map<String,String> toRowWithGridClasses = new Map<String,String>();
+		toRowWithGridClasses.put('TradeName__c', 'slds-col slds-size_1-of-5');
+		toRowWithGridClasses.put('LocationCode', 'slds-col slds-size_1-of-5');
+		toRowWithGridClasses.put('IsoCountry', 'slds-col slds-size_1-of-5');
+		toRowWithGridClasses.put('BillingCity', 'slds-col slds-size_1-of-5');
+		toRowWithGridClasses.put('Status__c', 'slds-col slds-size_1-of-5');
 		List<String> toEdit = new List<String>{'Name','Status__c'};
 
 		Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
@@ -1002,7 +1019,7 @@ public static Contact contactInfo = new Contact();
 			if(!fieldLabels.containsKey(fieldName)){
 				fieldLabels.put(fieldName,fieldName);}
 		}
-		for(String fieldName: toRow){
+		for(String fieldName: toRowWithGridClasses.keySet()){
 			if(!fieldLabels.containsKey(fieldName)){
 				fieldLabels.put(fieldName,fieldName);}
 		}
@@ -1027,19 +1044,21 @@ public static Contact contactInfo = new Contact();
 		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingPostalCode',(rType == 'Standard_Account'),true));
 		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
 
-		for(String fieldName : toRow){
-			wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
+		for(String fieldName : toRowWithGridClasses.keySet()){
+			FieldWrapper fieldWrapperAux = new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName));
+			fieldWrapperAux.gridClassName = toRowWithGridClasses.get(fieldName);
+			wrapperMap.get(rowsFields).add(fieldWrapperAux);
 		}
 
 
 		wrapperMap.put(viewFields,new List<FieldWrapper>());
 		for(String fieldName : toView){
-			wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
+			wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
 		}
 
 		wrapperMap.put(editFields,new List<FieldWrapper>());
 		for(String fieldName : toEdit){
-			wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
+			wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
 		}
 
 		return wrapperMap;
