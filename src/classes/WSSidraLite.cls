@@ -18,7 +18,7 @@ global class WSSidraLite {
 				Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c,
 				OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
 				OSCAR__r.Step26__c, OSCAR__r.Step35__c, Oscar__r.Step44__c, GDI_Premium__c, Short_Payment_Amount__c, IATA_Charges__c, Agency_Fees__c, BusinessHoursId,
-				Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c, Financial_Review_Type__c, CreatedDate,
+				Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c, Financial_Review_Type__c, CreatedDate, IFAP_Financial_Year__c,
 				(Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,
 					FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,
 					FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,
