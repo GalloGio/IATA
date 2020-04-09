@@ -92,10 +92,6 @@
             <translation>Perusahaan Induk</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Mitra Infrastruktur</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Media</translation>
         </picklistValues>

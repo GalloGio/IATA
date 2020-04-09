@@ -92,10 +92,6 @@
             <translation>持株会社</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>インフラパートナー</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>メディア</translation>
         </picklistValues>

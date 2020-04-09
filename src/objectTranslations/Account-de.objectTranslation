@@ -96,10 +96,6 @@
             <translation>Holding-Gesellschaft</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Infrastruktur-Partner</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Medien</translation>
         </picklistValues>

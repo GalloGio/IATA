@@ -96,10 +96,6 @@
             <translation>Holding</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Parceiro de infraestrutura</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Mídia</translation>
         </picklistValues>

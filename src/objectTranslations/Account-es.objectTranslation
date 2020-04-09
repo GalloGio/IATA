@@ -96,10 +96,6 @@
             <translation>Compañía matriz</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Socio de infraestructura</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Medios de comunicación</translation>
         </picklistValues>
