@@ -2,13 +2,13 @@ public class ANG_RHCAlertTriggerHandler {
 
 	private class RegionNotificationWrapper {
 		public String region;
-		public List<Id> userIdLst;
-		public List<String> emailAddressLst;
+		public Set<Id> userIdLst;
+		public Set<String> emailAddressLst;
 		
 		public RegionNotificationWrapper(String region){
 			this.region = region;
-			this.userIdLst = new List<Id>();
-			this.emailAddressLst = new List<String>();
+			this.userIdLst = new Set<Id>();
+			this.emailAddressLst = new Set<String>();
 		}
 
 		public void copy(RegionNotificationWrapper fromNotificationWrapper){
@@ -1033,7 +1033,7 @@ public class ANG_RHCAlertTriggerHandler {
 			RegionNotificationWrapper notificationWrapper = collectNotificationWrapper(acct.Region_formula__c.toUpperCase(), regionNotificationMap);
 
 			if(!notificationWrapper.emailAddressLst.isEmpty()){
-				emailLst.add(createNotificationEmailMessage(tBody, null, orgWideEmailId, emailSubject , notificationWrapper.emailAddressLst));
+				emailLst.add(createNotificationEmailMessage(tBody, null, orgWideEmailId, emailSubject ,new List<String>(notificationWrapper.emailAddressLst)));
 			}
 			
 			for(Id targetUser: notificationWrapper.userIdLst) {

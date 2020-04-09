@@ -732,7 +732,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Name = 'Portugal',
 			ISO_Code__c = 'PT',
 			AMS_Settlement_System__c = iss.id,
-			ANG_Enable_NewGen__c = true
+			ANG_Enable_NewGen__c = true,
+			Region__c = 'Europe'
 		);
 
 		insert country2 ;
@@ -770,7 +771,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		//NEWGEN-2005
 		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
-		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true, Region__c = 'Americas');
 		test.StartTest();
 
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
@@ -833,8 +834,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		//NEWGEN-2005
 		insert new RTS_Senior_Manager__c(Name = 'Test1', Email__c = 'test.2005@yopmail.com');
-		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
-		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@teste.org', Active__c = true);
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true, region__c = 'Europe');
+		insert new RTS_Orange_Senior_Manager__c(Name = 'Test3', Email__c = 'test1@teste.org', Active__c = true, region__c = 'Europe');
 
 
 		test.StartTest();
