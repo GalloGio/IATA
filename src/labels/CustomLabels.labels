@@ -18721,6 +18721,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>STATEMENT / UNDERTAKING</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CNS_Contact_Required</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS Contact Required</shortDescription>
+        <value>You need to choose a contact for Authorized Signatory or Invoicing Contact or Portal Admin or Security Contact!</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CNS_ENDORSEMENT</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22453,14 +22461,6 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>IATA Cargo Agent / IFACP Forwarder – New Head Office</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_OPTION_CNS_AGENCY_NEW_HO</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS OPTION CNS AGENCY NEW HO</shortDescription>
-        <value>CNS Endorsement - New Head Office</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_OPTION_COURIER_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -23987,13 +23987,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_7_Financial</shortDescription>
         <value>SECTION 7 - Financial</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step3_7_Sales_Promotion</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step3_7_Sales_Promotion</shortDescription>
-        <value>SECTION 7 - Sales &amp; Promotion</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_7_credit_ref</fullName>

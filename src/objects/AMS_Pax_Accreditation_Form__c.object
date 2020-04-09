@@ -2485,6 +2485,7 @@
     </fields>
     <fields>
         <fullName>CASS_USA_Account_Number__c</fullName>
+        <description>CASS USA Account Number when applicable</description>
         <externalId>false</externalId>
         <label>CASS-USA Account Number</label>
         <length>20</length>

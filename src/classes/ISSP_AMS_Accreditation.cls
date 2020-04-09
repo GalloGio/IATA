@@ -7398,7 +7398,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 			if(!haveContact){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'You need to choose a contact for Authorized Signatory or Invoicing Contact or Portal Admin or Security Contact!'));
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Contact_Required));
 			}
 		}else{
 

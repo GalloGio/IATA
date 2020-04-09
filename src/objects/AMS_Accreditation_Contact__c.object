@@ -443,6 +443,7 @@
     <fields>
         <fullName>CNS_Contact__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Contact belonging to an accredited CNS account</description>
         <externalId>false</externalId>
         <label>CNS Contact</label>
         <trackHistory>false</trackHistory>
@@ -1038,6 +1039,7 @@
     <fields>
         <fullName>Security_Contact__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Contact marked as Security Contact</description>
         <externalId>false</externalId>
         <label>Security Contact</label>
         <trackHistory>false</trackHistory>
