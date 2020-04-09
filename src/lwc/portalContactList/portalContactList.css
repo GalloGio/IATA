@@ -148,3 +148,9 @@ td.inactive {
   width: 100%;
   white-space: normal;
 }
+
+@media screen and (max-width: 640px) {
+  .gridContainerForMobile{
+    width: 1500px;
+  }
+}
