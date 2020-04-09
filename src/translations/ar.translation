@@ -22694,7 +22694,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>هل استفسارك حالة طارئة؟</label>
+        <label>هل الاستعلام  يخص حاله طارئه؟ يرجى العلم ان الاستعلامات الطارئه يتم الاجابه عليها باللغة الإنجليزي</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>
