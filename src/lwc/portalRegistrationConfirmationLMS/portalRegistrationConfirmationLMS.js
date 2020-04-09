@@ -3,7 +3,6 @@
 
 import { LightningElement, api, track } from 'lwc';
 
-import createIsoCity                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.createIsoCity';
 import registration                         from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.registration';
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
 import getLMSTermAndConditionAcceptance		from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance';
@@ -30,7 +29,6 @@ import CSP_L2_Go_To_Homepage_LMS from '@salesforce/label/c.CSP_L2_Go_To_Homepage
 import CSP_L2_Go_To_Service_LMS from '@salesforce/label/c.CSP_L2_Go_To_Service_LMS';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information';
-import CSP_L2_Is_PO_Box_Address from '@salesforce/label/c.CSP_L2_Is_PO_Box_Address';
 
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
@@ -61,7 +59,10 @@ import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_Registrati
 import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
 import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
 import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS';
-import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS'; 
+import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
+import CSP_L2_SucessUpdate_LMS from '@salesforce/label/c.CSP_L2_SucessUpdate_LMS';
+import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
+
 
 
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
@@ -91,8 +92,10 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
-	successModalTitle = 'Verification Mail';
-	@track successModalMessage = '';
+	@track successModalTitle = CSP_L2_Details_Saved;
+	@track successModalMessage = CSP_L2_Details_Saved_Message_LMS;
+	verificationModalTitle = CSP_L3_VerificationMailTitle_LMS;
+	@track verificationModalMessage = '';
 	errorModalTitle = 'Error';
 	@track errorModalMessage = '';
 
@@ -108,6 +111,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		"existingContactAccount" : ""
 	};
 
+	
 
 	// label variables
 	_labels = {
@@ -155,7 +159,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L2_VerificationToP1_LMS,
 		CSP_L2_VerificationToP2_LMS,
 		CSP_L_TrainingEmail_LMS,
-		CSP_L_TrainingUser_LMS
+		CSP_L_TrainingUser_LMS,
+		CSP_L2_SucessUpdate_LMS,
+		CSP_L3_VerificationMailTitle_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -220,6 +226,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	}
 
+
 	startLoading(){
 		this.dispatchEvent(new CustomEvent('startloading'));
 	}
@@ -232,6 +239,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.startLoading();
 		this.submitRegistration();
 	}
+
 
 	submitRegistration(){
 		let auxSearchValues = new Map();
@@ -276,6 +284,16 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 				.then(result => {
 					if(result.isSuccess == true){
 							this.openSuccessModal = true;
+							this.successModalTitle = CSP_L2_Details_Saved;
+							this.successModalMessage = CSP_L2_Details_Saved_Message_LMS;
+							if(this.flow === 'flow0'){
+								let msg = CSP_L2_SucessUpdate_LMS;
+								msg = msg.replace('</b>','');
+								let aMsg = msg.split('<br/><b>');
+								this.successModalTitle = aMsg[0];
+								this.successModalMessage = aMsg[1].replace('[Email]',this.contactInfo.Email);
+								
+							}
 						}
 						else{
 							this.openErrorModal = true;
@@ -313,7 +331,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			.then(result => {
 				if(result.isSuccess == true){
 						this.openVerificationMailSuccessModal = true;
-						this.successModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
+						this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
 					}
 					else{
 						this.openErrorModal = true;
