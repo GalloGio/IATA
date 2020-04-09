@@ -170,10 +170,6 @@
             <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>alvarengam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>concessios@iata.org</recipient>
             <type>user</type>
         </recipients>

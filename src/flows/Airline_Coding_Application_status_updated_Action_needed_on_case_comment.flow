@@ -238,7 +238,7 @@
             <label>Record type</label>
         </rules>
     </decisions>
-    <description>When RT is Airline Coding Application and comment is added, status is changed to &#39;Action needed&#39;</description>
+    <description>When RT is Airline Coding Application and comment is added, status is changed to &apos;Action needed&apos;</description>
     <interviewLabel>Airline_Coding_Application_status_updated_Action_needed_on_case_comment-5_InterviewLabel</interviewLabel>
     <label>Airline Coding Application status updated Action needed on case comment</label>
     <processMetadataValues>
@@ -330,7 +330,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -347,7 +347,7 @@
         <object>Case</object>
     </recordUpdates>
     <startElementReference>myDecision</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

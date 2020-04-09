@@ -22751,7 +22751,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Est-ce votre requête d'urgence? Requêtes d'urgence ne sont répondu qu'en anglais.</label>
+        <label>Est-ce votre requête d&apos;urgence? Requêtes d&apos;urgence ne sont répondu qu&apos;en anglais.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>
