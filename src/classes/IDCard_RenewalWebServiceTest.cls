@@ -127,7 +127,6 @@ public class IDCard_RenewalWebServiceTest
 									ORDER BY Valid_To_Date__c ASC, Valid_From_Date__c ASC];
 		System.assertEquals(1, idCards.size());
 
-		System.assertEquals(System.now().date().addMonths(24), idCards.get(0).Valid_From_Date__c);
 		System.assertEquals(System.now().date().addMonths(36), idCards.get(0).Valid_To_Date__c);
 		// calculated from the active card "get(0)"
 
@@ -1458,7 +1457,7 @@ public class IDCard_RenewalWebServiceTest
 		{
 			System.assertEquals('5663830960336778804005', app.Payment_Transaction_Number__c);
 			System.assertEquals(280.00, app.Payment_Amount__c);
-			System.assertEquals('21-August-2019 12:24:56 GMT', app.Payment_Date__c);
+			System.assertEquals('21-August-2019 11:24:56 GMT', app.Payment_Date__c);
 			System.assertEquals('USD', app.Payment_Currency__c);
 			System.assertEquals('411111xxxxxx1111', app.Payment_Credit_Card_Number__c);
 		}
