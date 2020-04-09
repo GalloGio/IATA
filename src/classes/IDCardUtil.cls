@@ -891,8 +891,9 @@ global with sharing class IDCardUtil {
 
 			//Get Start and End date and put them on the new idcard
 			idCardStartEndDate StartEndDate = getIdCardStartEndDate(theAccount, objApp, theContact);
+			if (objApp.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW)
+				idCard.Valid_From_Date__c = Date.today();
 			idCard.Valid_To_Date__c = StartEndDate.EndDate;
-			idCard.Valid_From_Date__c = StartEndDate.StartDate;
 
 			if (theAccount.ID_Card_Corporate_Validation_Date__c != null)
 				idCard.Valid_To_Date__c = theAccount.ID_Card_Corporate_Validation_Date__c;
@@ -919,8 +920,6 @@ global with sharing class IDCardUtil {
 
 			if(lastIdCard != null) {
 				idCard.Id = lastIdCard.Id;
-				if(lastIdCard.Valid_To_Date__c < Date.today())
-					idCard.Valid_From_Date__c = lastIdCard.Valid_From_Date__c;
 			}
 
 			system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] return ' + idcard);
@@ -1002,7 +1001,7 @@ global with sharing class IDCardUtil {
 		string appType = objApp.Type_of_application__c;
 		date dStartDate, dEndDate = null;
 		date dToday = system.Today();
-		date LastDayOfCurrentMonth = Date.newInstance(dToday.year(), dToday.month(), Date.daysInMonth(dToday.year(), dToday.month()));
+
 		if (appType == 'New' || appType == 'Replacement') {
 			dStartDate = dToday;//LastDayOfCurrentMonth - INC184819
 			dEndDate = dateReturn.EndDateCheckAccnt(Accnt, dStartDate, dToday, null);
