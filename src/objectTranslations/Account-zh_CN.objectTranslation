@@ -92,10 +92,6 @@
             <translation>控股公司</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>基础设施合作伙伴</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>媒体</translation>
         </picklistValues>

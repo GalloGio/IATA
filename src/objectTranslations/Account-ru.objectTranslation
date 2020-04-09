@@ -92,10 +92,6 @@
             <translation>Холдинговая компания</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Инфраструктурный партнер</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>СМИ</translation>
         </picklistValues>

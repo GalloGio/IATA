@@ -96,10 +96,6 @@
             <translation>Société d&apos;investissements</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Partenaire d&apos;infrastructure</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Média</translation>
         </picklistValues>

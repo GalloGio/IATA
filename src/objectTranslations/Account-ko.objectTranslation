@@ -96,10 +96,6 @@
             <translation>지주 회사</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>인프라 파트너</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>미디어</translation>
         </picklistValues>

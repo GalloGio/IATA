@@ -92,10 +92,6 @@
             <translation>Holding</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Partner per l&apos;infrastruttura</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Media</translation>
         </picklistValues>

@@ -92,10 +92,6 @@
             <translation>Công ty Cổ phần</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Đối tác Cung cấp Cơ sở Hạ tầng</translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Phương tiện Truyền thông</translation>
         </picklistValues>
