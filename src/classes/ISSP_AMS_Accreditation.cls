@@ -6448,23 +6448,83 @@ public without sharing class ISSP_AMS_Accreditation {
 		return errorFound;
 	}
 
-	private boolean validateForm(boolean includeErrorMsgs) {
-		Boolean errorFound = false;
-		Integer cntAdmin;
-		Integer cntMultiplePASS;
+	private Boolean passValidationsForm(Boolean errorFound){
+		Integer cntAdmin = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+						WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true];
+
+		Integer cntMultiplePASS = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+								WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true AND PASS_user__c = true];
 
 		Integer cntAuthorisedSig = [SELECT COUNT()
 									FROM AMS_Accreditation_Contact__c
 									WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id
 										AND Authorised_signatory__c = true];
 
-		if(isPassAccreditation){
-			cntAdmin = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-						WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true];
+		if(isocountry.Local_language_Agency_details_required__c){
+				if(newForm.Local_Legally_Registered_Name__c == null){
+					newForm.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Physical_Address_Street__c == null){
+					newForm.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Physical_Address_City__c == null){
+					newForm.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Physical_Address_Province__c == null){
+					newForm.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Postal_Address_Street__c == null){
+					newForm.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Postal_Address_City__c == null){
+					newForm.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if(newForm.Local_Postal_Address_Province__c == null){
+					newForm.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+			}
 
-			cntMultiplePASS = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-							   WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true AND PASS_user__c = true];
-		}
+			if(cntAdmin == 0) {
+				ApexPages.Message myMsg;
+				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
+				ApexPages.addMessage(myMsg);
+				errorFound = true;
+			}
+
+			if(cntMultiplePASS > 0) {
+				ApexPages.Message myMsg;
+				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_User);
+				ApexPages.addMessage(myMsg);
+				errorFound = true;
+			}
+
+			if (cntAuthorisedSig == 0) {
+				ApexPages.Message myMsg;
+				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Author_Sig);
+				ApexPages.addMessage(myMsg);
+				errorFound = true;
+			}
+		
+		return errorFound;
+
+	}
+
+	private boolean validateForm(boolean includeErrorMsgs) {
+		Boolean errorFound = false;
+
+
+		Integer cntAuthorisedSig = [SELECT COUNT()
+									FROM AMS_Accreditation_Contact__c
+									WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id
+										AND Authorised_signatory__c = true];
+
 
 		refreshCntIFAPContacts();
 
@@ -6915,25 +6975,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 
-			if(cntAdmin == 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
-
-			if(cntMultiplePASS > 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_User);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
-			if (cntAuthorisedSig == 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Author_Sig);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
+			
 
 			if (newForm.ISSP_AMS_Legal_Status__c != 'State Owned Enterprise' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
 				if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
@@ -6949,36 +6991,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 
-			if(isocountry.Local_language_Agency_details_required__c){
-				if(newForm.Local_Legally_Registered_Name__c == null){
-					newForm.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_Street__c == null){
-					newForm.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_City__c == null){
-					newForm.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_Province__c == null){
-					newForm.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_Street__c == null){
-					newForm.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_City__c == null){
-					newForm.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_Province__c == null){
-					newForm.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			}
+			passValidationsForm(errorFound);
 		}
 		else if (sectorValue.StartsWith(AMS_Utils.sectorValuePass) && amsOfficeType == 'Branch') {
 			 System.debug('Entra sitio certo');
@@ -6995,36 +7008,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if(isocountry.Local_language_Agency_details_required__c){
-				if(newForm.Local_Legally_Registered_Name__c == null){
-					newForm.Local_Legally_Registered_Name__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_Street__c == null){
-					newForm.Local_Physical_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_City__c == null){
-					newForm.Local_Physical_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Physical_Address_Province__c == null){
-					newForm.Local_Physical_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_Street__c == null){
-					newForm.Local_Postal_Address_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_City__c == null){
-					newForm.Local_Postal_Address_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Local_Postal_Address_Province__c == null){
-					newForm.Local_Postal_Address_Province__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			}
+			
 
 			if (newForm.Separate_user_access__c == null) {
 				newForm.Separate_user_access__c.addError(Label.ISSP_YouMustEnter);
@@ -7055,27 +7039,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if(cntAdmin == 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
-
-			if(cntMultiplePASS > 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_User);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
-
-			if (cntAuthorisedSig == 0) {
-				ApexPages.Message myMsg;
-				myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Author_Sig);
-				ApexPages.addMessage(myMsg);
-				errorFound = true;
-			}
-
+			passValidationsForm(errorFound);
 			//EO Travel Agency Form Validation, start of CGO HO validation
 		}
 		else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') && amsOfficeType == AMS_Utils.HO) {

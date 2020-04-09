@@ -2317,10 +2317,9 @@ global without sharing class ISSP_APProcess {
 			airlineBR.Sector__c = hq.Sector__c;
 			airlineBR.Category__c = hq.Category__c;
 			airlineBR.Reason_for_creation__c = 'New Airline joining CASS';
-			if (!test.isRunningtest() || (test.isRunningTest() && isGSSAUser && isPassAirline)){
-				airlineBR.OwnerId = UserInfo.getUserId();
-				insert airlineBR;
-			}
+			airlineBR.OwnerId = UserInfo.getUserId();
+			insert airlineBR;
+
 				
 
 			accountConcernedId = airlineBR.Id;
