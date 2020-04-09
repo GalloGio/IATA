@@ -146,7 +146,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		// hide page scrollbar to prevent having 2 scrollbars
         document.body.style.overflow = 'hidden';
 		
-		var pageParams = getParamsFromPage();
+		let pageParams = getParamsFromPage();
+
 		// Retrieve Contact information
 		getContactInfo()
 			.then(result => {
@@ -158,7 +159,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				// set up cached data
-				var countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
+				let countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
 				if(countryName.toLowerCase() === 'no country'){
 					this.selectedCountryId = '';
 				}
@@ -210,11 +211,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				//Address Info
 				getLMSContactInfo({lms:'yas'})
 				.then(result2 => {
-					if(result2 !== undefined){
+					if(result2 !== undefined && result2 !== null){
 						this.contactInfoLMS = JSON.parse(JSON.stringify(result2));
-
-						this.contactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
-						this.contactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
+						this.contactInfo.Username = this.contactInfoLMS.Username__c !== undefined && this.contactInfoLMS.Username__c !== null ? this.contactInfoLMS.Username__c : '';
+						this.contactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined && this.contactInfoLMS.UserId__c !== null ? this.contactInfoLMS.UserId__c : '';
 						
 						if(this.contactInfoLMS.Country_Reference__c != null &&
 							this.contactInfoLMS.Country_Reference__c != undefined &&
@@ -257,8 +257,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 				})
 				.catch((error) => {
-					this.localContactInfo.Username = '';
-					this.localContactInfo.UserId = '';
+					this.contactInfo.Username = '';
+					this.contactInfo.UserId = '';
 				
 					this.openMessageModalFlowRegister = true;
 					this.message = CSP_L2_RegistrationFailed_LMS + error;
@@ -668,13 +668,11 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 		if(/trident/i.test(M[1])){
 			tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-			// alert("IE"+'IE '+(tem[1] || ''));
 			return 'IE '+(tem[1] || '');
 		}
 		if(M[1]=== 'Chrome'){
 			tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
 			if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-			// alert('chrome');
 		}
 		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
 		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
