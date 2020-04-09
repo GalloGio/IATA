@@ -278,6 +278,22 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										this.registrationForm.language = pageParams.language.toLowerCase();;
 									}
 
+									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
+										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
+										this.gcsPortalServiceId = gcsPortalServiceId;
+							
+										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
+											var tcs = JSON.parse(JSON.stringify(result2));
+			
+											var tcIds = [];
+							
+											for(let i = 0; i < tcs.length; i++){
+												tcIds.push(tcs[i].id);
+											}
+											this.registrationForm.termsAndUsageIds = tcIds.join();
+										});
+									});
+
 									if(pageParams.email !== undefined){
 										this.registrationForm.email = decodeURIComponent(pageParams.email);
 										//this.isEmailFieldReadOnly = true;
@@ -292,22 +308,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								this.isLoading = false;
 							}
 						}
-
-						getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
-							var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-							this.gcsPortalServiceId = gcsPortalServiceId;
-				
-							getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
-								var tcs = JSON.parse(JSON.stringify(result2));
-
-								var tcIds = [];
-				
-								for(let i = 0; i < tcs.length; i++){
-									tcIds.push(tcs[i].id);
-								}
-								this.registrationForm.termsAndUsageIds = tcIds.join();
-							});
-						});						
 
 					})
 					.catch(error => {
