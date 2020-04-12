@@ -110,7 +110,7 @@
                     <!-- Upload Bank Mandate section (Without ICCS) -->
                     <apex:outputPanel layout="block" rendered="{!showUploadBankMandate}">
                         <div class="aplabel">
-                                <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false" styleclass="aplabel"/>
+                                <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false" styleclass="aplabel" rendered="{!isPassAirline}"/>
                             </div>
                         <p>
                             <b>Please download the Bank Mandate form using the link below:</b>
