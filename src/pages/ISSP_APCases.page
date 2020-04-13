@@ -7,10 +7,10 @@
            applyHtmlTag="false">
 <html>
   <c:ISSP_Header />
- 	<body>
+    <body>
 
- 	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
- 	<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
+    <script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
 
   <style>
     .iatainputbox {
@@ -67,7 +67,7 @@
     var optInOut;
 
     function optInOut() {
-      	$('#optInOut').modal('toggle');
+        $('#optInOut').modal('toggle');
     }
 
     function toggleCountryLists() {
@@ -131,7 +131,7 @@
     }
 
     function submitOptInOut() {
-      	var countries;
+        var countries;
 
         var effectiveDate = $('#datepicker').val();
 
@@ -207,7 +207,7 @@
 
   </script>
 
-	
+    
     <c:ISSP_CustomNavigation />
  <div class="container" style="min-height: 500px;">
       <div class="panel-primary">
@@ -216,7 +216,8 @@
         </div>
         <div class="panel-body">
     <p/>
-      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} was already created for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
+      <apex:outputText rendered="{!dupeDraftExists && $CurrentPage.parameters.cdupetype!='PASS'}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
+      <apex:outputText rendered="{!dupeDraftExists && $CurrentPage.parameters.cdupetype=='PASS'}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} is already in progress for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
     <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
     <div style="margin-bottom:6px;padding-left:24px">
@@ -238,7 +239,10 @@
         <div class="panel-body">
           <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
-              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2" rendered="{!MyIFAPCases.Reason1__c!='PASS Participation' && MyIFAPCases.Reason1__c!='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess3?caseId={!MyIFAPCases.Id}&airline=PASS&step=3" rendered="{!MyIFAPCases.Reason1__c=='PASS Participation'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess4?caseId={!MyIFAPCases.Id}&airline=PASS&managePASS=true&step=4" rendered="{!MyIFAPCases.Reason1__c=='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+
             </apex:column>
             <apex:column value="{!MyIFAPCases.Account_Concerned__r.Site}"/>
             <apex:column value="{!MyIFAPCases.Subject}"/>
@@ -267,7 +271,7 @@
         </div>
       </div>
     </apex:pageBlock>
-	</div>
+    </div>
       </div>
     </div>
     <c:ISSP_CustomFooter />
@@ -327,9 +331,9 @@
                   <apex:outputLabel value="My Airline wishes to:"/>
                 </div>
                 <div>
-                	<apex:selectList styleClass="iatainputbox, selectpicker" id="optInOutSelected" onchange="toggleCountryLists(); return false;">
-                	 	<apex:selectOptions id="optInOutOptions" value="{!optInOutOptions}"/>
-            			</apex:selectList>
+                    <apex:selectList styleClass="iatainputbox, selectpicker" id="optInOutSelected" onchange="toggleCountryLists(); return false;">
+                        <apex:selectOptions id="optInOutOptions" value="{!optInOutOptions}"/>
+                        </apex:selectList>
                 </div>
               </div>
             </div>
@@ -340,30 +344,30 @@
                 <hr/>
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
-                  	<div>
-                    	<apex:outputPanel id="coutriesInLabel" style="display: none">
-                      	<apex:outputLabel value="Countries to Opt-In: "/>
-                    	</apex:outputPanel>
-                    	<apex:outputPanel id="coutriesOutLabel" style="display: none">
-                      	<apex:outputLabel value="Countries to Opt-Out: "/>
-                    	</apex:outputPanel>
-                  	</div>
                     <div>
-                    	<apex:outputPanel id="coutriesIn" style="display: none">
-                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
+                        <apex:outputPanel id="coutriesInLabel" style="display: none">
+                        <apex:outputLabel value="Countries to Opt-In: "/>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="coutriesOutLabel" style="display: none">
+                        <apex:outputLabel value="Countries to Opt-Out: "/>
+                        </apex:outputPanel>
+                    </div>
+                    <div>
+                        <apex:outputPanel id="coutriesIn" style="display: none">
+                        <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
                         title="Countries to Opt-In: ">
-                        	<apex:selectOptions value="{!countriesIn}" />
-                      	</apex:selectList>
-                    	</apex:outputPanel>
-											
-											<apex:outputPanel id="coutriesOut" style="display: none">
-                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
+                            <apex:selectOptions value="{!countriesIn}" />
+                        </apex:selectList>
+                        </apex:outputPanel>
+                                            
+                                            <apex:outputPanel id="coutriesOut" style="display: none">
+                        <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
                         title="Countries to Opt-Out: ">
-													<apex:selectOptions value="{!countriesOut}" />
-                      	</apex:selectList>
-                    	</apex:outputPanel>
+                                                    <apex:selectOptions value="{!countriesOut}" />
+                        </apex:selectList>
+                        </apex:outputPanel>
                     </div>
                   </div>
                 </div>
