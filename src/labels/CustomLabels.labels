@@ -23458,7 +23458,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 ProgressBar PASS</shortDescription>
-        <value>A. Review the Checklist</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Review the Checklist</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Separate_Application</fullName>
@@ -23554,7 +23554,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 ProgressBar PASS</shortDescription>
-        <value>B. Complete Application Form</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Complete Application Form</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
@@ -24439,7 +24439,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ProgressBar PASS</shortDescription>
-        <value>C. Upload Files</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Upload Files</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
@@ -24471,7 +24471,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step4 ProgressBar PASS</shortDescription>
-        <value>D. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
@@ -32420,6 +32420,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_PASS</shortDescription>
         <value>Freight Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Accept_Terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Accept_Terms</shortDescription>
+        <value>Accept Terms and Conditions</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Administrators</fullName>
