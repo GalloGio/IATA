@@ -1,4 +1,4 @@
-<aura:component controller="AMP_OwnershipController">
+<aura:component controller="AMP_OwnershipController" access="public">
 	<aura:attribute name="accountId" type="String" />
 	<aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedAccounts" type="AMS_Account_Role__c[]"/><!-- List of Owners / Subsidiaries -->

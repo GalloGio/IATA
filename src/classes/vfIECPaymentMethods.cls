@@ -1,9 +1,9 @@
 /**
-  * Description: This class contains the controller for the Visualforce page (Payment Methods)
-  * Author: Samy Saied
-  * Version: 1.0
-  * History:
-  */
+	* Description: This class contains the controller for the Visualforce page (Payment Methods)
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 public class vfIECPaymentMethods extends IECPageController {
 
 	///////////////////////////////////////////////////////
@@ -20,12 +20,12 @@ public class vfIECPaymentMethods extends IECPageController {
 	private String tenantId;
 
 	public String getExtraParamString() {
-	  String extraParam = '';
-	  Map<String, String> extraParameters = getExtraParameters();
-	  for ( String param : extraParameters.keySet() ) {
+		String extraParam = '';
+		Map<String, String> extraParameters = getExtraParameters();
+		for ( String param : extraParameters.keySet() ) {
 		extraParam += '&' + param + '=' + extraParameters.get( param );
-	  }
-	  return extraParam;
+		}
+		return extraParam;
 	}
 	//////////////////////////////////////////////////////////
 
@@ -301,46 +301,6 @@ public class vfIECPaymentMethods extends IECPageController {
 
 	public Pagereference updateDefaultPaymentMethod() {
 		try {
-			/* Commented by Samy (2016-03-04) Replaced with new code to save the default payment type instead of method on the SF Account level
-			if (String.isBlank(customerDefaultPaymentMethodId)) {
-				addErrorMessage(Label.IEC_Error_DefaultPaymentEmpty);
-				customerDefaultPaymentMethodId = (String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId');
-				return null;
-			}
-
-			if (customerDefaultPaymentMethodId != IECConstants.PaymentMethod_ICH_ZuoraID
-				&& customerDefaultPaymentMethodId != IECConstants.PaymentMethod_BankTransfer_ZuoraID) {
-				IECZuoraHelper.CreditCard selectedCreditCard = getCreditCardById(customerDefaultPaymentMethodId);
-				// Calculate expiry date by last day in the month
-				Date expDate = Date.newInstance(selectedCreditCard.ExpirationYear, selectedCreditCard.ExpirationMonth, 1).addMonths(1).addDays(-1);
-
-				// Compare against system date
-				if (Date.today().daysBetween(expDate) < 0) {
-					addErrorMessage(Label.IEC_Error_DefaultPaymentExpired);
-					return null;
-				}
-			}
-
-			Zuora.zApi.SaveResult result;
-			// not in test method
-			if (!Test.isRunningTest()) {
-				result = IECZuoraHelper.updateDefaultPaymentMethod((String)loggedCustomer.RelatedZuoraAccount.getValue('Id'), customerDefaultPaymentMethodId);
-			}
-			// in test method so we fake the call
-			else {
-				result = new Zuora.zApi.SaveResult();
-				result.Success = true;
-			}
-
-			if (result.Success) {
-				addConfirmMessage(Label.IEC_Confirm_DefaultPaymentUpdate);
-				loggedCustomer.refreshZuoraAccount();
-				customerDefaultPaymentMethodId = (String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId');
-			}
-			else
-				addErrorMessage('Update default payment failed for the following reason(s): ' + IECZuoraHelper.getErrorMessagesString(result.Errors, '<BR> - '));
-			*/
-
 			if (String.isBlank(customerDefaultPaymentType)) {
 				addErrorMessage(Label.IEC_Error_DefaultPaymentEmpty);
 				customerDefaultPaymentType = loggedCustomer.RelatedAccount.Default_Payment_Type__c;
@@ -472,23 +432,23 @@ public class vfIECPaymentMethods extends IECPageController {
 		}
 
 		try {
-			  String token = EncodingUtil.convertToHex(Crypto.generateAesKey(128));
-			  String timestamp = String.valueOf(System.currentTimeMillis());
+				String token = EncodingUtil.convertToHex(Crypto.generateAesKey(128));
+				String timestamp = String.valueOf(System.currentTimeMillis());
 
-			  String queryString = 'id=' + pageId + '&' +
-				  'tenantId=' + tenantId + '&' +
-				  'timestamp=' + timestamp + '&' +
-				  'token=' + token;
+				String queryString = 'id=' + pageId + '&' +
+					'tenantId=' + tenantId + '&' +
+					'timestamp=' + timestamp + '&' +
+					'token=' + token;
 
-			  String queryHashString = queryString + apiSecurityKey;
-			  String signature = EncodingUtil.base64Encode(Blob.valueOf(EncodingUtil.convertToHex(Crypto.generateDigest('MD5', Blob.valueOf(queryHashString)))));
+				String queryHashString = queryString + apiSecurityKey;
+				String signature = EncodingUtil.base64Encode(Blob.valueOf(EncodingUtil.convertToHex(Crypto.generateDigest('MD5', Blob.valueOf(queryHashString)))));
 
-			  iframeSrc = appUrl + '/PublicHostedPage.do?method=requestPage&id=' + pageId + '&tenantId=' + tenantId + '&timestamp=' +timestamp + '&token=' + token + '&signature=' + signature;
+				iframeSrc = appUrl + '/PublicHostedPage.do?method=requestPage&id=' + pageId + '&tenantId=' + tenantId + '&timestamp=' +timestamp + '&token=' + token + '&signature=' + signature;
 
-			  Map<String, String> extraParameters = getExtraParameters();
-			  for ( String param : extraParameters.keySet() ) {
+				Map<String, String> extraParameters = getExtraParameters();
+				for ( String param : extraParameters.keySet() ) {
 				iframeSrc += '&' + param + '=' + extraParameters.get( param );
-			  }
+				}
 		}
 		catch (Exception ex) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
@@ -521,17 +481,17 @@ public class vfIECPaymentMethods extends IECPageController {
 					error = DefaultErrorPrefix;
 					unknownErrorCode = true;
 				}
-			  if ( errorMessage != null  && errorMessage != '' ) {
+				if ( errorMessage != null  && errorMessage != '' ) {
 				error += ( ': ' + errorMessage );
-			  }
-			  else if ( unknownErrorCode ) {
+				}
+				else if ( unknownErrorCode ) {
 				error += ( ': ' + errorCode );
-			  }
-			  ApexPages.addMessage( new ApexPages.Message( ApexPages.Severity.ERROR, error ) );
-			  iframeSrc += '&retainValues=true';
-			  if ( errorCode == 'InvalidCallbackSecurity' ) {
+				}
+				ApexPages.addMessage( new ApexPages.Message( ApexPages.Severity.ERROR, error ) );
+				iframeSrc += '&retainValues=true';
+				if ( errorCode == 'InvalidCallbackSecurity' ) {
 				return null;
-			  }
+				}
 			}
 
 			List<String> validationErrors = new List<String>();

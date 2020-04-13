@@ -1,4 +1,4 @@
-<aura:component controller="AWW_HeadOfficesCtrl">
+ <aura:component controller="AWW_HeadOfficesCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/> 

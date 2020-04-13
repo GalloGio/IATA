@@ -1,4 +1,4 @@
-<aura:component controller="AccountHeaderController">
+<aura:component controller="AccountHeaderController" access="public">
     <aura:attribute name="account" type="Account"/>
     <aura:attribute name="SanctionNotice" type="String"/>
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>

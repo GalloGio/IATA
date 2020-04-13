@@ -407,7 +407,7 @@
             <targetReference>Account_has_SIS_ID</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>Account</name>
         <dataType>SObject</dataType>

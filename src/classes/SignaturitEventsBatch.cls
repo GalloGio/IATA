@@ -23,15 +23,11 @@ global class SignaturitEventsBatch implements Database.Batchable<sObject>, Datab
 
 		for(sobject s : scope) {
 			Tracked_Email__c te = (Tracked_Email__c)s;
-			try {
+
 				List<Tracked_Email_Event__c> trackedEmailEvents = SignaturitRest.updateEventList(te);
 
 				eventsMap.put(te.Id, trackedEmailEvents);
 				events.addAll(trackedEmailEvents);
-
-			} catch (Exception e) {
-				System.debug( 'ERROR SignaturitEventsBatch in ' + te.Id + '  ' + e.getMessage() );
-			}
 		}
 
 		// insert all events
@@ -52,9 +48,9 @@ global class SignaturitEventsBatch implements Database.Batchable<sObject>, Datab
 	global void finish(Database.BatchableContext BC){
 		// Send an email to the Apex job's submitter.
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		String[] toAddresses = new String[] {UserInfo.getUserEmail()};
-		mail.setToAddresses(toAddresses);
+		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSubject('Signaturit Event Refresh');
+		mail.setSaveAsActivity(false);
 		mail.setPlainTextBody('Missing event(s) retrieved from Signaturit : ' + newEvents);
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 	}

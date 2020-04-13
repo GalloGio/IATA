@@ -646,12 +646,9 @@ public without sharing class LightningRegistrationProcess{
 			template = 'Identity_Portal_FRED_New_User';
 			link = prefix + '/s/IdentityFirstLogin?'+encodedPart+'&serviceName=FRED';
 			system.debug('aqui link ' + link);
-			//link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/FRED_First_Login?'+encodedPart;
 		}
 
 		Map<String,String> emailWrap = new Map<String,String>();
-
-		//emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);   // OneIdEnh CSP-ID002: replace with service aware method
 
 		emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
 		Comm_User_Helper.sendEmail(template, emailWrap, con, serviceName);

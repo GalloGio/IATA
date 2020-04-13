@@ -1,4 +1,4 @@
-<aura:component implements="lightning:availableForFlowScreens">
+<aura:component implements="lightning:availableForFlowScreens" access="public">
     <aura:attribute name="label" type="String" />
     <aura:attribute name="concatedValues" type="String" 
         description="Semi-colon of the value colon the label. Example value1:label1;value2:label2;" />

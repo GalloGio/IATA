@@ -160,7 +160,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,MADGDCCSMGR@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -168,6 +168,38 @@
         </recipients>
         <recipients>
             <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>concessios@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mohananb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siddiquio@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wangyy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>weitz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>xiewp@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/Calendar_Change_Approval_Confimation</template>
@@ -1374,6 +1406,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>concessios@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1454,6 +1490,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>quliyevaa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rabahh@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1466,6 +1506,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>shahb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>sughayerm@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1475,6 +1519,10 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vidalk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
