@@ -2919,7 +2919,7 @@ public class AMS_OSCARTriggerHandler {
 
 		if(oscarCommCaseId != null){
 
-			OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+			OrgWideEmailAddress[] owea = [select Id, Address, DisplayName from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 			List<Contact> contList;
 				contList = fetchContactInfoFromCase(oscarCommCaseId);
