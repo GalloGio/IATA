@@ -13394,14 +13394,6 @@ and
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label>支払い方法</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
-    </customLabels>
-    <customLabels>
-        <label>旅客及び国内のプログラムに適用される支払の形式に変更します</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>
