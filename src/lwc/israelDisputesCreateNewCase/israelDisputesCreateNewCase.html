@@ -89,17 +89,19 @@
                                 </p>
 						</div>
 						
-						<!--RELATED LOOKUP-->
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
-                            <p class="text-xsmall slds-p-bottom_small">IATA Code</p>
-                            <c-portal-search-lookup-component onsearch={handleRelatedSearch} data-id="relatedLookup"
-                                item-name="iatalookup" oniatalookup={showRelatedResults}
-                                required-class={requiredClass2} single-lookup-result={singleresult2}
-                                placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
-                                hide-icon=true
-                                onclick={removeRequired}>
-                            </c-portal-search-lookup-component>
-                        </div>
+                        <!--RELATED LOOKUP-->
+                        <template if:true={isNotBranch}>
+                            <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                                <p class="text-xsmall slds-p-bottom_small">IATA Code</p>
+                                <c-portal-search-lookup-component onsearch={handleRelatedSearch} data-id="relatedLookup"
+                                    item-name="iatalookup" oniatalookup={showRelatedResults}
+                                    required-class={requiredClass2} single-lookup-result={singleresult2}
+                                    placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
+                                    hide-icon=true
+                                    onclick={removeRequired}>
+                                </c-portal-search-lookup-component>
+                            </div>
+                        </template>
                         <!--RELATED LOOKUP-->
 
                         <!--AIRLINE LOOKUP-->

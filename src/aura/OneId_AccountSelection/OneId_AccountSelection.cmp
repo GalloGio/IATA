@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController" access="public">
 
 	<aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleItem}"/>
 	

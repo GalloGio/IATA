@@ -1,4 +1,4 @@
-<aura:component controller="AWW_HeadOfficesCtrl">
+<aura:component controller="AWW_HeadOfficesCtrl" access="public">
     <aura:attribute name="gridColumns" type="List" access="PRIVATE"/>
     <aura:attribute name="gridData" type="Object" access="PRIVATE"/>
     <aura:attribute name="gridExpandedRows" type="List" access="PRIVATE"/>

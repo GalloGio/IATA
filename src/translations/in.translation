@@ -22711,7 +22711,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Apakah permintaan Anda darurat?</label>
+        <label>Apakah pertanyaan Anda bersifat darurat? Kueri yang bersifat darurat akan diresponi dalam bahasa Inggris.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

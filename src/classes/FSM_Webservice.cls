@@ -105,15 +105,11 @@ global without sharing class FSM_Webservice {
 						htmlEmailBody += '</body></html>';
 
 
-						Messaging.SingleEmailMessage em = new Messaging.SingleEmailMessage();
-						em.setToAddresses(new list<string>{c.Contact.Email});
-						//em.setTemplateId(template[0].Id);
-						em.setTargetObjectId(c.Contact.Id);
-						em.saveAsActivity=false;
-						em.setSubject(sEmailSubject);
-						em.setHtmlBody(htmlEmailBody);
-
-						system.debug('EMAIL IS ' + em.getToAddresses());
+					Messaging.SingleEmailMessage em = new Messaging.SingleEmailMessage();
+					em.setTargetObjectId(c.Contact.Id);
+					em.saveAsActivity=false;
+					em.setSubject(sEmailSubject);
+					em.setHtmlBody(htmlEmailBody);
 
 						if(t.Attachments.size()>0){
 

@@ -170,7 +170,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		};
 
 		insert new SalesforceSupportEmails__c(Name = 'test', 
-			Support_Email__c = 'testSupportEmail@newgen.istest');
+			Support_Email__c = 'testSupportEmail@newgen.istest', Support_User_Id__c = UserInfo.getUserId()));
 
 		insert new AMS_ChangeCodes__c(Name = 'ARV',
 			Bulletin_Memo_Text__c = 'AGENT IS SERVED ADMINISTRATIVE NON-COMPLIANCE DUE TO ANNUAL REVALIDATION NON COMPLIANCE, AGENT IS GIVEN 30 DAYS TO VALIDATE THE AGENCY DETAILS',
@@ -314,4 +314,5 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		System.assert(notificationCreated.size() == 1, 'No Annual Revalidation Notification created');
 	}
+
 }

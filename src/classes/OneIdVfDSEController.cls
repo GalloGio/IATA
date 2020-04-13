@@ -921,9 +921,6 @@ public without sharing class OneIdVfDSEController {
 		types.add(new SelectOption(Airline,Label.ISSP_Airline));
 		types.add(new SelectOption(GSA,Label.ISSP_GSSA));
 		types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
-		//types.add(new SelectOption(Agency,'IATA Accredited Agent'));
-		//types.add(new SelectOption(NonIATA,'Non IATA Agent'));
-		//types.add(new SelectOption(TIESS,'TIESS'));
 		types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
 		types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
 		return types;
@@ -1043,13 +1040,9 @@ public without sharing class OneIdVfDSEController {
 					System.debug('Site User is located in ' + whichcountry);
 				}
 			}
-
-
 		}catch(Exception e){
 
 		}
-
-
 	}
 
 	// to be used in visualforce page OneIdVfCreateAccount

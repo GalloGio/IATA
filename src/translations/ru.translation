@@ -22718,7 +22718,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Ваш запрос экстренный?</label>
+        <label>Ваш запрос срочен? Срочные запросы отвечаются только по-английски.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

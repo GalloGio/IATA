@@ -1,4 +1,4 @@
-<aura:component controller="OneId_RegistrationProcessController">
+<aura:component controller="OneId_RegistrationProcessController" access="public">
 
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>

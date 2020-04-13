@@ -1,5 +1,5 @@
 <!-- add implements="forceCommunity:availableForAllPageTypes" to surface the component in community builder -->
-<aura:component extends="c:Base" controller="OneIdLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes">
+<aura:component access="public" extends="c:Base" controller="OneIdLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes">
     
     <ltng:require scripts="{!$Resource.jquery321minStandard}" afterScriptsLoaded="{!c.jsLoaded}"/>
     

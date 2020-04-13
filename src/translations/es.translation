@@ -22736,7 +22736,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>¿Es su consulta una emergencia?</label>
+        <label>¿Su consulta es una emergencia? Las consultas de emergencia sólo se responden en inglés.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

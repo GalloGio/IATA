@@ -22704,7 +22704,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Sua consulta é uma emergência?</label>
+        <label>Sua consulta é uma emergência? Consultas de emergência são respondidas apenas em inglês.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

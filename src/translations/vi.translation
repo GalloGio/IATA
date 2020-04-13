@@ -22703,7 +22703,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Truy vấn của bạn là một trường hợp khẩn cấp?</label>
+        <label>Câu hỏi của bạn có phải là một trường hợp khẩn cấp? Câu hỏi trường hợp khẩn cấp chỉ được hỗ trợ bằng tiếng Anh.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

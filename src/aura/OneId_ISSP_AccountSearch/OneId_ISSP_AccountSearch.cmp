@@ -2,7 +2,7 @@
  - Created by pvavruska on 5/13/2019.
  -->
 
-<aura:component description="OneId_ISSP_AccountSearch" controller="GCS_RegistrationController">
+<aura:component access="public" description="OneId_ISSP_AccountSearch" controller="GCS_RegistrationController">
 
     <!-- EVTs -->
     <aura:registerEvent name="itemSelected" type="c:OneId_ItemSelected_EVT"/>
