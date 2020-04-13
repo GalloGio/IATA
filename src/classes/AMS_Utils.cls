@@ -13,6 +13,8 @@ public without sharing class AMS_Utils {
 	public static final String FAILED = 'Failed';
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
+	public static final String NOT_STARTED = 'Not Started';
+	public static final String COMPLETED = 'Completed';
 	public static final String SUCCESS = 'SUCCESS';
 	public static final String VALID = 'VALID';
 
@@ -437,6 +439,9 @@ public without sharing class AMS_Utils {
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
 	public static final String NEW_CHANGE_CODE = 'NEW';
 	public static final String FIN_CHANGE_CODE = 'FIN';
+
+	public static final String FINANCIAL_SECURITY_STATUS_ACTIVE = 'Active';
+	public static final String FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY = 'Close to Expiry Date';
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
