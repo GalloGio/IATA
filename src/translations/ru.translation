@@ -13389,14 +13389,6 @@
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label>Формы оплаты</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
-    </customLabels>
-    <customLabels>
-        <label>Изменения в формах оплаты, применимых к программе по пассажирским перевозкам и по внутренним перевозкам</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>

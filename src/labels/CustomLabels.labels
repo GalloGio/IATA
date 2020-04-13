@@ -25243,22 +25243,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Filter by Geographic Area</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_eBulletin_Forms_of_Payment</fullName>
-        <categories>ISSP, Portal, E-Bulletin</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_eBulletin_Forms_of_Payment</shortDescription>
-        <value>Forms of Payment</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</fullName>
-        <categories>ISSP, Portal, E-Bulletin</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</shortDescription>
-        <value>Changes on Forms of Payment applicable to Passenger and Domestic programs</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_eBulletin_GeneratedReports</fullName>
         <language>en_US</language>
         <protected>false</protected>

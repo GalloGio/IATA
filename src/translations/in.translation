@@ -13402,14 +13402,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label>Metode Pembayaran</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
-    </customLabels>
-    <customLabels>
-        <label>Perubahan pada metode pembayaran yang berlaku bagi penumpang dan program domestik</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>

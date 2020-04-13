@@ -181,7 +181,7 @@
         <defaultValue>false</defaultValue>
         <description>To show changes on Forms of Payment applicable to Passenger and Domestic programs</description>
         <externalId>false</externalId>
-        <inlineHelpText>Forms of Payment</inlineHelpText>
+        <inlineHelpText>Changes on Forms of Payment applicable to Passenger and Domestic programs</inlineHelpText>
         <label>Forms of Payment</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

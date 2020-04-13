@@ -13394,14 +13394,6 @@ and
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label>지불의 형태</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
-    </customLabels>
-    <customLabels>
-        <label>여객 및 국내 프로그램에 적용되는 지불 형태의 변경</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>

@@ -13397,14 +13397,6 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label>Forme di pagamento</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment</name>
-    </customLabels>
-    <customLabels>
-        <label>Modifiche forme di pagamento</label>
-        <name>ISSP_AMS_eBulletin_Forms_of_Payment_HelpText</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
         <name>ISSP_AMS_eBulletin_GeneratedReports</name>
     </customLabels>
