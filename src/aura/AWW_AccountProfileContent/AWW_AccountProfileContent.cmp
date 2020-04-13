@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="canEdit" type="Boolean"/>
 

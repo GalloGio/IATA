@@ -14306,7 +14306,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -22716,7 +22716,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Sorgunuz bir acil durum mu?</label>
+        <label>Sorgunuz acil mi? Acil sorgulara yalnızca İngilizce olarak cevap verilmektedir.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

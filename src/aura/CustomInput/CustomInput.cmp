@@ -1,4 +1,4 @@
-<aura:component description="CustomInput" abstract="true">
+<aura:component access="public" description="CustomInput" abstract="true">
 
     <aura:attribute name="this" type="Object" default="{!this}"/>
     <aura:attribute name="value" type="String" access="global"/>

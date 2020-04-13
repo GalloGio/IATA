@@ -1,6 +1,6 @@
 public with sharing class AMS_VoucherInformationTriggerHandler {
 
-  	private static boolean recalculateLastYearFlag = true;
+		private static boolean recalculateLastYearFlag = true;
 
 	public static void handleAfterInsert(List<AMS_Voucher_Information__c> newMap) {
 		validateVoucherInfoUniqueness(newMap);
@@ -12,19 +12,6 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 
 	public static void handleAfterUndelete(List<AMS_Voucher_Information__c> newMap) {
 		validateVoucherInfoUniqueness(newMap);
-	}
-
-	public static void handleBeforeUndelete(List<AMS_Voucher_Information__c> newMap) {
-		//calculateLastYearsVouchers(newMap);
-	}
-
-	public static void handleBeforeUpdate(List<AMS_Voucher_Information__c> newMap) {
-		//calculateLastYearsVouchers(newMap);
-	}
-
-	public static void handleBeforeInsert(List<AMS_Voucher_Information__c> newMap) {
-
-		//calculateLastYearsVouchers(newMap);
 	}
 
 	// An account must only have one Voucher Information object attached.

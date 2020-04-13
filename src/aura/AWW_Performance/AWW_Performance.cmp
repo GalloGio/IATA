@@ -1,4 +1,4 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AWW_PerformanceCtrl" access="public">
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="accountId" type="Id"/>

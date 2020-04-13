@@ -14317,7 +14317,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Attivo</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -22716,7 +22716,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>La richiesta è urgente?</label>
+        <label>È la query di emergenza? Query di emergenza sono risposto solo in lingua inglese.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

@@ -14310,7 +14310,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>ยังใช้งานอยู่</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -22711,7 +22711,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>ข้อสอบถามของคุณเป็นกรณีฉุกเฉินหรือไม่?</label>
+        <label>คำถามของคุณฉุกเฉินหรือไม่? คำถามฉุกเฉินจะตอบกลับเป็นภาษาอังกฤษเท่านั้น</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

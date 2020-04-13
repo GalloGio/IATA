@@ -376,15 +376,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 				oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
 				insert oscarCase;
 
-				// AUTOMATICALLY APPROVE & TERMINATE
-				// pass sanity check
-				oscar.STEP6__c = AMS_Utils.PASSED;
-				oscar.Change_effective_as_of__c = Date.today();
-				update oscar;
-
-				oscar.STEP31__c = AMS_Utils.PASSED;
-				update oscar;
-
+				closeOscar(String.valueOf(oscar.Id));
 
 		} catch (Exception ex) {
 			ApexPages.addMessages(ex);
@@ -392,6 +384,21 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 		}
 
 		return new PageReference('/ISSP_AMS_MSO_Update?action=' + ACTION_TERMINATION + '&msoId=' + msoAccount.Id + '&step=success&caseId=' + oscarCase.Id);
+	}
+
+	@future
+	public static void closeOscar(String oscarId){
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		oscar.Id = oscarId;
+		// AUTOMATICALLY APPROVE & TERMINATE
+		// pass sanity check
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = Date.today();
+		update oscar;
+
+		//Close Oscar
+		oscar.STEP31__C = AMS_Utils.PASSED;
+		update oscar;
 	}
 
 	public PageReference submitAndApproveCase() {

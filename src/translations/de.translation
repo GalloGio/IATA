@@ -14315,7 +14315,7 @@ and
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktiv</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -22714,7 +22714,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Ist Ihre Anfrage ein Notfall?</label>
+        <label>Ist Ihre Frage ein Notfall? Notfall-Anfragen werden nur beantwortet auf Englisch.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

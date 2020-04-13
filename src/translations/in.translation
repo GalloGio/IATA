@@ -14322,7 +14322,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -22715,7 +22715,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Apakah permintaan Anda darurat?</label>
+        <label>Apakah pertanyaan Anda bersifat darurat? Kueri yang bersifat darurat akan diresponi dalam bahasa Inggris.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>

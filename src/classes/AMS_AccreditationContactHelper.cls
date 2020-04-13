@@ -21,27 +21,6 @@ public with sharing class AMS_AccreditationContactHelper
 		return rolePersonMap;
 	}
 
-	public static Map<String, AMS_Account_Role__c> findRolesAndContactsByEmail(Set<String> emailSet, Set<Id> acContactSet)
-	{
-		String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
-		String query = 'select ' + commaSeparatedFields;
-		query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
-		query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
-		List<AMS_Account_Role__c> roleList = Database.query(query);
-		Map<String, AMS_Account_Role__c> roleContactMap = new Map<String, AMS_Account_Role__c>();
-		for(AMS_Account_Role__c ar : roleList)
-		{
-			if(roleContactMap.get(ar.Contact__r.Email) == null){
-				roleContactMap.put(ar.Contact__r.Email, ar);
-			} else {
-				// TODO at a later stage. Right now we are safe to assume that emails are unique and there should not be Persons using the same email.
-			}
-		}
-		return roleContactMap;
-	}
-
-
-
 	public static Map<Id, Contact> findContactsByEmail(Set<String> emailSet)
 	{
 		Map<ID, Contact> contactMap = new Map<Id, Contact>([select Id, Email from Contact where Email in :emailSet limit 49999]);
@@ -206,7 +185,7 @@ public with sharing class AMS_AccreditationContactHelper
 		con.LastName = ac.Last_Name__c;
 		con.Title = ac.Job_Title__c;
 		if(con.AccountId==null)
-		   con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+			 con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
 		con.Membership_Main_Contact__c = ac.Membership_Main_Contact__c;
 		con.Financial_Assessment_Contact__c = ac.Financial_Assessment_Contact__c;
 		con.Phone = ac.Phone__c;
@@ -241,7 +220,7 @@ public with sharing class AMS_AccreditationContactHelper
 		con.LastName = ac.Last_Name__c;
 		con.Title = ac.Job_Title__c;
 		if(con.AccountId==null)
-		   con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+			 con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
 		con.Membership_Main_Contact__c = ac.Membership_Main_Contact__c;
 		con.Financial_Assessment_Contact__c = ac.Financial_Assessment_Contact__c;
 		con.Phone = ac.Phone__c;
@@ -488,13 +467,13 @@ public with sharing class AMS_AccreditationContactHelper
 
 			//get only the active records having record type ownership
 			List<AMS_Account_Role__c> activeRolesInTargetAgencies = new List<AMS_Account_Role__c>([ SELECT Id, Account__c, Contact__c, Person__c, Duty__c, IsManager__c, Legacy_External_ID__c,
-																										  Percentage__c, Position__c, Owner_Account__c, Employee_Name__c, Hours__c, Owner_Name__c,
-																										  Contact__r.FirstName, Contact__r.LastName, Contact__r.Membership_Main_Contact__c,
-																										  Contact__r.Financial_Assessment_Contact__c, Contact__r.Phone, Contact__r.Mobilephone,
-																										  Contact__r.Fax, Contact__r.Birthdate, Contact__r.Email, Contact__r.ISO_Country__c,
-																										  Contact__r.Training_dangerous_goods_completed__c, Contact__r.list_Dangerous_Goods_Awareness__c,
-																										  Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Phone__c, Person__r.Mobile__c,
-																										  Person__r.Fax__c, Person__r.DOB__c, Person__r.Email__c
+																											Percentage__c, Position__c, Owner_Account__c, Employee_Name__c, Hours__c, Owner_Name__c,
+																											Contact__r.FirstName, Contact__r.LastName, Contact__r.Membership_Main_Contact__c,
+																											Contact__r.Financial_Assessment_Contact__c, Contact__r.Phone, Contact__r.Mobilephone,
+																											Contact__r.Fax, Contact__r.Birthdate, Contact__r.Email, Contact__r.ISO_Country__c,
+																											Contact__r.Training_dangerous_goods_completed__c, Contact__r.list_Dangerous_Goods_Awareness__c,
+																											Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Phone__c, Person__r.Mobile__c,
+																											Person__r.Fax__c, Person__r.DOB__c, Person__r.Email__c
 																									FROM AMS_Account_Role__c
 																									WHERE Account__c
 																									IN :oscarTargetAgencyIds

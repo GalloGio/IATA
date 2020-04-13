@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountHeaderCtrl">
+<aura:component controller="AWW_AccountHeaderCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="record" type="Account"/>
 
