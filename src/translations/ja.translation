@@ -22712,7 +22712,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>お急ぎのお問い合わせですか。</label>
+        <label>本件は緊急のお問い合わせでしょうか？　緊急の問い合わせにつきましては、英語のみでのご対応となります</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>
