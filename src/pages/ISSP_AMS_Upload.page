@@ -62,18 +62,24 @@
                 </apex:commandLink>
             </div>
         </div>
-    <div class="progress" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 30%;">
-                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep2}" value="{!lblStepA}" id="Prev2PASS"/>
+        <div class="progress iata-tabs" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2PASS">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%;">
-               <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep3}" value="{!lblStepB}" id="Prev3PASS"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 27%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3PASS">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                </apex:commandLink>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!lblStepC}
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:outputText value="{!lblStepC}" escape="false"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
-                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep5}" value="{!lblStepD}" id="Next5PASS"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 21%;">
+                <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5PASS">
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                </apex:commandLink>
             </div>
         </div>
         </apex:form>

@@ -12,77 +12,60 @@
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
     <style>
-        .datePicker{
-            z-index:9999;
-        }
         .adlabel  {
          font-size: 91%;
-         text-align: right;
          }
-         .wid  {
-         width: 85%;
-         }
-         .branchemail  {
-         width: 32% !important;
-         margin-left: -14%;
-         }
-         .statusBox{margin-left: 60%;margin-top: -23.5%;}
+         .ui-autocomplete{  
+            z-index:9999 !important;
+        }
+        .ui-dialog{  
+            z-index:9999 !important;
+        }
+        .hophonestatusBox{margin-left: 185%;margin-top: -95%;}
+        .statusBox{margin-left: 60%;margin-top: -32.5%;}
+        
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
         }
-
-       .pbBody {
-        padding-left:10px !important;
-       }
-
-       .pbBody a{color:#337ab7 !important}
-
-        .bPageBlock {
-            border-top-width : thin !important;
-        }
-
+        
         .bEditBlock input {
             vertical-align:top !important;
         }
-
+       
        .btn {
             padding: 2px 12px !important;
         }
-
-        .btn-progressBar-PASS {
-            padding: 2px 40px !important;
-        }
-
+                             
         .btn-primary {
             color: #fff !important;
             background: inherit !important;
             background-color: #337ab7 !important;
             border-color: #2e6da4 !important;
             border: 1px solid transparent !important;
-            /*background: */
         }
-
+        
         .tb-header {
             padding-right:20px;
         }
-
+                 
         .modalrow {
             padding-top:10px;
         }
-
+            
         ul li, ol li {
             margin-left: inherit;
             padding-left: inherit;
         }
-
+        
         #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
-
+            
         .requiredText {display:none;}
-
+        
         .dateFormat {display:none;}
-
+        
         .errorMsg {color:#d74c3b}
-
+            
         .progress-bar-off {
                 color:#6BBBEA;
                 font-weight:bold;
@@ -91,32 +74,26 @@
                 border-right:2px solid white;
         }
 
-        body .bPageBlock .pbBody .pbSubheader{
-                background-image: url('') !important;
-                background-color:  #1797c0;
-                color: #fff;
-        }
-
         body .bPageBlock .pbBody .summary-subsection .pbSubheader{
                 background-image: url('') !important;
                 background-color: initial;
                 color: initial;
         }
-
+        
         .pbSubheader {
             font-weight:bold;
             font-size:15px;
         }
-
+                   
         .contact-detail {
             font-size:12px;
             margin-bottom:3px;
         }
-
+                   
         .tbFooter {
          text-align:right;
         }
-
+                   
         .requiredBlock {
             width:5px !important;
         }
@@ -132,27 +109,28 @@
         .summary-table td.dataCell {
             border: 1px solid #e0e3e5 !important;
         }
-
+        
             .col1 {
                 padding-bottom:5px;
                 width:40%;
                 vertical-align: text-top;
                 font-weight:bold
             }
-
+            
             .col1_regular {
                 padding-bottom:5px;
                 width:25%;
                 vertical-align: text-top;
                 font-weight:bold
-            }
-
+            }       
+                   
             .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
             .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
             .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
             .col3 {width:50%}
-
-    </style>
+       
+    </style>  
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
     <script type="text/javascript">
     var $j = jQuery.noConflict();
     var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -438,18 +416,24 @@
                 </div>
                 <div class="panel-body" id="body-enquiries">
                     <apex:form id="AMSForm">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 30%;">
-                                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!saveAMSFormAndGoBack}" value="{!lblStepA}" id="Prev2"/>
+                        <div class="progress iata-tabs">
+                            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" id="Prev2">
+                                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                                </apex:commandLink>
                             </div>
-                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%;">
-                                    {!lblStepB}
+                            <div class="progress-bar iata-tab tabl-active" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
+                                    <apex:outputText value="{!lblStepB}" escape="false"/>
                             </div>
-                            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!saveAMSFormAndGoForward}" value="{!lblStepC}" id="Next4"/>
+                            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4">
+                                    <apex:outputText value="{!lblStepC}" escape="false"/>
+                                </apex:commandLink>
                             </div>
-                            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
-                                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!saveAMSFormAndGoToStep5}" value="{!lblStepD}" id="Next5"/>
+                            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
+                                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+                                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                                </apex:commandLink>
                             </div>
                         </div>
 
@@ -465,9 +449,9 @@
                                     {!$Label.ISSP_AMS_Step3_Save_Anytime}
                             </div>
                             <apex:pageBlockButtons >
-                                <apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                                <apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" />
-                                <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" style="float:right" />&nbsp;
+                                <apex:commandButton styleClass="iatabtn iatabtn-danger smaller" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" style="float:right" />
+                                <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" />
                             </apex:pageBlockButtons>
                             <apex:PageMessages id="msgs"/>
                             <div class="apcontainer" style="border: 1px solid #ececec;">
