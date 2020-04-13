@@ -1238,14 +1238,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
-	private boolean isOnlyGeBspLeft(){
-		for (HierarchyItem i : hierarchy.values()){
-			if(!i.selected && !i.main && i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == currentGE.IATA_ISO_Country__r.AMS_Settlement_System__c){
-				return true;
-			}
+	private boolean isOnlyGeBspLeft() {
+		Set<Id> bsp = new Set<Id>();
+		
+		for (HierarchyItem i : hierarchy.values()) {
+			if (!i.selected && !i.main)
+				bsp.add(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
 		}
-
-		return false;
+		
+		return bsp.size() == 1;
 	}
 
 	private String appendGeLeftStandaloneOptTo(String changeOfHierarchyScenario) {
