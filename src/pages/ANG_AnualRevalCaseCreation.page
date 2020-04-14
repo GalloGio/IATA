@@ -162,7 +162,6 @@
 
 			</apex:pageBlockSection>
 
-
 			<apex:pageBlockSection id="parameter1" >
 
 				<apex:pageblockSectionItem rendered="{!mode == 'Financial year end' && !(region == 'Select Region')}">
@@ -208,7 +207,7 @@
 			<apex:pageBlockSection id="parameter4">
 				<div align="center">
 					<apex:pageBlockSectionItem >
-						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableSearchButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock" oncomplete="checkSelectAllOnCurrentPage();"/>
+						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableSearchButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock, noResultsPanel" oncomplete="checkSelectAllOnCurrentPage();"/>
 					</apex:pageBlockSectionItem>
 				</div>
 
@@ -223,6 +222,10 @@
 			
 			</apex:pageBlockSection>
 		</apex:pageBlock>
+
+		<apex:outputPanel id="noResultsPanel" >
+			<apex:pageMessage id="noResults" detail="There are no results for this search" severity="info" escape="false" strength="2" rendered="{!noResultsFound}"/>
+		</apex:outputPanel>
 
 		<apex:outputPanel id="buttons" >
 			<apex:pageBlock rendered="{!Con != null}">
