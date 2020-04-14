@@ -36,6 +36,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	};
 
 	private static Set<String> locationTypeSet = new Set<String> {
+		AMS_Utils.GE,
 		AMS_Utils.HE,
 		AMS_Utils.AE
 	};
