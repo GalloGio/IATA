@@ -224,7 +224,7 @@
 		</apex:pageBlock>
 
 		<apex:outputPanel id="noResultsPanel" >
-			<apex:pageMessage id="noResults" detail="There are no results for this search" severity="info" escape="false" strength="2" rendered="{!noResultsFound}"/>
+			<apex:pageMessage id="noResults" detail="There are no results for this search" severity="info" strength="2" rendered="{!noResultsFound}"/>
 		</apex:outputPanel>
 
 		<apex:outputPanel id="buttons" >
