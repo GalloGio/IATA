@@ -756,10 +756,10 @@ public class AmazonFileTrgHelper {
 				for (Contact con : SharingContacts_List) {
 					ContactIDs_set.add(con.id);
 				}
-
+				
 				for(User usr : [Select id, ContactId From User Where ContactId In :ContactIDs_set AND isActive = true AND Contact.isEmailBounced = false]) {
-                    contactIds_haveAccess.add(usr.ContactId);
-                }
+					contactIds_haveAccess.add(usr.ContactId);
+				}
 
 				//Get contacts with access to the portal service
 				List <Portal_Application_Right__c> accessList = [SELECT Id, Contact__c, Contact__r.AccountId FROM Portal_Application_Right__c
