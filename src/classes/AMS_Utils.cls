@@ -377,6 +377,10 @@ public without sharing class AMS_Utils {
 	public static final String ACCREDITATIONMODEL_LEGACY = 'Legacy';
 	public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
 
+	public static final String ACCREDITATION_GOLITE= 'GoLite';
+	public static final String ACCREDITATION_GOSTANDARD = 'GoStandard';
+	public static final String ACCREDITATION_GOGLOBAL = 'GoGlobal';
+
 	public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
 
 	public static final String ARC_TRAVEL_AGENT_USA_ONLY = 'ARC Travel Agent (USA Only)';
@@ -2565,11 +2569,11 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 			return null;
 
 		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASHLESS))
-			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, 'GoLite');
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, ACCREDITATION_GOLITE);
 		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASH))
-			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASH, 'GoStandard');
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASH, ACCREDITATION_GOSTANDARD);
 		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
-			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, 'GoGlobal');
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, ACCREDITATION_GOGLOBAL);
 
 		return result;
 
@@ -2594,10 +2598,10 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	}
 
 	public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
-		ACCREDITATIONMODEL_LEGACY => 'Legacy',
-		ACCREDITATIONMODEL_CASHLESS => 'GoLite',
-		ACCREDITATIONMODEL_CASH => 'GoStandard',
-		ACCREDITATIONMODEL_MULTICOUNTRY => 'GoGlobal'
+		ACCREDITATIONMODEL_LEGACY => ACCREDITATIONMODEL_LEGACY,
+		ACCREDITATIONMODEL_CASHLESS => ACCREDITATION_GOLITE,
+		ACCREDITATIONMODEL_CASH => ACCREDITATION_GOSTANDARD,
+		ACCREDITATIONMODEL_MULTICOUNTRY => ACCREDITATION_GOGLOBAL
 	};
 
 	public static String getCustomLabel(String labelName) {

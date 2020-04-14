@@ -137,17 +137,18 @@ global class AMS_OSCAR_Webservice {
 
 				Date currentDate = Date.today();
 				Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar.Account__c,
-										 Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = 'Agent to be Notified',
+										 Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED,
 										 Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar.Id, Financial_Assessment_requested__c = currentDate);
 
 				if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					ifapCase.Subject = ifapCase.Subject.replaceAll(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.ACCREDITATION_GOGLOBAL);
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
 				}
 
 				insert ifapCase;
 
-				oscar.STEP11__c = 'In Progress';
+				oscar.STEP11__c = AMS_Utils.IN_PROGRESS;
 				update oscar;
 
 				//OSCAR Name will be equal to the CaseNumber, so instead of querying the ifap Case for its CaseNumber
