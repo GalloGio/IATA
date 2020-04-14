@@ -152,20 +152,8 @@
     box-shadow: none;
 }
 
-.warningMessage{
-  margin-bottom: 40px;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
 .warningIcon{
   margin-right: 10px;
-}
-
-.warningContent{
-  font-size: 16px;
-  text-align: justify;
 }
 
 .buttonsContainer{

@@ -30,7 +30,6 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
     step3InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
     @api trigger;
-    @api isTriggeredByRequest = false;
 
     @track openMessageModal = false;
 

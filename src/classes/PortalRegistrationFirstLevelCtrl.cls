@@ -666,7 +666,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		BucketAccountDetail accDetail = new BucketAccountDetail();
 
-		String sector = selectedMetadataCustomerType.MasterLabel;
+		String sector = '';
+		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
+			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
+		}
+		else{
+			sector = selectedMetadataCustomerType.MasterLabel;
+		}
 
 		String accountQuery = '';
 		accountQuery +='SELECT Id, Sector__c, Category__c';
@@ -698,7 +704,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - Other';
+			if(sector == 'Cargo Agent'){
+				acc.Name = 'Freight Forwarder - Other';
+			}
+			else{
+				acc.Name = sector + ' - Other';
+			}
 			acc.Sector__c = sector;
 			acc.Category__c = 'Other';
 			acc.Category_Other_Value__c = 'Bucket Account';

@@ -120,7 +120,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;
     level2RegistrationTrigger = 'topic';
-    isTriggeredByRequest = true;
 
     //label construct
     @track label = {

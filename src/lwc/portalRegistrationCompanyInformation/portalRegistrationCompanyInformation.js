@@ -18,7 +18,6 @@ import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Web
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
-import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
 export default class PortalRegistrationCompanyInformation extends LightningElement {
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
@@ -29,7 +28,6 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @api originalCustomerType;
     @api customerType;
     @api countryId;
-    @api isTriggeredByRequest;
     @api internalUser;
 
     // customer type
@@ -43,8 +41,6 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @track threePicklists = false;
 
     @track isCategorizationSearchable;
-    // flag to warn user requesting access to a service/topic
-    @track isCategorizationModified = false;
 
     registrationUtilsJs;
 
@@ -64,8 +60,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
         CSP_L2_Website,
-        CSP_L2_Next_Step,
-        CSP_L2_Change_Categorization_Warning
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -79,6 +74,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     companyName;
     countryLabel;
     backToAccountSelection;
+
 
     get vatLabel(){
         if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c !== undefined){
@@ -159,7 +155,7 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
             this.backToAccountSelection = 'Back to Account Info';
         }
         else{
-            this.companyInformation = CSP_L2_Company_Information;            
+            this.companyInformation = CSP_L2_Company_Information;
             this.companyName = CSP_L2_Company_Name;
             this.countryLabel = CSP_L2_Work_Location;
             this.backToAccountSelection = CSP_L2_Back_to_Account_Selection;
@@ -211,9 +207,6 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
                     this.localAccount.customerTypeSector = result.Created_Account_Sector__c;
                     this.localAccount.customerTypeCategory = result.Created_Account_Category__c;
 
-                    if(this.isTriggeredByRequest){
-                        this.isCategorizationModified = result.DeveloperName !== this.originalCustomerType && this.isCategorizationSearchable;
-                    }
                     this.checkCompletion(false);
                 });
         }
