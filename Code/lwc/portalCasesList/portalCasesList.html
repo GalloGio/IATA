@@ -1,0 +1,168 @@
+<template>
+    <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-top_x-large">
+        <!-- Search bar and buttons -->
+        <div class="slds-col slds-grid slds-wrap slds-size_1-of-1 slds-medium-size_5-of-12 slds-order--2 slds-medium-order--1 slds-p-vertical--xx-small slds-p-horizontal_small slds-text-align_right">
+            <div class="slds-col slds-size--1-of-1 slds-large-size_8-of-12 aroundLightGrayBorder inputFilter borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall inputFilter">
+                <img src={searchIconUrl} title={label.CSP_SearchingOn}>
+                <lightning-input name="newRecipientTextInput"
+                    placeholder={label.CSP_CaseSearchPlaceholder}
+                    class="hideInputLabel grayInputPlaceholder"
+                    onchange={handleInputChange}
+                    value={filteringObject.searchText}>
+                </lightning-input>
+                <div if:true={showCross}  class="searchBarIcon slds-m-right--large">
+                    <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                </div>
+            </div>
+        </div>
+        <div class="slds-order--1 slds-medium-order--2  slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_7-of-12 ">
+            <div class="slds-grid slds-wrap slds-grid_align-end slds-grid_vertical-stretch">
+                <div class="slds-text-align_right slds-p-horizontal_none slds-col slds-size_1-of-1 buttonGrid">
+                    <div class="slds-grid slds-wrap slds-grid_align-end slds-grid_vertical-stretch slds-grid_vertical-align-end fullHeight slds-gutters_direct-medium">
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--11 slds-medium-order--1">
+            <!-- FILTER -->
+                            <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines fullHeight" onclick={openCasesFilterModal}>
+                                {label.CSP_Filtered}
+                                <img class="slds-float_right" src={filteredIconUrl}>
+                            </button>
+                            <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines fullHeight" onclick={openCasesFilterModal}>
+                                {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                            </button>
+                        </div>
+        <!-- LIST VIEW -->
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1" if:true={viewNormalUserCasesTableViewButton}>    
+                            <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth twoLines fullHeight" onclick={changeToUserCasesTableView} ></lightning-button>
+                        </div>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1" if:true={viewAdminUserCasesTableViewButton}>
+                            <lightning-button label={label.CSP_CompanyCases} class="containedButton fullWidth twoLines fullHeight" onclick={changeToAdminCasesTableView}></lightning-button>
+                        </div>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical--xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight slds-order--1">
+                            <lightning-button label="Reach Us" class="containedButton fullWidth twoLines fullHeight" onclick={openReachUs}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cases list datatable -->
+    <div class="customCardWhite slds-m-vertical_x-small">
+        <div class="slds-m-around_medium">
+            <div if:true={loading} class="spinnerContainer">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <div if:false={loading}>
+                <div if:true={viewResults} class="casesListWrapper">
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={casesList} 
+                        columns={columns} 
+                        hide-checkbox-column min-column-width="140" class="casesListTableClass">
+                    </lightning-datatable>
+                    <div class="endOfTableCases">
+                        <!-- PAGINATION -->
+                        <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
+                    </div>
+                </div>
+                <div if:false={viewResults}>
+                    <c-portal-no-cases-banner></c-portal-no-cases-banner>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div if:true={viewCasesFiltersModal}>
+        <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+            <div class="modal">
+                <div class="customPopupInteriorHalfScreenCentered">
+                    <!-- Popup Header -->
+                    <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                        <span class="modalTitle">{label.CSP_Filter}</span>
+                        <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeCasesFilterModal}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                onclick={closeCasesFilterModal}></lightning-icon>
+                        </span>
+                    </div>
+                    <div class="customWhiteBackground">
+                        <div class="slds-p-horizontal_medium">
+
+                            <!-- Country pick -->
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium">
+                                    <lightning-combobox
+                                        class="cursorPointerComboBox text-xxsmall customPickList"
+                                        label={label.CSP_Search_Case_Country} value={filteringObject.casesComponent.caseCountryFilter}
+                                        placeholder=" " options={countryPickOptions}
+                                        onchange={countryPickOnchangeHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="slds-grid slds-p-horizontal_medium">
+
+                            <!-- Creation Date (from) -->
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_xx-small">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                    <lightning-input 
+                                        class="customPickList dateField" 
+                                        type="date" 
+                                        onchange={dateFromOnchangeHandler}
+                                        value={filteringObject.casesComponent.dateFromFilter}
+                                        label={label.CSP_DateFrom}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <!-- Creation Date (to) -->
+                                <div class="slds-col slds-size_1-of-2 slds-p-around_xx-small">
+                                    <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                        <lightning-input 
+                                            class="customPickList dateField" 
+                                            type="date" 
+                                            onchange={dateToOnchangeHandler}
+                                            value={filteringObject.casesComponent.dateToFilter}
+                                            label={label.CSP_DateTo}>
+                                        </lightning-input>
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <!-- Contacts pick -->
+                            <div class="slds-p-horizontal_medium">
+                                <div class="slds-p-around_xx-small">
+                                    <div class="slds-p-horizontal_large slds-p-vertical_medium" if:true={viewContactsFilterPicklist}>
+                                        <lightning-combobox
+                                            class="cursorPointerComboBox text-xxsmall customPickList"
+                                            label={label.ISSP_Contact} value={filteringObject.casesComponent.caseContactFilter}
+                                            placeholder=" " options={contactPickOptions}
+                                            onchange={contactPickOnchangeHandler}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!-- BUTTON -->
+                        <div class="slds-p-horizontal_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-p-around_large slds-grid slds-wrap topLightGrayBorder text-center">
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-text-align_center">
+                                        <lightning-button variant="base" label={label.CSP_RemoveAllFilters}
+                                            onclick={resetFilters} class="baseButton newLinkButton buttonMinHeightMedium text-xsmall">
+                                        </lightning-button>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                        <lightning-button variant="brand" label={label.CSP_Apply}
+                                            onclick={applyFilters} class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>
