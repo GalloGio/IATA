@@ -268,13 +268,13 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Test.startTest();
 		
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE FR'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, true);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
 		
-		Case c = [SELECT Id, Contact.User_Portal_Status__c FROM Case WHERE Account.Name = 'MC Account 1 HE FR'];
+		Case c = [SELECT Id, Contact.User_Portal_Status__c FROM Case WHERE Account.Name = 'MC Account 1 GE PT' ORDER BY CaseNumber DESC LIMIT 1];
 		System.assertEquals(AMS_Utils.CONTACT_TYPE_ADMIN, c.Contact.User_Portal_Status__c);
 	}
 

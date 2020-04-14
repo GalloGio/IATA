@@ -170,6 +170,8 @@ public class ANG_TestDataHelper
 		);
 		insert cont;
 
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertContact] Created contact: ' + cont);
+
 		return cont;
 	}
 

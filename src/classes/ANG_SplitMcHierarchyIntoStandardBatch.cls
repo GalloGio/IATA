@@ -104,6 +104,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 
 	private void findContact() {
+		if (!processSingleBsp)
+			return;
+		
 		List<Contact> contacts = [SELECT Id, AccountId, User_Portal_Status__c
 								  FROM Contact
 								  WHERE AccountId = :accountGE
