@@ -1103,7 +1103,8 @@ public class ANG_AgencyChangesHelperTest {
 		System.assertEquals('Active', movedAuthorization.Status__c, 'Cash forms of payment should be the same of the new Parent after approval');
 	}
 
-	@isTest static void performChangeOfHierarchy_BSPSplit() {
+	@isTest 
+	static void performChangeOfHierarchy_BSPSplit() {
 		insert new ANG_AgencyChangesConfig__c(Name = 'MulticountryToStandardConversion', 
 			TCA_Sanity_check__c = 'CNV', 
 			TCA_Application_withdrawal__c = 'CWD', 
