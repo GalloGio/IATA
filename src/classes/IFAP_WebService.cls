@@ -301,6 +301,7 @@ global class IFAP_WebService {
 						AccountId,
 						CreatedDate,
 						Deadline_Date__c,
+						IFAP_Financial_Year__c,
 						Financial_Review_Type__c,
 						FA_Second_Deadline_Date__c,
 						Financial_Review_Result__c,

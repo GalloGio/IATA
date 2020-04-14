@@ -913,8 +913,11 @@ public class ANG_MulticountryHelper {
 
 	public static Case fetchIFAPWithOnGoingNonCompliance(Case cse){
 
+		Case onGoingIFAP = null;
+
 		if(MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
-			List<Case> ifapLst = [SELECT Id, CaseNumber,
+			List<Case> ifapLst = [SELECT Id, CaseNumber, Status, 
+										IFAP_Financial_Year__c, Financial_Review_Type__c,
 									(SELECT Id
 									FROM Tasks
 									WHERE Subject = :NON_COMPLIANCE_TASK_SUBJECT
@@ -928,17 +931,27 @@ public class ANG_MulticountryHelper {
 									AND Financial_Review_Type__c IN :AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES
 									AND CreatedDate < :cse.CreatedDate
 								  ORDER BY CreatedDate ASC];
+		
+			String lastFinancialYear = String.valueOf(Integer.valueOf(cse.IFAP_Financial_Year__c) - 1);
+			boolean isMulticountryAnnual = cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
 
-			//If assessment result is blank and there is a non compliance task created
-			//it means that non compliance for that IFAP is already processed so we discard it
-			for(Case ifap : ifapLst){
-				if(ifap.Tasks.isEmpty()){
-					return ifap;
+			for (Case ifap : ifapLst) {
+				//If we are in the scope of a multicountry annual IFAP (isMulticountryAnnual) 
+				//and the multicountry annual IFAP from the previous financial year is in status "Closed Non Compliance"
+				//it means that we need to allow the user to create a new SIDRA Lite to be able to generate the notice of termination (NOT)
+				if (isMulticountryAnnual && ifap.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL
+					&& ifap.IFAP_Financial_Year__c == lastFinancialYear && ifap.Status == AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE) {
+					return null;
+				}
+				//If the assessment result is blank and there is not a non compliance task created
+				//it means that the ongoing non compliance for that IFAP was not yet processed
+				if (onGoingIFAP == null && ifap.Tasks.isEmpty()) {
+					onGoingIFAP = ifap;
 				}
 			}
 		}
 
-		return null;
+		return onGoingIFAP;
 
 	}
 
