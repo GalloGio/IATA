@@ -61,21 +61,21 @@ global with sharing class IDCard_CleanUp_RenewalReminder_Scheduler implements Sc
 /* TA-ENHC0013710
 	string query = 'Select i.Related_Contact__r.Account.Status__c, i.Valid_To_Date__c , i.Related_Contact__r.Id, i.Related_Contact__r.Account.IDCard_Key_Account__c From ID_Card__c i where (i.Valid_To_Date__c = LAST_N_DAYS:60 or i.Valid_To_Date__c = NEXT_MONTH or i.Valid_To_Date__c = THIS_MONTH) and i.Cancellation_Date__c = null and i.Valid_To_Date__c != null and i.Card_Status__c = \'Valid ID Card\' and i.Related_Contact__r.Account.Status__c != \'Terminated\'';*/
 
-	string query = 'Select i.Related_Contact__r.Account.Status__c, i.Valid_To_Date__c , i.Related_Contact__r.Id, i.Related_Contact__r.Account.IDCard_Key_Account__c From ID_Card__c i where (i.Valid_To_Date__c = LAST_N_DAYS:60 or i.Valid_To_Date__c = NEXT_N_DAYS:60) and i.Valid_To_Date__c != null and i.Card_Status__c != \'Cancelled ID Card\' and i.Agency_Status__c != \'Terminated\'';
+	string query = 'Select i.Valid_To_Date__c, i.Email__c From ID_Card__c i where (i.Valid_To_Date__c >= 2019-06-30 or i.Valid_To_Date__c <= 2020-06-30) and i.Valid_To_Date__c != null and i.Card_Status__c != \'Cancelled ID Card\' and i.Agency_Status__c != \'Terminated\' AND RecordType.Name = \'AIMS\' AND IDCard_Key_Account__c = false';
 
 	iDCardsToRemind = Database.query(query);
 	System.debug(' * * * iDCardsToRemind ' + iDCardsToRemind);
 
-	Set<ID> contactsID = new Set<id>();
+	Set<String> contactsEmail = new Set<String>();
 	//add the list to a set to remove duplicates
 	for ( ID_Card__c initalID : iDCardsToRemind) {
-	  contactsID.add(initalID.Related_Contact__r.Id);
+	  contactsEmail.add(initalID.Email__c);
 	}
-	System.debug(' * * * contactsID ' + contactsID);
+	System.debug(' * * * contactsEmail ' + contactsEmail);
 
 
-	//get Contacts related to contactsID
-	List<Contact> contactsScope = [Select id, SendIDCardRenewalNotice__c from Contact where id = :contactsID];
+	//get Contacts related to contactsEmail
+	List<Contact> contactsScope = [Select id, Email, SendIDCardRenewalNotice__c from Contact where Email in :contactsEmail];
 
 	///////////////////////////////////////////////////////
 
