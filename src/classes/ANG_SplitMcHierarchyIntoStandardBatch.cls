@@ -12,6 +12,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 	private Integer currentThreads = 0;
 	private Integer finishedThreads = 0;
+
+	private Contact useContact;
 	
 	/**
 	 * Used when testing to limit the "start" method query. If the batch is executed in testing, it can only return 1 result.
@@ -31,6 +33,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
+		findContact();
+
 		List<String> fields = new List<String>();
 		fields.add('IATA_ISO_Country__r.Name');
 		fields.add('(SELECT Id, Hierarchy__c, Child_Account__c, Parent_Account__c FROM AMS_Agencies_relationships__r)');
@@ -97,6 +101,29 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		}
 
 		update oscar;
+	}
+
+	private void findContact() {
+		if (!processSingleBsp)
+			return;
+		
+		List<Contact> contacts = [SELECT Id, AccountId, User_Portal_Status__c
+								  FROM Contact
+								  WHERE AccountId = :accountGE
+									  OR Account.Top_Parent__c = :accountGE];
+		for (Contact c : contacts) {
+			if (c.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN) {
+				useContact = c;
+				if (c.AccountId == accountGE) { // 1. priority on GE + admin
+					return;
+				}
+			}
+		}
+		// 2. priority on admin
+		if (useContact != null)
+			return;
+		// 3. any contact
+		useContact = !contacts.isEmpty() ? contacts.get(0) : null;
 	}
 
 	private List<Account> filterAccounts(List<Account> accts) {
@@ -259,6 +286,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 		addAeAccountInformationToOscar(allGeAndHe, oscars);
 		Map<Id, Case> cases = createOscarCase(allHe, c, oscars);
+		addCaseComments(cases);
 		Map<Id, AMS_Pax_Accreditation_Form__c> paxs = createStagingArea(allHe, cases);
 		createOwners(allHe, paxs);
 		finalOscarUpdate(allHe, oscars, cases, paxs);
@@ -340,12 +368,11 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 			Map<String, Object> fieldsToSetOnCase = new Map<String, Object>();
 			fieldsToSetOnCase.put('Oscar__c', oscar.Id);
-			fieldsToSetOnCase.put('ContactId', c.ContactId);
 			if (!processSingleBsp)
 				fieldsToSetOnCase.put('ParentId', c.Id);
 			fieldsToSetOnCase.put('BSPCountry__c', acct.BillingCountry);
 			fieldsToSetOnCase.put('CaseArea__c', c.CaseArea__c);
-			fieldsToSetOnCase.put('ContactId', c.ContactId);
+			fieldsToSetOnCase.put('ContactId', useContact != null ? useContact.Id : c.ContactId);
 			fieldsToSetOnCase.put('Reason1__c', 'Accreditation Type');
 			fieldsToSetOnCase.put('Region__c', acct.Region_formula__c);
 			fieldsToSetOnCase.put('Subject', 'Accreditation Type - GoStandard - ' + acct.IATA_ISO_Country__r.Name);
@@ -360,6 +387,20 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		if (!casesToInsert.isEmpty())
 			insert casesToInsert.values();
 		return casesToInsert;
+	}
+
+	private void addCaseComments(Map<Id, Case> cases) {
+		if (!processSingleBsp)
+			return;
+
+		List<CaseComment> comments = new List<CaseComment>();
+
+		for (Case c : cases.values())
+			comments.add(new CaseComment(ParentId = c.Id, CommentBody = 'Please note that this case was automatically created. The conversion from GoGlobal to GoStandard needs to be processed on these locations'));
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - addCaseComments] Created comments: ' + comments);
+		if (!comments.isEmpty())
+			insert comments;
 	}
 
 	/**
@@ -446,7 +487,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 											  Contact_Phone__c, Owner_Name__c
 										  FROM AMS_Account_Role__c
 										  WHERE Account__c IN :accts
-											  AND active__c = true
+											  AND Active__c = true
 											  AND RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]) {
 			if (!owners.containsKey(owner.Account__c))
 				owners.put(owner.Account__c, new List<AMS_Account_Role__c>());
