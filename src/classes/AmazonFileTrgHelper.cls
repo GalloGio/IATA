@@ -757,11 +757,15 @@ public class AmazonFileTrgHelper {
 					ContactIDs_set.add(con.id);
 				}
 
+				for(User usr : [Select id, ContactId From User Where ContactId In :ContactIDs_set AND isActive = true AND Contact.isEmailBounced = false]) {
+                    contactIds_haveAccess.add(usr.ContactId);
+                }
+
 				//Get contacts with access to the portal service
 				List <Portal_Application_Right__c> accessList = [SELECT Id, Contact__c, Contact__r.AccountId FROM Portal_Application_Right__c
 																	WHERE Portal_Application__c In :portalServicesId
 																	AND Right__c = 'Access Granted'
-																	AND Contact__c IN :ContactIDs_set];
+																	AND Contact__c IN :contactIds_haveAccess];
 
 				Set<Id> contactsIds = new Set<Id>();
 				if (!accessList.isEmpty()) {
@@ -785,12 +789,6 @@ public class AmazonFileTrgHelper {
 						}
 					}
 				}
-
-				List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds AND isActive = true AND Contact.isEmailBounced = false];
-
-				for(User u : userList) {
-					contactUserMap.put(u.ContactId, u.Id);
-				}
 			}
 
 
@@ -806,7 +804,7 @@ public class AmazonFileTrgHelper {
 												Where DeveloperName = :ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports];
 
 
-				for(Id key : contactUserMap.keySet()) {
+				for(Id key : contactFileMap.keySet()) {
 					List<AmazonFile__c> files = contactFileMap.get(key);
 
 					// process the merge fields
