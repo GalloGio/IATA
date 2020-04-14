@@ -199,6 +199,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public Boolean disableLaunchButton {get; set;}
 
+	public Boolean noResultsFound {get; private set;}
+
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
 		accountsToCreate = new List<AccountWrapper>();
@@ -358,6 +360,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		con = null;
 		annualRevalidationCaseOscar.clear();
 		batchStatusBool = false;
+		noResultsFound = false;
 
 		Set<String> selectedAccreditationsSet = new Set<String>();
 
@@ -409,6 +412,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			con = new ApexPages.StandardSetController(accountLst);
 			con.setPageSize(size);
 			populateAccountsToDisplay((List<Account>)con.getRecords());
+		} else {
+			noResultsFound = true;
 		}
 	}
 	
