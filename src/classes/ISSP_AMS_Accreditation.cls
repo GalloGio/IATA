@@ -3477,6 +3477,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		return new Pagereference('/ISSP_AMSCases' + commParamFirst);
 	}
 
+	/*
 	private void updateAccountDetails() {
 		if (newForm.Branch_Office_Phone__c != null) {
 			accountConcerned.Phone = newForm.Branch_Office_Phone__c;
@@ -3500,10 +3501,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
 			accountConcerned.TradeName__c = newForm.Trade_Name__c;
 		}
-
 		upsert accountConcerned;
 	}
-
+*/
 	public Pagereference goToFinalStep() {
 		if (!validateCharactersInForm() || !validateForm(true) ) {
 			newForm.Validation_ERRORS__c = TRUE;
@@ -3530,9 +3530,10 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		try {
+			/* INC536200 - Change should be only applied when the Oscar case is processed through the Salesforce side 
 			if (isNoticeOfChange && !isBankAccountChange && newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && isocountry.Enable_Minor_Changes_from_Portal__c)
 				updateAccountDetails();
-
+			*/
 			if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID) {
 				setPortalAdminContact(); //Portal Admin is stored on AMS Form; for OSCAR Countries need to set AMS Contact as Portal Admin on submit
 				setInvoicingContact(); // CB AMSU-10
