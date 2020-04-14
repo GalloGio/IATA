@@ -24,7 +24,6 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
    }
    global void finish(Database.BatchableContext BC){
 
-	   System.debug('deleteScheduleDashboardsBatch completed: '+BC);
 	   updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
 	   Database.executeBatch(updateNamedCredentials,10);
    }

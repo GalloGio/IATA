@@ -1,5 +1,5 @@
 global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts, Database.Stateful  {
-
+    
     global final string appItemQuery;
     global List<String> errorList;
     global List<String> nCErrors;
@@ -10,19 +10,19 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
         nCErrors = nCRerros;
         if(Test.isRunningTest()){
             appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
-		}else{
-			appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
-		}
+    }else{
+      appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
+    }
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC){
 
      return Database.getQueryLocator(appItemQuery);
-	}
+  }
 
-	global  void execute(Database.BatchableContext BC,List<AppMenuItem> scope){
+  global  void execute(Database.BatchableContext BC,List<AppMenuItem> scope){
 
-		for(AppMenuItem app: scope){
+    for(AppMenuItem app: scope){
             List<MetadataService.DeleteResult> results = createService().deleteMetadata(
                 'ConnectedApp', new String[] { app.Name.replace(' ','_') });
                 handleDeleteResults(results[0]);
@@ -64,11 +64,11 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
 
    private static MetadataService.MetadataPort createService(){
 
-		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-		service.SessionHeader = new MetadataService.SessionHeader_element();
+    MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+    service.SessionHeader = new MetadataService.SessionHeader_element();
         service.SessionHeader.sessionId = UserInfo.getSessionId();
         
-		return service;
+    return service;
     }
 
     private void handleDeleteResults(MetadataService.DeleteResult deleteResult){

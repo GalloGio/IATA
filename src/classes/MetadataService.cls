@@ -4,7 +4,6 @@ public with sharing class MetadataService {
 
 	public virtual class Metadata {
 		public String fullName;
-		
 	}
 
 	public class NamedCredential extends Metadata {
