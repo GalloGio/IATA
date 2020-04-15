@@ -55,7 +55,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				DateTime databirth = DateTime.newInstance(DOB.year(), DOB.month(), DOB.day());
 
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 + '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -69,13 +69,13 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				if (allCards.size() > 0) {
 					for (ID_Card__c con : allCards) {
-						cContact temp = new cContact(con);
+						cContact temp = new cContact(con, String.isNotBlank(con.Photo__c) ? imageDecoder(con) : '');
 						if (temp.valid)
 							myContacts.add(temp);
 					}
 				}
 			} else {
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 //+ '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -89,7 +89,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				if (allCards.size() > 0) {
 					for (ID_Card__c con : allCards) {
-						cContact temp = new cContact(con);
+						cContact temp = new cContact(con, String.isNotBlank(con.Photo__c) ? imageDecoder(con) : '');
 						if (temp.valid)
 							myContacts.add(temp);
 					}
@@ -263,9 +263,11 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		public String[] theAddress {get; set;}
 		//RA: Valid is used to only display contacts with valid Agency
 		public Boolean valid {get; set;}
+		public String photo {get; set;}
 
-		public cContact(ID_Card__c c) {
+		public cContact(ID_Card__c c, String decodePhoto) {
 			con = c;
+			photo = decodePhoto;
 			selected = '';
 			Account[] temp = [Select Name, Legal_name__c, RecordType.Name, Short_Name__c, IATACode__c,
 							  BillingStreet, BillingState, BillingPostalCode, BillingCountry, BillingCity,
@@ -297,5 +299,17 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 			} else
 				valid = false;
 		}
+	}
+	public String imageDecoder(ID_Card__c idcard) {
+
+		Long timestamp = System.now().getTime()/1000 + 300;
+		String filename = '/' + credential.Bucket + '/' + FOLDER + '/' + idcard.Photo__c;
+
+		String canonical = 'GET\n\n\n' + timestamp + '\n' + filename;
+		Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));
+		String signature = EncodingUtil.base64Encode(bsig);
+
+		return credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+
 	}
 }

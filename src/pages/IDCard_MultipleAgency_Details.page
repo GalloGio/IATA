@@ -284,6 +284,9 @@ body a:hover {
                             
                             <table class="MultibleAgencyContacts">
                                 <tr>
+                                    <apex:image id="theImage" value="{!c.photo}" width="123" height="150"/>
+                                </tr>
+                                <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_LastName}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.LastName__c}</td>
                                 </tr>
@@ -295,10 +298,10 @@ body a:hover {
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_MiddleInitial}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Middle_Initial__c}</td>
                                 </tr>
-                                <tr>
+                     <!--           <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_Email}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Email__c}</td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_DOB}:</td>
                                     <td class="MultipleAgentsValues">
@@ -327,10 +330,10 @@ body a:hover {
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
                                     <td class="MultipleAgentsValues">{!c.acc.IATACode__c}</td>
                                 </tr>
-                                <tr>
+                         <!--       <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_Address}:</td>
                                     <td class="MultipleAgentsValues"><div style="height: 40px; max-height: 40px; vertical-align: top; overflow-y: scroll;">{!c.theAddress[0]}<br />{!c.theAddress[4]}, {!c.theAddress[1]} {!c.theAddress[2]}<br />{!c.theAddress[3]}</div></td>
-                                </tr>                 
+                                </tr>     -->            
                                 <script>
                                     var legalName  = '{!c.acc.Legal_name__c}';                                                        
                                     if (legalName == '' || legalName == '0' || legalName == '0.0' || legalName == '0.00'|| legalName == null)
