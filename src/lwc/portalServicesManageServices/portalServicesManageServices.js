@@ -292,7 +292,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //Level 2 registration variables
     @track isFirstLevelUser = false;
     level2RegistrationTrigger = 'service';
-    isTriggeredByRequest = true;
     
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;

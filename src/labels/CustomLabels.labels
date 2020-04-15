@@ -5070,7 +5070,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Profile_Incomplete_Message</shortDescription>
-        <value>But it is saved as a draft, you can continue later. Are you sure you want to quit?</value>
+        <value>Are you sure you want to quit?</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Registration_Error_Message</fullName>

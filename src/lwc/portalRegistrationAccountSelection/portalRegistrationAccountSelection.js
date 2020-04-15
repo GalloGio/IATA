@@ -37,7 +37,6 @@ import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_R
 import CSP_L2_Required from '@salesforce/label/c.CSP_L2_Required';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
 import CSP_L2_Search_Message from '@salesforce/label/c.CSP_L2_Search_Message';
-import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
 export default class PortalRegistrationAccountSelection extends LightningElement {
     @track portalPath = CSP_PortalPath;
@@ -81,7 +80,6 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     @api customerType;
     @api countryId;
     @api accountId;
-    @api isTriggeredByRequest;
     @api searchResults;
     @api internalUser;
 
@@ -140,9 +138,6 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         return !this.isCategorizationSearchable || (this.iataCodeInput.length < 2 && this.accountNameInput.length < 3) || this.localCountryId === '' || !this.inputModified;
     }
 
-    // flag to warn user requesting access to a service/topic
-    @track isCategorizationModified = false;
-    
     //search results variables
     @track localSearchResults;
     @track resultsToDisplay;
@@ -192,8 +187,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
         CSP_L2_Did_Not_Find_Message,
         CSP_L2_No_Matching_Results,
         CSP_L2_Required,
-        CSP_L2_Search_Message,
-        CSP_L2_Change_Categorization_Warning
+        CSP_L2_Search_Message
     }
     get labels() {
         return this._labels;
@@ -321,13 +315,6 @@ export default class PortalRegistrationAccountSelection extends LightningElement
 
                     if(this.isIataCodeSearchDisabled){
                         this.iataCodeInput = '';
-                    }
-
-                    // if user is requesting access to a service or a topic, he must be warned in case he select a categorization different than the one of his GP account
-                    // we first check that the category has been selected
-                    if(this.isTriggeredByRequest){
-                        // then we check if the sector-category combination is different than the bucket account's one
-                        this.isCategorizationModified = this.selectedCustomerTypeMetadata.DeveloperName !== this.customerType && this.isCategorizationSearchable;
                     }
                 })
                 .catch((error) => {

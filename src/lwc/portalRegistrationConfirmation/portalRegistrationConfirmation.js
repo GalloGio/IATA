@@ -11,7 +11,6 @@ import getCSPortalPath                      from '@salesforce/apex/PortalRegistr
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
 import CSP_L2_Additional_Details from '@salesforce/label/c.CSP_L2_Additional_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
@@ -68,7 +67,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     }
 
     @api trigger;
-    @api isTriggeredByRequest;
     @api contactInfo;
     @api account;
     @api address;
@@ -95,9 +93,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
     successModalMessage;
     successModalButton1Label;
     successModalButton2Label;
-
-    // flag to display warning message
-    @track isCategorizationModified = false;
 
     accountId;
 
@@ -133,7 +128,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         CSP_L2_Company_Name,
         CSP_L2_Category,
         CSP_L2_Sector,
-        CSP_L2_Change_Categorization_Warning,
         CSP_L2_Registration_Error_Title,
         CSP_L2_Registration_Error_Message,
         CSP_L2_Go_Back,
@@ -186,8 +180,6 @@ export default class PortalRegistrationConfirmation extends LightningElement {
                 let country = result.IATA_ISO_Country__r.Name;
                 
                 this.selectedAccount = JSON.parse(JSON.stringify(result));
-
-                this.isCategorizationModified = this.isTriggeredByRequest && (this.selectedAccount.Sector__c !== this.contactInfo.Account.Sector__c || this.selectedAccount.Category__c !== this.contactInfo.Account.Category__c);
 
                 for(let i = 0; i < this.searchResults.wrappedResults.length; i++){
                     if(this.searchResults.wrappedResults[i].isSelected){

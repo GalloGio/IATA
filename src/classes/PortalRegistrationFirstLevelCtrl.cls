@@ -666,7 +666,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		BucketAccountDetail accDetail = new BucketAccountDetail();
 
-		String sector = selectedMetadataCustomerType.MasterLabel;
+		String sector = '';
+		String category = '';
+		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
+			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
+			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		}
+		else{
+			sector = selectedMetadataCustomerType.MasterLabel;
+			category = 'Other';
+		}
 
 		String accountQuery = '';
 		accountQuery +='SELECT Id, Sector__c, Category__c';
@@ -684,9 +693,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		if(!String.isEmpty(sector)){
-			accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\'Other\'';
-		}
+		accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\''+ category +'\'';
 
 		List<Account> accList = new List<Account>();
 
@@ -698,10 +705,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - Other';
+			if(sector == 'Cargo Agent'){
+				acc.Name = 'Freight Forwarder - ' + category;
+			}
+			else{
+				acc.Name = sector + ' - ' + category;
+			}
 			acc.Sector__c = sector;
-			acc.Category__c = 'Other';
-			acc.Category_Other_Value__c = 'Bucket Account';
+			acc.Category__c = category;
+			if(category == 'Other'){
+				acc.Category_Other_Value__c = 'Bucket Account';
+			}
 			acc.Is_General_Public_Account__c = true;
 			//acc.IsPartner = true;
 
