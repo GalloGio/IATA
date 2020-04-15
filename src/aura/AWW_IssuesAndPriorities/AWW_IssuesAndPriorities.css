@@ -1,14 +1,46 @@
-.THIS .bckColor{
-    background: inherit !important;
+.THIS .noUpperCase{
+    text-transform: none !important;
+    font-size: small;
+}
+.THIS td {
+  max-width: 500px;
+  /*overflow-x: hidden;*/
+  white-space: normal !important;
+}
+.THIS th.narrowColumn {
+  width: 100px;
+}
+.THIS th.medColumn {
+  width: 110px;
+}
+.THIS th.actionColumn {
+  width: 100px;
+}
+.THIS th.wideColumn-30 {
+  width: 30%;
+}
+.THIS th.narrowColumn > span.slds-truncate {
+  white-space: normal !important;
+}
+.THIS .uiMenuList--default .uiMenuItem>a {
+      height: 2em;
+}
+.THIS td.allignTop {
+  vertical-align: top;
 }
 
-.THIS lightning-primitive-header-actions {
-    display: none;
+.THIS .close-button {
+    border: 0 !important;
+    background-color: transparent !important;
 }
 
-.THIS .no-truncate tbody .slds-truncate{
-    max-width: 100%;
-    overflow: initial; 
-    text-overflow: initial; 
-    white-space: normal;
+@media (max-width: 1200px) {
+    .THIS .slds-button {
+        display: block !important;
+    }
+
+    .THIS .slds-truncate {
+        /*word-break: break-all !important;*/
+        white-space: normal !important;
+    }
 }
