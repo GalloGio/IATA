@@ -588,7 +588,7 @@ public with sharing class ANG_AgencyChangesHelper {
 						}
 						
 						if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)){
-							// recalculate risk
+							// recalculate risk assessment
 							changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
 						}
 					}
@@ -1323,14 +1323,16 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-		Id topParentId = oscarAccount.Top_Parent__c != null ? oscarAccount.Top_Parent__c : oscarAccount.Id;
-
-		if(!accountIdsInvolvedSet.contains(topParentId)){
-			toReturn.addAccountToCalculateRiskAssessment(topParentId);
+		
+		// When processing the scenario where a standard hierarchy is acquired by a multicountry one 
+		// the risk assessment recalculation takes place after the approval step and therefore we need to skip at this point 
+		if(!AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)){
+			Id topParentId = oscarAccount.Top_Parent__c != null ? oscarAccount.Top_Parent__c : oscarAccount.Id;
+			if(!accountIdsInvolvedSet.contains(topParentId)){
+				toReturn.addAccountToCalculateRiskAssessment(topParentId);
+			}
+			toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 		}
-
-		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 
 		Boolean isHierarchySplit = AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
 
