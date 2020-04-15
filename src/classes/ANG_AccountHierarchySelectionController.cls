@@ -97,16 +97,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 						if (diffDestination) {
 							notes.add('The selected agencies will be linked to the new parent: ' + newParent.Name + '('
 								+ newParent.IATACode__c + ')');
-							
-							if (isOnlyGeBspLeft()) {
-								notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
-							}
 						} else {
 							if (isSingleBSPSelected) {
 								notes.add('You selected locations in only one BSP. This change of hierarchy will result in a change of Accreditation Model from GoGlobal to GoStandard');
 							} else {
 								notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: ' + newParent.Name + '(' + newParent.IATACode__c + ')');
 							}
+						}
+						if (isOnlyGeBspLeft()) {
+							notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 						}
 					} else if (diffDestination) {
 						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: ' + newParent.Name
@@ -1250,8 +1249,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	private String appendGeLeftStandaloneOptTo(String changeOfHierarchyScenario) {
-		if (this.isMulticountry && oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)
-			&& diffDestination(oscar.New_Parent__c) && isOnlyGeBspLeft()) {
+		if (this.isMulticountry && oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isOnlyGeBspLeft()) {
 			return (String.isNotBlank(changeOfHierarchyScenario) ? 
 				changeOfHierarchyScenario + ';' : '') + 
 				AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
