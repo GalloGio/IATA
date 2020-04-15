@@ -2097,6 +2097,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>搜索案例</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>更改电子邮件地址</label>
         <name>CSP_Change_Email</name>
     </customLabels>
