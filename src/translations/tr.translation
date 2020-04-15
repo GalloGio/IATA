@@ -2097,6 +2097,10 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Sorgu ara</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>E-posta adresinizi değiştirin</label>
         <name>CSP_Change_Email</name>
     </customLabels>
