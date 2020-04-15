@@ -146,10 +146,15 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	private Map<Id, Case> annualRevalidationCaseOscar{get;set;}
 
-	public boolean batchStatusBool { get; set; }
+	public Boolean batchStatusBool { get; set; }
 	public Id batchId { get; set; }
 	public AsyncApexJob batchJob { get; set; }
-	public boolean pollerBool { get; set; }
+	public Boolean pollerBool {
+		get {
+			return pollerBool == null ? false : pollerBool;
+		} 
+		set; 
+	}
 	public Integer getBatchStatus { get; set; }
 	
 	public ApexPages.StandardSetController con { get; set; }
@@ -306,7 +311,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public Boolean getshouldDisableSearchButton() {
-		return selectedAccreditations.isEmpty() || cashOrLiteAccreditationModelSelected
+		return selectedAccreditations.isEmpty() || pollerBool || cashOrLiteAccreditationModelSelected
 			&& (!validRegionSelected() || !validModeSelected() || !validFinancialYearEndSelected()
 				|| !validIATACodeSelected());
 	}
