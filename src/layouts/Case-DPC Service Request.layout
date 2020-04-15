@@ -386,6 +386,10 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ANG_Case_Tracking_History__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>

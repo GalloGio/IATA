@@ -3685,6 +3685,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>CSP_CaseSearchPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
+        <value>Search for Cases</value>
+    </labels>
+    <labels>
         <fullName>CSP_Case_Currency</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3712,14 +3720,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
-    </labels>
-    <labels>
-        <fullName>CSP_CaseSearchPlaceholder</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
-        <value>Search for Cases</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
