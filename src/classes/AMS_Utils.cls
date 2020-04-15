@@ -20,6 +20,7 @@ public without sharing class AMS_Utils {
 
 	public static final String ACTIVE = 'Active';
 	public static final String AUTHORIZED = 'Authorized';
+	public static final String NON_ACTIVE = 'Non-Active';
 
 	public static final String AUTH_APPROVAL = 'Authorize Approval';
 	public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
@@ -422,8 +423,8 @@ public without sharing class AMS_Utils {
 
 	public static final String CC = 'CC';
 	public static final String CA = 'CA';
-	public static final string EP = 'EP';
-	public static final string BOP = 'BOP';
+	public static final String EP = 'EP';
+	public static final String BOP = 'BOP';
 	public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
 	public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
 	public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -2804,18 +2805,18 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
 		Set<String> ccPciCompliantSet = new Set<String>{'Yes', 'Corporate Card'};
 
-		if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Active' && ccPciCompliantSet.contains(pciCompliant)){
-			aa.Status__c = 'Active';
+		if(aa.ANG_FormOfPayment_ID__c == CC && aa.Status__c != ACTIVE && ccPciCompliantSet.contains(pciCompliant)){
+			aa.Status__c = ACTIVE;
 			return true;
 		}
 
-		if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Non-Active' && !ccPciCompliantSet.contains(pciCompliant)){
-			aa.Status__c = 'Non-Active';
+		if(aa.ANG_FormOfPayment_ID__c == CC && aa.Status__c != NON_ACTIVE && !ccPciCompliantSet.contains(pciCompliant)){
+			aa.Status__c = NON_ACTIVE;
 			return true;
 		}
 
-		if((aa.ANG_FormOfPayment_ID__c == 'CA' || aa.ANG_FormOfPayment_ID__c == 'EP') && aa.Status__c != 'Active'){
-			aa.Status__c = 'Active';
+		if((aa.ANG_FormOfPayment_ID__c == CA || aa.ANG_FormOfPayment_ID__c == EP) && aa.Status__c != ACTIVE){
+			aa.Status__c = ACTIVE;
 			return true;
 		}
 

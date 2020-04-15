@@ -1,5 +1,8 @@
 public class ANG_RHCAlertTriggerHandler{
 
+	private static final String CASH_PAYMENT_IS_ACTIVE = 'CASH PAYMENT METHOD IS ACTIVE';
+	private static final String CASH_PAYMENT_RESTRICTED = 'Agent is restricted from using Cash form of payment method as all amounts Owing are higher than the Remittance Holding Capacity.';
+
 	private class RegionNotificationWrapper {
 		public String region;
 		public Set<Id> userIdSet;
@@ -448,7 +451,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 		List<Agency_Authorization__c> toReturn = new List<Agency_Authorization__c>();
 
-		String statusFOP = action == UPPERFLUCTUATION ? 'Non-Active' : 'Active';
+		String statusFOP = action == UPPERFLUCTUATION ? AMS_Utils.NON_ACTIVE : AMS_Utils.ACTIVE;
 
 		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
@@ -507,15 +510,15 @@ public class ANG_RHCAlertTriggerHandler{
 
 			AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-			AMS_ChangeCodes__c toUse = accountsAndStatus.get(acctToAddCC.Id) == 'Active' ? changeCodeConfigPCR : changeCodeConfigPCA;
+			AMS_ChangeCodes__c toUse = accountsAndStatus.get(acctToAddCC.Id) == AMS_Utils.ACTIVE ? changeCodeConfigPCR : changeCodeConfigPCA;
 
 			changeCode.name = toUse.Change_Code__c;
 			changeCode.reasonCode = toUse.Reason_Code__c;
 
-			if(accountsAndStatus.get(acctToAddCC.Id) == 'Active')
-				changeCode.memoText ='Agent has complied to Agency Rules. Cash payment methods are reinstated.';
+			if(accountsAndStatus.get(acctToAddCC.Id) == AMS_Utils.ACTIVE)
+				changeCode.memoText = CASH_PAYMENT_IS_ACTIVE;
 			else
-				changeCode.memoText = 'Agent is restricted from using Cash form of payment method as all amounts Owing are higher than the Remittance Holding Capacity.';
+				changeCode.memoText = CASH_PAYMENT_RESTRICTED;
 
 			changeCode.reasonDesc  = toUse.Reason_Code_Description__c;
 
