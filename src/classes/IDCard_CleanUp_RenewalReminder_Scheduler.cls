@@ -75,7 +75,8 @@ global with sharing class IDCard_CleanUp_RenewalReminder_Scheduler implements Sc
 
 
 	//get Contacts related to contactsEmail
-	List<Contact> contactsScope = [Select id, Email, SendIDCardRenewalNotice__c from Contact where Email in :contactsEmail];
+	List<Contact> contactsScope = [Select id, Email, SendIDCardRenewalNotice__c from Contact where Email in :contactsEmail AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
+	System.debug(' * * * contactsScope ' + contactsScope);
 
 	///////////////////////////////////////////////////////
 
