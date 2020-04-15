@@ -115,15 +115,19 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			if (c.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN) {
 				useContact = c;
 				if (c.AccountId == accountGE) { // 1. priority on GE + admin
+					System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - findContact] priority 1 on: ' + useContact);
 					return;
 				}
 			}
 		}
 		// 2. priority on admin
-		if (useContact != null)
+		if (useContact != null) {
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - findContact] priority 2 on: ' + useContact);
 			return;
+		}
 		// 3. any contact
 		useContact = !contacts.isEmpty() ? contacts.get(0) : null;
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - findContact] priority 3 on: ' + useContact);
 	}
 
 	private List<Account> filterAccounts(List<Account> accts) {

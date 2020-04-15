@@ -265,6 +265,8 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_TestDataHelper.insertContact(accountGE, false, AMS_Utils.CONTACT_TYPE_ADMIN);
 
+		Case oldCase = [SELECT Id FROM Case WHERE Account.Name = 'MC Account 1 GE PT'];
+
 		Test.startTest();
 		
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
@@ -274,7 +276,10 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		
 		Test.stopTest();
 		
-		Case c = [SELECT Id, Contact.User_Portal_Status__c FROM Case WHERE Account.Name = 'MC Account 1 GE PT' ORDER BY CaseNumber DESC LIMIT 1];
+		Case c = [SELECT Id, Contact.User_Portal_Status__c
+				  FROM Case
+				  WHERE Account.Name = 'MC Account 1 GE PT'
+					  AND Id <> :oldCase.Id];
 		System.assertEquals(AMS_Utils.CONTACT_TYPE_ADMIN, c.Contact.User_Portal_Status__c);
 	}
 
