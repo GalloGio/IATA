@@ -2101,6 +2101,10 @@ la seguente procedura per completarlo :
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Cerca Casi</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label>Modifica dell&apos;email</label>
         <name>CSP_Change_Email</name>
     </customLabels>

@@ -24,6 +24,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     @track renderNoResults = true;
     @track loading = true;
     timeout = null;
+    @track showCross = false;
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
     searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
@@ -124,17 +125,20 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
     filterInputChange(event) {
         this.searchText = event.target.value;
+       
         this.onInputChange(this.searchText);
     }
 
     onInputChange(param) {
         this.loading = true;
         this.searchText = param;
+        this.showCross = this.searchText.length>0;
 
         clearTimeout(this.timeout);
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
+          
             if(this.searchText.length > 2 || this.searchText === '') {
                 let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
                 for(let i = 0; i < _documentObject.categories.length; i++) {
@@ -150,5 +154,9 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             }
             this.loading = false;
         }, 1500, this);
+    }
+
+    removeTextSearch(){
+        this.onInputChange('');
     }
 }
