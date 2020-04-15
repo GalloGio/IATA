@@ -354,7 +354,9 @@ public without sharing class GenerateLateRemittanceCSVController {
 			cw.BillingDate = '';
 			cw.TextPrint = '';
 			cw.InternalRemark = '';
+			/*ENHC0013244 - Cláudio Catarino - START
 			cw.Material = '800402';
+			ENHC0013244 - Cláudio Catarino - END*/
 			cw.MatDesc = '';
 			cw.Quantity = '1';
 			cw.UnitPrice = '';
