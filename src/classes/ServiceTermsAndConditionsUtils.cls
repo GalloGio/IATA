@@ -187,10 +187,13 @@ public without sharing class ServiceTermsAndConditionsUtils {
 																				AND (Term_Condition__r.Initial_Version__c IN : initialVersions
 																					OR (Term_Condition__r.Initial_Version__c = null AND Term_Condition__r.Id IN: initialVersions))];
 
-		List<Id> termsAndConditionsWithExistingAcceptances = new List<Id>();
+		Set<Id> termsAndConditionsWithExistingAcceptances = new Set<Id>();
 		for(Term_and_Condition_Acceptance__c existingAcceptanceRecord : existingAcceptanceRecordsList){
 			termsAndConditionsWithExistingAcceptances.add(existingAcceptanceRecord.Term_Condition__r.Id);
 		}
+
+		// List of Terms and Conditions we will upsert
+		List<Term_and_Condition_Acceptance__c> recordsToUpsert = new List<Term_and_Condition_Acceptance__c>();
 
 		for(Term_and_Condition_Acceptance__c tca : existingAcceptanceRecordsList){
 			if(tcIds.contains(tca.Term_Condition__r.Id)){
@@ -199,18 +202,17 @@ public without sharing class ServiceTermsAndConditionsUtils {
 				if(tca.Status__c != status && !(tca.Status__c == TC_ACCEPTANCE_STATUS_ACCEPTED && status == TC_ACCEPTANCE_STATUS_PENDING)){
 					tca.Status__c = status;
 					tca.Status_Date__c = System.today();
+					recordsToUpsert.add(tca);
 				}
 			}
 			else{
 				// For the other records, if the status we want to set is Accepted or Pending, they have to mark them as superseded
 				if((status == TC_ACCEPTANCE_STATUS_ACCEPTED || status == TC_ACCEPTANCE_STATUS_PENDING) && tca.Is_Superseded__c == false){
 					tca.Is_Superseded__c = true;
+					recordsToUpsert.add(tca);
 				}
 			}
 		}
-
-		// List of Terms and Conditions we will upsert
-		List<Term_and_Condition_Acceptance__c> recordsToUpsert = new List<Term_and_Condition_Acceptance__c>();
 
 		// Now we have to create the missing records
 		for(Id tcId : tcIds){
@@ -223,9 +225,6 @@ public without sharing class ServiceTermsAndConditionsUtils {
 				));
 			}
 		}
-
-		// And we add to the missing records list, the list of records to update
-		recordsToUpsert.addAll(existingAcceptanceRecordsList);
 
 		upsert recordsToUpsert;
 	}
