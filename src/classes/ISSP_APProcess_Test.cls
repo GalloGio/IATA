@@ -1211,7 +1211,7 @@ private class ISSP_APProcess_Test
 			insert ap;
 			
 
-			PageReference pr = Page.ISSP_APCases;
+			PageReference pr = Page.ISSP_APProcess;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
 			Test.setCurrentPage(pr);
@@ -1223,7 +1223,6 @@ private class ISSP_APProcess_Test
 			pr.getParameters().put('isMandatory', 'test');
 			pr.getParameters().put('ctryreq', 'false');
 			Test.setCurrentPage(pr);
-			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '1');
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '2');
@@ -1345,7 +1344,7 @@ private class ISSP_APProcess_Test
 			insert ap;
 			
 
-			PageReference pr = Page.ISSP_APCases;
+			PageReference pr = Page.ISSP_APProcess;
 			pr.getParameters().put('step', 'Final');
 			pr.getParameters().put('caseId', testCase.Id);
 			Test.setCurrentPage(pr);
@@ -1357,9 +1356,6 @@ private class ISSP_APProcess_Test
 			pr.getParameters().put('isMandatory', 'test');
 			pr.getParameters().put('ctryreq', 'false');
 			Test.setCurrentPage(pr);
-			ctrl = new ISSP_APProcess();
-			pr.getParameters().put('step', '1');
-			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '2');
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
@@ -1496,9 +1492,6 @@ private class ISSP_APProcess_Test
 			pr.getParameters().put('isMandatory', 'test');
 			pr.getParameters().put('ctryreq', 'false');
 			Test.setCurrentPage(pr);
-			ctrl = new ISSP_APProcess();
-			pr.getParameters().put('step', '1');
-			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '2');
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
@@ -1539,7 +1532,7 @@ private class ISSP_APProcess_Test
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Case newCase = new Case(ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
+		Case newCase = new Case(Subject='testecase',ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
 		insert newCase;
 
 		Case testCase = [SELECT Id,Subject,ContactId,Contact.IsEmailBounced,Contact.Email FROM Case WHERE Subject='testecase'];
@@ -1603,10 +1596,10 @@ private class ISSP_APProcess_Test
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Case newCase = new Case(ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
+		Case newCase = new Case(Subject='testecase', ContactId = con.Id, Account_Concerned__c = child.Id, Verification__c='BSP');
 		insert newCase;
 
-		Case testCase = [SELECT Id,Subject,ContactId,Contact.IsEmailBounced,Contact.Email FROM Case WHERE Subject='testecase'];
+		Case testCase = [SELECT Id,Subject,ContactId,Region__c,Contact.IsEmailBounced,Contact.Email FROM Case WHERE Subject='testecase'];
 		Test.startTest();
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APCases;
@@ -2277,6 +2270,8 @@ private class ISSP_APProcess_Test
 		Test.startTest();
 
 		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('step' ,'1');
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
@@ -2318,7 +2313,8 @@ private class ISSP_APProcess_Test
 		Test.startTest();
 
 		System.runAs(newUser) {
-
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
 			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('step' ,'4');
@@ -2456,7 +2452,8 @@ private class ISSP_APProcess_Test
 
 		System.runAs(newUser) {
 
-
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('step' ,'3');
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
@@ -2514,12 +2511,15 @@ private class ISSP_APProcess_Test
 
 
 		System.runAs(newUser) {
-
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
 			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
+			ApexPages.currentPage().getParameters().put('airline' ,'PASS');
 			ApexPages.currentPage().getParameters().put('step' ,'4');
 
 			ISSP_APProcess ctrl = new ISSP_APProcess();
+			ctrl.strOperationType = AMS_Utils.passParticipation;
 			ctrl.fetchPassCountries(testCase);
 			ctrl.goToStep2();
 			ctrl.goToStep3();
@@ -2567,6 +2567,8 @@ private class ISSP_APProcess_Test
 
 
 		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ctrl.fetchPassCountries(testCase);
 
@@ -2605,6 +2607,8 @@ private class ISSP_APProcess_Test
 		Test.startTest();
 
 		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ctrl.fetchPassCountries(testCase);
 			ctrl.withdrawCountries();
@@ -2652,6 +2656,8 @@ private class ISSP_APProcess_Test
 
 		System.runAs(newUser) {
 			
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
@@ -2708,7 +2714,8 @@ private class ISSP_APProcess_Test
 
 		Test.StartTest();
 		System.runAs(newUser) {
-			
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('step' ,'4');
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);

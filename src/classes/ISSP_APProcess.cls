@@ -821,6 +821,7 @@ global without sharing class ISSP_APProcess {
 		String queryString = 'SELECT ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c,Airline_wish_to_join_ICCS__c,Contact_Resp_Job_Title__c,Contact_Resp_F_Name__c,'+
 						'Contact_Resp_L_Name__c,Contact_Resp_Email__c,ANG_Enable_NewGen__c,Id,Receive_HOT_files__c,Default_Commission_Rate__c,'+
 						'Hot_files_delivery_format__c,Submitted_to_IATA__c,VAT_Tax_number_in_your_home_country__c,Online_carrier_in_the_BSP_country__c,Colombia_City_selection__c,'+
+						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c,'+
 						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Change_Requested__c,Type_of_Settlement__c';
 		if(isBSP){
 			queryString += ',Type_of_participation_desired__c,ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
@@ -844,14 +845,15 @@ global without sharing class ISSP_APProcess {
 			'CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,'+
 			'CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,CASSLink_New_User_2_System_Functions__c,CASSLink_New_User_3_Salutation__c,'+
 			'CASSLink_New_User_3_F_Name__c,CASSLink_New_User_3_L_Name__c,CASSLink_New_User_3_Email__c,CASSLink_New_User_3_System_Functions__c,CASSLink_Extra_New_Users__c,'+
-			'Pay_Commission_to_agents__c,Pay_Standard_Commission__c,Commission_Rate__c,Participate_in_AWB_Stock_Management__c,'+
 			'CASS_PH_Bilateral_Agreement__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,CASS_PH_Preferred_Billing_Currency__c';
 		}
 		if(isBSP || isCASS){
 			queryString += ',Airline_Registered_under_other_name__c,Colombia_Type_of_Contributor__c,Cyprus_Turkey_based_Airline__c,Flights_operated_in_the_BSP_country__c,Clave_Bancaria_Unificada_CBU__c,'+
 			'BSP_Local_address__c,BSP_Local_Zip_Code__c,BSP_Local_City__c,Airline_Local_address_in_the_BSP_Country__c,'+
 			'BSP_Country_VAT_Tax_number__c,Other_TAX_Identification__c,Airline_s_Fiscal_Status__c,Name_Appearing_in_VAT__c,AP_BR_BankBeneficiary_Account_Holder__c,AP_BR_Address_To_Insert__c,'+
-			'AP_BR_Address_CNP__c,Fin_Adm_Contact__c,Fin_Adm_Contact_F_Name__c,Fin_Adm_Contact_L_Name__c,'+
+			'Pay_Commission_to_agents__c,AP_BR_Address_CNP__c,Fin_Adm_Contact__c,Fin_Adm_Contact_F_Name__c,Fin_Adm_Contact_L_Name__c,'+
+			'HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c, HOT_File_Recipient_Remove_Email_4__c,'+
+			'Pay_Standard_Commission__c,Commission_Rate__c,Participate_in_AWB_Stock_Management__c,'+
 			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
 		}
 		if(isPassAirline){
@@ -859,8 +861,6 @@ global without sharing class ISSP_APProcess {
 			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
-			'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c,'+
-			'HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c, HOT_File_Recipient_Remove_Email_4__c,'+
 			'Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,'+
 			'HOT_File_Recipient_Email_1__c,HOT_File_Recipient_Email_2__c,HOT_File_Recipient_Email_3__c,HOT_File_Recipient_Email_4__c,'+
 			'Receive_PDF_Reports__c,PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,Receive_XLS_Reports__c,'+
@@ -3523,6 +3523,26 @@ global without sharing class ISSP_APProcess {
 		}else{
 			showPDFReportsPreference=false;
 			showPDFReportsEmail=false;
+		}
+		return null;
+	}
+
+	/**
+	 * New method to be used in the Step3
+	 * It will return the pagereference to be used in the apex:include in order to save space
+	 * in the view state. Having more than one apex:include causes an error
+	 */
+	public pageReference getStep3Page() {
+		if (isICH) {
+			return Page.ISSP_AP_ICH_Form;
+		}
+		if (this.strAreaType=='Airline Joining') {
+			if (isBSP) return Page.ISSP_AP_BSP_Form;
+			if (isCASS) return Page.ISSP_AP_CASS_Form;
+			if (isPassAirline) return Page.ISSP_AP_PASS_Form;
+		}
+		if (this.strAreaType=='Airline Change') {
+			if (isBSP || isCASS) return Page.ISSP_AP_Changes;
 		}
 		return null;
 	}
