@@ -1726,6 +1726,10 @@
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
     </recordTypes>
     <searchLayouts/>
