@@ -252,22 +252,10 @@
     margin-bottom: 46px;
 }
 
-.warningMessage{
-    margin-bottom: 40px;
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
 .warningIcon{
     margin-right: 10px;
 }
   
-.warningContent{
-    font-size: 14px;
-    text-align: justify;
-}
-
 .buttonsContainer{
     margin-top: 34px;
     width: 100%;
@@ -285,7 +273,7 @@
         padding-right: 2rem;
     }
   }
-  
+
 .helpText{
     font-size: 12px !important;
 }

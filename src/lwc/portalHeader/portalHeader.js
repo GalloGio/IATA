@@ -128,7 +128,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // l2 registration
     level2RegistrationTrigger = 'homepage';
-    isTriggeredByRequest = false;
     
     // company tab on profile
     @track displayCompanyTab = false;

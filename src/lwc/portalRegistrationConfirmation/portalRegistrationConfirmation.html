@@ -34,16 +34,6 @@
                     <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
                     </lightning-layout-item>
 
-                    <template if:true={isCategorizationModified}>
-                        <lightning-layout-item size="12" class="sectionDescription warningMessage IEFixDisplay">
-                            <img src={alertIcon} height="36" width="36" class="warningIcon"/>
-                            <p class="warningContent">{labels.CSP_L2_Change_Categorization_Warning}</p>
-                        </lightning-layout-item>
-        
-                        <lightning-layout-item size="12" class="IEFixDisplay">
-                        </lightning-layout-item>
-                    </template>
-
                     <div class="fieldContainer">
                         <template for:each={selectedAccountFields} for:item="field">
                             <lightning-layout-item key={field.label} size="6" class="fieldItem fullWidthItem IEFixDisplay"> 
