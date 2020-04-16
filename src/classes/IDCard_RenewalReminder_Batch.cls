@@ -28,7 +28,7 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
 			//create list of idcards already renewed
 			ID_Card__c[] renewedIDCards = [Select Valid_To_Date__c, Email__c From ID_Card__c
 										   where Email__c IN :contactsEmails and (Is_Active_Card__c = True OR Card_Status__c = 'Valid ID Card')
-												   and Valid_To_Date__c > NEXT_MONTH];
+												   and Valid_To_Date__c > 2020-06-30];
 												   System.debug('renewedIDCards: '+renewedIDCards);
 
 			Case[] pendingCases = [Select Id, Contact.Email From Case where Contact.Email IN :contactsEmails and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 100];

@@ -276,7 +276,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 
 				
 				// get last ID Card
-				ID_Card__c idcard = [Select Valid_To_Date__c, Related_Contact__c, Related_Contact__r.Account.IDCard_Key_Account__c From ID_Card__c c where c.Email__c = :contactID AND c.Valid_To_Date__c != null  order by c.Valid_To_Date__c desc limit 1];
+				ID_Card__c idcard = [Select Valid_To_Date__c, Related_Contact__c, Related_Contact__r.Account.IDCard_Key_Account__c From ID_Card__c c where c.Email__c = :myID AND c.Valid_To_Date__c != null  order by c.Valid_To_Date__c desc limit 1];
 
 				//get related Contact
 				cc = [ Select c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Name, c.Date_of_Birth__c, id, c.AccountId, c.Account.type, c.Account.BillingStreet, c.Account.BillingCity, c.Account.IATACode__c, c.Account.BillingCountry, c.Account.Name, c.Account.Short_Name__c From Contact c where id = : idcard.Related_Contact__c ];
