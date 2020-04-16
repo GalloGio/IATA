@@ -4471,7 +4471,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	private string getCaseReason(string r, String accreditationModel) {
 		if (r == AMS_Utils.CASE_REASON_NEW_HO) {
 			return Label.ISSP_AMS_Reason_New_HO;
-		} else if (r == AMS_Utils.CASE_REASON_BR_IP) {
+		} else if (r == AMS_Utils.CASE_REASON_BR_IP || r == AMS_Utils.CASE_REASON_NEW_BR) {
 			return Label.ISSP_AMS_Reason_New_Branch;
 		} else if (r == AMS_Utils.CASE_REASON_BR_ABROAD) {
 			return Label.ISSP_AMS_Reason_Branch_Abroad;

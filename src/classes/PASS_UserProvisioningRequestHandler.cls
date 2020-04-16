@@ -115,4 +115,98 @@ public class PASS_UserProvisioningRequestHandler {
 		}
 		return trgPASSAirlinePE;
 	}
+
+	public static void handleProvisioningRequest(List<Portal_Application_Right__c> portalRightsList,List<Portal_Application_Right__c> denyGrantPortalRights, List<Portal_Application_Right__c> passReGrantPortalRights){
+		List<Portal_Application_Right__c> portalRightsToGrant = new List<Portal_Application_Right__c>();
+		List<Portal_Application_Right__c> portalRightsToRemove = new List<Portal_Application_Right__c>();
+		List<Portal_Application_Right__c> portalRightsToReGrant = new List<Portal_Application_Right__c>();
+		List<UserProvisioningRequest> provRequests = new List<UserProvisioningRequest>();
+		List<User> contactUsers;
+
+		Connected_App_Roles__c PASSConnectedApp = [SELECT Provisioning_Id__c,Connected_App_Provisioning_Name__c,Connected_App__c FROM Connected_App_Roles__c WHERE Name = 'Pass' LIMIT 1];
+
+		Map<Portal_Application_Right__c,User> mapss = new Map<Portal_Application_Right__c,User>();
+
+		List<String> contactIds = new List<String>();
+
+		for(Portal_Application_Right__c portalRight : portalRightsList){
+				portalRightsToGrant.add(portalRight);
+				contactIds.add(portalRight.ContactId__c);
+		}
+		for(Portal_Application_Right__c portalRight : denyGrantPortalRights){
+				portalRightsToRemove.add(portalRight);
+				contactIds.add(portalRight.ContactId__c);
+		}
+		for(Portal_Application_Right__c portalRight : passReGrantPortalRights){
+				portalRightsToReGrant.add(portalRight);
+				contactIds.add(portalRight.ContactId__c);
+		}
+
+		if(contactIds.size() > 0){
+			contactUsers = [SELECT Id,ContactId FROM User WHERE ContactId IN:contactIds];
+		}
+		if(portalRightsToGrant.size() > 0){
+			for(User u : contactUsers){
+				for(Portal_Application_Right__c portalRight : portalRightsToGrant){
+					if(u.ContactId == portalRight.Contact__c){
+						provRequests.add(
+								new UserProvisioningRequest(
+									AppName = PASSConnectedApp.Connected_App_Provisioning_Name__c
+									, ConnectedAppId = PASSConnectedApp.Provisioning_Id__c
+									, Operation = 'Create'
+									, ApprovalStatus = 'NotRequired'
+									, SalesforceUserId = u.Id
+									, state = 'New'
+								)
+							);
+					}
+
+				}
+			}
+		}
+
+		if(portalRightsToReGrant.size() > 0){
+			for(User u : contactUsers){
+				for(Portal_Application_Right__c portalRight : passReGrantPortalRights){
+					if(u.ContactId == portalRight.Contact__c){
+						provRequests.add(
+								new UserProvisioningRequest(
+									AppName = PASSConnectedApp.Connected_App_Provisioning_Name__c
+									, ConnectedAppId = PASSConnectedApp.Provisioning_Id__c
+									, Operation = 'Update'
+									, ApprovalStatus = 'NotRequired'
+									, SalesforceUserId = u.Id
+									, state = 'New'
+								)
+							);
+					}
+
+				}
+			}
+		}
+		if(portalRightsToRemove.size() > 0){
+			for(User u : contactUsers){
+				for(Portal_Application_Right__c portalRight : denyGrantPortalRights){
+					if(u.ContactId == portalRight.Contact__c){
+						provRequests.add(
+								new UserProvisioningRequest(
+									AppName = PASSConnectedApp.Connected_App_Provisioning_Name__c
+									, ConnectedAppId = PASSConnectedApp.Provisioning_Id__c
+									, Operation = 'Deactivate'
+									, ApprovalStatus = 'NotRequired'
+									, SalesforceUserId = u.Id
+									, state = 'New'
+								)
+							);
+					}
+
+				}
+			}
+		}
+
+
+		insert provRequests;
+
+	}
+
 }
