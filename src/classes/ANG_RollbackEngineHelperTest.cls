@@ -178,11 +178,6 @@ private class ANG_RollbackEngineHelperTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 		update oscar;
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
 		Test.StopTest();
 
 		List<Agency_Authorization__c> autorizations = [Select Id,Status__c from Agency_Authorization__c];
@@ -240,11 +235,6 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.StopTest();
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
 		for(Account acct: accts){
 
 			System.assertEquals('Test1 Agency OK',acct.Name);
@@ -328,9 +318,9 @@ private class ANG_RollbackEngineHelperTest {
 	@isTest static void RollbackTest2() {
 		setupData(false);
 
-		Test.startTest();
-
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+		Test.startTest();
 
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
@@ -407,25 +397,63 @@ private class ANG_RollbackEngineHelperTest {
 			Right__c = 'Access Granted',
 			Contact__c = con1.Id);
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-		beh.setNewParentHierarchyId(a1.Id);
-
-		beh.executeAdhoc();
-*/
-
-		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+		AMS_OSCAR__c oscar = [SELECT Id FROM AMS_OSCAR__c];
 
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		oscar.New_parent__c = a1.Id;
 
 		update oscar;
 
-		Account setupAccountAE = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1234591'];
+		Financial_Institution__c fi = new Financial_Institution__c(Name = 'FI1', 
+			Institution_Type__c = 'Bank');
+		insert fi;
 
-		Account setupAccountAE3 = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1264011'];
+		Case oscarCase = [SELECT Id FROM Case LIMIT 1];
 
-		Test.StopTest();
+		insert new Financial_Security__c(CurrencyIsoCode='USD', 
+			Account__c = a1.Id, 
+			Amount__c = 3000, 
+			Expiry_Date__c = System.today().addDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = oscarCase.Id,
+			Financial_Security_Validation_Case__c = oscarCase.Id);
+
+		insert new ANG_RHC_Information__c(ANG_AccountId__c = a1.id,
+			CurrencyIsoCode ='EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			ANG_Financial_Security__c = 0);
+
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(Name = 'Risk Event Test',
+			ANG_Description__c = 'Risk Event Test',
+			ANG_Expiration__c = 24,
+			ANG_Risk_ID__c = 'testRiskId',
+			Limit_Cash_conditions__c = false);
+
+		insert ret;
+
+		insert new ANG_Agency_Risk_Event__c(ANG_AccountId__c = a1.id,
+			ANG_Risk_Type__c = ret.id,
+			ANG_Issued_Date__c = System.today(),
+			ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE);
+
+		Account setupAccountAE;
+		Account setupAccountAE3;
+		
+		for (Account a : [SELECT Id, ParentId, Location_Type__c, Top_Parent__c, IATAcode__c
+						FROM Account
+						WHERE location_Type__c = 'AE'
+							AND IATAcode__c IN ( '1234591', '1264011' )]) {
+			if (a.IATAcode__c == '1234591') {
+				setupAccountAE = a;
+			} else {
+				setupAccountAE3 = a;
+			}
+		}
 
 		delete [Select Id From AMS_Agencies_relationhip__c where Id <> :relsToInsert.Id and Child_Account__c <> :setupAccountAE3.Id];
 
@@ -438,7 +466,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		List<AMS_Agencies_relationhip__c> relationsAfterChange = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
 
-		System.debug('relationsAfterChange are:'+relationsAfterChange);
+		Test.stopTest();
 
 		System.assertEquals(3,relationsAfterChange.size());
 
@@ -449,12 +477,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		List<AMS_Agencies_relationhip__c> relationsAfterRollback = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
 
-		System.debug('relationsAfterRollback are:'+relationsAfterRollback);
-
 		System.assertEquals(3,relationsAfterRollback.size());
-
-		System.debug('Accounts are:' + [Select Id, Location_Type__c, IATAcode__c, ParentId, Top_Parent__c, Name from Account]);
-
 	}
 
 	@isTest static void RollbackTest3() {
