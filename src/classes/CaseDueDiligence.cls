@@ -115,7 +115,7 @@ public with sharing class CaseDueDiligence {
 			}
 			//PASS
 			if( cse.Reason1__c == AMS_Utils.passAirlineCaseReason || cse.Reason1__c == AMS_Utils.passCountryCaseReason || cse.Reason1__c == AMS_Utils.passAggregatorCaseReason){
-				checkDueDiligence(account,2);
+				checkDueDiligence(account,3);
 			}	
 			//NOA   (TBD)
 		}

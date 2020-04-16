@@ -57,6 +57,26 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
 
+	List<Portal_Application_Right__c> passGrantPortalRights = new List<Portal_Application_Right__c>();
+	List<Portal_Application_Right__c> passReGrantPortalRights = new List<Portal_Application_Right__c>();
+	List<Portal_Application_Right__c> passDenyPortalRights = new List<Portal_Application_Right__c>();
+	for(Portal_Application_Right__c portal : trigger.new){
+
+		if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Requested')){
+			passGrantPortalRights.add(portal);
+		}
+		else if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Denied')){
+			passReGrantPortalRights.add(portal);
+		}
+		else if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Denied' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Granted')){
+			passDenyPortalRights.add(portal);
+		}
+	}
+	if(passGrantPortalRights.size() >0 || passDenyPortalRights.size()>0 || passReGrantPortalRights.size()>0){
+		PASS_UserProvisioningRequestHandler.handleProvisioningRequest(passGrantPortalRights,passDenyPortalRights,passReGrantPortalRights);
+	}
+
+
 	if(Trigger.isDelete) {
 
 		Set<Id> disableContactIdSet = new Set<Id>();

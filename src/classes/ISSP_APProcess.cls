@@ -811,7 +811,7 @@ global without sharing class ISSP_APProcess {
 
 	private void popContact(){
 		User user = [SELECT Id,ContactId FROM USER WHERE Id=:Userinfo.getUserId()];
-		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id FROM Contact WHERE Id=:user.ContactId];
+		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c FROM Contact WHERE Id=:user.ContactId];
 
 	}
 
