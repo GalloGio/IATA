@@ -30,7 +30,7 @@
                                                 <div style="flex: 1;">
                                                     <span><img src={exclamationIcon}></span>
                                                 </div>
-                                                <div style="flex: 15;">
+                                                <div style="flex: 15;"> 
                                                     {labels.CSP_Unexcepted_Error} {labels.CSP_Troubleshooting_Info} <a style="color: #fff; text-decoration: underline;" href={config.troubleShootingUrl}>{labels.CSP_Troubleshooting}</a>
                                                 </div>
                                                 <div style="flex: 1;">
@@ -40,8 +40,7 @@
                                             <div style="height:40px;"></div>
                                         </div>
 
-
-                                        <!------------------------------------------      E-Mail      --------------------------------------------->
+                                        <!------------------------------------------      E-Mail      ------------------------------------------- -->
                                         <lightning-layout-item size="12">
                                             <div class="formElementContainer">
                                                 <div class="formLabelContainer">
@@ -75,7 +74,7 @@
                                                 </div>
                                             </div>
                                         </lightning-layout-item>
-                                        <!------------------------------------------      Next Button      --------------------------------------------->
+                                        <!------------------------------------------      Next Button      ------------------------------------------- -->
                                         <template if:false={displayToU}>
                                             <lightning-layout-item size="12">
                                                 <div style="height:8px;"></div>
@@ -110,7 +109,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      First Name      --------------------------------------------->
+                                            <!------------------------------------------      First Name      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -133,7 +132,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Last Name      --------------------------------------------->
+                                            <!------------------------------------------      Last Name      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -156,12 +155,12 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Country      --------------------------------------------->
+                                            <!------------------------------------------      Country      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
-                                                            {config.contactLabelMap.Country__c}
+                                                            {labels.CSP_L2_Country}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -181,7 +180,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Phone      --------------------------------------------->
+                                            <!------------------------------------------      Phone      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -201,7 +200,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Customer Type      --------------------------------------------->
+                                            <!------------------------------------------      Customer Type      ------------------------------------------- -->
                                             <!-- Sector -->
                                             <template if:true={sector.display}>
                                                 <lightning-layout-item size="12">
@@ -295,7 +294,7 @@
                                                 </lightning-layout-item>
                                             </template-->
 
-                                            <!------------------------------------------      Preferred Portal Language      --------------------------------------------->
+                                            <!------------------------------------------      Preferred Portal Language      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -320,7 +319,8 @@
                                             </lightning-layout-item>
                                         </template>
                                         <template if:true={displayToU}>
-                                            <!------------------------------------------      Terms of Use      --------------------------------------------->
+                                            <!------------------------------------------      Terms of Use      ------------------------------------------- -->
+
                                             <lightning-layout-item size="12">
                                                 <div style="height:54px;">
                                                 </div>
@@ -339,7 +339,7 @@
                                                 </div>
                                             </lightning-layout-item>
 
-                                            <!------------------------------------------      Submit Button      --------------------------------------------->
+                                            <!------------------------------------------      Submit Button      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div>
                                                     <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.CSP_Submit}></lightning-button>
