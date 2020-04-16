@@ -4811,6 +4811,8 @@ Location_Type__c = 'BR');
 
 			insert new List<AMS_Facility__c>{facility1, facility2};
 
+			Test.startTest();
+
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
 			
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
@@ -4887,6 +4889,8 @@ Location_Type__c = 'BR');
 			ctrl.Previous();
 			ctrl.Next();
 			ctrl.selectAllCountries();
+
+			Test.stopTest();
 		}
 
 	}
