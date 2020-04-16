@@ -2081,6 +2081,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>ค้นหากรณี</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -2095,10 +2099,6 @@
     <customLabels>
         <label>คำร้อง</label>
         <name>CSP_Cases</name>
-    </customLabels>
-    <customLabels>
-        <label>ค้นหากรณี</label>
-        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>เปลี่ยนอีเมล</label>
@@ -18534,9 +18534,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA Treasury Dashboard
-
-IATA Treasury Dashboard คือเครื่องมือทางเวปเพื่อสนับสนุนสายการบินในการเตรียมแผนสภาพคล่อง และประมาณการณ์กระแสเงินสด Dashboard สามารถให้ทีมการเงินของสายการบินเห็นภาพรายรับจากระบบการชำระเงินหลักของ IATA: BSP, CASS, ICCS (Currency Clearance Service) และICH (IATA Clearing House). สำหรับข้อมูลเพิ่มเติม กรุณาไปที่ www.iata.org/treasurydashboard</label>
+        <label>IATA Treasury Dashboard คือเครื่องมือทางเวปเพื่อสนับสนุนสายการบินในการเตรียมแผนสภาพคล่อง และประมาณการณ์กระแสเงินสด Dashboard สามารถให้ทีมการเงินของสายการบินเห็นภาพรายรับจากระบบการชำระเงินหลักของ IATA: BSP, CASS, ICCS (Currency Clearance Service) และICH (IATA Clearing House). สำหรับข้อมูลเพิ่มเติม กรุณาไปที่ www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

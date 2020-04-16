@@ -2084,6 +2084,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>케이스 검색</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -2098,10 +2102,6 @@
     <customLabels>
         <label>사례</label>
         <name>CSP_Cases</name>
-    </customLabels>
-    <customLabels>
-        <label>케이스 검색</label>
-        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>이메일 변경</label>

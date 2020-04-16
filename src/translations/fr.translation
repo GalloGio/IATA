@@ -2084,6 +2084,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Recherche de cas</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -2098,10 +2102,6 @@
     <customLabels>
         <label>Cas</label>
         <name>CSP_Cases</name>
-    </customLabels>
-    <customLabels>
-        <label>Recherche de cas</label>
-        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>Changer le courriel</label>
@@ -18575,9 +18575,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>Tableau de bord de la trésorerie IATA
-
-Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information web dynamique qui vous facilite votre trésorerie avec la planification des liquidités et des activités de prévision des flux. Le tableau de bord permet à la trésorerie de votre compagnie d&apos;obtenir une visibilité complète des flux entrants en cours de traitement par chacun des principaux systèmes de règlement de l&apos;IATA: BSP, CASS, ICCS (Currency Clearance Service) et ICH (IATA Clearing House). Pour plus d&apos;informations, visitez: www.iata.org/treasurydashboard</label>
+        <label>Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information web dynamique qui vous facilite votre trésorerie avec la planification des liquidités et des activités de prévision des flux. Le tableau de bord permet à la trésorerie de votre compagnie d&apos;obtenir une visibilité complète des flux entrants en cours de traitement par chacun des principaux systèmes de règlement de l&apos;IATA: BSP, CASS, ICCS (Currency Clearance Service) et ICH (IATA Clearing House). Pour plus d&apos;informations, visitez: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

@@ -2081,6 +2081,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>البحث عن حالات</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -2095,10 +2099,6 @@
     <customLabels>
         <label>القضايا</label>
         <name>CSP_Cases</name>
-    </customLabels>
-    <customLabels>
-        <label>البحث عن حالات</label>
-        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>تغيير عنوان البريد الإلكتروني</label>
@@ -18519,9 +18519,7 @@ and
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>مؤشر الخزينة Treasury Dashboard
-
-إن مؤشر الخزينة هو عبارة عن أداة معلوماتية على الانترنت، تعمل على مساعدة شركات الطيران في خطط ونشاطات التسييل والسيولات النقدية.
+        <label>إن مؤشر الخزينة هو عبارة عن أداة معلوماتية على الانترنت، تعمل على مساعدة شركات الطيران في خطط ونشاطات التسييل والسيولات النقدية.
 كما أن هذا المؤشر يعطي رؤية واضحة لشركة الطيران على السيولة النقدية الواردة والتي تقوم أياتا بمعالجتها عبر انظمة تسوية متعددة مثل: BSP, CASS, ICCS (Currency Clearance Service), ICH (IATA Clearing House). لمزيد من المعلومات يرجى زيارة الموقع التالي: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>

@@ -2081,6 +2081,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>搜索案例</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -2095,10 +2099,6 @@
     <customLabels>
         <label>案例</label>
         <name>CSP_Cases</name>
-    </customLabels>
-    <customLabels>
-        <label>搜索案例</label>
-        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label>更改电子邮件地址</label>
@@ -18526,9 +18526,7 @@ and
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA 财务仪表板
-
-IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，协助和支持航空公司的流动资金计划及预测现金流。仪表板让各航空公司财务团队获得各自公司经过IATA主要的结算系统（BSP、CASS、ICCS及ICH）的现金流入的可见性，更多信息请访问：www.iata.org/treasurydashboard</label>
+        <label>IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，协助和支持航空公司的流动资金计划及预测现金流。仪表板让各航空公司财务团队获得各自公司经过IATA主要的结算系统（BSP、CASS、ICCS及ICH）的现金流入的可见性，更多信息请访问：www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>
