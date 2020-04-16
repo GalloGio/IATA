@@ -343,7 +343,7 @@
             <targetReference>Is_CLO_Closure</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>case_record</name>
         <dataType>SObject</dataType>

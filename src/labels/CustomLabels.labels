@@ -35295,10 +35295,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+        <value>The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
 The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
