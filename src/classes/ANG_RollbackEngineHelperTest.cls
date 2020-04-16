@@ -326,10 +326,9 @@ private class ANG_RollbackEngineHelperTest {
 	}
 
 	@isTest static void RollbackTest2() {
+		setupData(false);
 
 		Test.startTest();
-
-		setupData(false);
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
@@ -395,6 +394,18 @@ private class ANG_RollbackEngineHelperTest {
 
 		AMS_Agencies_relationhip__c relsToInsert = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
 		insert relsToInsert;
+
+		Contact con1 = [SELECT Id, AccountId FROM Contact WHERE FirstName = 'Joel' LIMIT 1];
+
+		con1.Financial_Assessment_Contact__c = true;
+		update con1;
+
+		Portal_Applications__c pApp = new Portal_Applications__c(Name = 'IFAP');
+		insert pApp;
+		
+		insert new Portal_Application_Right__c(Portal_Application__c = pApp.Id, 
+			Right__c = 'Access Granted',
+			Contact__c = con1.Id);
 
 /*
 		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
