@@ -46,6 +46,8 @@
 							<li>Cash condition false</li>
 							<li>No conditions RHC=%FS applied at IATA code or BSP level</li>
 						</ul>
+						<li>Select agencies from one page at a time, then click Submit.</li>
+						<li>Move to the next page only after the processing on the current page is completed.</li>
 					</ul>
 				</apex:pageBlockSection>
 			</apex:pageBlock>
