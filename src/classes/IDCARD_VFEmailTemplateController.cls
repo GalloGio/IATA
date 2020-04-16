@@ -16,6 +16,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 	public Contact cc {get; set;}
 
 	public Date thisDay { get; set;}
+	public Date expDate { get; set;}
 
 	public String emailBody1 {get; set;}
 	public String emailBody2 {get; set;}
@@ -283,7 +284,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 				String contactID = cc.Id;
 
 				//set expiry date of last IDCard
-				Date expDate = idcard.Valid_To_Date__c;
+				expDate = idcard.Valid_To_Date__c;
 
 				if (idcard.related_contact__r.account != null && idcard.related_contact__r.account.IDCard_Key_Account__c == true)
 					 hiderenewal = true;
@@ -311,7 +312,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 					e = [Select  Body_Section_1__c, Body_Section_2__C, Body_Section_3__c, Signature_Details__c, greeting_line__c, Text_1__c, Text_2__c, Text_3__c, Text_4__c, Text_5__c, Text_6__c from EmailTemplate__c where RecordType.Name = 'ID Card Application' and Template_Type__c = 'Renewal Notice' and Template_Language__c = : Lang];
 
 
-				emailBody1 = e.Body_Section_1__c + (expDate != null ? (' ' + expDate):'');
+				emailBody1 = e.Body_Section_1__c;
 				emailBody2 = e.Body_Section_2__c;
 				emailBody3 = e.Body_Section_3__c;
 				text1 = e.Text_1__c;

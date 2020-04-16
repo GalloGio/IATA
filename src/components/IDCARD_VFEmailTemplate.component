@@ -198,7 +198,8 @@
         </tr>        
         <tr>
             <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{!emailBody1}."></apex:outputText>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{!emailBody1}:"></apex:outputText>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{0,date, yyyy-MM-dd}"><apex:param value="{!expDate}" /></apex:outputText>
                 <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text1}"></apex:outputText>           
             </td> 
         </tr>
