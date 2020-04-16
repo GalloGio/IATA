@@ -32,17 +32,14 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
 												   System.debug('renewedIDCards: '+renewedIDCards);
 
 			Case[] pendingCases = [Select Id, Contact.Email From Case where Contact.Email IN :contactsEmails and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 100];
-			System.debug('pendingCases: '+pendingCases);
 
 			//create set of contacts that will be removed from renewal noticed if already have renewed their idcards or have pending idcard case
 			Set<String> contactsIdstoIgnore = new Set<String>();
 			for (ID_Card__c idc : renewedIDCards) {
-				System.debug('contactsIdstoIgnore: '+idc.Email__c);
 				contactsIdstoIgnore.add(idc.Email__c);
 			}
 
 			for (Case cs : pendingCases) {
-				System.debug('contactsIdstoIgnore: '+cs.Contact.Email);
 				contactsIdstoIgnore.add(cs.Contact.Email);
 			}
 

@@ -64,19 +64,15 @@ global with sharing class IDCard_CleanUp_RenewalReminder_Scheduler implements Sc
 	string query = 'Select i.Valid_To_Date__c, i.Email__c From ID_Card__c i where (i.Valid_To_Date__c >= 2019-06-30 and i.Valid_To_Date__c <= 2020-06-30) and i.Valid_To_Date__c != null and i.Card_Status__c != \'Cancelled ID Card\' and i.Agency_Status__c != \'Terminated\' AND RecordType.Name = \'AIMS\' AND IDCard_Key_Account__c = false';
 
 	iDCardsToRemind = Database.query(query);
-	System.debug(' * * * iDCardsToRemind ' + iDCardsToRemind);
 
 	Set<String> contactsEmail = new Set<String>();
 	//add the list to a set to remove duplicates
 	for ( ID_Card__c initalID : iDCardsToRemind) {
 	  contactsEmail.add(initalID.Email__c);
 	}
-	System.debug(' * * * contactsEmail ' + contactsEmail);
-
 
 	//get Contacts related to contactsEmail
 	List<Contact> contactsScope = [Select id, Email, SendIDCardRenewalNotice__c from Contact where Email in :contactsEmail AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
-	System.debug(' * * * contactsScope ' + contactsScope);
 
 	///////////////////////////////////////////////////////
 

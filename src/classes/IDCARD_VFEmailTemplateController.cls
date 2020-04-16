@@ -15,8 +15,8 @@ public with sharing class IDCARD_VFEmailTemplateController {
 	public Case c {get; set;}
 	public Contact cc {get; set;}
 
-	public Date thisDay { get; set;}
-	public Date expDate { get; set;}
+	public Date thisDay {get; set;}
+	public Date expDate {get; set;}
 
 	public String emailBody1 {get; set;}
 	public String emailBody2 {get; set;}
