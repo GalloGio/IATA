@@ -2084,6 +2084,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>ケースを検索</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18532,9 +18536,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA財務ダッシュボード
-
-IATA財務ダッシュボードは資金計画やキャッシュ・フロー予測に関する航空会社の財政を支援する、動的なWEB情報ツールです。このダッシュボードはIATAの主な各精算システム：BSP、CASS、ICCS (Currency Clearance Service) そしてICH (IATA Clearing House)によって精算された資金の流れを視覚化することにより、各航空会社の財務業務を支援します。詳細はこちらをご参照下さい：www.iata.org/treasurydashboard</label>
+        <label>IATA財務ダッシュボードは資金計画やキャッシュ・フロー予測に関する航空会社の財政を支援する、動的なWEB情報ツールです。このダッシュボードはIATAの主な各精算システム：BSP、CASS、ICCS (Currency Clearance Service) そしてICH (IATA Clearing House)によって精算された資金の流れを視覚化することにより、各航空会社の財務業務を支援します。詳細はこちらをご参照下さい：www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

@@ -2081,6 +2081,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Поиск по кейсам</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18536,10 +18540,7 @@ GSA - 3 буквы.
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>&lt;b&gt;IATA Treasury Dashboard («Финансовая инфопанель IATA»)&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-IATA Treasury Dashboard — динамичный информационный веб-инструмент, помогающий финансовым отделам авиаперевозчиков в планировании ликвидности и прогнозировании потоков денежных средств.
+        <label>IATA Treasury Dashboard — динамичный информационный веб-инструмент, помогающий финансовым отделам авиаперевозчиков в планировании ликвидности и прогнозировании потоков денежных средств.
 Инфопанель позволяет финансовому отделу каждого авиаперевозчика получать все данные о поступающих денежных потоках, обрабатываемых через каждую из основных систем платежей IATA: BSP, CASS, ICCS (служба валютного клиринга) и ICH (клиринговая палата IATA). Дополнительную информацию можно найти на сайте: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>

@@ -2083,6 +2083,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Tìm kiếm các trường hợp</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18526,9 +18530,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA Treasury Dashboard
-
-IATA Treasury Dashboard là một công cụ thông tin Web năng động mà có thể trợ giúp và hỗ trợ bộ phận kho ngân của các hãng hàng không với việc lên ké hoạch thanh khoản và dự đoán dòng tiền của công ty. Dashboard này sẽ giúp cho các bộ phận kho ngân của hãng hàng không có được tầm nhìn bao quát nhất về dòng tiền tương lai mà sẽ được xử lí qua các hệ thống xử lí thanh toán của IATA: BSP, CASS, ICCS (Dịch vụ thanh toán tiền tệ) và ICH (Trung tâm thông của IATA). Để biết thêm, xin tìm đến: www.iata.org/treasurydashboard</label>
+        <label>IATA Treasury Dashboard là một công cụ thông tin Web năng động mà có thể trợ giúp và hỗ trợ bộ phận kho ngân của các hãng hàng không với việc lên ké hoạch thanh khoản và dự đoán dòng tiền của công ty. Dashboard này sẽ giúp cho các bộ phận kho ngân của hãng hàng không có được tầm nhìn bao quát nhất về dòng tiền tương lai mà sẽ được xử lí qua các hệ thống xử lí thanh toán của IATA: BSP, CASS, ICCS (Dịch vụ thanh toán tiền tệ) và ICH (Trung tâm thông của IATA). Để biết thêm, xin tìm đến: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

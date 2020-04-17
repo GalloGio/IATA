@@ -2083,6 +2083,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Búsqueda de casos</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18560,9 +18564,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>Panel de contabilidad de IATA
-
-El Panel de contabilidad de IATA es una herramienta que contiene información dinámica de ayuda para los servicios de contabilidad de las aerolíneas en sus actividades de planificación de liquidez y de previsión de flujos de caja. El panel permite al servicio de contabilidad de las aerolíneas les ofrece plena visibilidad sobre los flujos de caja de entrada procesados en cada uno de los sistemas de pagos de IATA: BSP, CASS, ICCS (Servicio de liquidación de divisas) e ICH (servicio central de liquidación de IATA). Para consultar información ulterior al respecto, visite la página: www.iata.org/treasurydashboard</label>
+        <label>El Panel de contabilidad de IATA es una herramienta que contiene información dinámica de ayuda para los servicios de contabilidad de las aerolíneas en sus actividades de planificación de liquidez y de previsión de flujos de caja. El panel permite al servicio de contabilidad de las aerolíneas les ofrece plena visibilidad sobre los flujos de caja de entrada procesados en cada uno de los sistemas de pagos de IATA: BSP, CASS, ICCS (Servicio de liquidación de divisas) e ICH (servicio central de liquidación de IATA). Para consultar información ulterior al respecto, visite la página: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

@@ -2084,6 +2084,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Busca de casos</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18527,9 +18531,7 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>Painel da Tesouraria IATA
-
-O Painel da Tesouraria IATA é uma ferramenta na  Web que contém informação dinâmica que auxilia e apoia tesourarias das empresas aéreas com seu planejamento de liquidez e fluxo de caixa além de atividades de previsão.
+        <label>O Painel da Tesouraria IATA é uma ferramenta na  Web que contém informação dinâmica que auxilia e apoia tesourarias das empresas aéreas com seu planejamento de liquidez e fluxo de caixa além de atividades de previsão.
 O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade total de seus fluxos de caixa de entrada que está sendo processado por cada um dos principais sistemas de liquidação da IATA: BSP, CASS, CIEC (Moeda Clearance Service) e ICH (IATA Clearing House). Para mais informações visite: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>

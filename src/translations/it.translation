@@ -2085,6 +2085,10 @@ la seguente procedura per completarlo :
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Cerca Casi</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18536,9 +18540,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>Dashboard di tesoreria IATA
-
-ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supporta  i dipartimenti  contabili  delle compagnie aeree  con le loro attività di pianificazione della liquidità e la previsione dei flussi  di cassa. Il Dashboard consente ai vari team di tesorería dei vettori  di  ottenere visibilità completa dei loro flussi di cassa  estratti direttamante  da ciascuno dei  principali sistemi  IATA: BSP, CASS, ICCS (servizio di sdoganamento di valuta) e ICH (IATA Clearing House). Per ulteriori informazioni visita: www.iata.org/treasurydashboard</label>
+        <label>ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supporta  i dipartimenti  contabili  delle compagnie aeree  con le loro attività di pianificazione della liquidità e la previsione dei flussi  di cassa. Il Dashboard consente ai vari team di tesorería dei vettori  di  ottenere visibilità completa dei loro flussi di cassa  estratti direttamante  da ciascuno dei  principali sistemi  IATA: BSP, CASS, ICCS (servizio di sdoganamento di valuta) e ICH (IATA Clearing House). Per ulteriori informazioni visita: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>

@@ -43,7 +43,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	global String countryToSearch;
 
 	global static final Map<String,String> typeOfChangeMap = new Map<String, String> {
-				'Ownership to non-IATA Agent' => 'Hierarchy;Ownership',
+				'Ownership to non-IATA Agent' => 'Ownership',
 				'Ownership to IATA Agent' => 'Hierarchy;Ownership',
 				'Location with inspection' => 'Location',
 				'Name' => 'Legal name',

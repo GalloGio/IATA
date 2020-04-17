@@ -2081,6 +2081,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Sorgu ara</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18530,10 +18534,7 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-IATA Treasury Dashboard, hava yolu maliyelerinin Likidite Planlama ve Nakit Akış Tahmin faaliyetlerine yardımcı olan ve destekleyen web tabanlı bir bilgi aracıdır.
+        <label>IATA Treasury Dashboard, hava yolu maliyelerinin Likidite Planlama ve Nakit Akış Tahmin faaliyetlerine yardımcı olan ve destekleyen web tabanlı bir bilgi aracıdır.
 Gösterge Panosu, her bir hava yolu Maliye Ekibinin IATA’nın ana ödeme sistemleri tarafından işlem yapılan gelen nakit akışları için tam görüş kazanmalarını sağlar: BSP, CASS, ICCS (Currency Clearance Service) ve ICH (IATA Clearing House). Daha fazla bilgi için: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>

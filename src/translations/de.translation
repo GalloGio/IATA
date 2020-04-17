@@ -2085,6 +2085,10 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label>Nach Fällen suchen</label>
+        <name>CSP_CaseSearchPlaceholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
     </customLabels>
@@ -18532,9 +18536,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>IATA Treasury Dashboard
-
-&quot;Das IATA Treasury Dashboard ist ein dynamisches, webbasiertes Informationstool, welches die Finanzabteilungen der Airline bei Ihrer Liquiditätsplanung und Cash Flow Forecast unterstützt. Das Dashboard erlaubt jeder Airline Finanzabteilung eine volle Sicht auf ihren eingehenden Cash Flow, der durch die IATA Abrechnungssysteme verarbeitet wird: BSP, CASS, ICCS (Currency Clearance Service) und ICH (IATA Clearing House). Für weitere Informationen besuchen Sie: www.iata.org/treasurydashboard</label>
+        <label>&quot;Das IATA Treasury Dashboard ist ein dynamisches, webbasiertes Informationstool, welches die Finanzabteilungen der Airline bei Ihrer Liquiditätsplanung und Cash Flow Forecast unterstützt. Das Dashboard erlaubt jeder Airline Finanzabteilung eine volle Sicht auf ihren eingehenden Cash Flow, der durch die IATA Abrechnungssysteme verarbeitet wird: BSP, CASS, ICCS (Currency Clearance Service) und ICH (IATA Clearing House). Für weitere Informationen besuchen Sie: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
     <customLabels>
