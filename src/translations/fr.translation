@@ -2200,8 +2200,8 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Créer un nouveau compte</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <label>Créer un nouvel utilisateur</label>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Créer un mot de passe</label>
@@ -2476,6 +2476,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>J&#39;ai lu et j&#39;accepte les conditions suivantes :</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Bonjour [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2544,6 +2548,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Détails supplémentaires</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Nous n&apos;avons pas trouvé votre adresse. Veuillez cliquer sur le bouton « Étape suivante » pour confirmer que votre adresse est correcte.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2560,6 +2568,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Retour aux détails supplémentaires</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Retour à l&apos;adresse de l&apos;entreprise</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2572,11 +2584,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Retour aux détails du profil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Terminer le processus de renseignement du profil et sélection du compte</label>
+        <label>Sélection du compte et détails supplémentaires</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2584,7 +2592,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez remplir les informations d&apos;adresse de votre entreprise.</label>
+        <label>Veuillez indiquer l&#39;adresse professionnelle de votre lieu de travail.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2614,10 +2622,6 @@
     <customLabels>
         <label>L&apos;enregistrement de votre compte d&apos;entreprise vous donnera accès à des services IATA personnalisés. Vous pouvez facilement créer votre compte d&apos;entreprise en deux étapes.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Site de l&apos;entreprise</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Nom de l&apos;entreprise</label>
@@ -2744,6 +2748,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Prochaine étape</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Non</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2780,10 +2788,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Détails du profil</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Ajoutez vos données personnelles pour permettre à IATA de suggérer du contenu et des services personnalisés.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2792,7 +2796,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Mais nous l&apos;avons enregistré en tant que brouillon afin que vous puissiez continuer plus tard. Êtes-vous sûr de vouloir quitter ?</label>
+        <label>Êtes-vous sûr de vouloir arrêter ?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2880,7 +2884,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Titre</label>
+        <label>Salutation</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -2888,8 +2892,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Numéro de TVA</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Site Internet</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Pays/Territoire de votre lieu de travail</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Oui</label>
@@ -3393,6 +3405,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Accepter</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Accès demandé</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3513,6 +3529,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Dans le cadre de nos mises à jour régulières, nous apportons quelques modifications à nos conditions. Nous vous encourageons à lire les documents dans leur intégralité.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Merci pour vos commentaires.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3555,6 +3575,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Création d&#39;utilisateur</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Bienvenue sur le portail client IATA</label>
@@ -22175,6 +22199,14 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Politique de confidentialité</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Conditions d&#39;utilisation</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

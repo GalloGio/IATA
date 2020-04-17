@@ -2197,8 +2197,8 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Yeni hesap oluşturun</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <label>Yeni kullanıcı oluştur</label>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Şifre oluşturun</label>
@@ -2473,6 +2473,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Okudum ve aşağıdaki şartları kabul ediyorum:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Merhaba [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2541,6 +2545,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Ek Detaylar</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Adresinizi bulamadık. Adresinizin doğru olduğunu onaylamak için lütfen Sonraki Adım düğmesini tıklayın.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2557,6 +2565,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Ek Detaylara Dön</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>İş Adres Bilgisi&apos;ne Geri Dönün</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2569,11 +2581,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Profil Detaylarına Geri Dönün</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Profil Tamamlama &amp; Hesap Seçimi</label>
+        <label>Hesap Seçme ve Ek Detaylar</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2581,7 +2589,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Lütfen işletme adres bilgilerinizi doldurun.</label>
+        <label>Lütfen ofisinizin adresini belirtin</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2611,10 +2619,6 @@
     <customLabels>
         <label>Şirket hesabınızı kaydetmek, özelleştirilmiş IATA servislerine erişiminizi sağlayacaktır. Şirket hesabınızı iki adımda kolayca oluşturabilirsiniz.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Şirketin Konumu</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Şirket Adı</label>
@@ -2741,6 +2745,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Sonraki adım</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Hayır</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2777,10 +2785,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Profil Detayları</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2789,7 +2793,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Ama daha sonra devam edebilmeniz için taslak olarak kaydettik. Çıkmak istediğinizden emin misiniz?</label>
+        <label>Çıkmak istediğinizden emin misiniz?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2877,7 +2881,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Ünvan</label>
+        <label>Hitap</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -2885,8 +2889,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>KDV Numarası</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Web Sitesi</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>İş yerinizin Bölgesi/Ülkesi</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Evet</label>
@@ -3389,6 +3401,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Kabul Et</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Erişim İstendi</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3509,6 +3525,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Düzenli güncellemelerin bir parçası olarak, bizim şartları birkaç değişiklik yapıyoruz. Biz tam belgeleri okumanızı öneriyoruz.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Geri bildiriminiz için teşekkür ederiz.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3551,6 +3571,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanıcı Oluşturma</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>IATA Müşteri Portalı&apos;na hoşgeldiniz</label>
@@ -22139,6 +22163,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Gizlilik Politikası</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanım Koşulları&#39;nı</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

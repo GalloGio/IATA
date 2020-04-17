@@ -1457,9 +1457,9 @@
                     <label>General Sales Agent</label>
                 </value>
                 <value>
-                    <fullName>Infrastructure Partner</fullName>
+                    <fullName>Airport</fullName>
                     <default>false</default>
-                    <label>Infrastructure Partner</label>
+                    <label>Airport</label>
                 </value>
                 <value>
                     <fullName>Internal Use</fullName>

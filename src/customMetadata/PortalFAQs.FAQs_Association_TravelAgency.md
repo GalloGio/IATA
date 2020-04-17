@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Travel Agency Association</value>
+        <value xsi:type="xsd:string">Travel Agency Association;Other</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

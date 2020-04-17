@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">GSSA Cargo;Non Governmental Organization</value>
+        <value xsi:type="xsd:string">GSSA Cargo;Non Governmental Organization;Other</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

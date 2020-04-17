@@ -2200,7 +2200,7 @@
     </customLabels>
     <customLabels>
         <label>Tạo tài khoản mới</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Tạo mật khẩu</label>
@@ -2475,6 +2475,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Tôi đã đọc và đồng ý với các điều khoản sau:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Xin chào [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2543,6 +2547,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Chi tiết bổ sung</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi không thể tìm thấy địa chỉ của doanh nghiệp này. Xin quý khách vui lòng nhấn vào nút Bước tiếp theo để xác nhận địa chỉ mà quý khách cung cấp trên đây là một địa chỉ hợp lệ.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2559,6 +2567,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Trở về phần Chi tiết bổ sung</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Quay lại Thông tin Địa chỉ Doanh nghiệp</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2571,11 +2583,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Quay lại Chi tiết Hồ sơ doanh nghiệp</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Hoàn thành Hồ sơ cá nhân &amp; Lựa chọn tài khoản</label>
+        <label>Lựa chọn tài khoản &amp; Chi tiết bổ sung</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2583,7 +2591,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Xin quý khách vui lòng nhập thông tin liên quan đến địa chỉ doanh nghiệp của quý khách.</label>
+        <label>Vui lòng cung cấp địa chỉ nơi làm việc của bạn</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2613,10 +2621,6 @@
     <customLabels>
         <label>Việc đăng ký tài khoản doanh nghiệp trên IATA sẽ cung cấp cho doanh nghiệp của quý khách một số quyền truy cập vào các dịch vụ của IATA được thiết kế riêng cho doanh nghiệp của quý khách. Quý khách có thể dễ dàng tạo một tài khoản doanh nghiệp mới chỉ bằng hai bước.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Địa chỉ Trụ sở doanh nghiệp</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Tên doanh nghiệp</label>
@@ -2743,6 +2747,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Bước tiếp theo</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Không</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2779,10 +2787,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Chi tiết Hồ sơ cá nhân</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Bổ sung những thông tin còn thiếu trên Hồ sơ cá nhân của quý khách để IATA có thể đề xuất các nội dung và dịch vụ được cá nhân hóa dành riêng cho quý khách.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2791,7 +2795,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Nhưng chúng tôi đã lưu phần nội dung trên đây dưới dạng bản nháp trong hệ thống để quý khách có thể tiếp tục chỉnh sửa sau này. Quý khách có chắc chắn rằng mình muốn thoát khỏi trang này hay không?</label>
+        <label>Bạn có chắc bạn muốn thoát khỏi?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2879,7 +2883,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Tiêu đề</label>
+        <label>Danh xưng</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -2887,8 +2891,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Số thuế GTGT</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ Trang web doanh nghiệp</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc gia/ lãnh thổ của nơi làm việc của bạn</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Có</label>
@@ -3391,6 +3403,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Chấp nhận</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Yêu cầu truy cập</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3511,6 +3527,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Là một phần của bản cập nhật thường xuyên của chúng tôi, chúng tôi đang thực hiện một vài thay đổi các điều khoản của chúng tôi. Chúng tôi khuyến khích bạn đọc các tài liệu đầy đủ.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Cảm ơn phản hồi của bạn.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3553,6 +3573,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo tài khoản</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Chào mừng quý khách đến với Cổng thông tin Chăm sóc Khách hàng của IATA</label>
@@ -22131,6 +22155,14 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Chính sách bảo mật</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Điều khoản sử dụng</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

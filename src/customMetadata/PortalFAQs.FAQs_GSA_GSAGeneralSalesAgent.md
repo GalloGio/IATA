@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">GSA General Sales Agent</value>
+        <value xsi:type="xsd:string">GSA General Sales Agent;Other</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

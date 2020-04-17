@@ -3907,12 +3907,12 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>New to the IATA Customer Portal?</value>
     </labels>
     <labels>
-        <fullName>CSP_Create_New_Account_Label</fullName>
+        <fullName>CSP_Create_New_User_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP Create New Account Label</shortDescription>
-        <value>Create New Account</value>
+        <shortDescription>CSP Create New User Label</shortDescription>
+        <value>Create New User</value>
     </labels>
     <labels>
         <fullName>CSP_Create_Password</fullName>
@@ -4453,6 +4453,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Grant Access</value>
     </labels>
     <labels>
+        <fullName>CSP_Have_Read_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Have_Read_Terms</shortDescription>
+        <value>I have read and agree to the following terms:</value>
+    </labels>
+    <labels>
         <fullName>CSP_Home_WelcomeTitle</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4588,6 +4596,14 @@ If you are already CNS Endorsed, you can use this service to update information 
 Your company may have an account in IATA, so please check it first before creating a new one.</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Additional_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Additional_Details</shortDescription>
+        <value>Additional Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Address_Not_Found_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4621,6 +4637,14 @@ Please click Next Step button to confirm that your address is correct</value>
         <value>Back to Company Account Info</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Back_to_Additional_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Additional_Details</shortDescription>
+        <value>Back to Additional Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Back_to_Business_Address_Information</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4645,20 +4669,12 @@ Please click Next Step button to confirm that your address is correct</value>
         <value>Go back to edit</value>
     </labels>
     <labels>
-        <fullName>CSP_L2_Back_to_Profile_Details</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_L2_Back_to_Profile_Details</shortDescription>
-        <value>Back to Profile Details</value>
-    </labels>
-    <labels>
         <fullName>CSP_L2_Banner_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Banner_Title</shortDescription>
-        <value>Profile Completion &amp; Account Selection</value>
+        <value>Account Selection &amp; Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Business_Address_Information</fullName>
@@ -4674,7 +4690,7 @@ Please click Next Step button to confirm that your address is correct</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Business_Address_Information_Message</shortDescription>
-        <value>Please fill out your business address information.</value>
+        <value>Please provide the business address of your work location.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Category</fullName>
@@ -4732,14 +4748,6 @@ Please click Next Step button to confirm that your address is correct</value>
         <shortDescription>CSP_L2_Company_Information_Message</shortDescription>
         <value>Please fill out your company information to access customized services.
 You can easily create a company account in two steps</value>
-    </labels>
-    <labels>
-        <fullName>CSP_L2_Company_Location</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_L2_Company_Location</shortDescription>
-        <value>Company Location</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Company_Name</fullName>
@@ -4990,6 +4998,14 @@ You can easily create a company account in two steps</value>
         <value>Next Step / Confirmation</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Next_Step</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Step</shortDescription>
+        <value>Next Step</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_No</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5062,14 +5078,6 @@ You can easily create a company account in two steps</value>
         <value>Postal Code</value>
     </labels>
     <labels>
-        <fullName>CSP_L2_Profile_Details</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_L2_Profile_Details</shortDescription>
-        <value>Profile Details</value>
-    </labels>
-    <labels>
         <fullName>CSP_L2_Profile_Details_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5091,7 +5099,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Profile_Incomplete_Message</shortDescription>
-        <value>But it is saved as a draft, you can continue later. Are you sure you want to quit?</value>
+        <value>Are you sure you want to quit?</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Registration_Error_Message</fullName>
@@ -5278,12 +5286,28 @@ You can easily create a company account in two steps</value>
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_VAT_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VAT_Number</shortDescription>
+        <value>VAT Number</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Website</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Website</shortDescription>
         <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Work_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Work_Location</shortDescription>
+        <value>Country/Territory of your work location</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Yes</fullName>
@@ -6268,6 +6292,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Transparency in Payments (TIP) - Reports</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_Accept_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_Accept_Terms</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6508,6 +6540,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Task</value>
     </labels>
     <labels>
+        <fullName>CSP_Terms_Updated_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Terms_Updated_Message</shortDescription>
+        <value>As part of our regular updates, we're making a few changes to our terms. We encourage you to read the documents in full.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ThanksFeedback</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6590,6 +6630,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_User_Creation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_User_Creation</shortDescription>
+        <value>User Creation</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
@@ -42255,6 +42303,22 @@ SF Workflow Process</value>
         <protected>false</protected>
         <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
         <value>005w0000003XCG8</value>
+    </labels>
+    <labels>
+        <fullName>TC_CSP_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Privacy_Policy</shortDescription>
+        <value>Privacy Policy</value>
+    </labels>
+    <labels>
+        <fullName>TC_CSP_Terms_of_Use</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Terms_of_Use</shortDescription>
+        <value>Terms of Use</value>
     </labels>
     <labels>
         <fullName>TECH_GDPR_Community_Name</fullName>

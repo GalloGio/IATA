@@ -2200,8 +2200,8 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Criar nova conta</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <label>Criar Novo Usuário</label>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Criar senha</label>
@@ -2476,6 +2476,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Eu li e concordo com os seguintes termos:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Alô [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2544,6 +2548,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Detalhes adicionais</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Não foi possível encontrar o seu endereço. Clique no botão &quot;Próximo Passo&quot; para confirmar que seu endereço está correto.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2560,6 +2568,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Voltar para Detalhes Adicionais</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Voltar para Informações do Endereço</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2572,11 +2584,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Voltar aos Detalhes do Perfil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Conclusão de Perfil e Seleção de Conta</label>
+        <label>Seleção de conta e detalhes adicionais</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2584,7 +2592,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Preencha as informações do endereço comercial.</label>
+        <label>Por favor, informe o endereço comercial do seu local de trabalho.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2614,10 +2622,6 @@
     <customLabels>
         <label>O registro da conta da sua empresa dará acesso a serviços IATA personalizados. Você pode criar facilmente sua conta corporativa em duas etapas.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Localização da Empresa</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Nome da Empresa</label>
@@ -2744,6 +2748,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Próxima Etapa</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Não</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2780,10 +2788,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Detalhes de Perfil</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Adicione seus dados pessoais para permitir que a IATA sugira conteúdo e serviços personalizados.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2792,7 +2796,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Mas o salvamos como rascunho para que você possa continuar mais tarde. Você tem certeza que quer sair?</label>
+        <label>Você tem certeza que quer sair?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2880,7 +2884,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Título</label>
+        <label>Saudação</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -2888,8 +2892,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Número de IVA</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Site</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>País / Território do seu local de trabalho</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Sim</label>
@@ -3392,6 +3404,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Aceitar</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Acesso solicitado</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3512,6 +3528,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Como parte de nossas atualizações regulares, estamos fazendo algumas mudanças em nossos termos. Nós o encorajamos a ler os documentos na íntegra.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Obrigado pelo seu feedback!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3554,6 +3574,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Criação do usuário</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Bem-vindo ao Portal do Cliente IATA</label>
@@ -22132,6 +22156,14 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Política de privacidade</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Termos de uso</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

@@ -2200,8 +2200,8 @@
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Buat Akun Baru</label>
-        <name>CSP_Create_New_Account_Label</name>
+        <label>Buat Pengguna Baru</label>
+        <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
         <label>Buat Kata Sandi.</label>
@@ -2476,6 +2476,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Saya telah membaca dan menyetujui persyaratan sebagai berikut:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Halo [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -2544,6 +2548,10 @@
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
+        <label>Detil tambahan</label>
+        <name>CSP_L2_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Kami tidak dapat menemukan alamat Anda. Silakan klik tombol Langkah Berikutnya untuk mengonfirmasi bahwa alamat Anda benar.</label>
         <name>CSP_L2_Address_Not_Found_Message</name>
     </customLabels>
@@ -2560,6 +2568,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Kembali ke Detail Tambahan</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Kembali ke Informasi Alamat Bisnis</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -2572,11 +2584,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Kembali ke Detail Profil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Penyelesaian pengisian Profil &amp; Pemilihan Akun</label>
+        <label>Seleksi akun &amp; Rincian Tambahan</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -2584,7 +2592,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Silakan isi informasi alamat bisnis Anda.</label>
+        <label>Harap berikan alamat bisnis lokasi pekerjaan Anda.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2614,10 +2622,6 @@
     <customLabels>
         <label>Mendaftarkan akun perusahaan Anda akan memberi Anda akses ke layanan IATA (International Air Transport Association) yang disesuaikan. Anda dapat dengan mudah membuat akun perusahaan dalam dua langkah.</label>
         <name>CSP_L2_Company_Information_Message</name>
-    </customLabels>
-    <customLabels>
-        <label>Lokasi Perusahaan</label>
-        <name>CSP_L2_Company_Location</name>
     </customLabels>
     <customLabels>
         <label>Nama Perusahaan</label>
@@ -2744,6 +2748,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Langkah berikutnya</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Tidak</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -2780,10 +2788,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Profil lengkap</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Tambahkan detail pribadi Anda untuk mengizinkan IATA (International Air Transport Association) menyarankan konten dan layanan yang dipersonalisasi.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -2792,7 +2796,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Namun kami menyimpannya sebagai konsep agar Anda dapat melanjutkannya nanti. Anda yakin ingin berhenti?</label>
+        <label>Apakah Anda yakin ingin berhenti?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -2880,7 +2884,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Judul</label>
+        <label>Gelar</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -2888,8 +2892,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>PPN Nomor</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Situs web</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara / Wilayah lokasi pekerjaan Anda</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Ya</label>
@@ -3393,6 +3405,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Terima</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Akses Diminta</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -3513,6 +3529,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Sebagai bagian dari update reguler kami, kami membuat beberapa perubahan ketentuan kami. Kami mendorong Anda untuk membaca dokumen secara penuh.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Terima kasih atas umpan balik Anda!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -3555,6 +3575,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Pembuatan pengguna</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Selamat datang di Portal Pelanggan IATA</label>
@@ -22141,6 +22165,14 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Kebijakan Privasi</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Syarat Penggunaan</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
