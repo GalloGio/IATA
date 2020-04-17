@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Swapping Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Swapping Configuration</value>
+    </caseValues>
+    <fields>
+        <label><!-- Relationship Type --></label>
+        <name>Relationship_Type__c</name>
+        <picklistValues>
+            <masterLabel>Suggestion</masterLabel>
+            <translation><!-- Suggestion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Swap</masterLabel>
+            <translation><!-- Swap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upgrade</masterLabel>
+            <translation><!-- Upgrade --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Source rate plan before swapping --></help>
+        <label><!-- Source Product Rate Plan Information --></label>
+        <name>Source_Product_Rate_Plan_Information__c</name>
+        <relationshipLabel><!-- Swapping Configuration (Source Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Target Rate Plan after Swapping --></help>
+        <label><!-- Target Product Rate Plan Information --></label>
+        <name>Target_Product_Rate_Plan_Information__c</name>
+        <relationshipLabel><!-- Swapping Configuration (Target Rate Plan) --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- For Swapping: Target Rate Plan must be associated to the Same Product Category of the Source Product Rate Plan and must not be part of any Default Product Audience Rate Plans --></errorMessage>
+        <name>IECSwappingTargetRatePlanValidation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Target upgrade rate plan must only be unlimited. --></errorMessage>
+        <name>Upgrade_plan_must_be_to_Unlimited</name>
+    </validationRules>
+</CustomObjectTranslation>

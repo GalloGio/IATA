@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP Web Service Log</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP Web Service Logs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- ISSP Web Service Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agency Applied Change code --></label>
+        <name>Agency_Applied_Change_code__c</name>
+        <relationshipLabel><!-- Callout Web Service Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Link to the case that is related with the log. --></help>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- ISSP Web Service Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- ISSP Web Service Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Error Code --></label>
+        <name>Error_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Finished --></label>
+        <name>Finished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Input Description --></label>
+        <name>Input_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Login IP 2 --></label>
+        <name>Login_IP_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Login Ip --></label>
+        <name>Login_Ip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Method --></label>
+        <name>Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response --></label>
+        <name>Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- Started --></label>
+        <name>Started__c</name>
+    </fields>
+    <fields>
+        <label><!-- Success --></label>
+        <name>Success__c</name>
+    </fields>
+    <fields>
+        <label><!-- System --></label>
+        <name>System__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- ISSP Web Service Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Web Service --></label>
+        <name>Web_Service__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

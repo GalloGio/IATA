@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Product Manager Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Product Manager Mapping</value>
+    </caseValues>
+    <fields>
+        <label><!-- Product Manager --></label>
+        <lookupFilter>
+            <errorMessage><!-- Product Manager is not in users&apos; list. --></errorMessage>
+        </lookupFilter>
+        <name>Product_Manager__c</name>
+        <relationshipLabel><!-- Product Manager Mapping --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Profit Center --></label>
+        <name>Profit_Center__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

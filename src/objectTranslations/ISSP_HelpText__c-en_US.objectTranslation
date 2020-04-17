@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP HelpText</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP HelpText</value>
+    </caseValues>
+    <fields>
+        <label><!-- HelpText --></label>
+        <name>HelpText_Label_API__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subtopic --></label>
+        <name>Subtopic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic --></label>
+        <name>Topic__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

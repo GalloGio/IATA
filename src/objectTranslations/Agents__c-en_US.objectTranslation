@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Agent</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Agents</value>
+    </caseValues>
+    <fields>
+        <label><!-- Exact Log Off Time --></label>
+        <name>Exact_Log_Off_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Case Assigned Date/Time --></label>
+        <name>Last_Case_Assigned_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reassignment Time --></label>
+        <name>Log_Off_Time_After_Timeout__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log on picklist --></label>
+        <name>Log_on_picklist__c</name>
+        <picklistValues>
+            <masterLabel>Log off</masterLabel>
+            <translation><!-- Log off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Log on</masterLabel>
+            <translation><!-- Log on --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is the agent logged on? --></help>
+        <label><!-- Logged on --></label>
+        <name>Logged_on__c</name>
+    </fields>
+    <fields>
+        <help><!-- Maximum number of cases for this user --></help>
+        <label><!-- Maximum case workload --></label>
+        <name>Maximum_case_workload__c</name>
+    </fields>
+    <fields>
+        <help><!-- Maximum number of cases this user can get at one time --></help>
+        <label><!-- Maximum cases at one time --></label>
+        <name>Maximum_cases_at_one_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next case request date/time --></label>
+        <name>Next_case_request_date_time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the region to which the Agent belongs to. --></help>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For the agent, indicates that the next case should be assigned to them --></help>
+        <label><!-- Request next case --></label>
+        <name>Request_next_case__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Agents --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Skill_Assignments_for_this_Agent --></label>
+        <name>Skill_Assignments_for_this_Agent</name>
+    </webLinks>
+</CustomObjectTranslation>

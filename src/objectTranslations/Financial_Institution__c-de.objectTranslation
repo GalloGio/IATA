@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Institution --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field shows the code of the agent that is acting as guarantor --></help>
+        <label><!-- Agent IATA code --></label>
+        <name>Agent_IATA_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Person --></label>
+        <name>Contact_Person__c</name>
+    </fields>
+    <fields>
+        <label>Land</label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Rating --></label>
+        <name>Credit_Rating__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A+</masterLabel>
+            <translation><!-- A+ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A-</masterLabel>
+            <translation><!-- A- --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AA</masterLabel>
+            <translation><!-- AA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AA+</masterLabel>
+            <translation><!-- AA+ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AA-</masterLabel>
+            <translation><!-- AA- --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AAA</masterLabel>
+            <translation><!-- AAA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B+</masterLabel>
+            <translation><!-- B+ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B-</masterLabel>
+            <translation><!-- B- --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BB</masterLabel>
+            <translation><!-- BB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BB+</masterLabel>
+            <translation><!-- BB+ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BB-</masterLabel>
+            <translation><!-- BB- --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBB</masterLabel>
+            <translation><!-- BBB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBB+</masterLabel>
+            <translation><!-- BBB+ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBB-</masterLabel>
+            <translation><!-- BBB- --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CC</masterLabel>
+            <translation><!-- CC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCC</masterLabel>
+            <translation><!-- CCC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RD</masterLabel>
+            <translation><!-- RD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Institution ID --></label>
+        <name>Financial_Institution_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select all countries where this Financial Institution provides Financial Security. Used to show list of Financial Institutions on CS Portal. --></help>
+        <label><!-- Financial Security Country Coverage --></label>
+        <name>Financial_Security_Country_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Security Regional Coverage --></label>
+        <name>Financial_Security_Regional_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Call Letter required --></label>
+        <name>First_Call_Letter_required__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Institution Status Image --></label>
+        <name>Institution_Status_Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Institution Status --></label>
+        <name>Institution_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Institution Type --></label>
+        <name>Institution_Type__c</name>
+        <picklistValues>
+            <masterLabel>Bank</masterLabel>
+            <translation><!-- Bank --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Agent</masterLabel>
+            <translation><!-- IATA Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance Company</masterLabel>
+            <translation><!-- Insurance Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mutual Guarantee Society</masterLabel>
+            <translation><!-- Mutual Guarantee Society --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Telefon</label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If the guarantor is an IATA agent, fill it here --></help>
+        <label><!-- Related IATA agent account --></label>
+        <name>Related_IATA_agent_account__c</name>
+        <relationshipLabel><!-- Financial Institutions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tax ID --></label>
+        <name>Tax_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Website --></label>
+        <name>Website__c</name>
+    </fields>
+    <gender><!-- Neuter --></gender>
+    <nameFieldLabel><!-- Financial Institution Name --></nameFieldLabel>
+    <recordTypes>
+        <description><!-- Used for Currency Center --></description>
+        <label><!-- Currency Center Bank --></label>
+        <name>Currency_Center_Bank</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Generic Financial Institution as a default RT --></description>
+        <label><!-- Generic FI --></label>
+        <name>Generic_FI</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage>&quot;Please remove the double quotes &quot;&quot; from the name&quot;</errorMessage>
+        <name>SARA_Financial_institution_name_no_quote</name>
+    </validationRules>
+</CustomObjectTranslation>

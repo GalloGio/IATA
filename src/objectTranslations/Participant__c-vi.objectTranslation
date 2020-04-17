@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Participant --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cargo / Passenger --></label>
+        <name>Cargo_Passenger__c</name>
+    </fields>
+    <fields>
+        <label>Liên hệ</label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Participants --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Participant Office --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group RecordType --></label>
+        <name>Group_RecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Account --></label>
+        <name>Head_Quartier__c</name>
+        <relationshipLabel><!-- Participants --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Hidden Account Id --></label>
+        <name>Hidden_Account_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Governance --></label>
+        <name>Local_Governance__c</name>
+        <relationshipLabel><!-- Participants --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Local Group Type --></label>
+        <name>Local_Group_Type__c</name>
+        <picklistValues>
+            <masterLabel>ALWG</masterLabel>
+            <translation><!-- ALWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APJC</masterLabel>
+            <translation><!-- APJC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APJC / FAG</masterLabel>
+            <translation><!-- APJC / FAG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAPJC</masterLabel>
+            <translation><!-- CAPJC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CEC</masterLabel>
+            <translation><!-- CEC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CGA</masterLabel>
+            <translation><!-- CGA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EACP JC</masterLabel>
+            <translation><!-- EACP JC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICAP</masterLabel>
+            <translation><!-- ICAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JALWG</masterLabel>
+            <translation><!-- JALWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-C</masterLabel>
+            <translation><!-- LCAG-C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-P</masterLabel>
+            <translation><!-- LCAG-P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-P / Credit Card WG</masterLabel>
+            <translation><!-- LCAG-P / Credit Card WG --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Account --></label>
+        <name>Main_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Participant Role --></label>
+        <name>Participant_Type__c</name>
+        <picklistValues>
+            <masterLabel>Accredited Representative</masterLabel>
+            <translation><!-- Accredited Representative --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chair</masterLabel>
+            <translation><!-- Chair --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Co-Chair</masterLabel>
+            <translation><!-- Co-Chair --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Designated Alternate</masterLabel>
+            <translation><!-- Designated Alternate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Facilitator</masterLabel>
+            <translation><!-- Facilitator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Member</masterLabel>
+            <translation><!-- Member --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Observer</masterLabel>
+            <translation><!-- Observer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vice-Chair</masterLabel>
+            <translation><!-- Vice-Chair --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <help><!-- If the participant is not representing his/her employer on this specific group, enter the name of the company represented. --></help>
+        <label><!-- Representing --></label>
+        <name>Representing__c</name>
+        <relationshipLabel><!-- Participants (Representing) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field takes the Title from the Contact record. If it is blank, you will need to edit the Contact record and add the Title there, else you cannot save this APJC Participant. --></help>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <nameFieldLabel><!-- Participant Number --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Local Group Participants --></label>
+        <name>Local_Group_Participants</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Reg/Div Group Participants --></label>
+        <name>Reg_Div_Group_Participants</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- It&apos; s not possible to insert a new participant or change  the existing one if the participant is related to an inactive group. --></errorMessage>
+        <name>Cannot_change_if_inactive_group</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Participants cannot be added before the group has been approved --></errorMessage>
+        <name>Cant_add_before_approval</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The contact chosen must have a value for the following fields:
+First Name, Last Name, Title, Email and Account Name. Please complete these information and try again. --></errorMessage>
+        <name>Contact_should_have_value_in_main_fields</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to add or edit participants to this group --></errorMessage>
+        <name>Create_Edit_Participants</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies --></errorMessage>
+        <name>Group_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Title in the Contact is empty and you therefore cannot save this record. First edit the Contact record and add the Title, then create this APJC Participant record. --></errorMessage>
+        <name>Title_under_contact_is_blank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Participant must come from a verified Account --></errorMessage>
+        <name>Verified_Account</name>
+    </validationRules>
+</CustomObjectTranslation>

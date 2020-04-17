@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP Airlines Statistic</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP Airlines Statistics</value>
+    </caseValues>
+    <fields>
+        <help><!-- AA Counter --></help>
+        <label><!-- AA --></label>
+        <name>AA__c</name>
+    </fields>
+    <fields>
+        <help><!-- AC Counter --></help>
+        <label><!-- AC --></label>
+        <name>AC__c</name>
+    </fields>
+    <fields>
+        <label><!-- AO --></label>
+        <name>AO__c</name>
+    </fields>
+    <fields>
+        <help><!-- AW Counter --></help>
+        <label><!-- AW --></label>
+        <name>AW__c</name>
+    </fields>
+    <fields>
+        <help><!-- BR Counter --></help>
+        <label><!-- BR --></label>
+        <name>BR__c</name>
+    </fields>
+    <fields>
+        <help><!-- CS Counter --></help>
+        <label><!-- CS --></label>
+        <name>CS__c</name>
+    </fields>
+    <fields>
+        <help><!-- Class --></help>
+        <label><!-- Key Class --></label>
+        <name>Class__c</name>
+    </fields>
+    <fields>
+        <help><!-- Country and State --></help>
+        <label><!-- Key Country and State --></label>
+        <name>Country_State__c</name>
+    </fields>
+    <fields>
+        <help><!-- Country --></help>
+        <label><!-- Key Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <help><!-- EB Counter --></help>
+        <label><!-- EB --></label>
+        <name>EB__c</name>
+    </fields>
+    <fields>
+        <help><!-- EP Counter --></help>
+        <label><!-- EP --></label>
+        <name>EP__c</name>
+    </fields>
+    <fields>
+        <help><!-- ES Counter --></help>
+        <label><!-- ES --></label>
+        <name>ES__c</name>
+    </fields>
+    <fields>
+        <help><!-- HO Counter --></help>
+        <label><!-- HO --></label>
+        <name>HO__c</name>
+    </fields>
+    <fields>
+        <help><!-- IC Counter --></help>
+        <label><!-- IC --></label>
+        <name>IC__c</name>
+    </fields>
+    <fields>
+        <help><!-- The key built based on the YYYYMMDD, Country, State --></help>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last Update Statistics --></help>
+        <label><!-- Last Update --></label>
+        <name>Last_Update__c</name>
+    </fields>
+    <fields>
+        <help><!-- SA Counter --></help>
+        <label><!-- SA --></label>
+        <name>SA__c</name>
+    </fields>
+    <fields>
+        <help><!-- SE Counter --></help>
+        <label><!-- SE --></label>
+        <name>SE__c</name>
+    </fields>
+    <fields>
+        <help><!-- SP Counter --></help>
+        <label><!-- SP --></label>
+        <name>SP__c</name>
+    </fields>
+    <fields>
+        <help><!-- ST Counter --></help>
+        <label><!-- ST --></label>
+        <name>ST__c</name>
+    </fields>
+    <fields>
+        <help><!-- State --></help>
+        <label><!-- Key State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <help><!-- TD Counter --></help>
+        <label><!-- TD --></label>
+        <name>TD__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total of the Counters --></help>
+        <label><!-- Total --></label>
+        <name>Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- WH Counter --></help>
+        <label><!-- WH --></label>
+        <name>WH__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

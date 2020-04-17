@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Account Role Relationship</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Account Role Relationships</value>
+    </caseValues>
+    <fields>
+        <label><!-- From --></label>
+        <name>From__c</name>
+        <relationshipLabel><!-- Account Role Relationships (From) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Portal Service --></label>
+        <name>Portal_Service__c</name>
+        <relationshipLabel><!-- Account Role Relationships --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Relationship Status --></label>
+        <name>Relationship_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Relationship Type --></label>
+        <name>Relationship_Type__c</name>
+        <picklistValues>
+            <masterLabel>NDC Player</masterLabel>
+            <translation><!-- NDC Player --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- To --></label>
+        <name>To__c</name>
+        <relationshipLabel><!-- Account Role Relationships (To) --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Represents a flat grouping where all member Account Roles are peers. --></description>
+        <label><!-- Flat --></label>
+        <name>Flat</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Represents a hierarchical grouping where the relationships between all member Account Roles are represented within a hierarchy. --></description>
+        <label><!-- Hierarchical --></label>
+        <name>Hierarchical</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP SIS Account Status</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP SIS Account Status</value>
+    </caseValues>
+    <fields>
+        <help><!-- Use keyword &quot;All&quot; to select all countries --></help>
+        <label><!-- Country ISO Codes --></label>
+        <name>Country_ISO_Codes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use keyword &quot;All&quot; to select all Location Classes --></help>
+        <label><!-- Location Class --></label>
+        <name>Location_Class__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recordtype Developer Name --></label>
+        <name>Recordtype__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Status --></label>
+        <name>SIS_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Substatus --></label>
+        <name>SIS_Substatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Strategy</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Strategies</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Strategies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Business Problem Addressed --></label>
+        <name>Business_Problem_Addressed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Completion Date --></label>
+        <name>Est_Comp_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Product Revenue --></label>
+        <name>Estimated_Product_Revenue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Service Revenue --></label>
+        <name>Estimated_Service_Revenue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Total Revenue --></label>
+        <name>Estimated_Total_Revenue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Contact Sponsor --></label>
+        <name>Key_Contact_Sponsor__c</name>
+        <relationshipLabel><!-- Strategies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Plan --></label>
+        <name>SFDC_Acct_Plan__c</name>
+        <relationshipLabel><!-- Strategies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Solution / Goal --></label>
+        <name>Solution_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Strategy Status --></label>
+        <name>Strategy_Status__c</name>
+        <picklistValues>
+            <masterLabel>Investigation</masterLabel>
+            <translation><!-- Investigation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lost - No Opportunity</masterLabel>
+            <translation><!-- Lost - No Opportunity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity Created</masterLabel>
+            <translation><!-- Opportunity Created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Won - Achieved Rev. Goals</masterLabel>
+            <translation><!-- Won - Achieved Rev. Goals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Won - Partial Achievement</masterLabel>
+            <translation><!-- Won - Partial Achievement --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

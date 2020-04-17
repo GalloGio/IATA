@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP Agency Stats</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP Agency Stats</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agencies in Default (6) --></label>
+        <name>Agencies_in_Default_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agencies in Default (5) --></label>
+        <name>Agencies_in_Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Sales Offices --></label>
+        <name>Airline_Sales_Offices__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cargo Agencies --></label>
+        <name>Cargo_Agencies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code --></label>
+        <name>Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Emails --></label>
+        <name>Emails__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Sales Agents --></label>
+        <name>General_Sales_Agents__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geo Detail --></label>
+        <name>Geo_Detail__c</name>
+        <relationshipLabel><!-- GDP Agency Stats --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- GDP Agency Stats --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Used for upsert by scheduled task --></help>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Locations No Cargo --></label>
+        <name>Locations_No_Cargo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Locations --></label>
+        <name>Locations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scope --></label>
+        <name>Scope__c</name>
+        <picklistValues>
+            <masterLabel>AU Territories</masterLabel>
+            <translation><!-- AU Territories --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Provinces</masterLabel>
+            <translation><!-- CA Provinces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Country</masterLabel>
+            <translation><!-- Country --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sub Continent</masterLabel>
+            <translation><!-- Sub Continent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>US States</masterLabel>
+            <translation><!-- US States --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stats Date --></label>
+        <name>Stats_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Continent --></label>
+        <name>Sub_Continent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Travel Agencies --></label>
+        <name>Travel_Agencies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Unique Emails --></label>
+        <name>Unique_Emails__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

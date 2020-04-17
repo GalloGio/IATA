@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>AMS SOQL Query Export</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>AMS SOQL Query Exports</value>
+    </caseValues>
+    <fields>
+        <label><!-- Limit --></label>
+        <name>Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Direction --></label>
+        <name>Order_Direction__c</name>
+        <picklistValues>
+            <masterLabel>Ascending</masterLabel>
+            <translation><!-- Ascending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Descending</masterLabel>
+            <translation><!-- Descending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Order by --></label>
+        <name>Order_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- fields --></label>
+        <name>fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- object name --></label>
+        <name>object_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- where condition --></label>
+        <name>where_condition__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

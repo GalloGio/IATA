@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Batch Notification</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Batch Notifications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch id --></label>
+        <name>Batch_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- message --></label>
+        <name>message__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

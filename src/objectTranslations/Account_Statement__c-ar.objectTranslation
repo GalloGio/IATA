@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- الAccount Statement --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Statements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>المبلغ الواجب دفعه</label>
+        <name>Amount_to_be_Paid__c</name>
+    </fields>
+    <fields>
+        <label>الرصيد</label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label>تصحيح الفاتورة</label>
+        <name>Billing_Adjustment__c</name>
+    </fields>
+    <fields>
+        <label>قيمة الفاتورة</label>
+        <name>Billing_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group --></label>
+        <name>Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label>المبلغ المدفوع</label>
+        <name>Paid__c</name>
+    </fields>
+    <fields>
+        <label>الفترة</label>
+        <name>Period__c</name>
+    </fields>
+    <fields>
+        <label>تاريخ الحوالة</label>
+        <name>Remittance_Date__c</name>
+    </fields>
+    <fields>
+        <label>الحالة</label>
+        <name>Status__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- Account Statement Name --></nameFieldLabel>
+</CustomObjectTranslation>

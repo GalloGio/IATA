@@ -1,0 +1,2211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- AP Process Form --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Will you accept EasyPay transactions in the BSP settlement? --></help>
+        <label><!-- Airline accepts EasyPay trans. in BSP --></label>
+        <name>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- New Accr. Model &amp; Risk Events enabled --></label>
+        <name>ANG_Enable_NewGen__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CNPJ # must correspond with the address to be inserted in IATA Systems --></help>
+        <label><!-- CNPJ Address corresponds --></label>
+        <name>AP_BR_Address_CNP__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CNPJ # must correspond with the address to be inserted in IATA Systems --></help>
+        <label><!-- CNPJ Address To Insert --></label>
+        <name>AP_BR_Address_To_Insert__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does the CNPJ# provided above correspond with the Bank Beneficiary Account Holder? --></help>
+        <label><!-- CNPJ is Bank Beneficiary Acnt Holder --></label>
+        <name>AP_BR_BankBeneficiary_Account_Holder__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Accept Disclaimer --></label>
+        <name>Accept_Disclaimer__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does your Airline accept Payment Cards for BSP ticket issuance by Travel Agents? --></help>
+        <label><!-- Accept payment Cards for BSP ticket --></label>
+        <name>Accept_payment_Cards_for_BSP_ticket__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Accept terms and conditions --></label>
+        <name>Accept_terms_and_conditions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Billing Data File Type --></label>
+        <name>Airline_Billing_Data_File_Type__c</name>
+        <picklistValues>
+            <masterLabel>Airline Head Office System</masterLabel>
+            <translation><!-- Airline Head Office System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Local Office System</masterLabel>
+            <translation><!-- Airline Local Office System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA AWB Data Capture software is required</masterLabel>
+            <translation><!-- IATA AWB Data Capture software is required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upload by your Airline&apos;s GSSA</masterLabel>
+            <translation><!-- Upload by your Airline&apos;s GSSA --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Airline Registered Head Office Address --></help>
+        <label><!-- Airline HO Address --></label>
+        <name>Airline_HO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Intra-Europe Flights --></label>
+        <name>Airline_Intra_Europe_Flights__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Airline Invoice Address --></label>
+        <name>Airline_Invoice_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Local address in the BSP Country --></label>
+        <name>Airline_Local_address_in_the_BSP_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Registered under other name --></label>
+        <name>Airline_Registered_under_other_name__c</name>
+    </fields>
+    <fields>
+        <label>Hesap</label>
+        <name>Airline__c</name>
+        <relationshipLabel><!-- AP Process Forms --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Airline&apos;s Fiscal Status --></label>
+        <name>Airline_s_Fiscal_Status__c</name>
+        <picklistValues>
+            <masterLabel>Special (Contribuente Especial)</masterLabel>
+            <translation><!-- Special (Contribuente Especial) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard (Ordinario)</masterLabel>
+            <translation><!-- Standard (Ordinario) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Airline trade name --></label>
+        <name>Airline_trade_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline wish to join ICCS --></label>
+        <name>Airline_wish_to_join_ICCS__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- American Express Merchant Number --></label>
+        <name>American_Express_Merchant_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- American Express Name of Acquirer --></label>
+        <name>American_Express_Name_of_Acquirer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Auto-billing --></label>
+        <name>Auto_billing__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- BSPLink/ASD China Contact Email --></label>
+        <name>BSPLink_ASD_China_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSPLink/ASD China Contact L. Name --></label>
+        <name>BSPLink_ASD_China_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSPLink/ASD China Contact Phone --></label>
+        <name>BSPLink_ASD_China_Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSPLink/ASD China Contact F. Name --></label>
+        <name>BSPLink_ASD_China_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSPLink access level requested --></label>
+        <name>BSPLink_access_level_requested__c</name>
+        <picklistValues>
+            <masterLabel>Basic</masterLabel>
+            <translation><!-- Basic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enhanced</masterLabel>
+            <translation><!-- Enhanced --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Only if applicable: Please refer to Country requirements. --></help>
+        <label><!-- BSP Country VAT/Tax number --></label>
+        <name>BSP_Country_VAT_Tax_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Local City --></label>
+        <name>BSP_Local_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Local Zip Code --></label>
+        <name>BSP_Local_Zip_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Airline Local address in the BSP Country of application
+(Only if applicable. Please refer to Country Specifics) --></help>
+        <label><!-- BSP Local address --></label>
+        <name>BSP_Local_address__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Russia Double Tax avoiding Treaty --></label>
+        <name>BSP_Russia_Double_Tax_avoiding_Treaty__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- BSP UA BankCode MFO --></label>
+        <name>BSP_UA_BankCode_MFO__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP UA LocalReg Number EDRPOU --></label>
+        <name>BSP_UA_LocalReg_Number_EDRPOU__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact Email --></label>
+        <name>Billing_File_Emrgcy_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact F Name --></label>
+        <name>Billing_File_Emrgcy_Contact_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact Job Title --></label>
+        <name>Billing_File_Emrgcy_Contact_Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact L Name --></label>
+        <name>Billing_File_Emrgcy_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact Number --></label>
+        <name>Billing_File_Emrgcy_Contact_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing File Emrgcy Contact Salutation --></label>
+        <name>Billing_File_Emrgcy_Contact_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing Value Confirmation --></label>
+        <name>Billing_Value_Confirmation__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing Value Determination --></label>
+        <name>Billing_Value_Determination__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact Email --></label>
+        <name>CASSLink_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact F Name --></label>
+        <name>CASSLink_Contact_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact Fax --></label>
+        <name>CASSLink_Contact_Fax__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact Job Title --></label>
+        <name>CASSLink_Contact_Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact L Name --></label>
+        <name>CASSLink_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact Phone --></label>
+        <name>CASSLink_Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Contact Salutation --></label>
+        <name>CASSLink_Contact_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Extra Existing Users --></label>
+        <name>CASSLink_Extra_Existing_Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Extra New Users --></label>
+        <name>CASSLink_Extra_New_Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 1 Email --></label>
+        <name>CASSLink_New_User_1_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 1 F Name --></label>
+        <name>CASSLink_New_User_1_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 1 L Name --></label>
+        <name>CASSLink_New_User_1_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 1 Salutation --></label>
+        <name>CASSLink_New_User_1_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 1 System Functions --></label>
+        <name>CASSLink_New_User_1_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 2 Email --></label>
+        <name>CASSLink_New_User_2_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 2 F Name --></label>
+        <name>CASSLink_New_User_2_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 2 L Name --></label>
+        <name>CASSLink_New_User_2_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 2 Salutation --></label>
+        <name>CASSLink_New_User_2_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 2 System Functions --></label>
+        <name>CASSLink_New_User_2_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 3 Email --></label>
+        <name>CASSLink_New_User_3_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 3 F Name --></label>
+        <name>CASSLink_New_User_3_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 3 L Name --></label>
+        <name>CASSLink_New_User_3_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 3 Salutation --></label>
+        <name>CASSLink_New_User_3_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink New User 3 System Functions --></label>
+        <name>CASSLink_New_User_3_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink User 1 System Functions --></label>
+        <name>CASSLink_User_1_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink User 2 System Functions --></label>
+        <name>CASSLink_User_2_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink User 3 System Functions --></label>
+        <name>CASSLink_User_3_System_Functions__c</name>
+        <picklistValues>
+            <masterLabel>Add Corrections</masterLabel>
+            <translation><!-- Add Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add Input</masterLabel>
+            <translation><!-- Add Input --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approve Corrections</masterLabel>
+            <translation><!-- Approve Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output Airlines</masterLabel>
+            <translation><!-- Output Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock Management</masterLabel>
+            <translation><!-- Stock Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Corrections</masterLabel>
+            <translation><!-- View Corrections --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View Input</masterLabel>
+            <translation><!-- View Input --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Username 1 --></label>
+        <name>CASSLink_Username_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Username 2 --></label>
+        <name>CASSLink_Username_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASSLink Username 3 --></label>
+        <name>CASSLink_Username_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Ad Hoc Bulletins Email 1 --></label>
+        <name>CASS_Ad_Hoc_Bulletins_Email_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Ad Hoc Bulletins Email 2 --></label>
+        <name>CASS_Ad_Hoc_Bulletins_Email_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Corrections Email 1 --></label>
+        <name>CASS_Corrections_Email_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Corrections Email 2 --></label>
+        <name>CASS_Corrections_Email_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Corrections Email 3 --></label>
+        <name>CASS_Corrections_Email_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Corrections Email 4 --></label>
+        <name>CASS_Corrections_Email_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Defaults Email 1 --></label>
+        <name>CASS_Defaults_Email_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Defaults Email 2 --></label>
+        <name>CASS_Defaults_Email_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Operation --></label>
+        <name>CASS_Operation__c</name>
+        <picklistValues>
+            <masterLabel>Export</masterLabel>
+            <translation><!-- Export --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import</masterLabel>
+            <translation><!-- Import --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASS PH Bilat. Agreement Tax Rate --></label>
+        <name>CASS_PH_Bilat_Agreement_Tax_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS PH Bilateral Agreement --></label>
+        <name>CASS_PH_Bilateral_Agreement__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CASS PH Preferred Billing Currency --></label>
+        <name>CASS_PH_Preferred_Billing_Currency__c</name>
+        <picklistValues>
+            <masterLabel>PHP</masterLabel>
+            <translation><!-- PHP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD and PHP (2 separate billing files to be prepared by Airline)</masterLabel>
+            <translation><!-- USD and PHP (2 separate billing files to be prepared by Airline) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Canada Has Principal Office --></label>
+        <name>Canada_Has_Principal_Office__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Canada Local VAT Info --></label>
+        <name>Canada_LocalVAT_Info__c</name>
+    </fields>
+    <fields>
+        <label><!-- Canada Provincial Offices --></label>
+        <name>Canada_Provincial_Offices__c</name>
+        <picklistValues>
+            <masterLabel>ALBERTA (AB): GST</masterLabel>
+            <translation><!-- ALBERTA (AB): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BRITISH COLUMBIA (BC): GST</masterLabel>
+            <translation><!-- BRITISH COLUMBIA (BC): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MANITOBA (MB): GST</masterLabel>
+            <translation><!-- MANITOBA (MB): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEW BRUNSWICK (NB): HST</masterLabel>
+            <translation><!-- NEW BRUNSWICK (NB): HST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEWFOUNDLAND &amp; LABRADOR (NL): HST</masterLabel>
+            <translation><!-- NEWFOUNDLAND &amp; LABRADOR (NL): HST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NORTHWEST TERRITORIES (NW): GST</masterLabel>
+            <translation><!-- NORTHWEST TERRITORIES (NW): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOVA SCOTIA (NS): HST</masterLabel>
+            <translation><!-- NOVA SCOTIA (NS): HST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NUNAVUT (NT): GST</masterLabel>
+            <translation><!-- NUNAVUT (NT): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ONTARIO (ON): HST</masterLabel>
+            <translation><!-- ONTARIO (ON): HST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PRINCE EDWARD ISLAND (PE): HST</masterLabel>
+            <translation><!-- PRINCE EDWARD ISLAND (PE): HST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QUEBEC (QC): GST QST</masterLabel>
+            <translation><!-- QUEBEC (QC): GST QST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SASKATCHEWAN (SK): GST</masterLabel>
+            <translation><!-- SASKATCHEWAN (SK): GST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YUKON (YK): GST</masterLabel>
+            <translation><!-- YUKON (YK): GST --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Capital amount of the business --></label>
+        <name>Capital_amount_of_the_business__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card brand accepted for BSP ticket --></label>
+        <name>Card_brand_accepted_for_BSP_ticket__c</name>
+        <picklistValues>
+            <masterLabel>American Express (AX)</masterLabel>
+            <translation><!-- American Express (AX) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diners (DC)</masterLabel>
+            <translation><!-- Diners (DC) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MasterCard (CA)</masterLabel>
+            <translation><!-- MasterCard (CA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UATP (TP)</masterLabel>
+            <translation><!-- UATP (TP) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visa (VI)</masterLabel>
+            <translation><!-- Visa (VI) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CargoLink Address --></label>
+        <name>CargoLink_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- CargoLink Airline Name --></label>
+        <name>CargoLink_Airline_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CargoLink Phone Number --></label>
+        <name>CargoLink_Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- AP Process Forms --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The CBU, usually referred to as the Bank Code, consists of 22 digits and is mandatory for Argentinian Airline settlements. --></help>
+        <label><!-- Clave Bancaria Unificada - CBU --></label>
+        <name>Clave_Bancaria_Unificada_CBU__c</name>
+    </fields>
+    <fields>
+        <label><!-- Colombia City percentage --></label>
+        <name>Colombia_City_percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Colombia City selection --></label>
+        <name>Colombia_City_selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- Colombia - Type of Contributor --></label>
+        <name>Colombia_Type_of_Contributor__c</name>
+        <picklistValues>
+            <masterLabel>Asignación de NIT</masterLabel>
+            <translation><!-- Asignación de NIT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gran contribuyente</masterLabel>
+            <translation><!-- Gran contribuyente --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gran contribuyente autorretenedor</masterLabel>
+            <translation><!-- Gran contribuyente autorretenedor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regimen Especial</masterLabel>
+            <translation><!-- Regimen Especial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regimen comun</masterLabel>
+            <translation><!-- Regimen comun --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regimen comun autorretenedor</masterLabel>
+            <translation><!-- Regimen comun autorretenedor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regimen simplificado</masterLabel>
+            <translation><!-- Regimen simplificado --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Commission Rate --></label>
+        <name>Commission_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Country --></label>
+        <name>Company_Country__c</name>
+        <relationshipLabel><!-- AP Process Forms --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Company Email --></label>
+        <name>Company_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Registration ID --></label>
+        <name>Company_Registration_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Registration number --></label>
+        <name>Company_Registration_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company State --></label>
+        <name>Company_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Trade Name --></label>
+        <name>Company_Trade_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company address --></label>
+        <name>Company_address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company city --></label>
+        <name>Company_city__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email address --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Name --></label>
+        <name>Contact_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Name --></label>
+        <name>Contact_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Resp Email --></label>
+        <name>Contact_Resp_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact  Resp F. Name --></label>
+        <name>Contact_Resp_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Resp Job Title --></label>
+        <name>Contact_Resp_Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Resp L. Name --></label>
+        <name>Contact_Resp_L_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Phone number including country code --></help>
+        <label><!-- Contact Resp Phone --></label>
+        <name>Contact_Resp_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Resp Salutation --></label>
+        <name>Contact_Resp_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Contact_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Telephone Number --></label>
+        <name>Contact_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cyprus Turkey based Airline --></label>
+        <name>Cyprus_Turkey_based_Airline__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The &apos;Data Export&apos; means the controller who transfers the personal data --></help>
+        <label><!-- Data Exporter Name --></label>
+        <name>Data_Exporter_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporter Signatory Name --></label>
+        <name>Data_Exporter_Signatory_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporter Signatory Position --></label>
+        <name>Data_Exporter_Signatory_Position__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporting Organization Address --></label>
+        <name>Data_Exporting_Organization_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporting Organization Email --></label>
+        <name>Data_Exporting_Organization_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporting Organization Fax --></label>
+        <name>Data_Exporting_Organization_Fax__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporting Organization Name --></label>
+        <name>Data_Exporting_Organization_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Exporting Organization Phone --></label>
+        <name>Data_Exporting_Organization_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default Commission Rate --></label>
+        <name>Default_Commission_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Desired commencment date --></label>
+        <name>Desired_commencment_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Desired date to start in ICH --></label>
+        <name>Desired_date_to_start_in_ICH__c</name>
+    </fields>
+    <fields>
+        <label><!-- Desired date to start in SIS --></label>
+        <name>Desired_date_to_start_in_SIS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Digital Signature application --></label>
+        <name>Digital_Signature_application__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Digital Signature verification --></label>
+        <name>Digital_Signature_verification__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Diners Merchant Number --></label>
+        <name>Diners_Merchant_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diners Name of Acquirer --></label>
+        <name>Diners_Name_of_Acquirer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Do you have an iiNET account? --></label>
+        <name>Do_you_have_an_iiNET_account__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Do you want to add Bank Details? --></label>
+        <name>Do_you_want_to_add_Bank_Details__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No, use form 1</masterLabel>
+            <translation><!-- No, use form 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No, use form 2</masterLabel>
+            <translation><!-- No, use form 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Download Guide Counter --></label>
+        <name>Download_Guide_Counter__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Address --></label>
+        <name>ETSP_Contact_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Email --></label>
+        <name>ETSP_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact F Name --></label>
+        <name>ETSP_Contact_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Fax --></label>
+        <name>ETSP_Contact_Fax__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Job Title --></label>
+        <name>ETSP_Contact_Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact L Name --></label>
+        <name>ETSP_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Phone --></label>
+        <name>ETSP_Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contact Salutation --></label>
+        <name>ETSP_Contact_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ETSP Contractor Name --></label>
+        <name>ETSP_Contractor_Name__c</name>
+        <picklistValues>
+            <masterLabel>APG</masterLabel>
+            <translation><!-- APG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TAL Aviation Ltd</masterLabel>
+            <translation><!-- TAL Aviation Ltd --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EU Data Privacy Laws --></label>
+        <name>EU_Data_Privacy_Laws__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ecuador Legal Forms requirements --></label>
+        <name>Ecuador_Legal_Forms_requirements__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Address --></label>
+        <name>Fin_Adm_Contact_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact City --></label>
+        <name>Fin_Adm_Contact_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Country --></label>
+        <name>Fin_Adm_Contact_Country__c</name>
+        <picklistValues>
+            <masterLabel>France</masterLabel>
+            <translation><!-- France --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Email --></label>
+        <name>Fin_Adm_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact F. Name --></label>
+        <name>Fin_Adm_Contact_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Job Title --></label>
+        <name>Fin_Adm_Contact_Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact L. Name --></label>
+        <name>Fin_Adm_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Phone --></label>
+        <name>Fin_Adm_Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Zip Code --></label>
+        <name>Fin_Adm_Contact_Zip_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin./Adm. Contact Title --></label>
+        <name>Fin_Adm_Contact__c</name>
+        <picklistValues>
+            <masterLabel>Mme</masterLabel>
+            <translation><!-- Mme --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Flights operated in the BSP/CASS country --></label>
+        <name>Flights_operated_in_the_BSP_country__c</name>
+        <picklistValues>
+            <masterLabel>Both</masterLabel>
+            <translation><!-- Both --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic</masterLabel>
+            <translation><!-- Domestic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International</masterLabel>
+            <translation><!-- International --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GSSA Address --></label>
+        <name>GSSA_Address_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Address --></label>
+        <name>GSSA_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Code --></label>
+        <name>GSSA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact Email --></label>
+        <name>GSSA_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact FAX --></label>
+        <name>GSSA_Contact_FAX__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact F Name --></label>
+        <name>GSSA_Contact_F_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact JobTitle --></label>
+        <name>GSSA_Contact_JobTitle__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact L Name --></label>
+        <name>GSSA_Contact_L_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Contact Phone --></label>
+        <name>GSSA_Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA_Contact_Salutation --></label>
+        <name>GSSA_Contact_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr</masterLabel>
+            <translation><!-- Mr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs</masterLabel>
+            <translation><!-- Mrs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms</masterLabel>
+            <translation><!-- Ms --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GSSA Legal Name --></label>
+        <name>GSSA_Legal_Name_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSSA Legal Name --></label>
+        <name>GSSA_Legal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOT File Recipient Email 1 --></label>
+        <name>HOT_File_Recipient_Email_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOT File Recipient Email 2 --></label>
+        <name>HOT_File_Recipient_Email_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOT File Recipient Email 3 --></label>
+        <name>HOT_File_Recipient_Email_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOT File Recipient Email 4 --></label>
+        <name>HOT_File_Recipient_Email_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hot files delivery format --></label>
+        <name>Hot_files_delivery_format__c</name>
+        <picklistValues>
+            <masterLabel>ASD (applicable for China)</masterLabel>
+            <translation><!-- ASD (applicable for China) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSPLink</masterLabel>
+            <translation><!-- BSPLink --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Download only</masterLabel>
+            <translation><!-- Download only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-mail and Download</masterLabel>
+            <translation><!-- E-mail and Download --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not required</masterLabel>
+            <translation><!-- Not required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iiNET</masterLabel>
+            <translation><!-- iiNET --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IATA EasyPay Effective Date --></label>
+        <name>IATA_EasyPay_Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA EasyPay Opt-In / Opt-Out --></label>
+        <name>IATA_EasyPay_Opt_In_Opt_Out__c</name>
+        <picklistValues>
+            <masterLabel>Opt-In</masterLabel>
+            <translation><!-- Opt-In --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opt-Out</masterLabel>
+            <translation><!-- Opt-Out --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ICH Currency of Clearance --></label>
+        <name>ICH_Currency_of_Clearance__c</name>
+        <picklistValues>
+            <masterLabel>EUR Currency of Clearance (Zone D)</masterLabel>
+            <translation><!-- EUR Currency of Clearance (Zone D) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GBP Currency of Clearance (Zone A)</masterLabel>
+            <translation><!-- GBP Currency of Clearance (Zone A) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD Currency of Clearance (Zone B)</masterLabel>
+            <translation><!-- USD Currency of Clearance (Zone B) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ICH Currency of Settlement --></label>
+        <name>ICH_Currency_of_Settlement__c</name>
+        <picklistValues>
+            <masterLabel>Entirely in EUR</masterLabel>
+            <translation><!-- Entirely in EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Entirely in GBP</masterLabel>
+            <translation><!-- Entirely in GBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Entirely in USD</masterLabel>
+            <translation><!-- Entirely in USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In EUR and USD</masterLabel>
+            <translation><!-- In EUR and USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In GBP with respect to balance with other Zone A members and in USD with respect to all other zones</masterLabel>
+            <translation><!-- In GBP with respect to balance with other Zone A members and in USD with respect to all other zones --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Value must be  2 alpha 2 numeric --></help>
+        <label><!-- IINET account number --></label>
+        <name>IINET_account_number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Change this help text --></help>
+        <label><!-- Is your company an A&amp;A Member? --></label>
+        <name>Is_AA_Member__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is company subject to EU laws? --></label>
+        <name>Is_company_subject_to_EU_laws__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is publicly traded company --></label>
+        <name>Is_publicly_traded_company__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is your company joining the Clearing Hou --></label>
+        <name>Is_your_company_joining_the_Clearing_Hou__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Does your Airline wish to join BSP Electronic Credit Card Billing Scheme (ECCB), where BSP produces card clearing files and forwards them to your Acquirer or processor? --></help>
+        <label><!-- Join BSP ECCB --></label>
+        <name>Join_BSP_ECCB__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Legal Archiving --></label>
+        <name>Legal_Archiving__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Legal Name of account --></label>
+        <name>Legal_Name_of_account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Name of company --></label>
+        <name>Legal_Name_of_company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local CC / Settlement Scheme? --></label>
+        <name>Local_CC_Settlement_Scheme__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Master Card Merchant Number --></label>
+        <name>Master_Card_Merchant_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Master Card Name of Acquirer --></label>
+        <name>Master_Card_Name_of_Acquirer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum Commission Rate --></label>
+        <name>Maximum_Commission_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Commission Rate --></label>
+        <name>Minimum_Commission_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name appearing in the RUT --></label>
+        <name>Name_Appearing_in_VAT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of business/comm assoc --></label>
+        <name>Name_of_business_comm_assoc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Online carrier in the BSP country --></label>
+        <name>Online_carrier_in_the_BSP_country__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Other Card brand accepted for BSP ticket --></label>
+        <name>Other_Card_brand_accepted_for_BSP_ticket__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other TAX Identification --></label>
+        <name>Other_TAX_Identification__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF File Recipient Email 1 --></label>
+        <name>PDF_File_Recipient_Email_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF File Recipient Email 2 --></label>
+        <name>PDF_File_Recipient_Email_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF File Recipient Email 3 --></label>
+        <name>PDF_File_Recipient_Email_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF File Recipient Email 4 --></label>
+        <name>PDF_File_Recipient_Email_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF Report Delivery Format --></label>
+        <name>PDF_Report_Delivery_Format__c</name>
+        <picklistValues>
+            <masterLabel>Download Only</masterLabel>
+            <translation><!-- Download Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-mail and Download</masterLabel>
+            <translation><!-- E-mail and Download --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not required</masterLabel>
+            <translation><!-- Not required --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Participate in AWB Stock Management --></label>
+        <name>Participate_in_AWB_Stock_Management__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Participate in any Commission Control --></label>
+        <name>Participate_in_any_Commission_Control__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Participate in any Remit scheme --></label>
+        <name>Participate_in_any_Remit_scheme__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Pay Commission to agents --></label>
+        <name>Pay_Commission_to_agents__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Pay Standard Commission --></label>
+        <name>Pay_Standard_Commission__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Postal code --></label>
+        <name>Postal_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Receive Cargo BI statistics --></label>
+        <name>Receive_Cargo_BI_statistics__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Receive HOT files --></label>
+        <name>Receive_HOT_files__c</name>
+        <picklistValues>
+            <masterLabel>NO</masterLabel>
+            <translation><!-- NO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not required</masterLabel>
+            <translation><!-- Not required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YES - Billing Period HOT</masterLabel>
+            <translation><!-- YES - Billing Period HOT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YES - Daily</masterLabel>
+            <translation><!-- YES - Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YES - Per Period</masterLabel>
+            <translation><!-- YES - Per Period --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YES - Remittance Period HOT</masterLabel>
+            <translation><!-- YES - Remittance Period HOT --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Receive XLS Reports --></label>
+        <name>Receive_XLS_Reports__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Select Bank Account --></label>
+        <name>Select_Bank_Account__c</name>
+        <picklistValues>
+            <masterLabel>Use a new Bank Account</masterLabel>
+            <translation><!-- Use a new Bank Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Use my ICH bank account</masterLabel>
+            <translation><!-- Use my ICH bank account --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stock Exchange Name --></label>
+        <name>Stock_Exchange_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submitted to IATA --></label>
+        <name>Submitted_to_IATA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Email Address --></label>
+        <name>Super_User_Email_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Fax Number --></label>
+        <name>Super_User_Fax_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User First Name --></label>
+        <name>Super_User_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Last Name --></label>
+        <name>Super_User_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Mobile Number --></label>
+        <name>Super_User_Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Phone Number --></label>
+        <name>Super_User_Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Super User Salutation --></label>
+        <name>Super_User_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr.</masterLabel>
+            <translation><!-- Mr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs.</masterLabel>
+            <translation><!-- Mrs. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms.</masterLabel>
+            <translation><!-- Ms. --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TAX/VAT Registration Number --></label>
+        <name>TAX_VAT_Registration_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory Percentage (Italy) --></label>
+        <name>Territory_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>BSP</masterLabel>
+            <translation><!-- BSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS</masterLabel>
+            <translation><!-- CASS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Change Requested --></label>
+        <name>Type_of_Change_Requested__c</name>
+        <picklistValues>
+            <masterLabel>BSPLink Master Table</masterLabel>
+            <translation><!-- BSPLink Master Table --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Address</masterLabel>
+            <translation><!-- Change of Address --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tax Number</masterLabel>
+            <translation><!-- Tax Number --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of participation desired --></label>
+        <name>Type_of_participation_desired__c</name>
+        <picklistValues>
+            <masterLabel>Airline joining CASS through a GSSA</masterLabel>
+            <translation><!-- Airline joining CASS through a GSSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline joining directly</masterLabel>
+            <translation><!-- Airline joining directly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Full (direct participant)</masterLabel>
+            <translation><!-- Full (direct participant) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weblink</masterLabel>
+            <translation><!-- Weblink --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Use a new Bank Account --></label>
+        <name>Use_a_new_Bank_Account__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- VAT/Tax number in your home country --></label>
+        <name>VAT_Tax_number_in_your_home_country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visa Name of Acquirer or Processor --></label>
+        <name>Visa_Name_of_Acquirer_or_Processor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visa merchant number --></label>
+        <name>Visa_merchant_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Who requested to join TOU --></label>
+        <name>Who_requested_to_join_TOU__c</name>
+    </fields>
+    <nameFieldLabel><!-- AP Process Form # --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- BSP Change --></label>
+        <name>BSP_Change</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- BSP Joining --></label>
+        <name>BSP_Joining</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Change --></label>
+        <name>CASS_Change</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Joining --></label>
+        <name>CASS_Joining</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- IATA EasyPay Opt-in / Out --></label>
+        <name>IATA_EasyPay_Opt_in_Out</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- ICH Minor and Bank changes --></description>
+        <label><!-- ICH Change --></label>
+        <name>ICH_Change</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Joining Form for IATA Clearing House --></description>
+        <label><!-- ICH Joining --></label>
+        <name>ICH_Joining</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used in SIS Management Application, for ISPA membership --></description>
+        <label><!-- SIS Application ISPA --></label>
+        <name>SIS_Application_ISPA</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used in SIS Management Application, for ISUA membership --></description>
+        <label><!-- SIS Application ISUA --></label>
+        <name>SIS_Application_ISUA</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used in SIS Management Application, for Terms of use membership --></description>
+        <label><!-- SIS Application TOU --></label>
+        <name>SIS_Application_TOU</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Please select whether or not you wish to accept IATA EasyPay transactions in this BSP. --></errorMessage>
+        <name>ANG_AP_Accept_EasyPay_in_BSP</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter at least one email address for the HOT file email distribution. --></errorMessage>
+        <name>AP_CASS_HOT_File_EmailAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter at least one email address for the PDF report  email distribution. --></errorMessage>
+        <name>AP_CASS_PDF_Report_EmailAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please indicate whether or not the Airline provides a standard commission to Agents. --></errorMessage>
+        <name>AP_CASS_Pay_Standard_Commission</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please indicate the standard commission rate (%) paid to Agents. --></errorMessage>
+        <name>AP_CASS_Pay_Standard_Commission_Rate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide the GST/HST/QST information of your direct / principal office in Canada. --></errorMessage>
+        <name>AP_Canada_BSP_LocalVAT_Info</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the provincial location of your direct / principal office in Canada. --></errorMessage>
+        <name>AP_Canada_BSP_Province</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please indicate the flights the airline operates for the country concerned. --></errorMessage>
+        <name>AP_Check_Flights_BSP_Concerned</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The iiNET Account number cannot be empty, and must be 4 characters long, in order to receive HOT files in the iiNET format. --></errorMessage>
+        <name>AP_Check_IINET_Code</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select the HOT file delivery format. --></errorMessage>
+        <name>AP_HOT_File_Delivery_Format</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select whether or not you wish to join ICCS before submitting this application to IATA. --></errorMessage>
+        <name>AP_Joining_ICSS</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the tax rate for the special bilateral agreement with the Philippine government. --></errorMessage>
+        <name>AP_Philippines_Special_Tax_Rate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please accept the Terms and Conditions before submitting the Joining Application to IATA. --></errorMessage>
+        <name>AP_T_C_Selected_on_Submit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Desired Date to start in ICH can&apos;t be earlier than Desired Date to start in SIS --></errorMessage>
+        <name>Derired_Date_to_start_ICH_Lower_than_SIS</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please indicate if there is a “Double Tax avoiding Treaty” between Russia and the Airline&apos;s country of Registration. --></errorMessage>
+        <name>Russia_Double_Tax_avoiding_Treaty</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the Bank Code (MFO) before submitting to IATA. --></errorMessage>
+        <name>Ukraine_BankCode_MFO_Number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the Beneficiary Registration Code/ Local Registration Number (EDRPOU) before submitting ti IATA. --></errorMessage>
+        <name>Ukraine_EDRPOU_Number</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- View_as_PDF --></label>
+        <name>View_as_PDF</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_as_PDF_CASS --></label>
+        <name>View_as_PDF_CASS</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_as_PDF_SIS --></label>
+        <name>View_as_PDF_SIS</name>
+    </webLinks>
+</CustomObjectTranslation>

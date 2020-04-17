@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP Notifications Trigger</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP Notifications Trigger</value>
+    </caseValues>
+    <fields>
+        <help><!-- Use example:
+Field Set: Name, Phone Number
+Notification Message: Hello {0}, your phone number is: {1}
+Message shown to user: Hello User, you phone number is: 123456789 --></help>
+        <label><!-- FieldSetAPIName --></label>
+        <name>FieldSetAPIName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notification Template Id --></label>
+        <name>Notification_Template_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

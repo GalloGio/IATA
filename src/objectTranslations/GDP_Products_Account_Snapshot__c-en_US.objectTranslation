@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP Products - Account Snapshot</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP Products - Accounts Snapshot</value>
+    </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account View --></label>
+        <name>Account_View__c</name>
+        <relationshipLabel><!-- GDP Products - Accounts Snapshot --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agency Code --></label>
+        <name>Agency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Digit --></label>
+        <name>Check_Digit__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country ISO Code --></label>
+        <name>Country_ISO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Name --></label>
+        <name>Legal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Type Name --></label>
+        <name>Location_Type_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Accreditation Class Code --></label>
+        <name>Related_Accreditation_Class_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Accreditation Class Table --></label>
+        <name>Related_Accreditation_Class_Table__c</name>
+    </fields>
+    <fields>
+        <label><!-- State/Province Code --></label>
+        <name>State_Province_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Continent --></label>
+        <name>Sub_Continent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trading Name --></label>
+        <name>Trading_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zip/Postal Code --></label>
+        <name>Zip_Postal_Code__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

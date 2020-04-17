@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IEC SAP Invoice</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IEC SAP Invoices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- IEC SAP Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Bill To Contact SAP Partner --></label>
+        <name>Bill_To_Contact_SAP_Partner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bill To --></label>
+        <name>Bill_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- IEC SAP Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing City --></label>
+        <name>Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Country ISO Code --></label>
+        <name>Billing_Country_ISO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Country --></label>
+        <name>Billing_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Name --></label>
+        <name>Billing_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Street --></label>
+        <name>Billing_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Zip --></label>
+        <name>Billing_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Person --></label>
+        <name>Contact_Person__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End --></label>
+        <name>Contract_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Number --></label>
+        <name>Contract_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Start --></label>
+        <name>Contract_Start__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Card Type --></label>
+        <name>Credit_Card_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer PO --></label>
+        <name>Customer_PO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dist Chan --></label>
+        <name>Dist_Chan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- Doc Currency --></label>
+        <name>Doc_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Doc Type --></label>
+        <name>Doc_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee Responsible --></label>
+        <name>Employee_Responsible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Error SAP Items --></label>
+        <name>Number_of_Error_SAP_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of SAP Items --></label>
+        <name>Number_of_SAP_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Use Contract --></label>
+        <name>Number_of_Use_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Zuora Items --></label>
+        <name>Number_of_Zuora_Items__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Reason --></label>
+        <name>Order_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- IEC SAP Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- PO Date --></label>
+        <name>PO_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pay Method --></label>
+        <name>Pay_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pay Terms --></label>
+        <name>Pay_Terms__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Date --></label>
+        <name>Payment_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method Code --></label>
+        <name>Payment_Method_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Reference ID --></label>
+        <name>Payment_Reference_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ready for SAP? --></label>
+        <name>Ready_for_SAP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Orders --></label>
+        <name>Related_Orders__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Bill To Number --></label>
+        <name>SAP_Bill_To_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Contract Number --></label>
+        <name>SAP_Contract_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Invoice Clearance Date --></label>
+        <name>SAP_Invoice_Clearance_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Invoice Number --></label>
+        <name>SAP_Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Office --></label>
+        <name>Sales_Office__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Org --></label>
+        <name>Sales_Org__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping City --></label>
+        <name>Shipping_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Contact --></label>
+        <name>Shipping_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Country --></label>
+        <name>Shipping_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping State --></label>
+        <name>Shipping_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Street --></label>
+        <name>Shipping_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Zip --></label>
+        <name>Shipping_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Date --></label>
+        <name>Status_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pre Go-Live</masterLabel>
+            <translation><!-- Pre Go-Live --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAP Error</masterLabel>
+            <translation><!-- SAP Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAP Payment Confirmation Received</masterLabel>
+            <translation><!-- SAP Payment Confirmation Received --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sent to SAP</masterLabel>
+            <translation><!-- Sent to SAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sent to Zuora</masterLabel>
+            <translation><!-- Sent to Zuora --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation Error</masterLabel>
+            <translation><!-- Validation Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zuora Error</masterLabel>
+            <translation><!-- Zuora Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zuora Ready</masterLabel>
+            <translation><!-- Zuora Ready --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subscription Order Id --></label>
+        <name>Subscription_Order_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subtotal --></label>
+        <name>Subtotal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text Print --></label>
+        <name>Text_Print__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sum of all quantity items in related invoice items that has a Charge Amount value &gt; 0.
+
+This is to avoid sending negative invoice items to SAP --></help>
+        <label><!-- Total Positive Quantity --></label>
+        <name>Total_Positive_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sum of all related invoice item quantity --></help>
+        <label><!-- Total Quantity --></label>
+        <name>Total_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- VAT Number --></label>
+        <name>VAT_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field that stores warning messages received by SAP --></help>
+        <label><!-- Warning Message --></label>
+        <name>Warning_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zuora Billing Account ID --></label>
+        <name>Zuora_Billing_Account_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zuora Invoice ID --></label>
+        <name>Zuora_Invoice_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zuora Invoice Number --></label>
+        <name>Zuora_Invoice_Number__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

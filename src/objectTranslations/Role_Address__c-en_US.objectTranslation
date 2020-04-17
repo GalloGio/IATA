@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Role Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Role Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- ITP Employee --></label>
+        <name>Account_Contact_Role__c</name>
+        <relationshipLabel><!-- Role Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Role Relationship --></label>
+        <name>Account_Role_Relationship__c</name>
+        <relationshipLabel><!-- Role Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Role Service --></label>
+        <name>Account_Role_Service__c</name>
+        <relationshipLabel><!-- Account Role Service Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Airport --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- Role Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Airport Details --></label>
+        <name>Airport_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Role Certification --></label>
+        <name>Contact_Role_Certification__c</name>
+        <relationshipLabel><!-- Proficiency Stations List --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- OJT File Id --></label>
+        <name>OJT_File_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- OJT file --></label>
+        <name>OJT_file__c</name>
+    </fields>
+    <fields>
+        <label><!-- OJT file validated --></label>
+        <name>OJT_file_validated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary --></label>
+        <name>Primary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Proficiency Granted By --></label>
+        <name>Proficiency_Granted_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Proficiency Status --></label>
+        <name>Proficiency_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suppressed</masterLabel>
+            <translation><!-- Suppressed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Proficiency --></label>
+        <name>Proficiency_level__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <quickActions>
+        <label><!-- Remove Proficiency --></label>
+        <name>Remove_Proficiency</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

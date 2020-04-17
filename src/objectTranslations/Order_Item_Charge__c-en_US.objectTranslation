@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Item Charge</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Item Charges</value>
+    </caseValues>
+    <fields>
+        <label><!-- Discount Amount --></label>
+        <name>Discount_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Percentage --></label>
+        <name>Discount_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Type --></label>
+        <name>Discount_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Item --></label>
+        <name>Order_Item__c</name>
+        <relationshipLabel><!-- Order Item Charges --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Zuora Rate Plan Charge Id --></label>
+        <name>Zuora_Rate_Plan_Charge_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zuora Rate Plan Id --></label>
+        <name>Zuora_Rate_Plan_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

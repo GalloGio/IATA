@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SFDC SAP Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SFDC SAP Mapping</value>
+    </caseValues>
+    <fields>
+        <label><!-- SAP Distribition Channel --></label>
+        <name>SAP_Distribition_Channel__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Division --></label>
+        <name>SAP_Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Order Type --></label>
+        <name>SAP_Order_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Sales Org --></label>
+        <name>SAP_Sales_Org__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDC Key --></label>
+        <name>SFDC_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDC Order Channel --></label>
+        <name>SFDC_Order_Channel__c</name>
+        <picklistValues>
+            <masterLabel>Central Direct Sales</masterLabel>
+            <translation><!-- Central Direct Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telesales</masterLabel>
+            <translation><!-- Telesales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eCommerce</masterLabel>
+            <translation><!-- eCommerce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SFDC Order Source --></label>
+        <name>SFDC_Order_Source__c</name>
+        <picklistValues>
+            <masterLabel>Automatic Renewal</masterLabel>
+            <translation><!-- Automatic Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA event</masterLabel>
+            <translation><!-- IATA event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inbound call</masterLabel>
+            <translation><!-- Inbound call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA event</masterLabel>
+            <translation><!-- Non-IATA event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Outbound Solicitation</masterLabel>
+            <translation><!-- Outbound Solicitation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription Renewal</masterLabel>
+            <translation><!-- Subscription Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Word of mouth</masterLabel>
+            <translation><!-- Word of mouth --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eBroadcast Campaign</masterLabel>
+            <translation><!-- eBroadcast Campaign --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eCommerce</masterLabel>
+            <translation><!-- eCommerce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SFDC Order Type --></label>
+        <name>SFDC_Order_Type__c</name>
+        <picklistValues>
+            <masterLabel>Bulk Order</masterLabel>
+            <translation><!-- Bulk Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cart</masterLabel>
+            <translation><!-- Cart --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event Auto-Renew</masterLabel>
+            <translation><!-- Event Auto-Renew --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Order</masterLabel>
+            <translation><!-- Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal Notification</masterLabel>
+            <translation><!-- Renewal Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription</masterLabel>
+            <translation><!-- Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

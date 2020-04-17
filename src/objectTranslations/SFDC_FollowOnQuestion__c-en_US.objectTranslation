@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>FollowOnQuestion</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FollowOnQuestions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Answer --></label>
+        <name>Answer__c</name>
+        <relationshipLabel><!-- Follow On Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Help for Scripts --></label>
+        <name>Help__c</name>
+    </fields>
+    <fields>
+        <label><!-- QuestionOrder --></label>
+        <name>QuestionOrder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Question__c</name>
+        <relationshipLabel><!-- Follow On Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Script --></label>
+        <name>Script__c</name>
+        <relationshipLabel><!-- Questions --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

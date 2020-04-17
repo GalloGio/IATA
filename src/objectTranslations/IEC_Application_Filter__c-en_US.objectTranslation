@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IEC Application Filter</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IEC Application Filters</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agency Name Search Condition --></label>
+        <name>Agency_Name_Search_Condition__c</name>
+        <picklistValues>
+            <masterLabel>Both</masterLabel>
+            <translation><!-- Both --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal Name</masterLabel>
+            <translation><!-- Legal Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trading Name</masterLabel>
+            <translation><!-- Trading Name --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Agency Name Search Type --></label>
+        <name>Agency_Name_Search_Type__c</name>
+        <picklistValues>
+            <masterLabel>Contains</masterLabel>
+            <translation><!-- Contains --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exact match</masterLabel>
+            <translation><!-- Exact match --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Starts with</masterLabel>
+            <translation><!-- Starts with --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Agency Name --></label>
+        <name>Agency_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Program --></label>
+        <name>Agency_Program__c</name>
+    </fields>
+    <fields>
+        <label><!-- Area of Activity --></label>
+        <name>Area_of_Activity__c</name>
+        <picklistValues>
+            <masterLabel>Airline Sales Office</masterLabel>
+            <translation><!-- Airline Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency</masterLabel>
+            <translation><!-- Travel Agency --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- City Search Type --></label>
+        <name>City_Search_Type__c</name>
+        <picklistValues>
+            <masterLabel>Contains</masterLabel>
+            <translation><!-- Contains --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exact match</masterLabel>
+            <translation><!-- Exact match --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Starts with</masterLabel>
+            <translation><!-- Starts with --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <help><!-- The filter name given by the customer --></help>
+        <label><!-- Filter Name --></label>
+        <name>Filter_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Type --></label>
+        <name>Filter_Type__c</name>
+        <picklistValues>
+            <masterLabel>Advanced</masterLabel>
+            <translation><!-- Advanced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Basic</masterLabel>
+            <translation><!-- Basic --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Hierarchy --></label>
+        <name>Hierarchy__c</name>
+        <picklistValues>
+            <masterLabel>Administrative Office</masterLabel>
+            <translation><!-- Administrative Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Branch Office</masterLabel>
+            <translation><!-- Branch Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>European STP</masterLabel>
+            <translation><!-- European STP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head Office</masterLabel>
+            <translation><!-- Head Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Satellite Ticket Printer</masterLabel>
+            <translation><!-- Satellite Ticket Printer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Specific Sales Activity</masterLabel>
+            <translation><!-- Specific Sales Activity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Agency IATA code --></help>
+        <label><!-- IATA Code --></label>
+        <name>IATA_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Product Line to create isolation between GAD, PAL, CAL ASL --></help>
+        <label><!-- Product Line --></label>
+        <name>Product_Line__c</name>
+    </fields>
+    <fields>
+        <help><!-- The related contact --></help>
+        <label><!-- Related Contact --></label>
+        <name>Related_Contact__c</name>
+        <relationshipLabel><!-- IEC Application Filters --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Continent --></label>
+        <name>Sub_Continent__c</name>
+    </fields>
+    <fields>
+        <label><!-- System Generated? --></label>
+        <name>System_Generated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zip Code Search Type --></label>
+        <name>Zip_Code_Search_Type__c</name>
+        <picklistValues>
+            <masterLabel>Contains</masterLabel>
+            <translation><!-- Contains --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exact match</masterLabel>
+            <translation><!-- Exact match --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Starts with</masterLabel>
+            <translation><!-- Starts with --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Zip Code --></label>
+        <name>Zip_Code__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

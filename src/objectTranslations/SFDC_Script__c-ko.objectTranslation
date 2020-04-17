@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Script --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Available With --></label>
+        <name>Available_With__c</name>
+        <picklistValues>
+            <masterLabel>Accounts</masterLabel>
+            <translation><!-- Accounts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cases</masterLabel>
+            <translation><!-- Cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contacts</masterLabel>
+            <translation><!-- Contacts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Leads</masterLabel>
+            <translation><!-- Leads --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunities</masterLabel>
+            <translation><!-- Opportunities --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Help for Scripts --></label>
+        <name>Help__c</name>
+    </fields>
+    <fields>
+        <label><!-- Passing Score --></label>
+        <name>Passing_Score__c</name>
+    </fields>
+    <fields>
+        <label>설명</label>
+        <name>Script_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Use Scoring --></label>
+        <name>Use_Scoring__c</name>
+    </fields>
+    <nameFieldLabel><!-- Script Name --></nameFieldLabel>
+    <webLinks>
+        <label><!-- ScriptWizard --></label>
+        <name>ScriptWizard</name>
+    </webLinks>
+</CustomObjectTranslation>

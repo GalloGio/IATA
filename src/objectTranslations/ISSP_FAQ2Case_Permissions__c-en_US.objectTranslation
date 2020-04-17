@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP FAQ2Case Permissions</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP FAQ2Case Permissions</value>
+    </caseValues>
+    <fields>
+        <label><!-- ISO Country --></label>
+        <name>ISO_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sector Permission --></label>
+        <name>Sector_Permission__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subtopic --></label>
+        <name>Subtopic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic --></label>
+        <name>Topic__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

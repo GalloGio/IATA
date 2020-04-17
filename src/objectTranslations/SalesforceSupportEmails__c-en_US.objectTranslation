@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Salesforce Support Emails</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Salesforce Support Emails</value>
+    </caseValues>
+    <fields>
+        <label><!-- Support Email --></label>
+        <name>Support_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Support User Id --></label>
+        <name>Support_User_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

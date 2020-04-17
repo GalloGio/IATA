@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>One Id App Config Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>One Id App Config Details</value>
+    </caseValues>
+    <fields>
+        <label><!-- Connected App Provisioning Name --></label>
+        <name>Connected_App_Provisioning_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- One Id Service Provider Config --></label>
+        <name>One_Id_Service_Provider_Config__c</name>
+        <relationshipLabel><!-- One Id App Config Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- PermissionSet Provisioning --></label>
+        <name>PermissionSet_Provisioning__c</name>
+    </fields>
+    <fields>
+        <label><!-- PermissionSet SSO --></label>
+        <name>PermissionSet_SSO__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

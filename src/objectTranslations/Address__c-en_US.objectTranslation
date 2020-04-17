@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Count_Roles_Billing --></label>
+        <name>Count_Roles_Billing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count_Roles_Business --></label>
+        <name>Count_Roles_Business__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count_Roles_Shipping --></label>
+        <name>Count_Roles_Shipping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geo-Coordinates --></label>
+        <name>Geo_Coordinates__c</name>
+    </fields>
+    <fields>
+        <help><!-- Populated by a workflow rule when the Country Reference is changed. --></help>
+        <label><!-- Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is Business Address --></label>
+        <name>Is_Business_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- check if address is PO Box --></help>
+        <label><!-- PO Box --></label>
+        <name>PO_Box_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tech Update Address Flow --></label>
+        <name>TechUpdate_AddressFlow__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- MASTER --></label>
+        <name>MASTER</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- airport can have only one shipping role per address --></errorMessage>
+        <name>AirportOneRoleShipTo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- For Branch account you can&apos;t create another address than the main address (Business address). --></errorMessage>
+        <name>BranchAccount_cant_create_AnotherAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Modification of business account fields needs to be done on the related account --></errorMessage>
+        <name>BusinessAddressModification</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only one Billing role per address is allowed --></errorMessage>
+        <name>OneRoleBilling</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only one Business role per address is allowed --></errorMessage>
+        <name>OneRoleBusiness</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only one Shipping role per address is allowed --></errorMessage>
+        <name>OneRoleShipping</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can not fill Street and PO Number fields at the same time --></errorMessage>
+        <name>Street_POnumber</name>
+    </validationRules>
+</CustomObjectTranslation>

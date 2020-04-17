@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IATA Geonames City</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IATA Geonames Cities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameAlternateNames --></label>
+        <name>GeonameAlternateNames__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameFeatureClass --></label>
+        <name>GeonameFeatureClass__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameFeatureCode --></label>
+        <name>GeonameFeatureCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameHierarchy_label --></label>
+        <name>GeonameHierarchy_label__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameId --></label>
+        <name>GeonameId__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameModificationDate --></label>
+        <name>GeonameModificationDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeonameName --></label>
+        <name>GeonameName__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO State --></label>
+        <name>IATA_ISO_State__c</name>
+        <relationshipLabel><!-- IATA Geonames Cities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is PO Box City --></label>
+        <name>Is_PO_Box_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location --></label>
+        <name>Location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

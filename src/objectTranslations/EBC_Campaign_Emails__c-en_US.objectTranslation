@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>EBC Campaign Emails</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>EBC Campaign Emails</value>
+    </caseValues>
+    <fields>
+        <help><!-- Will add the controller from ebc setup and the client&apos;s email in order to receive the email as a sample --></help>
+        <label><!-- Add recipient --></label>
+        <name>Add_recipient__c</name>
+    </fields>
+    <fields>
+        <label><!-- EBC Campaign --></label>
+        <name>EBC_Campaign__c</name>
+        <relationshipLabel><!-- EBC Campaign Emails --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP Products - Account View --></label>
+        <name>GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- EBC Campaign Emails --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ID Card --></label>
+        <name>ID_Card__c</name>
+        <relationshipLabel><!-- EBC Campaign Emails --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Text SFDC Id --></help>
+        <label><!-- SFDC Id --></label>
+        <name>SFDC_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Stop Status</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Stop Statuses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Status Bucket --></label>
+        <name>Status_Bucket__c</name>
+        <picklistValues>
+            <masterLabel>Escalated Externally</masterLabel>
+            <translation><!-- Escalated Externally --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Escalated Internally</masterLabel>
+            <translation><!-- Escalated Internally --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>With Customer</masterLabel>
+            <translation><!-- With Customer --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

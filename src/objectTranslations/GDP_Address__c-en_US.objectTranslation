@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- AMS GDP Key --></label>
+        <name>AMS_GDP_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Capitalization &amp; Substitution rule from “|” to “/” in Address City Uppercase. --></help>
+        <label><!-- Address City Uppercase --></label>
+        <name>Address_City_Uppercase__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address City --></label>
+        <name>Address_City__c</name>
+    </fields>
+    <fields>
+        <help><!-- IATA_ISO_Country Name in uppercase --></help>
+        <label><!-- Address Country Name Uppercase --></label>
+        <name>Address_Country_Name_Uppercase__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup: IATA_ISO_Country__r.Name --></help>
+        <label><!-- Address Country Name --></label>
+        <name>Address_Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Country Short Name --></label>
+        <name>Address_Country_Short_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on Address_ISO_Country_Code__c or Address_State_Code__c --></help>
+        <label><!-- Address IATA Custom ISO Country Code --></label>
+        <name>Address_IATA_Custom_ISO_Country_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup: IATA_ISO_Country__r.ISO_Code__c --></help>
+        <label><!-- Address ISO Country Code --></label>
+        <name>Address_ISO_Country_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Capitalization &amp; Substitution rule from “|” to “/” in Address Line 1. --></help>
+        <label><!-- Address Line 1 Clean --></label>
+        <name>Address_Line_1_Clean__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Line 1 --></label>
+        <name>Address_Line_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Capitalization &amp; Substitution rule from “|” to “/” in Address Line 2. --></help>
+        <label><!-- Address Line 2 Clean --></label>
+        <name>Address_Line_2_Clean__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Line 2 --></label>
+        <name>Address_Line_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Capitalization &amp; Substitution rule from “|” to “/” in Address Line 3. --></help>
+        <label><!-- Address Line 3 Clean --></label>
+        <name>Address_Line_3_Clean__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Line 3 --></label>
+        <name>Address_Line_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Postal Code --></label>
+        <name>Address_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- State Code without the preceding country code. 
+The source of information is taken from IATA_ISO_State. --></help>
+        <label><!-- Address State Code --></label>
+        <name>Address_State_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- IATA_ISO_State Name in uppercase --></help>
+        <label><!-- Address State Name Uppercase --></label>
+        <name>Address_State_Name_Uppercase__c</name>
+    </fields>
+    <fields>
+        <help><!-- Conditional Lookup: IF Country = AU, BR, CA, AE, MX, UP, US, VE, return IATA_ISO_State__r.Name --></help>
+        <label><!-- Address State Name --></label>
+        <name>Address_State_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Type Uniqueness Validation --></label>
+        <name>Address_Type_Uniqueness_Validation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Type --></label>
+        <name>Address_Type__c</name>
+        <picklistValues>
+            <masterLabel>Location</masterLabel>
+            <translation><!-- Location --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mailing</masterLabel>
+            <translation><!-- Mailing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registered</masterLabel>
+            <translation><!-- Registered --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP Geo Detail --></label>
+        <name>GDP_Geo_Detail__c</name>
+        <relationshipLabel><!-- GDP Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- GDP Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO NCode --></label>
+        <name>IATA_ISO_NCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO State --></label>
+        <name>IATA_ISO_State__c</name>
+        <relationshipLabel><!-- GDP Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Lookup on field &quot;state numeric code&quot; at Account level --></help>
+        <label><!-- IATA Numeric Country Code --></label>
+        <name>IATA_Numeric_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profit Center --></label>
+        <name>Profit_Center__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Account --></label>
+        <name>Related_Account__c</name>
+        <relationshipLabel><!-- GDP Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related GDP Products Account View --></label>
+        <name>Related_GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- GDP Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sub Continent --></label>
+        <name>Sub_Continent__c</name>
+    </fields>
+    <fields>
+        <label><!-- WebStar ID --></label>
+        <name>WebStar_ID__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- GDP --></label>
+        <name>GDP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Live --></label>
+        <name>Live</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

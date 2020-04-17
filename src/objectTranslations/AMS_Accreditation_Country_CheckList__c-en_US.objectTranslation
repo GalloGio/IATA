@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>AMS Accreditation Country Checklist</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>AMS Accreditation Country Checklists</value>
+    </caseValues>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- AMS Accreditation Country Checklists --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Licence number of agency must be supplied if checked, plus attachment of original certificate --></help>
+        <label><!-- License required --></label>
+        <name>License_required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent - Domestic</masterLabel>
+            <translation><!-- Travel Agent - Domestic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent - International</masterLabel>
+            <translation><!-- Travel Agent - International --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Registration number of agency must be supplied if checked, plus attachment of original certificate --></help>
+        <label><!-- Registration required --></label>
+        <name>Registration_required__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if this is required for the Branch operation in this country. --></help>
+        <label><!-- Statement of International Sales-Branch --></label>
+        <name>Statement_of_International_Sales_Branch__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if this is required for the HO operation in this country. --></help>
+        <label><!-- Statement of International Sales-HO --></label>
+        <name>Statement_of_International_Sales__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

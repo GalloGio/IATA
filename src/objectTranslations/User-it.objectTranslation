@@ -1,0 +1,1426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- FieldsExcludedFromTracking --></label>
+        <name>FieldsExcludedFromTracking</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- TrackingHistory --></label>
+        <name>TrackingHistory</name>
+    </fieldSets>
+    <fields>
+        <label><!-- AMP Digest Daily or Weekly --></label>
+        <name>AMP_Digest_Daily_or_Weekly__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- AMP Digest Topics --></label>
+        <name>AMP_Digest_Topics__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accreditation Type --></label>
+        <name>ANG_Accreditation_Model__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>ANG_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Country ISO --></label>
+        <name>ANG_Customer_Country_ISO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Accredited Agent --></label>
+        <name>ANG_Is_Accredited_Agent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>ANG_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Air Transport Expertise --></label>
+        <name>Air_Transport_Expertise__c</name>
+        <picklistValues>
+            <masterLabel>Air Navigation Services</masterLabel>
+            <translation><!-- Air Navigation Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Recovery</masterLabel>
+            <translation><!-- Aircraft Recovery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Development</masterLabel>
+            <translation><!-- Airport Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Operations</masterLabel>
+            <translation><!-- Airport Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Services</masterLabel>
+            <translation><!-- Airport Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Operations</masterLabel>
+            <translation><!-- Cargo Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Services</masterLabel>
+            <translation><!-- Cargo Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dangerous Goods</masterLabel>
+            <translation><!-- Dangerous Goods --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Econometrics</masterLabel>
+            <translation><!-- Econometrics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engineering and Maintenance</masterLabel>
+            <translation><!-- Engineering and Maintenance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Environment</masterLabel>
+            <translation>Ambiente</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Facilitation</masterLabel>
+            <translation><!-- Facilitation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Services</masterLabel>
+            <translation><!-- Financial Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fleet Planning</masterLabel>
+            <translation><!-- Fleet Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flight Operations</masterLabel>
+            <translation><!-- Flight Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flight Simulation</masterLabel>
+            <translation><!-- Flight Simulation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel Services</masterLabel>
+            <translation><!-- Fuel Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Government Relations</masterLabel>
+            <translation><!-- Government Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handling</masterLabel>
+            <translation><!-- Ground Handling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>InFlight Services</masterLabel>
+            <translation><!-- InFlight Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Industry Taxation</masterLabel>
+            <translation><!-- Industry Taxation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure</masterLabel>
+            <translation><!-- Infrastructure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Interline Tariffs</masterLabel>
+            <translation><!-- Interline Tariffs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Live Animal Regulations</masterLabel>
+            <translation><!-- Live Animal Regulations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meteorological</masterLabel>
+            <translation><!-- Meteorological --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Navigation Services</masterLabel>
+            <translation><!-- Navigation Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger Operations</masterLabel>
+            <translation><!-- Passenger Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger Services</masterLabel>
+            <translation><!-- Passenger Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ramp Services</masterLabel>
+            <translation><!-- Ramp Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety</masterLabel>
+            <translation>Sicurezza</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety Operations</masterLabel>
+            <translation><!-- Safety Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schedules</masterLabel>
+            <translation><!-- Schedules --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Settlement Services</masterLabel>
+            <translation><!-- Settlement Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Software/IT</masterLabel>
+            <translation><!-- Software/IT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Special Cargoes</masterLabel>
+            <translation><!-- Special Cargoes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telecommunications</masterLabel>
+            <translation><!-- Telecommunications --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Services</masterLabel>
+            <translation><!-- Travel Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unit Load Devices</masterLabel>
+            <translation><!-- Unit Load Devices --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Area (PPD) --></label>
+        <name>Area_PPD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Area --></label>
+        <name>Area__c</name>
+        <picklistValues>
+            <masterLabel>Alternate Channels</masterLabel>
+            <translation><!-- Alternate Channels --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AsiaPac</masterLabel>
+            <translation><!-- AsiaPac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MEA</masterLabel>
+            <translation><!-- MEA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North Asia</masterLabel>
+            <translation><!-- North Asia --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ByPassValidationRule --></label>
+        <name>ByPassValidationRule__c</name>
+    </fields>
+    <fields>
+        <label><!-- CNS Account or Agency --></label>
+        <name>CNS_Account_or_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Community --></label>
+        <name>Community__c</name>
+    </fields>
+    <fields>
+        <label><!-- ContactKaviId --></label>
+        <name>ContactKaviId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account Country --></label>
+        <name>Contact_Account_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account Designator Code --></label>
+        <name>Contact_Account_Designator_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account IATA Code --></label>
+        <name>Contact_Account_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account Name --></label>
+        <name>Contact_Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account Record Type --></label>
+        <name>Contact_Account_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account Region --></label>
+        <name>Contact_Account_Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Unique Id --></label>
+        <name>Contact_Unique_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer type --></label>
+        <name>Customer_type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Cloud Customer 360: enter the name of the Cloud Customer 360 profile for this user. If no Cloud Customer 360 Profile is specified, the default profile will be used --></help>
+        <label><!-- Cloud Customer 360 Profile --></label>
+        <name>DSE__DS_Data_Scout_Profile__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date on which the Terms of Use were  accepted. --></help>
+        <label><!-- Date_ToU_accepted --></label>
+        <name>Date_ToU_accepted__c</name>
+    </fields>
+    <fields>
+        <label><!-- EF Billing Agreement Approver Email --></label>
+        <name>EF_Billing_Agreement_Approver_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Billing Agreement Approver --></label>
+        <name>EF_Billing_Agreement_Approver__c</name>
+        <relationshipLabel><!-- Users (E&amp;F Billing Agreement Approver) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EF CRM. Sets the right to change Client Account E&amp;F Status from Inactive to Active --></help>
+        <label><!-- E&amp;F Client Reactivation --></label>
+        <name>EF_Client_Reactivation__c</name>
+    </fields>
+    <fields>
+        <label><!-- EF Contract Approver Email --></label>
+        <name>EF_Contract_Approver_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Contract Approver --></label>
+        <name>EF_Contract_Approver__c</name>
+        <relationshipLabel><!-- Users (E&amp;F Contract Approver) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EF CRM. Sets the right to change E&amp;F Status from Inactive to Active --></help>
+        <label><!-- E&amp;F Customer Reactivation --></label>
+        <name>EF_Customer_Reactivation__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F User Role --></label>
+        <name>EF_User_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- EmailForSSO --></label>
+        <name>EmailForSSO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee Number (PPD) --></label>
+        <name>Employee_Number_PPD__c</name>
+    </fields>
+    <fields>
+        <label><!-- FedContactId --></label>
+        <name>FedContactId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Federation ID --></label>
+        <name>Federation_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Functional Expertise --></label>
+        <name>Functional_Expertise__c</name>
+        <picklistValues>
+            <masterLabel>Accounting</masterLabel>
+            <translation><!-- Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Administration</masterLabel>
+            <translation><!-- Administration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Branding</masterLabel>
+            <translation><!-- Branding --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Analysis</masterLabel>
+            <translation><!-- Business Analysis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Development</masterLabel>
+            <translation><!-- Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Intelligence</masterLabel>
+            <translation><!-- Business Intelligence --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Operations</masterLabel>
+            <translation><!-- Business Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Channel Management</masterLabel>
+            <translation><!-- Channel Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Communications</masterLabel>
+            <translation><!-- Communications --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultancy</masterLabel>
+            <translation><!-- Consultancy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Service</masterLabel>
+            <translation><!-- Customer Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance</masterLabel>
+            <translation>Finanze</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Graphics</masterLabel>
+            <translation><!-- Graphics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Human Resources</masterLabel>
+            <translation>Risorse Umane</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Information Technology</masterLabel>
+            <translation><!-- Information Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal</masterLabel>
+            <translation>Legale</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>People Management</masterLabel>
+            <translation><!-- People Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Printing</masterLabel>
+            <translation><!-- Printing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Management</masterLabel>
+            <translation><!-- Product Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Project Management</masterLabel>
+            <translation><!-- Project Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Relations</masterLabel>
+            <translation><!-- Public Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sourcing</masterLabel>
+            <translation><!-- Sourcing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telesales</masterLabel>
+            <translation><!-- Telesales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>Formazione</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IDFS Region --></label>
+        <name>IDFS_Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; MENA</masterLabel>
+            <translation><!-- Africa &amp; MENA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp;  Pacific</masterLabel>
+            <translation><!-- Asia &amp;  Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central</masterLabel>
+            <translation><!-- Central --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IFAP Close from any Status --></label>
+        <name>IFAP_Close_from_any_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- IFG Account Member --></label>
+        <name>IFG_Account_Member__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP Contact Language --></label>
+        <name>ISSP_Contact_Language__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP Old Email --></label>
+        <name>ISSP_Old_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Account&apos;s sector General Public --></label>
+        <name>Is_Account_s_sector_General_Public__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is General Public User --></label>
+        <name>Is_General_Public_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Kavi Internal User --></label>
+        <name>Is_Kavi_Internal_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is TIP User --></label>
+        <name>Is_TIP_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- LOB Expertise --></label>
+        <name>LOB_Expertise__c</name>
+        <picklistValues>
+            <masterLabel>Advertising</masterLabel>
+            <translation><!-- Advertising --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Audit</masterLabel>
+            <translation><!-- Audit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Intelligence</masterLabel>
+            <translation><!-- Business Intelligence --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consulting</masterLabel>
+            <translation><!-- Consulting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution &amp; Financial Services</masterLabel>
+            <translation><!-- Distribution &amp; Financial Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Environment</masterLabel>
+            <translation>Ambiente</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Events</masterLabel>
+            <translation><!-- Events --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Facillitation</masterLabel>
+            <translation><!-- Facillitation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel</masterLabel>
+            <translation><!-- Fuel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure</masterLabel>
+            <translation><!-- Infrastructure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance</masterLabel>
+            <translation><!-- Insurance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medical</masterLabel>
+            <translation><!-- Medical --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Member Relations</masterLabel>
+            <translation><!-- Member Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation>Operazioni</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotional</masterLabel>
+            <translation><!-- Promotional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regulatory Services</masterLabel>
+            <translation><!-- Regulatory Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety</masterLabel>
+            <translation>Sicurezza</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standards Development</masterLabel>
+            <translation><!-- Standards Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tariff Expertise</masterLabel>
+            <translation><!-- Tariff Expertise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Taxation</masterLabel>
+            <translation><!-- Taxation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>Formazione</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Charges</masterLabel>
+            <translation><!-- User Charges --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Spoken Languages --></label>
+        <name>LVA_Language_Skills__c</name>
+        <picklistValues>
+            <masterLabel>Albanian</masterLabel>
+            <translation><!-- Albanian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Arabic</masterLabel>
+            <translation><!-- Arabic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Azerbaycani</masterLabel>
+            <translation><!-- Azerbaycani --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bengali</masterLabel>
+            <translation><!-- Bengali --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bulgarian</masterLabel>
+            <translation><!-- Bulgarian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Burmese</masterLabel>
+            <translation><!-- Burmese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chinese</masterLabel>
+            <translation><!-- Chinese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Czech</masterLabel>
+            <translation><!-- Czech --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dari</masterLabel>
+            <translation><!-- Dari --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dutch</masterLabel>
+            <translation><!-- Dutch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>English</masterLabel>
+            <translation><!-- English --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Filipino</masterLabel>
+            <translation><!-- Filipino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finnish</masterLabel>
+            <translation><!-- Finnish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French</masterLabel>
+            <translation><!-- French --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>German</masterLabel>
+            <translation><!-- German --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greek</masterLabel>
+            <translation><!-- Greek --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gujarati</masterLabel>
+            <translation><!-- Gujarati --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hebrew</masterLabel>
+            <translation><!-- Hebrew --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hindi</masterLabel>
+            <translation><!-- Hindi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hungarian</masterLabel>
+            <translation><!-- Hungarian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Indonesian</masterLabel>
+            <translation><!-- Indonesian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italian</masterLabel>
+            <translation><!-- Italian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japanese</masterLabel>
+            <translation><!-- Japanese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kannada</masterLabel>
+            <translation><!-- Kannada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korean</masterLabel>
+            <translation><!-- Korean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kurdish</masterLabel>
+            <translation><!-- Kurdish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malay</masterLabel>
+            <translation><!-- Malay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marathi</masterLabel>
+            <translation><!-- Marathi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nepali</masterLabel>
+            <translation><!-- Nepali --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Odia</masterLabel>
+            <translation><!-- Odia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pashto</masterLabel>
+            <translation><!-- Pashto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Persian</masterLabel>
+            <translation><!-- Persian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Polish</masterLabel>
+            <translation><!-- Polish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Punjapi</masterLabel>
+            <translation><!-- Punjapi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Romanian</masterLabel>
+            <translation><!-- Romanian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russian</masterLabel>
+            <translation><!-- Russian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serbo-croatian</masterLabel>
+            <translation><!-- Serbo-croatian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Slovak</masterLabel>
+            <translation><!-- Slovak --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Slovenian</masterLabel>
+            <translation><!-- Slovenian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish</masterLabel>
+            <translation><!-- Spanish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tamil</masterLabel>
+            <translation><!-- Tamil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telugu</masterLabel>
+            <translation><!-- Telugu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thai</masterLabel>
+            <translation><!-- Thai --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turkish</masterLabel>
+            <translation><!-- Turkish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ukranian</masterLabel>
+            <translation><!-- Ukranian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urdu</masterLabel>
+            <translation><!-- Urdu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uzbek</masterLabel>
+            <translation><!-- Uzbek --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vietnamese</masterLabel>
+            <translation><!-- Vietnamese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pt_BR</masterLabel>
+            <translation><!-- pt_BR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Show photo on chat --></label>
+        <name>LVA_Show_photo_on_chat__c</name>
+    </fields>
+    <fields>
+        <help><!-- The IATA cost center that is paying for your Salesforce.com license. --></help>
+        <label><!-- License Cost Center --></label>
+        <name>License_Cost_Center__c</name>
+    </fields>
+    <fields>
+        <label><!-- License name --></label>
+        <name>License_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link to Business unit --></label>
+        <name>Link_to_Business_unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- MIR User --></label>
+        <name>MIR_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mgmt Report Team --></label>
+        <name>Mgmt_Report_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Office Location --></label>
+        <name>Office_Location__c</name>
+        <picklistValues>
+            <masterLabel>ABJ</masterLabel>
+            <translation><!-- ABJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ADD</masterLabel>
+            <translation><!-- ADD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AKL</masterLabel>
+            <translation><!-- AKL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMD</masterLabel>
+            <translation><!-- AMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMM</masterLabel>
+            <translation><!-- AMM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMS</masterLabel>
+            <translation><!-- AMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ATH</masterLabel>
+            <translation><!-- ATH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alternate</masterLabel>
+            <translation><!-- Alternate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BEG</masterLabel>
+            <translation><!-- BEG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BEY</masterLabel>
+            <translation><!-- BEY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BJS</masterLabel>
+            <translation><!-- BJS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BKK</masterLabel>
+            <translation><!-- BKK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BLR</masterLabel>
+            <translation><!-- BLR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BOG</masterLabel>
+            <translation><!-- BOG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BOM</masterLabel>
+            <translation><!-- BOM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BRU</masterLabel>
+            <translation><!-- BRU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUD</masterLabel>
+            <translation><!-- BUD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUE</masterLabel>
+            <translation><!-- BUE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUH</masterLabel>
+            <translation><!-- BUH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAI</masterLabel>
+            <translation><!-- CAI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAS</masterLabel>
+            <translation><!-- CAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCS</masterLabel>
+            <translation><!-- CCS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCU</masterLabel>
+            <translation><!-- CCU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>COK</masterLabel>
+            <translation><!-- COK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DAR</masterLabel>
+            <translation><!-- DAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEL</masterLabel>
+            <translation><!-- DEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DUB</masterLabel>
+            <translation><!-- DUB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FRA</masterLabel>
+            <translation><!-- FRA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GUA</masterLabel>
+            <translation><!-- GUA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GVA</masterLabel>
+            <translation><!-- GVA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HEL</masterLabel>
+            <translation><!-- HEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HKG</masterLabel>
+            <translation><!-- HKG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HRE</masterLabel>
+            <translation><!-- HRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HYD</masterLabel>
+            <translation><!-- HYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IEV</masterLabel>
+            <translation><!-- IEV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IST</masterLabel>
+            <translation><!-- IST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JED</masterLabel>
+            <translation><!-- JED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JKT</masterLabel>
+            <translation><!-- JKT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JNB</masterLabel>
+            <translation><!-- JNB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIN</masterLabel>
+            <translation><!-- KIN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KUL</masterLabel>
+            <translation><!-- KUL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KWI</masterLabel>
+            <translation><!-- KWI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LIM</masterLabel>
+            <translation><!-- LIM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LIS</masterLabel>
+            <translation><!-- LIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LJU</masterLabel>
+            <translation><!-- LJU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LLW</masterLabel>
+            <translation><!-- LLW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LON</masterLabel>
+            <translation><!-- LON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LPB</masterLabel>
+            <translation><!-- LPB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LUN</masterLabel>
+            <translation><!-- LUN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAA</masterLabel>
+            <translation><!-- MAA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAD</masterLabel>
+            <translation><!-- MAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MEX</masterLabel>
+            <translation><!-- MEX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MGA</masterLabel>
+            <translation><!-- MGA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MIA</masterLabel>
+            <translation><!-- MIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MLA</masterLabel>
+            <translation><!-- MLA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MNL</masterLabel>
+            <translation><!-- MNL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOW</masterLabel>
+            <translation><!-- MOW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MRU</masterLabel>
+            <translation><!-- MRU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MVD</masterLabel>
+            <translation><!-- MVD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NBO</masterLabel>
+            <translation><!-- NBO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NIC</masterLabel>
+            <translation><!-- NIC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NYC</masterLabel>
+            <translation><!-- NYC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PAR</masterLabel>
+            <translation><!-- PAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PHX</masterLabel>
+            <translation><!-- PHX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS</masterLabel>
+            <translation><!-- POS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PRG</masterLabel>
+            <translation><!-- PRG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PTY</masterLabel>
+            <translation><!-- PTY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ROM</masterLabel>
+            <translation><!-- ROM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAL</masterLabel>
+            <translation><!-- SAL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAO</masterLabel>
+            <translation><!-- SAO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SCL</masterLabel>
+            <translation><!-- SCL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDQ</masterLabel>
+            <translation><!-- SDQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEL</masterLabel>
+            <translation><!-- SEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHJ</masterLabel>
+            <translation><!-- SHJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIN</masterLabel>
+            <translation><!-- SIN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SJO</masterLabel>
+            <translation><!-- SJO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOF</masterLabel>
+            <translation><!-- SOF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STO</masterLabel>
+            <translation><!-- STO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SYD</masterLabel>
+            <translation><!-- SYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TGU</masterLabel>
+            <translation><!-- TGU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TLV</masterLabel>
+            <translation><!-- TLV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TPE</masterLabel>
+            <translation><!-- TPE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUN</masterLabel>
+            <translation><!-- TUN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TYO</masterLabel>
+            <translation><!-- TYO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UIO</masterLabel>
+            <translation><!-- UIO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VIE</masterLabel>
+            <translation><!-- VIE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WAS</masterLabel>
+            <translation><!-- WAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WAW</masterLabel>
+            <translation><!-- WAW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YMQ</masterLabel>
+            <translation><!-- YMQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZAG</masterLabel>
+            <translation><!-- ZAG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZRH</masterLabel>
+            <translation><!-- ZRH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Country (PPD) --></label>
+        <name>PPD_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Department (PPD) --></label>
+        <name>PPD_Department__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division (PPD) --></label>
+        <name>PPD_Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- Office (PPD) --></label>
+        <name>PPD_Office__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tittle (PPD) --></label>
+        <name>PPD_Tittle__c</name>
+    </fields>
+    <fields>
+        <help><!-- Fill only in this field if you are part of the Rapid Response Team! --></help>
+        <label><!-- Part of Rapid Response Team --></label>
+        <name>Part_of_Rapid_Response_Team__c</name>
+        <picklistValues>
+            <masterLabel>GVA</masterLabel>
+            <translation><!-- GVA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIN</masterLabel>
+            <translation><!-- SIN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YMQ</masterLabel>
+            <translation><!-- YMQ --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- One Id Portal App Role --></label>
+        <name>Portal_App_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portal Registration Required --></label>
+        <name>Portal_Registration_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portal User Inactive more than 90 days --></label>
+        <name>Portal_User_Frozen_Checkbox__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portal User Frozen --></label>
+        <name>Portal_User_Frozen__c</name>
+    </fields>
+    <fields>
+        <label><!-- Power of one --></label>
+        <name>Power_of_one__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Name --></label>
+        <name>Profile_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- us eto receive major apex error email from clas devTools --></help>
+        <label><!-- Receive Apex emails --></label>
+        <name>Receive_Apex_emails__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAML TD Id --></label>
+        <name>SAML_TD_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Account Access 1 --></label>
+        <name>SAP_Account_Access_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Account Access 2 --></label>
+        <name>SAP_Account_Access_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Account Access 3 --></label>
+        <name>SAP_Account_Access_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Account Access 4 --></label>
+        <name>SAP_Account_Access_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDCForeign_UserID --></label>
+        <name>SFDCForeign_UserID__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Team --></label>
+        <name>SIS_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Person Code --></label>
+        <name>Sales_Manager_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Segment Expertise --></label>
+        <name>Segment_Expertise__c</name>
+        <picklistValues>
+            <masterLabel>Airport &amp; Civil Aviation</masterLabel>
+            <translation><!-- Airport &amp; Civil Aviation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo</masterLabel>
+            <translation>Merci</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger</masterLabel>
+            <translation><!-- Passenger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel &amp; Tourism</masterLabel>
+            <translation><!-- Travel &amp; Tourism --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TD Team --></label>
+        <name>TD_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Temp filter --></label>
+        <name>Temp_filter__c</name>
+    </fields>
+    <fields>
+        <help><!-- Terms of Use Accepted:Yes/No. --></help>
+        <label><!-- ToU_accepted --></label>
+        <name>ToU_accepted__c</name>
+    </fields>
+    <fields>
+        <label><!-- UID --></label>
+        <name>UID__c</name>
+    </fields>
+    <fields>
+        <label><!-- active user settings --></label>
+        <name>dgai__active_user_settings__c</name>
+    </fields>
+    <fields>
+        <label><!-- isSISUser --></label>
+        <name>isSISUser__c</name>
+    </fields>
+    <fields>
+        <label><!-- Can View Not Assigned Prospects --></label>
+        <name>pi__Can_View_Not_Assigned_Prospects__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pardot Api Key --></label>
+        <name>pi__Pardot_Api_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pardot Api Version --></label>
+        <name>pi__Pardot_Api_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pardot User Id --></label>
+        <name>pi__Pardot_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pardot User Key --></label>
+        <name>pi__Pardot_User_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pardot User Role --></label>
+        <name>pi__Pardot_User_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- RPM --></label>
+        <name>rpm__c</name>
+        <relationshipLabel><!-- Users (RPM) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agent Brand --></label>
+        <name>unbabelapi__Agent_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unbabel Known Languages --></label>
+        <name>unbabelapi__Unbabel_Known_Languages__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unbabel Main Language --></label>
+        <name>unbabelapi__Unbabel_Language__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Please enter the Division of the user. --></errorMessage>
+        <name>UserDIvision</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01. --></errorMessage>
+        <name>Validate_User_License_Cost_Center</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Conga_Composer_OAuth --></label>
+        <name>APXTConga4__Conga_Composer_OAuth</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Conga_Mail_Merge --></label>
+        <name>APXTConga4__Conga_Mail_Merge</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Provision_Kavi_Access --></label>
+        <name>Provision_Kavi_Access</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Hierarchy Account Selection</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Hierarchy Account Selections</value>
+    </caseValues>
+    <fields>
+        <label><!-- Financial Review First Quarter --></label>
+        <name>AMS_Financial_Review_First_Quarter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Review Second Quarter --></label>
+        <name>AMS_Financial_Review_Second_Quarter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Review Third Quarter --></label>
+        <name>AMS_Financial_Review_Third_Quarter__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA code --></label>
+        <name>AMS_IATAcode__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANG_Location_Type_Conversion --></label>
+        <name>ANG_Location_Type_Conversion__c</name>
+        <picklistValues>
+            <masterLabel>AE</masterLabel>
+            <translation><!-- AE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GE</masterLabel>
+            <translation><!-- GE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HE</masterLabel>
+            <translation><!-- HE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Hierarchy Account Selections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Hierarchy Account Selections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- HOId --></label>
+        <name>HOId__c</name>
+    </fields>
+    <fields>
+        <label><!-- OSCAR --></label>
+        <name>OSCAR__c</name>
+        <relationshipLabel><!-- Hierarchy Account Selections --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <label><!-- Agency Involved --></label>
+        <name>Agency_Involved</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used for agencies --></description>
+        <label><!-- CaseRelatedAgencies --></label>
+        <name>CaseRelatedAgencies</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Multicountry Yearly Financial Review --></label>
+        <name>Multicountry_Yearly_Financial_Review</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The account related to the OSCAR cannot be inserted on this list --></errorMessage>
+        <name>AMS_BlockInsertOscarAccount</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_all_hierarchy --></label>
+        <name>Add_all_hierarchy</name>
+    </webLinks>
+</CustomObjectTranslation>

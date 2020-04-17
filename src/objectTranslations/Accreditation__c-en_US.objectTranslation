@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Accreditation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Accreditation</value>
+    </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- AMS_GDP_Key --></label>
+        <name>AMS_GDP_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accreditation ID --></label>
+        <name>Accreditation_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mapped to &quot;ANG_Accreditation_Model__c&quot; on AMS Account for Replication. --></help>
+        <label><!-- Accreditation Model --></label>
+        <name>Accreditation_Model__c</name>
+        <relationshipLabel><!-- Accreditation (Accreditation Model) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If Checked, RHC equals Financial Security Amount Provided.
+Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication. --></help>
+        <label><!-- Cash Conditions Override --></label>
+        <name>Cash_Conditions_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Class --></label>
+        <name>Class__c</name>
+        <relationshipLabel><!-- Accreditation (GDP Reference Table) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status Attained On --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Endorsed/Accredited By Code --></label>
+        <name>Endorsed_Accredited_By_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Endorsed/Accredited By --></label>
+        <name>Endorsed_Accredited_By_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Endorsed/Accredited By --></label>
+        <name>Endorsed_Accredited_By__c</name>
+        <relationshipLabel><!-- Accreditation (GDP Reference Table) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Mapped to &quot;ANG_IsNewGenAgency__c&quot; on AMS Account for Replication. --></help>
+        <label><!-- Is NewGen Agency --></label>
+        <name>Is_NewGen_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last change date --></label>
+        <name>Last_change_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last re-inspection date --></label>
+        <name>Last_re_inspection_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Original approval date --></label>
+        <name>Original_approval_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Account --></label>
+        <name>Related_Account__c</name>
+        <relationshipLabel><!-- Accreditation --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related GDP Products Account --></label>
+        <name>Related_GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- Accreditation --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication. --></help>
+        <label><!-- Risk Status --></label>
+        <name>Risk_Status__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <relationshipLabel><!-- Accreditation --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- WebStar ID --></label>
+        <name>WebStar_ID__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- GDP --></label>
+        <name>GDP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Live --></label>
+        <name>Live</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

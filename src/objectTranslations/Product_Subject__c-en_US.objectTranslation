@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Product Subject</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Product Subjects</value>
+    </caseValues>
+    <fields>
+        <label><!-- Family --></label>
+        <name>Family__c</name>
+        <picklistValues>
+            <masterLabel>Z01</masterLabel>
+            <translation><!-- Z01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z02</masterLabel>
+            <translation><!-- Z02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z03</masterLabel>
+            <translation><!-- Z03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z04</masterLabel>
+            <translation><!-- Z04 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z05</masterLabel>
+            <translation><!-- Z05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z06</masterLabel>
+            <translation><!-- Z06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z07</masterLabel>
+            <translation><!-- Z07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z08</masterLabel>
+            <translation><!-- Z08 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z09</masterLabel>
+            <translation><!-- Z09 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z10</masterLabel>
+            <translation><!-- Z10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z11</masterLabel>
+            <translation><!-- Z11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z12</masterLabel>
+            <translation><!-- Z12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z13</masterLabel>
+            <translation><!-- Z13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z14</masterLabel>
+            <translation><!-- Z14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z15</masterLabel>
+            <translation><!-- Z15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z16</masterLabel>
+            <translation><!-- Z16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z17</masterLabel>
+            <translation><!-- Z17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z18</masterLabel>
+            <translation><!-- Z18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z19</masterLabel>
+            <translation><!-- Z19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z20</masterLabel>
+            <translation><!-- Z20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z21</masterLabel>
+            <translation><!-- Z21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z22</masterLabel>
+            <translation><!-- Z22 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z23</masterLabel>
+            <translation><!-- Z23 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z24</masterLabel>
+            <translation><!-- Z24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z25</masterLabel>
+            <translation><!-- Z25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z26</masterLabel>
+            <translation><!-- Z26 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z27</masterLabel>
+            <translation><!-- Z27 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z28</masterLabel>
+            <translation><!-- Z28 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z29</masterLabel>
+            <translation><!-- Z29 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z30</masterLabel>
+            <translation><!-- Z30 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z31</masterLabel>
+            <translation><!-- Z31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZEF</masterLabel>
+            <translation><!-- ZEF --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Subjects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+        <picklistValues>
+            <masterLabel>Air Traffic Management</masterLabel>
+            <translation><!-- Air Traffic Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Air navigation Services</masterLabel>
+            <translation><!-- Air navigation Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Engineering and Maintenance</masterLabel>
+            <translation><!-- Aircraft Engineering and Maintenance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Forecasts and Statistics</masterLabel>
+            <translation><!-- Airline Forecasts and Statistics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Management</masterLabel>
+            <translation><!-- Airline Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Operations, Quality</masterLabel>
+            <translation><!-- Airline Operations, Quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation><!-- Airport --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Capacity</masterLabel>
+            <translation><!-- Airport Capacity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Forecast and Statistics</masterLabel>
+            <translation><!-- Airport Forecast and Statistics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auditing</masterLabel>
+            <translation><!-- Auditing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aviation Performance</masterLabel>
+            <translation><!-- Aviation Performance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cabin Safety</masterLabel>
+            <translation><!-- Cabin Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Capacity</masterLabel>
+            <translation><!-- Capacity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Forecast and Statistics</masterLabel>
+            <translation><!-- Cargo Forecast and Statistics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Operations and Statistics</masterLabel>
+            <translation><!-- Cargo Operations and Statistics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo and DGR</masterLabel>
+            <translation><!-- Cargo and DGR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Civil Aviation</masterLabel>
+            <translation><!-- Civil Aviation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clearing Services</masterLabel>
+            <translation><!-- Clearing Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coding</masterLabel>
+            <translation><!-- Coding --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Communication, Navigation and Surveillance</masterLabel>
+            <translation><!-- Communication, Navigation and Surveillance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cost Reductions</masterLabel>
+            <translation><!-- Cost Reductions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card Services</masterLabel>
+            <translation><!-- Credit Card Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Currency Services</masterLabel>
+            <translation><!-- Currency Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Service</masterLabel>
+            <translation><!-- Customer Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customs and Regulations</masterLabel>
+            <translation><!-- Customs and Regulations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dangerous Goods</masterLabel>
+            <translation><!-- Dangerous Goods --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Economics</masterLabel>
+            <translation><!-- Economics --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Emergency Response</masterLabel>
+            <translation><!-- Emergency Response --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Environment</masterLabel>
+            <translation><!-- Environment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Environment and Fuel</masterLabel>
+            <translation><!-- Environment and Fuel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fares and Ticketing</masterLabel>
+            <translation><!-- Fares and Ticketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance and Accounting</masterLabel>
+            <translation><!-- Finance and Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Management</masterLabel>
+            <translation><!-- Financial Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Services</masterLabel>
+            <translation><!-- Financial Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flight Operations</masterLabel>
+            <translation><!-- Flight Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fraud Prevention</masterLabel>
+            <translation><!-- Fraud Prevention --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel</masterLabel>
+            <translation><!-- Fuel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Distribution Systems</masterLabel>
+            <translation><!-- Global Distribution Systems --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handling Operations</masterLabel>
+            <translation><!-- Ground Handling Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Operations</masterLabel>
+            <translation><!-- Ground Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IOSA</masterLabel>
+            <translation><!-- IOSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infectious Substances</masterLabel>
+            <translation><!-- Infectious Substances --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inflight Services</masterLabel>
+            <translation><!-- Inflight Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Information Technology</masterLabel>
+            <translation><!-- Information Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Strategy</masterLabel>
+            <translation><!-- Infrastructure Strategy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure and Safety</masterLabel>
+            <translation><!-- Infrastructure and Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inspection, Certification and Safety Oversight</masterLabel>
+            <translation><!-- Inspection, Certification and Safety Oversight --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance</masterLabel>
+            <translation><!-- Insurance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International Travel and Tourism Programme</masterLabel>
+            <translation><!-- International Travel and Tourism Programme --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing Services</masterLabel>
+            <translation><!-- Invoicing Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Law and Regulations</masterLabel>
+            <translation><!-- Law and Regulations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal</masterLabel>
+            <translation><!-- Legal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Live Animals</masterLabel>
+            <translation><!-- Live Animals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Management Skills</masterLabel>
+            <translation><!-- Management Skills --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medicine</masterLabel>
+            <translation><!-- Medicine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Technology</masterLabel>
+            <translation><!-- New Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations and Management</masterLabel>
+            <translation><!-- Operations and Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger and Baggage Processing</masterLabel>
+            <translation><!-- Passenger and Baggage Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Perishable Goods</masterLabel>
+            <translation><!-- Perishable Goods --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Policies and Regulations</masterLabel>
+            <translation><!-- Policies and Regulations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Project management</masterLabel>
+            <translation><!-- Project management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proration</masterLabel>
+            <translation><!-- Proration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Management</masterLabel>
+            <translation><!-- Quality Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reservations</masterLabel>
+            <translation><!-- Reservations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resolutions</masterLabel>
+            <translation><!-- Resolutions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Management</masterLabel>
+            <translation><!-- Revenue Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety</masterLabel>
+            <translation><!-- Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety Data Management and Analysis</masterLabel>
+            <translation><!-- Safety Data Management and Analysis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety Issues</masterLabel>
+            <translation><!-- Safety Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety Management Systems (SMS)</masterLabel>
+            <translation><!-- Safety Management Systems (SMS) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales and Marketing</masterLabel>
+            <translation><!-- Sales and Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduling</masterLabel>
+            <translation><!-- Scheduling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security Issues</masterLabel>
+            <translation><!-- Security Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Settlement Systems</masterLabel>
+            <translation><!-- Settlement Systems --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Simplifying Passenger Travel</masterLabel>
+            <translation><!-- Simplifying Passenger Travel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Simplifying the Business</masterLabel>
+            <translation><!-- Simplifying the Business --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standards</masterLabel>
+            <translation><!-- Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tariffs</masterLabel>
+            <translation><!-- Tariffs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Taxation</masterLabel>
+            <translation><!-- Taxation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Codes and Designators</masterLabel>
+            <translation><!-- Travel Agency Codes and Designators --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent&apos;s Resolutions</masterLabel>
+            <translation><!-- Travel Agent&apos;s Resolutions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agents</masterLabel>
+            <translation><!-- Travel Agents --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel and Tourism</masterLabel>
+            <translation><!-- Travel and Tourism --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unit Load Devices</masterLabel>
+            <translation><!-- Unit Load Devices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Charges</masterLabel>
+            <translation><!-- User Charges --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

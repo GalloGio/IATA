@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Instrumental</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Instrumental</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Prepositional</caseType>
+        <plural>false</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Prepositional</caseType>
+        <plural>true</plural>
+        <value><!-- Financial Security --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Converted Amount --></label>
+        <name>ANG_ConvertedAmount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Security Currency --></label>
+        <name>ANG_Financial_Security_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Security Amount (Minimum) --></label>
+        <name>ANG_Minimum_Financial_Security__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update RHC --></label>
+        <name>ANG_isToUpdateRHC__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Case BSP Country --></label>
+        <name>Account_Case_BSP_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Country --></label>
+        <name>Account_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Account must have Agency record type. --></errorMessage>
+        </lookupFilter>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Financial Securities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Acknowledge Sent Date --></label>
+        <name>Acknowledge_Sent_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Acknowledgment sent --></label>
+        <name>Acknowledgment_sent__c</name>
+    </fields>
+    <fields>
+        <label>Сумма</label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- calculates the days left until the expiry date --></help>
+        <label><!-- Days to Expiry date --></label>
+        <name>Days_to_Expiry_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Encashment Date --></label>
+        <name>Encashment_Date__c</name>
+    </fields>
+    <fields>
+        <label>Дата окончания действия</label>
+        <name>Expiry_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Optional, in case the security has an external identifier --></help>
+        <label><!-- External Security ID --></label>
+        <name>External_Security_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- It is mandatory to link the security with an institution. If the institution does not exist, create it first and then create the security related to it --></help>
+        <label>Финансовое учреждение</label>
+        <name>Financial_Institution__c</name>
+        <relationshipLabel><!-- Financial Securities --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Please fill in the case number through which the bank confirms the validity of this Financial Security --></help>
+        <label><!-- Financial Security Validation Case --></label>
+        <lookupFilter>
+            <errorMessage><!-- This field can only be filled in for Bank Guarantees --></errorMessage>
+        </lookupFilter>
+        <name>Financial_Security_Validation_Case__c</name>
+        <relationshipLabel><!-- Financial Security Validation Case --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Fill the date when the financial security is validated with the financial institution issuer upon receipt. --></help>
+        <label><!-- Financial Security Validation --></label>
+        <name>Financial_Security_Validation__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Call Letter required --></label>
+        <name>First_Call_Letter_required1__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Call Letter required --></label>
+        <name>First_Call_Letter_required__c</name>
+    </fields>
+    <fields>
+        <help><!-- IATA code comes from the acccount object related to this security --></help>
+        <label><!-- IATA code --></label>
+        <name>IATA_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Updated by Source --></label>
+        <name>Last_updated_by_source__c</name>
+    </fields>
+    <fields>
+        <help><!-- Specify the date before which this guarantee shall not be release --></help>
+        <label><!-- Should not be released before --></label>
+        <name>Minimumrelease__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Reason --></label>
+        <name>Reasonforrequest__c</name>
+        <picklistValues>
+            <masterLabel>ACC change</masterLabel>
+            <translation><!-- ACC change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Review</masterLabel>
+            <translation><!-- Financial Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Irregularities</masterLabel>
+            <translation><!-- Irregularities --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Application</masterLabel>
+            <translation><!-- New Application --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Previous Security Update</masterLabel>
+            <translation><!-- Previous Security Update --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reception Case --></label>
+        <name>Reception_Case__c</name>
+        <relationshipLabel><!-- Financial Securities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reception Date --></label>
+        <name>Reception_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Fill in the case number related to the release of the financial security --></help>
+        <label><!-- Release Case --></label>
+        <name>Release_Case__c</name>
+        <relationshipLabel><!-- Financial Securities (Release Case) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release Date --></label>
+        <name>Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Reason --></label>
+        <name>Release_Reason__c</name>
+        <picklistValues>
+            <masterLabel>Encashment</masterLabel>
+            <translation><!-- Encashment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Favorable Financial Situation</masterLabel>
+            <translation><!-- Favorable Financial Situation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal</masterLabel>
+            <translation><!-- Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security Update</masterLabel>
+            <translation><!-- Security Update --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Termination</masterLabel>
+            <translation><!-- Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voluntary Relinquishment</masterLabel>
+            <translation><!-- Voluntary Relinquishment --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Renewal Case Creation Date --></label>
+        <name>Renewal_Case_Creation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Renewal Case --></label>
+        <name>Renewal_Case__c</name>
+        <relationshipLabel><!-- Financial Securities (Renewal Case) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Статус безопасности</label>
+        <name>Security_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation>Активный</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Close to Expiry Date</masterLabel>
+            <translation><!-- Close to Expiry Date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encashed</masterLabel>
+            <translation><!-- Encashed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encashment in progress</masterLabel>
+            <translation><!-- Encashment in progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Expired</masterLabel>
+            <translation><!-- Expired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive_Addendum</masterLabel>
+            <translation><!-- Inactive_Addendum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Active yet</masterLabel>
+            <translation><!-- Not Active yet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Validation</masterLabel>
+            <translation><!-- Pending Validation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending to be Released</masterLabel>
+            <translation><!-- Pending to be Released --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Released</masterLabel>
+            <translation><!-- Released --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Тип безопасности</label>
+        <name>Security_Type__c</name>
+        <picklistValues>
+            <masterLabel>Bank Guarantee</masterLabel>
+            <translation>Банковская гарантия</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCG</masterLabel>
+            <translation><!-- CCG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CWA Mutual Fund</masterLabel>
+            <translation><!-- CWA Mutual Fund --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cross Border Guarantee</masterLabel>
+            <translation><!-- Cross Border Guarantee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DIP</masterLabel>
+            <translation><!-- DIP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Guarantee</masterLabel>
+            <translation>Финансовая гарантия</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GDI</masterLabel>
+            <translation><!-- GDI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hong Kong Trust Fund</masterLabel>
+            <translation><!-- Hong Kong Trust Fund --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance Bond</masterLabel>
+            <translation>Страховая облигация</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ireland Trust Fund</masterLabel>
+            <translation><!-- Ireland Trust Fund --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Joint Bank Guarantee (India)</masterLabel>
+            <translation><!-- Joint Bank Guarantee (India) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter Of Credit</masterLabel>
+            <translation>Аккредитив</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Letter Of Undertaking</masterLabel>
+            <translation>Письмо-обязательство</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MCBG</masterLabel>
+            <translation><!-- MCBG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MCPG</masterLabel>
+            <translation><!-- MCPG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manifestacion de Bienes</masterLabel>
+            <translation><!-- Manifestacion de Bienes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OTOC</masterLabel>
+            <translation><!-- OTOC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation>Другое</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parent Company Guarantee</masterLabel>
+            <translation>Гарантия головной компании</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recapitalization</masterLabel>
+            <translation>Рекапитализация</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standby Letter Of Credit</masterLabel>
+            <translation>Резервный аккредитив</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Statement Of Assignment</masterLabel>
+            <translation>Заявление о назначении</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Surety Bond</masterLabel>
+            <translation>Поручительство</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TAANZ Bonding Scheme</masterLabel>
+            <translation><!-- TAANZ Bonding Scheme --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Deposit</masterLabel>
+            <translation>Срочный вклад</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Deposit Pledge</masterLabel>
+            <translation><!-- Time Deposit Pledge --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transit Account</masterLabel>
+            <translation><!-- Transit Account --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Send FS acknowledgment --></label>
+        <name>Send_FS_acknowledgment__c</name>
+    </fields>
+    <fields>
+        <help><!-- reflects the source of the Fin. Security --></help>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status image --></label>
+        <name>Status_image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Two months passed expiry --></label>
+        <name>Two_months_passed_expiry__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the bank guarantee has no expiration date --></help>
+        <label>Unlimited Security</label>
+        <name>Unlimited_Security__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date as from when the financial security is valid --></help>
+        <label>Дата начала действия</label>
+        <name>Validity_Start_Date__c</name>
+    </fields>
+    <gender><!-- Neuter --></gender>
+    <nameFieldLabel><!-- Financial Security Name --></nameFieldLabel>
+    <validationRules>
+        <errorMessage><!-- Financial institution is not active. Please request agent to submit a financial security from alternative provider. --></errorMessage>
+        <name>Check_Financial_institution_status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Expiry date of the Financial Security can&apos;t be less than the Validity start date. --></errorMessage>
+        <name>Expiry_date_greater_than_validity_start</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill &quot;Financial Security Validation Case&quot; before making it active. --></errorMessage>
+        <name>Financial_Security_Validation_Case</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please validate the FS and update this field --></errorMessage>
+        <name>Financial_Security_Validation_is_mandato</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The financial institution is mandatory --></errorMessage>
+        <name>Financial_institution_is_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Inform the region --></errorMessage>
+        <name>Region_must_be_informed_for_FS</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The security is set as unlimited security (with no expiry date) and at the same time as having an expiry date. Please correct this inconsistency before saving. --></errorMessage>
+        <name>SARA_Expiry_date_and_Unlimited_Security</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill the date of release or encashment of this guarantee using the field &quot;Release / Encashment Date&quot; --></errorMessage>
+        <name>SARA_Fill_Release_Encashment_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill the reason why this security has been released from this picklist --></errorMessage>
+        <name>SARA_Fill_Release_reason</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please set the expiry date of the security. If it has no expiry, then select the checkbox field &quot;Unlimited Security&quot; below. --></errorMessage>
+        <name>SARA_Security_expiry_date_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>The financial security must be linked to the HO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
+        <name>SARA_Security_must_be_linked_to_HO</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please make sure that all the information regarding the reception of the security is filled in: Reception date, request reason and related case. --></errorMessage>
+        <name>SARA_reception_information_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter the validity start date for this security --></errorMessage>
+        <name>SARA_validity_start_date_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Invalid Security Type --></errorMessage>
+        <name>Security_Type_Verification</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Amend_FS --></label>
+        <name>Amend_FS</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_PDF_letter --></label>
+        <name>Create_PDF_letter</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Acknowledgement --></label>
+        <name>Send_Acknowledgement</name>
+    </webLinks>
+</CustomObjectTranslation>

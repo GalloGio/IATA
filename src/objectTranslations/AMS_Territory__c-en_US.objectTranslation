@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>AMS Territory</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>AMS Territories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Appointment (AMS) --></label>
+        <name>Appointment__c</name>
+        <relationshipLabel><!-- AMS Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Country --></label>
+        <name>ISO_Country__c</name>
+        <relationshipLabel><!-- AMS Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ISO State --></label>
+        <name>ISO_State__c</name>
+        <relationshipLabel><!-- AMS Territories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Legacy Id --></label>
+        <name>Legacy_Id__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

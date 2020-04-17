@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Industry Group</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Industry Groups</value>
+    </caseValues>
+    <fields>
+        <help><!-- To be checked only for top level groups: DG, AGM, BoG --></help>
+        <label><!-- Top Level Group --></label>
+        <name>AM_Top_Level_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Under --></label>
+        <name>AM_Under__c</name>
+        <relationshipLabel><!-- Industry Groups (Under) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Abbreviation --></label>
+        <name>Abbreviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved --></label>
+        <name>Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cargo / Passenger --></label>
+        <name>Cargo_Passenger__c</name>
+        <picklistValues>
+            <masterLabel>Cargo</masterLabel>
+            <translation><!-- Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger</masterLabel>
+            <translation><!-- Passenger --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cluster --></label>
+        <name>Cluster__c</name>
+        <relationshipLabel><!-- Local Groups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Industry Groups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>APCS</masterLabel>
+            <translation><!-- APCS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS</masterLabel>
+            <translation><!-- CS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DG</masterLabel>
+            <translation><!-- DG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FDS</masterLabel>
+            <translation><!-- FDS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MACS</masterLabel>
+            <translation><!-- MACS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MER</masterLabel>
+            <translation><!-- MER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SFO</masterLabel>
+            <translation><!-- SFO --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Email Address --></label>
+        <name>Email_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of Meetings per year --></help>
+        <label><!-- Frequency of Face to Face Meetings --></label>
+        <name>Frequency_of_Face_to_Face_Meetings__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 1</masterLabel>
+            <translation><!-- At least 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 2</masterLabel>
+            <translation><!-- At least 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 3</masterLabel>
+            <translation><!-- At least 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 4</masterLabel>
+            <translation><!-- At least 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 5</masterLabel>
+            <translation><!-- At least 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>At least 6</masterLabel>
+            <translation><!-- At least 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Frequency of Other Types of Meetings --></label>
+        <name>Frequency_of_Meetings__c</name>
+    </fields>
+    <fields>
+        <help><!-- Person designated by the Group Owner to maintain the group information (TORs and participants). --></help>
+        <label><!-- Group Administrator --></label>
+        <name>Group_Administrator__c</name>
+        <relationshipLabel><!-- Industry Groups (Group Administrator) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Name of Group Owner --></help>
+        <label><!-- Group Owner --></label>
+        <name>Group_Owner_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- For local groups, if empty, this field will be populated with the country manager --></help>
+        <label><!-- Group Owner --></label>
+        <name>Group_Owner__c</name>
+        <relationshipLabel><!-- Industry Groups (Group Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA Local Office --></label>
+        <name>IATA_Local_Office__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field shall reflect the IATA Office that is managing this specific APJC. --></help>
+        <label><!-- IATA Local Office --></label>
+        <name>IATA_Office__c</name>
+        <relationshipLabel><!-- Local Groups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Group Type --></label>
+        <name>Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsMyGroup --></label>
+        <name>IsMyGroup__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Title --></label>
+        <name>Job_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latest Successes --></label>
+        <name>Latest_Successes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Group type --></label>
+        <name>Local_Governance_type__c</name>
+        <picklistValues>
+            <masterLabel>ALWG</masterLabel>
+            <translation><!-- ALWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APJC</masterLabel>
+            <translation><!-- APJC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APJC / FAG</masterLabel>
+            <translation><!-- APJC / FAG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAPJC</masterLabel>
+            <translation><!-- CAPJC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCC</masterLabel>
+            <translation><!-- CCC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CEC</masterLabel>
+            <translation><!-- CEC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CGA</masterLabel>
+            <translation><!-- CGA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICAP</masterLabel>
+            <translation><!-- ICAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JALWG</masterLabel>
+            <translation><!-- JALWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-C</masterLabel>
+            <translation><!-- LCAG-C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-P</masterLabel>
+            <translation><!-- LCAG-P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LCAG-P / Credit Card WG</masterLabel>
+            <translation><!-- LCAG-P / Credit Card WG --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Managed in SSW --></label>
+        <name>Managed_in_SSW__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Excluding Observers --></help>
+        <label><!-- Maximum Number of Participants --></label>
+        <name>Maximum_Number_of_Participiants__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mission --></label>
+        <name>Mission__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of local group meetings --></label>
+        <name>Number_of_local_group_meetings__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of participants --></label>
+        <name>Number_of_participants__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open to --></label>
+        <name>Open_to__c</name>
+        <picklistValues>
+            <masterLabel>Cargo Agency Associations</masterLabel>
+            <translation><!-- Cargo Agency Associations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agents</masterLabel>
+            <translation><!-- Cargo Agents --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agents</masterLabel>
+            <translation><!-- General Sales Agents --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Member Airlines</masterLabel>
+            <translation><!-- IATA Member Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Industry Stakeholders</masterLabel>
+            <translation><!-- Industry Stakeholders --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Airlines</masterLabel>
+            <translation><!-- Non-IATA Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strategic Partners</masterLabel>
+            <translation><!-- Strategic Partners --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Associations</masterLabel>
+            <translation><!-- Travel Agency Associations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agents</masterLabel>
+            <translation><!-- Travel Agents --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Open to non-IATA Airlines and Others --></label>
+        <name>Open_to_non_IATA_Airlines_and_Others__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Permanent or Temporary Group --></label>
+        <name>Permanent_or_Temporary_Group__c</name>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permanent</masterLabel>
+            <translation><!-- Permanent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temporary</masterLabel>
+            <translation><!-- Temporary --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reporting to --></label>
+        <name>Reporting_to__c</name>
+        <relationshipLabel><!-- Subgroups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Resolution --></label>
+        <name>Resolution__c</name>
+        <picklistValues>
+            <masterLabel>800</masterLabel>
+            <translation><!-- 800 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>801</masterLabel>
+            <translation><!-- 801 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>801r</masterLabel>
+            <translation><!-- 801r --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>801re</masterLabel>
+            <translation><!-- 801re --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>801rr</masterLabel>
+            <translation><!-- 801rr --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>801z</masterLabel>
+            <translation><!-- 801z --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>803</masterLabel>
+            <translation><!-- 803 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>804</masterLabel>
+            <translation><!-- 804 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>805</masterLabel>
+            <translation><!-- 805 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>805zz</masterLabel>
+            <translation><!-- 805zz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>807</masterLabel>
+            <translation><!-- 807 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>809</masterLabel>
+            <translation><!-- 809 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>809zz</masterLabel>
+            <translation><!-- 809zz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>810</masterLabel>
+            <translation><!-- 810 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>810i</masterLabel>
+            <translation><!-- 810i --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>810j</masterLabel>
+            <translation><!-- 810j --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>811</masterLabel>
+            <translation><!-- 811 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>813</masterLabel>
+            <translation><!-- 813 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>814</masterLabel>
+            <translation><!-- 814 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>815</masterLabel>
+            <translation><!-- 815 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>817</masterLabel>
+            <translation><!-- 817 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>818g</masterLabel>
+            <translation><!-- 818g --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>851</masterLabel>
+            <translation><!-- 851 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>853</masterLabel>
+            <translation><!-- 853 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Restricted Number of Participants --></label>
+        <name>Restricted_of_Participants__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Unique Name --></label>
+        <name>Unique_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- What is Group Working on Now --></label>
+        <name>What_is_Group_Working_on_Now__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Local Groups --></label>
+        <name>Local_Groups</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- an overview of all the airline’s participations in all of IATA’s groups --></description>
+        <label><!-- Reg/Div Groups --></label>
+        <name>Reg_Div_Groups</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- It&apos;s not possible to change this record because it is inactive --></errorMessage>
+        <name>Cannot_change_if_inactive_group</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to delete meetings from this group --></errorMessage>
+        <name>Delete_group_meetings</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to delete participants from this group --></errorMessage>
+        <name>Delete_participants</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The group can have either a Division or a Region - but not both at the same time --></errorMessage>
+        <name>Either_a_Division_or_a_Region</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to change ownership of an industry group. Please contact a System administrator or Account management team. --></errorMessage>
+        <name>Industry_Group_Ownership</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Name of the group cannot be modified after being approved --></errorMessage>
+        <name>Name_of_Reg_Div_Group_cant_be_modified</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only the Account management team can perform the editing --></errorMessage>
+        <name>Restrict_edit</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Deacitvate --></label>
+        <name>Deacitvate</name>
+    </webLinks>
+</CustomObjectTranslation>

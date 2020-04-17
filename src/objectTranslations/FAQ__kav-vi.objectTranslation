@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Knowledge --></value>
+    </caseValues>
+    <fields>
+        <label>Trả lời</label>
+        <name>Answer__c</name>
+    </fields>
+    <fields>
+        <label><!-- CNS Article --></label>
+        <name>CNS_Article__c</name>
+    </fields>
+    <fields>
+        <label><!-- Categories --></label>
+        <name>Categories__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chat Answer --></label>
+        <name>Chat_Answer__c</name>
+    </fields>
+    <fields>
+        <help><!-- Complete this checkbox if it’s linked to a new articles expected --></help>
+        <label><!-- New Articles --></label>
+        <name>New_Articles__c</name>
+    </fields>
+    <fields>
+        <label><!-- Queues --></label>
+        <name>Queues__c</name>
+    </fields>
+    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
+    <quickActions>
+        <label><!-- Submit for Approval --></label>
+        <name>SubmitApproval</name>
+    </quickActions>
+    <recordTypes>
+        <label><!-- FAQ --></label>
+        <name>FAQ</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- FAQs for internal use only. Not to be published to Partner Channel --></description>
+        <label><!-- Internal FAQ --></label>
+        <name>Internal_FAQ</name>
+    </recordTypes>
+</CustomObjectTranslation>

@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Agency Applied Change code --></value>
+    </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- The user who created this change code in AIMS --></help>
+        <label><!-- AIMS Updated by --></label>
+        <name>AIMS_Updated_by__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Status --></label>
+        <name>AccountNewStatus__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/no commission</masterLabel>
+            <translation><!-- Cash basis/no commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/with commission</masterLabel>
+            <translation><!-- Cash basis/with commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Changes processed</masterLabel>
+            <translation><!-- Changes processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listed</masterLabel>
+            <translation><!-- Listed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New application pending</masterLabel>
+            <translation><!-- New application pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No longer a customer</masterLabel>
+            <translation><!-- No longer a customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not accreditated</masterLabel>
+            <translation><!-- Not accreditated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not in operation</masterLabel>
+            <translation><!-- Not in operation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terminated</masterLabel>
+            <translation><!-- Terminated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Under review</masterLabel>
+            <translation><!-- Under review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- AccountPreviousStatus --></label>
+        <name>AccountPreviousStatus__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/no commission</masterLabel>
+            <translation><!-- Cash basis/no commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/with commission</masterLabel>
+            <translation><!-- Cash basis/with commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Changes processed</masterLabel>
+            <translation><!-- Changes processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listed</masterLabel>
+            <translation><!-- Listed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New application pending</masterLabel>
+            <translation><!-- New application pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No longer a customer</masterLabel>
+            <translation><!-- No longer a customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not accreditated</masterLabel>
+            <translation><!-- Not accreditated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not in operation</masterLabel>
+            <translation><!-- Not in operation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terminated</masterLabel>
+            <translation><!-- Terminated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Under review</masterLabel>
+            <translation><!-- Under review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Checked if this code is Active. Agency can only have one Active code in same time. --></help>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Agency where this code is applied to --></help>
+        <label><!-- Agency (AMS) --></label>
+        <name>Agency__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Applied Configuration --></label>
+        <name>Applied_Configuration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bulletin Information --></label>
+        <name>Bulletin_Information__c</name>
+    </fields>
+    <fields>
+        <label><!-- Change Code --></label>
+        <name>Change_Code__c</name>
+        <picklistValues>
+            <masterLabel>AFN</masterLabel>
+            <translation><!-- AFN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSF</masterLabel>
+            <translation><!-- BSF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP</masterLabel>
+            <translation><!-- BSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAS</masterLabel>
+            <translation><!-- CAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCA</masterLabel>
+            <translation><!-- CCA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCF</masterLabel>
+            <translation><!-- CCF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCR</masterLabel>
+            <translation><!-- CCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHC</masterLabel>
+            <translation><!-- CHC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHF</masterLabel>
+            <translation><!-- CHF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHG</masterLabel>
+            <translation><!-- CHG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHI</masterLabel>
+            <translation><!-- CHI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHJ</masterLabel>
+            <translation><!-- CHJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHL</masterLabel>
+            <translation><!-- CHL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHM</masterLabel>
+            <translation><!-- CHM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHN</masterLabel>
+            <translation><!-- CHN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHO</masterLabel>
+            <translation><!-- CHO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHS</masterLabel>
+            <translation><!-- CHS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHV</masterLabel>
+            <translation><!-- CHV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLF</masterLabel>
+            <translation><!-- CLF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLI</masterLabel>
+            <translation><!-- CLI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLO</masterLabel>
+            <translation><!-- CLO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLR</masterLabel>
+            <translation><!-- CLR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CMF</masterLabel>
+            <translation><!-- CMF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNF</masterLabel>
+            <translation><!-- CNF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>COR</masterLabel>
+            <translation><!-- COR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CSF</masterLabel>
+            <translation><!-- CSF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CWD</masterLabel>
+            <translation><!-- CWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEF</masterLabel>
+            <translation><!-- DEF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DFE</masterLabel>
+            <translation><!-- DFE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DFW</masterLabel>
+            <translation><!-- DFW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DIS</masterLabel>
+            <translation><!-- DIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DOM</masterLabel>
+            <translation><!-- DOM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DWD</masterLabel>
+            <translation><!-- DWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FIN</masterLabel>
+            <translation><!-- FIN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FOP</masterLabel>
+            <translation><!-- FOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FPR</masterLabel>
+            <translation><!-- FPR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FPY</masterLabel>
+            <translation><!-- FPY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IAF</masterLabel>
+            <translation><!-- IAF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRR</masterLabel>
+            <translation><!-- IRR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRS</masterLabel>
+            <translation><!-- IRS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRW</masterLabel>
+            <translation><!-- IRW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LRA</masterLabel>
+            <translation><!-- LRA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LRD</masterLabel>
+            <translation><!-- LRD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LRR</masterLabel>
+            <translation><!-- LRR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LSP</masterLabel>
+            <translation><!-- LSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LSW</masterLabel>
+            <translation><!-- LSW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MCH</masterLabel>
+            <translation><!-- MCH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MEP</masterLabel>
+            <translation><!-- MEP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NAC</masterLabel>
+            <translation><!-- NAC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NCA</masterLabel>
+            <translation><!-- NCA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NCW</masterLabel>
+            <translation><!-- NCW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEP</masterLabel>
+            <translation><!-- NEP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEW</masterLabel>
+            <translation><!-- NEW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NFS</masterLabel>
+            <translation><!-- NFS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOT</masterLabel>
+            <translation><!-- NOT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NTW</masterLabel>
+            <translation><!-- NTW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NWD</masterLabel>
+            <translation><!-- NWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OIN</masterLabel>
+            <translation><!-- OIN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OOT</masterLabel>
+            <translation><!-- OOT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PCA</masterLabel>
+            <translation><!-- PCA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PCN</masterLabel>
+            <translation><!-- PCN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PCR</masterLabel>
+            <translation><!-- PCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RCM</masterLabel>
+            <translation><!-- RCM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RCR</masterLabel>
+            <translation><!-- RCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>REC</masterLabel>
+            <translation><!-- REC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>REI</masterLabel>
+            <translation><!-- REI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>REW</masterLabel>
+            <translation><!-- REW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RNC</masterLabel>
+            <translation><!-- RNC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RPY</masterLabel>
+            <translation><!-- RPY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RRC</masterLabel>
+            <translation><!-- RRC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RTE</masterLabel>
+            <translation><!-- RTE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RTR</masterLabel>
+            <translation><!-- RTR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RVW</masterLabel>
+            <translation><!-- RVW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RWD</masterLabel>
+            <translation><!-- RWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDR</masterLabel>
+            <translation><!-- SDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SRM</masterLabel>
+            <translation><!-- SRM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STR</masterLabel>
+            <translation><!-- STR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TAP</masterLabel>
+            <translation><!-- TAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TCH</masterLabel>
+            <translation><!-- TCH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TER</masterLabel>
+            <translation><!-- TER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRW</masterLabel>
+            <translation><!-- TRW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VRR</masterLabel>
+            <translation><!-- VRR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VRW</masterLabel>
+            <translation><!-- VRW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WCP</masterLabel>
+            <translation><!-- WCP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Change effective as of --></label>
+        <name>Change_effective_as_of__c</name>
+    </fields>
+    <fields>
+        <label><!-- HUB Effective Date --></label>
+        <name>CreatedDate_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date_To_Show__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date_eBulletin__c</name>
+    </fields>
+    <fields>
+        <label><!-- DEF Non-Payment --></label>
+        <name>DEF_Non_Payment2__c</name>
+    </fields>
+    <fields>
+        <label><!-- DEF Non-Payment --></label>
+        <name>DEF_Non_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- DateTime GMT --></label>
+        <name>DateTime_GMT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Memo Sent --></label>
+        <name>Date_Memo_Sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date-time of change --></label>
+        <name>Date_time_of_change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Date --></label>
+        <name>Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- End of Grace Period Date --></label>
+        <name>End_of_Grace_Period_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Financial Security --></label>
+        <name>Financial_Security__c</name>
+    </fields>
+    <fields>
+        <label><!-- For Integration --></label>
+        <name>For_Integration__c</name>
+    </fields>
+    <fields>
+        <help><!-- FOPs to show on eBulletin --></help>
+        <label><!-- Forms of Payment --></label>
+        <name>Forms_of_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Code Top Parent --></label>
+        <name>IATA_Code_Top_Parent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Show the IATA Code from the related Account --></help>
+        <label><!-- IATA Code --></label>
+        <name>IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- IEPPayload --></label>
+        <name>IEPPayload__c</name>
+    </fields>
+    <fields>
+        <label><!-- IRR: Accumulated irregularities --></label>
+        <name>IRR_Acumulated_irregularities__c</name>
+    </fields>
+    <fields>
+        <label><!-- IRR Expiration Date --></label>
+        <name>IRR_Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- IRR Period --></label>
+        <name>IRR_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- IRR Reason --></label>
+        <name>IRR_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Integration RecId --></label>
+        <name>Integration_RecId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Irregularities_Expired --></label>
+        <name>Irregularities_Expired__c</name>
+    </fields>
+    <fields>
+        <label><!-- Irregularities Points --></label>
+        <name>Irregularities_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Irregularity Sequence --></label>
+        <name>Irregularity_Sequence__c</name>
+    </fields>
+    <fields>
+        <label><!-- Irregularity Type Description --></label>
+        <name>Irregularity_Type_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Irregularity Type --></label>
+        <name>Irregularity_Type__c</name>
+        <picklistValues>
+            <masterLabel>1PT</masterLabel>
+            <translation><!-- 1PT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2PT</masterLabel>
+            <translation><!-- 2PT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FC1</masterLabel>
+            <translation><!-- FC1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FC2</masterLabel>
+            <translation><!-- FC2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NPA</masterLabel>
+            <translation><!-- NPA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OV1</masterLabel>
+            <translation><!-- OV1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OV2</masterLabel>
+            <translation><!-- OV2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SC1</masterLabel>
+            <translation><!-- SC1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SC2</masterLabel>
+            <translation><!-- SC2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WD1</masterLabel>
+            <translation><!-- WD1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WD2</masterLabel>
+            <translation><!-- WD2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- In Case this Code has been applied during a Accreditaiton Request --></help>
+        <label><!-- OSCAR --></label>
+        <name>OSCAR__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- A = Add Irregularity. W = Withdraw Irregularity --></help>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value to be displayed at Outstanding Amount column on eBulletin report --></help>
+        <label><!-- Outstanding Amount --></label>
+        <name>Outstanding_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- PreviousReason --></label>
+        <name>PreviousReason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Published on EBulletin --></label>
+        <name>Published_on_EBulletin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason Code --></label>
+        <name>Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>00</masterLabel>
+            <translation>0</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>01</masterLabel>
+            <translation>1</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>02</masterLabel>
+            <translation>2</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>03</masterLabel>
+            <translation>3</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>21</masterLabel>
+            <translation><!-- 21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>31</masterLabel>
+            <translation><!-- 31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>32</masterLabel>
+            <translation><!-- 32 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>40</masterLabel>
+            <translation><!-- 40 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>43</masterLabel>
+            <translation><!-- 43 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>50</masterLabel>
+            <translation><!-- 50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>51</masterLabel>
+            <translation><!-- 51 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>52</masterLabel>
+            <translation><!-- 52 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>53</masterLabel>
+            <translation><!-- 53 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>54</masterLabel>
+            <translation><!-- 54 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>60</masterLabel>
+            <translation><!-- 60 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>61</masterLabel>
+            <translation><!-- 61 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>62</masterLabel>
+            <translation><!-- 62 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>63</masterLabel>
+            <translation><!-- 63 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>64</masterLabel>
+            <translation><!-- 64 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>65</masterLabel>
+            <translation><!-- 65 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>66</masterLabel>
+            <translation><!-- 66 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>67</masterLabel>
+            <translation><!-- 67 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>71</masterLabel>
+            <translation><!-- 71 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>72</masterLabel>
+            <translation><!-- 72 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>81</masterLabel>
+            <translation><!-- 81 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>91</masterLabel>
+            <translation><!-- 91 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>93</masterLabel>
+            <translation><!-- 93 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason Description --></label>
+        <name>Reason_Description__c</name>
+        <picklistValues>
+            <masterLabel>ACCREDITED - MEETS CRITERIA</masterLabel>
+            <translation><!-- ACCREDITED - MEETS CRITERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ACCREDITED-MEET-STANDARDS</masterLabel>
+            <translation><!-- ACCREDITED-MEET-STANDARDS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ADMINISTRATIVE OFFICES</masterLabel>
+            <translation><!-- ADMINISTRATIVE OFFICES --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APPLICATION DISAPPROVED</masterLabel>
+            <translation><!-- APPLICATION DISAPPROVED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APPLICATION WITHDRAWN</masterLabel>
+            <translation><!-- APPLICATION WITHDRAWN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BANKRUPTCY/LIQUIDATION</masterLabel>
+            <translation><!-- BANKRUPTCY/LIQUIDATION --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP PARTICIPATIION - REVIEW IN PROGRESS</masterLabel>
+            <translation><!-- BSP PARTICIPATIION - REVIEW IN PROGRESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP PARTICIPATION - REVIEW IN PROGRESS</masterLabel>
+            <translation><!-- BSP PARTICIPATION - REVIEW IN PROGRESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BY AGENCY ADMINISTRATOR</masterLabel>
+            <translation><!-- BY AGENCY ADMINISTRATOR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BY COMMISSIONER</masterLabel>
+            <translation><!-- BY COMMISSIONER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS PARTICIPATION - REVIEW IN PROGRESS</masterLabel>
+            <translation><!-- CASS PARTICIPATION - REVIEW IN PROGRESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHANGE IN PROCESS</masterLabel>
+            <translation><!-- CHANGE IN PROCESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CODE ASSIGNED</masterLabel>
+            <translation><!-- CODE ASSIGNED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CODE ASSIGNMENT ONLY</masterLabel>
+            <translation><!-- CODE ASSIGNMENT ONLY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROSS DEFAULT ACTION</masterLabel>
+            <translation><!-- CROSS DEFAULT ACTION --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEFAULT - NON PAYMENT</masterLabel>
+            <translation><!-- DEFAULT - NON PAYMENT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEFAULT - UNDER REPAYMENT PLAN</masterLabel>
+            <translation><!-- DEFAULT - UNDER REPAYMENT PLAN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEFAULT ACCUM. IRR. - NON COMPLIANCE</masterLabel>
+            <translation><!-- DEFAULT ACCUM. IRR. - NON COMPLIANCE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEFAULT ACCUM. IRR. - PAYMENT RELATED</masterLabel>
+            <translation><!-- DEFAULT ACCUM. IRR. - PAYMENT RELATED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEFAULT NON-SETTLEMENT</masterLabel>
+            <translation><!-- DEFAULT NON-SETTLEMENT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEW APPLICATION</masterLabel>
+            <translation><!-- NEW APPLICATION --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NON COMPLIANCE TO ACCREDITATION CRITERIA</masterLabel>
+            <translation><!-- NON COMPLIANCE TO ACCREDITATION CRITERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NON COMPLIANCE TO CRITERIA</masterLabel>
+            <translation><!-- NON COMPLIANCE TO CRITERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NON COMPLIANCE TO FINANCIAL CRITERIA</masterLabel>
+            <translation><!-- NON COMPLIANCE TO FINANCIAL CRITERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOTICE OF TERMINATION DUE TO NON PAYMENT</masterLabel>
+            <translation><!-- NOTICE OF TERMINATION DUE TO NON PAYMENT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PREJUDICED COLLECTION OF FUNDS</masterLabel>
+            <translation><!-- PREJUDICED COLLECTION OF FUNDS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RELINQUISHMENT IN PROCESS</masterLabel>
+            <translation><!-- RELINQUISHMENT IN PROCESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VOLUNTARY RELINQUISHMENT</masterLabel>
+            <translation><!-- VOLUNTARY RELINQUISHMENT --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Irregularity --></label>
+        <name>Related_Irregularity__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Request Step --></label>
+        <name>Request_Step__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIDRA Case --></label>
+        <lookupFilter>
+            <errorMessage><!-- You can only select SIDRA or SIDRA Lite cases, make sure the selected case has the correct record type --></errorMessage>
+        </lookupFilter>
+        <name>SIDRA_Case__c</name>
+        <relationshipLabel><!-- Agencies Applied Change codes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sent to external system --></label>
+        <name>Sent_to_external_system__c</name>
+    </fields>
+    <fields>
+        <label><!-- Skip Agency Update --></label>
+        <name>Skip_Agency_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Termination Date --></label>
+        <name>Termination_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Uncheck if the change code should not appear in the e-bulletin --></help>
+        <label><!-- To Publish in e-Bulletin --></label>
+        <name>To_Publish_in_e_Bulletin__c</name>
+    </fields>
+    <fields>
+        <help><!-- Flag for Analyst to check if the Minor Change has been carried out to AIMS --></help>
+        <label><!-- Updated AIMS --></label>
+        <name>Updated_AIMS__c</name>
+    </fields>
+    <nameFieldLabel><!-- Change code details --></nameFieldLabel>
+    <recordTypes>
+        <description><!-- Applied for irregularities only --></description>
+        <label><!-- Irregularities --></label>
+        <name>Irregularities</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used for non-irregularities --></description>
+        <label><!-- Standard --></label>
+        <name>Standard</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Irregularity change codes cannot be created on newgen agencies. --></errorMessage>
+        <name>ANG_Block_Irregularity_Change_Codes</name>
+    </validationRules>
+</CustomObjectTranslation>

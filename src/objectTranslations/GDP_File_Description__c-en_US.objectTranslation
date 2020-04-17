@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP File Description</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP File Descriptions</value>
+    </caseValues>
+    <fields>
+        <help><!-- Will Allow to segregate the File Production. Selection of option 0 will deactivate the production of the file. --></help>
+        <label><!-- Atom --></label>
+        <name>Atom__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>255</masterLabel>
+            <translation><!-- 255 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Agency Classification --></help>
+        <label><!-- Class --></label>
+        <name>Class__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation>CGO: Cargo Agents</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation>DOM: Domestic Agents</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M,G</masterLabel>
+            <translation>MGO: MSO &amp; GSA Agents</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P,V</masterLabel>
+            <translation>PAS: Passenger Agents</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation>TID: TIDS Agents</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Credential and String to connect to the Mysql Database --></help>
+        <label><!-- Database Connector --></label>
+        <name>Database_Connector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field API --></label>
+        <name>Field_API__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Filter Value --></label>
+        <name>Field_Filter_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Filter --></label>
+        <name>Field_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Group --></label>
+        <name>Field_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Hidden Columns --></label>
+        <name>Field_Hidden_columns__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Label --></label>
+        <name>Field_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Length --></label>
+        <name>Field_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Object Name --></label>
+        <name>Field_Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field_Txt_Hidden --></label>
+        <name>Field_Txt_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Type --></label>
+        <name>Field_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Visible --></label>
+        <name>Field_Visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field_Xml_Group --></label>
+        <name>Field_Xml_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field_Xml_Hidden --></label>
+        <name>Field_Xml_Hidden__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field_Xml_Name --></label>
+        <name>Field_Xml_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Xml Structure --></label>
+        <name>Field_Xml_Structure__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is the File Type in which the data is converted, When DATABASE the replication process does carry directly the information to the given database --></help>
+        <label><!-- File Format --></label>
+        <name>File_Format__c</name>
+        <picklistValues>
+            <masterLabel>Database</masterLabel>
+            <translation><!-- Database --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TXT</masterLabel>
+            <translation><!-- TXT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XLSX</masterLabel>
+            <translation><!-- XLSX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XML</masterLabel>
+            <translation><!-- XML --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- File Naming Convention used during File Production, allow to build the name of the file produced and preventing duplicates so the administrator needs to pay attention when adding a new configuration (no risk when the file type is DATABASE) --></help>
+        <label><!-- File Naming Convention --></label>
+        <name>File_Naming_Convention__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Frequency set the logic of when the data from the Rest API is produced --></help>
+        <label><!-- Frequency --></label>
+        <name>Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Semi-Monthly</masterLabel>
+            <translation><!-- Semi-Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Full SFDC ID --></label>
+        <name>Full_SFDC_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Allow the filtering of the data by  including or excluding the countries selected in the Area Definition --></help>
+        <label><!-- Geo Coverage --></label>
+        <name>Geo_Coverage_Definition__c</name>
+        <relationshipLabel><!-- GDP File Descriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This file definition is a reference layout and can be used by other file definition with specific filters and criterias, because it is not refering to a parent reference --></help>
+        <label><!-- Is a Reference Layout --></label>
+        <name>Is_Reference__c</name>
+    </fields>
+    <fields>
+        <help><!-- Delta will refer to the Select of Delta Update Records for updated Account View Records Only for the given period of time, Master is every Account View Records --></help>
+        <label><!-- Magnitude --></label>
+        <name>Magnitude__c</name>
+        <picklistValues>
+            <masterLabel>Delta</masterLabel>
+            <translation><!-- Delta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Master</masterLabel>
+            <translation><!-- Master --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- In case of Delta File Description it is required to send the Master file the first time --></help>
+        <label><!-- Master File Description --></label>
+        <name>Master_File_Description__c</name>
+        <relationshipLabel><!-- GDP File Descriptions (Master File Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Maximum API Request That the Rest API process is going to produce to ensure the Timeout is not reached --></help>
+        <label><!-- Maximum API Request --></label>
+        <name>Maximum_API_Request__c</name>
+    </fields>
+    <fields>
+        <help><!-- Minimum of digits expected from the search code provided by the customer to return response, otherwise generate error like multiple results. --></help>
+        <label><!-- Minimum Digit Search --></label>
+        <name>Minimum_Digit_Search__c</name>
+    </fields>
+    <fields>
+        <help><!-- Order by is used to sort the data list extracted to present it in the sort selected --></help>
+        <label><!-- Order By --></label>
+        <name>Order_By__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used by the Reference Record and Will tell the replication process which payload procedure to consume to get the data --></help>
+        <label><!-- Payload Procedure --></label>
+        <name>Payload_Procedure__c</name>
+        <picklistValues>
+            <masterLabel>Agency</masterLabel>
+            <translation><!-- Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IDCard</masterLabel>
+            <translation><!-- IDCard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription</masterLabel>
+            <translation><!-- Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used on the Reference Record To Determine the Family Product Category --></help>
+        <label><!-- Product Type --></label>
+        <name>Product_Type__c</name>
+        <picklistValues>
+            <masterLabel>CAC</masterLabel>
+            <translation><!-- CAC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CACEWS</masterLabel>
+            <translation><!-- CACEWS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CACSWS</masterLabel>
+            <translation><!-- CACSWS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSS</masterLabel>
+            <translation><!-- GSS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MDP</masterLabel>
+            <translation><!-- MDP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used on the Reference Record To Limit the Query as clause where inside the REST API --></help>
+        <label><!-- Reference Clause --></label>
+        <name>Reference_Clause__c</name>
+    </fields>
+    <fields>
+        <help><!-- Allows to prevent the user to create the set of fields over and over in the fields configuration, By using the reference logic only few configurations are needed to operate multiple derivation of the sample configuration with different attributes as File --></help>
+        <label><!-- Reference --></label>
+        <name>Reference__c</name>
+        <relationshipLabel><!-- GDP File Descriptions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Service Target is used to upsert the data to the right table into the mysql --></help>
+        <label><!-- Service Target --></label>
+        <name>Service_Target__c</name>
+        <picklistValues>
+            <masterLabel>Response</masterLabel>
+            <translation><!-- Response --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription</masterLabel>
+            <translation><!-- Subscription --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For CAC Web Service Default returned response when the code is not found --></help>
+        <label><!-- Web Service Default Response --></label>
+        <name>Web_Service_Default_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- XSD Schema --></label>
+        <name>XSD_Schema__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Sidra Lite Email Templates</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sidra Lite Email Templates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- EmailTemplate --></label>
+        <name>EmailTemplate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- SidraLiteAction --></label>
+        <name>SidraLiteAction__c</name>
+    </fields>
+    <fields>
+        <label><!-- SidraLiteReason --></label>
+        <name>SidraLiteReason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Customer --></label>
+        <name>TypeOfCustomer__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

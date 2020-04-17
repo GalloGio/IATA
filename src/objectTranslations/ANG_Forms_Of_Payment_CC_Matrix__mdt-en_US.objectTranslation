@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Forms Of Payment CC Matrix</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Forms Of Payment CC Matrix</value>
+    </caseValues>
+    <fields>
+        <label><!-- Action in FoP OSCAR --></label>
+        <name>Action_in_FoP_OSCAR__c</name>
+        <picklistValues>
+            <masterLabel>Restore All</masterLabel>
+            <translation><!-- Restore All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restore Cash</masterLabel>
+            <translation><!-- Restore Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restore Credit Card</masterLabel>
+            <translation><!-- Restore Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restrict All</masterLabel>
+            <translation><!-- Restrict All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restrict Cash</masterLabel>
+            <translation><!-- Restrict Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restrict Credit Card</masterLabel>
+            <translation><!-- Restrict Credit Card --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cash after --></label>
+        <name>Cash_after__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivation in process</masterLabel>
+            <translation><!-- Deactivation in process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Active</masterLabel>
+            <translation><!-- Non-Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Authorized</masterLabel>
+            <translation><!-- Not Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not set</masterLabel>
+            <translation><!-- Not set --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cash before --></label>
+        <name>Cash_before__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivation in process</masterLabel>
+            <translation><!-- Deactivation in process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Active</masterLabel>
+            <translation><!-- Non-Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Authorized</masterLabel>
+            <translation><!-- Not Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not set</masterLabel>
+            <translation><!-- Not set --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Change Code --></label>
+        <name>Change_Code__c</name>
+        <picklistValues>
+            <masterLabel>CCA</masterLabel>
+            <translation><!-- CCA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCR</masterLabel>
+            <translation><!-- CCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FOP</masterLabel>
+            <translation><!-- FOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FPR</masterLabel>
+            <translation><!-- FPR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOCC</masterLabel>
+            <translation><!-- NOCC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PCA</masterLabel>
+            <translation><!-- PCA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PCR</masterLabel>
+            <translation><!-- PCR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credit Card after --></label>
+        <name>Credit_Card_after__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivation in process</masterLabel>
+            <translation><!-- Deactivation in process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Active</masterLabel>
+            <translation><!-- Non-Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Authorized</masterLabel>
+            <translation><!-- Not Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not set</masterLabel>
+            <translation><!-- Not set --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credit Card before --></label>
+        <name>Credit_Card_before__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivation in process</masterLabel>
+            <translation><!-- Deactivation in process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Active</masterLabel>
+            <translation><!-- Non-Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Authorized</masterLabel>
+            <translation><!-- Not Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not set</masterLabel>
+            <translation><!-- Not set --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

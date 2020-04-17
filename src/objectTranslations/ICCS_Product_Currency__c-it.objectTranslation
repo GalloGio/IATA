@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- ICCS Product Currency --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- ICCS Product Currency --></value>
+    </caseValues>
+    <fields>
+        <label>Paese</label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Code --></label>
+        <name>ICCS_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Product Country --></label>
+        <name>ICCS_Product_Country__c</name>
+        <relationshipLabel><!-- ICCS Product Currencies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation>Attivo</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation>Inattivo</translation>
+        </picklistValues>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- ICCS Product Currency Name --></nameFieldLabel>
+    <startsWith><!-- Consonant --></startsWith>
+    <validationRules>
+        <errorMessage><!-- This field is mandatory. Please select a value. --></errorMessage>
+        <name>CurrencyIsMandatory</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Back_to_ICCS_Product_Country --></label>
+        <name>Back_to_ICCS_Product_Country</name>
+    </webLinks>
+</CustomObjectTranslation>

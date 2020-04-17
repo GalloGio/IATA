@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Authorized Signatory</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Authorized Signatories</value>
+    </caseValues>
+    <fields>
+        <label><!-- ASP Effective Date --></label>
+        <name>ASP_Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachment Link --></label>
+        <name>Attachment_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Authorized Signatories Package --></label>
+        <name>Authorized_Signatories_Package__c</name>
+        <relationshipLabel><!-- Authorized Signatories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact Title --></label>
+        <name>Contact_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Authorized Signatories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Image Attachment Id --></label>
+        <name>Image_Attachment_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Attachment Id --></label>
+        <name>Last_Attachment_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signature Snapshot --></label>
+        <name>Signature_Snapshot__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

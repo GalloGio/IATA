@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IEC GDP Replication</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IEC GDP Replication</value>
+    </caseValues>
+    <fields>
+        <help><!-- Profile IDs that has access to modify records synchronized with WebStar or AIMS (Comma separated with no spaces) --></help>
+        <label><!-- Profile IDs with Access --></label>
+        <name>Profile_IDs_with_Access__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Active? --></label>
+        <name>Schedule_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Period (hr) --></label>
+        <name>Schedule_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- System Admin Email --></label>
+        <name>System_Admin_Email__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

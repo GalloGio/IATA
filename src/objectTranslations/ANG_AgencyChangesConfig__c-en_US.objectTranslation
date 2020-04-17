@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ANG Agency Changes Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ANG Agency Changes Configuration</value>
+    </caseValues>
+    <fields>
+        <help><!-- Change Code to be applied after application withdrawal --></help>
+        <label><!-- Application withdrawal --></label>
+        <name>TCA_Application_withdrawal__c</name>
+    </fields>
+    <fields>
+        <help><!-- Change Code to be applied after manager approval --></help>
+        <label><!-- Manager approval --></label>
+        <name>TCA_Manager_approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Not Applicable Steps --></label>
+        <name>TCA_Not_Applicable_Steps__c</name>
+    </fields>
+    <fields>
+        <help><!-- Change Code to be applied after sanity check --></help>
+        <label><!-- Sanity check --></label>
+        <name>TCA_Sanity_check__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accreditation type --></label>
+        <name>TC_Accreditation_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Conversion Multicountry --></label>
+        <name>TC_Conversion_Multicountry__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hierarchy --></label>
+        <name>TC_Hierarchy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal name --></label>
+        <name>TC_Legal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal status --></label>
+        <name>TC_Legal_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Letter Generation --></label>
+        <name>TC_Letter_Generation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location type --></label>
+        <name>TC_Location_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location --></label>
+        <name>TC_Location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location type to different legal entity --></label>
+        <name>TC_Location_type_diff_legal_ent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Major shareholding --></label>
+        <name>TC_Major_Shareholding__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minor shareholding --></label>
+        <name>TC_Minor_Shareholding__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ownership --></label>
+        <name>TC_Ownership__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trade name --></label>
+        <name>TC_Trade_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- VMFR --></label>
+        <name>TC_VMFR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid Accreditation Models --></label>
+        <name>Valid_Accreditation_Models__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

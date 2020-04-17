@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Yardstick Contact Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Yardstick Contact Details</value>
+    </caseValues>
+    <fields>
+        <help><!-- Accredited training center ID --></help>
+        <label><!-- ATC ID --></label>
+        <name>ATC_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the accredited center school --></help>
+        <label><!-- ATC --></label>
+        <name>ATC__c</name>
+    </fields>
+    <fields>
+        <help><!-- Connection to the Account Contact Role record --></help>
+        <label><!-- Account Contact Role --></label>
+        <name>Account_Contact_Role__c</name>
+        <relationshipLabel><!-- Yardstick Contact Details --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Yardstick Trainee --></description>
+        <label><!-- Yardstick Trainee --></label>
+        <name>Yardstick_Trainee</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Test Plan/Test Script Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Test Plan/Test Script Mappings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Test Plan Name --></label>
+        <name>Test_Plan_Name__c</name>
+        <relationshipLabel><!-- Test Plan/Test Script Mappings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Test Script Name --></label>
+        <name>Test_Script_Name__c</name>
+        <relationshipLabel><!-- Test Plan/Test Script Mappings --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

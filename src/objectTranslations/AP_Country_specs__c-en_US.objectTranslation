@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Airline Participation Country specifics</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Airline Participation Country specifics</value>
+    </caseValues>
+    <fields>
+        <label><!-- Download_URL --></label>
+        <name>Download_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Library Doc Name --></label>
+        <name>Library_Doc_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link label --></label>
+        <name>Link_label__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

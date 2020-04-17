@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Data Submission</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Data Submissions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Data Submissions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External Actor Id --></label>
+        <name>External_Actor_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- File Name --></label>
+        <name>File_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Original User --></label>
+        <name>Original_User__c</name>
+        <relationshipLabel><!-- Data Submissions (Original User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Parent Data Submission --></label>
+        <name>Parent_Data_Submission__c</name>
+        <relationshipLabel><!-- Data Submissions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Result --></label>
+        <name>Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Accepted for Processing</masterLabel>
+            <translation><!-- Accepted for Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Submission Error</masterLabel>
+            <translation><!-- Data Submission Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>File processed</masterLabel>
+            <translation><!-- File processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Submission date --></label>
+        <name>Submission_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submitter --></label>
+        <name>Submitter__c</name>
+        <relationshipLabel><!-- Data Submissions (Submitter) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Processing</masterLabel>
+            <translation><!-- Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submission</masterLabel>
+            <translation><!-- Submission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation</masterLabel>
+            <translation><!-- Validation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Data Submissions --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

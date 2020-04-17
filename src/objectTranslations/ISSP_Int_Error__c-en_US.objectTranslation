@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ISSP Integration Error Handling</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ISSP Integration Error Handling</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assignment Group --></label>
+        <name>Assignment_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Service --></label>
+        <name>Business_Service__c</name>
+    </fields>
+    <fields>
+        <label><!-- Caller ID --></label>
+        <name>Caller_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Caused By --></label>
+        <name>Caused_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Type --></label>
+        <name>Contact_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Impact --></label>
+        <name>Impact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opened by --></label>
+        <name>Opened_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Severity --></label>
+        <name>Severity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Short Description --></label>
+        <name>Short_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subcategory --></label>
+        <name>Subcategory__c</name>
+    </fields>
+    <fields>
+        <label><!-- u Application --></label>
+        <name>U_Application__c</name>
+    </fields>
+    <fields>
+        <label><!-- u Business Service --></label>
+        <name>U_Business_Service__c</name>
+    </fields>
+    <fields>
+        <label><!-- u Issue Identified By --></label>
+        <name>U_Issue_Identified_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- u Operation Name --></label>
+        <name>U_Operation_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Urgency --></label>
+        <name>Urgency__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

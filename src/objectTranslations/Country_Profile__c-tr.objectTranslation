@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Nominative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Accusative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Genitive</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Dative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Ablative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>None</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>First</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>false</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <caseValues>
+        <caseType>Locative</caseType>
+        <plural>true</plural>
+        <possessive>Second</possessive>
+        <value><!-- Country Profile --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Airport (landing, take-off, lighting...) --></label>
+        <name>AC_Airport__c</name>
+    </fields>
+    <fields>
+        <label><!-- Catering --></label>
+        <name>AC_Catering__c</name>
+    </fields>
+    <fields>
+        <label><!-- Crew Accommodation --></label>
+        <name>AC_Crew_Accommodation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fuel --></label>
+        <name>AC_Fuel__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ground Handling (pax, cargo, cleaning..) --></label>
+        <name>AC_Ground_Handling__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ground Transport (crew and pax) --></label>
+        <name>AC_Ground_Transport__c</name>
+    </fields>
+    <fields>
+        <label><!-- Line Maintenance (fueling, engineering) --></label>
+        <name>AC_Line_Maintenance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pax Accommodation --></label>
+        <name>AC_Pax_Accommodation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>AC_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- Acceptability of Currency (Reso 024d) --></label>
+        <name>Acceptability_Of_Currency__c</name>
+        <picklistValues>
+            <masterLabel>Not Restricted</masterLabel>
+            <translation><!-- Not Restricted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restricted</masterLabel>
+            <translation><!-- Restricted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Acquisition Model Info --></label>
+        <name>Acquisition_Model_Info__c</name>
+    </fields>
+    <fields>
+        <label><!-- Acquisition Model --></label>
+        <name>Acquisition_Model__c</name>
+        <picklistValues>
+            <masterLabel>Central</masterLabel>
+            <translation><!-- Central --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Local</masterLabel>
+            <translation><!-- Local --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Actual Amount Blocked In Local Currency --></label>
+        <name>Actual_Amount_Blocked_In_Local_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Amount Blocked --></label>
+        <name>Actual_Amount_Blocked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alerts --></label>
+        <name>Alerts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Availability --></label>
+        <name>Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Airlines Participating --></label>
+        <name>BSP_Airlines_participating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume 1 --></label>
+        <name>BSP_Average_Monthly_Volume_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume 2 --></label>
+        <name>BSP_Average_Monthly_Volume_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume --></label>
+        <name>BSP_Average_Monthly_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Clearing Bank --></label>
+        <name>BSP_Clearing_Bank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency 1 --></label>
+        <name>BSP_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency 2 --></label>
+        <name>BSP_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>BSP_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Update --></label>
+        <name>BSP_General_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Availability --></label>
+        <name>BSP_ICCS_Availability__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Launch Date --></label>
+        <name>BSP_Launch_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Card Profile: Acceptance --></label>
+        <name>BSP_Payment_Card_Profile_Acceptance__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency 1 --></label>
+        <name>BSP_Settlement_Frequency_1__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency 2 --></label>
+        <name>BSP_Settlement_Frequency_2__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency --></label>
+        <name>BSP_Settlement_Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- # Airlines Participating --></label>
+        <name>CASS_Airlines_Participating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume 1 --></label>
+        <name>CASS_Average_Monthly_Volume_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume 2 --></label>
+        <name>CASS_Average_Monthly_Volume_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Monthly Volume --></label>
+        <name>CASS_Average_Monthly_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Clearing Bank --></label>
+        <name>CASS_Clearing_Bank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency 1 --></label>
+        <name>CASS_Currency_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency 2 --></label>
+        <name>CASS_Currency_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>CASS_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Update --></label>
+        <name>CASS_General_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Availability --></label>
+        <name>CASS_ICCS_Availability__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Launch Date --></label>
+        <name>CASS_Launch_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency 1 --></label>
+        <name>CASS_Settlement_Frequency_1__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency 2 --></label>
+        <name>CASS_Settlement_Frequency_2__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Frequency --></label>
+        <name>CASS_Settlement_Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 10 D</masterLabel>
+            <translation><!-- Each 10 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 3 D</masterLabel>
+            <translation><!-- Each 3 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each 5 D</masterLabel>
+            <translation><!-- Each 5 D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cause of Issue --></label>
+        <name>Cause_of_Issue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Central Bank --></label>
+        <name>Central_Bank__c</name>
+    </fields>
+    <fields>
+        <label><!-- Civil Aviation Authority --></label>
+        <name>Civil_Aviation_Authority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Clearing Currency --></label>
+        <name>Clearing_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+        <relationshipLabel><!-- Country Profiles --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Credit Spread --></label>
+        <name>Credit_Spread__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency Exchange Rate --></label>
+        <name>Currency_Exchange_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Account Balance (% of GDP) --></label>
+        <name>Current_Account_Balance_of_GDP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Devaluation Risk --></label>
+        <name>Devaluation_Risk__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medium</masterLabel>
+            <translation><!-- Medium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Documentation &amp; Forms --></label>
+        <name>Documentation_Forms__c</name>
+    </fields>
+    <fields>
+        <label><!-- FX Bank Partners --></label>
+        <name>FX_Bank_Partners__c</name>
+    </fields>
+    <fields>
+        <label><!-- FX Reserves (%change yoy) --></label>
+        <name>Foreign_Exchange_Reserves_change_yoy__c</name>
+    </fields>
+    <fields>
+        <label><!-- FX Reserves (#months of imports) --></label>
+        <name>Foreign_Exchange_Reserves_months__c</name>
+    </fields>
+    <fields>
+        <label><!-- Formal FX Repatriation Procedure --></label>
+        <name>Formal_FX_Repatriation_Procedure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Forward/NDF --></label>
+        <name>Forward_NDF__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP Growth (%yoy) --></label>
+        <name>GDP_Growth_yoy__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Profile --></label>
+        <name>General_Profile_c__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Profile --></label>
+        <name>General_profile_e__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA --></label>
+        <name>HM_CA__c</name>
+    </fields>
+    <fields>
+        <label><!-- CPI --></label>
+        <name>HM_CPI__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cr. Rating --></label>
+        <name>HM_Cr_Rating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit spread --></label>
+        <name>HM_Credit_spread__c</name>
+    </fields>
+    <fields>
+        <label><!-- FX Res --></label>
+        <name>HM_FX_Res__c</name>
+    </fields>
+    <fields>
+        <label><!-- FX Res (%) --></label>
+        <name>HM_FX_Res_percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fwd/NDF --></label>
+        <name>HM_Fwd_NDF__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP --></label>
+        <name>HM_GDP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Indicators Update Date --></label>
+        <name>HM_Last_Indicators_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- NPL --></label>
+        <name>HM_NPL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spot 12m ch --></label>
+        <name>HM_Spot_12m_ch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spot 1m ch --></label>
+        <name>HM_Spot_1m_ch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hedging Opportunities --></label>
+        <name>Hedging_Opportunities__c</name>
+    </fields>
+    <fields>
+        <label><!-- History --></label>
+        <name>History__c</name>
+    </fields>
+    <fields>
+        <label><!-- History of Blocked Funds in Country --></label>
+        <name>History_of_Blocked_Funds_in_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Area Manager --></label>
+        <name>IATA_Area_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- Country Profiles (IATA ISO Country) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ICCS Simplified Process --></label>
+        <name>ICCS_Simplified_Process__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Code --></label>
+        <name>ISO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Inflation (%yoy) --></label>
+        <name>Inflation_yoy__c</name>
+    </fields>
+    <fields>
+        <label><!-- International Banks and Domestic Banks --></label>
+        <name>International_Banks_Domestic_Banks__c</name>
+    </fields>
+    <fields>
+        <label><!-- International Fares Currency (Reso 024a) --></label>
+        <name>International_Fares_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issue Started --></label>
+        <name>Issue_Started__c</name>
+    </fields>
+    <fields>
+        <label><!-- Listed In --></label>
+        <name>Listed_In__c</name>
+        <picklistValues>
+            <masterLabel>All others</masterLabel>
+            <translation><!-- All others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blocked Funds</masterLabel>
+            <translation><!-- Blocked Funds --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Watch List</masterLabel>
+            <translation><!-- Watch List --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Local BAR --></label>
+        <name>Local_BAR__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Task Force --></label>
+        <name>Local_Task_Force__c</name>
+    </fields>
+    <fields>
+        <label><!-- Market Size --></label>
+        <name>Market_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minister of Transport / Tourism --></label>
+        <name>Minister_of_Transport_and_Tourism__c</name>
+    </fields>
+    <fields>
+        <label><!-- News Text --></label>
+        <name>News_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- NPL (share of total loans) --></label>
+        <name>Non_Performing_Loans_share_of_total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notification Message --></label>
+        <name>Notification_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Airlines Present In Market --></label>
+        <name>Number_of_Airlines_Present_In_Market__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Airlines Reporting Issues --></label>
+        <name>Number_of_Airlines_Reporting_Issues__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Months Blocked --></label>
+        <name>Number_of_Months_Blocked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presence of BSP --></label>
+        <name>Presence_of_BSP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presence of CASS --></label>
+        <name>Presence_of_CASS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Presence of ICCS --></label>
+        <name>Presence_of_ICCS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Providers Info --></label>
+        <name>Providers_Info__c</name>
+    </fields>
+    <fields>
+        <label><!-- Providers --></label>
+        <name>Providers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publish News? --></label>
+        <name>Publish_News__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Quotas or Restrictions --></label>
+        <name>Quotas_or_Restrictions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Notifications ? --></label>
+        <name>Send_Notifications__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sovereign Credit Rating --></label>
+        <name>Sovereign_Credit_Rating__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spot 12m Change --></label>
+        <name>Spot_12m_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spot 1m Change --></label>
+        <name>Spot_1m_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status and Figures --></label>
+        <name>Status_and_Figures__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax &amp; Fees on Cross Border Payments --></label>
+        <name>Tax_Fees_on_Cross_Border_Payments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Travel Agent Association --></label>
+        <name>Travel_Agent_Association__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update_c__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update_e__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update_gi__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update_ic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>Update_rp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Withholding Tax FX &amp; Cross Border Pymts --></label>
+        <name>Withholding_Tax_on_FX_Cross_Border_Pay__c</name>
+    </fields>
+    <fields>
+        <label><!-- Withholding Tax on FX &amp; Cross Border Pay --></label>
+        <name>Withholding_Tax_on_FX_Cross_Border__c</name>
+    </fields>
+    <nameFieldLabel><!-- Country Profile Name --></nameFieldLabel>
+</CustomObjectTranslation>

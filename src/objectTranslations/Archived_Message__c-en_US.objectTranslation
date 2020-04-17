@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Archived Email Message</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Archived Email Messages</value>
+    </caseValues>
+    <fields>
+        <label><!-- Parent Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Archived Email Messages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- EmailMessage --></label>
+        <name>EmailMessage__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

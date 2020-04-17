@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>KPI Value</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>KPI Values</value>
+    </caseValues>
+    <fields>
+        <label><!-- Area Concerned --></label>
+        <name>Area_Concerned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>CaseNumber__c</name>
+        <relationshipLabel><!-- KPI Values --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Value --></label>
+        <name>Date_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deadline --></label>
+        <name>Deadline__c</name>
+    </fields>
+    <fields>
+        <label><!-- FDS KPI Reporting --></label>
+        <name>FDS_KPI_Reporting__c</name>
+        <relationshipLabel><!-- KPI Values --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Value Number --></label>
+        <name>KPI_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month --></label>
+        <name>Month__c</name>
+        <picklistValues>
+            <masterLabel>April</masterLabel>
+            <translation><!-- April --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>August</masterLabel>
+            <translation><!-- August --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>December</masterLabel>
+            <translation><!-- December --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>February</masterLabel>
+            <translation><!-- February --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>January</masterLabel>
+            <translation><!-- January --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>July</masterLabel>
+            <translation><!-- July --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>June</masterLabel>
+            <translation><!-- June --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>March</masterLabel>
+            <translation><!-- March --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May</masterLabel>
+            <translation><!-- May --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>November</masterLabel>
+            <translation><!-- November --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>October</masterLabel>
+            <translation><!-- October --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>September</masterLabel>
+            <translation><!-- September --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Please check box if the KPI is not available this month --></help>
+        <label><!-- Not Available --></label>
+        <name>Not_Available__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+        <picklistValues>
+            <masterLabel>BSP</masterLabel>
+            <translation><!-- BSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS</masterLabel>
+            <translation><!-- CASS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central</masterLabel>
+            <translation><!-- Central --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GDC Madrid</masterLabel>
+            <translation><!-- GDC Madrid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global</masterLabel>
+            <translation><!-- Global --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reminder sent to responsible --></label>
+        <name>Reminder_sent_to_responsible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Responsible --></label>
+        <name>Responsible__c</name>
+        <relationshipLabel><!-- KPI Values --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scope --></label>
+        <name>Scope__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value Percentage --></label>
+        <name>Value_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value Type --></label>
+        <name>Value_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You can not update this record after 10 days of the deadline. Please contact your administrator --></errorMessage>
+        <name>KPI_No_entry_after_the_deadline_in_10d</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team --></errorMessage>
+        <name>KPI_No_entry_after_the_deadline_in_3d</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This KPI is a Number, please update the &quot;Value Number&quot; field --></errorMessage>
+        <name>KPI_Value_type_Number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This KPI is a percentage, please update the &quot;Value Percentage&quot; field --></errorMessage>
+        <name>KPI_Value_type_Percentage</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can not update this record after 10 days of the deadline. Please contact your administrator --></errorMessage>
+        <name>Perce_No_entry_after_the_deadline_in_10d</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team --></errorMessage>
+        <name>Perce_No_entry_after_the_deadline_in_3d</name>
+    </validationRules>
+</CustomObjectTranslation>

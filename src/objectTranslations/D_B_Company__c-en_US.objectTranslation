@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>D&amp;B Company</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>D&amp;B Companies</value>
+    </caseValues>
+    <fields>
+        <label><!-- DUNS Number --></label>
+        <name>DUNS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- D&amp;B Company Name --></label>
+        <name>D_B_Company_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Domestic Ultimate DUNS Number --></label>
+        <name>Domestic_Ultimate_DUNS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global Ultimate DUNS Number --></label>
+        <name>Global_Ultimate_DUNS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Headquarter DUNS Number --></label>
+        <name>Headquarter_DUNS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Majority Owner DUNS --></label>
+        <name>Majority_Owner_DUNS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Out of Business? --></label>
+        <name>Out_of_Business__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- MASTER --></label>
+        <name>MASTER</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

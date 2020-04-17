@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Risk Alert</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Risk Alerts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>ANG_Account__c</name>
+        <relationshipLabel><!-- Risk Alerts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RTS Sales Amount --></label>
+        <name>ANG_Agent_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agent Current Standing --></label>
+        <name>ANG_Agent_current_standing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Direction --></label>
+        <name>ANG_Direction__c</name>
+        <picklistValues>
+            <masterLabel>DOWN</masterLabel>
+            <translation><!-- DOWN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAME</masterLabel>
+            <translation><!-- SAME --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UP</masterLabel>
+            <translation><!-- UP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EventId --></label>
+        <name>ANG_EventId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Created --></label>
+        <name>ANG_Is_Case_Created__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open Cash Position --></label>
+        <name>ANG_Open_Cash_Position__c</name>
+    </fields>
+    <fields>
+        <label><!-- RHC Information --></label>
+        <name>ANG_RHC_Information__c</name>
+        <relationshipLabel><!-- Risk Alerts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RME Last Update --></label>
+        <name>ANG_RME_Last_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- RTS Severity --></label>
+        <name>ANG_Severity__c</name>
+        <picklistValues>
+            <masterLabel>Orange</masterLabel>
+            <translation><!-- Orange --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SIDRA Lite --></label>
+        <name>ANG_Sidra_Lite__c</name>
+        <relationshipLabel><!-- Risk Alerts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Threshold Level --></label>
+        <name>ANG_Threshold_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ticketing Authority Removed --></label>
+        <name>ANG_Ticketing_Authority_Removed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Triggered Rules --></label>
+        <name>ANG_Triggered_Rules__c</name>
+        <picklistValues>
+            <masterLabel>Cash Sales Shift</masterLabel>
+            <translation><!-- Cash Sales Shift --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cross Border Sales</masterLabel>
+            <translation><!-- Cross Border Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Decrease Last 12m</masterLabel>
+            <translation><!-- Fast Growth Decrease Last 12m --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Decrease Last 3m</masterLabel>
+            <translation><!-- Fast Growth Decrease Last 3m --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Decrease Last 3m vs previous year</masterLabel>
+            <translation><!-- Fast Growth Decrease Last 3m vs previous year --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Increase Last 12m</masterLabel>
+            <translation><!-- Fast Growth Increase Last 12m --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Increase Last 3m</masterLabel>
+            <translation><!-- Fast Growth Increase Last 3m --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fast Growth Increase Last 3m vs previous year</masterLabel>
+            <translation><!-- Fast Growth Increase Last 3m vs previous year --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Market Intelligence</masterLabel>
+            <translation><!-- Market Intelligence --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shift of FoP</masterLabel>
+            <translation><!-- Shift of FoP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Email Sent --></label>
+        <name>ANG_email_sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monitored Account --></label>
+        <name>Monitored_Account__c</name>
+        <relationshipLabel><!-- Risk Alerts (Monitored Account) --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Used to receive RHC information alerts from the external system --></description>
+        <label><!-- Risk Alert RHC --></label>
+        <name>Risk_Alert</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- EDS Alert received from external systems for newgen and non newgen accounts --></description>
+        <label><!-- Risk Alert EDS --></label>
+        <name>Risk_Alert_EDS</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Risk Alert RTS --></label>
+        <name>Risk_Alert_RTS</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Progress Bar Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Progress Bar Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Label Translatable --></label>
+        <name>Label_Translatable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process Type --></label>
+        <name>RecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- ValueError --></label>
+        <name>ValueError__c</name>
+    </fields>
+    <fields>
+        <label><!-- ValueOk --></label>
+        <name>ValueOk__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value Progress --></label>
+        <name>ValueProgress__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

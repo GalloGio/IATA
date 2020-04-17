@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Airline Suspension</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Airline Suspensions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Airline Code --></label>
+        <name>Airline_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Country --></label>
+        <name>Airline_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Headquarter Region --></label>
+        <name>Airline_Headquarter_Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Name --></label>
+        <name>Airline_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Information extracted from Business Intelligence System considering the last 12 month of Net Cash Settlements before the suspension --></help>
+        <label><!-- Amount of Cash Deposit --></label>
+        <name>Amount_of_Cash_Deposit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments from Region --></label>
+        <name>Approval_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Participations --></label>
+        <name>BSP_Participations_locked__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Participations --></label>
+        <name>CASS_Participations_locked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Airline Suspensions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ChildSuspensionCasesGenerated --></label>
+        <name>ChildSuspensionCasesGenerated__c</name>
+        <picklistValues>
+            <masterLabel>Generated</masterLabel>
+            <translation><!-- Generated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This information will be copied in the Description field of the child suspension cases. --></help>
+        <label><!-- Child Case Description --></label>
+        <name>Child_Case_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chronology of event (days) --></label>
+        <name>Chronology_of_event_days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Communications Sent to the Market --></label>
+        <name>Communications_Sent_to_the_Market__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Confirmation from AP Team --></label>
+        <name>Confirmation_BSPlink_CASSlink_suspension__c</name>
+    </fields>
+    <fields>
+        <label><!-- Confirmation of the Event --></label>
+        <name>Confirmation_of_the_Event__c</name>
+    </fields>
+    <fields>
+        <label><!-- Debt with Invoicing &amp; Collection --></label>
+        <name>Debt_with_central_billing__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS 1 Confirmation time --></label>
+        <name>GDS_1_Confirmation_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS 2 Confirmation time --></label>
+        <name>GDS_2_Confirmation_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS 3 Confirmation time --></label>
+        <name>GDS_3_Confirmation_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS 4 Confirmation time --></label>
+        <name>GDS_4_Confirmation_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS 5 Confirmation time --></label>
+        <name>GDS_5_Confirmation_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS Name 2 --></label>
+        <name>GDS_Name_2__c</name>
+        <picklistValues>
+            <masterLabel>ABACUS</masterLabel>
+            <translation><!-- ABACUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGRA (Inactive)</masterLabel>
+            <translation><!-- AGRA (Inactive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMADEUS</masterLabel>
+            <translation><!-- AMADEUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXESS</masterLabel>
+            <translation><!-- AXESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEUTCHES REISEBURO</masterLabel>
+            <translation><!-- DEUTCHES REISEBURO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-SAV</masterLabel>
+            <translation><!-- E-SAV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ELAL CARMEL</masterLabel>
+            <translation><!-- ELAL CARMEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FARELOGIX</masterLabel>
+            <translation><!-- FARELOGIX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFINI</masterLabel>
+            <translation><!-- INFINI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIUSYS</masterLabel>
+            <translation><!-- KIUSYS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESIBER/IBERIA</masterLabel>
+            <translation><!-- RESIBER/IBERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABRE</masterLabel>
+            <translation><!-- SABRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS (Amadeus)</masterLabel>
+            <translation><!-- TOPAS (Amadeus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELPORT</masterLabel>
+            <translation><!-- TRAVELPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELSKY</masterLabel>
+            <translation><!-- TRAVELSKY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTINTERACTIVE</masterLabel>
+            <translation><!-- TTINTERACTIVE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GDS Name 3 --></label>
+        <name>GDS_Name_3__c</name>
+        <picklistValues>
+            <masterLabel>ABACUS</masterLabel>
+            <translation><!-- ABACUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGRA (Inactive)</masterLabel>
+            <translation><!-- AGRA (Inactive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMADEUS</masterLabel>
+            <translation><!-- AMADEUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXESS</masterLabel>
+            <translation><!-- AXESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEUTCHES REISEBURO</masterLabel>
+            <translation><!-- DEUTCHES REISEBURO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-SAV</masterLabel>
+            <translation><!-- E-SAV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ELAL CARMEL</masterLabel>
+            <translation><!-- ELAL CARMEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FARELOGIX</masterLabel>
+            <translation><!-- FARELOGIX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFINI</masterLabel>
+            <translation><!-- INFINI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIUSYS</masterLabel>
+            <translation><!-- KIUSYS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESIBER/IBERIA</masterLabel>
+            <translation><!-- RESIBER/IBERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABRE</masterLabel>
+            <translation><!-- SABRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS (Amadeus)</masterLabel>
+            <translation><!-- TOPAS (Amadeus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELPORT</masterLabel>
+            <translation><!-- TRAVELPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELSKY</masterLabel>
+            <translation><!-- TRAVELSKY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTINTERACTIVE</masterLabel>
+            <translation><!-- TTINTERACTIVE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GDS Name 4 --></label>
+        <name>GDS_Name_4__c</name>
+        <picklistValues>
+            <masterLabel>ABACUS</masterLabel>
+            <translation><!-- ABACUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGRA (Inactive)</masterLabel>
+            <translation><!-- AGRA (Inactive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMADEUS</masterLabel>
+            <translation><!-- AMADEUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXESS</masterLabel>
+            <translation><!-- AXESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEUTCHES REISEBURO</masterLabel>
+            <translation><!-- DEUTCHES REISEBURO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-SAV</masterLabel>
+            <translation><!-- E-SAV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ELAL CARMEL</masterLabel>
+            <translation><!-- ELAL CARMEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FARELOGIX</masterLabel>
+            <translation><!-- FARELOGIX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFINI</masterLabel>
+            <translation><!-- INFINI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIUSYS</masterLabel>
+            <translation><!-- KIUSYS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESIBER/IBERIA</masterLabel>
+            <translation><!-- RESIBER/IBERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABRE</masterLabel>
+            <translation><!-- SABRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS (Amadeus)</masterLabel>
+            <translation><!-- TOPAS (Amadeus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELPORT</masterLabel>
+            <translation><!-- TRAVELPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELSKY</masterLabel>
+            <translation><!-- TRAVELSKY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTINTERACTIVE</masterLabel>
+            <translation><!-- TTINTERACTIVE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GDS Name 5 --></label>
+        <name>GDS_Name_5__c</name>
+        <picklistValues>
+            <masterLabel>ABACUS</masterLabel>
+            <translation><!-- ABACUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGRA (Inactive)</masterLabel>
+            <translation><!-- AGRA (Inactive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMADEUS</masterLabel>
+            <translation><!-- AMADEUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXESS</masterLabel>
+            <translation><!-- AXESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEUTCHES REISEBURO</masterLabel>
+            <translation><!-- DEUTCHES REISEBURO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-SAV</masterLabel>
+            <translation><!-- E-SAV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ELAL CARMEL</masterLabel>
+            <translation><!-- ELAL CARMEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FARELOGIX</masterLabel>
+            <translation><!-- FARELOGIX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFINI</masterLabel>
+            <translation><!-- INFINI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIUSYS</masterLabel>
+            <translation><!-- KIUSYS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESIBER/IBERIA</masterLabel>
+            <translation><!-- RESIBER/IBERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABRE</masterLabel>
+            <translation><!-- SABRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS (Amadeus)</masterLabel>
+            <translation><!-- TOPAS (Amadeus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELPORT</masterLabel>
+            <translation><!-- TRAVELPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELSKY</masterLabel>
+            <translation><!-- TRAVELSKY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTINTERACTIVE</masterLabel>
+            <translation><!-- TTINTERACTIVE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GDS Name 1 --></label>
+        <name>GDS_Name__c</name>
+        <picklistValues>
+            <masterLabel>ABACUS</masterLabel>
+            <translation><!-- ABACUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGRA (Inactive)</masterLabel>
+            <translation><!-- AGRA (Inactive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMADEUS</masterLabel>
+            <translation><!-- AMADEUS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXESS</masterLabel>
+            <translation><!-- AXESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DEUTCHES REISEBURO</masterLabel>
+            <translation><!-- DEUTCHES REISEBURO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E-SAV</masterLabel>
+            <translation><!-- E-SAV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ELAL CARMEL</masterLabel>
+            <translation><!-- ELAL CARMEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FARELOGIX</masterLabel>
+            <translation><!-- FARELOGIX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFINI</masterLabel>
+            <translation><!-- INFINI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KIUSYS</masterLabel>
+            <translation><!-- KIUSYS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESIBER/IBERIA</masterLabel>
+            <translation><!-- RESIBER/IBERIA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABRE</masterLabel>
+            <translation><!-- SABRE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS (Amadeus)</masterLabel>
+            <translation><!-- TOPAS (Amadeus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELPORT</masterLabel>
+            <translation><!-- TRAVELPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRAVELSKY</masterLabel>
+            <translation><!-- TRAVELSKY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTINTERACTIVE</masterLabel>
+            <translation><!-- TTINTERACTIVE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- RVP Agree --></label>
+        <name>HQ_Reqion_SVP_Agree__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Before the suspension approval, this represents the current status of the airline&apos;s IATA membership. After the suspension has been approved, this represents the airline&apos;s IATA membership status at the suspension approval time. --></help>
+        <label><!-- IATA Member --></label>
+        <name>IATA_member__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA member locked value --></label>
+        <name>IATA_member_locked_value__c</name>
+    </fields>
+    <fields>
+        <help><!-- Before the suspension approval, this represents the current status of the airline&apos;s IATA membership. After the suspension has been approved, this represents the airline&apos;s IATA membership status at the suspension approval time. --></help>
+        <label><!-- ICCS Membership Status --></label>
+        <name>ICCS_membership_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS membership Status locked value --></label>
+        <name>ICCS_membership_Status_locked_value__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICH Member --></label>
+        <name>ICH_participant__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Net amount due --></label>
+        <name>Net_amount_due__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of months on reported period --></label>
+        <name>Number_of_months_on_reported_period__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Occurence of Event --></label>
+        <name>Occurence_of_Event__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overall GDS confirm within time --></label>
+        <name>Overall_GDS_confirm_within_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Participates in IATA Governance Groups --></label>
+        <name>Participates_in_IATA_Governance_Groups__c</name>
+        <picklistValues>
+            <masterLabel>Audit Committee</masterLabel>
+            <translation><!-- Audit Committee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAConf</masterLabel>
+            <translation><!-- CAConf --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPG</masterLabel>
+            <translation><!-- CPG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Committee</masterLabel>
+            <translation><!-- Financial Committee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Board of Governors</masterLabel>
+            <translation><!-- IATA Board of Governors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PAConf</masterLabel>
+            <translation><!-- PAConf --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PSG</masterLabel>
+            <translation><!-- PSG --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason for Suspension --></label>
+        <name>Reason_for_Suspension__c</name>
+        <picklistValues>
+            <masterLabel>AOC withdrawn</masterLabel>
+            <translation><!-- AOC withdrawn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Code Recall</masterLabel>
+            <translation><!-- Airline Code Recall --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bankruptcy or Reorganization</masterLabel>
+            <translation><!-- Bankruptcy or Reorganization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ceased Operations</masterLabel>
+            <translation><!-- Ceased Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt to IATA</masterLabel>
+            <translation><!-- Debt to IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negative Settlement Balance</masterLabel>
+            <translation><!-- Negative Settlement Balance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operational Embargo</masterLabel>
+            <translation><!-- Operational Embargo --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Receipt Confirmation from GDS 2 --></label>
+        <name>Receipt_Confirmation_from_GDS_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Receipt Confirmation from GDS 3 --></label>
+        <name>Receipt_Confirmation_from_GDS_3__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Receipt Confirmation from GDS 4 --></label>
+        <name>Receipt_Confirmation_from_GDS_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Receipt Confirmation from GDS 5 --></label>
+        <name>Receipt_Confirmation_from_GDS_5__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Receipt Confirmation from GDS 1 --></label>
+        <name>Receipt_Confirmation_from_GDS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recommendation from HAPM --></label>
+        <name>Recommendation_from_HAPM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Regions Involved --></label>
+        <name>Regions_Involved__c</name>
+    </fields>
+    <fields>
+        <label><!-- Net Cash Settlement (12 Months) --></label>
+        <name>Reported_period_net_cash_sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- SH Alert Received 24hrs after Event --></label>
+        <name>SH_Alert_Received_24hrs_after_Event__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- RVP Reply --></label>
+        <name>SVP_Agreement_Rejection_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- SVP FDS Approval --></label>
+        <name>SVP_FDS_Approval__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Sent for SVP FDS Approval --></label>
+        <name>Sent_for_SVP_FDS_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settle Directly To --></label>
+        <name>Settle_Directly_To__c</name>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Statement of Account Date --></label>
+        <name>Statement_of_Account_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Instructions to AP Teams Sent --></label>
+        <name>Suspension_Instructions_Sent_to_AP_Team__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Suspension Instructions Sent to GDS --></label>
+        <name>Suspension_Instructions_Sent_to_GDS__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Instructions to CS Teams Sent --></label>
+        <name>Suspension_Instructions_to_CS_Teams_Sent__c</name>
+    </fields>
+    <fields>
+        <help><!-- This time is in your local time zone settings --></help>
+        <label><!-- Suspension Letter Sent --></label>
+        <name>Suspension_Letter_Sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suspension time spent (Days) --></label>
+        <name>Suspension_time_spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suspension time spent with AP (Days) --></label>
+        <name>Suspension_time_spent_with_AP_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total amount due --></label>
+        <name>Total_amount_due__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total amount held --></label>
+        <name>Total_amount_held__c</name>
+    </fields>
+    <fields>
+        <label><!-- Weblink participant --></label>
+        <name>Weblink_participant__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2 weeks average net cash settlement --></label>
+        <name>X2_weeks_average_net_cash_settlement__c</name>
+    </fields>
+    <fields>
+        <label><!-- 4 weeks average net cash settlement --></label>
+        <name>X4_weeks_average_net_cash_settlement__c</name>
+    </fields>
+    <fields>
+        <label><!-- 6 weeks average net cash settlement --></label>
+        <name>X6_weeks_average_net_cash_settlement__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- The field Participates in IATA Governance Groups needs to be set to Not Applicable  if the airline is not an IATA Member. --></errorMessage>
+        <name>No_IATA_Governance_Groups_if_not_member</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select the SVP Agreement / Rejection Date. --></errorMessage>
+        <name>SVP_Agreement_Rejection_Date_Mandatory</name>
+    </validationRules>
+</CustomObjectTranslation>

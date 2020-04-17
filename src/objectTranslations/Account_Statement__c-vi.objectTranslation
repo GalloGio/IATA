@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Account Statement --></value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Statements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Số tiền phải trả</label>
+        <name>Amount_to_be_Paid__c</name>
+    </fields>
+    <fields>
+        <label>Cân đối</label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label>Điều chỉnh thanh toán</label>
+        <name>Billing_Adjustment__c</name>
+    </fields>
+    <fields>
+        <label>Số tiền cần trả theo báo cáo</label>
+        <name>Billing_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group --></label>
+        <name>Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label>Đã trả</label>
+        <name>Paid__c</name>
+    </fields>
+    <fields>
+        <label>Kỳ báo cáo</label>
+        <name>Period__c</name>
+    </fields>
+    <fields>
+        <label>Ngày thanh toán</label>
+        <name>Remittance_Date__c</name>
+    </fields>
+    <fields>
+        <label>Tình trạng</label>
+        <name>Status__c</name>
+    </fields>
+    <nameFieldLabel><!-- Account Statement Name --></nameFieldLabel>
+</CustomObjectTranslation>

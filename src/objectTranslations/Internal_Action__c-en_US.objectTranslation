@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Internal Action</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Internal Actions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Action Person --></label>
+        <name>Action_Person_text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related ACR --></label>
+        <name>Related_ACR__c</name>
+        <relationshipLabel><!-- Internal Actions --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

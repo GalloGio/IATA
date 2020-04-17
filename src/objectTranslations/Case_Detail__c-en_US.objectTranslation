@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Case Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Case Details</value>
+    </caseValues>
+    <fields>
+        <help><!-- The CS Rep adapted their approach to providing service to the customer based on the customer’s unique needs, personality and issues --></help>
+        <label><!-- Adapted to customers needs and issues --></label>
+        <name>Adapted_to_customer__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asked if the customer if they have any additional questions or issues before ending the call, referring to their personal or company situation (e.g. I see you joined IATA recently. Is there any way I can assist with some of your doubts) --></help>
+        <label><!-- Asked for additional questions or issues --></label>
+        <name>Additional_questions_or_issues__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep addresses the customer appropriately and writes the customer&apos;s name correctly --></help>
+        <label><!-- Adressed the customer appropriately --></label>
+        <name>Adressed_the_customer_appropriately__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Amount Expected --></label>
+        <name>Amount_Expected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount Received --></label>
+        <name>Amount_Received__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asked for the caller&apos;s IATA code and verify email and phone number. --></help>
+        <label><!-- Asked IATA code, email and phone --></label>
+        <name>Asked_IATA_code_email_and_phone__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asked for the caller’s name --></help>
+        <label><!-- Asked callers name --></label>
+        <name>Asked_callers_name__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asks the customer if they would like to get a written confirmation. In case the customer says yes: has this been done? --></help>
+        <label><!-- Asks if additional confirmation is requi --></label>
+        <name>Asks_if_additional_confirmation__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep avoided long silences during the call --></help>
+        <label><!-- Avoided long silences --></label>
+        <name>Avoided_long_silences__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Number --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Case Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep proactively checks the accounts and offers opportunities for additional services (i.e. portal accesses, admins, pending users…) --></help>
+        <label><!-- Checked account &amp; offers  services --></label>
+        <name>Checked_account_offers_services__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments 2 --></label>
+        <name>Comments_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments 3 --></label>
+        <name>Comments_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments 4 --></label>
+        <name>Comments_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments 5 --></label>
+        <name>Comments_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments 6 --></label>
+        <name>Comments_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments 7 --></label>
+        <name>Comments_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep remained confident throughout the call --></help>
+        <label><!-- Remained confident throughout the call --></label>
+        <name>Confident__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep used the proper pronunciation of the caller’s name --></help>
+        <label><!-- Correctly pronounced caller&apos;s name --></label>
+        <name>Correctly_pronounced_caller_s_name__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date received --></label>
+        <name>Date_received__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep did not interrupt or talk over the customer --></help>
+        <label><!-- Did not talk over the customer --></label>
+        <name>Did_not_talk_over_the_customer__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep documented complete call information in the Salesforce case --></help>
+        <label><!-- Documented the info in the SF case --></label>
+        <name>Documented_info_in_case__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Due date --></label>
+        <name>Due_date__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep used effective active listening skills --></help>
+        <label><!-- Effective active listening skills --></label>
+        <name>Effective_active_listening_skills__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Exchange Rate --></label>
+        <name>Exchange_Rate__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep finalized the call/case with a &quot;WOW&quot; --></help>
+        <label><!-- Finalized with a &quot;WOW&quot; --></label>
+        <name>Finalized_with_a_WOW__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep followed up with the customer through the Customer Portal within the agreed upon timeframe --></help>
+        <label><!-- Followed up with customer as agreed --></label>
+        <name>Followed_up_with_customer_as_agreed__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep was friendly, polite and professional --></help>
+        <label><!-- Was friendly, polite and professional --></label>
+        <name>Friendly_polite_and_professional__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep identified themselves to the customer --></help>
+        <label><!-- Identified themselves --></label>
+        <name>Identified_themselves__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep adequately adapted their approach to interacting with the customer, within the scripts guidelines, when necessary --></help>
+        <label><!-- Interaction was within the scripts guide --></label>
+        <name>Interaction_within_scripts_guide__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Interest Amount --></label>
+        <name>Interest_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Reps demonstrates accurate knowledge of the processes and products of IATA, and provides correct information and guidance to the customers. --></help>
+        <label><!-- Demonstrates accurate knowledge of IATA --></label>
+        <name>Knowledge_of_IATA__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep mentioned IATA --></help>
+        <label><!-- Mentioned IATA --></label>
+        <name>Mentioned_IATA__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Name__c</name>
+        <relationshipLabel><!-- Case Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Next Issue Avoidance: The CS Rep informed the customer of relevant supporting documentation or instructions to help avoid future issues --></help>
+        <label><!-- Next issue avoidance --></label>
+        <name>Next_issue_avoidance__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep offered assistance to the caller --></help>
+        <label><!-- Offered assistance --></label>
+        <name>Offered_assistance__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Payment Status --></label>
+        <name>Payment_Status__c</name>
+        <picklistValues>
+            <masterLabel>Amount Received After Termination</masterLabel>
+            <translation><!-- Amount Received After Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not received by due date</masterLabel>
+            <translation><!-- Not received by due date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Received</masterLabel>
+            <translation><!-- Received --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>To be confirmed</masterLabel>
+            <translation><!-- To be confirmed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- % Score --></label>
+        <name>PercentScore__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asked pertinent questions to accurately diagnose the problem --></help>
+        <label><!-- Pertinent questions --></label>
+        <name>Pertinent_questions__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep remembers he is representing IATA in every single word used. The CS Rep uses a professional and customer centric language. --></help>
+        <label><!-- Was professional and represents IATA --></label>
+        <name>Professional_and_represents_IATA__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep maintained proper tone, pitch, volume and pace throughout the call --></help>
+        <label><!-- Proper tone, pitch, volume and pace --></label>
+        <name>Proper_tone__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep provided a reference number to the customer after resolving their issue --></help>
+        <label><!-- Provided reference number to customer --></label>
+        <name>Provided_reference__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep refrained from using complicated jargon and adapted their responses to the customer&apos;s need. --></help>
+        <label><!-- Refrained from using complicated jargon --></label>
+        <name>Refrained_using_complicated_jargon__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep resolved the request fully in line with the customer&apos;s request. The case has not been closed before having provided a full resolution. --></help>
+        <label><!-- Request fully resolved in line --></label>
+        <name>Request_fully_resolved_in_line__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Salesforce case was edited correctly. If the opportunity took place, has the CS Rep added some &quot;remarks&quot; about the customer in their contact detail? --></help>
+        <label><!-- SF case was edited correctly --></label>
+        <name>SF_case_was_edited_correctly__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Score --></label>
+        <name>Score1__c</name>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep summarized the call, indicated action items (if any) and ensure information is clear for the customer. --></help>
+        <label><!-- Summarized at the end of the call --></label>
+        <name>Summarized_at_the_end_of_the_call__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep summarized the customer’s main points before troubleshooting or offering a solution --></help>
+        <label><!-- Summarized customers main points --></label>
+        <name>Summarized_customers_main_points__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Thank you for calling IATA. We are here for you for future occasions. --></help>
+        <label><!-- Thanked Customer for calling at the end --></label>
+        <name>Thanked_Customer_for_calling__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep thanked the customer --></help>
+        <label><!-- Thanked the Customer --></label>
+        <name>Thanked_the_Customer__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep took ownership of the problem using the &quot;I&quot;, not the &quot;we&quot; or &quot;they&quot;.  If required, the CS Rep provided an apology for any dissatisfaction. --></help>
+        <label><!-- Took ownership of problem --></label>
+        <name>Took_ownership_of_problem__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep used courteous words and phrases --></help>
+        <label><!-- Used courteous words and phrases --></label>
+        <name>Used_courteous_words_and_phrases__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep used appropriate resources to address the issue and offers preferences --></help>
+        <label><!-- Used appropriate resources --></label>
+        <name>Used_resources__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Data quality - The CS Rep took the time to validate account and contact details as email and phone number --></help>
+        <label><!-- Validated account and contact details --></label>
+        <name>Validated_account_and_contact__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The CS Rep asked for the caller&apos;s IATA code and verify email and phone number. --></help>
+        <label><!-- Verified email and phone number --></label>
+        <name>Verified_email_and_phone_number__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <description><!-- Used for checklist to monitor CS reps call cases --></description>
+        <label><!-- Call Monitoring --></label>
+        <name>Call_Monitoring</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Case Monitoring --></label>
+        <name>Case_Monitoring</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Payment information for SIDRA cases --></description>
+        <label><!-- Repayment Instalment --></label>
+        <name>Repayment_Instalment</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record Type to store instalment details --></description>
+        <label><!-- Repayment Instalment Details --></label>
+        <name>Repayment_Instalment_Details</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Priority Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Priorities Mappings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Application --></label>
+        <name>Application__c</name>
+        <picklistValues>
+            <masterLabel>SIS Help Desk</masterLabel>
+            <translation><!-- SIS Help Desk --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Classification --></label>
+        <name>Case_Classification__c</name>
+        <picklistValues>
+            <masterLabel>Application Error</masterLabel>
+            <translation><!-- Application Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing Data Issue</masterLabel>
+            <translation><!-- Billing Data Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Related</masterLabel>
+            <translation><!-- Business Related --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Certification Issue</masterLabel>
+            <translation><!-- Certification Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Digital Signature Issue</masterLabel>
+            <translation><!-- Digital Signature Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enhancement to Existing Feature</masterLabel>
+            <translation><!-- Enhancement to Existing Feature --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Input File load Issue</masterLabel>
+            <translation><!-- Input File load Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Master Table Issue</masterLabel>
+            <translation><!-- Master Table Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Member Profile Issue</masterLabel>
+            <translation><!-- Member Profile Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Migration Issue</masterLabel>
+            <translation><!-- Migration Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Feature</masterLabel>
+            <translation><!-- New Feature --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output File Issue</masterLabel>
+            <translation><!-- Output File Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processing Time Issue</masterLabel>
+            <translation><!-- Processing Time Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting Issue</masterLabel>
+            <translation><!-- Reporting Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sandbox Issue</masterLabel>
+            <translation><!-- Sandbox Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server / iiNET Issue</masterLabel>
+            <translation><!-- Server / iiNET Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Settlement File Issue</masterLabel>
+            <translation><!-- Settlement File Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Supporting Document</masterLabel>
+            <translation><!-- Supporting Document --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Related</masterLabel>
+            <translation><!-- System Related --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Access Issue</masterLabel>
+            <translation><!-- User Access Issue --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Reason --></label>
+        <name>Case_Reason__c</name>
+        <picklistValues>
+            <masterLabel>A master table value provided to SIS has caused a validation error</masterLabel>
+            <translation><!-- A master table value provided to SIS has caused a validation error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Access to SIS Solution is not possible</masterLabel>
+            <translation><!-- Access to SIS Solution is not possible --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alerts are not / incorrectly delivered</masterLabel>
+            <translation><!-- Alerts are not / incorrectly delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing data captured through IS-Web does not contain intended values</masterLabel>
+            <translation><!-- Billing data captured through IS-Web does not contain intended values --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing data is incorrectly reported or not present in the respective clearing house.</masterLabel>
+            <translation><!-- Billing data is incorrectly reported or not present in the respective clearing house. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing data submitted via IS-IDEC/IS-XML does not contain intended values</masterLabel>
+            <translation><!-- Billing data submitted via IS-IDEC/IS-XML does not contain intended values --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Related Question</masterLabel>
+            <translation><!-- Business Related Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Certification Issue</masterLabel>
+            <translation><!-- Certification Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enhancement to Existing Feature</masterLabel>
+            <translation><!-- Enhancement to Existing Feature --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Functionality not working as expected</masterLabel>
+            <translation><!-- Functionality not working as expected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoices cannot be Digitally Signed</masterLabel>
+            <translation><!-- Invoices cannot be Digitally Signed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Member Profile issue / updates not working</masterLabel>
+            <translation><!-- Member Profile issue / updates not working --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minor defects which do not affect functionality</masterLabel>
+            <translation><!-- Minor defects which do not affect functionality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Feature Request</masterLabel>
+            <translation><!-- New Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Digital Signature issues</masterLabel>
+            <translation><!-- Other Digital Signature issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS</masterLabel>
+            <translation><!-- Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reports cannot be viewed / downloaded</masterLabel>
+            <translation><!-- Reports cannot be viewed / downloaded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Response times for files submitted are greater than expected</masterLabel>
+            <translation><!-- Response times for files submitted are greater than expected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Response times for manual file load are greater than expected</masterLabel>
+            <translation><!-- Response times for manual file load are greater than expected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS Solution is not working</masterLabel>
+            <translation><!-- SIS Solution is not working --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS usage data incorrectly produced</masterLabel>
+            <translation><!-- SIS usage data incorrectly produced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sandbox Issue</masterLabel>
+            <translation><!-- Sandbox Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server / iiNET Issue</masterLabel>
+            <translation><!-- Server / iiNET Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submission of billing data not possible</masterLabel>
+            <translation><!-- Submission of billing data not possible --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Supporting Documents did not link</masterLabel>
+            <translation><!-- Supporting Documents did not link --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Related Question</masterLabel>
+            <translation><!-- System Related Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unable to send migrated transaction types</masterLabel>
+            <translation><!-- Unable to send migrated transaction types --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User password is disabled</masterLabel>
+            <translation><!-- User password is disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation reports have not been received / generated</masterLabel>
+            <translation><!-- Validation reports have not been received / generated --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Type --></label>
+        <name>Case_Type__c</name>
+        <picklistValues>
+            <masterLabel>Feature Request</masterLabel>
+            <translation><!-- Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Question</masterLabel>
+            <translation><!-- General Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem / Issue</masterLabel>
+            <translation><!-- Problem / Issue --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>Priority 1 (Showstopper)</masterLabel>
+            <translation><!-- Priority 1 (Showstopper) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Priority 2 (Major)</masterLabel>
+            <translation><!-- Priority 2 (Major) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Priority 3 (Minor)</masterLabel>
+            <translation><!-- Priority 3 (Minor) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Priority 4 (Trivial Defects)</masterLabel>
+            <translation><!-- Priority 4 (Trivial Defects) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Visible in ISS Portal --></label>
+        <name>Visible_in_ISS_Portal__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

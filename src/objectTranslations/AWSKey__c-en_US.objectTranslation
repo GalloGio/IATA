@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>AWS Credential</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>AWS Credentials</value>
+    </caseValues>
+    <fields>
+        <label><!-- AWS EndPoint URL --></label>
+        <name>AWS_ENDPOINT_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Define the bucket to use with this credential key --></help>
+        <label><!-- Bucket --></label>
+        <name>Bucket__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL access point as http(s)://IP:PORT --></help>
+        <label><!-- IAS Access Point --></label>
+        <name>IAS_Access_Point__c</name>
+    </fields>
+    <fields>
+        <label><!-- IAS Configation name --></label>
+        <name>IAS_Configation_name__c</name>
+    </fields>
+    <fields>
+        <help><!-- enter the nameof IAS configuratuon file to load for this access --></help>
+        <label><!-- IAS configuration name --></label>
+        <name>IAS_configuration_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Secret --></label>
+        <name>Secret__c</name>
+    </fields>
+    <fields>
+        <label><!-- WS Endpoint --></label>
+        <name>WS_Endpoint__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

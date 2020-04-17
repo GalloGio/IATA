@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Progress Bar Step</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Progress Bar Steps</value>
+    </caseValues>
+    <fields>
+        <help><!-- Put the name of an existing label --></help>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Put a valid glyphicon name --></help>
+        <label><!-- Icon Error --></label>
+        <name>IconError__c</name>
+    </fields>
+    <fields>
+        <help><!-- Put a valid glyphicon name --></help>
+        <label><!-- Icon Not Done --></label>
+        <name>IconNotDone__c</name>
+    </fields>
+    <fields>
+        <help><!-- Put a valid glyphicon name --></help>
+        <label><!-- Icon Ok --></label>
+        <name>IconOk__c</name>
+    </fields>
+    <fields>
+        <help><!-- Put a valid glyphicon name --></help>
+        <label><!-- Icon Progress --></label>
+        <name>IconProgress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Visible --></label>
+        <name>Is_Visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Progress Bar Setting --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Progress Bar Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ValueError --></label>
+        <name>ValueError__c</name>
+    </fields>
+    <fields>
+        <label><!-- ValueOk --></label>
+        <name>ValueOk__c</name>
+    </fields>
+    <fields>
+        <label><!-- ValueProgress --></label>
+        <name>ValueProgress__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

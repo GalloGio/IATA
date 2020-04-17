@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GDP File Fields Description</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GDP File Fields Description</value>
+    </caseValues>
+    <fields>
+        <help><!-- Salesforce.com  API field name used to build SOQL query ex: Website__c or Status__r.Name should never have more than one level or lookup as Account__r.Industry__r.Name create a formula instead and reference the API name of the formula --></help>
+        <label><!-- API Name --></label>
+        <name>API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Must be a valid API Name (same spelling as Salesforce), when not required leave the section blank --></help>
+        <label><!-- API Object Name --></label>
+        <name>API_Object_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Description will help to understand the use of the data field --></help>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- DRIVES GDP_DELTA CREATION. If Checked, the field will not be tracked by the GDP_Delta trigger. --></help>
+        <label><!-- Do Not Track --></label>
+        <name>Do_not_Track__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field used to compare with the data field value --></help>
+        <label><!-- Filter Field API Name --></label>
+        <name>Filter_Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value compared with the data value, if the same the data value of the requested field is returned otherwise the returned value is blank --></help>
+        <label><!-- Filter Field Value --></label>
+        <name>Filter_Field_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP File Description --></label>
+        <name>GDP_File_Description__c</name>
+        <relationshipLabel><!-- GDP File Fields Description --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Column is processed during the extract but will be hidden in the excel file (The column will not exist). Usage : allow formula like concatenation to happen in another column. --></help>
+        <label><!-- XLS Hidden Column --></label>
+        <name>Hidden_Column__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field Label used for xml and xls file type during file production --></help>
+        <label><!-- Label --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <help><!-- Important: Index Position to order the field selection during file production --></help>
+        <label><!-- Position --></label>
+        <name>Position__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field size in number of characters --></help>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- Remove the field from the Txt file. THIS ALTERS THE LAYOUT and will shift the information fields backward. --></help>
+        <label><!-- TXT Hidden Column --></label>
+        <name>TXT_Hidden_Column__c</name>
+    </fields>
+    <fields>
+        <help><!-- Target is the object field type where the data is going to be loading from --></help>
+        <label><!-- Group --></label>
+        <name>Target__c</name>
+        <picklistValues>
+            <masterLabel>Agency</masterLabel>
+            <translation><!-- Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Territory</masterLabel>
+            <translation><!-- Territory --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Allow proper transformation to happen during file production and depending on the file type. --></help>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Boolean</masterLabel>
+            <translation><!-- Boolean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Date YYYYMMDD</masterLabel>
+            <translation><!-- Date YYYYMMDD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Date YYYYMMDDHHMM</masterLabel>
+            <translation><!-- Date YYYYMMDDHHMM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datetime</masterLabel>
+            <translation><!-- Datetime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Decimal</masterLabel>
+            <translation><!-- Decimal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integer</masterLabel>
+            <translation><!-- Integer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>String</masterLabel>
+            <translation><!-- String --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Makes the information visible or not in the field WITHOUT ALTERING THE LAYOUT (spacing maintained with blank information) --></help>
+        <label><!-- Visible --></label>
+        <name>Visible__c</name>
+    </fields>
+    <fields>
+        <help><!-- Remove the field from the XML file. THIS ALTERS THE LAYOUT (XML block will no be present in files). --></help>
+        <label><!-- XML Hidden Column --></label>
+        <name>XML_Hidden_Column__c</name>
+    </fields>
+    <fields>
+        <help><!-- Allow to group field in the same complex element of the given structure (Agency or Airline) --></help>
+        <label><!-- Xml_Group --></label>
+        <name>Xml_Group__c</name>
+    </fields>
+    <fields>
+        <help><!-- Will replace the Label Name when populated, used to created unbounded xml structure --></help>
+        <label><!-- Xml Label --></label>
+        <name>Xml_Name__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

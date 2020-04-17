@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IEC Agency Type</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IEC Agency Types</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agency Program Code --></label>
+        <name>Agency_Program_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Program --></label>
+        <name>Agency_Program__c</name>
+    </fields>
+    <fields>
+        <label><!-- Area of Activity --></label>
+        <name>Area_of_Activity__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

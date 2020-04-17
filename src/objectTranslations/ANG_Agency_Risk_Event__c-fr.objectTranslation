@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Agency Risk Event --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Agency Risk Event --></value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- RelatedList --></label>
+        <name>RelatedList</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Account --></label>
+        <name>ANG_AccountId__c</name>
+        <relationshipLabel><!-- Risk Events at my location --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>ANG_Account_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Case --></label>
+        <name>ANG_CaseId__c</name>
+        <relationshipLabel><!-- Risk Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cash Conditions Real Activation Date --></label>
+        <name>ANG_Cash_Conditions_Activation_FF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cash Conditions Activation Date --></label>
+        <name>ANG_Cash_Conditions_Activation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Change Code --></label>
+        <name>ANG_ChangeCode__c</name>
+        <relationshipLabel><!-- Risk Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created from --></label>
+        <name>ANG_Created_from__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Status --></label>
+        <name>ANG_Event_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>ANG_Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expired --></label>
+        <name>ANG_Expired__c</name>
+    </fields>
+    <fields>
+        <label><!-- HE Account --></label>
+        <name>ANG_HE_AccountId__c</name>
+        <relationshipLabel><!-- Risk Events at all locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Date d’émission</label>
+        <name>ANG_Issued_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Limit Cash Conditions --></label>
+        <name>ANG_Limit_Cash_Conditions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual --></label>
+        <name>ANG_Manual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>ANG_Name_Link_FF__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source OSCAR --></label>
+        <name>ANG_OscarId__c</name>
+        <relationshipLabel><!-- Agency Risk Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>ANG_Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Configuration --></label>
+        <name>ANG_Risk_Configuration__c</name>
+        <relationshipLabel><!-- Agency Risk Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type ID --></label>
+        <name>ANG_Risk_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>ANG_Risk_Type__c</name>
+        <relationshipLabel><!-- Risk Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Source Id --></label>
+        <name>ANG_Source_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>ANG_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Agency --></label>
+        <name>ANG_TargetAgency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Key --></label>
+        <name>ANG_UniqueKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>ANG_expiration_date_ff__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Cashless Agency --></label>
+        <name>ANG_isCashlessAgency__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Risk Event --></label>
+        <name>RISK_EVENT</name>
+    </recordTypes>
+    <startsWith><!-- Consonant --></startsWith>
+    <validationRules>
+        <errorMessage><!-- You can only create risk events for Accredited Agencies --></errorMessage>
+        <name>Prevent_RE_in_Not_Accreditated_Agencies</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can only change the Issue Date on Risk Events Pending Activation --></errorMessage>
+        <name>Prevent_users_from_changing_issued_date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can&apos;t change the Risk Event Type --></errorMessage>
+        <name>Prevent_users_from_updating_RE_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please, fill only one of the source fields --></errorMessage>
+        <name>Unique_Source_Validation</name>
+    </validationRules>
+</CustomObjectTranslation>

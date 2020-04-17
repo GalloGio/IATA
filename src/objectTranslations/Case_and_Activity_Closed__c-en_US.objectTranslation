@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Case and Activity Closed</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Case_and_Activity_Closed</value>
+    </caseValues>
+    <fields>
+        <label><!-- Activities Closed --></label>
+        <name>Activities_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cases Closed --></label>
+        <name>Cases_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case number --></label>
+        <name>Csae_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Closed --></label>
+        <name>Date_Time_Closed__c</name>
+    </fields>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

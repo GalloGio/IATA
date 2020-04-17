@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CSS Tracking</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CSS Tracking</value>
+    </caseValues>
+    <fields>
+        <help><!-- Area that project, enhancement is related to --></help>
+        <label><!-- Area_name --></label>
+        <name>Area_name__c</name>
+        <picklistValues>
+            <masterLabel>Customer Portal</masterLabel>
+            <translation><!-- Customer Portal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GDP/Products</masterLabel>
+            <translation><!-- GDP/Products --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knowledge Management</masterLabel>
+            <translation><!-- Knowledge Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mass-Communication</masterLabel>
+            <translation><!-- Mass-Communication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Architecture Recommendations</masterLabel>
+            <translation><!-- Salesforce Architecture Recommendations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Enhancements</masterLabel>
+            <translation><!-- Salesforce Enhancements --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Projects</masterLabel>
+            <translation><!-- Salesforce Projects --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- BRD created --></help>
+        <label><!-- BRD in place --></label>
+        <name>BRD_in_place__c</name>
+    </fields>
+    <fields>
+        <help><!-- Responsible contacts from the business side (3 names max) --></help>
+        <label><!-- Business Contacts --></label>
+        <name>Business_Contacts__c</name>
+    </fields>
+    <fields>
+        <help><!-- Team Member name --></help>
+        <label><!-- CSS Team Member --></label>
+        <name>CSS_Team_Member__c</name>
+        <picklistValues>
+            <masterLabel>Gabriel Oueidat</masterLabel>
+            <translation><!-- Gabriel Oueidat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jefferson Simoes</masterLabel>
+            <translation><!-- Jefferson Simoes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manuel Garcia</masterLabel>
+            <translation><!-- Manuel Garcia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Snjezana Ivancan</masterLabel>
+            <translation><!-- Snjezana Ivancan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Young Park</masterLabel>
+            <translation><!-- Young Park --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Responsible contact from ITS side --></help>
+        <label><!-- ITS Contacts --></label>
+        <name>ITS_Contacts__c</name>
+    </fields>
+    <fields>
+        <help><!-- ITS involvment --></help>
+        <label><!-- ITS involved --></label>
+        <name>ITS_involved__c</name>
+    </fields>
+    <fields>
+        <help><!-- Short description of project/enhancement --></help>
+        <label><!-- Item Description --></label>
+        <name>Item_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Planned ending date of project/enhancement --></help>
+        <label><!-- Item Ending Date --></label>
+        <name>Item_Ending_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Planned beginning date of project/enhancement --></help>
+        <label><!-- Item Starting Date --></label>
+        <name>Item_Starting_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Project/enhancement status --></help>
+        <label><!-- Item Status --></label>
+        <name>Item_Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finished</masterLabel>
+            <translation><!-- Finished --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finished partially</masterLabel>
+            <translation><!-- Finished partially --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not started yet</masterLabel>
+            <translation><!-- Not started yet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Project/enhancement name --></help>
+        <label><!-- Item_name --></label>
+        <name>Item_name__c</name>
+        <picklistValues>
+            <masterLabel>Accounts and Contacts Clean</masterLabel>
+            <translation><!-- Accounts and Contacts Clean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Participation</masterLabel>
+            <translation><!-- Airline Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auto assignment of cases</masterLabel>
+            <translation><!-- Auto assignment of cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Auto selection of “from” address when email is sent from a case</masterLabel>
+            <translation><!-- Auto selection of “from” address when email is sent from a case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case field clean-up and potential move of fields to new objects</masterLabel>
+            <translation><!-- Case field clean-up and potential move of fields to new objects --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chatter for Local Offices and Governance</masterLabel>
+            <translation><!-- Chatter for Local Offices and Governance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Country Manager Client Scorecard</masterLabel>
+            <translation><!-- Country Manager Client Scorecard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Portal (SSO) POC phase</masterLabel>
+            <translation><!-- Customer Portal (SSO) POC phase --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Portal - additional languages</masterLabel>
+            <translation><!-- Customer Portal - additional languages --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enhanced Complaint</masterLabel>
+            <translation><!-- Enhanced Complaint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enhanced Monthly Report</masterLabel>
+            <translation><!-- Enhanced Monthly Report --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External web form/Creation of case for Airline Participation</masterLabel>
+            <translation><!-- External web form/Creation of case for Airline Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flagging account with last SIDRA case created</masterLabel>
+            <translation><!-- Flagging account with last SIDRA case created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FormAssembly to replace Customer Portal</masterLabel>
+            <translation><!-- FormAssembly to replace Customer Portal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GDP/Products</masterLabel>
+            <translation><!-- GDP/Products --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IFAP</masterLabel>
+            <translation><!-- IFAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knowledge Management</masterLabel>
+            <translation><!-- Knowledge Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mass-Communication</masterLabel>
+            <translation><!-- Mass-Communication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multiple communication within SF</masterLabel>
+            <translation><!-- Multiple communication within SF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Account &amp; Contact Structure</masterLabel>
+            <translation><!-- New Account &amp; Contact Structure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New users/profiles/roles/permissions</masterLabel>
+            <translation><!-- New users/profiles/roles/permissions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Project 100% communications through Salesforce</masterLabel>
+            <translation><!-- Project 100% communications through Salesforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real time KPIs in SF and Performance management</masterLabel>
+            <translation><!-- Real time KPIs in SF and Performance management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAAM Cases – Change Request Proof of Concept</masterLabel>
+            <translation><!-- SAAM Cases – Change Request Proof of Concept --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEDA implementation</masterLabel>
+            <translation><!-- SEDA implementation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SF attachments</masterLabel>
+            <translation><!-- SF attachments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIDRA cases tracking for recurrent small amounts</masterLabel>
+            <translation><!-- SIDRA cases tracking for recurrent small amounts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIDRA eDefault</masterLabel>
+            <translation><!-- SIDRA eDefault --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce DPC alignment (BSP, CASS)</masterLabel>
+            <translation><!-- Salesforce DPC alignment (BSP, CASS) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Governance</masterLabel>
+            <translation><!-- Salesforce Governance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce-SAP connection</masterLabel>
+            <translation><!-- Salesforce-SAP connection --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security &amp; SSP</masterLabel>
+            <translation><!-- Security &amp; SSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Storage issues</masterLabel>
+            <translation><!-- Storage issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Surveys sent tracking at contact level</masterLabel>
+            <translation><!-- Surveys sent tracking at contact level --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tool for tracking the impact of changes in Salesforce</masterLabel>
+            <translation><!-- Tool for tracking the impact of changes in Salesforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eBulletin project</masterLabel>
+            <translation><!-- eBulletin project --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eFAX through Salesforce</masterLabel>
+            <translation><!-- eFAX through Salesforce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status comment --></label>
+        <name>Status_comment__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

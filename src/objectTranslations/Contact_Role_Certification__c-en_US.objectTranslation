@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Contact Role Certification</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Contact Role Certifications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Contact Role --></label>
+        <name>Account_Contact_Role__c</name>
+        <relationshipLabel><!-- Contact Role Certifications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- AssessmentId --></label>
+        <name>AssessmentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certification --></label>
+        <name>Certification__c</name>
+        <relationshipLabel><!-- Contact Role Certifications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact Role certification name Formula --></label>
+        <name>Contact_Role_certification_name_Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enrolled --></label>
+        <name>Enrolled__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Expiration Date --></label>
+        <name>Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Status --></label>
+        <name>Expiration_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Integration Status --></label>
+        <name>Integration_Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Proficiency --></label>
+        <name>Proficiency__c</name>
+        <picklistValues>
+            <masterLabel>Level 2</masterLabel>
+            <translation><!-- Level 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Level 3</masterLabel>
+            <translation><!-- Level 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stopped --></label>
+        <name>Stopped__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

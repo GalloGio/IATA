@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>E&amp;F Contact Role Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>E&amp;F Contact Role Details</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Functional Role --></label>
+        <name>AccountFunctionalRole__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account name --></label>
+        <name>Account_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Functional Role --></label>
+        <name>ContactFunctionalRole__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Role --></label>
+        <name>Contact_Role__c</name>
+        <relationshipLabel><!-- E&amp;F Contact Role Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact name --></label>
+        <name>Contact_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Detailed contact role --></label>
+        <name>Detailed_contact_role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact and Detailed contact role --></label>
+        <name>Display_Contact_Detailed_contact_role__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Account Role Detail --></label>
+        <name>E_F_Account_Role_Detail__c</name>
+        <relationshipLabel><!-- E&amp;F Contact Role Details --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <label><!-- MASTER --></label>
+        <name>MASTER</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

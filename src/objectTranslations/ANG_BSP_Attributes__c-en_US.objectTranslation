@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BSP Attributes</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BSP Attributes</value>
+    </caseValues>
+    <fields>
+        <label><!-- BSP --></label>
+        <name>BSP__c</name>
+        <relationshipLabel><!-- BSP Attributes --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- C-Cargo
+D-Domestic
+E-External Registrars
+G-General Sales Agents
+K-CATO
+M-Members &amp; Airlines Sales Offices
+N-NISI
+O-SATO
+P-Passenger
+S-SSI
+T-TIDS
+V-Travel Service Intermediaries-TSI (USA Only) 
+X-Handling Agents and Shipping Lines
+J-Joint Vent --></help>
+        <label><!-- Class Type --></label>
+        <name>Class_Type__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>I</masterLabel>
+            <translation><!-- I --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>J</masterLabel>
+            <translation><!-- J --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N</masterLabel>
+            <translation><!-- N --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Q</masterLabel>
+            <translation><!-- Q --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W</masterLabel>
+            <translation><!-- W --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X</masterLabel>
+            <translation><!-- X --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- % of Financial Security --></label>
+        <name>FS_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO State --></label>
+        <name>ISO_State__c</name>
+        <relationshipLabel><!-- BSP Attributes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Limit Cash Condition --></label>
+        <name>Limit_Cash_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max FA Points --></label>
+        <name>Max_FA_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min FA Points --></label>
+        <name>Min_FA_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+        <relationshipLabel><!-- BSP Attributes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RHC Amount Calculation Type --></label>
+        <name>RHC_Amnt_Calc_Type__c</name>
+        <picklistValues>
+            <masterLabel>Fixed Percentage</masterLabel>
+            <translation><!-- Fixed Percentage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Formula</masterLabel>
+            <translation><!-- Formula --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Remittance Frequency --></label>
+        <name>Remittance_Frequency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remittances Per Year --></label>
+        <name>Remittances_Per_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risk Status --></label>
+        <name>Risk_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- UniqueKey --></label>
+        <name>UniqueKey__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Cash Condition Conf --></label>
+        <name>Cash_Condition_Conf</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- RHC Amount Conf --></label>
+        <name>RHC_Amount_Conf</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Remittance Frequency --></label>
+        <name>Remittance_Frequency</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- BSP is a mandatory field. --></errorMessage>
+        <name>BSP_mandatory_field</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- % of Financial Security is required and must be &gt;= 0 --></errorMessage>
+        <name>Cash_Condition_FS_Percentage_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- % of Financial Security must be &gt;=0 --></errorMessage>
+        <name>RHC_Amount_Conf_FS_Percentage_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- For RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory --></errorMessage>
+        <name>RHC_Amount_Conf_FixedPercent_Blank_Value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- For RHC Amount Calculation Type &apos;Formula&apos;, the fields Min FA Points, Max FA Points and % of Financial Security must be blank --></errorMessage>
+        <name>RHC_Amount_Conf_Formula_Blank_Values</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Risk Status is a mandatory field --></errorMessage>
+        <name>RHC_Amount_Conf_Mandatory_RiskStatus</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min FA Points must be lower than Max FA Points --></errorMessage>
+        <name>RHC_Amount_Conf_Min_Max_Fa_Points</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- RHC Amount Calculation Type is a mandatory field --></errorMessage>
+        <name>RHC_Amount_RHC_Amnt_Calc_Type_Mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Class Type is a required field for Record Type Remittance_Frequency --></errorMessage>
+        <name>Remittance_Frequency_Required_Class_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Remittance Frequency is a required field for Record Type Remittance_Frequency --></errorMessage>
+        <name>Remittance_Frequency_Required_RF</name>
+    </validationRules>
+</CustomObjectTranslation>

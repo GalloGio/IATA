@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SIS Management Visibility</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SIS Management Visibilities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Visible --></label>
+        <name>Is_Visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Management Type --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- SIS Management Visibilities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>Sector__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

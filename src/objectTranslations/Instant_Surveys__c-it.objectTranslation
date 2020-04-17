@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Instant Survey --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Instant Survey --></value>
+    </caseValues>
+    <fields>
+        <help><!-- Additional comments customer may give --></help>
+        <label><!-- Additional comments (optional) --></label>
+        <name>Additional_comments_optional__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX CES Dissatisfaction --></label>
+        <name>CX_CES_Dissatisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX CES Satisfaction Weighted --></label>
+        <name>CX_CES_Satisfaction_Weighted__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX CES Satisfaction --></label>
+        <name>CX_CES_Satisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX CSR Quality --></label>
+        <name>CX_CSR_Quality__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX Clear Communication --></label>
+        <name>CX_Clear_Communication__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat Dissatisfied</masterLabel>
+            <translation><!-- Somewhat Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat Satisfied</masterLabel>
+            <translation><!-- Somewhat Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Dissatisfied</masterLabel>
+            <translation><!-- Very Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Satisfied</masterLabel>
+            <translation><!-- Very Satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CX Communication --></label>
+        <name>CX_Communication__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX Dissatisfaction --></label>
+        <name>CX_Dissatisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX Easy Resolution (CES) --></label>
+        <name>CX_Easy_Resolution_CES__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat Dissatisfied</masterLabel>
+            <translation><!-- Somewhat Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat Satisfied</masterLabel>
+            <translation><!-- Somewhat Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Dissatisfied</masterLabel>
+            <translation><!-- Very Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Satisfied</masterLabel>
+            <translation><!-- Very Satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CX NPS Detractor --></label>
+        <name>CX_NPS_Detractor__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX NPS Promoter --></label>
+        <name>CX_NPS_Promoter__c</name>
+    </fields>
+    <fields>
+        <help><!-- 0 meaning the least recommendable - 10 meaning the most recommendable --></help>
+        <label><!-- CX NPS rating --></label>
+        <name>CX_NPS_rating__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CX Overall Satisfaction --></label>
+        <name>CX_Overall_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat Dissatisfied</masterLabel>
+            <translation><!-- Somewhat Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat Satisfied</masterLabel>
+            <translation><!-- Somewhat Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Dissatisfied</masterLabel>
+            <translation><!-- Very Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Satisfied</masterLabel>
+            <translation><!-- Very Satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CX Quality of CSR --></label>
+        <name>CX_Quality_of_CSR__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat Dissatisfied</masterLabel>
+            <translation><!-- Somewhat Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat Satisfied</masterLabel>
+            <translation><!-- Somewhat Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Dissatisfied</masterLabel>
+            <translation><!-- Very Dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Satisfied</masterLabel>
+            <translation><!-- Very Satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CX Satisfaction Weighted --></label>
+        <name>CX_Satisfaction_Weighted__c</name>
+    </fields>
+    <fields>
+        <label><!-- CX Satisfaction --></label>
+        <name>CX_Satisfaction__c</name>
+    </fields>
+    <fields>
+        <label>Area del caso</label>
+        <name>Case_Area__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case ID --></label>
+        <name>Case_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chat Agent Experience --></label>
+        <name>Chat_Agent_Experience__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Chat Agent --></label>
+        <name>Chat_Agent__c</name>
+        <relationshipLabel><!-- Instant Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Chat Preferred Channel --></label>
+        <name>Chat_Channel__c</name>
+        <picklistValues>
+            <masterLabel>Chat</masterLabel>
+            <translation><!-- Chat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frequently Asked Questions</masterLabel>
+            <translation><!-- Frequently Asked Questions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portal enquiry</masterLabel>
+            <translation><!-- Portal enquiry --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Chat comment --></label>
+        <name>Chat_comment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Rating on clarity of response given from CSR to customer --></help>
+        <label><!-- Clarity of response --></label>
+        <name>Clarity_of_response__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisified</masterLabel>
+            <translation><!-- Very satisified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Instant Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Rating on CSR&apos;s courtesy and friendliness by customer --></help>
+        <label><!-- Courtesy and friendliness --></label>
+        <name>Courtesy_and_friendliness__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisfied</masterLabel>
+            <translation><!-- Very satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Dissatisfaction --></label>
+        <name>Dissatisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Espiritu - NPS rating on FDS-OPS --></label>
+        <name>Espiritu_NPS_rating_on_FDS_OPS__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Espiritu - One change to improve FDS-OPS --></label>
+        <name>Espiritu_One_change_to_improve_FDS_OPS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Espiritu - X-team collaboration rating --></label>
+        <name>Espiritu_X_team_collaboration_rating__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Rating on perception of IATA procedures and resolutions by customer --></help>
+        <label><!-- IATA procedures and resolutions --></label>
+        <name>IATA_procedures_and_resolutions__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisified</masterLabel>
+            <translation><!-- Very satisified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Rating on perception of CSR&apos;s knowledge and competence by customer --></help>
+        <label><!-- Knowledge and competence --></label>
+        <name>Knowledge_and_competence__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisfied</masterLabel>
+            <translation><!-- Very satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- NPS Comments --></label>
+        <name>NPS_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- Rating on CSR&apos;s overall performance by customer --></help>
+        <label><!-- Overall performance --></label>
+        <name>Overall_performance__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisified</masterLabel>
+            <translation><!-- Very satisified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Rating on customer&apos;s overall satisfaction of management of his/her case by IATA --></help>
+        <label><!-- Overall satisfaction --></label>
+        <name>Overall_satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisfied</masterLabel>
+            <translation><!-- Very satisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Process/product Satisfaction --></label>
+        <name>Process_product_Satisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+    </fields>
+    <fields>
+        <help><!-- Free text field within survey for customer to give feedback specifically if dissatsifed --></help>
+        <label><!-- Reasons for Dissatisfaction --></label>
+        <name>Reasons_for_Dissatisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reasons for High Satisfaction --></label>
+        <name>Reasons_for_High_Satisfaction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Relationship to Account --></label>
+        <name>Relationship_to_Account__c</name>
+        <relationshipLabel><!-- Instant Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Relationship to Case --></label>
+        <name>Relationship_to_Case__c</name>
+        <relationshipLabel><!-- Instant Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Rating on relevance of explanations given by CSR to customer --></help>
+        <label><!-- Relevance of explanations --></label>
+        <name>Relevance_of_explanations__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisified</masterLabel>
+            <translation><!-- Very satisified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- How would you rate the added value that this change has brought to the business --></help>
+        <label><!-- SFACR Added value --></label>
+        <name>SFACR_Added_value__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- How good was the communication content and communication process during and after the change? --></help>
+        <label><!-- SFACR Communication --></label>
+        <name>SFACR_Communication__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- How satisfied are you with the material or documentation provided --></help>
+        <label><!-- SFACR Documentation Satisfaction --></label>
+        <name>SFACR_Documentation_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Finally how likely would you recommend working with our team for developments, where 0 is Not at all, and 10 is Very much. --></help>
+        <label><!-- SFACR NPS --></label>
+        <name>SFACR_NPS__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- How easy was dealing with us team and how good our personal touch --></help>
+        <label><!-- SFACR Personal touch --></label>
+        <name>SFACR_Personal_touch__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Rates the general satisfaction with the delivered product by the salesforce ACR --></help>
+        <label><!-- SFACR Quality Satisfaction --></label>
+        <name>SFACR_Quality_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat Satisfied</masterLabel>
+            <translation><!-- Somewhat Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat Unsatisfied</masterLabel>
+            <translation><!-- Somewhat Unsatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Satisfied</masterLabel>
+            <translation><!-- Very Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very Unsatisfied</masterLabel>
+            <translation><!-- Very Unsatisfied --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- rates satisfaction with the time management of the Salesforce change request. --></help>
+        <label><!-- SFACR Time and speed --></label>
+        <name>SFACRtimeandspeed__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Satisfaction --></label>
+        <name>Satisfaction__c</name>
+    </fields>
+    <fields>
+        <help><!-- Rating on CSR&apos;s speed and efficiency by customer --></help>
+        <label><!-- Speed and efficiency --></label>
+        <name>Speed_and_efficiency__c</name>
+        <picklistValues>
+            <masterLabel>Somewhat dissatisfied</masterLabel>
+            <translation><!-- Somewhat dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somewhat satisfied</masterLabel>
+            <translation><!-- Somewhat satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very dissatisfied</masterLabel>
+            <translation><!-- Very dissatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Very satisified</masterLabel>
+            <translation><!-- Very satisified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SurveyURL --></label>
+        <name>SurveyURL__c</name>
+    </fields>
+    <fields>
+        <label><!-- SurveyUserID --></label>
+        <name>SurveyUserID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fix value 1 (used to count) --></label>
+        <name>Use__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 CES Number --></label>
+        <name>X2015_CES_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 CES --></label>
+        <name>X2015_CES__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2015 CSR Quality --></label>
+        <name>X2015_CSR_Quality__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2015 CSR Quality number --></label>
+        <name>X2015_CSR_Quality_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Communication Satisfaction --></label>
+        <name>X2015_Communication_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2015 Communication Satisfaction number --></label>
+        <name>X2015_Communication_Satisfaction_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Email --></label>
+        <name>X2015_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 First Name --></label>
+        <name>X2015_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Improve Documentation quality --></label>
+        <name>X2015_Improve_Documentation_quality__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Improve Other --></label>
+        <name>X2015_Improve_Other__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Improve Phone availability --></label>
+        <name>X2015_Improve_Phone_availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Improve Portal usability --></label>
+        <name>X2015_Improve_Portal_usability__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Improve Rep T&amp;D --></label>
+        <name>X2015_Improve_Rep_T_D__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Last Name --></label>
+        <name>X2015_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Other Specify --></label>
+        <name>X2015_Other_Specify__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Overall Satisfaction --></label>
+        <name>X2015_Overall_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2015 Overall Satisfaction number --></label>
+        <name>X2015_Overall_Satisfaction_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Phone Number --></label>
+        <name>X2015_Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- 2015 Speed Satisfaction --></label>
+        <name>X2015_Speed_Satisfaction__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- 2015 Speed Satisfaction number --></label>
+        <name>X2015_Speed_Satisfaction_number__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <nameFieldLabel><!-- Instant Surveys Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Espiritu IS Record Type --></label>
+        <name>Espiritu_IS_Record_Type</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Live Agent Chat --></label>
+        <name>Live_Agent_Chat</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Salesforce ACR surveys --></description>
+        <label><!-- SF ACR Survey --></label>
+        <name>SF_ACR_Survey</name>
+    </recordTypes>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ZuoraPricing2SAP Price</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ZuoraPricing2SAP Prices</value>
+    </caseValues>
+    <fields>
+        <label><!-- Amount Or Percentage --></label>
+        <name>AmountOrPercentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coupon --></label>
+        <name>Coupon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Type --></label>
+        <name>CustomerType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective From --></label>
+        <name>EffectiveFrom__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective To --></label>
+        <name>EffectiveTo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ending Unit --></label>
+        <name>EndingUnit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Free Shipping --></label>
+        <name>IsFreeShipping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Pre Sale --></label>
+        <name>IsPreSale__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Recurring --></label>
+        <name>IsRecurring__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latest Source Timestamp --></label>
+        <name>LatestSourceTimestamp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Material Number --></label>
+        <name>Material_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pricing Type --></label>
+        <name>Pricing_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sending Timestamp --></label>
+        <name>SendingTimestamp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Starting Unit --></label>
+        <name>StartingUnit__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

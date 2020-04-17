@@ -1,0 +1,1234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- E&amp;F Asset --></value>
+    </caseValues>
+    <fields>
+        <label>บัญชี</label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- E&amp;F Assets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- BSP --></label>
+        <name>BSP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Date Reception --></label>
+        <name>Billing_Date_Reception__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billling Period --></label>
+        <name>Billling_Period__c</name>
+        <picklistValues>
+            <masterLabel>Every 3 days</masterLabel>
+            <translation><!-- Every 3 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly</masterLabel>
+            <translation><!-- Quarterly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yearly</masterLabel>
+            <translation><!-- Yearly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Clearing Cycle --></label>
+        <name>Clearing_Cycle__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Signed Date --></label>
+        <name>Contract_Signed_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Manager --></label>
+        <name>Country_Manager__c</name>
+    </fields>
+    <fields>
+        <label>ประเทศ</label>
+        <name>Country__c</name>
+        <picklistValues>
+            <masterLabel>Afghanistan</masterLabel>
+            <translation>อัฟกานิสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Albania</masterLabel>
+            <translation>แอลเบเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Algeria</masterLabel>
+            <translation>แอลจีเรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>American Samoa</masterLabel>
+            <translation>อเมริกันซามัว</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Andorra</masterLabel>
+            <translation>อันดอร์รา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Angola</masterLabel>
+            <translation>แองโกลา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Anguilla</masterLabel>
+            <translation>แองกวิลลา </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Antigua And Barbuda</masterLabel>
+            <translation>แอนติกาและบาร์บูดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Argentina</masterLabel>
+            <translation>อาร์เจนตินา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Armenia</masterLabel>
+            <translation>อาร์มีเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aruba</masterLabel>
+            <translation>อารูบา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Australia</masterLabel>
+            <translation>ออสเตรเลีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Austria</masterLabel>
+            <translation>ออสเตรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Azerbaijan</masterLabel>
+            <translation>อาเซอร์ไบจาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bahamas</masterLabel>
+            <translation>บาฮามาส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bahrain</masterLabel>
+            <translation>บาห์เรน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bangladesh</masterLabel>
+            <translation>บังกลาเทศ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Barbados</masterLabel>
+            <translation>บาร์เบโดส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belarus</masterLabel>
+            <translation>เบลารุส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belgium</masterLabel>
+            <translation>เบลเยียม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belize</masterLabel>
+            <translation>เบลีซ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Benin</masterLabel>
+            <translation>เบนิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bermuda</masterLabel>
+            <translation>เบอร์มิวดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bhutan</masterLabel>
+            <translation>ภูฏาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bolivia</masterLabel>
+            <translation>โบลิเวีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bosnia And Herzegovina</masterLabel>
+            <translation>บอสเนียและเฮอร์เซโกวีนา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Botswana</masterLabel>
+            <translation>บอตสวานา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brazil</masterLabel>
+            <translation>บราซิล</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brunei Darussalam</masterLabel>
+            <translation>บรูไนดารุสซาลาม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bulgaria</masterLabel>
+            <translation>บัลแกเรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Burkina Faso</masterLabel>
+            <translation>บูร์กินาฟาโซ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Burundi</masterLabel>
+            <translation>บุรุนดี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cambodia</masterLabel>
+            <translation>กัมพูชา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cameroon</masterLabel>
+            <translation>แคเมอรูน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canada</masterLabel>
+            <translation>แคนาดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cape Verde</masterLabel>
+            <translation>กาบูเวร์ดี </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cayman Islands</masterLabel>
+            <translation>หมู่เกาะเคย์แมน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central African Republic</masterLabel>
+            <translation>สาธารณรัฐแอฟริกากลาง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chad</masterLabel>
+            <translation>ชาด</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chile</masterLabel>
+            <translation>ชิลี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chinese Taipei</masterLabel>
+            <translation>ไต้หวัน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Colombia</masterLabel>
+            <translation>โคลอมเบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Comoros</masterLabel>
+            <translation>คอโมโรส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Congo</masterLabel>
+            <translation>คองโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Congo, The Democratic Republic Of The</masterLabel>
+            <translation>สาธารณรัฐประชาธิปไตยคองโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cook Islands</masterLabel>
+            <translation>หมู่เกาะคุก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Costa Rica</masterLabel>
+            <translation>คอสตาริกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Croatia</masterLabel>
+            <translation>โครเอเชีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cuba</masterLabel>
+            <translation>คิวบา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cyprus</masterLabel>
+            <translation>ไซปรัส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Czech Republic</masterLabel>
+            <translation>สาธารณรัฐเช็ก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Côte D&apos;Ivoire</masterLabel>
+            <translation>โกตดิวัวร์ </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denmark</masterLabel>
+            <translation>เดนมาร์ก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Djibouti</masterLabel>
+            <translation>จิบูตี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dominica</masterLabel>
+            <translation>ดอมินีกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dominican Republic</masterLabel>
+            <translation>สาธารณรัฐโดมินิกัน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>East Timor</masterLabel>
+            <translation>ติมอร์-เลสเต</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ecuador</masterLabel>
+            <translation>เอกวาดอร์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Egypt</masterLabel>
+            <translation>อียิปต์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>El Salvador</masterLabel>
+            <translation>เอลซัลวาดอร์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equatorial Guinea</masterLabel>
+            <translation>อิเควทอเรียลกินี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eritrea</masterLabel>
+            <translation>เอริเทรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Estonia</masterLabel>
+            <translation>เอสโตเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ethiopia</masterLabel>
+            <translation>เอธิโอเปีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Falkland Islands (Malvinas)</masterLabel>
+            <translation>หมู่เกาะฟอล์กแลนด์ (มัลบีนัส)</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Faroe Islands</masterLabel>
+            <translation>หมู่เกาะแฟโร</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fiji</masterLabel>
+            <translation>ฟิจิ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finland</masterLabel>
+            <translation>ฟินแลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France</masterLabel>
+            <translation>ฝรั่งเศส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French Guiana</masterLabel>
+            <translation>เฟรนช์เกียนา </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French Polynesia</masterLabel>
+            <translation>เฟรนช์โปลินีเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gabon</masterLabel>
+            <translation>กาบอง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gambia</masterLabel>
+            <translation>แกมเบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Georgia</masterLabel>
+            <translation>จอร์เจีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany</masterLabel>
+            <translation>เยอรมนี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ghana</masterLabel>
+            <translation>กานา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gibraltar</masterLabel>
+            <translation>ยิบรอลตาร์ </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greece</masterLabel>
+            <translation>กรีซ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greenland</masterLabel>
+            <translation>กรีนแลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grenada</masterLabel>
+            <translation>เกรเนดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guadeloupe</masterLabel>
+            <translation>กวาเดอลูป</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guam</masterLabel>
+            <translation>กวม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guatemala</masterLabel>
+            <translation>กัวเตมาลา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guernsey</masterLabel>
+            <translation><!-- Guernsey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guinea</masterLabel>
+            <translation>กินี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guinea-Bissau</masterLabel>
+            <translation>กินี-บิสเซา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guyana</masterLabel>
+            <translation>กายอานา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Haiti</masterLabel>
+            <translation>เฮติ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holy See (Vatican City State)</masterLabel>
+            <translation><!-- Holy See (Vatican City State) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Honduras</masterLabel>
+            <translation>ฮอนดูรัส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hong Kong (Sar), China</masterLabel>
+            <translation>ฮ่องกง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hungary</masterLabel>
+            <translation>ฮังการี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Iceland</masterLabel>
+            <translation>ไอซ์แลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>India</masterLabel>
+            <translation>อินเดีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Indonesia</masterLabel>
+            <translation>อินโดนีเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Iran, Islamic Republic Of</masterLabel>
+            <translation>อิหร่าน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Iraq</masterLabel>
+            <translation>อิรัก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ireland</masterLabel>
+            <translation>ไอร์แลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Isle Of Man</masterLabel>
+            <translation><!-- Isle Of Man --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Israel</masterLabel>
+            <translation>อิสราเอล</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italy</masterLabel>
+            <translation>อิตาลี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jamaica</masterLabel>
+            <translation>จาเมกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan</masterLabel>
+            <translation>ญี่ปุ่น</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jersey</masterLabel>
+            <translation><!-- Jersey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jordan</masterLabel>
+            <translation>จอร์แดน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kazakhstan</masterLabel>
+            <translation>คาซัคสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kenya</masterLabel>
+            <translation>เคนยา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kiribati</masterLabel>
+            <translation>คิริบาส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korea, Democratic People&apos;S Republic Of</masterLabel>
+            <translation>เกาหลีเหนือ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korea, Republic Of</masterLabel>
+            <translation>เกาหลีใต้</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kuwait</masterLabel>
+            <translation>คูเวต</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kyrgyzstan</masterLabel>
+            <translation>คีร์กีซสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lao People&apos;S Democratic Republic</masterLabel>
+            <translation>ลาว</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Latvia</masterLabel>
+            <translation>ลัตเวีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lebanon</masterLabel>
+            <translation>เลบานอน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lesotho</masterLabel>
+            <translation>เลโซโท</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liberia</masterLabel>
+            <translation>ไลบีเรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Libyan Arab Jamahiriya</masterLabel>
+            <translation><!-- Libyan Arab Jamahiriya --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liechtenstein</masterLabel>
+            <translation>ลิกเตนสไตน์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lithuania</masterLabel>
+            <translation>ลิทัวเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Luxembourg</masterLabel>
+            <translation>ลักเซมเบิร์ก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Macao (Sar), China</masterLabel>
+            <translation>มาเก๊า</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Macedonia, The Former Yugoslav Republic of</masterLabel>
+            <translation>มาซิโดเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Madagascar</masterLabel>
+            <translation>มาดากัสการ์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malawi</masterLabel>
+            <translation>มาลาวี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malaysia</masterLabel>
+            <translation>มาเลเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maldives</masterLabel>
+            <translation>มัลดีฟส์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mali</masterLabel>
+            <translation>มาลี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malta</masterLabel>
+            <translation>มอลตา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marshall Islands</masterLabel>
+            <translation>หมู่เกาะมาร์แชลล์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinique</masterLabel>
+            <translation>มาร์ตีนีก </translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mauritania</masterLabel>
+            <translation>มอริเตเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mauritius</masterLabel>
+            <translation>มอริเชียส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mayotte</masterLabel>
+            <translation>มายอต</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mexico</masterLabel>
+            <translation>เม็กซิโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Micronesia, Federated States Of</masterLabel>
+            <translation>ไมโครนีเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Moldova, Republic Of</masterLabel>
+            <translation>มอลโดวา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monaco</masterLabel>
+            <translation>โมนาโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mongolia</masterLabel>
+            <translation>มองโกเลีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Montenegro</masterLabel>
+            <translation>มอนเตเนโกร</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Montserrat</masterLabel>
+            <translation> มอนต์เซอร์รัต</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Morocco</masterLabel>
+            <translation>โมร็อกโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozambique</masterLabel>
+            <translation>โมซัมบิก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Myanmar</masterLabel>
+            <translation>พม่า</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Namibia</masterLabel>
+            <translation>นามิเบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nauru</masterLabel>
+            <translation><!-- Nauru --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nepal</masterLabel>
+            <translation>เนปาล</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Netherlands</masterLabel>
+            <translation>เนเธอร์แลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Netherlands Antilles</masterLabel>
+            <translation>เนเธอร์แลนด์แอนทิลลิส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Caledonia</masterLabel>
+            <translation>นิวแคลิโดเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Zealand</masterLabel>
+            <translation>นิวซีแลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nicaragua</masterLabel>
+            <translation>นิการากัว</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Niger</masterLabel>
+            <translation>ไนเจอร์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nigeria</masterLabel>
+            <translation>ไนจีเรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Niue</masterLabel>
+            <translation>นีอูเอ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Norfolk Island</masterLabel>
+            <translation><!-- Norfolk Island --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Northern Mariana Islands</masterLabel>
+            <translation>หมู่เกาะนอร์เทิร์นมาเรียนา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Norway</masterLabel>
+            <translation>นอร์เวย์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oman</masterLabel>
+            <translation>โอมาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pakistan</masterLabel>
+            <translation>ปากีสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palau</masterLabel>
+            <translation>ปาเลา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palestinian Territory, Occupied</masterLabel>
+            <translation>ปาเลสไตน์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Panama</masterLabel>
+            <translation>ปานามา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Papua New Guinea</masterLabel>
+            <translation>ปาปัวนิวกินี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paraguay</masterLabel>
+            <translation>ปารากวัย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>People&apos;s Republic Of China</masterLabel>
+            <translation>จีน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peru</masterLabel>
+            <translation>เปรู</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Philippines</masterLabel>
+            <translation>ฟิลิปปินส์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pitcairn</masterLabel>
+            <translation>พิตแคร์น</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Poland</masterLabel>
+            <translation>โปแลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portugal</masterLabel>
+            <translation>โปรตุเกส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Puerto Rico</masterLabel>
+            <translation>เปอร์โตริโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Qatar</masterLabel>
+            <translation>กาตาร์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Romania</masterLabel>
+            <translation>โรมาเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russian Federation</masterLabel>
+            <translation>รัสเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rwanda</masterLabel>
+            <translation>รวันดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Réunion</masterLabel>
+            <translation>เรอูว์นียง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Helena</masterLabel>
+            <translation>เซนต์เฮเลนา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Kitts And Nevis</masterLabel>
+            <translation>เซนต์คิตส์และเนวิส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Lucia</masterLabel>
+            <translation>เซนต์ลูเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Martin (French Part)</masterLabel>
+            <translation><!-- Saint Martin (French Part) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Pierre And Miquelon</masterLabel>
+            <translation>แซงปีแยร์และมีเกอลง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint Vincent And The Grenadines</masterLabel>
+            <translation>เซนต์วินเซนต์และเกรนาดีนส์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saint-Barthélemy</masterLabel>
+            <translation><!-- Saint-Barthélemy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samoa</masterLabel>
+            <translation>ซามัว</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>San Marino</masterLabel>
+            <translation>ซานมารีโน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sao Tome And Principe</masterLabel>
+            <translation>เซาตูเมและปรินซิปี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saudi Arabia</masterLabel>
+            <translation>ซาอุดีอาระเบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Senegal</masterLabel>
+            <translation>เซเนกัล</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serbia</masterLabel>
+            <translation>เซอร์เบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seychelles</masterLabel>
+            <translation>เซเชลส์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sierra Leone</masterLabel>
+            <translation>เซียร์ราลีโอน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Singapore</masterLabel>
+            <translation>สิงคโปร์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Slovakia</masterLabel>
+            <translation>สโลวาเกีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Slovenia</masterLabel>
+            <translation>สโลวีเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solomon Islands</masterLabel>
+            <translation>หมู่เกาะโซโลมอน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Somalia</masterLabel>
+            <translation>โซมาเลีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South Africa</masterLabel>
+            <translation>แอฟริกาใต้</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spain</masterLabel>
+            <translation>สเปน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sri Lanka</masterLabel>
+            <translation>ศรีลังกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sudan</masterLabel>
+            <translation>ซูดาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suriname</masterLabel>
+            <translation>ซูรินาม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Svalbard And Jan Mayen</masterLabel>
+            <translation><!-- Svalbard And Jan Mayen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Swaziland</masterLabel>
+            <translation>สวาซิแลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sweden</masterLabel>
+            <translation>สวีเดน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Switzerland</masterLabel>
+            <translation>สวิตเซอร์แลนด์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syrian Arab Republic</masterLabel>
+            <translation>ซีเรีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tajikistan</masterLabel>
+            <translation>ทาจิกิสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tanzania, United Republic Of</masterLabel>
+            <translation>แทนซาเนีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thailand</masterLabel>
+            <translation>ไทย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Togo</masterLabel>
+            <translation>โตโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tokelau</masterLabel>
+            <translation><!-- Tokelau --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tonga</masterLabel>
+            <translation>ตองกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trinidad And Tobago</masterLabel>
+            <translation>ตรินิแดดและโตเบโก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tunisia</masterLabel>
+            <translation>ตูนิเซีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turkey</masterLabel>
+            <translation>ตุรกี</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turkmenistan</masterLabel>
+            <translation>เติร์กเมนิสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turks And Caicos Islands</masterLabel>
+            <translation>หมู่เกาะเติกส์และหมู่เกาะ เคคอส</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tuvalu</masterLabel>
+            <translation>ตูวาลู</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uganda</masterLabel>
+            <translation>ยูกันดา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ukraine</masterLabel>
+            <translation>ยูเครน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Arab Emirates</masterLabel>
+            <translation>สหรัฐอาหรับเอมิเรตส์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom</masterLabel>
+            <translation>สหราชอาณาจักร</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United States</masterLabel>
+            <translation>สหรัฐอเมริกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uruguay</masterLabel>
+            <translation> อุรุกวัย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uzbekistan</masterLabel>
+            <translation>อุซเบกิสถาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vanuatu</masterLabel>
+            <translation>วานูอาตู</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Venezuela</masterLabel>
+            <translation>เวเนซุเอลา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Viet Nam</masterLabel>
+            <translation>เวียตนาม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virgin Islands, British</masterLabel>
+            <translation>หมู่เกาะบริติชเวอร์จิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virgin Islands, U.S.</masterLabel>
+            <translation>หมู่เกาะเวอร์จินของสหรัฐอเมริกา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wallis And Futuna</masterLabel>
+            <translation>วาลลิสและฟุตูนา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Western Sahara</masterLabel>
+            <translation>เวสเทิร์นสะฮารา</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yemen</masterLabel>
+            <translation>เยเมน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zambia</masterLabel>
+            <translation>แซมเบีย</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zimbabwe</masterLabel>
+            <translation> ซิมบับเว</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Åland Islands</masterLabel>
+            <translation><!-- Åland Islands --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Data Format --></label>
+        <name>Data_Format__c</name>
+        <picklistValues>
+            <masterLabel>e-Data</masterLabel>
+            <translation><!-- e-Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>e-Data - missing elements</masterLabel>
+            <translation><!-- e-Data - missing elements --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Direct Payment --></label>
+        <name>Direct_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Operations Contact --></label>
+        <name>E_F_Operations_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geographic Region --></label>
+        <name>Geographic_Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa</masterLabel>
+            <translation><!-- Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia Pacific</masterLabel>
+            <translation><!-- Asia Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MENA</masterLabel>
+            <translation><!-- MENA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North America</masterLabel>
+            <translation><!-- North America --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North Asia</masterLabel>
+            <translation><!-- North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oceania</masterLabel>
+            <translation><!-- Oceania --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russia &amp; CIS</masterLabel>
+            <translation><!-- Russia &amp; CIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South Asia</masterLabel>
+            <translation><!-- South Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>The Americas</masterLabel>
+            <translation><!-- The Americas --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ICH --></label>
+        <name>ICH__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISS Payment --></label>
+        <name>ISS_Payment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Credit Term --></label>
+        <name>Invoice_Credit_Term__c</name>
+        <picklistValues>
+            <masterLabel>15 Days</masterLabel>
+            <translation><!-- 15 Days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 Days</masterLabel>
+            <translation><!-- 30 Days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>60 Days</masterLabel>
+            <translation><!-- 60 Days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>90 Days</masterLabel>
+            <translation><!-- 90 Days --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoicing Currency --></label>
+        <name>Invoicing_Currency__c</name>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SAP Contract --></label>
+        <name>SAP_Contract__c</name>
+    </fields>
+    <fields>
+        <label><!-- SO&amp;I Manager --></label>
+        <name>SO_I_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Manager --></label>
+        <name>Sales_Manager__c</name>
+        <relationshipLabel><!-- E&amp;F Assets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Active --></label>
+        <name>Service_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Currency --></label>
+        <name>Settlement_Currency__c</name>
+        <picklistValues>
+            <masterLabel>ARS</masterLabel>
+            <translation><!-- ARS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBD</masterLabel>
+            <translation><!-- BBD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSD</masterLabel>
+            <translation><!-- BSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAD</masterLabel>
+            <translation><!-- MAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYR</masterLabel>
+            <translation><!-- MYR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NGN</masterLabel>
+            <translation><!-- NGN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTD</masterLabel>
+            <translation><!-- TTD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XCD</masterLabel>
+            <translation><!-- XCD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XOF</masterLabel>
+            <translation><!-- XOF --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Settlement Date --></label>
+        <name>Settlement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Period --></label>
+        <name>Settlement_Period__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly</masterLabel>
+            <translation><!-- Quarterly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twice a Month</masterLabel>
+            <translation><!-- Twice a Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yearly</masterLabel>
+            <translation><!-- Yearly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User Charges Manager --></label>
+        <name>User_Charges_Manager__c</name>
+    </fields>
+    <nameFieldLabel><!-- E&amp;F Asset Name --></nameFieldLabel>
+</CustomObjectTranslation>
