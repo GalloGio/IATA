@@ -2636,7 +2636,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			SFDCAccount.Category__c = 'Non-IATA Cargo Agent';
 		}
 
-		SFDCAccount.Top_Parent__c = hqAccount.ParentId;
+		//For Multicountry, the topParent is the account linked with the case
+		SFDCAccount.Top_Parent__c = isMulticountry ? hqAccount.Id : hqAccount.ParentId;
 		SFDCAccount.BillingCountry = isocountry.Name;
 		//NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
 		if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) SFDCAccount.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
@@ -3563,12 +3564,16 @@ public without sharing class ISSP_AMS_Accreditation {
 					createHOAccount(hqAccount);
 					accountStagingFieldMapping(hqAccount, newCase.Reason1__c, true);
 				} else {  //Non-accredited agent applying for new HO
-					if(newAccreditationModels) {
-						hqAccount.Location_Type__c = AMS_Utils.HE;
+					if (newAccreditationModels) {
+						if (isMulticountry && newForm.HO_Account__c != null) {
+							hqAccount.Location_Type__c = AMS_Utils.GE;
+						} else {
+							hqAccount.Location_Type__c = AMS_Utils.HE;
+						}
 					} else {
 						hqAccount.Location_Type__c = AMS_Utils.HO;
 					}
-
+					
 					hqAccount.Location_Class__c = getLocationClass();
 					upsert hqAccount;
 
@@ -3734,7 +3739,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void submitMultiCountryApplication() {
 		Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityForms = new Set<AMS_Pax_Accreditation_Form__c>();
-		Boolean wasNotGE;
 		List<AMS_Pax_Accreditation_Form__c> mcFormsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
 
 		for (AMS_Pax_Accreditation_Form__c mcForm: multiCountryApplicationForms) {
@@ -3746,10 +3750,6 @@ public without sharing class ISSP_AMS_Accreditation {
 			} else {
 				mcForm.Location_Type__c = AMS_Utils.GE;
 				geMCForm = mcform;
-				if (hqAccount.Location_Type__c != AMS_Utils.GE) {
-					wasNotGE = true;
-					hqAccount.Location_Type__c = AMS_Utils.GE;
-				}
 			}
 
 			mcForm.Accept_terms_and_conditions__c = true;
@@ -3759,10 +3759,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		update mcFormsToUpdate;
-
-		if (wasNotGE) {
-			update hqAccount;
-		}
 
 		if (!sameLegalEntityForms.isEmpty()) {
 			copyOwnersOnMCSubmit(sameLegalEntityForms);
