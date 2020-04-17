@@ -1457,7 +1457,7 @@ public class IDCard_RenewalWebServiceTest
 		{
 			System.assertEquals('5663830960336778804005', app.Payment_Transaction_Number__c);
 			System.assertEquals(280.00, app.Payment_Amount__c);
-			System.assertEquals('21-August-2019 12:24:56 GMT', app.Payment_Date__c);
+			System.assertEquals('21-August-2019 11:24:56 GMT', app.Payment_Date__c);
 			System.assertEquals('USD', app.Payment_Currency__c);
 			System.assertEquals('411111xxxxxx1111', app.Payment_Credit_Card_Number__c);
 		}
