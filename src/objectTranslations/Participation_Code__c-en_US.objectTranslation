@@ -8,25 +8,5 @@
         <plural>true</plural>
         <value>Participation Codes</value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Participation Codes --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Code Type --></label>
-        <name>Code_Type__c</name>
-    </fields>
-    <fields>
-        <label><!-- Code Value --></label>
-        <name>Code_Value__c</name>
-    </fields>
-    <layouts>
-        <layout>Participation Code Layout</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

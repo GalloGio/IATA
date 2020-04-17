@@ -337,8 +337,8 @@
     </echo>
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/objectPackageRet.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
   <target name="getObjectsWithPermissions">

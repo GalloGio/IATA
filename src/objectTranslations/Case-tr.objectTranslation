@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <caseValues>
+            <caseType>Nominative</caseType>
+            <plural>false</plural>
+            <possessive>None</possessive>
+            <value>Konu numarası</value>
+        </caseValues>
+        <name>case_number</name>
+    </fields>
+</CustomObjectTranslation>
