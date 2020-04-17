@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>AMP Core Groups</value>
     </caseValues>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -108,6 +108,89 @@
         <possessive>Second</possessive>
         <value><!-- الSystem Settings --></value>
     </caseValues>
+    <fields>
+        <help><!-- Currently active settings - this will inactivate all other system setting options --></help>
+        <label>نشط</label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <help>&quot;Use ; to separate the email addresses.&quot;</help>
+        <label><!-- Email on Error --></label>
+        <name>Email_on_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- In Progress Case Workload Weighting --></label>
+        <name>In_Progress_Case_Workload_Weighting__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open Case Workload Weighting --></label>
+        <name>Open_Case_Workload_Weighting__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the region to which the System Settings belongs to. --></help>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas - AGM</masterLabel>
+            <translation><!-- Americas - AGM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global</masterLabel>
+            <translation><!-- Global --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Skill P1 Weighting --></label>
+        <name>Skill_P1_Weighting__c</name>
+    </fields>
+    <fields>
+        <label><!-- Skill P2 Weighting --></label>
+        <name>Skill_P2_Weighting__c</name>
+    </fields>
+    <fields>
+        <label><!-- Skill P3 Weighting --></label>
+        <name>Skill_P3_Weighting__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Off</masterLabel>
+            <translation><!-- Off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On</masterLabel>
+            <translation><!-- On --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Workload Limit --></label>
+        <name>Workload_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workload Weight --></label>
+        <name>Workload_Weight__c</name>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- System Settings Name --></nameFieldLabel>
 </CustomObjectTranslation>

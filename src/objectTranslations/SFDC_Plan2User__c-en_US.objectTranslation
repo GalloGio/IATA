@@ -8,5 +8,39 @@
         <plural>true</plural>
         <value>Plan2User</value>
     </caseValues>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+        <picklistValues>
+            <masterLabel>Executive Committee</masterLabel>
+            <translation><!-- Executive Committee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Products Lead</masterLabel>
+            <translation><!-- Products Lead --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Engineering</masterLabel>
+            <translation><!-- Sales Engineering --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Management</masterLabel>
+            <translation><!-- Sales Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Services Lead</masterLabel>
+            <translation><!-- Services Lead --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account Plan --></label>
+        <name>SFDC_Acct_Plan__c</name>
+        <relationshipLabel><!-- Account Plan Team --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Plan Team Member --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Plan2User --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

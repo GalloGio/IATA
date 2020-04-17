@@ -8,5 +8,227 @@
         <plural>true</plural>
         <value>E&amp;F Airline Billing Agreements</value>
     </caseValues>
+    <fields>
+        <label><!-- Airline ID --></label>
+        <name>Airline_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Location ID --></label>
+        <name>Airline_Location_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Name --></label>
+        <name>Airline_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline --></label>
+        <name>Airline__c</name>
+        <relationshipLabel><!-- E&amp;F Airline Billing Agreements (Airline) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Allow Billing Agreements --></label>
+        <name>Allow_Billing_Agreements__c</name>
+    </fields>
+    <fields>
+        <label><!-- Base URL --></label>
+        <name>Base_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- SAP Bill To Number --></help>
+        <label><!-- Bill to --></label>
+        <name>Bill_to__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Agreement Name --></label>
+        <name>BillingAgreement_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Currency --></label>
+        <name>Billing_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Client --></label>
+        <name>Client__c</name>
+        <relationshipLabel><!-- E&amp;F Airline Billing Agreements (Client) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contract Group Code --></label>
+        <name>Contract_Group_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Terms --></label>
+        <name>Contract_Payment_Terms__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract --></label>
+        <name>Contract__c</name>
+        <relationshipLabel><!-- E&amp;F Airline Billing Agreements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency_Read_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Currency --></label>
+        <name>Data_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Airline Id --></label>
+        <name>EF_Airline_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Approver Email --></label>
+        <name>EF_Approver_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this field to store general comments regarding the record update you are performing. --></help>
+        <label><!-- Comments --></label>
+        <name>EF_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- History --></label>
+        <name>EF_History__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Location ID Name --></label>
+        <name>EF_Location_ID_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Location ID --></label>
+        <name>EF_Location_ID__c</name>
+        <relationshipLabel><!-- E&amp;F Airline Billing Agreements --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If no active material line item exist, the E&amp;F Status is automatically set to Inactive --></help>
+        <label><!-- E&amp;F Status --></label>
+        <name>EF_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Submitter Email --></label>
+        <name>EF_Submitter_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Distribution Method Code --></label>
+        <name>Invoice_Distribution_Method_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Distribution Method --></label>
+        <name>Invoice_Distribution_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code Details --></label>
+        <name>Location_Code_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code --></label>
+        <name>Location_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager Approval --></label>
+        <name>Manager_Approval__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- SAP Payer Number --></help>
+        <label><!-- Payer --></label>
+        <name>Payer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Currency --></label>
+        <name>Payment_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method Code --></label>
+        <name>Payment_Method_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Method --></label>
+        <name>Payment_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Terms Code --></label>
+        <name>Payment_Terms_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Terms --></label>
+        <name>Payment_Terms__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Changes --></label>
+        <name>Requested_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Require Approval --></label>
+        <name>Require_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send to SAP --></label>
+        <name>Send_to_SAP__c</name>
+    </fields>
+    <fields>
+        <help><!-- SAP Ship to Number --></help>
+        <label><!-- Ship to --></label>
+        <name>Ship_to__c</name>
+    </fields>
+    <fields>
+        <label><!-- Skip Approval --></label>
+        <name>Skip_Approval__c</name>
+    </fields>
+    <fields>
+        <help><!-- SAP Sold To --></help>
+        <label><!-- Sold to --></label>
+        <name>Sold_to__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Airline cannot be modified after Billing Agreement creation --></errorMessage>
+        <name>EF_Prevent_Airline_Change_After_Creation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Client cannot be modified after Billing Agreement creation --></errorMessage>
+        <name>EF_Prevent_Client_Change_After_Creation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Billing Agreements can&apos;t be created if either the Client or Airline are Inactive --></errorMessage>
+        <name>EF_Prevent_For_Inactive_Accounts</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The selected Contract record has &quot;Allow Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please choose a different Contract or update the currently selected Contract to allow Billing Agreements. --></errorMessage>
+        <name>EF_Prevent_For_Not_Allowed_Contracts</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements. --></errorMessage>
+        <name>EF_Prevent_Update_From_General_Access</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Edit_All --></label>
+        <name>Edit_All</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Edit_All_Airline_BA --></label>
+        <name>Edit_All_Airline_BA</name>
+    </webLinks>
 </CustomObjectTranslation>

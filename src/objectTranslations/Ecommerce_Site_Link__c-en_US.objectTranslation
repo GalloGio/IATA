@@ -8,5 +8,33 @@
         <plural>true</plural>
         <value>Ecommerce Site Links</value>
     </caseValues>
+    <fields>
+        <label><!-- IsActive --></label>
+        <name>IsActive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order By --></label>
+        <name>Order_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Page Section --></label>
+        <name>Page_Section__c</name>
+        <picklistValues>
+            <masterLabel>Customer Care Services</masterLabel>
+            <translation><!-- Customer Care Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal</masterLabel>
+            <translation><!-- Legal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stay Informed</masterLabel>
+            <translation><!-- Stay Informed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- URL --></label>
+        <name>URL__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

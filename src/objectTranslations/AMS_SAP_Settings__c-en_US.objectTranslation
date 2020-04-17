@@ -8,5 +8,92 @@
         <plural>true</plural>
         <value>AMS SAP Settings</value>
     </caseValues>
+    <fields>
+        <label><!-- AIMS1_CRON_EXP --></label>
+        <name>AIMS1_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- AIMS2_CRON_EXP --></label>
+        <name>AIMS2_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- AIMS3_CRON_EXP --></label>
+        <name>AIMS3_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Batch Size to be used when sending agency lists to MDM --></help>
+        <label><!-- Batch Size --></label>
+        <name>Batch_Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- Copy Right Message --></help>
+        <label><!-- Copy Right Message --></label>
+        <name>Copy_Right_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Encryption Algorythm --></label>
+        <name>Encryption_Algorythm__c</name>
+    </fields>
+    <fields>
+        <label><!-- Encryption Key --></label>
+        <name>Encryption_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- REGION1_CRON_EXP --></label>
+        <name>REGION1_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- REGION2_CRON_EXP --></label>
+        <name>REGION2_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- REGION3_CRON_EXP --></label>
+        <name>REGION3_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- REGION4_CRON_EXP --></label>
+        <name>REGION4_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- REGION5_CRON_EXP --></label>
+        <name>REGION5_CRON_EXP__c</name>
+    </fields>
+    <fields>
+        <label><!-- RegEx Special Chars --></label>
+        <name>RegEx_Special_Chars__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sales Order Batch Size --></help>
+        <label><!-- Sales Order Batch Size --></label>
+        <name>Sales_Order_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Special Chars to Escape List --></label>
+        <name>Special_Chars_to_Escape_List__c</name>
+    </fields>
+    <fields>
+        <help><!-- The password to use when calling the SAP Web Service  (encrypted with the encryption key in AMS classes) --></help>
+        <label><!-- Web Service Password --></label>
+        <name>Web_Service_Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- The username to use when calling the SAP web service --></help>
+        <label><!-- Web Service Username --></label>
+        <name>Web_Service_Username__c</name>
+    </fields>
+    <fields>
+        <help><!-- Endpoint for SAP PI web service
+
+Environment	Used on SFDC - Web URL 
+DEV - https://pixid.iata.org/XISOAPAdapter/MessageServlet
+QA - https://pixiq.iata.org/XISOAPAdapter/MessageServlet
+PRE-PROD - https://pixis.iata.org/XISOAPAdapter/MessageServlet --></help>
+        <label><!-- Web Service endpoint --></label>
+        <name>Web_Service_endpoint__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

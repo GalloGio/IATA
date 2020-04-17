@@ -8,5 +8,64 @@
         <plural>true</plural>
         <value>Test Log</value>
     </caseValues>
+    <fields>
+        <label><!-- Corresponding Bug/Enhancement Request --></label>
+        <name>Corresponding_Bug_Enhancement_Request__c</name>
+        <relationshipLabel><!-- Test Log --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Tested --></label>
+        <name>Date_Tested__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Tested --></label>
+        <name>Profile_Tested__c</name>
+        <picklistValues>
+            <masterLabel>Profile 1</masterLabel>
+            <translation><!-- Profile 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Profile 2</masterLabel>
+            <translation><!-- Profile 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Profile 3</masterLabel>
+            <translation><!-- Profile 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Profile 4</masterLabel>
+            <translation><!-- Profile 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Profile 5</masterLabel>
+            <translation><!-- Profile 5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Fail</masterLabel>
+            <translation><!-- Fail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pass</masterLabel>
+            <translation><!-- Pass --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Plan Tested --></label>
+        <name>Test_Plan_Tested__c</name>
+        <relationshipLabel><!-- Test Log --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Test Script Tested --></label>
+        <name>Test_Script_Tested__c</name>
+        <relationshipLabel><!-- Test Log --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- fail rate --></label>
+        <name>fail_rate__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

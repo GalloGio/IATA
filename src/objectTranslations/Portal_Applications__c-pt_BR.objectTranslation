@@ -8,6 +8,431 @@
         <plural>true</plural>
         <value>Serviços do portal</value>
     </caseValues>
+    <fieldSets>
+        <label><!-- ISSP Available Services --></label>
+        <name>ISSP_Available_Services</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Flag Restrict by Accreditation Type --></label>
+        <name>ANG_Accre_Tp__c</name>
+    </fields>
+    <fields>
+        <help><!-- Restrict portal visibility to accredited Agents with Agency Status=Approved OR Changes processed OR Listed. --></help>
+        <label><!-- Accredited Agents Only --></label>
+        <name>ANG_Accredited_Agents_Only__c</name>
+    </fields>
+    <fields>
+        <help><!-- If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another. --></help>
+        <label><!-- Cannot move contact between Agencies --></label>
+        <name>ANG_Cannot_move_contact_between_Agencies__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Coverage --></label>
+        <name>ANG_Country_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag Country Coverage --></label>
+        <name>ANG_Flag_Country_Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag Restrict Accredited Agent --></label>
+        <name>ANG_Flag_Restrict_Accredited_Agent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag Restrict Sector --></label>
+        <name>ANG_Flag_Restrict_Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag Restrict by Agency Category --></label>
+        <name>ANG_Flag_Restrict_by_Agency_Category__c</name>
+    </fields>
+    <fields>
+        <help><!-- Only allow internal users to grant access to this portal service if the agency&apos;s accreditation type matches the &apos;Restrict by Accreditation Type&apos; of the portal service --></help>
+        <label><!-- Lock access to Accreditation Type --></label>
+        <name>ANG_Lock_access_to_accreditation_type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Restrict visibility by Accreditation Type (PAX Agents only). Service will be visible to all PAX Agents, including Legacy Agents, if left empty. --></help>
+        <label><!-- Restrict by Accreditation Type --></label>
+        <name>ANG_Restrict_by_Accreditation_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cashless</masterLabel>
+            <translation><!-- Cashless --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Restrict portal visibility by Agency Category. Will be visible for all categories of Agents if left empty. --></help>
+        <label><!-- Restrict by Agency Category --></label>
+        <name>ANG_Restrict_by_Agency_Category__c</name>
+        <picklistValues>
+            <masterLabel>Airline Point of Sale</masterLabel>
+            <translation><!-- Airline Point of Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic Agent</masterLabel>
+            <translation><!-- Domestic Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA General Sales Agent</masterLabel>
+            <translation><!-- GSA General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Handling Agent</masterLabel>
+            <translation><!-- Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Cargo Agent</masterLabel>
+            <translation><!-- IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Passenger Sales Agent</masterLabel>
+            <translation><!-- IATA Passenger Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATAN Passenger Sales Agent (USA Only)</masterLabel>
+            <translation><!-- IATAN Passenger Sales Agent (USA Only) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import Agent</masterLabel>
+            <translation><!-- Import Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation><!-- MSO Member Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIDS Agent</masterLabel>
+            <translation><!-- TIDS Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Service Intermediaries-TSI (USA Only)</masterLabel>
+            <translation><!-- Travel Service Intermediaries-TSI (USA Only) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Restrict portal visibility to either Travel or Cargo Agents. Will be visible to Agents in both sectors if left empty. --></help>
+        <label><!-- Restrict by Agency Sector --></label>
+        <name>ANG_Restrict_by_Agency_Sector__c</name>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enabling this option prevents internal users from granting this portal service to contacts. --></help>
+        <label><!-- Cannot be granted internally --></label>
+        <name>ANG_Restrict_internal_selection__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tick if this is the application for the Agent type of customer. --></help>
+        <label>Agência</label>
+        <name>Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Aplication Start Icon --></label>
+        <name>Aplication_Start_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application URL --></label>
+        <name>Application_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application icon URL --></label>
+        <name>Application_icon_URL__c</name>
+    </fields>
+    <fields>
+        <label>Ícone de aplicativo</label>
+        <name>Application_icon__c</name>
+    </fields>
+    <fields>
+        <help><!-- All profiles selected here will be able to get this service without any approval from the administrator. --></help>
+        <label><!-- Auto approved for --></label>
+        <name>Auto_approved_for__c</name>
+        <picklistValues>
+            <masterLabel>ISS Portal (Partner)</masterLabel>
+            <translation><!-- ISS Portal (Partner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISS Portal Agency User (Partner)</masterLabel>
+            <translation><!-- ISS Portal Agency User (Partner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISS Portal Airline User (Partner)</masterLabel>
+            <translation><!-- ISS Portal Airline User (Partner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISS Portal GSA User (Partner)</masterLabel>
+            <translation><!-- ISS Portal GSA User (Partner) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISS Portal PwC2</masterLabel>
+            <translation><!-- ISS Portal PwC2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If ticked the portal admin user will not have visible options to manage this service. --></help>
+        <label><!-- Cannot be managed by portal admin --></label>
+        <name>Cannot_be_managed_by_portal_admin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case creation record type --></label>
+        <name>Case_creation_record_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Confirm Box --></label>
+        <name>Confirm_Box__c</name>
+    </fields>
+    <fields>
+        <label><!-- Confirm Text --></label>
+        <name>Confirm_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- Listed Countries Only: Only available to &apos;Country Visibility Restriction&apos; listed countries
+
+    Hide from Listed Countries: Available to all countries EXCEPT the listed countries
+
+    All Countries: Available to all countries; ignores related list --></help>
+        <label><!-- Country Visibility Control --></label>
+        <name>Country_Visibility_Control__c</name>
+        <picklistValues>
+            <masterLabel>Display to All Countries</masterLabel>
+            <translation><!-- Display to All Countries --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hide from Listed Countries</masterLabel>
+            <translation><!-- Hide from Listed Countries --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listed Countries Only</masterLabel>
+            <translation><!-- Listed Countries Only --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Critical Service --></label>
+        <name>Critical_Service__c</name>
+    </fields>
+    <fields>
+        <label>Descrição</label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDPR_PrivacyStatement --></label>
+        <name>GDPR_PrivacyStatement__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tick if this is the application for the GSA type of customer. --></help>
+        <label><!-- GSA --></label>
+        <name>GSA__c</name>
+    </fields>
+    <fields>
+        <help><!-- Make portal service available to all GSSA customers (Partner users belonging to Account of record type &apos;General Sales Agent Headquarters / Branch WITH 3-letter IATA code) --></help>
+        <label><!-- GSSA --></label>
+        <name>GSSA__c</name>
+    </fields>
+    <fields>
+        <help><!-- If check the application will not be visible on the user homepage --></help>
+        <label><!-- Hide on Homepage --></label>
+        <name>Hide_on_Homepage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tick if this is the application for the ICH Airline type of customer. --></help>
+        <label><!-- ICH Airline --></label>
+        <name>ICH_Airline__c</name>
+    </fields>
+    <fields>
+        <help><!-- When this filed is filled, it will show the service in NewGenAPP mobile. --></help>
+        <label><!-- NewGenAPP-ShortName --></label>
+        <name>NewGenAPP_ShortName__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Window --></label>
+        <name>New_Window__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tick if this is the application for the Airline non-ICH type of customer. --></help>
+        <label><!-- Not ICH Airline --></label>
+        <name>Not_ICH_Airline__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tick if this is the application for Others account record type. --></help>
+        <label><!-- Others --></label>
+        <name>Others__c</name>
+    </fields>
+    <fields>
+        <label><!-- Provisioning Type --></label>
+        <name>Provisioning_Type__c</name>
+        <picklistValues>
+            <masterLabel>SCIM</masterLabel>
+            <translation><!-- SCIM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebService</masterLabel>
+            <translation><!-- WebService --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The id of the Record type to open when creating a new service access request --></help>
+        <label><!-- Record type for App Rigth --></label>
+        <name>Record_type_for_App_Rigth__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requestable --></label>
+        <name>Requestable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requires Level2 Registration --></label>
+        <name>Requires_Level2_Registration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Restricted App --></label>
+        <name>Restricted_App__c</name>
+    </fields>
+    <fields>
+        <label><!-- SCIM App Name --></label>
+        <name>SCIM_App_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service --></label>
+        <name>ServiceName__c</name>
+    </fields>
+    <fields>
+        <help><!-- Input a Custom Label API name. Optional. If present, overrides the Service Description formula field --></help>
+        <label><!-- Service Description Label --></label>
+        <name>Service_Description_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Description List A --></label>
+        <name>Service_Description_List_A__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Description List B --></label>
+        <name>Service_Description_List_B__c</name>
+    </fields>
+    <fields>
+        <label>Descrição</label>
+        <name>Service_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- TD Access Level --></label>
+        <name>TD_Access_Level__c</name>
+        <picklistValues>
+            <masterLabel>Basic</masterLabel>
+            <translation><!-- Basic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premium</masterLabel>
+            <translation><!-- Premium --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TD Included Dashboards --></label>
+        <name>TD_Included_Dashboards__c</name>
+        <picklistValues>
+            <masterLabel>ISSP_TD_1</masterLabel>
+            <translation><!-- ISSP_TD_1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_TD_2</masterLabel>
+            <translation><!-- ISSP_TD_2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_TD_3</masterLabel>
+            <translation><!-- ISSP_TD_3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_TD_4</masterLabel>
+            <translation><!-- ISSP_TD_4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_TD_5</masterLabel>
+            <translation><!-- ISSP_TD_5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TD Included Reports --></label>
+        <name>TD_Included_Reports__c</name>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Forecast Data</masterLabel>
+            <translation><!-- Forecast Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Historical Data</masterLabel>
+            <translation><!-- Historical Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS Settlement</masterLabel>
+            <translation><!-- ICCS Settlement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incoming Funds</masterLabel>
+            <translation><!-- Incoming Funds --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non TD Reports</masterLabel>
+            <translation><!-- Non TD Reports --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Past Settlements</masterLabel>
+            <translation><!-- Past Settlements --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Settlement Calendars</masterLabel>
+            <translation><!-- Settlement Calendars --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIP Reports</masterLabel>
+            <translation><!-- TIP Reports --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Defines if the service should be visible on the CNS portal branding. --></help>
+        <label><!-- Visible on CNS --></label>
+        <name>VisibleCNS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visible --></label>
+        <name>Visible__c</name>
+    </fields>
     <gender>Masculine</gender>
     <nameFieldLabel>Serviço</nameFieldLabel>
+    <recordTypes>
+        <label><!-- ISS Portal Application --></label>
+        <name>ISS_Portal_Application</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Field &quot;Cannot be managed by portal admin&quot; must be unchecked in order to select profiles --></errorMessage>
+        <name>Autoapproved_only_when_managed_by_admins</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Restriction of visibility by Accreditation Type can only occur for portal services that are also restricted by Agency Sector = Travel Agent --></errorMessage>
+        <name>Restrict_by_Accreditation_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select to restrict visibility by Agency in order to Restrict by Agency Category. --></errorMessage>
+        <name>Restrict_by_Agency_Category</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select to restrict visibility by Agency in order to Restrict by Agency Sector. --></errorMessage>
+        <name>Restrict_by_Agency_Sector</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- SCIM APP Name field must be provided when Provisioning Type is SCIM --></errorMessage>
+        <name>SCIM_Type_Check</name>
+    </validationRules>
 </CustomObjectTranslation>

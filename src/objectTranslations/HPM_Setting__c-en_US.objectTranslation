@@ -8,5 +8,25 @@
         <plural>true</plural>
         <value>HPM Setting</value>
     </caseValues>
+    <fields>
+        <label><!-- Base Url --></label>
+        <name>Base_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- App Url --></label>
+        <name>HPM_App_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Page Id --></label>
+        <name>HPM_Page_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- API Security Key --></label>
+        <name>HPM_Security_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tenant ID --></label>
+        <name>HPM_Tenant_Id__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

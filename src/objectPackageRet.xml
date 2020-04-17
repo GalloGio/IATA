@@ -35,6 +35,10 @@
     </types>
     <types>
         <members>*</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -52,10 +56,6 @@
     <types>
         <members>*</members>
         <name>Workflow</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomObjectTranslation</name>
     </types>
     <version>47.0</version>
 </Package>

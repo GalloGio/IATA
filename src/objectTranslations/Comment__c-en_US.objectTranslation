@@ -8,5 +8,562 @@
         <plural>true</plural>
         <value>News</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- News --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Is this a comment that should be displayed on the weekly or monthly reports --></help>
+        <label><!-- Achievement --></label>
+        <name>Achievement__c</name>
+    </fields>
+    <fields>
+        <help><!-- Area this comment is related to --></help>
+        <label><!-- Area --></label>
+        <name>Area__c</name>
+        <picklistValues>
+            <masterLabel>Arg-Par-Uru</masterLabel>
+            <translation><!-- Arg-Par-Uru --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brazil</masterLabel>
+            <translation><!-- Brazil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Can-Ber</masterLabel>
+            <translation><!-- Can-Ber --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caribbean</masterLabel>
+            <translation><!-- Caribbean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central America</masterLabel>
+            <translation><!-- Central America --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central Asia</masterLabel>
+            <translation><!-- Central Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central Europe</masterLabel>
+            <translation><!-- Central Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Central West Africa</masterLabel>
+            <translation><!-- Central West Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chile</masterLabel>
+            <translation><!-- Chile --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China-Mongolia-North Korea</masterLabel>
+            <translation><!-- China-Mongolia-North Korea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chinese Taipei</masterLabel>
+            <translation><!-- Chinese Taipei --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Colombia-Ecuador</masterLabel>
+            <translation><!-- Colombia-Ecuador --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eastern Africa</masterLabel>
+            <translation><!-- Eastern Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eastern Europe</masterLabel>
+            <translation><!-- Eastern Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR+BE+NL</masterLabel>
+            <translation><!-- FR+BE+NL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-NL</masterLabel>
+            <translation><!-- FR-NL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greece &amp;amp; Cyprus</masterLabel>
+            <translation><!-- Greece &amp;amp; Cyprus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gulf Area</masterLabel>
+            <translation><!-- Gulf Area --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HK_MO</masterLabel>
+            <translation><!-- HK_MO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Iberian Peninsula</masterLabel>
+            <translation><!-- Iberian Peninsula --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>India</masterLabel>
+            <translation><!-- India --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Indonesia</masterLabel>
+            <translation><!-- Indonesia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Israel</masterLabel>
+            <translation><!-- Israel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italy_Malta</masterLabel>
+            <translation><!-- Italy_Malta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan</masterLabel>
+            <translation><!-- Japan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Levant</masterLabel>
+            <translation><!-- Levant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mexico</masterLabel>
+            <translation><!-- Mexico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nordic Baltic</masterLabel>
+            <translation><!-- Nordic Baltic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>North Africa</masterLabel>
+            <translation><!-- North Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pakistan</masterLabel>
+            <translation><!-- Pakistan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peru-Bolivia</masterLabel>
+            <translation><!-- Peru-Bolivia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Philippines</masterLabel>
+            <translation><!-- Philippines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Republic of Korea</masterLabel>
+            <translation><!-- Republic of Korea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russia and Belarus</masterLabel>
+            <translation><!-- Russia and Belarus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SA-YE</masterLabel>
+            <translation><!-- SA-YE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SG_LK_MY_BD_MV_BN</masterLabel>
+            <translation><!-- SG_LK_MY_BD_MV_BN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South Western Africa</masterLabel>
+            <translation><!-- South Western Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Southern Africa</masterLabel>
+            <translation><!-- Southern Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Southern Eastern Europe</masterLabel>
+            <translation><!-- Southern Eastern Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Southwest Pacific</masterLabel>
+            <translation><!-- Southwest Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thailand</masterLabel>
+            <translation><!-- Thailand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turkey</masterLabel>
+            <translation><!-- Turkey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UK &amp;amp; Ireland</masterLabel>
+            <translation><!-- UK &amp;amp; Ireland --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USA</masterLabel>
+            <translation><!-- USA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ukraine and Caucasus</masterLabel>
+            <translation><!-- Ukraine and Caucasus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Venezuela-Cuba</masterLabel>
+            <translation><!-- Venezuela-Cuba --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vietnam</masterLabel>
+            <translation><!-- Vietnam --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Western Balkans</masterLabel>
+            <translation><!-- Western Balkans --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Should this comment be displayed in the RLT report under the country news (related to the specified Area) --></help>
+        <label><!-- Country News --></label>
+        <name>Country_News__c</name>
+    </fields>
+    <fields>
+        <help><!-- Description of this comment --></help>
+        <label><!-- Detail --></label>
+        <name>Detail__c</name>
+    </fields>
+    <fields>
+        <help><!-- Division this comment is related to --></help>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>APCS</masterLabel>
+            <translation><!-- APCS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS</masterLabel>
+            <translation><!-- CS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FDS</masterLabel>
+            <translation><!-- FDS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MACS</masterLabel>
+            <translation><!-- MACS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MER</masterLabel>
+            <translation><!-- MER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPD</masterLabel>
+            <translation><!-- PPD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RVPO</masterLabel>
+            <translation><!-- RVPO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SFO</masterLabel>
+            <translation><!-- SFO --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Should this comment be displayed in the RLT report under the divisional news (related to the specified Division) --></help>
+        <label><!-- Divisional News --></label>
+        <name>Divisional_News__c</name>
+    </fields>
+    <fields>
+        <help><!-- Functional area/group related to the specified division --></help>
+        <label><!-- Functional Group --></label>
+        <name>Functional_Group__c</name>
+        <picklistValues>
+            <masterLabel>Airport Development &amp; Charges</masterLabel>
+            <translation><!-- Airport Development &amp; Charges --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BIS</masterLabel>
+            <translation><!-- BIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAP</masterLabel>
+            <translation><!-- CAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPS</masterLabel>
+            <translation><!-- CPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo</masterLabel>
+            <translation><!-- Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consulting</masterLabel>
+            <translation><!-- Consulting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Environment</masterLabel>
+            <translation><!-- Environment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Events</masterLabel>
+            <translation><!-- Events --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Affairs</masterLabel>
+            <translation><!-- External Affairs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FSS</masterLabel>
+            <translation><!-- FSS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance</masterLabel>
+            <translation><!-- Finance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Operations</masterLabel>
+            <translation><!-- Ground Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ITS</masterLabel>
+            <translation><!-- ITS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure</masterLabel>
+            <translation><!-- Infrastructure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger Experience</masterLabel>
+            <translation><!-- Passenger Experience --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Products</masterLabel>
+            <translation><!-- Products --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPP</masterLabel>
+            <translation><!-- SPP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Safety</masterLabel>
+            <translation><!-- Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security &amp; Facilitation</masterLabel>
+            <translation><!-- Security &amp; Facilitation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Support</masterLabel>
+            <translation><!-- Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T&amp;T</masterLabel>
+            <translation><!-- T&amp;T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation><!-- Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transformation</masterLabel>
+            <translation><!-- Transformation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Charges</masterLabel>
+            <translation><!-- User Charges --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Country Profile --></label>
+        <name>ICCS_Country_Profile__c</name>
+        <relationshipLabel><!-- News --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>ICCS_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publish --></label>
+        <name>ICCS_Publish__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>ICCS_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>ICCS_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is incomplete --></label>
+        <name>Is_incomplete__c</name>
+    </fields>
+    <fields>
+        <help><!-- Objective this comment is related to --></help>
+        <label><!-- Parent Objective --></label>
+        <name>Parent_Objective__c</name>
+        <relationshipLabel><!-- News --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Region this comment is related to --></help>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>AME</masterLabel>
+            <translation><!-- AME --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ASPAC</masterLabel>
+            <translation><!-- ASPAC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nth. Asia</masterLabel>
+            <translation><!-- Nth. Asia --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Aborted</masterLabel>
+            <translation><!-- Aborted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed without intervention</masterLabel>
+            <translation><!-- Closed without intervention --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deferred</masterLabel>
+            <translation><!-- Deferred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delayed</masterLabel>
+            <translation><!-- Delayed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivered</masterLabel>
+            <translation><!-- Delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Delivered</masterLabel>
+            <translation><!-- Not Delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On hold</masterLabel>
+            <translation><!-- On hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On track</masterLabel>
+            <translation><!-- On track --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Out of scope</masterLabel>
+            <translation><!-- Out of scope --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resolved</masterLabel>
+            <translation><!-- Resolved --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Some divisions may need to report at a sub-region level instead of regional --></help>
+        <label><!-- Sub-region --></label>
+        <name>Sub_region__c</name>
+        <picklistValues>
+            <masterLabel>AFI</masterLabel>
+            <translation><!-- AFI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MENA</masterLabel>
+            <translation><!-- MENA --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <description><!-- Record Type used for ICCS Currency Center portal service. Used to store news connected to Country Profiles --></description>
+        <label><!-- 3. Country Profile News --></label>
+        <name>Country_Profile_News</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Comment not related to a formally agreed objective --></description>
+        <label><!-- 2. Independent --></label>
+        <name>Objective_Independent</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Comment related to an objective --></description>
+        <label><!-- 1. Objective Related --></label>
+        <name>Objective_Related</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record Type used for ICCS Currency Center portal service. Used to store Regional Outlook &amp; News entries --></description>
+        <label><!-- 4. Regional Outlook News --></label>
+        <name>X4_Regional_Outlook_News</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please specify the hierarchy your comment is related to --></errorMessage>
+        <name>Hierarchy_of_comment</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- If this comment is intended to be in the RLT report under the country news, please specify the area --></errorMessage>
+        <name>RLT_comment_Country</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- If this comment is intended to be in the RLT report under the divisional news, please specify the division --></errorMessage>
+        <name>RLT_comment_Division</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the type of comment --></errorMessage>
+        <name>Type_of_independent_comment</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify the type of comment --></errorMessage>
+        <name>Type_of_related_comment</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- New_Comment --></label>
+        <name>New_Comment</name>
+    </webLinks>
 </CustomObjectTranslation>

@@ -8,5 +8,47 @@
         <plural>true</plural>
         <value>EBC Click Events</value>
     </caseValues>
+    <fields>
+        <help><!-- The related EBC Campaign --></help>
+        <label><!-- EBC Campaign --></label>
+        <name>EBC_Campaign__c</name>
+        <relationshipLabel><!-- EBC Click Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The date time of the click event in milliseconds since 1970, used for sorting purpose (datetime does not provide accurate milliseconds) --></help>
+        <label><!-- Event Date Timestamp --></label>
+        <name>Event_Date_Timestamp__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date time of the click event --></help>
+        <label><!-- Event Date --></label>
+        <name>Event_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- The GDP Products Acc View matching with the click --></help>
+        <label><!-- Related Agency --></label>
+        <name>Related_Agency__c</name>
+        <relationshipLabel><!-- EBC Click Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The ID Card matching with the click --></help>
+        <label><!-- Related Agent --></label>
+        <name>Related_Agent__c</name>
+        <relationshipLabel><!-- EBC Click Events --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Subscriber Key of the client that clicked --></help>
+        <label><!-- Subscriber Key --></label>
+        <name>Subscriber_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- The URL that have been clicked --></help>
+        <label><!-- URL --></label>
+        <name>URL__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

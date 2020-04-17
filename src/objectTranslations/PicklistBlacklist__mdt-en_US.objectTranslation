@@ -8,5 +8,14 @@
         <plural>true</plural>
         <value>Sector/Category Picklists Blacklist</value>
     </caseValues>
+    <fields>
+        <help><!-- Sector or Category --></help>
+        <label><!-- Field Name --></label>
+        <name>Field_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- API Name of the Value to be hidden --></label>
+        <name>Value_to_be_hidden__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

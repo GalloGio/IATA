@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Affiliations (AMS)</value>
     </caseValues>
+    <fields>
+        <label><!-- Affiliation Code --></label>
+        <name>Affiliation_Code__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

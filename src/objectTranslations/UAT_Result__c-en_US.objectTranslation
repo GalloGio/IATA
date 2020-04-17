@@ -8,5 +8,38 @@
         <plural>true</plural>
         <value>UAT Results</value>
     </caseValues>
+    <fields>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- ITS Feedback --></label>
+        <name>ITS_Feedback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Result --></label>
+        <name>Result__c</name>
+        <picklistValues>
+            <masterLabel>Fail</masterLabel>
+            <translation><!-- Fail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pass</masterLabel>
+            <translation><!-- Pass --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sequence Number --></label>
+        <name>Sequence_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- UAT ID --></label>
+        <name>UAT_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- UAT Scenario --></label>
+        <name>UAT_Scenario__c</name>
+        <relationshipLabel><!-- UAT Results --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

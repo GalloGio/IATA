@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Checkbox picture</value>
     </caseValues>
+    <fields>
+        <label><!-- Url --></label>
+        <name>Url__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

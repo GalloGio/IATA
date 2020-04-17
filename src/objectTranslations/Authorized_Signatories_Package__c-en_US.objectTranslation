@@ -8,5 +8,21 @@
         <plural>true</plural>
         <value>Authorized Signatories Packages</value>
     </caseValues>
+    <fields>
+        <label><!-- ASP Effective Date --></label>
+        <name>ASP_Effective_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <lookupFilter>
+            <errorMessage><!-- The selected account needs to be an Airline HQ or GSA HQ. --></errorMessage>
+        </lookupFilter>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Authorized Signatories Packages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Ongoing Request for Documents --></label>
+        <name>Ongoing_Request_for_Documents__c</name>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

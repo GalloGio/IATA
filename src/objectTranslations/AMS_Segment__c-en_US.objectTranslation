@@ -8,5 +8,81 @@
         <plural>true</plural>
         <value>Segments (AMS)</value>
     </caseValues>
+    <fields>
+        <label><!-- CountryISOCode --></label>
+        <name>CountryISOCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last synchronization --></label>
+        <name>Last_synchronization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy ID --></label>
+        <name>Legacy_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy System --></label>
+        <name>Legacy_System__c</name>
+        <picklistValues>
+            <masterLabel>AIMS</masterLabel>
+            <translation><!-- AIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAIMS</masterLabel>
+            <translation><!-- CAIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Webstar</masterLabel>
+            <translation><!-- Webstar --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Segment Type --></label>
+        <name>Segment_type__c</name>
+        <picklistValues>
+            <masterLabel>Geographic</masterLabel>
+            <translation><!-- Geographic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hierarchy</masterLabel>
+            <translation><!-- Hierarchy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <description><!-- Defines an Area base on a single country --></description>
+        <label><!-- Country Area --></label>
+        <name>Country_Area</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Defines an Are with a single Country AND a single State --></description>
+        <label><!-- Country State Area --></label>
+        <name>Country_State_Area</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Defines an Area geographically set --></description>
+        <label><!-- Geographic Area --></label>
+        <name>Geographic_Area</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- IATA Code Programs --></label>
+        <name>IATA_Code_Programs</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Defines an Area set based on Non geographic criterias --></description>
+        <label><!-- Non Geographic --></label>
+        <name>Non_Geographic</name>
+    </recordTypes>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,66 @@
         <plural>true</plural>
         <value>Tracked Email Events</value>
     </caseValues>
+    <fields>
+        <label><!-- Attachment --></label>
+        <name>Attachment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Unique Field --></label>
+        <name>Event_Unique_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tracked Email --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Tracked Email Events History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipient Address --></label>
+        <name>Recipient_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipient Name --></label>
+        <name>Recipient_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>audit_trail_ready</masterLabel>
+            <translation><!-- audit_trail_ready --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>delivered</masterLabel>
+            <translation><!-- delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>open</masterLabel>
+            <translation><!-- open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>opened</masterLabel>
+            <translation><!-- opened --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>processed</masterLabel>
+            <translation><!-- processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>signed</masterLabel>
+            <translation><!-- signed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>signed_document_ready</masterLabel>
+            <translation><!-- signed_document_ready --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Timestamp --></label>
+        <name>Timestamp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tracked Email Event Name --></label>
+        <name>Tracked_Email_Event_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

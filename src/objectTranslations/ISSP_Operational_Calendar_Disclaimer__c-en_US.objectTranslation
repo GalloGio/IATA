@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>ISSP Operational Calendar Disclaimer</value>
     </caseValues>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation Type --></label>
+        <name>Operation_Type__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

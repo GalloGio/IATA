@@ -4,5 +4,341 @@
         <plural>false</plural>
         <value><!-- Portal Service Access --></value>
     </caseValues>
+    <fieldSets>
+        <label><!-- ISSP Access to Service List View --></label>
+        <name>ISSPAccServiceListView</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Portal Service Role --></label>
+        <name>ANG_Portal_Service_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Access Pending Detail --></label>
+        <name>Access_Pending_Detail__c</name>
+        <picklistValues>
+            <masterLabel>Pending IATA Approval</masterLabel>
+            <translation><!-- Pending IATA Approval --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>이유</label>
+        <name>Access_Status_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Airline Prefix --></label>
+        <name>Account_Airline_Prefix__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Country --></label>
+        <name>Account_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account HQ/BR --></label>
+        <name>Account_HQ_BR__c</name>
+    </fields>
+    <fields>
+        <label>거래명</label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label>계정</label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Name Text Field --></label>
+        <name>Application_Name_Text_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Name --></label>
+        <name>Application_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Start Icon --></label>
+        <name>Application_Start_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Start URL --></label>
+        <name>Application_Start_URL__c</name>
+    </fields>
+    <fields>
+        <label>이용신청 아이콘</label>
+        <name>Application_icon_del__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application uniqueness for contact --></label>
+        <name>Application_uniqueness_for_contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case creation record type --></label>
+        <name>Case_creation_record_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Conctact is CNS --></label>
+        <name>Conctact_is_CNS__c</name>
+    </fields>
+    <fields>
+        <label><!-- ContactId --></label>
+        <name>ContactId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact User Portal Status --></label>
+        <name>Contact_User_Portal_Status__c</name>
+    </fields>
+    <fields>
+        <label>연락처</label>
+        <name>Contact__c</name>
+        <relationshipLabel>포털 이용신청 권한</relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Main Currency --></label>
+        <name>Currency1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Secondary Currency --></label>
+        <name>Currency2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Notifications --></label>
+        <name>Enable_Notifications__c</name>
+    </fields>
+    <fields>
+        <label><!-- Favourite Service --></label>
+        <name>Favourite_Service__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Currency Center Current Visit --></label>
+        <name>ICCS_Currency_Center_Current_Visit__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Currency Center Previous Visit --></label>
+        <name>ICCS_Currency_Center_Previous_Visit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Please choose at least one invoice type to give rights --></help>
+        <label><!-- Invoice Type --></label>
+        <name>Invoice_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cass Invoices</masterLabel>
+            <translation><!-- Cass Invoices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoices</masterLabel>
+            <translation>인보이스</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger Invoices</masterLabel>
+            <translation><!-- Passenger Invoices --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IsSCIMIFG --></label>
+        <name>IsSCIMIFG__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Favorite --></label>
+        <name>Is_Favorite__c</name>
+    </fields>
+    <fields>
+        <label><!-- Kavi user --></label>
+        <name>Kavi_user__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Visit Date --></label>
+        <name>Last_Visit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last modified by internal user --></label>
+        <name>Last_modified_by_internal_user__c</name>
+    </fields>
+    <fields>
+        <label><!-- My Apps --></label>
+        <name>My_Apps__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Role Requested --></label>
+        <name>New_Role_Requested__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notification Template --></label>
+        <name>Notification_Template__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Account --></label>
+        <name>Parent_Account__c</name>
+    </fields>
+    <fields>
+        <help><!-- This formula field looks up the service Name and the points to a custom label --></help>
+        <label><!-- PortalServiceTranslatedName --></label>
+        <name>PortalServiceTranslatedName__c</name>
+    </fields>
+    <fields>
+        <label>포털 서비스</label>
+        <name>Portal_Application__c</name>
+        <relationshipLabel><!-- Portal Application Rights --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Restricted App --></label>
+        <name>Restricted_App__c</name>
+    </fields>
+    <fields>
+        <label>권한</label>
+        <name>Right__c</name>
+        <picklistValues>
+            <masterLabel>Access Denied</masterLabel>
+            <translation>접속 거부</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Access Granted</masterLabel>
+            <translation>접속 허가</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Access Requested</masterLabel>
+            <translation>접속 요청됨</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TD Record --></label>
+        <name>TD_Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technical Provisioning Status --></label>
+        <name>Technical_Provisioning_Status__c</name>
+        <picklistValues>
+            <masterLabel>Access Requested</masterLabel>
+            <translation><!-- Access Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Access Denied</masterLabel>
+            <translation><!-- External Access Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Access Granted</masterLabel>
+            <translation><!-- External Access Granted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fail</masterLabel>
+            <translation><!-- Fail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Access Denied</masterLabel>
+            <translation><!-- IATA Access Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Access Granted</masterLabel>
+            <translation><!-- IATA Access Granted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Terms Acceptance Date --></label>
+        <name>Terms_Acceptance_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Terms Acceptance Version --></label>
+        <name>Terms_Acceptance_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Terms Acceptance --></label>
+        <name>Terms_Acceptance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Top Account --></label>
+        <name>Top_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- allowAssignFinContactFlowChange --></label>
+        <name>allowAssignFinContactFlowChange__c</name>
+    </fields>
     <nameFieldLabel><!-- Portal Application Right Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- Application access request --></label>
+        <name>Application_access_request</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Application rigth --></label>
+        <name>Application_rigth</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Biller Direct --></label>
+        <name>Biller_Direct</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- You are not allow to assign &quot;Management Information Report&quot; if the contact is not one of the following:
+  * Distribution Risk Expert
+  * Distribution Risk Leader
+  * PAConf Representative
+  * or be a CFO --></errorMessage>
+        <name>ACRM_MIR_Service_Contact_Restriction</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A least one invoice type have to be selected to grant Biller Direct Access --></errorMessage>
+        <name>Biller_Direct_Granted_Invoice_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The user&apos;s portal status must be validated before granting access to any application. --></errorMessage>
+        <name>Cant_create_for_not_validated_users</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type). --></errorMessage>
+        <name>Internal_grant_access_by_accred_type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Management Information Report portal service can only be granted for users under airline accounts. --></errorMessage>
+        <name>MIR_service_for_airlines_only</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>본 서비스의 접근 상태(Access Status) 정보는 IATA ‘관리 보고(Management Report)’ 팀만 변경할 수 있습니다.</errorMessage>
+        <name>MR_cannot_be_approved_by_admin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This service has been discontinued and cannot be given access to. --></errorMessage>
+        <name>Old_CassLink_not_available</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access. --></errorMessage>
+        <name>Prevent_Portal_Admin_Direct_Edit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account. --></errorMessage>
+        <name>Restrict_Access_For_Payment_Providers</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Access to an IATA IATA Accreditation &amp; Changes portal service cannot be requested internally to a contact under accounts registered as Freight Forwarders in a CNS country. --></errorMessage>
+        <name>Restrict_IAC_request</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Access to an IATA EasyPay portal service cannot be requested internally. Please ask the user to request access from the CS Portal, or the portal admin to add this user to the service. --></errorMessage>
+        <name>Restrict_IEP_request</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service. --></errorMessage>
+        <name>Restrict_internal_selection</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>본 서비스의 접근 상태(Access Status) 정보는 IATA ‘관리 보고(SiS help desk)’ 팀만 변경할 수 있습니다.</errorMessage>
+        <name>SIS_cannot_be_approved_by_admin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Access Status of this service can only be changed by a request coming from the external service. --></errorMessage>
+        <name>SSO_cannot_be_approved_by_admin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>본 서비스의 접근 상태(Access Status) 정보는 IATA ‘관리 보고(Treasury Dashboard)’ 팀만 변경할 수 있습니다.</errorMessage>
+        <name>TD_cannot_be_approved_by_admin</name>
+    </validationRules>
+    <webLinks>
+        <label>이 서비스에 사용자 추가하기</label>
+        <name>Add_User_to_this_service</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_App_Request --></label>
+        <name>New_App_Request</name>
+    </webLinks>
 </CustomObjectTranslation>

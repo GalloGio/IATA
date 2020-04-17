@@ -1,3 +1,306 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Answer_Views --></label>
+        <name>Answer_Views__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answered No --></label>
+        <name>Answered_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answered Yes --></label>
+        <name>Answered_Yes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Specific --></label>
+        <name>Country_Specific__c</name>
+        <picklistValues>
+            <masterLabel>Austria</masterLabel>
+            <translation><!-- Austria --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Belgium &amp; Luxembourg</masterLabel>
+            <translation><!-- Belgium &amp; Luxembourg --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bulgaria</masterLabel>
+            <translation><!-- Bulgaria --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Croatia</masterLabel>
+            <translation>Croazia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cyprus</masterLabel>
+            <translation>Cipro</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Czech Republic &amp; Slovakia</masterLabel>
+            <translation><!-- Czech Republic &amp; Slovakia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finland</masterLabel>
+            <translation>Finlandia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>France</masterLabel>
+            <translation>Francia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Germany</masterLabel>
+            <translation>Germania</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greece</masterLabel>
+            <translation>Grecia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hungary</masterLabel>
+            <translation><!-- Hungary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ireland</masterLabel>
+            <translation>Irlanda</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Israel</masterLabel>
+            <translation>Israele</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italy</masterLabel>
+            <translation>Italia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Malta</masterLabel>
+            <translation><!-- Malta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Netherlands</masterLabel>
+            <translation><!-- Netherlands --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nordic &amp; Baltic</masterLabel>
+            <translation><!-- Nordic &amp; Baltic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Poland</masterLabel>
+            <translation>Polonia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portugal</masterLabel>
+            <translation>Portogallo</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Romania &amp; Moldavia</masterLabel>
+            <translation><!-- Romania &amp; Moldavia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Russia</masterLabel>
+            <translation>Russia E Csi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serbia &amp; Montenegro</masterLabel>
+            <translation><!-- Serbia &amp; Montenegro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Slovenia</masterLabel>
+            <translation><!-- Slovenia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spain</masterLabel>
+            <translation>Spagna</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Switzerland &amp; Liechtenstein</masterLabel>
+            <translation><!-- Switzerland &amp; Liechtenstein --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Turkey</masterLabel>
+            <translation>Turchia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ukraine</masterLabel>
+            <translation>Ucraina</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom</masterLabel>
+            <translation>Regno Unito</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Documentation --></label>
+        <name>Documentation__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA solution number --></label>
+        <name>IATA_solution_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Language IATA --></label>
+        <name>Language__c</name>
+        <picklistValues>
+            <masterLabel>English</masterLabel>
+            <translation>Inglese</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French</masterLabel>
+            <translation>Francese</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>German</masterLabel>
+            <translation>Tedesco</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greek</masterLabel>
+            <translation><!-- Greek --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Italian</masterLabel>
+            <translation>Italiano</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation>Altro</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish</masterLabel>
+            <translation>Spagnolo</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Business Process --></label>
+        <name>Main_Business_Process__c</name>
+        <picklistValues>
+            <masterLabel>Accreditation</masterLabel>
+            <translation>Accreditamento</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Applications / interfaces</masterLabel>
+            <translation><!-- Applications / interfaces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP Procedures</masterLabel>
+            <translation><!-- BSP Procedures --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP Reports or Billings</masterLabel>
+            <translation><!-- BSP Reports or Billings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP system</masterLabel>
+            <translation><!-- BSP system --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSPLink</masterLabel>
+            <translation><!-- BSPLink --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Procedures</masterLabel>
+            <translation>Procedure CASS</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Enquiry</masterLabel>
+            <translation><!-- Product Enquiry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ticket Stock Management</masterLabel>
+            <translation><!-- Ticket Stock Management --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Need Clarifications --></label>
+        <name>Need_Clarifications__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is used to be able to sort FAQs related to Suspension of an Airline in an easy way for the RRT team --></help>
+        <label><!-- Originator --></label>
+        <name>Originator__c</name>
+        <picklistValues>
+            <masterLabel>Airlines</masterLabel>
+            <translation><!-- Airlines --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation>Agente merci</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internally</masterLabel>
+            <translation><!-- Internally --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passengers</masterLabel>
+            <translation><!-- Passengers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>Agente di viaggio</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ready for translation to --></label>
+        <name>Ready_for_translation_to__c</name>
+        <picklistValues>
+            <masterLabel>French</masterLabel>
+            <translation>Francese</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish - Americas</masterLabel>
+            <translation><!-- Spanish - Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish - Europe</masterLabel>
+            <translation><!-- Spanish - Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ready for validation by: --></label>
+        <name>Ready_for_validation_by__c</name>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Relates to Suspension of an Airline --></label>
+        <name>Relates_to_Suspension_of_an_Airline__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDCForeign_SolutionID --></label>
+        <name>SFDCForeign_SolutionID__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- IDFS --></label>
+        <name>IDFS</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used for SIS Help Desk Solutions --></description>
+        <label><!-- SIS Help Desk --></label>
+        <name>SIS_Help_Desk</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Standard solution items --></description>
+        <label><!-- Standard --></label>
+        <name>Standard</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Conga_Composer_OAuth --></label>
+        <name>APXTConga4__Conga_Composer_OAuth</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Conga_Mail_Merge --></label>
+        <name>APXTConga4__Conga_Mail_Merge</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- CreateTranslatedSolution --></label>
+        <name>CreateTranslatedSolution</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- AttachFTP --></label>
+        <name>ENZ__AttachFTP</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>SIS HelpDesk Stop Status</value>
     </caseValues>
+    <fields>
+        <label><!-- Kale Stop Status --></label>
+        <name>KaleStopStatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Stop Status (From Kale) --></label>
+        <name>SISStopStatus_FromKale__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Stop Status --></label>
+        <name>SISStopStatus__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

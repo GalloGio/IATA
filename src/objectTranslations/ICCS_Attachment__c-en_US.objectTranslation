@@ -8,5 +8,10 @@
         <plural>true</plural>
         <value>ICCS Attachments</value>
     </caseValues>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- ICCS Attachments --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

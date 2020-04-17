@@ -216,5 +216,133 @@
         <possessive>Second</possessive>
         <value><!-- Related Contact --></value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Related Contacts under Other Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Related to Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The date when the Contact has finished playing this role for the Account. --></help>
+        <label><!-- Date Inactivated --></label>
+        <name>Date_Inactivated__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date when the Contact has started playing this role for the Account. --></help>
+        <label><!-- Date activated --></label>
+        <name>Date_activated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association member</masterLabel>
+            <translation><!-- Association member --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP/CASS Payment contact</masterLabel>
+            <translation>BSP/CASS Ödeme Yetkilisi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial assessments</masterLabel>
+            <translation><!-- Financial assessments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA/GSSA Contact</masterLabel>
+            <translation><!-- GSA/GSSA Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS contact</masterLabel>
+            <translation><!-- ICCS contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inspector</masterLabel>
+            <translation><!-- Inspector --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
     <nameFieldLabel><!-- Related Contact Number --></nameFieldLabel>
+    <webLinks>
+        <label><!-- Link_to_New_Account --></label>
+        <name>Link_to_New_Account</name>
+    </webLinks>
 </CustomObjectTranslation>

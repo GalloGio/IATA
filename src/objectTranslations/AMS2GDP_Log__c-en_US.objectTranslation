@@ -8,5 +8,21 @@
         <plural>true</plural>
         <value>AMS2GDP Logs</value>
     </caseValues>
+    <fields>
+        <label><!-- AMS Record Id --></label>
+        <name>AMS_Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDP Record Id --></label>
+        <name>GDP_Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Name --></label>
+        <name>Job_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Message --></label>
+        <name>Message__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

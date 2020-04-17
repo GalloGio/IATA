@@ -8,5 +8,38 @@
         <plural>true</plural>
         <value>AMS =&gt; GDP Batches</value>
     </caseValues>
+    <fields>
+        <label><!-- Batch Name --></label>
+        <name>Batch_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failed Records --></label>
+        <name>Failed_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Manual Replication --></label>
+        <name>Is_Manual_Replication__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last Sync Start Date taken on First Execution of Job 1. Date used by Job 1 Second Pass for population of formulas --></help>
+        <label><!-- Job 1 Original Start Date --></label>
+        <name>Job_1_Original_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Sync End Date --></label>
+        <name>Last_Sync_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Sync Start Date --></label>
+        <name>Last_Sync_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Failed Records --></label>
+        <name>Total_Failed_Records__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Records Processed --></label>
+        <name>Total_Records_Processed__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

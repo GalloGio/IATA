@@ -8,5 +8,107 @@
         <plural>true</plural>
         <value>Tracked Emails</value>
     </caseValues>
+    <fields>
+        <label><!-- AdditionalTo --></label>
+        <name>AdditionalTo__c</name>
+    </fields>
+    <fields>
+        <label><!-- BccAddress --></label>
+        <name>BccAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Tracked Emails --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CcAddress --></label>
+        <name>CcAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- EmailMessage --></label>
+        <name>EmailMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- From Address --></label>
+        <name>FromAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- From Name --></label>
+        <name>FromName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Attachment --></label>
+        <name>Has_Attachment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Html Body --></label>
+        <name>Html_Body_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Html Body --></label>
+        <name>Html_Body__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsHtml --></label>
+        <name>IsHtml__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signaturit Certificate Ids --></label>
+        <name>Signaturit_Certificate_Ids__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signaturit Id --></label>
+        <name>Signaturit_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Body --></label>
+        <name>TextBody__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Contact --></label>
+        <name>ToContact__c</name>
+        <relationshipLabel><!-- Tracked Emails --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Tracked emails can&apos;t be updated --></errorMessage>
+        <name>Signaturit_Id_updatable_if_null</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Tracked emails can&apos;t be updated --></errorMessage>
+        <name>Status_updatable_with_Signaturit_profile</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Forward --></label>
+        <name>Forward</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Refresh_Events --></label>
+        <name>Refresh_Events</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Reply --></label>
+        <name>Reply</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Reply_To_All --></label>
+        <name>Reply_To_All</name>
+    </webLinks>
 </CustomObjectTranslation>

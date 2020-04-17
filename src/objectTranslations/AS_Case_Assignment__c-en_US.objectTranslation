@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Airline Suspension Case Assignment</value>
     </caseValues>
+    <fields>
+        <label><!-- Queue Name --></label>
+        <name>Queue_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

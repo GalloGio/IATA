@@ -8,5 +8,22 @@
         <plural>true</plural>
         <value>External Reports</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- External Reports --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Domain --></label>
+        <name>Domain__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report ID --></label>
+        <name>Report_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source System --></label>
+        <name>Source_System__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

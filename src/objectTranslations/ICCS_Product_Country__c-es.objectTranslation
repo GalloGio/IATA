@@ -8,6 +8,36 @@
         <plural>true</plural>
         <value><!-- ICCS Product Country --></value>
     </caseValues>
+    <fields>
+        <label><!-- Accelerated Settlement --></label>
+        <name>Accelerated_Settlement__c</name>
+    </fields>
+    <fields>
+        <label>País ISO</label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- ICCS Product Countries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ICCS Country Name --></label>
+        <name>ICCS_Product_Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- ICCS Product Countries --></relationshipLabel>
+    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- Record Name --></nameFieldLabel>
+    <validationRules>
+        <errorMessage><!-- Invalid selection. Please select a product from the ICCS family. --></errorMessage>
+        <name>ProductFamilyMustBeICCS</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Product field is mandatory. Please select a value. --></errorMessage>
+        <name>ProductIsMandatory</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Back_to_Product --></label>
+        <name>Back_to_Product</name>
+    </webLinks>
 </CustomObjectTranslation>

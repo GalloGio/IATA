@@ -8,5 +8,10 @@
         <plural>true</plural>
         <value>Financial Assessment Results</value>
     </caseValues>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Financial Assessment Results --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

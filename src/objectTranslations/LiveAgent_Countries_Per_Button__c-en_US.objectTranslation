@@ -8,5 +8,25 @@
         <plural>true</plural>
         <value>LiveAgent Countries Per Button</value>
     </caseValues>
+    <fields>
+        <label><!-- Button Name --></label>
+        <name>Button_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Iso Code --></label>
+        <name>Iso_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>Sector__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -108,6 +108,77 @@
         <possessive>Second</possessive>
         <value><!-- الGDP Phone --></value>
     </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- AMS GDP Key --></label>
+        <name>AMS_GDP_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Complete full number based on Country code (ISD_Code), Area code (STD_Code), and phone number --></help>
+        <label><!-- Full Phone Number --></label>
+        <name>Full_Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISD Code --></label>
+        <name>ISD_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number --></label>
+        <name>Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone Type --></label>
+        <name>Phone_Type__c</name>
+        <picklistValues>
+            <masterLabel>Fax</masterLabel>
+            <translation>فاكس</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone 1</masterLabel>
+            <translation><!-- Phone 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone 2</masterLabel>
+            <translation><!-- Phone 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone 3</masterLabel>
+            <translation><!-- Phone 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Toll Free</masterLabel>
+            <translation><!-- Toll Free --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Account --></label>
+        <name>Related_Account__c</name>
+        <relationshipLabel><!-- GDP Phones --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related GDP Products - Account View --></label>
+        <name>Related_GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- GDP Phones --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- STD Code --></label>
+        <name>STD_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- WebStar ID --></label>
+        <name>WebStar_ID__c</name>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- Full Number --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- GDP --></label>
+        <name>GDP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Live --></label>
+        <name>Live</name>
+    </recordTypes>
 </CustomObjectTranslation>

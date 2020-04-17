@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>SCIM App Messages Definition</value>
     </caseValues>
+    <fields>
+        <label><!-- Apex Class Name --></label>
+        <name>Apex_Class_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

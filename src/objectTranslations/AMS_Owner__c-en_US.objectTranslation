@@ -8,5 +8,43 @@
         <plural>true</plural>
         <value>Owners (AMS)</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Owners (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last synchronization --></label>
+        <name>Last_synchronization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy External ID --></label>
+        <name>Legacy_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy System --></label>
+        <name>Legacy_System__c</name>
+        <picklistValues>
+            <masterLabel>AIMS</masterLabel>
+            <translation><!-- AIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAIMS</masterLabel>
+            <translation><!-- CAIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Webstar</masterLabel>
+            <translation><!-- Webstar --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Person --></label>
+        <name>Person__c</name>
+        <relationshipLabel><!-- Owners (AMS) --></relationshipLabel>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

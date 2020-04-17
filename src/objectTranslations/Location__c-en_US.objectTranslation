@@ -8,5 +8,224 @@
         <plural>true</plural>
         <value>Locations</value>
     </caseValues>
+    <fields>
+        <label><!-- Account &amp; Contact &amp; Address ID --></label>
+        <name>Account_Contact_Address_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account &amp; Contact ID --></label>
+        <name>Account_Contact_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Email --></label>
+        <name>Account_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Payment Term --></label>
+        <name>Account_Payment_Term__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Payment Type --></label>
+        <name>Account_Payment_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Phone --></label>
+        <name>Account_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Record Type Id --></label>
+        <name>Account_Record_Type_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account VAT Number --></label>
+        <name>Account_VAT_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Name --></label>
+        <name>Address_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+        <relationshipLabel><!-- Locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Attention --></label>
+        <name>Attention__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact First Name --></label>
+        <name>Contact_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Last Name --></label>
+        <name>Contact_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Phone --></label>
+        <name>Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Salutation --></label>
+        <name>Contact_Salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Title --></label>
+        <name>Contact_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- D&amp;B Company --></label>
+        <lookupFilter>
+            <errorMessage><!-- The Company chosen is Out of Business and cannot be referenced. --></errorMessage>
+        </lookupFilter>
+        <name>D_B_Company__c</name>
+        <relationshipLabel><!-- Locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Address --></label>
+        <name>Full_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- IEC_Migration_Key --></label>
+        <name>IEC_Migration_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO State Code SAP is valid --></label>
+        <name>IEC_Valid_SAP_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Country Code --></label>
+        <name>ISO_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Country Name --></label>
+        <name>ISO_Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO State Code SAP --></label>
+        <name>ISO_State_Code_SAP__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO State Code --></label>
+        <name>ISO_State_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO State Name --></label>
+        <name>ISO_State_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Postal Code Required --></label>
+        <name>Is_Postal_Code_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Id --></label>
+        <name>SAP_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Condition --></label>
+        <name>Shipping_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Bill To</masterLabel>
+            <translation><!-- Bill To --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ship To</masterLabel>
+            <translation><!-- Ship To --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sold To</masterLabel>
+            <translation><!-- Sold To --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- VAT Number --></label>
+        <name>VAT_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- ZipCode --></label>
+        <name>ZipCode__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Data entry is not allowed --></errorMessage>
+        <name>No_Change_On_Account</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Data entry is not allowed --></errorMessage>
+        <name>No_Change_On_Contact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Data entry is not allowed --></errorMessage>
+        <name>No_Change_On_SAP_Id</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Data entry is not allowed --></errorMessage>
+        <name>No_Change_On_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must enter a value --></errorMessage>
+        <name>Require_Account</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must enter a value --></errorMessage>
+        <name>Require_Contact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must enter a value --></errorMessage>
+        <name>Require_Type</name>
+    </validationRules>
 </CustomObjectTranslation>

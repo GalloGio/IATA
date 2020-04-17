@@ -8,5 +8,29 @@
         <plural>true</plural>
         <value>Technical Logs</value>
     </caseValues>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log --></label>
+        <name>Log__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record --></label>
+        <name>Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- start date --></label>
+        <name>start_date__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

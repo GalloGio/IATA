@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>ISSP SIS Account Allowed Location</value>
     </caseValues>
+    <fields>
+        <label><!-- Location Classes --></label>
+        <name>Location_Classes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Types --></label>
+        <name>Location_Types__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

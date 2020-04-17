@@ -8,5 +8,25 @@
         <plural>true</plural>
         <value>Case Process Types</value>
     </caseValues>
+    <fields>
+        <label><!-- KPI Reference Field --></label>
+        <name>KPI_Reference_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- KPI Reference Value --></label>
+        <name>KPI_Reference_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

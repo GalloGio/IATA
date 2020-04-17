@@ -8,7 +8,763 @@
         <plural>true</plural>
         <value><!-- Agency (AMS) --></value>
     </caseValues>
+    <fields>
+        <label><!-- A Code --></label>
+        <name>A_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Abbreviated name --></label>
+        <name>Abbreviated_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Accumulated Irregularities --></label>
+        <name>Accumulated_Irregularities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Administrator --></label>
+        <name>Administrator__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agency Site --></label>
+        <name>Agency_Site__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Status --></label>
+        <name>Agency_Status__c</name>
+        <picklistValues>
+            <masterLabel>Accredited</masterLabel>
+            <translation><!-- Accredited --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/no commission</masterLabel>
+            <translation><!-- Cash basis/no commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cash basis/with commission</masterLabel>
+            <translation><!-- Cash basis/with commission --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Changes processed</masterLabel>
+            <translation><!-- Changes processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Listed</masterLabel>
+            <translation><!-- Listed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New application pending</masterLabel>
+            <translation><!-- New application pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No longer a customer</masterLabel>
+            <translation><!-- No longer a customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not accreditated</masterLabel>
+            <translation><!-- Not accreditated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not in operation</masterLabel>
+            <translation><!-- Not in operation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terminated</masterLabel>
+            <translation><!-- Terminated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Under review</masterLabel>
+            <translation><!-- Under review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Agent under economic sanction --></label>
+        <name>Agent_under_economic_sanction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Code --></label>
+        <name>Airline_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Code --></label>
+        <name>BSP_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Number --></label>
+        <name>CASS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- C Code --></label>
+        <name>C_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cargo Agency --></label>
+        <name>Cargo_Agency__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Check Digit --></label>
+        <name>Chk_Dgt__c</name>
+    </fields>
+    <fields>
+        <help><!-- A - Association
+C - Corporation
+E - Government Owned Enterprise
+O - Other
+P - Partnership
+R - Limited Partnership
+S - Sole Proprietorship
+T - Trust Company
+V - Co-operative --></help>
+        <label><!-- Company Type --></label>
+        <name>Company_Type__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>DPC_Operation__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Financial Year End --></label>
+        <name>Financial_Year_End__c</name>
+        <picklistValues>
+            <masterLabel>April</masterLabel>
+            <translation>Avril</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>August</masterLabel>
+            <translation>Août</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>December</masterLabel>
+            <translation>Décembre</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>February</masterLabel>
+            <translation>Février</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>January</masterLabel>
+            <translation>Janvier</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>July</masterLabel>
+            <translation>Juillet</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>June</masterLabel>
+            <translation>Juin</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>March</masterLabel>
+            <translation>Mars</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>May</masterLabel>
+            <translation>Mai</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>November</masterLabel>
+            <translation>Novembre</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>October</masterLabel>
+            <translation>Octobre</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>September</masterLabel>
+            <translation>Septembre</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Full IATA Code --></label>
+        <name>Full_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- ABAC-ABACUS
+AGTD-Amadeus
+AXSS-AXESS
+CMAS-Kiu System
+DERD-DEUTSCHE REISEBURO
+FLGX-Farelogix
+GDSL-Galileo
+INFI-INFINI
+KOTI-KOTIS TRAVEL INFO
+MINS-Travelsky
+RESI-Resiber
+SABR-Sabre
+SITA-SITA
+STRA-SIRENA
+TOPAS-Topas
+UALA-Apollo
+WSPN-Worldspan --></help>
+        <label><!-- GDS --></label>
+        <name>GDS__c</name>
+        <picklistValues>
+            <masterLabel>ABAC</masterLabel>
+            <translation><!-- ABAC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AGTD</masterLabel>
+            <translation><!-- AGTD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AXSS</masterLabel>
+            <translation><!-- AXSS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CMAS</masterLabel>
+            <translation><!-- CMAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DERD</masterLabel>
+            <translation><!-- DERD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FLGX</masterLabel>
+            <translation><!-- FLGX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GDSL</masterLabel>
+            <translation><!-- GDSL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INFI</masterLabel>
+            <translation><!-- INFI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KOTI</masterLabel>
+            <translation><!-- KOTI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MINS</masterLabel>
+            <translation><!-- MINS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESI</masterLabel>
+            <translation><!-- RESI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SABR</masterLabel>
+            <translation><!-- SABR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STRA</masterLabel>
+            <translation><!-- STRA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOPAS</masterLabel>
+            <translation><!-- TOPAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UALA</masterLabel>
+            <translation><!-- UALA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WSPN</masterLabel>
+            <translation><!-- WSPN --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATACode__c</name>
+    </fields>
+    <fields>
+        <label><!-- In a Airport --></label>
+        <name>In_a_Airport__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set of values in Agency that were not present on Account. If there is field on the account that is empty but it&apos;s not empty on the Agency, this flag will be true and we should migrate the appropriate data --></help>
+        <label><!-- IsDirtyToAccount --></label>
+        <name>IsDirtyToAccount__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO State --></label>
+        <name>Iso_State__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Inspection Date --></label>
+        <name>Last_Inspection_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last synchronization --></label>
+        <name>Last_synchronization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy External Id --></label>
+        <name>Legacy_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy System --></label>
+        <name>Legacy_System__c</name>
+        <picklistValues>
+            <masterLabel>AIMS</masterLabel>
+            <translation><!-- AIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAIMS</masterLabel>
+            <translation><!-- CAIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WEBSTAR</masterLabel>
+            <translation><!-- WEBSTAR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Legal Name 1 --></label>
+        <name>Legal_Name_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Name 2 --></label>
+        <name>Legal_Name_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Name 3 --></label>
+        <name>Legal_Name_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- License Number --></label>
+        <name>License_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Category --></label>
+        <name>Location_Category__c</name>
+        <picklistValues>
+            <masterLabel>AL</masterLabel>
+            <translation><!-- AL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AR</masterLabel>
+            <translation><!-- AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AS</masterLabel>
+            <translation><!-- AS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AT</masterLabel>
+            <translation><!-- AT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CL</masterLabel>
+            <translation><!-- CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CT</masterLabel>
+            <translation><!-- CT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DA</masterLabel>
+            <translation><!-- DA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DO</masterLabel>
+            <translation><!-- DO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EA</masterLabel>
+            <translation><!-- EA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ET</masterLabel>
+            <translation><!-- ET --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GS</masterLabel>
+            <translation><!-- GS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HA</masterLabel>
+            <translation><!-- HA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HS</masterLabel>
+            <translation><!-- HS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IB</masterLabel>
+            <translation><!-- IB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IC</masterLabel>
+            <translation><!-- IC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IL</masterLabel>
+            <translation><!-- IL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP</masterLabel>
+            <translation><!-- IP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IS</masterLabel>
+            <translation><!-- IS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JJ</masterLabel>
+            <translation><!-- JJ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MB</masterLabel>
+            <translation><!-- MB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MP</masterLabel>
+            <translation><!-- MP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NA</masterLabel>
+            <translation><!-- NA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NC</masterLabel>
+            <translation><!-- NC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ND</masterLabel>
+            <translation><!-- ND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NI</masterLabel>
+            <translation><!-- NI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OL</masterLabel>
+            <translation><!-- OL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OS</masterLabel>
+            <translation><!-- OS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RA</masterLabel>
+            <translation><!-- RA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RG</masterLabel>
+            <translation><!-- RG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RS</masterLabel>
+            <translation><!-- RS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SL</masterLabel>
+            <translation><!-- SL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SO</masterLabel>
+            <translation><!-- SO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TF</masterLabel>
+            <translation><!-- TF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TO</masterLabel>
+            <translation><!-- TO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TP</masterLabel>
+            <translation><!-- TP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WS</masterLabel>
+            <translation><!-- WS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- C-Cargo
+D-Domestic
+E-External Registrars
+G-General Sales Agents
+K-CATO
+M-Members &amp; Airlines Sales Offices
+N-NISI
+O-SATO
+P-Passenger
+S-SSI
+T-TIDS
+V-Travel Service Intermediaries-TSI (USA Only) 
+X-Handling Agents and Shipping Lines --></help>
+        <label><!-- Location Class --></label>
+        <name>Location_Class__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N</masterLabel>
+            <translation><!-- N --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X</masterLabel>
+            <translation><!-- X --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- N Code --></label>
+        <name>N_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organization Last Change Date --></label>
+        <name>Organization_Last_Change_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Original Approval Date --></label>
+        <name>Original_Approval_DAte__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other Tax Reference Number --></label>
+        <name>Other_Tax_Reference_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Reference Number --></label>
+        <name>Parent_Reference_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- International dialing code ISD --></help>
+        <label><!-- Phone Number International code --></label>
+        <name>Phone_Number_Int__c</name>
+    </fields>
+    <fields>
+        <help><!-- STD code (Area Code) --></help>
+        <label><!-- Phone Number STD code --></label>
+        <name>Phone_Number_STD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone Number --></label>
+        <name>Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary address --></label>
+        <name>Primary_address__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Qualified ticketing agent --></label>
+        <name>Qualified_ticketing_agent2__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Qualified ticketing agent --></label>
+        <name>Qualified_ticketing_agent__c</name>
+        <relationshipLabel><!-- Agencies (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recert Expiry Date --></label>
+        <name>Recert_Expiry_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Number --></label>
+        <name>Reference_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- STD Code --></label>
+        <name>STD_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- AO=Admin. Off;BR=Branch Off;CS=Cargo Sales Off;EB=ERSP Branch;EP=ERSP Parent;ES=European STP;ET=ERSP linked to TID;HO=Head off;SA=Specific Sales Activity;SE=Special Event;SP=Service Provider;ST=Satellite Ticket Printer;TD=Ticket Delivery Off;WH=Warehouse --></help>
+        <label><!-- Site Type --></label>
+        <name>Site_Type__c</name>
+        <picklistValues>
+            <masterLabel>AO</masterLabel>
+            <translation><!-- AO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BR</masterLabel>
+            <translation><!-- BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS</masterLabel>
+            <translation><!-- CS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EB</masterLabel>
+            <translation><!-- EB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EP</masterLabel>
+            <translation><!-- EP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES</masterLabel>
+            <translation><!-- ES --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ET</masterLabel>
+            <translation><!-- ET --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HO</masterLabel>
+            <translation><!-- HO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SA</masterLabel>
+            <translation><!-- SA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SE</masterLabel>
+            <translation><!-- SE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP</masterLabel>
+            <translation><!-- SP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TD</masterLabel>
+            <translation><!-- TD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WH</masterLabel>
+            <translation><!-- WH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Solicitation Flag --></label>
+        <name>Solicitation_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tax Reference Number --></label>
+        <name>Tax_Reference_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trading Name 1 --></label>
+        <name>Trading_Name_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trading Name 2 --></label>
+        <name>Trading_Name_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique ID --></label>
+        <name>Unique_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Verification Date --></label>
+        <name>Verification_Date__c</name>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- AMS Agency Name --></nameFieldLabel>
+    <recordTypes>
+        <label><!-- CARGO --></label>
+        <name>CARGO</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- PASSENGER --></label>
+        <name>PASSENGER</name>
+    </recordTypes>
     <startsWith><!-- Consonant --></startsWith>
+    <validationRules>
+        <errorMessage><!-- Cass Number Must be a Numeric --></errorMessage>
+        <name>Cass_Number_is_null_or_Numeric</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Check Digit must be Numeric --></errorMessage>
+        <name>Check_Digit_is_null_or_numeric</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length. --></errorMessage>
+        <name>Passenger_Abbreviated_name_lenght</name>
+    </validationRules>
 </CustomObjectTranslation>

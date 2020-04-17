@@ -8,5 +8,56 @@
         <plural>true</plural>
         <value>PowerBI Config</value>
     </caseValues>
+    <fields>
+        <help><!-- Use only letters and numbers, no spaces or special characters! --></help>
+        <label><!-- Application Identifier --></label>
+        <name>Application_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- ClientId --></label>
+        <name>ClientId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Client secret --></label>
+        <name>Client_secret__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL for details calls, e.g. for dataset, report detail etc. --></help>
+        <label><!-- Details Resource --></label>
+        <name>Details_Resource__c</name>
+    </fields>
+    <fields>
+        <label><!-- HTTP Method --></label>
+        <name>HTTP_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Named Credentials --></label>
+        <name>Named_Credentials__c</name>
+    </fields>
+    <fields>
+        <label><!-- Password --></label>
+        <name>Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL address for embedded report. --></help>
+        <label><!-- Report Resource --></label>
+        <name>Report_Resource__c</name>
+    </fields>
+    <fields>
+        <label><!-- Resource --></label>
+        <name>Resource__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tenant Id --></label>
+        <name>Tenant_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- URL Param --></label>
+        <name>URL_Param__c</name>
+    </fields>
+    <fields>
+        <label><!-- Username --></label>
+        <name>Username__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

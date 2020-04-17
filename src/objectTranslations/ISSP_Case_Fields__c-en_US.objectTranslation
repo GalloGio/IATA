@@ -8,5 +8,45 @@
         <plural>true</plural>
         <value>ISSP Case Fields</value>
     </caseValues>
+    <fields>
+        <label><!-- AP Case --></label>
+        <name>AP_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Name --></label>
+        <name>Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- NOT FDS --></label>
+        <name>NOT_FDS__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Case --></label>
+        <name>New_Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Id List --></label>
+        <name>Profile_Id_List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Read Only --></label>
+        <name>Read_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Required --></label>
+        <name>Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

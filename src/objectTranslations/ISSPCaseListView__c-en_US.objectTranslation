@@ -8,5 +8,41 @@
         <plural>true</plural>
         <value>ISSP Case List View</value>
     </caseValues>
+    <fields>
+        <label><!-- Field Set API Name --></label>
+        <name>Field_Set_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label API name --></label>
+        <name>Label_API_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Permission set --></label>
+        <name>Permission_set__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profiles Id --></label>
+        <name>Profiles_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOQL Filter --></label>
+        <name>SOQL_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOQL Order --></label>
+        <name>SOQL_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- isAdmin --></label>
+        <name>isAdmin__c</name>
+    </fields>
+    <fields>
+        <label><!-- isMyAccount --></label>
+        <name>isMyAccount__c</name>
+    </fields>
+    <fields>
+        <label><!-- isOwnedByMe --></label>
+        <name>isOwnedByMe__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,25 @@
         <plural>true</plural>
         <value>E&amp;F Critical Field Notification</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Airline Fields --></label>
+        <name>Account_Airline_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Client Fields --></label>
+        <name>Account_Client_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Airline Billing Agreement Fields --></label>
+        <name>Airline_Billing_Agreement_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Fields --></label>
+        <name>Contact_Fields__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Fields --></label>
+        <name>Contract_Fields__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

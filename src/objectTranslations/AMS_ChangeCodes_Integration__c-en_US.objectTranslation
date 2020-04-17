@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>AMS Change Codes Integration</value>
     </caseValues>
+    <fields>
+        <label><!-- RecId A --></label>
+        <name>RecId_A__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecId B --></label>
+        <name>RecId_B__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecId Result --></label>
+        <name>RecId_Res__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

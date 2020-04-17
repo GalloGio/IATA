@@ -4,5 +4,17 @@
         <plural>false</plural>
         <value>ACLI Sector Category</value>
     </caseValues>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Service --></label>
+        <name>Type_of_Service__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,137 @@
         <plural>true</plural>
         <value>IEC Subscriptions History</value>
     </caseValues>
+    <fields>
+        <help><!-- The T&amp;Cs accepted at the time of purchase --></help>
+        <label><!-- Accepted Terms and Conditions --></label>
+        <name>Accepted_Terms_and_Conditions__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The action that generated the Subscription History --></help>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+        <picklistValues>
+            <masterLabel>Renew</masterLabel>
+            <translation><!-- Renew --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Subscription</masterLabel>
+            <translation><!-- Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trial</masterLabel>
+            <translation><!-- Trial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Upgrade</masterLabel>
+            <translation><!-- Upgrade --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Account number of the account in Zuora --></help>
+        <label><!-- Billing Account Number --></label>
+        <name>Billing_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing City --></label>
+        <name>Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Country --></label>
+        <name>Billing_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Street --></label>
+        <name>Billing_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Zip --></label>
+        <name>Billing_Zip__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credit Card --></label>
+        <name>Credit_Card__c</name>
+    </fields>
+    <fields>
+        <help><!-- Zuora Invoice Number --></help>
+        <label><!-- Invoice Number --></label>
+        <name>Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Zuora Id of the Invoice --></help>
+        <label><!-- Invoice Zuora ID --></label>
+        <name>Invoice_Zuora_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Product Category that was purchased --></help>
+        <label><!-- Purchased Product Category --></label>
+        <name>Purchased_Product_Category__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Purchased Product Information --></help>
+        <label><!-- Purchased Product Information --></label>
+        <name>Purchased_Product_Information__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Lookup to the purchase Product Rate Plan Information --></help>
+        <label><!-- Purchased Product Rate Plan Information --></label>
+        <name>Purchased_Product_Rate_Plan_Information__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Zuora Product SKU --></help>
+        <label><!-- Purchased Product SKU --></label>
+        <name>Purchased_Product_SKU__c</name>
+    </fields>
+    <fields>
+        <help><!-- Quantity of the rate plan that was associated to the cart item --></help>
+        <label><!-- Rate Plan Quantity --></label>
+        <name>Rate_Plan_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- The SalesForce Account related to the user who purchased the subscription --></help>
+        <label><!-- Related Account --></label>
+        <name>Related_Account__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Contact that made the purchase --></help>
+        <label><!-- Related Contact --></label>
+        <name>Related_Contact__c</name>
+        <relationshipLabel><!-- IEC Subscriptions History --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The payment method selected at the time of purchase --></help>
+        <label><!-- Selected Payment Method --></label>
+        <name>Selected_Payment_Method__c</name>
+        <picklistValues>
+            <masterLabel>Bank Transfer</masterLabel>
+            <translation><!-- Bank Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Zuora Subscription Number --></help>
+        <label><!-- Subscription Number --></label>
+        <name>Subscription_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- VAT Number --></label>
+        <name>VAT_Number__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

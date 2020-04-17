@@ -8,5 +8,29 @@
         <plural>true</plural>
         <value>LVA_CallUsConfig</value>
     </caseValues>
+    <fields>
+        <label><!-- AvailableHours --></label>
+        <name>AvailableHours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Hours Name --></label>
+        <name>Business_Hours_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsoCountry --></label>
+        <name>IsoCountry__c</name>
+    </fields>
+    <fields>
+        <label><!-- PhoneNumber --></label>
+        <name>PhoneNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>Sector__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic --></label>
+        <name>Topic__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

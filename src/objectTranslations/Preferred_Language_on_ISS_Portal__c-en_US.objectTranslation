@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>Preferred Language on ISS Portal</value>
     </caseValues>
+    <fields>
+        <label><!-- Language --></label>
+        <name>Language__c</name>
+    </fields>
+    <fields>
+        <label><!-- languageLocalKey --></label>
+        <name>languageLocalKey__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,26 @@
         <plural>true</plural>
         <value>Portal Application Visibilities</value>
     </caseValues>
+    <fields>
+        <label><!-- Auto-grant service --></label>
+        <name>Auto_grant_service__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Visible --></label>
+        <name>Is_Visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portal Application Setting --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Portal Application Visibilities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sector --></label>
+        <name>Sector__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

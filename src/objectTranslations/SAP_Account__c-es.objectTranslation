@@ -8,6 +8,44 @@
         <plural>true</plural>
         <value><!-- SAP Account --></value>
     </caseValues>
+    <fields>
+        <label>Cuenta</label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- SAP Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Airline Coding --></label>
+        <name>Airline_Coding__c</name>
+    </fields>
+    <fields>
+        <help><!-- SAP Account used by the e-Commerce GDP products. Only one SAP Account can be selected as GDP per Account. --></help>
+        <label><!-- GDP --></label>
+        <name>GDP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Type --></label>
+        <name>SAP_Account_type__c</name>
+        <picklistValues>
+            <masterLabel>Cass Invoices</masterLabel>
+            <translation><!-- Cass Invoices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoices</masterLabel>
+            <translation>Facturas</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger Invoices</masterLabel>
+            <translation><!-- Passenger Invoices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>e-Commerce</masterLabel>
+            <translation><!-- e-Commerce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SAP ID --></label>
+        <name>SAP_ID__c</name>
+    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- Internal Reference --></nameFieldLabel>
 </CustomObjectTranslation>

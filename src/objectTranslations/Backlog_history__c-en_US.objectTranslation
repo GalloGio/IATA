@@ -8,5 +8,21 @@
         <plural>true</plural>
         <value>Backlog history</value>
     </caseValues>
+    <fields>
+        <label><!-- Closed Cases --></label>
+        <name>Closed_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

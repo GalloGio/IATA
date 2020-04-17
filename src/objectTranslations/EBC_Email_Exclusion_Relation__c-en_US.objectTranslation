@@ -8,5 +8,47 @@
         <plural>true</plural>
         <value>EBC Email Exclusion Relations</value>
     </caseValues>
+    <fields>
+        <help><!-- Billing Account to be exclude --></help>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- EBC Email Exclusion Relations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Email Exclusion records that has been used to create the relation --></help>
+        <label><!-- EBC Email Exclusion --></label>
+        <name>EBC_Email_Exclusion__c</name>
+        <relationshipLabel><!-- EBC Email Exclusion Relations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Exclusion Type --></label>
+        <name>Exclusion_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- This Id will be used for upserting records on a unique manner --></help>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- GDP Account that should be exclude from an eBroadcast Mailing --></help>
+        <label><!-- GDP Products - Account View --></label>
+        <name>GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- EBC Email Exclusion Relations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Id Card that should be exclude from an eBroadcast Mailing --></help>
+        <label><!-- ID Card --></label>
+        <name>ID_Card__c</name>
+        <relationshipLabel><!-- EBC Email Exclusion Relations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Is GDP Account or ID Card email address changed since the exclusion --></help>
+        <label><!-- Is Email Changed --></label>
+        <name>Is_Email_Changed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Global --></label>
+        <name>Is_Global__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,31 @@
         <plural>true</plural>
         <value>GDP_Delta</value>
     </caseValues>
+    <fields>
+        <help><!-- Shows if related GDP Account is CNS --></help>
+        <label><!-- CNS_Agency --></label>
+        <name>CNS_Agency__c</name>
+    </fields>
+    <fields>
+        <help><!-- A=Added, C=Changed or D=Deleted --></help>
+        <label><!-- Change Code --></label>
+        <name>Change_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date time when one of the fields refered in the File definition was modified --></help>
+        <label><!-- DeltaLastModifiedDate --></label>
+        <name>DeltaLastModifiedDate__c</name>
+    </fields>
+    <fields>
+        <help><!-- File Description (Reference only) --></help>
+        <label><!-- GDP File Description --></label>
+        <name>GDP_File_Description__c</name>
+        <relationshipLabel><!-- GDP_Delta --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- GDP Product Account View --></label>
+        <name>Related_GDP_Product_Account_View__c</name>
+        <relationshipLabel><!-- GDP_Delta --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

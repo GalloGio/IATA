@@ -8,5 +8,116 @@
         <plural>true</plural>
         <value>ISSP BSPLink Users</value>
     </caseValues>
+    <fields>
+        <label><!-- Account IATA Code --></label>
+        <name>Account_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account ISO Country Code --></label>
+        <name>Account_ISO_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Record Type --></label>
+        <name>Account_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Region --></label>
+        <name>Account_Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP IATA Code --></label>
+        <name>BSP_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP ISOC --></label>
+        <name>BSP_ISOC__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP User Id --></label>
+        <name>BSP_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP User Level --></label>
+        <name>BSP_User_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP User Type --></label>
+        <name>BSP_User_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Username --></label>
+        <name>BSP_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Status --></label>
+        <name>Contact_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- ISSP BSPLink Users --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created New User --></label>
+        <name>Created_New_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Granted Access --></label>
+        <name>Granted_Access__c</name>
+    </fields>
+    <fields>
+        <label><!-- IFAP Contact --></label>
+        <name>IFAP_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Record --></label>
+        <name>New_Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Out of Scope --></label>
+        <name>Out_of_Scope__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Account --></label>
+        <name>Processed_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Contact --></label>
+        <name>Processed_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed User --></label>
+        <name>Processed_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce Account --></label>
+        <name>Salesforce_Account__c</name>
+        <relationshipLabel><!-- ISSP BSPLink Users --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- To Create New User --></label>
+        <name>To_Create_New_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Grant Access --></label>
+        <name>To_Grant_Access__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Portal Status --></label>
+        <name>User_Portal_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- ISSP BSPLink Users --></relationshipLabel>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

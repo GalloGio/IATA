@@ -8,5 +8,23 @@
         <plural>true</plural>
         <value>Agency Hierarchies</value>
     </caseValues>
+    <fields>
+        <label><!-- Hierarchy Name --></label>
+        <name>Hierarchy_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Account --></label>
+        <name>Main_Account__c</name>
+        <relationshipLabel><!-- Agency Hierarchies --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Migrated --></label>
+        <name>Migrated__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Mandatory and initial Hierarchy for this branch --></description>
+        <label><!-- MAIN --></label>
+        <name>MAIN</name>
+    </recordTypes>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

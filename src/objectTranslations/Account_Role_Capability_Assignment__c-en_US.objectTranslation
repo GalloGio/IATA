@@ -8,5 +8,15 @@
         <plural>true</plural>
         <value>Account Role Capability Assignments</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Role Service Capability --></label>
+        <name>Account_Role_Service_Capability__c</name>
+        <relationshipLabel><!-- Account Role Capability Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account Role Service --></label>
+        <name>Account_Role_Service__c</name>
+        <relationshipLabel><!-- Account Role Capability Assignments --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,90 @@
         <plural>true</plural>
         <value>BIN Ranges</value>
     </caseValues>
+    <fields>
+        <label><!-- Effective From Date To Show --></label>
+        <name>TIP_Effective_From_Date_To_Show__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective From Date --></label>
+        <name>TIP_Effective_From_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective To Date --></label>
+        <name>TIP_Effective_To_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Provider Product --></label>
+        <name>TIP_Payment_Provider_Product__c</name>
+        <relationshipLabel><!-- BIN Ranges --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Range To --></label>
+        <name>TIP_Range_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Range From --></label>
+        <name>TIP_Range_Start__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>TIP_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- Enrolled --></label>
+        <name>Enrolled</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Statistical --></label>
+        <name>Statistical</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Unenrolled Known --></label>
+        <name>Unenrolled_Known</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Only Effective To Date can be changed for active Bin Ranges. --></errorMessage>
+        <name>Check_If_BIN_Range_Active</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BIN Range cannot be activated if related Product is not active --></errorMessage>
+        <name>Check_if_product_is_Active</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Effective to Date needs to be greater than Effective from Date --></errorMessage>
+        <name>Effective_from_before_effective_To</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Listed by IATA Bin Range must be linked to the Generic Product --></errorMessage>
+        <name>Validate_PP_name_for_IATA_RT</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Range To needs to be a number --></errorMessage>
+        <name>Validate_Range_End_Is_Number</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Range To has to be greater than Range From --></errorMessage>
+        <name>Validate_Range_End_Lower_Than_Start</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Range From needs to be a number --></errorMessage>
+        <name>Validate_Range_Start_Is_Number</name>
+    </validationRules>
 </CustomObjectTranslation>

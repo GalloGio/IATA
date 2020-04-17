@@ -8,5 +8,30 @@
         <plural>true</plural>
         <value>GST Informations</value>
     </caseValues>
+    <fields>
+        <label><!-- AP Process Form --></label>
+        <name>AP_Process_Form__c</name>
+        <relationshipLabel><!-- GST Informations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- India Local VAT City --></label>
+        <name>India_Local_VAT_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- India Local VAT Number --></label>
+        <name>India_Local_VAT_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- India Local VAT State Code --></label>
+        <name>India_Local_VAT_State_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- India Local VAT State Name --></label>
+        <name>India_Local_VAT_State_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- India Local VAT Street --></label>
+        <name>India_Local_VAT_Street__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

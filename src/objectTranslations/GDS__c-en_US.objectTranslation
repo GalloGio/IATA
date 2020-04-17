@@ -8,5 +8,44 @@
         <plural>true</plural>
         <value>GDSs</value>
     </caseValues>
+    <fields>
+        <label><!-- AIMS ID --></label>
+        <name>AIMS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- AMS GDP Key --></label>
+        <name>AMS_GDP_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Computer Reservation System --></label>
+        <name>Computer_Reservation_System__c</name>
+        <relationshipLabel><!-- GDSs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- GDS ID --></label>
+        <name>GDS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Account --></label>
+        <name>Related_Account__c</name>
+        <relationshipLabel><!-- GDSs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Related GDP Products Account View --></label>
+        <name>Related_GDP_Products_Account_View__c</name>
+        <relationshipLabel><!-- GDSs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- WebStar ID --></label>
+        <name>WebStar_ID__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- GDP --></label>
+        <name>GDP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Live --></label>
+        <name>Live</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

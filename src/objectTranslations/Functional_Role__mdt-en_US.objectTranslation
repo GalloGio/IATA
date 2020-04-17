@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>Functional Roles</value>
     </caseValues>
+    <fields>
+        <label><!-- Functional Role Name --></label>
+        <name>Functional_Role_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role Management Permission --></label>
+        <name>Role_Management_Permission__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

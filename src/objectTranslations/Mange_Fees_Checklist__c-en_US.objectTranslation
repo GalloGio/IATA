@@ -8,5 +8,78 @@
         <plural>true</plural>
         <value>Manage Fees Checklists</value>
     </caseValues>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Manage Fees Checklists --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Forms of Payment --></label>
+        <name>Forms_of_Payment__c</name>
+        <picklistValues>
+            <masterLabel>Payment via Bank Transfer</masterLabel>
+            <translation><!-- Payment via Bank Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment via ICH</masterLabel>
+            <translation><!-- Payment via ICH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- I&amp;C Confirmation --></label>
+        <name>I_C_Confirmation__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- I&amp;C Request --></label>
+        <name>I_C_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Customer Master Data Form requested --></label>
+        <name>SAP_Customer_Master_Data_Form_requested__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Customer number provided --></label>
+        <name>SAP_Customer_number_provided__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP customer number associated --></label>
+        <name>SAP_customer_number_associated__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Order Sent --></label>
+        <name>Sales_Order_Sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Fee --></label>
+        <name>Type_of_Fee__c</name>
+        <picklistValues>
+            <masterLabel>Administrative Fees (including rejoining within 18 months of voluntary withdrawal)</masterLabel>
+            <translation><!-- Administrative Fees (including rejoining within 18 months of voluntary withdrawal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Multi-country joining fees</masterLabel>
+            <translation><!-- CASS Multi-country joining fees --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Joining Fees for direct participation</masterLabel>
+            <translation><!-- Joining Fees for direct participation --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

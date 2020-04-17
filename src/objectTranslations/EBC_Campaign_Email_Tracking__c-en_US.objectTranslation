@@ -8,5 +8,116 @@
         <plural>true</plural>
         <value>EBC Campaign Email Trackings</value>
     </caseValues>
+    <fields>
+        <help><!-- Indicates the number of conversions results from Campaign --></help>
+        <label><!-- Conversions --></label>
+        <name>Conversions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Master EBC Campaign Related to Campaign Email Tracking --></help>
+        <label><!-- EBC Campaign --></label>
+        <name>EBC_Campaign__c</name>
+        <relationshipLabel><!-- EBC Campaign Email Trackings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Indicates Forward To A Friend emails sent as a result of campaign --></help>
+        <label><!-- FTAFEmailsSent --></label>
+        <name>FTAFEmailsSent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of subscribers opting in to receiving messages as a result of a Forward To A Friend action from campaign --></help>
+        <label><!-- FTAFOptIns --></label>
+        <name>FTAFOptIns__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of Forward To A Friend requests received as part of campaign --></help>
+        <label><!-- FTAFRequests --></label>
+        <name>FTAFRequests__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the number of send emails in progress --></help>
+        <label><!-- InProcess --></label>
+        <name>InProcess__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of send emails not sent due to error --></help>
+        <label><!-- NotSentDueToError --></label>
+        <name>NotSentDueToError__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of sends not completed due to a subscriber&apos;s decision to opt out of receiving emails --></help>
+        <label><!-- Not Sent Due To Opt Out --></label>
+        <name>NotSentDueToOptOut__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of sends not completed due to a subscriber&apos;s undeliverable status --></help>
+        <label><!-- Not Sent Due To Undeliverable --></label>
+        <name>NotSentDueToUndeliverable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of bounces resulting from campaign --></help>
+        <label><!-- Number Bounced --></label>
+        <name>NumberBounced__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of subscribers who opted out of receiving emails after receiving email --></help>
+        <label><!-- Number Opt Outs --></label>
+        <name>NumberOptOuts__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of emails sent --></help>
+        <label><!-- Number Sent --></label>
+        <name>NumberSent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the number of clicks resulting from campaign --></help>
+        <label><!-- Number of Clicks --></label>
+        <name>NumberofClicks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of opens from campaign --></help>
+        <label><!-- Number of Opens --></label>
+        <name>NumberofOpens__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of unique clicks on email --></help>
+        <label><!-- Number of Unique Clicks --></label>
+        <name>NumberofUniqueClicks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of unique opens resulting from campaign --></help>
+        <label><!-- Number of Unique Opens --></label>
+        <name>NumberofUniqueOpens__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of messages queued for sending --></help>
+        <label><!-- Queued --></label>
+        <name>Queued__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate the rank of hours for tracking --></help>
+        <label><!-- Rank --></label>
+        <name>Rank__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the date that campaign was send --></help>
+        <label><!-- Send Date --></label>
+        <name>SendDate__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of responses to a survey question contained in email --></help>
+        <label><!-- SurveyResponses --></label>
+        <name>SurveyResponses__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the name of triggered send in Excattarget --></help>
+        <label><!-- Triggered Send Name --></label>
+        <name>TriggeredSendName__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates number of unique conversions resulting from campaign --></help>
+        <label><!-- UniqueConversions --></label>
+        <name>UniqueConversions__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

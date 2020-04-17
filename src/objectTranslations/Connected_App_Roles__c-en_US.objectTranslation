@@ -8,5 +8,65 @@
         <plural>true</plural>
         <value>Connected App Roles</value>
     </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- App Picture Url --></label>
+        <name>App_Picture_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connected App Description --></label>
+        <name>Connected_App_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connected App Provisioning Name --></label>
+        <name>Connected_App_Provisioning_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connected App SSO Name --></label>
+        <name>Connected_App__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default User Role --></label>
+        <name>Default_User_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manage User Access --></label>
+        <name>Manage_User_Access__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min. users with Role --></label>
+        <name>Min_Users_With_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- PermissionSet Provisioning --></label>
+        <name>PermissionSet_Provisioning__c</name>
+    </fields>
+    <fields>
+        <label><!-- PermissionSet SSO --></label>
+        <name>Permission_set_SSO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connected App Provisioning Id --></label>
+        <name>Provisioning_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- isCommunity --></label>
+        <name>isCommunity__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

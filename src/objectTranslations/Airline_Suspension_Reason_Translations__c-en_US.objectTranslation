@@ -8,5 +8,16 @@
         <plural>true</plural>
         <value>Airline Suspension Reason Translations</value>
     </caseValues>
+    <fields>
+        <help><!-- Type in the language +a space + the value of the reason in English. 
+
+Example: Spanish Bankruptcy or Reorganization --></help>
+        <label><!-- Language Key --></label>
+        <name>Language_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Translation --></label>
+        <name>Translation__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

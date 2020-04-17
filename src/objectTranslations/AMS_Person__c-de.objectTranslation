@@ -40,6 +40,170 @@
         <plural>true</plural>
         <value><!-- Person (AMS) --></value>
     </caseValues>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Persons (AMS) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Of Birth --></label>
+        <name>DOB__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fax --></label>
+        <name>Fax__c</name>
+    </fields>
+    <fields>
+        <label>Vorname</label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Industry start date --></label>
+        <name>Industry_start_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Correspondence Language --></label>
+        <name>Language_of_correspondence__c</name>
+        <picklistValues>
+            <masterLabel>EN</masterLabel>
+            <translation><!-- EN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP</masterLabel>
+            <translation><!-- SP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last Case Assigned Date/Time --></label>
+        <name>Last_Case_Assigned_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last synchronization --></label>
+        <name>Last_synchronization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lastname --></label>
+        <name>Lastname__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy External ID --></label>
+        <name>Legacy_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy System --></label>
+        <name>Legacy_System__c</name>
+        <picklistValues>
+            <masterLabel>AIMS</masterLabel>
+            <translation><!-- AIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAIMS</masterLabel>
+            <translation><!-- CAIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Webstar</masterLabel>
+            <translation><!-- Webstar --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Log on picklist --></label>
+        <name>Log_on_picklist__c</name>
+        <picklistValues>
+            <masterLabel>Log off</masterLabel>
+            <translation><!-- Log off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Log on</masterLabel>
+            <translation><!-- Log on --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Logged on --></label>
+        <name>Logged_on__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum case workload --></label>
+        <name>Maximum_case_workload__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum cases at one time --></label>
+        <name>Maximum_cases_at_one_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Middle Initials --></label>
+        <name>Middle_Initials__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile --></label>
+        <name>Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next case request date/time --></label>
+        <name>Next_case_request_date_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Africa &amp; Middle East</masterLabel>
+            <translation><!-- Africa &amp; Middle East --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asia &amp; Pacific</masterLabel>
+            <translation><!-- Asia &amp; Pacific --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China &amp; North Asia</masterLabel>
+            <translation><!-- China &amp; North Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Request next case --></label>
+        <name>Request_next_case__c</name>
+    </fields>
+    <fields>
+        <help><!-- M - Male
+F - Female --></help>
+        <label><!-- Sex --></label>
+        <name>Sex__c</name>
+        <picklistValues>
+            <masterLabel>F</masterLabel>
+            <translation><!-- F --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Persons (AMS) --></relationshipLabel>
+    </fields>
     <gender><!-- Neuter --></gender>
     <nameFieldLabel><!-- Full Name --></nameFieldLabel>
 </CustomObjectTranslation>

@@ -8,5 +8,49 @@
         <plural>true</plural>
         <value>ArticlesStatistics</value>
     </caseValues>
+    <fields>
+        <label><!-- Article Number --></label>
+        <name>Article_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stat Type --></label>
+        <name>Stat_Type__c</name>
+        <picklistValues>
+            <masterLabel>Satisfied</masterLabel>
+            <translation><!-- Satisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UnSatisfied</masterLabel>
+            <translation><!-- UnSatisfied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>View</masterLabel>
+            <translation><!-- View --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Topic English --></label>
+        <name>Sub_Topic_English__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Topic --></label>
+        <name>Sub_Topic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Timestamp --></label>
+        <name>Timestamp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic English --></label>
+        <name>Topic_English__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic --></label>
+        <name>Topic__c</name>
+    </fields>
+    <fields>
+        <label><!-- URL Name --></label>
+        <name>URL_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

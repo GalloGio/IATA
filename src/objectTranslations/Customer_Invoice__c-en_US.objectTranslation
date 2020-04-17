@@ -8,5 +8,262 @@
         <plural>true</plural>
         <value>Customer Invoices</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Id --></label>
+        <name>AccountId__c</name>
+        <relationshipLabel><!-- Customer Invoices --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Name --></label>
+        <name>Bank_Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account No --></label>
+        <name>Bank_Account_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Code --></label>
+        <name>Bank_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name --></label>
+        <name>Bank_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billed Member Accounting Code --></label>
+        <name>Billed_Member_Accounting_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billed Member Designator Code --></label>
+        <name>Billed_Member_Designator_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billed Member Id --></label>
+        <name>Billed_Member_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billed Member Name --></label>
+        <name>Billed_Member_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Currency --></label>
+        <name>Billing_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Member Accounting Code --></label>
+        <name>Billing_Member_Accounting_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Member Designator Code --></label>
+        <name>Billing_Member_Designator_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Member IS Sub Status --></label>
+        <name>Billing_Member_IS_Sub_Status__c</name>
+        <picklistValues>
+            <masterLabel>E&amp;F AIRPORT</masterLabel>
+            <translation><!-- E&amp;F AIRPORT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA OFFICE</masterLabel>
+            <translation><!-- IATA OFFICE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing Member Id --></label>
+        <name>Billing_Member_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Member Name --></label>
+        <name>Billing_Member_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch Code --></label>
+        <name>Branch_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- CH Agreement Indicator --></label>
+        <name>CH_Agreement_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Charge Category --></label>
+        <name>Charge_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Clearance Currency --></label>
+        <name>Clearance_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Currency Code --></label>
+        <name>Currency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Basis --></label>
+        <name>Date_Basis__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Due Date --></label>
+        <name>Discount_Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Due Days --></label>
+        <name>Discount_Due_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Discount Percent --></label>
+        <name>Discount_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exchange Rate --></label>
+        <name>Exchange_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Codes Display --></label>
+        <name>Fee_Codes_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fee Codes --></label>
+        <name>Fee_Codes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Attachments --></label>
+        <name>Has_Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- IBAN --></label>
+        <name>IBAN__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice ID --></label>
+        <name>Invoice_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Number --></label>
+        <name>Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Status --></label>
+        <name>Invoice_Status__c</name>
+        <picklistValues>
+            <masterLabel>Credit Applied</masterLabel>
+            <translation><!-- Credit Applied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Accepted</masterLabel>
+            <translation><!-- Dispute Accepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Auto-Closed</masterLabel>
+            <translation><!-- Dispute Auto-Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Rejected</masterLabel>
+            <translation><!-- Dispute Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Resolved</masterLabel>
+            <translation><!-- Dispute Resolved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Under Review</masterLabel>
+            <translation><!-- Dispute Under Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disputed</masterLabel>
+            <translation><!-- Disputed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Erroneous Invoice Do not Pay</masterLabel>
+            <translation><!-- Erroneous Invoice Do not Pay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Full Payment Received</masterLabel>
+            <translation><!-- Full Payment Received --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Overdue Payment</masterLabel>
+            <translation><!-- Overdue Payment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Payment Accepted</masterLabel>
+            <translation><!-- Partial Payment Accepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Payment Accepted as per Dispute</masterLabel>
+            <translation><!-- Partial Payment Accepted as per Dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Payment Disputed</masterLabel>
+            <translation><!-- Partial Payment Disputed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partial Payment Outstanding</masterLabel>
+            <translation><!-- Partial Payment Outstanding --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unpaid Invoice</masterLabel>
+            <translation><!-- Unpaid Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Viewed by Billed Member</masterLabel>
+            <translation><!-- Viewed by Billed Member --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Net Due Date --></label>
+        <name>Net_Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Status Billed Member --></label>
+        <name>Payment_Status_Billed_Member__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Status Billing Member --></label>
+        <name>Payment_Status_Billing_Member__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Terms Type --></label>
+        <name>Payment_Terms_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- SWIFT --></label>
+        <name>SWIFT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Method --></label>
+        <name>Settlement_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Month Period --></label>
+        <name>Settlement_Month_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Type --></label>
+        <name>Transaction_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type Of Service --></label>
+        <name>Type_Of_Service__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- SIS Invoicing information --></label>
+        <name>SIS_Invoicing_information</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,131 @@
         <plural>true</plural>
         <value>E&amp;F Account Role Details</value>
     </caseValues>
+    <fields>
+        <label><!-- Account name --></label>
+        <name>AccountName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Role --></label>
+        <name>Account_Role__c</name>
+        <relationshipLabel><!-- E&amp;F Account Role Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- BSP --></label>
+        <name>BSP__c</name>
+        <picklistValues>
+            <masterLabel>F1</masterLabel>
+            <translation><!-- F1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>F2</masterLabel>
+            <translation><!-- F2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W1</masterLabel>
+            <translation><!-- W1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W2</masterLabel>
+            <translation><!-- W2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W3</masterLabel>
+            <translation><!-- W3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Charges Collected --></label>
+        <name>Charges_Collected__c</name>
+        <picklistValues>
+            <masterLabel>Long list attached</masterLabel>
+            <translation><!-- Long list attached --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Detailed Account Role --></label>
+        <name>Detailed_Account_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account and Detailed Account Role --></label>
+        <name>Display_Account_Detailed_Account_Role__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is this client chaged for &quot;Electronic fund transfers&quot; ? --></help>
+        <label><!-- EFT --></label>
+        <name>EFT__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Client Services Specialist --></label>
+        <name>E_and_F_Client_Services_Specialist__c</name>
+        <relationshipLabel><!-- E&amp;F Account Role Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Level --></label>
+        <name>E_and_F_Level__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Status Change Date --></label>
+        <name>E_and_F_Status_Change_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Status --></label>
+        <name>E_and_F_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Functional Role --></label>
+        <name>Functional_Role__c</name>
+    </fields>
+    <fields>
+        <help><!-- Which ICH period the funds should be linked to ? --></help>
+        <label><!-- ICH --></label>
+        <name>ICH__c</name>
+        <picklistValues>
+            <masterLabel>P1</masterLabel>
+            <translation><!-- P1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P2</masterLabel>
+            <translation><!-- P2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P3</masterLabel>
+            <translation><!-- P3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P4</masterLabel>
+            <translation><!-- P4 --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <description><!-- used to store informations related to Client --></description>
+        <label><!-- Client --></label>
+        <name>Client</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- used to store informations related to Operator --></description>
+        <label><!-- Operator --></label>
+        <name>Operator</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

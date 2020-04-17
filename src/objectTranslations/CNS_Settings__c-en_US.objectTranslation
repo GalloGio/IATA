@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>CNS Settings</value>
     </caseValues>
+    <fields>
+        <label><!-- DGR - Validate Certificates --></label>
+        <name>DGR_Validate_Certificates__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

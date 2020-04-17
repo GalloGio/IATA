@@ -8,5 +8,29 @@
         <plural>true</plural>
         <value>SIS SLA</value>
     </caseValues>
+    <fields>
+        <label><!-- Kale P1 (Hours) --></label>
+        <name>Kale_P1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Kale P2 (Hours) --></label>
+        <name>Kale_P2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Kale P3 (Hours) --></label>
+        <name>Kale_P3__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS P1 (Hours) --></label>
+        <name>SIS_P1__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS P2 (Hours) --></label>
+        <name>SIS_P2__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS P3 (Hours) --></label>
+        <name>SIS_P3__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

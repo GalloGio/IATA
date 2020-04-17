@@ -8,5 +8,33 @@
         <plural>true</plural>
         <value>Default Agencies Payment</value>
     </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Codes --></label>
+        <name>Country_Codes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default Amount --></label>
+        <name>Default_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visibility --></label>
+        <name>Visibility__c</name>
+        <picklistValues>
+            <masterLabel>External</masterLabel>
+            <translation><!-- External --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal</masterLabel>
+            <translation><!-- Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal/External</masterLabel>
+            <translation><!-- Internal/External --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

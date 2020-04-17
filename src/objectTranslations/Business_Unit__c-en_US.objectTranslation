@@ -8,5 +8,37 @@
         <plural>true</plural>
         <value>Business Units</value>
     </caseValues>
+    <fields>
+        <label><!-- Budget Owner --></label>
+        <name>Budget_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budgeted licenses --></label>
+        <name>Budgeted_licenses__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost Centre --></label>
+        <name>Cost_Centre__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>Corporate Services</masterLabel>
+            <translation><!-- Corporate Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IDFS</masterLabel>
+            <translation><!-- IDFS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MACS</masterLabel>
+            <translation><!-- MACS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- # Used Licenses --></label>
+        <name>Used_Licenses__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

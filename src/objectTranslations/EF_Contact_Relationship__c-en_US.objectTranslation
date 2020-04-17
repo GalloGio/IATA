@@ -8,5 +8,55 @@
         <plural>true</plural>
         <value>E&amp;F Contact Billing Agreements</value>
     </caseValues>
+    <fields>
+        <label><!-- Billing Agreement Name --></label>
+        <name>Billing_Agreement_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Account --></label>
+        <name>Contact_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- E&amp;F Contact Billing Agreements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Airline Billing Agreement --></label>
+        <name>EF_Airline_Billing_Agreement__c</name>
+        <relationshipLabel><!-- E&amp;F Contact Airline Billing Agreements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>EF_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The contact selected is Inactive for E&amp;F and can&apos;t be selected --></errorMessage>
+        <name>CannotAddInactiveContact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Status can&apos;t be active if Contact E&amp;F Status is Inactive --></errorMessage>
+        <name>StatusMustBeConsistentWithEFStatusConta</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Mass_Update_Contact_Billing_Agreement --></label>
+        <name>Mass_Update_Contact_Billing_Agreement</name>
+    </webLinks>
 </CustomObjectTranslation>

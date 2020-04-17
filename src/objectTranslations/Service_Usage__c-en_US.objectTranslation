@@ -8,5 +8,56 @@
         <plural>true</plural>
         <value>Service Usages</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Region --></label>
+        <name>Account_Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Role --></label>
+        <name>Account_Role__c</name>
+        <relationshipLabel><!-- Service Usages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Date --></label>
+        <name>Action_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dashboard Id --></label>
+        <name>Dashboard_Id__c</name>
+        <relationshipLabel><!-- Service Usages --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service --></label>
+        <name>Service__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target --></label>
+        <name>Target__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Dashboard</masterLabel>
+            <translation><!-- Dashboard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Page</masterLabel>
+            <translation><!-- Page --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Service Usages --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

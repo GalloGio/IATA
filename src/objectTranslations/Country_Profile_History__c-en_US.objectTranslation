@@ -8,5 +8,22 @@
         <plural>true</plural>
         <value>Country Profile Histories</value>
     </caseValues>
+    <fields>
+        <label><!-- Country Profile --></label>
+        <name>Country_Profile__c</name>
+        <relationshipLabel><!-- Country Profile Histories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Field --></label>
+        <name>Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- NewValue --></label>
+        <name>NewValue__c</name>
+    </fields>
+    <fields>
+        <label><!-- OldValue --></label>
+        <name>OldValue__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,119 @@
         <plural>true</plural>
         <value>Case Milestones</value>
     </caseValues>
+    <fields>
+        <label><!-- Business Hours --></label>
+        <name>Business_Hours__c</name>
+        <relationshipLabel><!-- Case Milestones --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Case Milestones --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Classification Phase --></label>
+        <name>Classification_Phase__c</name>
+        <picklistValues>
+            <masterLabel>Business clarification by DPC</masterLabel>
+            <translation><!-- Business clarification by DPC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployment and Documentation</masterLabel>
+            <translation><!-- Deployment and Documentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development</masterLabel>
+            <translation><!-- Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Documentation Review</masterLabel>
+            <translation><!-- Documentation Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finalization</masterLabel>
+            <translation><!-- Finalization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Initial evaluation and approval</masterLabel>
+            <translation><!-- Initial evaluation and approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PQ delivery and approval</masterLabel>
+            <translation><!-- PQ delivery and approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UAT approval</masterLabel>
+            <translation><!-- UAT approval --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Milestone --></label>
+        <name>Is_Milestone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Milestone Date --></label>
+        <name>Milestone_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Milestone Length --></label>
+        <name>Milestone_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- StatusName --></label>
+        <name>StatusName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Escalated Externally - number --></label>
+        <name>Time_Escalated_Externally__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Escalated Externally --></label>
+        <name>Time_Escalated_Externally_text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Escalated Internally - number --></label>
+        <name>Time_Escalated_Internally__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Escalated Internally --></label>
+        <name>Time_Escalated_Internally_text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time With Support - number --></label>
+        <name>Time_With_Support__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time With Support --></label>
+        <name>Time_With_Support_text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Time Escalated Externally --></label>
+        <name>Total_Time_Escalated_Externally__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Time Escalated Internally --></label>
+        <name>Total_Time_Escalated_Internally__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Time With Support --></label>
+        <name>Total_Time_With_Support__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>DPC Application Change Request</masterLabel>
+            <translation><!-- DPC Application Change Request --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The End Date must be greater than the Milestone Date. --></errorMessage>
+        <name>EndDateMustComeAfterMilestoneDate</name>
+    </validationRules>
 </CustomObjectTranslation>
