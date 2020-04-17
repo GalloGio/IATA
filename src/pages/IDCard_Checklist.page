@@ -26,6 +26,8 @@
                 $('div').remove('#pictureOption');
            if (({!isPictureOptionActive}) && $('#pictureOptionRecurring'))
                 $('div').remove('#pictureOptionRecurring'); 
+   /*        if (({!ischeckboxGeralOptionActive}) && $('#checkboxGeralOption'))
+                $('div').remove('#checkboxGeralOption');  */
             //if (!({!isCreditCardAndChequeOptionActive}) && $("#creditCardAndChequeOption"))
                     //$('div').remove('#creditCardAndChequeOption'); 
 	    });                
@@ -96,7 +98,7 @@
                         <div id="proofEmploymentOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="proofEmploymentOptionChkBox" value="{!isProofEmploymentOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_ProofEmploymentOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -110,7 +112,7 @@
                         <div id="pictureOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="pictureOptionChkBox" value="{!isPictureOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_Checklist_PictureOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -124,7 +126,7 @@
                         <div id="creditCardOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="creditCardOptionChkBox" value="{!isCreditCardOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_PaymentInformationOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -138,7 +140,7 @@
                         <div id="pictureOptionRecurring">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="pictureOptionChkBoxRecurring" value="{!isPictureOptionRecurringChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_Checklist_PictureOptionTitle} (Optional)</div></td>
                                 </tr>
                                 <tr>
@@ -152,7 +154,7 @@
                         <div id="proofNameOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="proofNameOptionChkBox" value="{!isProofNameOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_ProofNameChangeOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -162,6 +164,16 @@
                             </table>
                             <br />
                         </div>
+
+                        <div id="checkboxGeralOption">
+                                <table class="checklistTable">
+                                    <tr>
+                                        <td class="checklistTableChk"><apex:inputCheckbox id="checkboxGeralOptionChkBox" value="{!ischeckboxGeralOptionChecked}" /></td>
+                                        <td>Colocar o texto desta checkbox nas custom labels.</td>
+                                    </tr>  
+                                </table>
+                                <br/>
+                         </div>
 
                         <!--<div id="creditCardAndChequeOption">
     
