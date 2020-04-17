@@ -277,7 +277,7 @@ private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country,
 		return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
 				Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
 				FROM ISSP_FAQ2Case_Record_Type__c
-				WHERE  (Topic__c =: topic
+				WHERE Complaint__c =: isComplaint AND (Topic__c =: topic
 								   OR SubTopic__c = : subtopic
 													OR Country_concerned_by_the_query__c like: country
 													OR Country_concerned_by_the_query2__c like: country

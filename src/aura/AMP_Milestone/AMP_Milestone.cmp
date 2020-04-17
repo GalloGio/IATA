@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:attribute name="milestone" type="Task" />
     <aura:attribute name="index" type="Integer" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />

@@ -260,13 +260,13 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		if(!accountIdSet.isEmpty()){
-
+			
 			//Fetch all the accounts from the hierarchies
 			List<Account> acctLst = new List<Account>(
 				[SELECT
 					Id,
 					ANG_FA_Opt_out__c
-				FROM
+				FROM  
 					Account
 				WHERE
 					Id IN :accountIdSet
@@ -2073,6 +2073,7 @@ public class AMS_OSCARTriggerHandler {
 				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED && oscar.Process__c != AMS_Utils.VOLRELINQUISH)
 				|| (oscar.Termination_Date__c != oldMap.get(oscar.Id).Termination_Date__c && oscar.Process__c == AMS_Utils.VOLRELINQUISH)
 				|| (oscar.Process__c == AMS_Utils.NGCHANGES && newMap.get(oscar.Id).ANG_Type_Of_Change__c != oldMap.get(oscar.Id).ANG_Type_Of_Change__c )
+				|| (oscar.Process__c == AMS_Utils.AGENCYCHANGES && newMap.get(oscar.Id).Type_Of_Change__c != oldMap.get(oscar.Id).Type_Of_Change__c)
 				|| (oscar.Step10__c == AMS_Utils.PASSED && oscar.AMS_Online_Accreditation__r.SAAM_Case__r.BSPCountry__c == null)
 			){
 				updatedOscars.add(oscar);
@@ -2112,9 +2113,9 @@ public class AMS_OSCARTriggerHandler {
 				c.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
 				caseChanged = true;
 			}
-			if(newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c ){
+			if((newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c) || (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.AGENCYCHANGES && newMap.get(updatedOSCAR.Id).Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).Type_Of_Change__c)){
 
-				String newReason = fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c);
+				String newReason = (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES ? fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c):fetchCaseReason(newMap.get(updatedOSCAR.Id).Type_of_change__c));
 
 				if(newReason != null){
 					c.Reason1__c = newReason;
@@ -2227,8 +2228,8 @@ public class AMS_OSCARTriggerHandler {
 			return 'CHN - Change of Name';
 		if(typeOfChange.contains('VMFR'))
 			return 'VMFR Setup/Update';
-		if(typeOfChange.contains('Minor shareholding'))
-			return 'CHG – Data Maintenance';
+		if(typeOfChange.containsIgnoreCase('Minor shareholding'))
+			return 'MCH – Minor Change of Shareholding';
 		if(typeOfChange.contains('Hierarchy'))
 			return 'Change of Hierarchy';
 		if(typeOfChange.contains('Accreditation type'))
@@ -4920,357 +4921,6 @@ public class AMS_OSCARTriggerHandler {
 
 		for(String key : iataCodes.keySet())
 			ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
-
+		
 	}
-
-	// to be removed
-	public void fakeMethod(){
-	Integer i = 0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	 i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	i=0;
-	}
-
-
 }

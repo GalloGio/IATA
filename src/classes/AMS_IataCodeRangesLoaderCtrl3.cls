@@ -248,16 +248,13 @@ public class AMS_IataCodeRangesLoaderCtrl3{
 
 		if(HasError01 || HasError02 || HasError03 || HasError04){
 			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-			List<String> receivers = new List<String>();
 			//DTULLO: 23/02/2016. Use standard classes
-			//for(User u:[Select Id,Name,Email from User where Id=:userinfo.getuserId()])
-			//	receivers.add(u.Email);
-			receivers.add(UserInfo.GetUserEmail());
 
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setSubject('[IATA CODE GENERATION] Loader Issue cause '+ HasError01 +' / '+ HasError02 +' / '+ HasError03 +' / '+ HasError04);
-			mail.setToAddresses(receivers) ;
+			mail.setTargetObjectId(UserInfo.getUserId());
 			mail.setPlainTextBody(sb.getStringValue());
+			mail.setSaveAsActivity(false);
 			emails.add( mail);
 			//Messaging.sendEmail(emails);
 		}

@@ -1,157 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customApplications>
-        <label><!-- ACLI --></label>
-        <name>ACLI</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- AMS INTEGRATION --></label>
-        <name>AMS</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- AMS =&gt; GDP Sync --></label>
-        <name>AMS_GDP_Sync</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Force.com for Amazon Web Services --></label>
-        <name>AWS_Toolkit</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Call Scripting --></label>
-        <name>CallScripting</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Clicktools --></label>
-        <name>Clicktools</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- DPC Management --></label>
-        <name>DPC_Management</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- E&amp;F CRM --></label>
-        <name>EF_CRM</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- E&amp;F CRM Lightning --></label>
-        <name>EF_CRM_Lightning</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- E&amp;F --></label>
-        <name>E_F</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- ExactTarget --></label>
-        <name>ExactTarget</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- FDS - ICCS --></label>
-        <name>FDS_ICCS</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- FRED+ --></label>
-        <name>FRED</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- GADM --></label>
-        <name>GADM</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- GADM --></label>
-        <name>GADM_Classic</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- GDP --></label>
-        <name>GDP</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATA 3B GSS-MDP --></label>
-        <name>IATA_3B_GSS_MDP</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATA - Auto Assignment --></label>
-        <name>IATA_Auto_Assignment</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATA Financial Assessment --></label>
-        <name>IATA_Financial_Assessment</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATA Financial Security Monitoring --></label>
-        <name>IATA_Financial_Security_Monitoring</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATA Training Service --></label>
-        <name>IATA_Training_Service</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IATAforce --></label>
-        <name>IATAforce</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- ID Card --></label>
-        <name>ID_Card</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IEC Admin Console --></label>
-        <name>IEC_Admin_Console</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IFTP --></label>
-        <name>IFTP</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- MITA / BIETA --></label>
-        <name>MITA_BIETA</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- PKB 2 --></label>
-        <name>PKB_2</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Regional Reporting --></label>
-        <name>Regional_Reporting</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Release Planning --></label>
-        <name>Release_Planning</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Requirement Planning without Estimation --></label>
-        <name>Requirement_Planning_without_Estimation</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- SARA --></label>
-        <name>SARA</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- IS Help Desk --></label>
-        <name>SIS_Help_Desk</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Service console lightning L1/L2 --></label>
-        <name>Service_console_lightning_l1l2</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- Service --></label>
-        <name>Service_l1l2</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- TIP --></label>
-        <name>TIP</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- TTBS --></label>
-        <name>TTBS</name>
-    </customApplications>
-    <customApplications>
-        <label><!-- eBroadcast --></label>
-        <name>eBroadcast</name>
-    </customApplications>
     <customLabels>
         <label><!-- ACCEPTED_PAYMENT_METHODS_MANDATORY --></label>
         <name>ACCEPTED_PAYMENT_METHODS_MANDATORY</name>
@@ -2079,6 +1927,10 @@
     <customLabels>
         <label>Sorgu numarası</label>
         <name>CSP_CaseNumber</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu ara</label>
+        <name>CSP_CaseSearchPlaceholder</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Case_Currency --></label>
@@ -14306,7 +14158,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active --></label>
+        <label>Aktif</label>
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
@@ -18530,10 +18382,7 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_TD_5</name>
     </customLabels>
     <customLabels>
-        <label>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-IATA Treasury Dashboard, hava yolu maliyelerinin Likidite Planlama ve Nakit Akış Tahmin faaliyetlerine yardımcı olan ve destekleyen web tabanlı bir bilgi aracıdır.
+        <label>IATA Treasury Dashboard, hava yolu maliyelerinin Likidite Planlama ve Nakit Akış Tahmin faaliyetlerine yardımcı olan ve destekleyen web tabanlı bir bilgi aracıdır.
 Gösterge Panosu, her bir hava yolu Maliye Ekibinin IATA’nın ana ödeme sistemleri tarafından işlem yapılan gelen nakit akışları için tam görüş kazanmalarını sağlar: BSP, CASS, ICCS (Currency Clearance Service) ve ICH (IATA Clearing House). Daha fazla bilgi için: www.iata.org/treasurydashboard</label>
         <name>ISSP_TD_Description</name>
     </customLabels>
@@ -22716,7 +22565,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_InvalidPhoneValue</name>
     </customLabels>
     <customLabels>
-        <label>Sorgunuz bir acil durum mu?</label>
+        <label>Sorgunuz acil mi? Acil sorgulara yalnızca İngilizce olarak cevap verilmektedir.</label>
         <name>csp_IsEmergency</name>
     </customLabels>
     <customLabels>
@@ -23231,260 +23080,4 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- wire transfer payment msg --></label>
         <name>wire_transfer_payment_msg</name>
     </customLabels>
-    <customTabs>
-        <label><!-- AMS =&gt; GDP Synchronizer --></label>
-        <name>AMS_GDP_Synchronizer</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- OSCAR mass action --></label>
-        <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Annual Revalidation Campaign --></label>
-        <name>ANG_Anual_Revalidation_Tool</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- RHC Mass Calculation --></label>
-        <name>ANG_RHC_Mass_Calculation</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- AWS Explorer --></label>
-        <name>AWS_Explorer</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- About Clicktools --></label>
-        <name>AboutClicktools</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- About ExactTarget for AppExchange --></label>
-        <name>AboutExactTargetforAppExchange</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- About Force.com for Amazon Web Services --></label>
-        <name>About_Force_com_Toolkit_for_AWS</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Access to Services --></label>
-        <name>Access_to_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Acli Update --></label>
-        <name>Acli_Update</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Agreements --></label>
-        <name>Agreements</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Annual Certificate Campaign --></label>
-        <name>Annual_Certificate_Campaign</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Apply RHC Equal to FS --></label>
-        <name>Apply_RHC_Equal_to_FS</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Attachment Manager --></label>
-        <name>AttachmentManager</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Available Services --></label>
-        <name>Available_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- CNS E-Bulletin --></label>
-        <name>CNS_E_Bulletin</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Campaign Customers --></label>
-        <name>Campaign_Customers</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Campaign Notification --></label>
-        <name>Campaign_Notification</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Cases --></label>
-        <name>Cases_IFAP_Portal_Tab</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Change Language --></label>
-        <name>Change_Language</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Chatter Topics --></label>
-        <name>Chatter_Topics</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Clicktools --></label>
-        <name>Clicktools</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Data Submisssion --></label>
-        <name>Data_Submisssion</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- EC2 Console --></label>
-        <name>EC2_Console</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- EC2 Images --></label>
-        <name>EC2_Images</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Encryption Utility --></label>
-        <name>Encryption_Utility</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- ExactTarget --></label>
-        <name>ExactTarget</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Data Submission --></label>
-        <name>File_Upload</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Financial Assessment Campaign --></label>
-        <name>Financial_Assessment_Campaign</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Financial Security Request --></label>
-        <name>Financial_Security_Request</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- IATA Code Loader --></label>
-        <name>IATA_Code_Loader</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- IEC INTERNAL --></label>
-        <name>IEC_INTERNAL</name>
-    </customTabs>
-    <customTabs>
-        <label>Bilgi</label>
-        <name>ISSP_Knowledge</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- ISS Operations Loader --></label>
-        <name>ISS_Operation</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Invite User --></label>
-        <name>Invite_User</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Invite User --></label>
-        <name>Invite_User1</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Late Remittance Report --></label>
-        <name>Late_Remittance_Report</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Manage Provisioning Requests --></label>
-        <name>Manage_Provisioning_Requests</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Mass Case Creation Non-Compliance --></label>
-        <name>Mass_Case_Creation_Non_Compliance</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Mass Email Request --></label>
-        <name>Mass_Email_Request</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Mass Email Reminder --></label>
-        <name>Mass_Reminder_Email</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Memorandums --></label>
-        <name>Memorandums</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- My Profile --></label>
-        <name>MyProfile</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- My Cases --></label>
-        <name>My_Cases</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- My Contacts --></label>
-        <name>My_Contacts</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- My Services --></label>
-        <name>My_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- My Status --></label>
-        <name>My_Status</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Notification Center --></label>
-        <name>Notification_Center</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- OPS --></label>
-        <name>OPS</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- PKB 2 Settings --></label>
-        <name>PKB_2_Settings</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Purge IATA Code Process --></label>
-        <name>Purge_IATA_Code_Process</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Report Red Alerts --></label>
-        <name>Report_Red_Alerts</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Resources --></label>
-        <name>Resources</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- S3 Samples --></label>
-        <name>S3_Samples</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- SIDRA Lite Mass Action --></label>
-        <name>SIDRA_Lite_Mass_Action</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- SIDRA Lite Mass Approval --></label>
-        <name>SIDRA_Lite_Mass_Approval</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Search / Create --></label>
-        <name>Search_Create</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Settlement &amp; Operation --></label>
-        <name>Settlement_Operation</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Projects Calendar --></label>
-        <name>UAT_Calendar</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Unregistered users --></label>
-        <name>Unregistered_users</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Usage Report --></label>
-        <name>Usage_Report</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Voucher Management --></label>
-        <name>Voucher_Management</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Welcome --></label>
-        <name>Welcome</name>
-    </customTabs>
 </Translations>

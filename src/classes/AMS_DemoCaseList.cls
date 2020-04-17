@@ -96,7 +96,6 @@ public class AMS_DemoCaseList {
 		return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT];
 	}
 
-
 	public List<SelectOption> getItems() {
 		List<SelectOption> options = new List<SelectOption>();
 		options.add(new SelectOption('All','All'));

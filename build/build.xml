@@ -309,8 +309,9 @@
   <!-- RETRIEVES -->
 
   <target name="simpleRetrieve">
-    <antcall target="getObjects" />
-    <antcall target="getStaticResourceAndLayouts" />
+    <antcallback target="getObjects" />
+    <antcallback target="getStaticResourceAndLayouts" />
+    <antcallback target="getLabelsAndTranslations" />
   </target>
 
   <target name="completeRetrieve">
@@ -332,12 +333,12 @@
 
   <target name="getObjects">
     <echo level="info">
-      Retrieving the server's version of OBJECTs
+      Retrieving the server's version of EmailTemplate, FlexiPage, Flow, Object, QuickAction, Workflow
     </echo>
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/objectPackageRet.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
   <target name="getObjectsWithPermissions">
@@ -396,6 +397,15 @@
     <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
+  <target name="getLabelsAndTranslations">
+    <echo level="info">
+      Retrieving the server's version of Labels and Translations
+    </echo>
+    <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
+    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/labelPackage.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+  </target>
 
   <target name="bulkRetrieveEmailTemplate">
     <echo level="info">
@@ -410,18 +420,4 @@
     <delete file="${basedir}/${sfdc.retrieveTarget}/package.xml" />
     <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
-
-  <target name="getCodePointAndClick">
-    <echo level="info">Retrieving the server's version of OBJECTs </echo>
-    <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
-    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/objectPackageRet.xml" />
-
-    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
-
-    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
-
-
-    <antcallback target="getStaticResourceAndLayouts" />
-  </target>
-
 </project>

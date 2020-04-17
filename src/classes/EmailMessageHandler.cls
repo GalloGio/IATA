@@ -57,23 +57,16 @@ public with sharing class EmailMessageHandler {
 
 	}
 
-
-	/*
-	 * This method prevents the deletion of email messages
-	 */
-	public static void PreventEmailDeletion(list<EmailMessage> lstTriggerOld) {
-		for (EmailMessage em : lstTriggerOld) {
-			em.addError('You are not allowed to delete this Email message.');
-		}
-	}
-
 	/*
 	 * If an email message related to a case closed for more than 2 weeks is received
 	 * and this case is in one of the selected recordtypes then
 	 * a warning email is sent to the sender
 	 */
 	public static final String ORG_ADDRESS_FROM = 'noreply@iata.org';
-	public static final list<String> LIST_VALID_RT = new list<String>{'Cases_Global','CasesEurope','CasesAmericas','CasesMENA','ExternalCasesIDFSglobal','Cases_China_North_Asia','ComplaintIDFS'};
+	public static final list<String> LIST_VALID_RT = new list<String>{
+		'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
+		'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+	};
 	public static void sendEmailToSenderWhenCaseClosed(list<EmailMessage> listNewEmail) {
 		// create a map with parent cases as key and their emails as value
 		map<Id,list<EmailMessage>> mapCaseIdEmail = new map<Id,list<EmailMessage>>();
@@ -204,11 +197,11 @@ public with sharing class EmailMessageHandler {
 
 		for(Case_RTs_for_Auto_Reply_Email__c cs : eligibleCaseRTs) {
 			validRTList.add(cs.Record_Type_Name__c);
-	  	}
+			}
 
-	  	system.debug('### EmailMessageHandler - validRTList: ' + validRTList);
+			system.debug('### EmailMessageHandler - validRTList: ' + validRTList);
 
-	  	// find, in previously selected cases, those that have a valid RT
+			// find, in previously selected cases, those that have a valid RT
 		List<Case> eligibleCases = [SELECT Id, ClosedDate, ContactId, RecordType__c,
 										contact.CNS_Contact__c, contact.Preferred_Language__c, account.Source_System__c
 									FROM Case

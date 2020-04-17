@@ -4531,6 +4531,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active AL Withholding</fullName>
+                    <default>false</default>
+                    <label>Active AL Withholding</label>
+                </value>
+                <value>
                     <fullName>AG &gt; 6 mths</fullName>
                     <default>false</default>
                     <label>AG &gt; 6 mths</label>
@@ -4671,19 +4676,24 @@
                     <label>Irregularity /Default</label>
                 </value>
                 <value>
-                    <fullName>Issue &lt; $1k</fullName>
+                    <fullName>Late AL settlement (External) &lt; $1k</fullName>
                     <default>false</default>
-                    <label>Issue &lt; $1k</label>
+                    <label>Late AL settlement (External) &lt; $1k</label>
                 </value>
                 <value>
                     <fullName>Late AL settlement (External )</fullName>
                     <default>false</default>
-                    <label>Late AL settlement (External )</label>
+                    <label>Late AL Settlement (External) &gt; $1k</label>
+                </value>
+                <value>
+                    <fullName>Late AL settlement (Internal) &lt; $1k</fullName>
+                    <default>false</default>
+                    <label>Late AL settlement (Internal) &lt; $1k</label>
                 </value>
                 <value>
                     <fullName>Late AL settlement (Internal)</fullName>
                     <default>false</default>
-                    <label>Late AL settlement (Internal)</label>
+                    <label>Late AL Settlement (Internal) &gt; $1k</label>
                 </value>
                 <value>
                     <fullName>Manual billing upload</fullName>
@@ -4804,6 +4814,10 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Board Target Exclusion</controllingFieldValue>
+                <valueName>Active AL Withholding</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Board Target Exclusion</controllingFieldValue>
                 <valueName>AL instruction</valueName>
             </valueSettings>
             <valueSettings>
@@ -4918,7 +4932,11 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other</controllingFieldValue>
-                <valueName>Issue &lt; $1k</valueName>
+                <valueName>Late AL settlement (External) &lt; $1k</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Other</controllingFieldValue>
+                <valueName>Late AL settlement (Internal) &lt; $1k</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other</controllingFieldValue>
@@ -6437,7 +6455,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <description>Used by CPS OI to link the operation code with the country</description>
         <externalId>false</externalId>
         <label>Section Code</label>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -8188,6 +8206,16 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                     <label>AR_BSP_Y_USD_I</label>
                 </value>
                 <value>
+                    <fullName>SY_BSP_Y_USD_I</fullName>
+                    <default>false</default>
+                    <label>SY_BSP_Y_USD_I</label>
+                </value>
+                <value>
+                    <fullName>SY_BSP_Y_SYP_I</fullName>
+                    <default>false</default>
+                    <label>SY_BSP_Y_SYP_I</label>
+                </value>
+                <value>
                     <fullName>DE_CAS_I_EUR_I</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -8825,6 +8853,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <valueSettings>
                 <controllingFieldValue>Switzerland</controllingFieldValue>
                 <valueName>CH_CAS_E_CHF_I</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Syria</controllingFieldValue>
+                <valueName>SY_BSP_Y_USD_I</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Syria</controllingFieldValue>
+                <valueName>SY_BSP_Y_SYP_I</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Tanzania</controllingFieldValue>
@@ -13290,6 +13326,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Active AL Withholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Agent Adjustment</fullName>
                 <default>false</default>
             </values>
@@ -13370,15 +13410,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Issue %3C %241k</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Late AL settlement %28External %29</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Late AL settlement %28External%29 %3C %241k</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Late AL settlement %28Internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late AL settlement %28Internal%29 %3C %241k</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14952,6 +14996,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>SX_BSP_Y_USD_I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY_BSP_Y_SYP_I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY_BSP_Y_USD_I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17924,10 +17976,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Irregularity %2FDefault</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Issue %3C %241k</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22214,10 +22262,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Issue %3C %241k</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Late AL settlement %28External %29</fullName>
                 <default>false</default>
             </values>
@@ -24009,6 +24053,16 @@ NOT(INCLUDES( Root_Cause_s__c , &quot;Measure (controls and KPIs)&quot;)),
 NOT(INCLUDES( Root_Cause_s__c , &quot;Mother Earth (force majeure)&quot;))
 )</errorConditionFormula>
         <errorMessage>According to ISO 9001, ‘Man (people)’ in isolation is not a valid root cause, what weakness in process/tool caused a person to make an error? please select relevant root cause(s).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Section_code_is_mandatory_for_CPS_Checks</fullName>
+        <active>true</active>
+        <description>To make sure the field Section code is alwyas filled in before creating an operational improvement under CPS</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;CPS_Checks&apos;, ISPICKVAL(Section_Code__c,&quot;&quot;)
+)</errorConditionFormula>
+        <errorDisplayField>Section_Code__c</errorDisplayField>
+        <errorMessage>Please select the applicatble section code</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>affected_process_Other_check</fullName>

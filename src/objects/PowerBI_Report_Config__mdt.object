@@ -78,6 +78,18 @@
         </valueSet>
     </fields>
     <label>PowerBI Report Config</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>Group_Id_Prod__c</columns>
+        <columns>Report_Id_Prod__c</columns>
+        <columns>LastModifiedDate__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>PowerBI Report Configs</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
