@@ -11813,7 +11813,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000HmC0&amp;oid=00D2000000008TF&amp;lastMod=1587048852000</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
