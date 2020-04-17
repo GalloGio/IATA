@@ -420,15 +420,4 @@
     <delete file="${basedir}/${sfdc.retrieveTarget}/package.xml" />
     <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
-
-  </target>
-
-    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackageRet.xml" />
-
-    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
-
-
-    <antcallback target="getStaticResourceAndLayouts" />
-  </target>
-
 </project>
