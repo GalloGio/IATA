@@ -108,6 +108,42 @@
         <possessive>Second</possessive>
         <value><!-- الPromotion --></value>
     </caseValues>
+    <fields>
+        <label>رمز الترقية</label>
+        <name>Promotion_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion Duration - Valid From --></label>
+        <name>Promotion_Duration_Valid_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion Duration - Valid Up to --></label>
+        <name>Promotion_Duration_Valid_Up_to__c</name>
+    </fields>
+    <fields>
+        <label>قيمة الترقية</label>
+        <name>Promotion_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Application --></label>
+        <name>Type_of_Application__c</name>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reissue</masterLabel>
+            <translation><!-- Reissue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal</masterLabel>
+            <translation><!-- Renewal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Replacement</masterLabel>
+            <translation><!-- Replacement --></translation>
+        </picklistValues>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- Promotion Name --></nameFieldLabel>
 </CustomObjectTranslation>

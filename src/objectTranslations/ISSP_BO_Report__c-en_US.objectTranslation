@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>ISSP BO Report</value>
     </caseValues>
+    <fields>
+        <label><!-- Posted Date --></label>
+        <name>Report_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Date format --></label>
+        <name>Report_Date_format__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

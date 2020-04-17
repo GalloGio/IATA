@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>E&amp;F Amazonfile Default Private</value>
     </caseValues>
+    <fields>
+        <label><!-- E&amp;F Private --></label>
+        <name>EF_Private__c</name>
+    </fields>
+    <fields>
+        <label><!-- SObject 3 first chars --></label>
+        <name>SObject_3_first_chars__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

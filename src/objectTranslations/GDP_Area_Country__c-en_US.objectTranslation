@@ -8,5 +8,27 @@
         <plural>true</plural>
         <value>GDP Area Countries</value>
     </caseValues>
+    <fields>
+        <label><!-- GDP Area Definition --></label>
+        <name>GDP_Area_Definition__c</name>
+        <relationshipLabel><!-- GDP Area Countries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- GDP Area Countries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Method --></label>
+        <name>Method__c</name>
+        <picklistValues>
+            <masterLabel>Exclude</masterLabel>
+            <translation><!-- Exclude --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Include</masterLabel>
+            <translation><!-- Include --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

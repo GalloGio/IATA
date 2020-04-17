@@ -8,5 +8,21 @@
         <plural>true</plural>
         <value>Mapping for CSR Cases</value>
     </caseValues>
+    <fields>
+        <label><!-- Access to portal --></label>
+        <name>Access_to_portal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Id --></label>
+        <name>Contact_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- DPC System --></label>
+        <name>DPC_System__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type Id --></label>
+        <name>Record_Type_Id__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

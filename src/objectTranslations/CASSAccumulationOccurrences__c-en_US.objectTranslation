@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>SIDRA CASS Accumulation Occurrences</value>
     </caseValues>
+    <fields>
+        <label><!-- Number Of Occurrences --></label>
+        <name>Number_Of_Occurrences__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

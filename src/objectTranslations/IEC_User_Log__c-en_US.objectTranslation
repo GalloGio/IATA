@@ -8,5 +8,26 @@
         <plural>true</plural>
         <value>IEC User Logs</value>
     </caseValues>
+    <fields>
+        <label><!-- Log Description --></label>
+        <name>Log_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Value --></label>
+        <name>New_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Value --></label>
+        <name>Old_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscription Number --></label>
+        <name>Subscription_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- IEC User Logs --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

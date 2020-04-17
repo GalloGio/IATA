@@ -8,5 +8,19 @@
         <plural>true</plural>
         <value>IS Keywords</value>
     </caseValues>
+    <fields>
+        <help><!-- Keyword Length --></help>
+        <label><!-- Keyword Length --></label>
+        <name>Keyword_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Keyword --></label>
+        <name>Keyword__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority Mapping --></label>
+        <name>Priority_Mapping__c</name>
+        <relationshipLabel><!-- IS Keywords --></relationshipLabel>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

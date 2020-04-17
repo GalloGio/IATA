@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Utility Custom Setting</value>
     </caseValues>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

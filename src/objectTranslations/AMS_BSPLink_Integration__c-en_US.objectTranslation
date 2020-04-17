@@ -8,5 +8,33 @@
         <plural>true</plural>
         <value>AMS BSPLink Integration</value>
     </caseValues>
+    <fields>
+        <label><!-- EndpointDeactivationUndo --></label>
+        <name>EndpointDeactivationUndo__c</name>
+    </fields>
+    <fields>
+        <label><!-- EndpointDeactivation --></label>
+        <name>EndpointDeactivation__c</name>
+    </fields>
+    <fields>
+        <label><!-- EndpointReactivation --></label>
+        <name>EndpointReactivation__c</name>
+    </fields>
+    <fields>
+        <label><!-- EndpointToken --></label>
+        <name>EndpointToken__c</name>
+    </fields>
+    <fields>
+        <label><!-- GrantType --></label>
+        <name>GrantType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Password --></label>
+        <name>Password__c</name>
+    </fields>
+    <fields>
+        <label><!-- Username --></label>
+        <name>Username__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

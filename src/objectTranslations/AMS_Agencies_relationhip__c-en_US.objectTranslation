@@ -8,5 +8,90 @@
         <plural>true</plural>
         <value>AMS Agencies relationships</value>
     </caseValues>
+    <fieldSets>
+        <label><!-- AMS Oscar Savepoint fields --></label>
+        <name>AMS_Oscar_Savepoint_fields</name>
+    </fieldSets>
+    <fields>
+        <help><!-- Child account in hierarchy relationship --></help>
+        <label><!-- Child Account --></label>
+        <name>Child_Account__c</name>
+        <relationshipLabel><!-- AMS Agencies relationships --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agency (AMS) --></label>
+        <name>Child_Agency__c</name>
+        <relationshipLabel><!-- AMS Agencies relationships --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field is used to set a common branch for all Agency relationships with the same HQ --></help>
+        <label><!-- HO hierarchy Flag --></label>
+        <name>HO_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Hierarchy --></label>
+        <name>Hierarchy__c</name>
+        <relationshipLabel><!-- Agency relationships --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is Newgen Relation --></label>
+        <name>Is_Newgen_Relation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last legacy sync direction --></label>
+        <name>Last_legacy_sync_direction__c</name>
+        <picklistValues>
+            <masterLabel>AMS 2 LEGACY</masterLabel>
+            <translation><!-- AMS 2 LEGACY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LEGACY 2 AMS</masterLabel>
+            <translation><!-- LEGACY 2 AMS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last synchronization --></label>
+        <name>Last_synchronization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy Id --></label>
+        <name>Legacy_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legacy System --></label>
+        <name>Legacy_System__c</name>
+        <picklistValues>
+            <masterLabel>AIMS</masterLabel>
+            <translation><!-- AIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAIMS</masterLabel>
+            <translation><!-- CAIMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNS</masterLabel>
+            <translation><!-- CNS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WEBSTAR</masterLabel>
+            <translation><!-- WEBSTAR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Parent account in relationship --></help>
+        <label><!-- Parent Account --></label>
+        <name>Parent_Account__c</name>
+        <relationshipLabel><!-- AMS Agencies relationships (Parent Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Agency (AMS) --></label>
+        <name>Parent_agency__c</name>
+        <relationshipLabel><!-- AMS Agencies relationships (Agency (AMS)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Please indicate nature of relationship --></help>
+        <label><!-- Relationship details --></label>
+        <name>Relationship_details__c</name>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

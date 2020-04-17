@@ -8,5 +8,28 @@
         <plural>true</plural>
         <value>IEC Renewal notice logs</value>
     </caseValues>
+    <fields>
+        <label><!-- Campaign --></label>
+        <name>Campaign__c</name>
+        <relationshipLabel><!-- IEC Renewal notice logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Member --></label>
+        <name>Member__c</name>
+        <relationshipLabel><!-- IEC Renewal notice logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Message --></label>
+        <name>Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- IEC Renewal notice logs --></relationshipLabel>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,10 @@
         <plural>true</plural>
         <value>IFTP Account Role Service Details</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Role Service --></label>
+        <name>Account_Role_Service__c</name>
+        <relationshipLabel><!-- IFTP Account Role Service Details --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

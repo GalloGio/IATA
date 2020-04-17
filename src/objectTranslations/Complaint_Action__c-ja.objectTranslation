@@ -4,5 +4,131 @@
         <plural>false</plural>
         <value><!-- Complaint Action --></value>
     </caseValues>
+    <fields>
+        <label><!-- Action Case --></label>
+        <name>Action_Case__c</name>
+        <relationshipLabel><!-- Related complaint actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Action Owner --></label>
+        <name>Action_Owner__c</name>
+        <picklistValues>
+            <masterLabel>Accreditation</masterLabel>
+            <translation>認定</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agency Risk Management</masterLabel>
+            <translation><!-- Agency Risk Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Management</masterLabel>
+            <translation>航空会社</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Service</masterLabel>
+            <translation><!-- Customer Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DPC</masterLabel>
+            <translation><!-- DPC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance</masterLabel>
+            <translation>財務</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing &amp; Collection</masterLabel>
+            <translation><!-- Invoicing &amp; Collection --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Local Office</masterLabel>
+            <translation><!-- Local Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other IATA Division</masterLabel>
+            <translation><!-- Other IATA Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Remittance &amp; Settlement</masterLabel>
+            <translation>送金および決済</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting &amp; Billing</masterLabel>
+            <translation><!-- Reporting &amp; Billing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Support</masterLabel>
+            <translation><!-- System Support --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Action Type --></label>
+        <name>Action_Type__c</name>
+        <picklistValues>
+            <masterLabel>Correct / Update Data</masterLabel>
+            <translation><!-- Correct / Update Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Feedback Request</masterLabel>
+            <translation><!-- Feedback Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Info Request</masterLabel>
+            <translation><!-- Info Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Investigation Request</masterLabel>
+            <translation><!-- Investigation Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Issue Credit / Debit Note</masterLabel>
+            <translation><!-- Issue Credit / Debit Note --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Task Request</masterLabel>
+            <translation><!-- Other Task Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rerun / Re-Send Data</masterLabel>
+            <translation><!-- Rerun / Re-Send Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Review Invoicing File</masterLabel>
+            <translation><!-- Review Invoicing File --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service Request</masterLabel>
+            <translation><!-- Service Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Translation</masterLabel>
+            <translation><!-- Translation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Closed Date --></label>
+        <name>Closed_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Complaint Case --></label>
+        <name>Complaint_Case__c</name>
+        <relationshipLabel><!-- Complaint Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
     <nameFieldLabel><!-- Complaint Action Name --></nameFieldLabel>
 </CustomObjectTranslation>

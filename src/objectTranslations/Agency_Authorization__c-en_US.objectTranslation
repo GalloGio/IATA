@@ -8,5 +8,90 @@
         <plural>true</plural>
         <value>Agency Authorizations</value>
     </caseValues>
+    <fields>
+        <label><!-- Form of Payment ID --></label>
+        <name>ANG_FormOfPayment_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Agency Authorizations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Authorization --></label>
+        <name>Authority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Quality Description --></label>
+        <name>Data_Quality_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Quality Score --></label>
+        <name>Data_Quality_Score__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email (Used for BSP Creation) --></label>
+        <name>Email_Used_for_BSP_Creation__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATACode__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Country --></label>
+        <name>ISO_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Request Result --></label>
+        <name>Last_Request_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorized</masterLabel>
+            <translation><!-- Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deactivation in process</masterLabel>
+            <translation><!-- Deactivation in process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Active</masterLabel>
+            <translation><!-- Non-Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Authorized</masterLabel>
+            <translation><!-- Not Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not set</masterLabel>
+            <translation><!-- Not set --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Unique Identifier --></label>
+        <name>Unique_Identifier__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- BSPLink --></label>
+        <name>BSPLink</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Form Of Payment --></label>
+        <name>FormOfPayment</name>
+    </recordTypes>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false --></errorMessage>
+        <name>Form_Of_Payment_CC_and_PCI_Compliant</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- New_Agency_Authorization --></label>
+        <name>New_Agency_Authorization</name>
+    </webLinks>
 </CustomObjectTranslation>

@@ -8,6 +8,627 @@
         <plural>true</plural>
         <value><!-- Work Order --></value>
     </caseValues>
+    <fields>
+        <label>Compte</label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Work Orders (Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Actual Duration --></label>
+        <name>Actual_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Finish Date --></label>
+        <name>Actual_Finish_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Start Date --></label>
+        <name>Actual_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Air France Project --></label>
+        <name>Air_France_Project__c</name>
+        <picklistValues>
+            <masterLabel>ALL</masterLabel>
+            <translation>Tout</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ALL Power Supplier</masterLabel>
+            <translation><!-- ALL Power Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CARAIB</masterLabel>
+            <translation><!-- CARAIB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GENEX IN</masterLabel>
+            <translation><!-- GENEX IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GENEX OUT</masterLabel>
+            <translation><!-- GENEX OUT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PAX</masterLabel>
+            <translation><!-- PAX --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Work Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Customer Change Order --></label>
+        <name>Customer_Change_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Contract Comments --></label>
+        <name>Customer_Contract_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Contract Status Time Stamp --></label>
+        <name>Customer_Contract_Status_Time_Stamp__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Contract Status --></label>
+        <name>Customer_Contract_Status__c</name>
+        <picklistValues>
+            <masterLabel>CCF Approved</masterLabel>
+            <translation><!-- CCF Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCF Submitted</masterLabel>
+            <translation><!-- CCF Submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Signed</masterLabel>
+            <translation><!-- Customer Signed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Executed</masterLabel>
+            <translation><!-- Executed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Hold</masterLabel>
+            <translation><!-- On Hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terms &amp; Conditions Agreed</masterLabel>
+            <translation><!-- Terms &amp; Conditions Agreed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terms &amp; Conditions under Review</masterLabel>
+            <translation><!-- Terms &amp; Conditions under Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Customer Contract Value --></label>
+        <name>Customer_Contract_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Price Currency --></label>
+        <name>Customer_Price_Currency__c</name>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Customer Price --></label>
+        <name>Customer_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Reference --></label>
+        <name>Customer_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deadline --></label>
+        <name>Deadline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Forecasted PROD delivey --></label>
+        <name>Forecasted_PROD_delivey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Forecasted UAT signoff --></label>
+        <name>Forecasted_UAT_signoff__c</name>
+    </fields>
+    <fields>
+        <label><!-- Forecasted WO signoff --></label>
+        <name>Forecasted_WP_signoff__c</name>
+    </fields>
+    <fields>
+        <label><!-- Funding --></label>
+        <name>Funding__c</name>
+        <picklistValues>
+            <masterLabel>End User</masterLabel>
+            <translation><!-- End User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Service Provider</masterLabel>
+            <translation><!-- Service Provider --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>To Be Determined</masterLabel>
+            <translation><!-- To Be Determined --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Workload --></label>
+        <name>Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Cost Center --></label>
+        <name>IATA_Cost_Center__c</name>
+        <picklistValues>
+            <masterLabel>IIS001CA01</masterLabel>
+            <translation><!-- IIS001CA01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PM0192CA01</masterLabel>
+            <translation><!-- PM0192CA01 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IATA Owner --></label>
+        <name>IATA_Owner__c</name>
+        <relationshipLabel><!-- Work Orders (IATA Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Industry Enhancement --></label>
+        <name>Industry_Enhancement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Information --></label>
+        <name>Information__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA PO --></label>
+        <name>Legacy_Service_Call_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- The ID of Work Orders from the lagacy system (Service Desk). --></help>
+        <label><!-- Legacy Work Order ID --></label>
+        <name>Legacy_Work_Order_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Work Order --></label>
+        <name>Parent_Work_Order_ID__c</name>
+        <relationshipLabel><!-- Work Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- 30% upon WO signature
+30% - UAT completion
+40% - Approval for PROD --></help>
+        <label><!-- Percent of Value Paid --></label>
+        <name>PercentValuePaid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned Duration --></label>
+        <name>Planned_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planned Finish --></label>
+        <name>Planned_Finish__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the planned start date --></help>
+        <label><!-- Planned Start --></label>
+        <name>Planned_Start__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planning - PROD Availability --></label>
+        <name>Planning_PROD_Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planning - Quote Availability --></label>
+        <name>Planning_Quote_Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planning - Release Number --></label>
+        <name>Planning_Release_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Planning - UAT Availability --></label>
+        <name>Planning_UAT_Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quoting Priority --></label>
+        <name>Quoting_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related to Case No --></label>
+        <name>Related_to_Case_No__c</name>
+        <relationshipLabel><!-- Work Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks_del__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested by Customer --></label>
+        <name>Requested_by_Customer__c</name>
+        <relationshipLabel><!-- Work Orders --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- this field is updated by the SLA calculation script --></help>
+        <label><!-- SLA2 result (quote delivery) --></label>
+        <name>SLA2_result_quote_delivery__c</name>
+    </fields>
+    <fields>
+        <help><!-- this field is updated by the SLA calcunation script --></help>
+        <label><!-- SLA4.2 result (UAT start) --></label>
+        <name>SLA4_2_result_UAT_start__c</name>
+    </fields>
+    <fields>
+        <help><!-- this field is updated by the SLA calculation script --></help>
+        <label><!-- SLA6 result (UAT fix) --></label>
+        <name>SLA6_result_UAT_fix__c</name>
+    </fields>
+    <fields>
+        <help><!-- date of actual delivery of Quote and delivery plan by BPS --></help>
+        <label><!-- Actual Quote delivery --></label>
+        <name>SLA_Actual_Quote_delivery__c</name>
+    </fields>
+    <fields>
+        <help><!-- number of days between failure of initial delivery till the date of delivery which passed the final acceptance test, minus all time for IATA and customer tests. --></help>
+        <label><!-- Additional Fixing (days) --></label>
+        <name>SLA_Additional_Fixing_days__c</name>
+    </fields>
+    <fields>
+        <help><!-- date of delivery of business requirements by IATA --></help>
+        <label><!-- Business Req. provided --></label>
+        <name>SLA_Business_Req_provided__c</name>
+    </fields>
+    <fields>
+        <help><!-- 1 - more complex (product core service feature)
+2 - compex customer-specific configuration
+3 - simple change request --></help>
+        <label><!-- Complexity Category --></label>
+        <name>SLA_Complexity_Category__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- date of final delivery of functional requirements by BPS, considered by SLA 1. 
+
+- cat. 1 - 20 b/days after business req., 
+- cat.2 - 10 b/days, 
+- cat.3 - 5 b/days --></help>
+        <label><!-- Final Funct. Req. received --></label>
+        <name>SLA_Final_Funct_Req_received__c</name>
+    </fields>
+    <fields>
+        <help><!-- date of IATA&apos;s approval of functional requirements --></help>
+        <label><!-- Funct. Spec sign-off --></label>
+        <name>SLA_Funct_Spec_sign_off__c</name>
+    </fields>
+    <fields>
+        <help><!-- date of initial delivery of functional requirements document by BPS --></help>
+        <label><!-- Initial  Funct. Req. received --></label>
+        <name>SLA_Initial_Funct_Req_received__c</name>
+    </fields>
+    <fields>
+        <help><!-- Agreed date for delivery of  Quote and delivery plan (WO in BPS terminology). 
+
+If field empty - date will be defined according to SLA:
+
+- Cat1: 10 b/days from approval of functional requirements
+- Cat2: 5 b/days
+- Cat3: 3 b/days --></help>
+        <label><!-- Planned Quote delivery --></label>
+        <name>SLA_Planned_Quote_delivery__c</name>
+    </fields>
+    <fields>
+        <help><!-- this field is updated by the SLA calculation script --></help>
+        <label><!-- SLA1 results (funct. req) --></label>
+        <name>SLA_SLA1_results_funct_req__c</name>
+    </fields>
+    <fields>
+        <help><!-- this field is updated by the SLA calculation script --></help>
+        <label><!-- SLA5 result (iterations) --></label>
+        <name>SLA_SLA5_result_iterations__c</name>
+    </fields>
+    <fields>
+        <help><!-- Service Level Credit actually applied to this WO (% of value)
+
+this field should NOT be updated manually, it is updated by the SLA calculation script on a regular basis --></help>
+        <label><!-- SLC % Applied --></label>
+        <name>SLA_SLC_Applied__c</name>
+    </fields>
+    <fields>
+        <help><!-- Service Level Credit to be applied to this WO (% of value)
+
+this field is updated by the SLA calculation script on a regular basis --></help>
+        <label><!-- SLC % Calculated --></label>
+        <name>SLA_SLC_Calculated__c</name>
+    </fields>
+    <fields>
+        <help><!-- Service Level Credit to be applied to this WO (value)
+
+this field should NOT be updated manually, it is updated by the SLA calculation script on a regular basis --></help>
+        <label><!-- SLC Value Applied --></label>
+        <name>SLA_SLC_Value_Applied__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject to SLA --></label>
+        <name>SLA_Subject_to_SLA__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- date of planned UAT start identified in the delivery plan (WO) --></help>
+        <label><!-- UAT Date in WO --></label>
+        <name>SLA_UAT_Date_in_WO__c</name>
+    </fields>
+    <fields>
+        <help><!-- As per IATA-BPS contract, test scripts and implementation documentation  should be sent to IATA 3 days before Actual UAT start. --></help>
+        <label><!-- UAT Doc. Received 3 days (SLA3) --></label>
+        <name>SLA_UAT_Doc_Received_3_days_SLA3__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- the number of testing re-iterations made by IATA/customer as a result of incomplete delivery/ bugs - till the final delivery acceptance.
+
+SLA:
+- cat. 1 - 4 iterations
+- cat. 2 - 2 iterations
+- cat. 3 - 1 iterations --></help>
+        <label><!-- UAT re-iterations --></label>
+        <name>SLA_UAT_Iterations__c</name>
+    </fields>
+    <fields>
+        <help><!-- date when UAT was actually started.
+
+SLA: 
+- cat. 1  - variance of 10 b/days from delivery plan
+- cat. 2  - variance of 5 b/days from delivery plan
+- cat. 3  - variance of 1 b/days from delivery plan --></help>
+        <label><!-- UAT Actual Start --></label>
+        <name>SLA_UAT_Start_Actual__c</name>
+    </fields>
+    <fields>
+        <help><!-- Service Level Credit to be applied to this WO (value)
+
+this field is updated by the SLA calculation script on a regular basis --></help>
+        <label><!-- SLC Value Calculated --></label>
+        <name>SLC_Value_Calculated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scheduling Priority --></label>
+        <name>Scheduling_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Provider Reference --></label>
+        <name>Service_Provider_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Provider --></label>
+        <name>Service_Provider__c</name>
+        <picklistValues>
+            <masterLabel>ATOS</masterLabel>
+            <translation><!-- ATOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deskom</masterLabel>
+            <translation><!-- Deskom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diversified</masterLabel>
+            <translation><!-- Diversified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recall</masterLabel>
+            <translation><!-- Recall --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>b-process / Ariba</masterLabel>
+            <translation><!-- b-process / Ariba --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>iPayables</masterLabel>
+            <translation><!-- iPayables --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status Prior to Hold --></label>
+        <name>Status_Prior_to_Hold__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>1 - Compiling Business Requirements, IATA</masterLabel>
+            <translation><!-- 1 - Compiling Business Requirements, IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 - Completed</masterLabel>
+            <translation><!-- 10 - Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11 - On Hold</masterLabel>
+            <translation><!-- 11 - On Hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12 - Cancelled</masterLabel>
+            <translation><!-- 12 - Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2 - Compiling Technical Requirements, Dev</masterLabel>
+            <translation><!-- 2 - Compiling Technical Requirements, Dev --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.5 - Pending IATA SA review</masterLabel>
+            <translation><!-- 2.5 - Pending IATA SA review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3 - Pending Quote / QQ</masterLabel>
+            <translation><!-- 3 - Pending Quote / QQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4 - Pending Technical Approval (spec, Q)</masterLabel>
+            <translation><!-- 4 - Pending Technical Approval (spec, Q) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5 - Pending Cust. Change Order Approval</masterLabel>
+            <translation><!-- 5 - Pending Cust. Change Order Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6 - Pending IATA Approval</masterLabel>
+            <translation><!-- 6 - Pending IATA Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7 - Pending Schedule</masterLabel>
+            <translation><!-- 7 - Pending Schedule --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8 - Scheduled / Development</masterLabel>
+            <translation><!-- 8 - Scheduled / Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9a - Pending IATA Acceptance</masterLabel>
+            <translation><!-- 9a - Pending IATA Acceptance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9b - Pending Customer Acceptance test</masterLabel>
+            <translation><!-- 9b - Pending Customer Acceptance test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9c - Pending Development team</masterLabel>
+            <translation><!-- 9c - Pending Development team --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9d - Test Failed, pending fix</masterLabel>
+            <translation><!-- 9d - Test Failed, pending fix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9e - Pending release into Prod</masterLabel>
+            <translation><!-- 9e - Pending release into Prod --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9f - Released into Prod</masterLabel>
+            <translation><!-- 9f - Released into Prod --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub-Contractor Owner --></label>
+        <name>Sub_Contractor_Owner__c</name>
+        <relationshipLabel><!-- Work Orders (Sub-Contractor Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- As per IATA-BPS contract, confirmation of UAT start day should be sent 3 days before it is scheduled according to delivery plan. --></help>
+        <label><!-- UAT 3 days&apos; notification  (SLA4.1) --></label>
+        <name>UAT_3_days_notification_SLA4_1__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Value Currency --></label>
+        <name>Value_Currency__c</name>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Value Type --></label>
+        <name>Value_Type__c</name>
+        <picklistValues>
+            <masterLabel>IATA Estimate</masterLabel>
+            <translation><!-- IATA Estimate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor&apos;s raw estimate</masterLabel>
+            <translation><!-- Vendor&apos;s raw estimate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendors&apos; quote</masterLabel>
+            <translation><!-- Vendors&apos; quote --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
+    <fields>
+        <help><!-- This value is defining the bucket where this WO should be allocated in planning. --></help>
+        <label><!-- WO Type --></label>
+        <name>WO_Type_Bucket__c</name>
+        <picklistValues>
+            <masterLabel>1. Standard Solution – evolution</masterLabel>
+            <translation><!-- 1. Standard Solution – evolution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2. Ad-hoc customer request</masterLabel>
+            <translation><!-- 2. Ad-hoc customer request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3. New customer onboarding to St. Solution</masterLabel>
+            <translation><!-- 3. New customer onboarding to St. Solution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4. New non-standard customer onboarding to St. Solution</masterLabel>
+            <translation><!-- 4. New non-standard customer onboarding to St. Solution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5. Migration project</masterLabel>
+            <translation><!-- 5. Migration project --></translation>
+        </picklistValues>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- Work Order ID --></nameFieldLabel>
     <startsWith><!-- Consonant --></startsWith>

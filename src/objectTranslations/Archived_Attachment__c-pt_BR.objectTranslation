@@ -8,6 +8,53 @@
         <plural>true</plural>
         <value><!-- Archived Attachment --></value>
     </caseValues>
+    <fields>
+        <label><!-- AWS S3 URL --></label>
+        <name>AWS_S3_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Archived Message --></label>
+        <name>ArchivedMessage__c</name>
+        <relationshipLabel><!-- Archived Attachments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- BodyLength --></label>
+        <name>BodyLength__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bucket --></label>
+        <name>Bucket__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Archived Attachments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ContentType --></label>
+        <name>ContentType__c</name>
+    </fields>
+    <fields>
+        <label>Descrição</label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Comments --></label>
+        <name>Internal_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- OriginalCreatedBy --></label>
+        <name>OriginalCreatedBy__c</name>
+        <relationshipLabel><!-- Archived Attachments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Original Creation Date --></label>
+        <name>Original_Creation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Originally Created By --></label>
+        <name>Originally_Created_By__c</name>
+    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- Archived Attachment Name --></nameFieldLabel>
 </CustomObjectTranslation>

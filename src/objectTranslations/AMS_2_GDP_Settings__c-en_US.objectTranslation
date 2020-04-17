@@ -8,5 +8,25 @@
         <plural>true</plural>
         <value>AMS 2 GDP Settings</value>
     </caseValues>
+    <fields>
+        <label><!-- Activate Sync --></label>
+        <name>Activate_Sync__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Classes --></label>
+        <name>Location_Classes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notification Email --></label>
+        <name>Notification_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Period (hr) --></label>
+        <name>Schedule_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

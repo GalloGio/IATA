@@ -8,5 +8,41 @@
         <plural>true</plural>
         <value>Test Scripts</value>
     </caseValues>
+    <fields>
+        <label><!-- Expected Result --></label>
+        <name>Expected_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Module --></label>
+        <name>Module__c</name>
+        <picklistValues>
+            <masterLabel>Accounts</masterLabel>
+            <translation><!-- Accounts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contacts</masterLabel>
+            <translation><!-- Contacts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunities</masterLabel>
+            <translation><!-- Opportunities --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Script Prerequsite --></label>
+        <name>Script_Prerequsite__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Script Description --></label>
+        <name>Test_Script_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Script Purpose --></label>
+        <name>Test_Script_Purpose__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Script Steps --></label>
+        <name>Test_Script_Steps__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

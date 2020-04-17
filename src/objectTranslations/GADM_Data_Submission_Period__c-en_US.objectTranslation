@@ -8,5 +8,88 @@
         <plural>true</plural>
         <value>GADM Data Submission Periods</value>
     </caseValues>
+    <fields>
+        <help><!-- In Due Notification in days --></help>
+        <label><!-- In Due Notification --></label>
+        <name>In_Due_Notification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Months Count --></label>
+        <name>Months_Count__c</name>
+    </fields>
+    <fields>
+        <help><!-- Period length in months --></help>
+        <label><!-- Period Length --></label>
+        <name>Period_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Cycle End Day --></label>
+        <name>Submission_Cycle_End_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Cycle End Month --></label>
+        <name>Submission_Cycle_End_Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Cycle Start Day --></label>
+        <name>Submission_Cycle_Start_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Cycle Start Month --></label>
+        <name>Submission_Cycle_Start_Month__c</name>
+    </fields>
+    <fields>
+        <label><!-- TestDate --></label>
+        <name>TestDate__c</name>
+    </fields>
+    <fields>
+        <help><!-- Upcoming Notification in days --></help>
+        <label><!-- Upcoming Notification --></label>
+        <name>Upcoming_Notification__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Date must always be first day of month. --></errorMessage>
+        <name>DayIsFirstDayInMonth</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- In due notification must be equal or greater than 0. --></errorMessage>
+        <name>InDueNotification</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Period Length must be equal or greater than 1. --></errorMessage>
+        <name>PeriodLenght</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission Cycle End Day must be equal or greater than Submission Cycle Start Day --></errorMessage>
+        <name>SubmissionCycleEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission Cycle End Month must be equal or greater than Submission Cycle Start Month --></errorMessage>
+        <name>SubmissionCycleEndMonth</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission Cycle End Month must be equal or less than Period Length --></errorMessage>
+        <name>SubmissionCycleEndtMonth_PeriondLength</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submissin Cycle Start Day must be &gt; 0 --></errorMessage>
+        <name>SubmissionCycleStartDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission Cycle Start Month must be &gt; 0 --></errorMessage>
+        <name>SubmissionCycleStartMonth</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Submission Cycle Start Month must be equal or less than Period Length --></errorMessage>
+        <name>SubmissionCycleStartMonth_PeriondLength</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Upcoming notification must be equal or greater than 0. --></errorMessage>
+        <name>Upcoming_notification</name>
+    </validationRules>
 </CustomObjectTranslation>

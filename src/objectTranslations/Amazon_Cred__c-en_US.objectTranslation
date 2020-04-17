@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>Amazon Cred</value>
     </caseValues>
+    <fields>
+        <label><!-- Dev Configuration --></label>
+        <name>Dev_Configuration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Prod Configuration --></label>
+        <name>Prod_Configuration__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

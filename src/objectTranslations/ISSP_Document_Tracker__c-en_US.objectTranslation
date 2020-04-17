@@ -8,5 +8,41 @@
         <plural>true</plural>
         <value>ISSP Document Tracker</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amazon File --></label>
+        <name>Amazon_File__c</name>
+        <relationshipLabel><!-- ISSP Document Tracker --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Management Information Report --></label>
+        <name>Management_Information_Report__c</name>
+        <relationshipLabel><!-- ISSP Document Tracker --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NonTD  Report --></label>
+        <name>NonTD_Report__c</name>
+        <relationshipLabel><!-- ISSP Document Tracker --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Report Id --></label>
+        <name>Report_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- ISSP Document Tracker --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

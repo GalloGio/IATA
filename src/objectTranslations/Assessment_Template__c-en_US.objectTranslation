@@ -8,5 +8,29 @@
         <plural>true</plural>
         <value>Assessment Templates</value>
     </caseValues>
+    <fields>
+        <label><!-- Country ISO Code --></label>
+        <name>Country_ISO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Passenger/Cargo --></label>
+        <name>Passenger_Cargo__c</name>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Template Code --></label>
+        <name>Template_Code__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

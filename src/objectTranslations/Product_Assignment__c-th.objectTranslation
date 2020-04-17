@@ -4,5 +4,120 @@
         <plural>false</plural>
         <value><!-- ICCS Product Assignment --></value>
     </caseValues>
+    <fields>
+        <label><!-- Accelerated Function --></label>
+        <name>Accelerated_Function__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accelerated Settlement --></label>
+        <name>Accelerated_Settlement__c</name>
+    </fields>
+    <fields>
+        <label>บัญชี</label>
+        <lookupFilter>
+            <errorMessage><!-- The Account must have the Airline Headquarters record type. --></errorMessage>
+        </lookupFilter>
+        <name>Account__c</name>
+        <relationshipLabel><!-- ICCS Product Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Code --></label>
+        <name>Bank_Account_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Currency --></label>
+        <name>Bank_Account_Currency__c</name>
+    </fields>
+    <fields>
+        <label>ผู้ติดต่อ</label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- ICCS Product Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- (De)Activation Date --></label>
+        <name>De_Activation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSA Agreement --></label>
+        <name>GSA_Agreement__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Bank Account --></label>
+        <name>ICCS_Bank_Account__c</name>
+        <relationshipLabel><!-- ICCS Product Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ICCS Code --></label>
+        <name>ICCS_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Product Code --></label>
+        <name>ICCS_Product_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Product Currency --></label>
+        <name>ICCS_Product_Currency__c</name>
+        <relationshipLabel><!-- ICCS Product Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Notice of Assignment --></label>
+        <name>Notice_of_Assignment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percentage --></label>
+        <name>Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Split Type --></label>
+        <name>Split_Type__c</name>
+        <picklistValues>
+            <masterLabel>Amount</masterLabel>
+            <translation><!-- Amount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Balance</masterLabel>
+            <translation><!-- Balance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Percentage</masterLabel>
+            <translation><!-- Percentage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Total</masterLabel>
+            <translation><!-- Total --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation>ใช้งานในปัจจุบัน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation>ไม่มีการใช้งาน</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Third Party Payment --></label>
+        <name>Third_Party_Payment__c</name>
+    </fields>
     <nameFieldLabel><!-- ICCS Product Assignment Name --></nameFieldLabel>
+    <validationRules>
+        <errorMessage>&quot;This field is available only if Split Type = &quot;&quot;Amount&quot;&quot;&quot;</errorMessage>
+        <name>AmountOnlyForRightSplitType</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Accelerated settlement is not allowed for this account --></errorMessage>
+        <name>CheckAcceleratedSettlementOnAccount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Accelerated settlement is not allowed for this country --></errorMessage>
+        <name>CheckAcceleratedSettlementOnCountry</name>
+    </validationRules>
 </CustomObjectTranslation>

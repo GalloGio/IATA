@@ -8,5 +8,31 @@
         <plural>true</plural>
         <value>AMS Trigger Execution Manager</value>
     </caseValues>
+    <fields>
+        <label><!-- AMS_Agency_Ownership__c Triggers --></label>
+        <name>AMS_Agency_Ownership_c_Triggers__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma separated trigger API names to prevent execution --></help>
+        <label><!-- Account Triggers --></label>
+        <name>Account_Triggers__c</name>
+    </fields>
+    <fields>
+        <help><!-- Prevent execution for all triggers using AMS_TriggerExecutionManager --></help>
+        <label><!-- All --></label>
+        <name>All__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Triggers --></label>
+        <name>Case_Triggers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Triggers --></label>
+        <name>Contact_Triggers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lead Triggers --></label>
+        <name>Lead_Triggers__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

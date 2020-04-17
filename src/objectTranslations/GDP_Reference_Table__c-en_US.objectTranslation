@@ -8,5 +8,31 @@
         <plural>true</plural>
         <value>GDP References Table</value>
     </caseValues>
+    <fields>
+        <label><!-- Code --></label>
+        <name>Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used for tooltip --></help>
+        <label><!-- Definition --></label>
+        <name>Definition__c</name>
+    </fields>
+    <fields>
+        <help><!-- External ID used for Data loading from external system --></help>
+        <label><!-- System ID --></label>
+        <name>System_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- System --></label>
+        <name>System__c</name>
+    </fields>
+    <fields>
+        <label><!-- Table --></label>
+        <name>Table__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid for GDP --></label>
+        <name>Valid_for_GDP__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

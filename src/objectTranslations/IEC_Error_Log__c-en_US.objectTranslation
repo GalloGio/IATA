@@ -8,5 +8,56 @@
         <plural>true</plural>
         <value>IEC Error Logs</value>
     </caseValues>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- IEC Error Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Input Data --></label>
+        <name>Data__c</name>
+    </fields>
+    <fields>
+        <label><!-- Displayed Message --></label>
+        <name>Displayed_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Errror Message --></label>
+        <name>Errror_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- This can be used to log more information on the error like parameters or variables that will help developer trace this issue. --></help>
+        <label><!-- Extra Information --></label>
+        <name>Extra_Information__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA Code --></label>
+        <name>IATACODE__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determines the source of the error whether it is a visualforce page or any other apex code --></help>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stack Trace --></label>
+        <name>Stack_Trace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Info</masterLabel>
+            <translation><!-- Info --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Warning</masterLabel>
+            <translation><!-- Warning --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

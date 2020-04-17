@@ -8,5 +8,166 @@
         <plural>true</plural>
         <value>Additional Case Informations</value>
     </caseValues>
+    <fields>
+        <help><!-- The date the acknowledgment of the receipt of the request was sent to the customer --></help>
+        <label><!-- Acknowledgment Sent --></label>
+        <name>Acknowledgment_Sent__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date by when the customer needs to submit the signed agreement --></help>
+        <label><!-- Agreement Deadline --></label>
+        <name>Agreement_Deadline__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date when the signed  agreement has been received  from the customer --></help>
+        <label><!-- Agreement Received --></label>
+        <name>Agreement_Received__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date when then the agreement has been sent to the customer to sign --></help>
+        <label><!-- Agreement Requested --></label>
+        <name>Agreement_Requested__c</name>
+    </fields>
+    <fields>
+        <help><!--  The result of the agreement whether it passes the sanity check and meets all the necessary criteria or not. --></help>
+        <label><!-- Agreement Result --></label>
+        <name>Agreement_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Additional Case Informations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!--  The date when the change request became affected, reflected in the relative systems and communicated to the customer --></help>
+        <label><!-- Change Effective As Of --></label>
+        <name>Change_Effective_As_Of__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the initial deadline for the processing --></help>
+        <label><!-- Deadline Date --></label>
+        <name>Deadline_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the  date when the documentation has passed the sanity check and deemed as complete to start the processing of the request --></help>
+        <label><!-- Documentation Complete --></label>
+        <name>Documentation_Complete__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to enter any remarks regarding the sanity of the documentation submitted  or any missing requirement in relation to the submitted request --></help>
+        <label><!-- Documentation Remarks --></label>
+        <name>Documentation_Remarks__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date the request with the relevant documentation has been received --></help>
+        <label><!-- Dossier Reception Date --></label>
+        <name>Dossier_Reception_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates the deadline based on the due diligence process timelines --></help>
+        <label><!-- Due Diligence Deadline --></label>
+        <name>Due_Diligence_Deadline__c</name>
+    </fields>
+    <fields>
+        <help><!-- It is used to confirm when the due diligence was performed --></help>
+        <label><!-- Due Diligence Performed Date --></label>
+        <name>Due_Diligence_Performed_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- This checkbox indicates when due diligence has been requested, please select it when applicable --></help>
+        <label><!-- Due Diligence Requested --></label>
+        <name>Due_Diligence_Requested__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is used to provide the result of the due diligence process --></help>
+        <label><!-- Due Diligence Result --></label>
+        <name>Due_Diligence_Result__c</name>
+        <picklistValues>
+            <masterLabel>Fail</masterLabel>
+            <translation><!-- Fail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pass</masterLabel>
+            <translation><!-- Pass --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!--  The date the paid fees refund has been requested, applicable in case of withdrawal or cancellation of the request --></help>
+        <label><!-- Fees Refund Requested  --></label>
+        <name>Fees_Refund_Requested__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date when all necessary system has been updated to finalize the request --></help>
+        <label><!-- Finalized In Systems --></label>
+        <name>Finalized_In_Systems__c</name>
+    </fields>
+    <fields>
+        <help><!--  The document number of the invoice --></help>
+        <label><!-- Invoice Number --></label>
+        <name>Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date the invoice was requested to be issued --></help>
+        <label><!-- Invoice Requested --></label>
+        <name>Invoice_Requested__c</name>
+    </fields>
+    <fields>
+        <help><!-- The status of the invoice whether paid or not --></help>
+        <label><!-- Invoice Status --></label>
+        <name>Invoice_Status__c</name>
+        <picklistValues>
+            <masterLabel>Paid</masterLabel>
+            <translation><!-- Paid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unpaid</masterLabel>
+            <translation><!-- Unpaid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If the initial deadline has been updated (delayed or forwarded) this date should have the updated deadline --></help>
+        <label><!-- New Deadline Date --></label>
+        <name>New_Deadline_Date__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date the deadline should be paid by --></help>
+        <label><!-- Payment Deadline --></label>
+        <name>Payment_Deadline__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date the payment was requested from the customer --></help>
+        <label><!-- Payment Requested --></label>
+        <name>Payment_Requested__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date when the payment status has been last updated to paid or unpaid --></help>
+        <label><!-- Payment Status Updated --></label>
+        <name>Payment_Status_Updated__c</name>
+    </fields>
+    <fields>
+        <help><!--  The date when the system has been first updated applicable especially when there are other system(s) dependent this initial update --></help>
+        <label><!-- System Updated --></label>
+        <name>System_Updated__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Due Diligence --></label>
+        <name>Due_Diligence</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Finalization --></label>
+        <name>Finalization</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Payment --></label>
+        <name>Payment</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Processing --></label>
+        <name>Processing</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Reception --></label>
+        <name>Reception</name>
+    </recordTypes>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

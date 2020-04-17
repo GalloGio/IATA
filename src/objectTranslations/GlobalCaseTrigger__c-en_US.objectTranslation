@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Global Case Trigger</value>
     </caseValues>
+    <fields>
+        <label><!-- ON / OFF --></label>
+        <name>ON_OFF__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

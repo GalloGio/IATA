@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>ISSPAttachmentPermissions</value>
     </caseValues>
+    <fields>
+        <label><!-- AttachmentId --></label>
+        <name>AttachmentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShowToPortalUsers --></label>
+        <name>ShowToPortalUsers__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

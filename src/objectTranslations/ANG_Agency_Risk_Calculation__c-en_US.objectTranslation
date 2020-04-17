@@ -8,5 +8,126 @@
         <plural>true</plural>
         <value>Agency Risk Calculations</value>
     </caseValues>
+    <fields>
+        <label><!-- Accreditation Model --></label>
+        <name>ANG_Accreditation_Model__c</name>
+    </fields>
+    <fields>
+        <label><!-- Adjusted --></label>
+        <name>ANG_Adjusted__c</name>
+        <picklistValues>
+            <masterLabel>Mixed</masterLabel>
+            <translation><!-- Mixed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Rule --></label>
+        <lookupFilter>
+            <errorMessage><!-- You can only select an Agency Risk Calculation with Rules record type. --></errorMessage>
+        </lookupFilter>
+        <name>ANG_Calculation_Rule__c</name>
+        <relationshipLabel><!-- Adjustments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Financial Review Result --></label>
+        <name>ANG_Financial_Review_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Limit Cash Condition --></label>
+        <name>ANG_Limit_Cash_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max Range --></label>
+        <name>ANG_Max_Range__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min Range --></label>
+        <name>ANG_Min_Range__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of occurrence --></label>
+        <name>ANG_Occurrence_Num__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>ANG_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Occurences --></label>
+        <name>ANG_Parent_Occurences__c</name>
+    </fields>
+    <fields>
+        <label><!-- Points --></label>
+        <name>ANG_Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- RF Sum Type --></label>
+        <name>ANG_RF_Sum_Type__c</name>
+        <picklistValues>
+            <masterLabel>CEILING[Σ(RF)*0.0075]</masterLabel>
+            <translation><!-- CEILING[Σ(RF)*0.0075] --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Σ(RF)</masterLabel>
+            <translation><!-- Σ(RF) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Remittance Frequency --></label>
+        <name>ANG_Remittance_Frequency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risk History Assessment --></label>
+        <name>ANG_Risk_History_Assessment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risk History --></label>
+        <name>ANG_Risk_History__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Key --></label>
+        <name>ANG_UniqueKey__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Adjustment --></label>
+        <name>Adjustment</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record type to track the value that each type of remittance frequency has for multicountry --></description>
+        <label><!-- Remittance Frequency Values --></label>
+        <name>Remittance_Frequency_Values</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Risk Status Assessment --></label>
+        <name>Risk_Status_Assessment</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Rules --></label>
+        <name>Rules</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Number of occurrence has to be a positive number --></errorMessage>
+        <name>ANG_Occurrence_Num_cant_be_negative</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- RF Sum Type must only be filled when the accreditation model is &apos;Multicountry&apos; --></errorMessage>
+        <name>ANG_RF_Sum_Type_Only_for_Multicountry</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min and Max Range can only be filled when Adjusted = &apos;Mixed&apos; and Accreditation Model = &apos;Multicountry&apos; --></errorMessage>
+        <name>ANG_Ranges_Only_for_Mixed_Multicountry</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must select a value --></errorMessage>
+        <name>ANG_Remittance_Frequency_Adj_Required</name>
+    </validationRules>
 </CustomObjectTranslation>

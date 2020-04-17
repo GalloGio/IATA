@@ -8,5 +8,19 @@
         <plural>true</plural>
         <value>RTS Senior Manager</value>
     </caseValues>
+    <fields>
+        <help><!-- Check if email is to be sent to this senior --></help>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email of the senior manager --></help>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Id --></label>
+        <name>User_Id__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

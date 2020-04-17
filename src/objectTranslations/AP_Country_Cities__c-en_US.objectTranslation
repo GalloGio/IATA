@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>Airline Participation Country cities</value>
     </caseValues>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country ISO Code --></label>
+        <name>Country_ISO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

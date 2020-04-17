@@ -8,5 +8,72 @@
         <plural>true</plural>
         <value>EBC Email Exclusions</value>
     </caseValues>
+    <fields>
+        <label><!-- BillingAccName --></label>
+        <name>BillingAccName__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Email Address to opt out --></help>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Event Date in milliseconds since 1970 --></help>
+        <label><!-- Event Date Timestamp --></label>
+        <name>Event_Date_Timestamp__c</name>
+    </fields>
+    <fields>
+        <help><!-- The event date --></help>
+        <label><!-- Event Date --></label>
+        <name>Event_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Manual cancellation of an exclusion should use this field --></help>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is the relation has been created by the batch job --></help>
+        <label><!-- Is Relation Created --></label>
+        <name>Is_Relation_Created__c</name>
+    </fields>
+    <fields>
+        <help><!-- The reason of this event --></help>
+        <label><!-- Other Reason --></label>
+        <name>Other_Reason__c</name>
+    </fields>
+    <fields>
+        <help><!-- The campaign that was sent when this event was generated --></help>
+        <label><!-- Source Campaign --></label>
+        <name>Source_Campaign__c</name>
+        <relationshipLabel><!-- EBC Email Exclusions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Type of exclusion --></help>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>HARDBOUNCE</masterLabel>
+            <translation><!-- HARDBOUNCE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LISTDETECTIVE</masterLabel>
+            <translation><!-- LISTDETECTIVE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OPTOUT</masterLabel>
+            <translation><!-- OPTOUT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OTHER</masterLabel>
+            <translation><!-- OTHER --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The billing account that the client wants to unsubscribe. Empty means unsbuscribe from all. --></help>
+        <label><!-- Unsubscribe From --></label>
+        <name>Unsubscribe_From__c</name>
+        <relationshipLabel><!-- EBC Email Exclusions --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

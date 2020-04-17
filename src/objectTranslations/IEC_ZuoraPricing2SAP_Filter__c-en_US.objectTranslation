@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>ZuoraPricing2SAP Product Filters</value>
     </caseValues>
+    <fields>
+        <label><!-- Exclude SAP Material Number --></label>
+        <name>Exclude_SAP_Material_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Division Code --></label>
+        <name>SAP_Division_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Sales Channel Code --></label>
+        <name>SAP_Sales_Channel_Code__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

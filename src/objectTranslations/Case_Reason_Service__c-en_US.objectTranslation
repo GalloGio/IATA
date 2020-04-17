@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>Case Reason Service</value>
     </caseValues>
+    <fields>
+        <label><!-- Create custom service rendered? --></label>
+        <name>Create_custom_service_rendered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Provider Required --></label>
+        <name>Provider_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service --></label>
+        <name>Service__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

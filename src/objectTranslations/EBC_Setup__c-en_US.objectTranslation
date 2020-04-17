@@ -8,5 +8,317 @@
         <plural>true</plural>
         <value>EBC Setups</value>
     </caseValues>
+    <fields>
+        <help><!-- The field designates the default value that will be used when there are no pre-paid plans (subscriptions) active. --></help>
+        <label><!-- Default Cost per E-mail --></label>
+        <name>Default_Cost_per_E_mail__c</name>
+    </fields>
+    <fields>
+        <help><!-- Default Storage Capacity in MegaBytes --></help>
+        <label><!-- Default Storage Capacity (Mg) --></label>
+        <name>Default_Storage_Capacity__c</name>
+    </fields>
+    <fields>
+        <help><!-- Internal Email Address where campaigns are sent for IATA Monitoring and Safekeeping --></help>
+        <label><!-- EBC Admin CC Email --></label>
+        <name>EBC_Admin_CC_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the community base url for the eBroadcast pages --></help>
+        <label><!-- E-Commerce Base Url --></label>
+        <name>E_Commerce_Base_Url__c</name>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Member Prepaid --></help>
+        <label><!-- E-Commerce Member Prepaid 01 --></label>
+        <name>E_Member_Prepaid_Product_Rate_Plan_01__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Member Prepaid 01) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Member Prepaid 02 --></label>
+        <name>E_Member_Prepaid_Product_Rate_Plan_02__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Member Prepaid 02) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Member Prepaid 03 --></label>
+        <name>E_Member_Prepaid_Product_Rate_Plan_03__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Member Prepaid 03) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Member Prepaid 04 --></label>
+        <name>E_Member_Prepaid_Product_Rate_Plan_04__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Member Prepaid 04) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Non-Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Non-Member Prepaid Plan 1 --></label>
+        <name>E_N_Member_Prepaid_Product_Rate_Plan_01__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Non-Member Prepaid Plan 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Non-Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Non-Member Prepaid Plan 2 --></label>
+        <name>E_N_Member_Prepaid_Product_Rate_Plan_02__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Non-Member Prepaid Plan 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Non-Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Non-Member Prepaid Plan 3 --></label>
+        <name>E_N_Member_Prepaid_Product_Rate_Plan_03__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Non-Member Prepaid Plan 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- E-Commerce Non-Member Prepaid Plan --></help>
+        <label><!-- E-Commerce Non-Member Prepaid Plan 4 --></label>
+        <name>E_N_Member_Prepaid_Product_Rate_Plan_04__c</name>
+        <relationshipLabel><!-- EBC Setups (E-Commerce Non-Member Prepaid Plan 4) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Rate plan containing the default information for Enhanced Reporting Add-On. --></help>
+        <label><!-- Enhanced Reporting Product Rate Plan --></label>
+        <name>Enhanced_Reporting_Product_Rate_Plan__c</name>
+        <relationshipLabel><!-- EBC Setups (Enhanced Reporting Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The amount of storage given as part of enabling the Extra Storage Add-On. --></help>
+        <label><!-- Extra Storage Capacity --></label>
+        <name>Extra_Storage_Capacity__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of location class codes considered in EBC --></help>
+        <label><!-- Included Location Classes --></label>
+        <name>Included_Location_Classes__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>F</masterLabel>
+            <translation><!-- F --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>H</masterLabel>
+            <translation><!-- H --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>I</masterLabel>
+            <translation><!-- I --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>J</masterLabel>
+            <translation><!-- J --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N</masterLabel>
+            <translation><!-- N --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Q</masterLabel>
+            <translation><!-- Q --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>U</masterLabel>
+            <translation><!-- U --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W</masterLabel>
+            <translation><!-- W --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X</masterLabel>
+            <translation><!-- X --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Y</masterLabel>
+            <translation><!-- Y --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Z</masterLabel>
+            <translation><!-- Z --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Maximum File Size Upload in MegOctet --></help>
+        <label><!-- Maximum File Size Upload --></label>
+        <name>Maximum_File_Size_Upload__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for member --></help>
+        <label><!-- Member Email Block Product --></label>
+        <name>Member_Email_Block_Product__c</name>
+        <relationshipLabel><!-- EBC Setups for Member Email Block Product --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Pay As You Go Rate Plan for member. 
+This is used for the member subscriber who do not choose the Prepaid Plan or has subscription expired. 
+There is no recurring charge for this. --></help>
+        <label><!-- Member Pay-As-You-Go Plan --></label>
+        <name>Member_Pay_As_You_Go_Plan__c</name>
+        <relationshipLabel><!-- EBC Setups (Member Pay-As-You-Go Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for member --></help>
+        <label><!-- Member Prepaid Product Rate Plan 1 --></label>
+        <name>Member_Prepaid_Product_Rate_Plan_01__c</name>
+        <relationshipLabel><!-- EBC Setups (Member Enterprise Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for member --></help>
+        <label><!-- Member Prepaid Product Rate Plan 2 --></label>
+        <name>Member_Prepaid_Product_Rate_Plan_02__c</name>
+        <relationshipLabel><!-- EBC Setups (Member Premium Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for member --></help>
+        <label><!-- Member Prepaid Product Rate Plan 3 --></label>
+        <name>Member_Prepaid_Product_Rate_Plan_03__c</name>
+        <relationshipLabel><!-- EBC Setups (Member Pro Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for member --></help>
+        <label><!-- Member Prepaid Product Rate Plan 4 --></label>
+        <name>Member_Prepaid_Product_Rate_Plan_04__c</name>
+        <relationshipLabel><!-- EBC Setups (Member Starter Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This is the product that will be the base of the Rate Plans for the Email Blocks, for member --></help>
+        <label><!-- Member Email Block Product --></label>
+        <name>New_Member_Email_Block_Product__c</name>
+        <relationshipLabel><!-- EBC Setups for Member Email Block Product --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This is the product that will be the base of the Rate Plans for the Email Blocks, for non member --></help>
+        <label><!-- Non Member Email Block Product --></label>
+        <name>New_Non_Member_Email_Block_Product__c</name>
+        <relationshipLabel><!-- EBC Setups (Non Member Email Block Product) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for non member --></help>
+        <label><!-- Non Member Email Block Product --></label>
+        <name>Non_Member_Email_Block_Product__c</name>
+        <relationshipLabel><!-- EBC Setups (Non Member Email Block Product) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Pay As You Go Rate Plan for non-member.
+This is used for the non-member subscriber who do not choose the Prepaid Plan or has subscription expired.
+There is no recurring charge for this. --></help>
+        <label><!-- Non-Member Pay-As-You-Go Plan --></label>
+        <name>Non_Member_Pay_As_You_Go_Plan__c</name>
+        <relationshipLabel><!-- EBC Setups (Non-Member Pay-As-You-Go Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for non member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for non member --></help>
+        <label><!-- Non-Member Prepaid Product_Rate Plan 1 --></label>
+        <name>Non_Member_Prepaid_Product_Rate_Plan_01__c</name>
+        <relationshipLabel><!-- EBC Setups (Non-Member Enterprise Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for non member, --></help>
+        <label><!-- Non-Member Prepaid Product_Rate Plan 2 --></label>
+        <name>Non_Member_Prepaid_Product_Rate_Plan_02__c</name>
+        <relationshipLabel><!-- EBC Setups (Non-Member Premium Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for non-member. --></help>
+        <label><!-- Non-Member Prepaid Product_Rate Plan 3 --></label>
+        <name>Non_Member_Prepaid_Product_Rate_Plan_03__c</name>
+        <relationshipLabel><!-- EBC Setups (Non-Member Pro Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for non-member --></help>
+        <label><!-- Non-Member Prepaid Product Rate Plan 4 --></label>
+        <name>Non_Member_Prepaid_Product_Rate_Plan_04__c</name>
+        <relationshipLabel><!-- EBC Setups (Non-Member Starter Product Rate Plan) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- To be used when the eBroadcast member user pays the exact amount for a campaign. --></help>
+        <label><!-- Pay Exact Amount Member --></label>
+        <name>Pay_Exact_Amount_Member__c</name>
+        <relationshipLabel><!-- EBC Setups (Pay Exact Amount PAYG Member) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- To be used when the eBroadcast non-member user pay the exact amount for a campaign. --></help>
+        <label><!-- Pay Exact Amount Non Member --></label>
+        <name>Pay_Exact_Amount_Non_Member__c</name>
+        <relationshipLabel><!-- EBC Setups (Pay Exact Amount PAYG Non Member) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Product Category for EBC products. 
+This is used to get details such as Renewal_Window used for sending renewal offering email. --></help>
+        <label><!-- Product Category --></label>
+        <name>Product_Category__c</name>
+        <relationshipLabel><!-- EBC Setups --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Number of days when the user can see the renewal option.
+This is defined in Product Category. --></help>
+        <label><!-- Renewal Window --></label>
+        <name>Renewal_Window__c</name>
+    </fields>
+    <fields>
+        <help><!-- Rate plan containing the default information for Additional Storage Add-On. --></help>
+        <label><!-- Storage Product Rate Plan --></label>
+        <name>Storage_Product_Rate_Plan__c</name>
+        <relationshipLabel><!-- EBC Setups --></relationshipLabel>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

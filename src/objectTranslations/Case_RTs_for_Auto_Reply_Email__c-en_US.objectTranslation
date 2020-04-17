@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Case RTs for Auto Reply Email</value>
     </caseValues>
+    <fields>
+        <label><!-- Record Type Name --></label>
+        <name>Record_Type_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

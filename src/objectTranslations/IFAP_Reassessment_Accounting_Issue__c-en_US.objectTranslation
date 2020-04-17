@@ -8,5 +8,34 @@
         <plural>true</plural>
         <value>Accounting Issues</value>
     </caseValues>
+    <fields>
+        <help><!-- Comment --></help>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the field where the issue was identified --></help>
+        <label><!-- Field Name --></label>
+        <name>Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quality issue --></label>
+        <name>IFAP_Reassessment__c</name>
+        <relationshipLabel><!-- Accounting Issues --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Value to be used by GFA --></help>
+        <label><!-- Value to use --></label>
+        <name>Value_to_use__c</name>
+    </fields>
+    <fields>
+        <help><!-- Wrong value used by GFA --></help>
+        <label><!-- Wrong value --></label>
+        <name>Wrong_value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- A Reassessment Accounting Issue cannot be created/updated when the case status is Reassessment Request Approved or Reassessment Requested --></errorMessage>
+        <name>Check_IFAP_case_status</name>
+    </validationRules>
 </CustomObjectTranslation>

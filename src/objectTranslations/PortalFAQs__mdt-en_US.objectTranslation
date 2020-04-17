@@ -8,5 +8,140 @@
         <plural>true</plural>
         <value>Portal FAQs</value>
     </caseValues>
+    <fields>
+        <label><!-- Account Categories --></label>
+        <name>Account_Categories__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Sector --></label>
+        <name>Account_Sector__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this field to exclude account categories from this data category --></help>
+        <label><!-- CategoryExceptions --></label>
+        <name>CategoryExceptions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for TR --></help>
+        <label><!-- DataCategoryLabel_TR --></label>
+        <name>DataCategoryLabel_TR__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for ar --></help>
+        <label><!-- DataCategoryLabel_ar --></label>
+        <name>DataCategoryLabel_ar__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for de --></help>
+        <label><!-- DataCategoryLabel_de --></label>
+        <name>DataCategoryLabel_de__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for en_US --></help>
+        <label><!-- DataCategoryLabel_en_US --></label>
+        <name>DataCategoryLabel_en_US__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for es --></help>
+        <label><!-- DataCategoryLabel_es --></label>
+        <name>DataCategoryLabel_es__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for fr --></help>
+        <label><!-- DataCategoryLabel_fr --></label>
+        <name>DataCategoryLabel_fr__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for in --></help>
+        <label><!-- DataCategoryLabel_in --></label>
+        <name>DataCategoryLabel_in__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for it --></help>
+        <label><!-- DataCategoryLabel_it --></label>
+        <name>DataCategoryLabel_it__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for ja --></help>
+        <label><!-- DataCategoryLabel_ja --></label>
+        <name>DataCategoryLabel_ja__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for ko --></help>
+        <label><!-- DataCategoryLabel_ko --></label>
+        <name>DataCategoryLabel_ko__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for pt_BR --></help>
+        <label><!-- DataCategoryLabel_pt_BR --></label>
+        <name>DataCategoryLabel_pt_BR__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for ru --></help>
+        <label><!-- DataCategoryLabel_ru --></label>
+        <name>DataCategoryLabel_ru__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for th --></help>
+        <label><!-- DataCategoryLabel_th --></label>
+        <name>DataCategoryLabel_th__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for vi --></help>
+        <label><!-- DataCategoryLabel_vi --></label>
+        <name>DataCategoryLabel_vi__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label for zh_CN --></help>
+        <label><!-- DataCategoryLabel_zh_CN --></label>
+        <name>DataCategoryLabel_zh_CN__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the category in the structure --></help>
+        <label><!-- DataCategoryName --></label>
+        <name>DataCategoryName__c</name>
+    </fields>
+    <fields>
+        <label><!-- DataSubtopicName --></label>
+        <name>DataSubtopicName__c</name>
+    </fields>
+    <fields>
+        <label><!-- DataTopicName --></label>
+        <name>DataTopicName__c</name>
+    </fields>
+    <fields>
+        <help><!-- Determinates if it&apos;s a element from the data category setup hierarchie. --></help>
+        <label><!-- FAQsStructure --></label>
+        <name>FAQsStructure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Codes 1 --></label>
+        <name>ISO_Country_Codes1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Codes 2 --></label>
+        <name>ISO_Country_Codes2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Codes 3 --></label>
+        <name>ISO_Country_Codes3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Permission Set Name --></label>
+        <name>Permission_Set_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requires_Level2_Registration --></label>
+        <name>Requires_Level2_Registration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this field to exclude account sectors from this data category --></help>
+        <label><!-- SectorExceptions --></label>
+        <name>SectorExceptions__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

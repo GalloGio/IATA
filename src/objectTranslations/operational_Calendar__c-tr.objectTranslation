@@ -216,5 +216,290 @@
         <possessive>Second</possessive>
         <value><!-- Operational Calendar --></value>
     </caseValues>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For BSP Agency --></label>
+        <name>ISSP_Page_Detail_For_BSP_Agency</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For BSP Airline --></label>
+        <name>ISSP_Page_Detail_For_BSP_Airline</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For CASS Agency --></label>
+        <name>ISSP_Page_Detail_For_CASS_Agency</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For CASS Airline --></label>
+        <name>ISSP_Page_Detail_For_CASS_Airline</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For CNS Agency --></label>
+        <name>ISSP_Page_Detail_For_CNS_Agency</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For CNS Airline --></label>
+        <name>ISSP_Page_Detail_For_CNS_Airline</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For ICCS --></label>
+        <name>ISSP_Page_Detail_For_ICCS</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For SIS --></label>
+        <name>ISSP_Page_Detail_For_SIS</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For SIS+ACH --></label>
+        <name>ISSP_Page_Detail_For_SIS_ACH</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Detail For SIS+ICH --></label>
+        <name>ISSP_Page_Detail_For_SIS_ICH</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For BSP Agency --></label>
+        <name>ISSP_Page_Hover_For_BSP_Agency</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For BSP Airline --></label>
+        <name>ISSP_Page_Hover_For_BSP_Airline</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For CASS Agency --></label>
+        <name>ISSP_Page_Hover_For_CASS_Agency</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For CASS Airline --></label>
+        <name>ISSP_Page_Hover_For_CASS_Airline</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For ICCS --></label>
+        <name>ISSP_Page_Hover_For_ICCS</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ISSP Page Hover For SIS --></label>
+        <name>ISSP_Page_Hover_For_SIS</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Advice Day --></label>
+        <name>Advice_Day__c</name>
+    </fields>
+    <fields>
+        <label>Acente Düzeltme Son Tarihi</label>
+        <name>Agent_Correction_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label>Hava yolu fatura &amp; HOT</label>
+        <name>Airline_Billing_HOT__c</name>
+    </fields>
+    <fields>
+        <label>Hava yolu Düzeltme Cevabı Son Tarihi</label>
+        <name>Airline_Correction_Response_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label>Hava yolu Girdi Yükleme Son Tarihi</label>
+        <name>Airline_Input_Upload_Cut_Off__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Settlement Date --></label>
+        <name>BSP_Settlement_Date__c</name>
+    </fields>
+    <fields>
+        <label>Fatura Durumu</label>
+        <name>Billing_Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Output Generation --></label>
+        <name>Billing_Output_Generation__c</name>
+    </fields>
+    <fields>
+        <label>CASS raporları durumu</label>
+        <name>CASS_reports_Availability__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Day --></label>
+        <name>Call_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Operational Calendars --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cycle --></label>
+        <name>Cycle__c</name>
+    </fields>
+    <fields>
+        <label><!-- EP Settlement date --></label>
+        <name>EP_Settlement_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Early Call Day --></label>
+        <name>Early_Call_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- ExternalId --></label>
+        <name>ExternalId__c</name>
+    </fields>
+    <fields>
+        <label>Fatura Başlangıç</label>
+        <name>First_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- HAR Day --></label>
+        <name>HAR_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Cycle Start Date --></label>
+        <name>ICCS_Cycle_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ICCS Settlement Date --></label>
+        <name>ICCS_Settlement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISS Operation --></label>
+        <name>ISS_operation__c</name>
+        <relationshipLabel><!-- Operational Calendars --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Fatura Bitiş</label>
+        <name>Last_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation Code --></label>
+        <name>Operation_Code__c</name>
+    </fields>
+    <fields>
+        <label>Operasyon Para Birimi</label>
+        <name>Operation_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation + Period code --></label>
+        <name>Operation_Period_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation Type --></label>
+        <name>Operation_Type__c</name>
+        <picklistValues>
+            <masterLabel>BSP</masterLabel>
+            <translation><!-- BSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP Domestic</masterLabel>
+            <translation>Yerel BSP</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP International</masterLabel>
+            <translation>Uluslararası BSP</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS</masterLabel>
+            <translation><!-- CASS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Export</masterLabel>
+            <translation>CASS İhracat</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Import</masterLabel>
+            <translation>CASS İthalat</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS</masterLabel>
+            <translation><!-- SIS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Dönem Kodu</label>
+        <name>Period_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Protest Deadline (ACH) --></label>
+        <name>Protest_Deadline_ACH_Transactions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Protest Deadline (IATA) --></label>
+        <name>Protest_Deadline_IATA_Transactions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Protest Deadline --></label>
+        <name>Protest_Deadline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rebill Period --></label>
+        <name>Rebill_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recap Sheet Submission Deadline --></label>
+        <name>Recap_Sheet_Submission_Deadline__c</name>
+    </fields>
+    <fields>
+        <label>Son ödeme tarihi</label>
+        <name>Remittance_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Day (ACH) --></label>
+        <name>Settlement_Day_ACH_Transactions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Day (Associated Members) --></label>
+        <name>Settlement_Day_Associated_Members__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Day (IATA) --></label>
+        <name>Settlement_Day_IATA_Transactions__c</name>
+    </fields>
+    <fields>
+        <label>Ödeme iletim tarihi</label>
+        <name>Settlement_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Sheet Posting Date (IATA) --></label>
+        <name>Settlement_Sheet_Posting_Date_IATA_Tran__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Sheet Posting Date (ACH) --></label>
+        <name>Settlement_Sheet_Posting_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Deadline --></label>
+        <name>Submission_Deadline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submission Open --></label>
+        <name>Submission_Open__c</name>
+    </fields>
+    <fields>
+        <label><!-- Supporting Documents Link Deadline --></label>
+        <name>Supporting_Documents_Link_Deadline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Suspension Day --></label>
+        <name>Suspension_Day__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visible on the portal --></label>
+        <name>Visible_on_the_portal__c</name>
+    </fields>
+    <fields>
+        <label>Ödeme sıklığı kodu</label>
+        <name>frequency_code__c</name>
+    </fields>
     <nameFieldLabel><!-- FDS Calendar Name --></nameFieldLabel>
+    <recordTypes>
+        <description><!-- used to host ICCS Calendars --></description>
+        <label><!-- ICCS Calendar --></label>
+        <name>ICCS_Calendar</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- used to host ISS (BSP and CASS) Calendars --></description>
+        <label><!-- ISS Calendar --></label>
+        <name>ISS_Calendar</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- used to host SIS Calendars --></description>
+        <label><!-- SIS Calendar --></label>
+        <name>SIS_Calendar</name>
+    </recordTypes>
 </CustomObjectTranslation>

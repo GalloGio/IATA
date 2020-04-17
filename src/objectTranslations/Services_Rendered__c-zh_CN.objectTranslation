@@ -4,5 +4,118 @@
         <plural>false</plural>
         <value><!-- Services Rendered --></value>
     </caseValues>
+    <fields>
+        <help><!-- Opt-out from IATA EasyPay? --></help>
+        <label><!-- IATA EasyPay Opt-out --></label>
+        <name>ANG_IATA_EasyPay_Opt_out__c</name>
+    </fields>
+    <fields>
+        <label><!-- BSP Country --></label>
+        <name>BSP_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Country --></label>
+        <name>CASS_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- GSA Type --></label>
+        <name>GSA_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISO Country Code --></label>
+        <name>ISO_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label>ISO 国家</label>
+        <name>ISO_Country_formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Leaving - Airline Participation Case --></label>
+        <name>Inactivation_Airline_Participation_Case__c</name>
+        <relationshipLabel><!-- Services Rendered (Inactivation Airline Participation Case) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Joining Date --></label>
+        <name>Joining_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Leaving Date --></label>
+        <name>Leaving_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pax / Cargo --></label>
+        <name>Pax_Cargo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Services Rendered Airport --></label>
+        <name>Services_Rendered_Airport__c</name>
+    </fields>
+    <fields>
+        <label><!-- Provider --></label>
+        <name>Services_Rendered_By__c</name>
+        <relationshipLabel><!-- Services Rendered --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Status --></label>
+        <name>Services_Rendered_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation>活跃</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation>非活跃</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>服务</label>
+        <name>Services_Rendered_Type__c</name>
+        <picklistValues>
+            <masterLabel>BSP Participation</masterLabel>
+            <translation><!-- BSP Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSP via IBCS</masterLabel>
+            <translation><!-- BSP via IBCS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Export Direct Participation</masterLabel>
+            <translation><!-- CASS Export Direct Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Export via GSSA</masterLabel>
+            <translation><!-- CASS Export via GSSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Import Direct Participation</masterLabel>
+            <translation><!-- CASS Import Direct Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Import via GHA</masterLabel>
+            <translation><!-- CASS Import via GHA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Participation</masterLabel>
+            <translation><!-- CASS Participation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation>市场</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales</masterLabel>
+            <translation><!-- Sales --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Consumer --></label>
+        <name>Services_Rendered_to_Airline__c</name>
+        <relationshipLabel><!-- Services Rendered --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Joining - Airline Participation Case --></label>
+        <name>Source_Case__c</name>
+        <relationshipLabel><!-- Services Rendered --></relationshipLabel>
+    </fields>
     <nameFieldLabel><!-- Service Name --></nameFieldLabel>
 </CustomObjectTranslation>

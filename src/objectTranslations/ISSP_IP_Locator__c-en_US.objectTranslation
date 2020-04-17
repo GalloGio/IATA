@@ -8,5 +8,65 @@
         <plural>true</plural>
         <value>ISSP IP Locator</value>
     </caseValues>
+    <fields>
+        <label><!-- Country Code --></label>
+        <name>Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- End1 --></label>
+        <name>End1__c</name>
+    </fields>
+    <fields>
+        <label><!-- End2 --></label>
+        <name>End2__c</name>
+    </fields>
+    <fields>
+        <label><!-- End3 --></label>
+        <name>End3__c</name>
+    </fields>
+    <fields>
+        <label><!-- End4 --></label>
+        <name>End4__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Integer --></label>
+        <name>End_Integer__c</name>
+    </fields>
+    <fields>
+        <label><!-- End --></label>
+        <name>End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start1 --></label>
+        <name>Start1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start2 --></label>
+        <name>Start2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start3 --></label>
+        <name>Start3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start4 --></label>
+        <name>Start4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Integer --></label>
+        <name>Start_Integer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Number --></label>
+        <name>Start_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start --></label>
+        <name>Start__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

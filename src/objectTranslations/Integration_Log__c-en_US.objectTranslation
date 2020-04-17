@@ -8,5 +8,60 @@
         <plural>true</plural>
         <value>Integration Logs</value>
     </caseValues>
+    <fields>
+        <label><!-- Context --></label>
+        <name>Context__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Transaction Id --></label>
+        <name>External_Transaction_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordId --></label>
+        <name>RecordId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record ID --></label>
+        <name>Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Detail --></label>
+        <name>Status_Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Failure</masterLabel>
+            <translation><!-- Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Object Type --></label>
+        <name>object_type__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Used when Salesforce sends data via an interface as part of a long running Salesforce process, the completion of which can be used to update the Status &amp; Status Detail so that either a completion event may be fired or to support polling from an interested --></description>
+        <label><!-- Callback --></label>
+        <name>Callback</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used when there is no requirement to track the status of an interface. --></description>
+        <label><!-- Fire-and-Forget --></label>
+        <name>Fire_and_Forget</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used when Salesforce sends data via an interface and expects a response. This may not necessarily be synchronous communication as the response may only be for logging purposes --></description>
+        <label><!-- Track Response --></label>
+        <name>Track_Response</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,23 @@
         <plural>true</plural>
         <value>Email Notifications</value>
     </caseValues>
+    <fields>
+        <label><!-- External email address --></label>
+        <name>External_email_address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal user --></label>
+        <name>Internal_user__c</name>
+        <relationshipLabel><!-- Email Notifications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>Product__c</name>
+        <relationshipLabel><!-- Email Notifications --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Both fields cannot be empty --></errorMessage>
+        <name>Null_values</name>
+    </validationRules>
 </CustomObjectTranslation>

@@ -8,5 +8,195 @@
         <plural>true</plural>
         <value>Account Contacts Role</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Role --></label>
+        <name>Account_Role__c</name>
+        <relationshipLabel><!-- Account Contacts Role --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Contacts Role --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Business_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact&apos;s Account --></label>
+        <name>Contact_Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact and Functional role --></label>
+        <name>Contact_And_Functional_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contact Role Name to fill accordingly to the application using the record --></help>
+        <label><!-- Contact Role Name --></label>
+        <name>Contact_Role_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Role --></label>
+        <name>Contact_Role__c</name>
+        <picklistValues>
+            <masterLabel>ITP Trainee</masterLabel>
+            <translation><!-- ITP Trainee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ITP Training Coordinator</masterLabel>
+            <translation><!-- ITP Training Coordinator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Primary Contact</masterLabel>
+            <translation><!-- Primary Contact --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Portal Contact Roles --></label>
+        <name>Contact_Roles__c</name>
+        <relationshipLabel><!-- Account Contacts Role --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Account Contacts Role --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Details --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Functional Role --></label>
+        <name>Functional_Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global ID --></label>
+        <name>Global_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Integration Status --></label>
+        <name>Integration_Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Queued</masterLabel>
+            <translation><!-- Queued --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last Name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Personal Email --></label>
+        <name>Personal_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Position --></label>
+        <name>Position__c</name>
+    </fields>
+    <fields>
+        <help><!-- To Which Service the contact is associated --></help>
+        <label><!-- Service Rendered --></label>
+        <name>Service_Rendered__c</name>
+        <picklistValues>
+            <masterLabel>GADM</masterLabel>
+            <translation><!-- GADM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IFTP</masterLabel>
+            <translation><!-- IFTP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIP</masterLabel>
+            <translation><!-- TIP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- TransferFlag --></label>
+        <name>TransferFlag__c</name>
+    </fields>
+    <fields>
+        <label><!-- UniqueKey --></label>
+        <name>UniqueKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary --></label>
+        <name>is_primary__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Relates to the role of the Contact when interacting within the context of the IATA Customer Portal --></description>
+        <label><!-- Functional --></label>
+        <name>Functional</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Group (for participation in cross company/account groupings such as alliances). --></description>
+        <label><!-- Group --></label>
+        <name>Group</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- ITP --></label>
+        <name>ITP</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Master RecordType --></description>
+        <label><!-- Master --></label>
+        <name>Master</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record-type related to the payment provider contact --></description>
+        <label><!-- Payment Provider Contact --></label>
+        <name>Payment_Provider_Contact</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The following Contact fields cannot be empty for Primary Provider Contacts: First name, Last Name, Salutation, Title, Email &amp; Phone. --></errorMessage>
+        <name>Mandatory_fields_for_primary_contact</name>
+    </validationRules>
 </CustomObjectTranslation>

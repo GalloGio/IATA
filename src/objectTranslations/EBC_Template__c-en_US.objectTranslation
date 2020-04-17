@@ -8,5 +8,63 @@
         <plural>true</plural>
         <value>EBC Templates</value>
     </caseValues>
+    <fields>
+        <help><!-- Audience will impact the merged field used in the template --></help>
+        <label><!-- Audience --></label>
+        <name>Audience__c</name>
+        <picklistValues>
+            <masterLabel>Agency</masterLabel>
+            <translation><!-- Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agent</masterLabel>
+            <translation><!-- Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Neutral</masterLabel>
+            <translation><!-- Neutral --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Billing Account owning the Templates --></help>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- EBC Templates --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Exact Target is of this template --></help>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Reusable --></label>
+        <name>Is_Reusable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is the template has been Send a Test Email since the last save --></help>
+        <label><!-- Is Tested --></label>
+        <name>Is_Tested__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Global Template that was used to create this child --></help>
+        <label><!-- Parent Template --></label>
+        <name>Parent_Template__c</name>
+        <relationshipLabel><!-- Designs --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Exact Target Triggered Sent Id --></help>
+        <label><!-- Triggered Send Id --></label>
+        <name>TriggSend_Id__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- These are global templates --></description>
+        <label><!-- Global --></label>
+        <name>Global</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Use this for user created templates --></description>
+        <label><!-- User Templates --></label>
+        <name>User_Templates</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

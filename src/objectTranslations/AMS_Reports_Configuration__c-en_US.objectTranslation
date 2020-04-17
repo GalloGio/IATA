@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>AMS Reports Configuration</value>
     </caseValues>
+    <fields>
+        <label><!-- Report Type ID --></label>
+        <name>Report_Type_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Type Name --></label>
+        <name>Report_Type_Name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

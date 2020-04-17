@@ -8,5 +8,342 @@
         <plural>true</plural>
         <value>Currency Center Survey</value>
     </caseValues>
+    <fields>
+        <label><!-- Airline --></label>
+        <name>Airline__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Allocation of Funds --></label>
+        <name>Allocation_of_Funds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount USD --></label>
+        <name>Amount_USD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amounts Blocked/Delayed --></label>
+        <name>Amounts_Blocked_Delayed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Average Exchange Rate --></label>
+        <name>Average_Exchange_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name --></label>
+        <name>Bank_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Percentage --></label>
+        <name>Bank_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank --></label>
+        <name>Bank__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Comment on issues faced and causing blocked funds --></help>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Country Comments --></label>
+        <name>Country_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency --></label>
+        <name>Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Balance Amount in local Currency --></label>
+        <name>Current_Balance_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delay in day --></label>
+        <name>Delay_in_day__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ICCS --></label>
+        <name>ICCS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Allocation Amount --></label>
+        <name>Last_Allocation_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date --></label>
+        <name>Last_Allocation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Amount USD --></label>
+        <name>Last_Allocation_Total_Amount_USD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Currency --></label>
+        <name>Local_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month Survey --></label>
+        <name>Month_Survey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Nov &amp; Dec Sales --></label>
+        <name>Nov_Dec_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other Currency Business --></label>
+        <name>Other_Currency_Business__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Id --></label>
+        <name>Parent_Id__c</name>
+        <relationshipLabel><!-- Currency Center Survey --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Report Type Comments --></label>
+        <name>Report_Type_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reporting Date --></label>
+        <name>Reporting_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reporting Type --></label>
+        <name>Reporting_Type__c</name>
+        <picklistValues>
+            <masterLabel>Blocked Amount</masterLabel>
+            <translation><!-- Blocked Amount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Approval</masterLabel>
+            <translation><!-- Pending Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Transfer</masterLabel>
+            <translation><!-- Pending Transfer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Funds Awainting Repatriation --></label>
+        <name>SalesFundsAwaintingRepatriation__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Month Blocked/Delayed End --></label>
+        <name>Sales_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Month Blocked/Delayed Start --></label>
+        <name>Sales_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Period --></label>
+        <name>Sales_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Section --></label>
+        <name>Section__c</name>
+        <picklistValues>
+            <masterLabel>Bank Record</masterLabel>
+            <translation><!-- Bank Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Country Comment Record</masterLabel>
+            <translation><!-- Country Comment Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Country Record</masterLabel>
+            <translation><!-- Country Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Report Type Record</masterLabel>
+            <translation><!-- Report Type Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey Record</masterLabel>
+            <translation><!-- Survey Record --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Type Of Operations Record</masterLabel>
+            <translation><!-- Type Of Operations Record --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Survey --></label>
+        <name>Survey__c</name>
+        <picklistValues>
+            <masterLabel>Annual</masterLabel>
+            <translation><!-- Annual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Amount USD --></label>
+        <name>Total_Amount_USD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Blocked/Delayed Amount --></label>
+        <name>Total_Blocked_Delayed_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total_Currency --></label>
+        <name>Total_Currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type Of Operations (%) --></label>
+        <name>Type_Of_Operations_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Operations --></label>
+        <name>Type_of_Operations__c</name>
+        <picklistValues>
+            <masterLabel>BSP</masterLabel>
+            <translation><!-- BSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS</masterLabel>
+            <translation><!-- CASS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Direct Sales</masterLabel>
+            <translation><!-- Direct Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS</masterLabel>
+            <translation><!-- ICCS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Revenues --></label>
+        <name>Type_of_Revenues__c</name>
+        <picklistValues>
+            <masterLabel>Not flown from Algeria</masterLabel>
+            <translation><!-- Not flown from Algeria --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not flown ticket revenues</masterLabel>
+            <translation><!-- Not flown ticket revenues --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Year Survey --></label>
+        <name>Year_Survey__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Annual - Bank Record --></description>
+        <label><!-- Annual - Bank Record --></label>
+        <name>AnnualBankRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Annual - Country Comment Record --></description>
+        <label><!-- Annual - Country Comment Record --></label>
+        <name>AnnualCountryCommentRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Annual - Country Record --></description>
+        <label><!-- Annual - Country Record --></label>
+        <name>AnnualCountryRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Annual - Report Type Record --></description>
+        <label><!-- Annual - Report Type Record --></label>
+        <name>AnnualReportTypeRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Annual - Survey Record --></description>
+        <label><!-- Annual - Survey Record --></label>
+        <name>AnnualSurveyRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Annual - Type Of Operations Record --></description>
+        <label><!-- Annual - Type Of Operations Record --></label>
+        <name>AnnualTypeOfOperationsRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Monthly - Bank Record --></description>
+        <label><!-- Monthly - Bank Record --></label>
+        <name>MonthlyBankRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Monthly - Country Record --></description>
+        <label><!-- Monthly - Country Record --></label>
+        <name>MonthlyCountryRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Monthly - Report Type Record --></description>
+        <label><!-- Monthly - Report Type Record --></label>
+        <name>MonthlyReportTypeRecord</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Monthly - Survey Record --></description>
+        <label><!-- Monthly - Survey Record --></label>
+        <name>MonthlySurveyRecord</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Type of Operations percentage must be between 0 and 100%. --></errorMessage>
+        <name>Percentage_Validation</name>
+    </validationRules>
 </CustomObjectTranslation>

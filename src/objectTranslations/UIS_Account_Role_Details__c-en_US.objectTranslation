@@ -8,5 +8,26 @@
         <plural>true</plural>
         <value>UIS Account Role Details</value>
     </caseValues>
+    <fields>
+        <help><!-- Account Role --></help>
+        <label><!-- Account Role --></label>
+        <name>Account_Role__c</name>
+        <relationshipLabel><!-- UIS Account Role Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Customer Number --></help>
+        <label><!-- Customer Number --></label>
+        <name>Customer_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Customer Type --></help>
+        <label><!-- Customer Type --></label>
+        <name>Customer_Type__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Amsterdam Publications --></description>
+        <label><!-- Amsterdam Publications --></label>
+        <name>Amsterdam_Publications</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

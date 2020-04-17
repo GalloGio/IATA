@@ -8,5 +8,17 @@
         <plural>true</plural>
         <value>BatchErrors</value>
     </caseValues>
+    <fields>
+        <label><!-- AccountInfo --></label>
+        <name>AccountInfo__c</name>
+    </fields>
+    <fields>
+        <label><!-- BatchID --></label>
+        <name>BatchID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ErrorMsg --></label>
+        <name>ErrorMsg__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

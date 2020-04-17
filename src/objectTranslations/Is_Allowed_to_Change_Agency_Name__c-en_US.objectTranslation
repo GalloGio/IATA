@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Is Allowed to Change Agency Name</value>
     </caseValues>
+    <fields>
+        <label><!-- Can change name --></label>
+        <name>Can_change_name__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

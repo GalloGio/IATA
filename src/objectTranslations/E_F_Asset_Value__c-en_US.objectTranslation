@@ -8,5 +8,46 @@
         <plural>true</plural>
         <value>E&amp;F Asset Values</value>
     </caseValues>
+    <fields>
+        <label><!-- Airlines Billed --></label>
+        <name>Airlines_Billed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoiced Amount --></label>
+        <name>Colection_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Collected Amount --></label>
+        <name>Collected_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Collection Rate --></label>
+        <name>Collection_Rate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Amount --></label>
+        <name>Commission_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission% --></label>
+        <name>Commission__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Asset --></label>
+        <name>E_F_Asset__c</name>
+        <relationshipLabel><!-- E&amp;F Asset Values --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- % IFS Settlement --></label>
+        <name>IFS_Settlement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rejection --></label>
+        <name>Rejection__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year --></label>
+        <name>Year__c</name>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

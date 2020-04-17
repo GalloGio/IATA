@@ -8,5 +8,22 @@
         <plural>true</plural>
         <value>Portal Service User Preferences</value>
     </caseValues>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Notification</masterLabel>
+            <translation><!-- Notification --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Portal Service Access --></label>
+        <name>Portal_Service_Access__c</name>
+        <relationshipLabel><!-- Portal Service User Preferences --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Subscribed --></label>
+        <name>Subscribed__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,68 @@
         <plural>true</plural>
         <value>E&amp;F Material Line Items</value>
     </caseValues>
+    <fields>
+        <label><!-- Allow Billing Agreements --></label>
+        <name>Allow_Billing_Agreements__c</name>
+    </fields>
+    <fields>
+        <label><!-- Base URL --></label>
+        <name>Base_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract --></label>
+        <name>Contract__c</name>
+        <relationshipLabel><!-- E&amp;F Material Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Approver Email --></label>
+        <name>EF_Approver_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Material Name --></label>
+        <name>EF_Material_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Material --></label>
+        <name>EF_Material__c</name>
+        <relationshipLabel><!-- E&amp;F Material Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Airline Billing Agreement --></label>
+        <name>EF_Relationship__c</name>
+        <relationshipLabel><!-- E&amp;F Material Line Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Status --></label>
+        <name>EF_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- E&amp;F Submitter Email --></label>
+        <name>EF_Submitter_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager Approval --></label>
+        <name>Manager_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested Changes --></label>
+        <name>Requested_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Require Approval --></label>
+        <name>Require_Approval__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Contract Line Item --></label>
+        <name>Contract_Line_Item</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Billing Agreement Line Item --></label>
+        <name>Relationship_Line_Item</name>
+    </recordTypes>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <label><!-- Edit_All --></label>
+        <name>Edit_All</name>
+    </webLinks>
 </CustomObjectTranslation>

@@ -8,5 +8,90 @@
         <plural>true</plural>
         <value>Remote Invocations</value>
     </caseValues>
+    <fields>
+        <label><!-- Integration Transaction ID --></label>
+        <name>Integration_Transaction_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal ID --></label>
+        <name>Internal_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Type --></label>
+        <name>Request_Type__c</name>
+        <picklistValues>
+            <masterLabel>GDI_ENDORSEMENT</masterLabel>
+            <translation><!-- GDI_ENDORSEMENT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NewGen - Easy Pay Model A</masterLabel>
+            <translation><!-- NewGen - Easy Pay Model A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIP - IFG Report</masterLabel>
+            <translation><!-- TIP - IFG Report --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIP_AUTO_REPORTS</masterLabel>
+            <translation><!-- TIP_AUTO_REPORTS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <picklistValues>
+            <masterLabel>GDI</masterLabel>
+            <translation><!-- GDI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IEP</masterLabel>
+            <translation><!-- IEP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IFG</masterLabel>
+            <translation><!-- IFG --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status Detail --></label>
+        <name>Status_Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Initializing</masterLabel>
+            <translation><!-- Initializing --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- NewGen - Easy Pay Model A --></label>
+        <name>ANG_IEP_MODEL_A</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- GDI ENDORSEMENT --></label>
+        <name>GDI_ENDORSEMENT</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- TIP Auto Reports --></description>
+        <label><!-- TIP_AUTO_REPORTS --></label>
+        <name>TIP_AUTO_REPORTS</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- TIP - IFG Report --></label>
+        <name>TIP_IFG_REPORT</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

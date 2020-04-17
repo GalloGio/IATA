@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>SIDRA Case 3 Occurrences Go live Date</value>
     </caseValues>
+    <fields>
+        <label><!-- Go Live Date --></label>
+        <name>Go_Live_Date__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,6 +8,56 @@
         <plural>true</plural>
         <value><!-- Script Header --></value>
     </caseValues>
+    <fields>
+        <label>Conta</label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Scripts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Ação</label>
+        <name>Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Scripts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label>Contato</label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Scripts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Taken --></label>
+        <name>Date_Taken__c</name>
+    </fields>
+    <fields>
+        <label><!-- Help for Scripts --></label>
+        <name>Help__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lead --></label>
+        <name>Lead__c</name>
+        <relationshipLabel><!-- Scripts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Scripts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Score --></label>
+        <name>Score__c</name>
+    </fields>
+    <fields>
+        <label><!-- Script --></label>
+        <name>Script__c</name>
+        <relationshipLabel><!-- Script Results --></relationshipLabel>
+    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- ID --></nameFieldLabel>
 </CustomObjectTranslation>

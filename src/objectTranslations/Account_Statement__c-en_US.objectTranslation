@@ -8,5 +8,54 @@
         <plural>true</plural>
         <value>Account Statements</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Statements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount to be paid --></label>
+        <name>Amount_to_be_Paid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Balance --></label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Adjustment --></label>
+        <name>Billing_Adjustment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Amount --></label>
+        <name>Billing_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group --></label>
+        <name>Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Paid --></label>
+        <name>Paid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Period --></label>
+        <name>Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remittance Date --></label>
+        <name>Remittance_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

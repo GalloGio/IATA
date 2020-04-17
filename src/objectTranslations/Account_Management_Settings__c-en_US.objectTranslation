@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Account Management Settings</value>
     </caseValues>
+    <fields>
+        <label><!-- Topic Digest Time Range Aggregator --></label>
+        <name>Topic_Digest_Time_Range_Aggregator__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

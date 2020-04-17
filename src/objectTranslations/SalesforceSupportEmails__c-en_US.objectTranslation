@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>Salesforce Support Emails</value>
     </caseValues>
+    <fields>
+        <label><!-- Support Email --></label>
+        <name>Support_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Support User Id --></label>
+        <name>Support_User_Id__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

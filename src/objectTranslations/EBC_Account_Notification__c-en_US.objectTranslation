@@ -8,5 +8,145 @@
         <plural>true</plural>
         <value>EBC Account Notifications</value>
     </caseValues>
+    <fields>
+        <help><!-- Billing Account Name (formula) --></help>
+        <label><!-- Billing Account Name --></label>
+        <name>Billing_Account_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Related Billing Account  of whom the notification is all about. --></help>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- EBC Account Notifications --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Contact Name from the Billing Account. --></help>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- The link to create new Campaign Url for eBroadcast community page. --></help>
+        <label><!-- Create New Campaign URL --></label>
+        <name>Create_New_Campaign_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- EBC Subscription Status for this Billing Account.
+This is set based on Billing Account eBroadcast Product Access --></help>
+        <label><!-- EBC Account Status --></label>
+        <name>EBC_Account_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Link to the EBC Dashboard. --></help>
+        <label><!-- EBC Dashboard URL --></label>
+        <name>EBC_Dashboard_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Selected eBroadcast rate plan name. The value is set to the EBC Product Rate Plan.Name --></help>
+        <label><!-- EBC Rate Plan Name --></label>
+        <name>EBC_Rate_Plan_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- eBroadcast Subscription Type of this user, based on Product Rate Plan&apos;s EBC SubscriptionType --></help>
+        <label><!-- EBC Subscription Type --></label>
+        <name>EBC_Subscription_Type__c</name>
+        <picklistValues>
+            <masterLabel>Pay-As-You-Go</masterLabel>
+            <translation><!-- Pay-As-You-Go --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pre-Paid</masterLabel>
+            <translation><!-- Pre-Paid --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The amount of current email credit balance --></help>
+        <label><!-- Email Balance --></label>
+        <name>Email_Balance__c</name>
+    </fields>
+    <fields>
+        <help><!-- Recipient Email Address of this notification. 
+This is set based on the EBC Preference&apos;s Primary Contact Email. --></help>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL pointing to my manage account page. --></help>
+        <label><!-- Manage My Account URL --></label>
+        <name>Manage_My_Account_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Next Renewal Date in string, with format DD Month YYYY. --></help>
+        <label><!-- Next Renewal Date String --></label>
+        <name>Next_Renewal_Date_String__c</name>
+    </fields>
+    <fields>
+        <help><!-- Zuora Subscription Next Renewal Date  for this EBC Subscription. --></help>
+        <label><!-- Next Renewal Date --></label>
+        <name>Next_Renewal_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Notification Date in string, with format DD Month YYYY. --></help>
+        <label><!-- Notification Date String --></label>
+        <name>Notification_Date_String__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email notification date on the letter. For simplicity, this will be set as the date of record creation, but that can be modify later --></help>
+        <label><!-- Notification Date --></label>
+        <name>Notification_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Notification Type is used to define which email template that will be used to sent. --></help>
+        <label><!-- Notification Type --></label>
+        <name>Notification_Type__c</name>
+        <picklistValues>
+            <masterLabel>Account Status</masterLabel>
+            <translation><!-- Account Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal Offer</masterLabel>
+            <translation><!-- Renewal Offer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Total number of campaigns executed in the previous month of the Notification Date. 
+This value is collected from related EBC_Activity records. --></help>
+        <label><!-- Number of Campaigns Last Month --></label>
+        <name>Number_of_Campaigns_Last_Month__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of email recipients in the previous months.
+This is calculated based on the EBC Activities. --></help>
+        <label><!-- Number of Email Recipients Last Month --></label>
+        <name>Number_of_Email_Recipients_Last_Month__c</name>
+    </fields>
+    <fields>
+        <help><!-- Primary Contact Name, copied from EBC_Preference PrimaryContact_Name --></help>
+        <label><!-- Primary Contact Name --></label>
+        <name>Primary_Contact_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Subscription End Date in string, with format DD Month YYYY. --></help>
+        <label><!-- Subscription End Date String --></label>
+        <name>Subscription_End_Date_String__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value of  Zuora Subscription&apos;s  Zuora TermEndDate, only set if the user has Active Prepaid EBC Subscription.
+Active is defined as Zuora Status=Active and Zuora TermEndDate__c &gt;= Today --></help>
+        <label><!-- Subscription End Date --></label>
+        <name>Subscription_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Related Username (User.Email) for this billing account. --></help>
+        <label><!-- Username --></label>
+        <name>Username__c</name>
+    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

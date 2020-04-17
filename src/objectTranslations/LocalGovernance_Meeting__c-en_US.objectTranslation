@@ -8,5 +8,184 @@
         <plural>true</plural>
         <value>Local Group Meetings</value>
     </caseValues>
+    <fields>
+        <label><!-- Comments (checklist) --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Criteria Reviewed --></label>
+        <name>Criteria_Reviewed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Legal REJECTED the agenda --></label>
+        <name>Date_Legal_REJECTED_the_agenda__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Legal REJECTED the minutes --></label>
+        <name>Date_Legal_REJECTED_the_minutes__c</name>
+    </fields>
+    <fields>
+        <help><!-- When this field is filled a workflow informs Legal that your minutes are ready to be signed off. --></help>
+        <label><!-- Date Legal Requested to Sign Off Minutes --></label>
+        <name>Date_Legal_Requested_to_Sign_Off_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Legal Requested to Sign off Agenda --></label>
+        <name>Date_Legal_Requested_to_Sign_off_Agenda__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field can only be filled by Legal and reflects the date when the minutes were signed. --></help>
+        <label><!-- Date Legal Signed Off the Minutes --></label>
+        <name>Date_Legal_Signed_Off_the_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Legal Signed off Agenda --></label>
+        <name>Date_Legal_Signed_off_Agenda__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the date the meeting will be held! --></help>
+        <label><!-- Date of Meeting --></label>
+        <name>Date_of_Meeting__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Remarks Agenda --></label>
+        <name>Legal_Remarks_Agenda__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legal Remarks Minutes --></label>
+        <name>Legal_Remarks_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Governance --></label>
+        <name>Local_Governance__c</name>
+        <relationshipLabel><!-- Local Group Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Select the user responsible for this meeting --></help>
+        <label><!-- Meeting Responsible --></label>
+        <name>Meeting_Responsible__c</name>
+        <relationshipLabel><!-- Local Group Meetings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Other --></label>
+        <name>Other__c</name>
+    </fields>
+    <fields>
+        <label><!-- Proposal to Conference --></label>
+        <name>Proposal_to_Conference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason for Rejection Agenda --></label>
+        <name>Reason_for_Rejection_Agenda__c</name>
+        <picklistValues>
+            <masterLabel>Agenda is not in English</masterLabel>
+            <translation><!-- Agenda is not in English --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agenda is not uploaded in Salesforce</masterLabel>
+            <translation><!-- Agenda is not uploaded in Salesforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agenda is unclear</masterLabel>
+            <translation><!-- Agenda is unclear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agenda must be redrafted for compliance purposes</masterLabel>
+            <translation><!-- Agenda must be redrafted for compliance purposes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No reference is made to the competition law compliance statement</masterLabel>
+            <translation><!-- No reference is made to the competition law compliance statement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other (see comments)</masterLabel>
+            <translation><!-- Other (see comments) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reason for Rejection Minutes --></label>
+        <name>Reason_for_Rejection_Minutes__c</name>
+        <picklistValues>
+            <masterLabel>Minutes are not in English</masterLabel>
+            <translation><!-- Minutes are not in English --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minutes are not uploaded in Salesforce</masterLabel>
+            <translation><!-- Minutes are not uploaded in Salesforce --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minutes are unclear</masterLabel>
+            <translation><!-- Minutes are unclear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minutes must be redrafted for compliance purposes</masterLabel>
+            <translation><!-- Minutes must be redrafted for compliance purposes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No reference is made to the competition law compliance statement</masterLabel>
+            <translation><!-- No reference is made to the competition law compliance statement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other (see comments)</masterLabel>
+            <translation><!-- Other (see comments) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Persons names are used in the Minutes</masterLabel>
+            <translation><!-- Persons names are used in the Minutes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Only applicable if weekly remittance is not implemented in the market(s). --></help>
+        <label><!-- Remittance Frequency Reviewed --></label>
+        <name>Remittance_Frequency_Reviewed__c</name>
+    </fields>
+    <fields>
+        <label><!-- VMFR --></label>
+        <name>VMFR__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please specify the items that were discussed in the meeting (Criteria Reviewed, Remittance Frequency Reviewed, VMFR) or fill &quot;Other&quot; with any other item discussed. --></errorMessage>
+        <name>At_least_one_checkbox</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- It&apos; s not possible to insert a new meeting or change the existing one if the participant is related to an inactive local group. --></errorMessage>
+        <name>Cannot_change_if_inactive_group</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill Comments checklist with the additional items discussed in the meeting. --></errorMessage>
+        <name>Comments_required_if_Other_is_true</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are not allowed to add or edit meetings to this group --></errorMessage>
+        <name>Create_Edit_Group_Meetings</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The date when Legal Signed off the Agenda can&apos;t be before Legal Requested to Sign Off the agenda --></errorMessage>
+        <name>Date_Legal_Signed_off_Agenda</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The date when Legal Signed off the Minutes can&apos;t be before Legal Requested to Sign Off the Minutes --></errorMessage>
+        <name>Date_Legal_Signed_off_minutes</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date of the meeting can&apos;t be in the past --></errorMessage>
+        <name>Date_of_meeting_cant_be_in_the_past</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill the Legal Remarks Agenda with the reason for rejecting it --></errorMessage>
+        <name>Legal_Remarks_Agenda_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill Legal remarks minutes explaining the Other reasons to reject the minutes. --></errorMessage>
+        <name>Legal_remarks_minutes_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please give a reason for rejecting the minutes --></errorMessage>
+        <name>Reason_for_rejection_minutes_mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please give a reason for rejecting the Agenda --></errorMessage>
+        <name>Reason_for_rejection_of_agenda_mandatory</name>
+    </validationRules>
 </CustomObjectTranslation>

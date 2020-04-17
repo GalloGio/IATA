@@ -8,5 +8,15 @@
         <plural>true</plural>
         <value>Contact Role Services</value>
     </caseValues>
+    <fields>
+        <label><!-- Contact Role --></label>
+        <name>Contact_Role__c</name>
+        <relationshipLabel><!-- Contact Role Services --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service --></label>
+        <name>Service__c</name>
+        <relationshipLabel><!-- Contact Role Services --></relationshipLabel>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

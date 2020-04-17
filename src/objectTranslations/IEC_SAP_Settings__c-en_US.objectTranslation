@@ -8,5 +8,63 @@
         <plural>true</plural>
         <value>IEC SAP Settings</value>
     </caseValues>
+    <fields>
+        <help><!-- If checked, the SFDC to SAP interface will run; it will send all invoices/invoice items that are ready to be sent to SAP for creation --></help>
+        <label><!-- Activate SAP Invoice Interface --></label>
+        <name>Activate_SAP_Invoice_Interface__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, the SFDC to Zuora interface will be activated; it will create payments in Zuora that have been processed in SAP --></help>
+        <label><!-- Activate Zuora Payment Interface --></label>
+        <name>Activate_Zuora_Payment_Interface__c</name>
+    </fields>
+    <fields>
+        <label><!-- DistChan --></label>
+        <name>DistChan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- DocType --></label>
+        <name>DocType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee Responsible --></label>
+        <name>Employee_Responsible__c</name>
+    </fields>
+    <fields>
+        <help><!-- The class id of the class BtchIECSendInvoicesToSAP. This is to prevent multiple instances of the same batch running at the same time. --></help>
+        <label><!-- SFDCtoSAPBatchClassId --></label>
+        <name>SFDCtoSAPBatchClassId__c</name>
+    </fields>
+    <fields>
+        <label><!-- SalesOffice --></label>
+        <name>SalesOffice__c</name>
+    </fields>
+    <fields>
+        <label><!-- SalesOrg --></label>
+        <name>SalesOrg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Period (min) --></label>
+        <name>Schedule_Period__c</name>
+    </fields>
+    <fields>
+        <help><!-- The password to use when calling the SAP Web Service to send invoices (encrypted with the encryption key in IEC Settings) --></help>
+        <label><!-- Web Service Password --></label>
+        <name>Web_Service_Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- The username to use when calling the SAP web service to send invoices --></help>
+        <label><!-- Web Service Username --></label>
+        <name>Web_Service_Username__c</name>
+    </fields>
+    <fields>
+        <help><!-- Endpoint of the SAP web service for contract creation --></help>
+        <label><!-- Web Service endpoint --></label>
+        <name>Web_Service_endpoint__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

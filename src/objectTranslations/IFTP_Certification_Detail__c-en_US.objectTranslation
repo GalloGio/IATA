@@ -8,5 +8,73 @@
         <plural>true</plural>
         <value>IFTP Certification Details</value>
     </caseValues>
+    <fields>
+        <help><!-- Additional training required by an Airline. Not visible in Detailed View or Summary View --></help>
+        <label><!-- Additional training --></label>
+        <name>Additional_training__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Certification --></label>
+        <name>Certification__c</name>
+        <relationshipLabel><!-- IFTP Certification Details --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- General Training --></label>
+        <name>General_Training__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Proficiency Level --></label>
+        <name>Prerequisite_Level__c</name>
+        <picklistValues>
+            <masterLabel>Level 2</masterLabel>
+            <translation><!-- Level 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Level 3</masterLabel>
+            <translation><!-- Level 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Airline can select aircraft type training that they consider are relevant than other --></help>
+        <label><!-- Relevant training --></label>
+        <name>Relevant_training__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If Yes - training are retired --></help>
+        <label><!-- Retired training --></label>
+        <name>Retired_training__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

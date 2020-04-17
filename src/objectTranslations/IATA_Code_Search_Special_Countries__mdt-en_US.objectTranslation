@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>IATA Code Search Special Countries</value>
     </caseValues>
+    <fields>
+        <label><!-- Remittance Holding Capacity Value --></label>
+        <name>Remittance_Holding_Capacity_Value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

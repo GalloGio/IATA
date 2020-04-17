@@ -8,7 +8,2328 @@
         <plural>true</plural>
         <value><!-- AMS Online Accreditation --></value>
     </caseValues>
+    <fieldSets>
+        <label><!-- AMS_CorrectionAllHierarchy --></label>
+        <name>AMS_CorrectionAllHierarchy</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- AMS_CorrectionPerLocation --></label>
+        <name>AMS_CorrectionPerLocation</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- AMS_CorrectionSingleAccount --></label>
+        <name>AMS_CorrectionSingleAccount</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- RemovalOfTradeName --></label>
+        <name>AMS_cnsremovaloftradename</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- LegalStatus --></label>
+        <name>AMS_legalstatus</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Location --></label>
+        <name>AMS_location</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- LocationType --></label>
+        <name>AMS_locationtype</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- LocationWithInspection --></label>
+        <name>AMS_locationwithinspection</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- MajorShareholding --></label>
+        <name>AMS_majorshareholding</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- MinorShareholding --></label>
+        <name>AMS_minorshareholding</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Name --></label>
+        <name>AMS_name</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- OwnershipToNonIATAAgent --></label>
+        <name>AMS_ownershiptoiataagent</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- OwnershipToNonIATAAgent --></label>
+        <name>AMS_ownershiptononiataagent</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- VMFR --></label>
+        <name>AMS_vmfr</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Acreditation Type --></label>
+        <name>ANG_accreditationtype</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Hierarchy Conversion To MC --></label>
+        <name>ANG_accreditationtype_CONVERSION</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Hierarchy --></label>
+        <name>ANG_hierarchy</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Name --></label>
+        <name>ANG_legalname</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Legal Status --></label>
+        <name>ANG_legalstatus</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Location --></label>
+        <name>ANG_location</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Location Type --></label>
+        <name>ANG_locationtype</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Location Type to Different Legal Entity --></label>
+        <name>ANG_locationtypetodifferentlegalentity</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Major Shareholding --></label>
+        <name>ANG_majorshareholding</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Minor change --></label>
+        <name>ANG_minorchange</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Minor Shareholding --></label>
+        <name>ANG_minorshareholding</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Ownership --></label>
+        <name>ANG_ownership</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG Trade Name --></label>
+        <name>ANG_tradename</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NG vmfr --></label>
+        <name>ANG_vmfr</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfLegal --></label>
+        <name>ChangeOfLegal</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfLocation --></label>
+        <name>ChangeOfLocation</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfLocationType --></label>
+        <name>ChangeOfLocationType</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfName --></label>
+        <name>ChangeOfName</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfOwnership --></label>
+        <name>ChangeOfOwnership</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ChangeOfShareholding --></label>
+        <name>ChangeOfShareholding</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- STAGING_AREA_FIELDS_TO_VALIDATE --></label>
+        <name>STAGING_AREA_FIELDS_TO_VALIDATE</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- VMFR --></label>
+        <name>VMFR</name>
+    </fieldSets>
+    <fields>
+        <label><!-- AE separate Legal Entity --></label>
+        <name>AE_separate_Legal_Entity__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- AMS Agency Id --></label>
+        <name>AMS_Agency_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANG_AE_SameLegal --></label>
+        <name>ANG_AE_SameLegal__c</name>
+    </fields>
+    <fields>
+        <label>Type d’accréditation</label>
+        <name>ANG_Accreditation_Model_to_Change__c</name>
+        <picklistValues>
+            <masterLabel>GoGlobal</masterLabel>
+            <translation><!-- GoGlobal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GoLite</masterLabel>
+            <translation><!-- GoLite --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GoStandard</masterLabel>
+            <translation><!-- GoStandard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Type d’accréditation</label>
+        <name>ANG_Accreditation_type__c</name>
+    </fields>
+    <fields>
+        <label>Type d’accréditation actuel</label>
+        <name>ANG_Current_Accreditation_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is New Gen Agency --></label>
+        <name>ANG_IsNewGenAgency__c</name>
+    </fields>
+    <fields>
+        <label><!-- A Code --></label>
+        <name>A_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Abbreviated Address --></label>
+        <name>Abbreviated_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Abbreviated name --></label>
+        <name>Abbreviated_name__c</name>
+    </fields>
+    <fields>
+        <label>* Accepter les Conditions générales</label>
+        <name>Accept_terms_and_conditions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account New Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch Agency Codes affected --></label>
+        <name>Agency_Codes_Concerned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agent Type --></label>
+        <name>Agent_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- *Agents Numeric Code of your Head Office --></label>
+        <name>Agents_Numeric_Code_of_your_Head_Office__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Previous Cargo Agency default? --></label>
+        <name>Been_a_sole_proprietor__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- * Been director or had a financial interest or a position of management in an IATA Agent that was removed from the IATA Cargo Agency List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debt --></help>
+        <label><!-- * Cargo Agency with outstanding debts? --></label>
+        <name>Been_director_or_had_a_financial__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- * Been found guilty of infringements of any shipping regulations? --></help>
+        <label><!-- * Guilty of infringing shipping regulat. --></label>
+        <name>Been_found_guilty_of_infringements__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- * Involved in bankruptcy proceeding? --></label>
+        <name>Been_involved_in_a_bankruptcy__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing payment Another Branch --></label>
+        <name>Billing_payment_Another_Branch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing payment Branch Office --></label>
+        <name>Billing_payment_Branch_Office__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing payment Head Office --></label>
+        <name>Billing_payment_Head_Office__c</name>
+    </fields>
+    <fields>
+        <label>* Ville</label>
+        <name>Branch_Office_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch Office Code --></label>
+        <name>Branch_Office_Code__c</name>
+    </fields>
+    <fields>
+        <label>Pays</label>
+        <name>Branch_Office_Country__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Country) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * Office Email --></label>
+        <name>Branch_Office_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- FAX --></label>
+        <name>Branch_Office_FAX__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fax --></label>
+        <name>Branch_Office_Fax_National__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Office Phone --></label>
+        <name>Branch_Office_Phone_National__c</name>
+    </fields>
+    <fields>
+        <label>Téléphone</label>
+        <name>Branch_Office_Phone__c</name>
+    </fields>
+    <fields>
+        <label>Code postale</label>
+        <name>Branch_Office_Postal_code__c</name>
+    </fields>
+    <fields>
+        <label>* Nom et numéro de la rue</label>
+        <name>Branch_Office_Street_name_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- * CASS Assoc. Code --></label>
+        <name>CASS_Assoc_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Date issued --></label>
+        <name>CASS_Date_issued__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Name under which it was issued --></label>
+        <name>CASS_Name_under_which_it_was_issued__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASS Number --></label>
+        <name>CASS_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Reason for cancellation --></label>
+        <name>CASS_Reason_for_cancellation__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region AirFreight Selection --></label>
+        <name>CGO_Region_AirFreight_Selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region AirFreight Total --></label>
+        <name>CGO_Region_AirFreight_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Consignment Selection --></label>
+        <name>CGO_Region_Consignment_Selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Consignment Total --></label>
+        <name>CGO_Region_Consignment_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Percentage Selection --></label>
+        <name>CGO_Region_Percentage_Selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Percentage Total --></label>
+        <name>CGO_Region_Percentage_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Selection --></label>
+        <name>CGO_Region_Selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Tons Selection --></label>
+        <name>CGO_Region_Tons_Selection__c</name>
+    </fields>
+    <fields>
+        <label><!-- CGO Region Tons Total --></label>
+        <name>CGO_Region_Tons_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- C Code --></label>
+        <name>C_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cargo Agent Account --></label>
+        <name>Cargo_Agent_Account__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Cargo Agent Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Check Digit --></label>
+        <name>Chk_Dgt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Confirm Agent Details --></label>
+        <name>Confirm_Agent_Details__c</name>
+    </fields>
+    <fields>
+        <label>Confirmer les informations juridiques</label>
+        <name>Confirm_Legal_Details_are_correct__c</name>
+    </fields>
+    <fields>
+        <label>Confirmer la situation géographique</label>
+        <name>Confirm_Location_Details_are_correct__c</name>
+    </fields>
+    <fields>
+        <label>Confirmez les détails de la propriété</label>
+        <name>Confirm_Ownership_details_are_correct__c</name>
+    </fields>
+    <fields>
+        <label>Type d’accréditation–Confirmer</label>
+        <name>Confirm_accreditation_type_are_correct__c</name>
+    </fields>
+    <fields>
+        <label>Copier la fiche des données de propriété</label>
+        <name>Copy_Ownership_Records__c</name>
+    </fields>
+    <fields>
+        <label>Copier les données de propriété</label>
+        <name>Copy_Ownership__c</name>
+    </fields>
+    <fields>
+        <label>Pays</label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current VAT Number 2 --></label>
+        <name>Current_VAT_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current VAT Number --></label>
+        <name>Current_VAT_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- DGR Agency Regulation --></label>
+        <name>DGR_Agency_Regulation__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * DG Air Freight Charges --></label>
+        <name>DG_Air_Freight_Charges__c</name>
+    </fields>
+    <fields>
+        <label><!-- * DG Number of Consignments --></label>
+        <name>DG_Number_of_Consignments__c</name>
+    </fields>
+    <fields>
+        <label><!-- * DG Percentage --></label>
+        <name>DG_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- * DG Tons --></label>
+        <name>DG_Tons__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Date issued --></label>
+        <name>Date_issued__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does the air transportation which your firm sells/handles include goods owned by your firm? --></help>
+        <label><!-- Air transport includes firm owned goods? --></label>
+        <name>Does_the_air_transportation_which_your__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Does your firm intend to request authorization to deliver consignments for transportation to air carrier(s) at airport(s) in any country(ies) adjacent to the country for which this application is being made? --></help>
+        <label><!-- * Request delivery consignment authoriz? --></label>
+        <name>Does_your_firm_intend_to_request__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- * Does your firm now share or intend to share office or warehouse space or  equipment with any other person or firm? --></help>
+        <label><!-- * Sharing space with other person/firm? --></label>
+        <name>Does_your_firm_now_share_or_intend__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Does your firm operate a cargo cartage --></label>
+        <name>Does_your_firm_operate_a_cargo_cartage__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Does your firm sell air cargo --></label>
+        <name>Does_your_firm_sell_air_cargo__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Does your firm use its own vehicles? --></label>
+        <name>Does_your_firm_use_its_own_vehicles__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Date d’application de la modification</label>
+        <name>Effective_Date_Of_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Credit Card FOP --></label>
+        <name>Enable_Credit_Card_FOP__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Est Future Sales --></label>
+        <name>Est_Future_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Explain fully, stating name --></label>
+        <name>Explain_fully_stating_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Address --></label>
+        <name>Full_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geoname Billing City --></label>
+        <name>Geoname_Billing_City__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Geoname Shipping City --></label>
+        <name>Geoname_Shipping_City__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Geoname Shipping City) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>&quot; * Si oui, veuillez préciser&quot;</label>
+        <name>Give_details_for_authorization_to_act__c</name>
+    </fields>
+    <fields>
+        <label>&quot; * Si oui, veuillez préciser&quot;</label>
+        <name>Give_details_for_the_change_of_ownership__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Please give full details --></label>
+        <name>Give_full_details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Give the name of the association(s) --></label>
+        <name>Give_the_name_of_the_association_s__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup to HO for the Online application (not necessarily the account on the case) --></help>
+        <label><!-- HO Account --></label>
+        <name>HO_Account__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (HO Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- HO Billing Address --></label>
+        <name>HO_Billing_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- HO Shipping Address --></label>
+        <name>HO_Shipping_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- Has your firm ever held a Cargo Agency Agreement executed by IATA? --></help>
+        <label><!-- * Ever held IATA Cargo Agency agreement? --></label>
+        <name>Has_your_firm_ever_held_a_Cargo_Agency__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Has your firm ever held a Cargo Agency Agreement executed by IATA? --></help>
+        <label><!-- * Ever held IATA CASS Assoc. agreement? --></label>
+        <name>Has_your_form_ever_held_CASS_Assoc_etc__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Have any having authorization to act --></label>
+        <name>Have_any_having_authorization_to_act__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Head Office have access --></label>
+        <name>Head_Office_have_access__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Code de l&apos;IATA</label>
+        <name>IATACode__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATAN Agent Account --></label>
+        <name>IATAN_Agent_Account__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (IATAN Agent Account) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * IATAN Code --></label>
+        <name>IATAN_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * IATA Agents Numeric Code --></label>
+        <name>IATA_Agents_Numeric_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * IATA Code --></label>
+        <name>IATA_Cargo_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing ISO State --></label>
+        <name>IATA_ISO_State__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * IATA Registered IATAN Agent --></label>
+        <name>IATA_Registered_IATAN_Agent__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- INVALID Tax Number 2 --></label>
+        <name>INVALID_Tax_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- INVALID Tax Number --></label>
+        <name>INVALID_Tax_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing ISO Country --></label>
+        <name>ISO_Country__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (ISO Country) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount of credit requested --></label>
+        <name>ISSP_AMS_Amount_of_credit_requested__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Number 1 --></label>
+        <name>ISSP_AMS_Bank_Account_Number_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Number 2 --></label>
+        <name>ISSP_AMS_Bank_Account_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Number 3 --></label>
+        <name>ISSP_AMS_Bank_Account_Number_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name &amp; Address 1 --></label>
+        <name>ISSP_AMS_Bank_Address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name &amp; Address 2 --></label>
+        <name>ISSP_AMS_Bank_Address_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name &amp; Address 3 --></label>
+        <name>ISSP_AMS_Bank_Address_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Bank account --></label>
+        <name>ISSP_AMS_Bank_account__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Give details of business activities --></label>
+        <name>ISSP_AMS_Business_Activities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date office opened as a Cargo Agency --></label>
+        <name>ISSP_AMS_Cargo_Office_Open_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Is Legal Entity with listed shares? --></label>
+        <name>ISSP_AMS_Curr_Entity_with_listed_shares__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Date d&apos;enregistrement</label>
+        <name>ISSP_AMS_Date_Registration_granted__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Date of legal establishment of firm --></label>
+        <name>ISSP_AMS_Date_legal_establishment__c</name>
+    </fields>
+    <fields>
+        <label>* Date de délivrance de la licence</label>
+        <name>ISSP_AMS_Date_license_granted__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Date of Association --></label>
+        <name>ISSP_AMS_Date_of_Association__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Date of incorporation --></label>
+        <name>ISSP_AMS_Date_of_incorporation__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Is Legal Entity with listed shares? --></label>
+        <name>ISSP_AMS_Entity_with_listed_shares__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- * For whom? --></label>
+        <name>ISSP_AMS_For_whom_Nominee__c</name>
+    </fields>
+    <fields>
+        <label><!-- GDS with signed contract --></label>
+        <name>ISSP_AMS_GDS_with_signed_contract__c</name>
+        <picklistValues>
+            <masterLabel>Abacus</masterLabel>
+            <translation><!-- Abacus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Amadeus</masterLabel>
+            <translation><!-- Amadeus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Axess</masterLabel>
+            <translation><!-- Axess --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deutsche Reiseburo</masterLabel>
+            <translation><!-- Deutsche Reiseburo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Farelogix</masterLabel>
+            <translation><!-- Farelogix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infini</masterLabel>
+            <translation><!-- Infini --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kiu System</masterLabel>
+            <translation><!-- Kiu System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kotis Travel Info SE</masterLabel>
+            <translation><!-- Kotis Travel Info SE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resiber</masterLabel>
+            <translation><!-- Resiber --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA</masterLabel>
+            <translation><!-- SITA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sabre</masterLabel>
+            <translation><!-- Sabre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sirena</masterLabel>
+            <translation><!-- Sirena --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Topas</masterLabel>
+            <translation><!-- Topas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travelport (Apollo)</masterLabel>
+            <translation><!-- Travelport (Apollo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travelport (Galileo)</masterLabel>
+            <translation><!-- Travelport (Galileo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travelport (Worldspan)</masterLabel>
+            <translation><!-- Travelport (Worldspan) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travelsky</masterLabel>
+            <translation><!-- Travelsky --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Durant votre première année ?</label>
+        <name>ISSP_AMS_Gross_Amnt_First_year__c</name>
+    </fields>
+    <fields>
+        <label>* Durant votre seconde année ?</label>
+        <name>ISSP_AMS_Gross_Amnt_Second_year__c</name>
+    </fields>
+    <fields>
+        <label>* Agent de transport affilié à l&apos;IATA</label>
+        <name>ISSP_AMS_IATA_Registered_Cargo_Agent__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- * IBAN --></label>
+        <name>ISSP_AMS_IBAN__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoicing Contact --></label>
+        <name>ISSP_AMS_Invoicing_Contact__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Invoicing Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * Is the applicant a parent, subsidiary? --></label>
+        <name>ISSP_AMS_Is_Applicant_Parent__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is firm authorized to make declarations? --></label>
+        <name>ISSP_AMS_Is_Make_Declarations__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Nom et adresse légalement enregistrés</label>
+        <name>ISSP_AMS_Legal_Reg_Name_Address__c</name>
+    </fields>
+    <fields>
+        <label>* Spécifier le statut légal</label>
+        <name>ISSP_AMS_Legal_Status__c</name>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Co-operative</masterLabel>
+            <translation>Coopérative</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corporation</masterLabel>
+            <translation>Entreprise</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Joint Venture</masterLabel>
+            <translation>Joint-venture</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Limited Company</masterLabel>
+            <translation>Société à responsabilité limitée</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Limited Partnership</masterLabel>
+            <translation>Société en commandite</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partnership</masterLabel>
+            <translation>Partenariat</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sole Proprietorship</masterLabel>
+            <translation>Entreprise individuelle</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>State Owned Enterprise</masterLabel>
+            <translation>Société publique</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust Company</masterLabel>
+            <translation>Société de gestion</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Numéro de licence de l&apos;agence</label>
+        <name>ISSP_AMS_License_No__c</name>
+    </fields>
+    <fields>
+        <label>Capital minimum versé</label>
+        <name>ISSP_AMS_Min_Paidup_capital__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Nominee or trustee for someone else? --></label>
+        <name>ISSP_AMS_Nominee_Trustee__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- * Number of years --></label>
+        <name>ISSP_AMS_Number_of_Years_Traded__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Application is for an Online Agency? --></label>
+        <name>ISSP_AMS_Online_Agency_Application__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* URL de l&apos;agence en ligne</label>
+        <name>ISSP_AMS_Online_Agency_URL__c</name>
+    </fields>
+    <fields>
+        <label>&lt;b&gt;* &lt;/b&gt;Capital versé</label>
+        <name>ISSP_AMS_Paidup_capital__c</name>
+    </fields>
+    <fields>
+        <label>Date ouverture agence de voyages</label>
+        <name>ISSP_AMS_Pax_Office_Open_Date__c</name>
+    </fields>
+    <fields>
+        <label>Administrateur du portail</label>
+        <name>ISSP_AMS_Portal_admin__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Portal administrator) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Locaux situés dans un aéroport ?</label>
+        <name>ISSP_AMS_Premises_located_at_airport__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Explication du défaut antérieur</label>
+        <name>ISSP_AMS_Prev_default_explanation__c</name>
+    </fields>
+    <fields>
+        <label>* Antérieurement en défaut</label>
+        <name>ISSP_AMS_Previous_default__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Activité principale de l’entreprise ?</label>
+        <name>ISSP_AMS_Principal_business_Org__c</name>
+    </fields>
+    <fields>
+        <label>Capital enregistré</label>
+        <name>ISSP_AMS_Registered_Capital__c</name>
+    </fields>
+    <fields>
+        <label><!-- * SWIFT --></label>
+        <name>ISSP_AMS_SWIFT__c</name>
+    </fields>
+    <fields>
+        <label><!-- *State the name(s) address(es) --></label>
+        <name>ISSP_AMS_State_Names_Addresses__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Total Current Ownership Companies --></label>
+        <name>ISSP_AMS_Total_Current_Ownership_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Total Current Ownership Individuals --></label>
+        <name>ISSP_AMS_Total_Current_Ownership_Individ__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Total Current Ownership --></label>
+        <name>ISSP_AMS_Total_Current_Ownership__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Total Ownership --></label>
+        <name>ISSP_AMS_Total_Ownership__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Total Previous Ownership --></label>
+        <name>ISSP_AMS_Total_Previous_Ownership__c</name>
+    </fields>
+    <fields>
+        <label>* N° d&apos;enreg. au registre du commerce</label>
+        <name>ISSP_AMS_Trade_Reg_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Type of License --></label>
+        <name>ISSP_AMS_Type_of_License__c</name>
+    </fields>
+    <fields>
+        <label><!-- * VAT Number 2 --></label>
+        <name>ISSP_AMS_VAT_Number_2_Input__c</name>
+    </fields>
+    <fields>
+        <label>* Numéro de VAT</label>
+        <name>ISSP_AMS_VAT_Number_Input__c</name>
+    </fields>
+    <fields>
+        <label>* Numéro de TVA</label>
+        <name>ISSP_AMS_VAT_number__c</name>
+    </fields>
+    <fields>
+        <label>* Date d&apos;intégration</label>
+        <name>ISSP_AMS_when_incorporated__c</name>
+    </fields>
+    <fields>
+        <label>* Lieu d&apos;intégration</label>
+        <name>ISSP_AMS_where_incorporated__c</name>
+    </fields>
+    <fields>
+        <label>Moyen d’identification de l’agence</label>
+        <name>ISSP_AM_Means_Identified_Travel_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP Branch AccountId --></label>
+        <name>ISSP_Branch_AccountId__c</name>
+    </fields>
+    <fields>
+        <label><!-- * If yes, are you fully and legally disc --></label>
+        <name>If_yes_are_you_fully_and_legally__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- International Sales in last Year? --></label>
+        <name>International_Sales_in_last_Year__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is GSA? --></label>
+        <name>IsGSA__c</name>
+        <picklistValues>
+            <masterLabel>NO</masterLabel>
+            <translation>NON</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YES</masterLabel>
+            <translation>OUI</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is change bank account details --></label>
+        <name>Is_change_bank_account_details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is change legal name --></label>
+        <name>Is_change_legal_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is change location --></label>
+        <name>Is_change_location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is change ownership or shareholding --></label>
+        <name>Is_change_ownership_or_shareholding__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is there any relationship between the ownership, management or profits of your business and the ownership, management or profits of a General Sales Agent of an air carrier? --></help>
+        <label><!-- Any Ownership / GSSA relationship? --></label>
+        <name>Is_there_any_relationship__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Cette surccursale devient 1 siège ?</label>
+        <name>Is_this_Branch_becoming_a_Head_Office__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Ce siège devient-il une succursale ?</label>
+        <name>Is_this_Head_Office_becoming_a_Branch__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is your firm a General Sales Agent (GSA) for any air carrier(s) --></help>
+        <label><!-- GSSA for any air carrier(s)? --></label>
+        <name>Is_your_firm_a_General_Sales_Agent_GSA__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is your firm a member of a national or international association of freight forwarders? --></help>
+        <label><!-- Member of freight forwarders assoc.? --></label>
+        <name>Is_your_firm_a_member_of_a_national__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is your firm acting as agent for a surface carrier? --></help>
+        <label><!-- Acting as agent for surface carrier? --></label>
+        <name>Is_your_firm_acting_as_agent_for_surface__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is your firm affiliated directly --></label>
+        <name>Is_your_firm_affiliated_directly__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is your firm an approved IATA Passenger Sales Agent? --></help>
+        <label><!-- * Approved IATA Passenger Sales Agent? --></label>
+        <name>Is_your_firm_an_approved_IATA_Passenger__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- * Is your firm handling Dangerous Goods? --></label>
+        <name>Is_your_firm_handling_Dangerous_Goods__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- * Is your firm insured to cover its liability in the event of loss or damage to shipper&apos;s cargo while in your possession? --></help>
+        <label><!-- * Insured in event of loss to cargo? --></label>
+        <name>Is_your_firm_insured_to_cover__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Capital social émis après changement</label>
+        <name>Issued_share_capital_After_Change__c</name>
+    </fields>
+    <fields>
+        <label>Capital-actions émis</label>
+        <name>Issued_share_capital__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Scope Of Change --></label>
+        <name>Last_Scope_Of_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link agent name --></label>
+        <name>Link_agent_name__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Link agent name) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * List carrier(s) --></label>
+        <name>List_carriers__c</name>
+    </fields>
+    <fields>
+        <label><!-- * List the airport(s) to be authorized --></label>
+        <name>List_the_airport_s_to_be_authorized__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Live Animals Air Freight Charges --></label>
+        <name>Live_Animals_Air_Freight_Charges__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Live Animals No of Consignments --></label>
+        <name>Live_Animals_No_of_Consignments__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Live Animals Percentage --></label>
+        <name>Live_Animals_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Live Animals Tons --></label>
+        <name>Live_Animals_Tons__c</name>
+    </fields>
+    <fields>
+        <label>Pays</label>
+        <name>Local_Address_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Agent Type --></label>
+        <name>Local_Agent_Type__c</name>
+        <picklistValues>
+            <masterLabel>Domestic</masterLabel>
+            <translation><!-- Domestic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International</masterLabel>
+            <translation><!-- International --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Dénomination sociale/enregistrée</label>
+        <name>Local_Legally_Registered_Name__c</name>
+    </fields>
+    <fields>
+        <label>Région</label>
+        <name>Local_Physical_Address_Area__c</name>
+    </fields>
+    <fields>
+        <label>* Ville</label>
+        <name>Local_Physical_Address_City__c</name>
+    </fields>
+    <fields>
+        <label>Pays</label>
+        <name>Local_Physical_Address_Country__c</name>
+    </fields>
+    <fields>
+        <label>Code postale</label>
+        <name>Local_Physical_Address_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Province --></label>
+        <name>Local_Physical_Address_Province__c</name>
+    </fields>
+    <fields>
+        <label>* Adresse dans la licence d’exploitation</label>
+        <name>Local_Physical_Address_Street__c</name>
+    </fields>
+    <fields>
+        <label>Région</label>
+        <name>Local_Postal_Address_Area__c</name>
+    </fields>
+    <fields>
+        <label>* Ville</label>
+        <name>Local_Postal_Address_City__c</name>
+    </fields>
+    <fields>
+        <label>Code postale</label>
+        <name>Local_Postal_Address_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Province --></label>
+        <name>Local_Postal_Address_Province__c</name>
+    </fields>
+    <fields>
+        <label>* Nº et nom de la rue (correspondance)</label>
+        <name>Local_Postal_Address_Street__c</name>
+    </fields>
+    <fields>
+        <help><!-- C-Cargo
+D-Domestic
+E-External Registrars
+G-General Sales Agents
+K-CATO
+M-Members &amp; Airlines Sales Offices
+N-NISI
+O-SATO
+P-Passenger
+S-SSI
+T-TIDS
+V-Travel Service Intermediaries-TSI (USA Only)
+X-Handling Agents and Shipping Lines --></help>
+        <label><!-- Location Class --></label>
+        <name>Location_Class__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>G</masterLabel>
+            <translation><!-- G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>I</masterLabel>
+            <translation><!-- I --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>K</masterLabel>
+            <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N</masterLabel>
+            <translation><!-- N --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>O</masterLabel>
+            <translation><!-- O --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>P</masterLabel>
+            <translation><!-- P --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Q</masterLabel>
+            <translation><!-- Q --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>R</masterLabel>
+            <translation><!-- R --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>T</masterLabel>
+            <translation><!-- T --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>V</masterLabel>
+            <translation><!-- V --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X</masterLabel>
+            <translation><!-- X --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Location Type --></label>
+        <name>Location_Type__c</name>
+        <picklistValues>
+            <masterLabel>AO</masterLabel>
+            <translation><!-- AO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BR</masterLabel>
+            <translation><!-- BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CS</masterLabel>
+            <translation><!-- CS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EB</masterLabel>
+            <translation><!-- EB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EP</masterLabel>
+            <translation><!-- EP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES</masterLabel>
+            <translation><!-- ES --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HO</masterLabel>
+            <translation><!-- HO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SA</masterLabel>
+            <translation><!-- SA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SE</masterLabel>
+            <translation><!-- SE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ST</masterLabel>
+            <translation><!-- ST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TD</masterLabel>
+            <translation><!-- TD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WH</masterLabel>
+            <translation><!-- WH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Map Company Type of HO to Legal Status --></help>
+        <label>Statut juridique actuel</label>
+        <name>Map_Company_Type_to_Legal_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- MobileNational --></label>
+        <name>MobileNational__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile --></label>
+        <name>Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- MultiCountry Countries Concerned --></label>
+        <name>MultiCountry_Countries_Concerned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Multicountry Apply Language --></label>
+        <name>Multicountry_Apply_Language__c</name>
+    </fields>
+    <fields>
+        <label><!-- NDC Agent --></label>
+        <name>NDC_Transactions__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- N Code --></label>
+        <name>N_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Name under which it was issued --></label>
+        <name>Name_under_which_it_was_issued__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Head Office IATA Code --></label>
+        <name>New_Head_Office_IATA_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Total No. of Consignments (last year) --></label>
+        <name>No_Consignments_Last_Year__c</name>
+    </fields>
+    <fields>
+        <label>Type d’accréditation–Demande changement</label>
+        <name>Notify_Change_Accreditation_Type__c</name>
+    </fields>
+    <fields>
+        <label>Signaler un changement à l’IATA</label>
+        <name>Notify_Change_Legal_Details__c</name>
+    </fields>
+    <fields>
+        <label>Signaler un changement à l’IATA</label>
+        <name>Notify_Change_Location__c</name>
+    </fields>
+    <fields>
+        <label>Signaler un changement à l’IATA</label>
+        <name>Notify_Change_Ownership__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation Type --></label>
+        <name>Operation_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cargo_Agent</masterLabel>
+            <translation><!-- Cargo_Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel_Agent</masterLabel>
+            <translation><!-- Travel_Agent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- * Other Air Freight Charges --></label>
+        <name>Other_Air_Freight_Charges__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other Number of Consignments --></label>
+        <name>Other_Number_of_Consignments__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Other Percentage --></label>
+        <name>Other_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Other Tons --></label>
+        <name>Other_Tons__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Via Bank Transfer --></label>
+        <name>Payment_Via_Bank_Transfer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Via Direct Debit --></label>
+        <name>Payment_Via_Direct_Debit__c</name>
+    </fields>
+    <fields>
+        <label>Si oui, merci de fournir des détails</label>
+        <name>Please_provide_details_for_the_change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preferred RHC currency --></label>
+        <name>Preferred_RHC_currency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current City --></label>
+        <name>Previous_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Office Email --></label>
+        <name>Previous_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current FAX --></label>
+        <name>Previous_Fax2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Legal / Registered Name --></label>
+        <name>Previous_Legal_Registered_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Mobile National --></label>
+        <name>Previous_Mobile_National__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Mobile --></label>
+        <name>Previous_Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Phone --></label>
+        <name>Previous_Phone2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Office Phone --></label>
+        <name>Previous_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Postal code --></label>
+        <name>Previous_Postal_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current State/Province --></label>
+        <name>Previous_State_Province__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Street Name &amp; Number --></label>
+        <name>Previous_Street_Name_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Trade Name --></label>
+        <name>Previous_Trade_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current FAX --></label>
+        <name>Previous_fax1__c</name>
+    </fields>
+    <fields>
+        <label>Si oui, merci de fournir des détails</label>
+        <name>Provide_details_for_change_affect_staff__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Please provide detailed explanation --></label>
+        <name>Provide_explanation_for_change_locations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rail --></label>
+        <name>Rail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ready for Accreditation --></label>
+        <name>Ready_for_Accreditation__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Reason for cancellation --></label>
+        <name>Reason_for_cancellation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Registered to receive HOT files --></label>
+        <name>Registered_to_hot_files__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency__c</name>
+        <picklistValues>
+            <masterLabel>4 times per month</masterLabel>
+            <translation><!-- 4 times per month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EasyPay</masterLabel>
+            <translation><!-- EasyPay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 10 days</masterLabel>
+            <translation><!-- Every 10 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 3 days</masterLabel>
+            <translation><!-- Every 3 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every 5 days</masterLabel>
+            <translation><!-- Every 5 days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Long Daily</masterLabel>
+            <translation><!-- Long Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twice a week</masterLabel>
+            <translation><!-- Twice a week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>SAAM_Case__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Periode de vente de</label>
+        <name>Sales_Period_From__c</name>
+    </fields>
+    <fields>
+        <label>à</label>
+        <name>Sales_Period_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Same Legal Entity Agency Account --></label>
+        <name>Same_Legal_Entity_Agency_Account__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Same Legal Entity Agency Form --></label>
+        <name>Same_Legal_Entity_Agency_Form__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Same Legal Entity Agency Id --></label>
+        <name>Same_Legal_Entity_Agency_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Saved At Least Once --></label>
+        <name>Saved_At_Least_Once__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scope of Change --></label>
+        <name>Scope_of_Change__c</name>
+        <picklistValues>
+            <masterLabel>Branch Abroad</masterLabel>
+            <translation><!-- Branch Abroad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HO - All Branches</masterLabel>
+            <translation><!-- HO - All Branches --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HO - Selected Branches</masterLabel>
+            <translation><!-- HO - Selected Branches --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HO Only</masterLabel>
+            <translation><!-- HO Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selected Branches Only</masterLabel>
+            <translation><!-- Selected Branches Only --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Separate user access --></label>
+        <name>Separate_user_access__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Ville de livraison</label>
+        <name>Shipping_City__c</name>
+    </fields>
+    <fields>
+        <label>Pays de livraison</label>
+        <name>Shipping_Country__c</name>
+    </fields>
+    <fields>
+        <label>Code pays ISO de livraison</label>
+        <name>Shipping_ISO_Country__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Shipping ISO Country) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>État de livraison ISO</label>
+        <name>Shipping_ISO_State__c</name>
+        <relationshipLabel><!-- AMS Online Accreditations (Shipping ISO State) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Code postal de livraison</label>
+        <name>Shipping_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Same As Billing --></label>
+        <name>Shipping_Same_As_Billing__c</name>
+    </fields>
+    <fields>
+        <label>État de livraison</label>
+        <name>Shipping_State__c</name>
+    </fields>
+    <fields>
+        <label>Rue de livraison</label>
+        <name>Shipping_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Short Name --></label>
+        <name>Short_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Solicitation Flag --></label>
+        <name>Solicitation_Flag__c</name>
+    </fields>
+    <fields>
+        <help><!-- Does your firm specialize in any particular type of traffic? --></help>
+        <label><!-- * Specialize in particular traffic type? --></label>
+        <name>Specialize_in_particular_traffic_type__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Spécifiez le nouveau statut légal</label>
+        <name>Specify_Legal_Status_After_Change__c</name>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Co-operative</masterLabel>
+            <translation>Coopérative</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corporation</masterLabel>
+            <translation>Entreprise</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Joint Venture</masterLabel>
+            <translation>Joint-venture</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Limited Company</masterLabel>
+            <translation>Société à responsabilité limitée</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Limited Partnership</masterLabel>
+            <translation>Société en commandite</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partnership</masterLabel>
+            <translation>Partenariat</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sole Proprietorship</masterLabel>
+            <translation>Entreprise individuelle</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>State Owned Enterprise</masterLabel>
+            <translation>Société publique</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trust Company</masterLabel>
+            <translation>Société de gestion</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- State/Province --></label>
+        <name>State_Province__c</name>
+    </fields>
+    <fields>
+        <label><!-- * State full name of such Agent --></label>
+        <name>State_full_name_of_such_Agent__c</name>
+    </fields>
+    <fields>
+        <help><!-- State the percentage of your gross monetary volume of yearly air cargo transportation business represented by the transportation of such goods --></help>
+        <label><!-- * % of gross monetary volume --></label>
+        <name>State_the_percentage_of_your_gross__c</name>
+    </fields>
+    <fields>
+        <help><!-- Staging area&apos;s status --></help>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>InProgress</masterLabel>
+            <translation><!-- InProgress --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Steamship --></label>
+        <name>Steamship__c</name>
+    </fields>
+    <fields>
+        <label><!-- Submitted to IATA --></label>
+        <name>Submitted_to_IATA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Charges (Specialized Traffic) --></label>
+        <name>Total_Charges_Specialized_Traffic__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total monetary value of freight charges --></help>
+        <label><!-- *Total Freight Charges value (last year) --></label>
+        <name>Total_Freight_Charges_monetary_value__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Total Freight weight (Kgs last year) --></label>
+        <name>Total_Freight_weight_Kgs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total International Sales --></label>
+        <name>Total_International_Sales__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Consignments --></label>
+        <name>Total_Number_of_Consignments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Percentage (Specialized Traffic) --></label>
+        <name>Total_Percentage_Specialized_Traffic__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Total Projected Number Consignments --></label>
+        <name>Total_Projected_Number_Consignments__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Total Projected Value Freight Charges --></label>
+        <name>Total_Projected_Value_Freight__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Total Projected Weight (Kilos) --></label>
+        <name>Total_Projected_Weight_Kilos__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total SOIS Charges Collected --></label>
+        <name>Total_SOIS_Charges_Collected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total SOIS Prepaid Collected --></label>
+        <name>Total_SOIS_Prepaid_Collected__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total SOIS Weight --></label>
+        <name>Total_SOIS_Weight__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Tons (Specialized Traffic) --></label>
+        <name>Total_Tons_Special_Traffic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trade Name --></label>
+        <name>TradeName__c</name>
+    </fields>
+    <fields>
+        <label>Nom commercial</label>
+        <name>Trade_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trucking --></label>
+        <name>Trucking__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Cargo Agent --></label>
+        <name>Type_of_Cargo_Agent__c</name>
+        <picklistValues>
+            <masterLabel>CASS Export</masterLabel>
+            <translation><!-- CASS Export --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Import</masterLabel>
+            <translation><!-- CASS Import --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Change --></label>
+        <name>Type_of_Change__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Operation --></label>
+        <name>Type_of_Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- VAT Number 2 --></label>
+        <name>VAT_Number_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validation_ERRORS --></label>
+        <name>Validation_ERRORS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Website --></label>
+        <name>Website__c</name>
+    </fields>
+    <fields>
+        <label><!-- * Were all IATA Members fully repaid? --></label>
+        <name>Were_all_IATA_Members_fully_repaid__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- What percentage of your sales is to the general public? --></help>
+        <label><!-- * % of sales to general public --></label>
+        <name>What_percentage_of_your_sales__c</name>
+    </fields>
+    <fields>
+        <label>* Entièrement gérée par ce siège social?</label>
+        <name>Wholly_managed_by_this_Head_Office__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>* Propriété à 100% de ce siège social?</label>
+        <name>Wholly_owned_by_this_Head_Office__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Will such change affect locations --></label>
+        <name>Will_such_change_affect_locations__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Will such change affect the managers --></label>
+        <name>Will_such_change_affect_the_managers__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Will such change affect the premises --></label>
+        <name>Will_such_change_affect_the_premises__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Will the change of ownership cause --></label>
+        <name>Will_the_change_of_ownership_cause__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation>Non</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation>Oui</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Please provide details --></label>
+        <name>provide_details__c</name>
+    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- Pax Accreditation Form Name --></nameFieldLabel>
+    <recordTypes>
+        <description><!-- Record type for Annual Revalidation staging areas. --></description>
+        <label><!-- Annual Revalidation --></label>
+        <name>Annual_Revalidation</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Associate - Branch --></label>
+        <name>CASS_Associate_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Associate - HO --></label>
+        <name>CASS_Associate_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Import - Branch --></label>
+        <name>CASS_Import_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CASS Import - HO --></label>
+        <name>CASS_Import_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- IATA Cargo Agent (Res 801/805) Branch applications --></description>
+        <label><!-- Cargo Agent - Branch --></label>
+        <name>Cargo_Agent_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- IATA Cargo Agent (Res 801/805) HO applications --></description>
+        <label><!-- Cargo Agent - HO --></label>
+        <name>Cargo_Agent_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- EACP Intermediary (Res 805zz) Branch applications --></description>
+        <label><!-- Cargo EACP - Branch --></label>
+        <name>Cargo_EACP_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- EACP Intermediary (Res 805zz) HO applications --></description>
+        <label><!-- Cargo EACP - HO --></label>
+        <name>Cargo_EACP_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Change of Bank Account Details --></label>
+        <name>Change_of_Bank_Account_Details</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Courier - Branch --></label>
+        <name>Courier_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Courier - HO --></label>
+        <name>Courier_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- General Online Accreditation Record Type --></description>
+        <label><!-- General Online Accreditation --></label>
+        <name>GeneralOnlineAccreditation</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- New Gen Changes --></label>
+        <name>New_Gen_Changes</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Other Changes --></label>
+        <name>Other_Changes</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Other Changes - NAM --></label>
+        <name>Other_Changes_NAM</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- PCI Compliance --></label>
+        <name>PCI_Compliance</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent --></label>
+        <name>Travel_Agent</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - Associate Entity --></label>
+        <name>Travel_Agent_Associate_Entity</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - Branch --></label>
+        <name>Travel_Agent_Branch</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - Branch Abroad --></label>
+        <name>Travel_Agent_Branch_Abroad</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - HO --></label>
+        <name>Travel_Agent_HO</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - Head Entity Standard no Cash --></label>
+        <name>Travel_Agent_Head_Entity_Standard_no_Cash</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Travel Agent - Head Entity Standard with Cash --></label>
+        <name>Travel_Agent_Head_Entity_Standard_with_Cash</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- VR --></label>
+        <name>VR</name>
+    </recordTypes>
     <startsWith><!-- Consonant --></startsWith>
+    <validationRules>
+        <errorMessage><!-- You can only reparent case field for Newgen Multicountry Accreditations --></errorMessage>
+        <name>Allow_Reparenting_on_MC_Cases</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The CASS Number must have 3 digits. --></errorMessage>
+        <name>CASS_Number_3_Digits</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CASS Number cannot be changed if IATA Code is already filled. --></errorMessage>
+        <name>CassNumberCannotBeChanged</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents. --></errorMessage>
+        <name>Cass_Number_edit_permission</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Agent needs to be pointed to create a new account and new application. --></errorMessage>
+        <name>Change_Location_Class_after_IATACode_gen</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>Veuillez accepter les Conditions générales avant d&apos;envoyer la demande d&apos;accréditation de votre agence à IATA.</errorMessage>
+        <name>ISSP_AMS_T_C_Accepted_on_Submit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The amount of selected options is not valid for this agency. --></errorMessage>
+        <name>Limit_Remittance_Frequency_Options</name>
+    </validationRules>
 </CustomObjectTranslation>

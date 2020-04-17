@@ -8,5 +8,14 @@
         <plural>true</plural>
         <value>Area Counters</value>
     </caseValues>
+    <fields>
+        <help><!-- Area number (1, 2 or 3) --></help>
+        <label><!-- AIMS Area ID --></label>
+        <name>AIMS_Area_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Counter Value --></label>
+        <name>Next_Counter_Value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -40,6 +40,55 @@
         <plural>true</plural>
         <value><!-- Account Statement --></value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Account Statements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label>Zahlbetrag</label>
+        <name>Amount_to_be_Paid__c</name>
+    </fields>
+    <fields>
+        <label>Saldo</label>
+        <name>Balance__c</name>
+    </fields>
+    <fields>
+        <label>Abrechnungskorrektur</label>
+        <name>Billing_Adjustment__c</name>
+    </fields>
+    <fields>
+        <label>Abrechnungsbetrag</label>
+        <name>Billing_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group --></label>
+        <name>Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>Operation__c</name>
+    </fields>
+    <fields>
+        <label>bezahlt</label>
+        <name>Paid__c</name>
+    </fields>
+    <fields>
+        <label>Abrechnungsperiode</label>
+        <name>Period__c</name>
+    </fields>
+    <fields>
+        <label>Überweisungsdatum</label>
+        <name>Remittance_Date__c</name>
+    </fields>
+    <fields>
+        <label>Status</label>
+        <name>Status__c</name>
+    </fields>
     <gender><!-- Neuter --></gender>
     <nameFieldLabel><!-- Account Statement Name --></nameFieldLabel>
 </CustomObjectTranslation>

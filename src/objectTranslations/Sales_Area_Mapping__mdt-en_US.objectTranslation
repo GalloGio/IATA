@@ -8,5 +8,34 @@
         <plural>true</plural>
         <value>Sales Area Mappings</value>
     </caseValues>
+    <fields>
+        <label><!-- Business Context --></label>
+        <name>Business_Context_Configuration__c</name>
+        <relationshipLabel><!-- Sales Area Mappings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sales Area --></label>
+        <name>Sales_Area__c</name>
+        <picklistValues>
+            <masterLabel>E&amp;F Canada</masterLabel>
+            <translation><!-- E&amp;F Canada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F India</masterLabel>
+            <translation><!-- E&amp;F India --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F Indonesia</masterLabel>
+            <translation><!-- E&amp;F Indonesia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F Standard</masterLabel>
+            <translation><!-- E&amp;F Standard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F Venezuela</masterLabel>
+            <translation><!-- E&amp;F Venezuela --></translation>
+        </picklistValues>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

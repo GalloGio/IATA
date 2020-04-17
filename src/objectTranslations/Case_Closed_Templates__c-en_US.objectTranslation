@@ -8,5 +8,24 @@
         <plural>true</plural>
         <value>Case Closed Templates</value>
     </caseValues>
+    <fields>
+        <help><!-- values can be: true, false or Default --></help>
+        <label><!-- CNS Contact --></label>
+        <name>CNS_Contact__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;Default&quot; value is for the default template when no language is defined --></help>
+        <label><!-- Language --></label>
+        <name>Language__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;Default&quot; value is for all Source Systems --></help>
+        <label><!-- Source System --></label>
+        <name>Source_System__c</name>
+    </fields>
+    <fields>
+        <label><!-- Template Id --></label>
+        <name>Template_Id__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

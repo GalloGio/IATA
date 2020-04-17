@@ -8,5 +8,20 @@
         <plural>true</plural>
         <value>Managed Agencies</value>
     </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- ID Card Key Account – Managed Agency --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Contact --></help>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- ID Card Key Account – Managed Agency --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Delegate --></label>
+        <name>Delegate__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

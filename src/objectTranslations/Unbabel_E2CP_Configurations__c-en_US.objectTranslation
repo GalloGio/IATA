@@ -8,5 +8,10 @@
         <plural>true</plural>
         <value>Unbabel E2CP Configurations</value>
     </caseValues>
+    <fields>
+        <help><!-- With this option checked the outbound comment won&apos;t be published automatically to the Portal. It be necessary to publish it manually after the translation arrives. --></help>
+        <label><!-- Validate Translation Step --></label>
+        <name>Validate_Translation_Step__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

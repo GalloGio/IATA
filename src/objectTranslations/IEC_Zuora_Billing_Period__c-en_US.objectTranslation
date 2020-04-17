@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>IEC Zuora Billing Period</value>
     </caseValues>
+    <fields>
+        <label><!-- Months in Period --></label>
+        <name>Months_in_Period__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

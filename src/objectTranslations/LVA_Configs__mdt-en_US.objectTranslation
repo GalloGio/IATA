@@ -8,5 +8,13 @@
         <plural>true</plural>
         <value>LVA_Configs</value>
     </caseValues>
+    <fields>
+        <label><!-- ValueLong --></label>
+        <name>ValueLong__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

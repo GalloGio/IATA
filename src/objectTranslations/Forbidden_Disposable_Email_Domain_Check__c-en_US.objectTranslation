@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>Forbidden Disposable Email Domain Check</value>
     </caseValues>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

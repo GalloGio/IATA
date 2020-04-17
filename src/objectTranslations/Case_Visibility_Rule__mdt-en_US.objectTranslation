@@ -8,5 +8,41 @@
         <plural>true</plural>
         <value>Case Visibility Rules</value>
     </caseValues>
+    <fields>
+        <label><!-- Always Visible --></label>
+        <name>Always_Visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseArea --></label>
+        <name>CaseArea__c</name>
+    </fields>
+    <fields>
+        <label><!-- CreatedDate --></label>
+        <name>CreatedDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- DPC_Software --></label>
+        <name>DPC_Software__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Filter --></label>
+        <name>Field_Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Origin --></label>
+        <name>Origin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reason1 --></label>
+        <name>Reason1__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordTypeId --></label>
+        <name>RecordTypeId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,5 +8,43 @@
         <plural>true</plural>
         <value>Risk Event Types</value>
     </caseValues>
+    <fields>
+        <label><!-- Agency Risk Calculation --></label>
+        <name>ANG_Agency_Risk_Calculation__c</name>
+        <relationshipLabel><!-- Risk Event Types --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If value equals to 0 cash condition will be enforced on creation. Leave blank to prevent limit cash condition --></help>
+        <label><!-- Delay Cash Condition (Days) --></label>
+        <name>ANG_Delay_Cash_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>ANG_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Timeframe --></label>
+        <name>ANG_Expiration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risk ID --></label>
+        <name>ANG_Risk_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Nr Occurences --></label>
+        <name>ANG_nr_occurence_ff__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grouping Number --></label>
+        <name>Grouping_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Limit Cash conditions --></label>
+        <name>Limit_Cash_conditions__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Delaying Cash Conditions only work when Risk Events start with false and enforce Cash Conditions some days later --></errorMessage>
+        <name>Delay_Cash_Conditions</name>
+    </validationRules>
 </CustomObjectTranslation>
