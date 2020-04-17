@@ -323,8 +323,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Reopened_case__c = 0.0,
 			Account_Concerned__c = childAccIcc.Id,
 			IFAP_Country_ISO__c = 'tp',
-			OwnerId = userIcc.Id,
-			OSCAR__c=oscarTest.id
+			OwnerId = userIcc.Id
 
 		);
 		insert caseIcc;
