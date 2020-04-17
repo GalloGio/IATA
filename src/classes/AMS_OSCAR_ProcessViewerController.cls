@@ -4,19 +4,27 @@ public class AMS_OSCAR_ProcessViewerController {
 		public String stepName;
 		public String process;
 		public String optToHide;
+		public Boolean checkEmptyOscarParent;
 
-		public HideOptionStepWrapper(String stepName, String process, String optToHide){
+		public HideOptionStepWrapper(String stepName, String process, String optToHide, Boolean checkEmptyOscarParent){
 			this.stepName = stepName;
 			this.process = process;
 			this.optToHide = optToHide;
+			this.checkEmptyOscarParent = checkEmptyOscarParent;
 		}
 	}
 
 	private static Map<String, List<HideOptionStepWrapper>> hideOptsByStepMap = new Map<String, List<HideOptionStepWrapper>>{
 		'STEP45__c' =>
 			new List<HideOptionStepWrapper>{
-				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NOT_APPLICABLE),
-				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NEWGESTANDARD, AMS_Utils.NOT_APPLICABLE)
+				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NOT_APPLICABLE, false),
+				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NEWGESTANDARD, AMS_Utils.NOT_APPLICABLE, false)
+				
+			},
+
+		'STEP51__c' =>
+			new List<HideOptionStepWrapper>{
+				new HideOptionStepWrapper('STEP51__c', AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.NOT_APPLICABLE, true)
 			}
 	};
 
@@ -584,8 +592,14 @@ public class AMS_OSCAR_ProcessViewerController {
 
 		if(stepWrapperLst != NULL){
 			for(HideOptionStepWrapper hosw : stepWrapperLst){
-				if(oscar.Process__c == hosw.process){
-					optsToHideSet.add(hosw.optToHide);
+				if(oscar.Process__c == hosw.process) {
+					if (hosw.checkEmptyOscarParent) {
+						if (hosw.process == AMS_Utils.NGCONVERSIONMCTOST && String.isBlank(oscar.Parent_OSCAR__c)) {
+							optsToHideSet.add(hosw.optToHide);
+						}
+					} else {
+						optsToHideSet.add(hosw.optToHide);
+					}
 				}
 			}
 		}
