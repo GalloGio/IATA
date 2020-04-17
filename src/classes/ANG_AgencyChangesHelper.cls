@@ -2,7 +2,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	@TestVisible
 	private static final String CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION = 'Cannot pass sanity check until all the related BSPs OSCAR cases have passed sanity checks.';
-	
+	private static final String ERROR_TOKEN = 'ERROR';
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 	public static AChangeStructure changesContainer = null;
@@ -435,15 +435,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 					}
 
-					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE &&
-						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
-
-						if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
-						else{
-							String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
-							if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
-							else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
-						}
+					if(oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION){
+						createDueDiligenceCase(oscar, changesContainer.accountsMap.get(oscar.Account__c));
 					}
 
 				}
@@ -720,6 +713,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
+			createDueDiligenceCase(oscar, accountHE);
+			
 		} //Approval step passed 
 		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
 
@@ -2612,6 +2607,23 @@ public with sharing class ANG_AgencyChangesHelper {
 	private static ANG_AgencyChangesHelper.AChangeStructure processChangeCodeGeneration(AMS_OSCAR__c oscar, String accreditationModel, String currentStep, Set<Id> allAccountsInvolvedSet, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode){
 		ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, accreditationModel);
 		return generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, currentStep, allAccountsInvolvedSet, changesContainer);
+	}
+
+	private static void createDueDiligenceCase(AMS_OSCAR__c oscar, Account account){
+		if (account.IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE){
+
+			if(account.Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS){
+				oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
+			} else {
+				String dueDiligenceResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
+				if (dueDiligenceResult.startsWith(ERROR_TOKEN)){
+					oscar.addError(dueDiligenceResult);
+				} else {
+					account.Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
+				}
+			}
+
+		}
 	}
 
 }

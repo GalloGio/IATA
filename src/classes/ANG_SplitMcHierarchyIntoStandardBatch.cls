@@ -372,8 +372,6 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 			Map<String, Object> fieldsToSetOnCase = new Map<String, Object>();
 			fieldsToSetOnCase.put('Oscar__c', oscar.Id);
-			if (!processSingleBsp)
-				fieldsToSetOnCase.put('ParentId', c.Id);
 			fieldsToSetOnCase.put('BSPCountry__c', acct.BillingCountry);
 			fieldsToSetOnCase.put('CaseArea__c', c.CaseArea__c);
 			fieldsToSetOnCase.put('ContactId', useContact != null ? useContact.Id : c.ContactId);
