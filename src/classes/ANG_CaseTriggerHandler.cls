@@ -108,9 +108,12 @@ public class ANG_CaseTriggerHandler {
 				}
 				if(a.Financial_Review_Result__c != c.Financial_Review_Result__c){
 					a.Financial_Review_Result__c = c.Financial_Review_Result__c;
-					a.Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, a.Assessment_Performed_Date__c);
 					updateAcct = true;
 					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
+				}
+				if(a.Assessment_Performed_Date__c < c.Assessment_Performed_Date__c){
+					a.Assessment_Performed_Date__c = c.Assessment_Performed_Date__c;
+					updateAcct = true;
 				}
 				if(updateAcct) toUpdate.add(a);
 			}
