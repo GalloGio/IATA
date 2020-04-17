@@ -63,7 +63,9 @@ public class AMS_OSCARTriggerHandler {
 				'STEP8__c' => System.Label.AMS_OSCAR_STEP8,
 				'STEP9__c' => System.Label.AMS_OSCAR_STEP9,
 				'STEP41__c' => System.Label.AMS_OSCAR_STEP41,
-				'STEP42__c' => System.Label.AMS_OSCAR_STEP42
+				'STEP42__c' => System.Label.AMS_OSCAR_STEP42,
+				'STEP45__c' => System.Label.AMS_OSCAR_STEP45,
+				'STEP51__c' => System.Label.AMS_OSCAR_STEP51
 			};
 		}
 		set;
