@@ -402,8 +402,8 @@
       Retrieving the server's version of Labels and Translations
     </echo>
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
-    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/labelPackage.xml" />
-    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml" />
+    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/retrieveLabelPackage.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/retrieveLabelPackage.xml" />
     <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
