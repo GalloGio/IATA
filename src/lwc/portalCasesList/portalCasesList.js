@@ -28,6 +28,7 @@ import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
 import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
+import CSP_CaseSearchPlaceholder from '@salesforce/label/c.CSP_CaseSearchPlaceholder';
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track label = {
@@ -45,6 +46,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_DateTo,
         CSP_RemoveAllFilters,
         CSP_FAQReachUsBanner_ButtonText,
+        CSP_CaseSearchPlaceholder,
         CSP_Apply
     };
 
@@ -89,6 +91,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     @track normalView = true; //stores if the user is viewing it's own cases
     @track adminView = false; //stores if the user is viewing company cases
     @track filtered = false;
+    @track showCross = false;
 
     @track paginationObject = {
         totalItems: 10,
@@ -235,20 +238,22 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     }
 
-    handleKeyUp(event) {
-        const isEnterKey = event.keyCode === 13;
-        if (isEnterKey) {
-            //search again
-            this.resetPagination();
-            this.searchWithNewFilters();
-        }
-    }
-
     handleInputChange(event) {
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = event.target.value;
+        this.showCross =  event.target.value.length > 0;
         this.filteringObject = filteringObjectAux;
+
+
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            if(this.filteringObject.searchText.length > 3 || this.filteringObject.searchText.length==0) {
+                this.resetPagination();
+                this.searchWithNewFilters();
+            }
+        }, 1300, this);
     }
 
     changeToUserCasesTableView(){
@@ -360,6 +365,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         filteringObjectAux.casesComponent.dateFromFilter = this.dateFromFiltersTemp;
         filteringObjectAux.casesComponent.dateToFilter = this.dateToFiltersTemp;
         this.filteringObject = filteringObjectAux;
+    }
+
+    removeTextSearch(){
+        this.showCross=false;
+        this.filteringObject.searchText=null;
+        this.resetPagination();
+        this.searchWithNewFilters();
     }
 
     getPickWithAllValue(picklist){

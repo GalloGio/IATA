@@ -19,7 +19,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Allow_Billing_Agreements__c</field>
             <table>EF_Billing_Agreement__c</table>
-        </columns> 
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Base_URL__c</field>

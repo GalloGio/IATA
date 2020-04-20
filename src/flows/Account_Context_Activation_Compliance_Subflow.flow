@@ -181,7 +181,7 @@
     </decisions>
     <decisions>
         <description>Account is currently compliant are:
-Due Diligence Status (Due_Diligence_Status__c) = “Cleared”, AND
+Clearance level (Clearance_level__c) = “1”, AND
 Date of last clearance (Date_of_last_clearance__c) within the last 12 months</description>
         <name>Is_Account_compliant</name>
         <label>Is Account compliant ?</label>
@@ -202,10 +202,10 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Account.Due_Diligence_Status__c</leftValueReference>
+                <leftValueReference>Account.Clearance_level__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Cleared</stringValue>
+                    <stringValue>1</stringValue>
                 </rightValue>
             </conditions>
             <connector>
