@@ -33,17 +33,47 @@
                     </div>
                 </aura:set>
                 <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
-                    <lightning:datatable
-					    class="no-truncate"
-                        keyField="Id"
-                        data="{!v.data}"
-                        columns="{!v.columns}"
-                        resizeColumnDisabled="true"
-                        onrowaction="{!c.handleRowAction}"
-                        hideCheckboxColumn="true"
-                        sortedBy="{!v.sortBy}"
-                        sortedDirection="{!v.sortDirection}"
-                        onsort="{!c.handleSort}"/>                 
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+                        <thead>
+                            <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+                                <th scope="col" class="actionColumn"><span class="slds-truncate"></span></th><!--Actions-->
+                                <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Milestone</span></th>
+                                <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Responsible</span></th>
+                                <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Involved</span></th>
+                                <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Support Required From Account</span></th>
+                                <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">Milestone Status</span></th>
+                                <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">End Date</span></th>
+                                <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Comments</span></th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <aura:iteration items="{!v.data}" var="milestone" indexVar="index">
+                                <tr>
+                                    <td>
+                                        <div class="{!'slds-col ' + if((v.canEdit || v.haveUserAMPIssuesAndPriorities),'','slds-hide')}">
+                                            <lightning:buttonMenu alternativeText="Show more" onselect="{!c.handleRowAction}">
+                                                <lightning:menuItem value="{!'edit_milestone-'+milestone.Id}" label="Edit" />
+                                                <lightning:menuItem value="{!'delete_milestone-'+milestone.Id}" label="Delete"/>
+                                            </lightning:buttonMenu>
+                                        </div>
+                                    </td>
+                                    <td class="{!if(greaterthan(milestone.Subject__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!milestone.Subject__c}"/></td>
+                                    <td class="{!if((lessthan(milestone.Subject__c.length, 26) || !milestone.Subject__c),'','slds-hide')}"><ui:outputText value="{!milestone.Subject__c}" /></td>
+                                    <td class="{!if(greaterthan(milestone.AM_Responsible__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!milestone.AM_Responsible__c}" /></td>
+                                    <td class="{!if((lessthan(milestone.AM_Responsible__c.length, 26) || !milestone.AM_Responsible__c),'','slds-hide')}"><ui:outputText value="{!milestone.AM_Responsible__c}" /></td>
+                                    <td class="{!if(greaterthan(milestone.AM_Involved__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!milestone.AM_Involved__c}" /></td>
+                                    <td class="{!if((lessthan(milestone.AM_Involved__c.length, 26) || !milestone.AM_Involved__c),'','slds-hide')}"><ui:outputText value="{!milestone.AM_Involved__c}" /></td>
+                                    <td class="{!if(greaterthan(milestone.AM_Support_Required_from_Account__c.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!milestone.AM_Support_Required_from_Account__c}" /></td>
+                                    <td class="{!if((lessthan(milestone.AM_Support_Required_from_Account__c.length, 26) || !milestone.AM_Support_Required_from_Account__c),'','slds-hide')}"><ui:outputText value="{!milestone.AM_Support_Required_from_Account__c}" /></td>
+                                    <td><ui:outputText value="{!milestone.Status}" /></td>
+                                    <td><ui:outputDate value="{!milestone.ActivityDate}" class="slds-truncate" /></td>
+                                    <td class="{!if(greaterthan(milestone.Description.length, 25),'','slds-hide')}"><c:AMP_LongText text="{!milestone.Description}"/></td>
+                                    <td class="{!if((lessthan(milestone.Description.length, 26) || !milestone.Description),'','slds-hide')}"><ui:outputText value="{!milestone.Description}" /></td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>           
                 </div>
             </lightning:card>
         </div>

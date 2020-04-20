@@ -643,7 +643,7 @@
         <queriedFields>Business_City_Name__c</queriedFields>
         <queriedFields>Business_Postal_Code__c</queriedFields>
         <queriedFields>Business_Street__c</queriedFields>
-        <queriedFields>Due_Diligence_Status__c</queriedFields>
+        <queriedFields>Clearance_level__c</queriedFields>
         <queriedFields>Date_of_last_clearance__c</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>Region__c</queriedFields>
@@ -653,6 +653,7 @@
         <queriedFields>Region_formula__c</queriedFields>
         <queriedFields>EF_SIS_Designator__c</queriedFields>
         <queriedFields>EF_SIS_Code__c</queriedFields>
+        <queriedFields>Legal_name__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
