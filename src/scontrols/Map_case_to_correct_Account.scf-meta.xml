@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scontrol xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contentSource>HTML</contentSource>
+    <description>This S-Control is used to map cases to correct Account, If Case is not associated with correct Account Name</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Map case to correct Account</name>
+    <supportsCaching>true</supportsCaching>
+</Scontrol>
