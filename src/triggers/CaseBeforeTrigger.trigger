@@ -250,7 +250,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 								if(currentCase.Id != aCase.Id){
 									ANG_MulticountryHelper.addMulticountryOpenIFAPCase(currentCase, nbrOfOpenCasesPerReviewTypeMap);
 								}
-						}
+							}
 
 							if(ANG_MulticountryHelper.hasMulticountryOpenIFAPCases(aCase, nbrOfOpenCasesPerReviewTypeMap)){
 								aCase.addError(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS);

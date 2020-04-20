@@ -7982,25 +7982,34 @@ system.debug('aqui sectorValue ' + sectorValue);
 	}
 
 	private void createHoAdminNotifications() {
+
+		if(String.isBlank(con.Account.Top_Parent__c)){
+			//Avoid querying the contacts when the top parent is null
+			return; 
+		}
+
 		// get HO portal admin contact
 		List<Contact> adminContactsHO = [SELECT Id, Email, AccountId, Account.IATACode__c, User_Portal_Status__c
 										FROM Contact
 										WHERE AccountId = :con.Account.Top_Parent__c
-											AND IsEmailBounced = false AND User_Portal_Status__c = 'Approved Admin'];
+											AND IsEmailBounced = false 
+											AND User_Portal_Status__c = :AMS_Utils.CONTACT_TYPE_ADMIN];
 
 		if (!adminContactsHO.isEmpty()) {
 			try {
-				List<Notification__c> lstNotificationsToCreate = new List<Notification__c>();
+				Boolean isContactMulticountry = con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
+				List<Notification__c> lstNotificationsToCreate = new List<Notification__c>();
 				for (Contact loopCon : adminContactsHO) {
+					String iataCode = isContactMulticountry ? con.Account.IATACode__c : loopCon.Account.IATACode__c;
 					Notification__c notification = new Notification__c();
 					notification.Contact__c = loopCon.Id;
 					notification.Type__c= 'Information';
 					notification.Notificatin_color__c = '#007FFF';
 					notification.Alert_Contact_By_Email__c = true;
 					notification.Expiry_date__c = Datetime.now().addDays(14);
-					notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + loopCon.Account.IATACode__c;
-					notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + loopCon.Account.IATACode__c + '.<br/>';
+					notification.Subject__c = 'New ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' from branch ' + iataCode;
+					notification.Message__c = '<p>A new ' + (isBankAccountChange ? 'Change of Bank Account Details' : 'Notice of Change') + ' case has been submitted from one of your branch accounts, with IATA Code ' + iataCode + '.<br/>';
 					notification.Message__c+= 'Case number: <a href="/ISSP_Case?caseId=' + newCase.Id + '">' + newCase.CaseNumber + '</a></p>';
 
 					lstNotificationsToCreate.add(notification);
