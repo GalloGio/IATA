@@ -5,14 +5,14 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Boolean isProofNameOptionActive {get; private set;}
 	public Boolean isCreditCardOptionActive {get; private set;}
 	public Boolean isCreditCardAndChequeOptionActive {get; private set;}
-	public Boolean ischeckboxGeralOptionActive {get; private set;}
 
 	public Boolean isPictureOptionChecked {get; set;}
 	public Boolean isProofEmploymentOptionChecked {get; set;}
 	public Boolean isProofNameOptionChecked {get; set;}
 	public Boolean isCreditCardOptionChecked {get; set;}
 	public Boolean isPictureOptionRecurringChecked {get; set;}
-	public Boolean ischeckboxGeralOptionChecked {get; set;}
+	public Boolean isCheckboxGeralOptionChecked {get; set;}
+	public Boolean isViewPopUpDisplayed {get; set;}
 	//public Boolean isCreditCardAndChequeOptionChecked {get;set;}
 
 	private Contact selected {get; set;}
@@ -70,6 +70,7 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 		accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
 		IATA_ISO_Country__c contactCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
 
+		isViewPopUpDisplayed = false;
 		isPictureOptionActive = true;
 		isProofEmploymentOptionActive  = !keyAccount;//true;
 		isCreditCardOptionActive  = true;
@@ -155,6 +156,9 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 
 
 	}
+	public void closePopup() {
+        isViewPopUpDisplayed = false;
+    }
 
 	public Pagereference next() {
 
@@ -183,9 +187,9 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 			} */
 			if (!isCheckboxGeralOptionChecked) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'CreditCard'));
+				isViewPopUpDisplayed = true;
 				return null;
 			}
-			
 
 			/*if(isCreditCardAndChequeOptionActive && !isCreditCardAndChequeOptionChecked) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage+ 'cehceck'));
