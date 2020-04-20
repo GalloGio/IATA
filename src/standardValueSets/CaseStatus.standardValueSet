@@ -38,12 +38,6 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
-        <fullName>Approval/rejection received</fullName>
-        <default>false</default>
-        <label>Approval/rejection received</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
         <fullName>Approved</fullName>
         <default>false</default>
         <label>Approved</label>
@@ -54,18 +48,6 @@
         <default>false</default>
         <label>Archived</label>
         <closed>true</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Assigned to Level 2</fullName>
-        <default>false</default>
-        <label>Assigned to Level 2</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Assigned to Level 3</fullName>
-        <default>false</default>
-        <label>Assigned to Level 3</label>
-        <closed>false</closed>
     </standardValue>
     <standardValue>
         <fullName>Awaiting Approval</fullName>
@@ -107,18 +89,6 @@
         <fullName>Completed</fullName>
         <default>false</default>
         <label>Completed</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Completed - no bug</fullName>
-        <default>false</default>
-        <label>Completed - no bug</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Customer Hold</fullName>
-        <default>false</default>
-        <label>Customer Hold</label>
         <closed>false</closed>
     </standardValue>
     <standardValue>
@@ -188,12 +158,6 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
-        <fullName>Pending approval by PO</fullName>
-        <default>false</default>
-        <label>Pending approval by PO</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
         <fullName>Pending customer</fullName>
         <default>false</default>
         <label>Pending customer</label>
@@ -212,27 +176,9 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
-        <fullName>Resolved by AFO</fullName>
-        <default>false</default>
-        <label>Resolved by AFO</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
         <fullName>Reviewed and Accepted</fullName>
         <default>false</default>
         <label>Reviewed and Accepted</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Reviewed by RO</fullName>
-        <default>false</default>
-        <label>Reviewed by RO</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>User Clarification Required</fullName>
-        <default>false</default>
-        <label>User Clarification Required</label>
         <closed>false</closed>
     </standardValue>
     <standardValue>
@@ -266,21 +212,9 @@
         <closed>false</closed>
     </standardValue>
     <standardValue>
-        <fullName>Ready to process</fullName>
-        <default>false</default>
-        <label>Ready to process</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
         <fullName>Submitted</fullName>
         <default>false</default>
         <label>Submitted</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Rejected by CMC</fullName>
-        <default>false</default>
-        <label>Rejected by CMC</label>
         <closed>false</closed>
     </standardValue>
     <standardValue>
@@ -378,54 +312,6 @@
         <default>false</default>
         <label>Pending Feedback From Requestor</label>
         <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Business Requirements Definition</fullName>
-        <default>false</default>
-        <label>Business Requirements Definition</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Solution and Effort Definition</fullName>
-        <default>false</default>
-        <label>Solution and Effort Definition</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Priority Setting / Timelines</fullName>
-        <default>false</default>
-        <label>Priority Setting / Timelines</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>On queue</fullName>
-        <default>false</default>
-        <label>On queue</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Ready for Deployment to Production</fullName>
-        <default>false</default>
-        <label>Ready for Deployment to Production</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Testing in Production</fullName>
-        <default>false</default>
-        <label>Testing in Production</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Deployed - Pilot</fullName>
-        <default>false</default>
-        <label>Deployed - Pilot</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>Deployed</fullName>
-        <default>false</default>
-        <label>Deployed</label>
-        <closed>true</closed>
     </standardValue>
     <standardValue>
         <fullName>Ready for production</fullName>
