@@ -8,25 +8,5 @@
         <plural>true</plural>
         <value>GDPR Pardot Subscription Lists</value>
     </caseValues>
-    <fields>
-        <label><!-- Help text --></label>
-        <name>Help_text__c</name>
-    </fields>
-    <fields>
-        <label><!-- Pardot ID --></label>
-        <name>Pardot_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Section --></label>
-        <name>Section__c</name>
-        <picklistValues>
-            <masterLabel>Newsletter</masterLabel>
-            <translation><!-- Newsletter --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Products</masterLabel>
-            <translation><!-- Products --></translation>
-        </picklistValues>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

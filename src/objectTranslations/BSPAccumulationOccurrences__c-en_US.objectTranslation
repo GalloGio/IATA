@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>SIDRA BSP Accumulation Occurrences</value>
     </caseValues>
-    <fields>
-        <label><!-- Funds Received Number Of Occurrences --></label>
-        <name>Number_Of_Occurrences__c</name>
-    </fields>
-    <fields>
-        <label><!-- Reported Sales Number Of Occurrences --></label>
-        <name>Reported_Sales_Number_Of_Occurrences__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

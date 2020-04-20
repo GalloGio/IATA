@@ -8,18 +8,5 @@
         <plural>true</plural>
         <value>SAP Invoices</value>
     </caseValues>
-    <fields>
-        <label><!-- Clearance Date --></label>
-        <name>Clearance_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Invoice Number --></label>
-        <name>Invoice_Number__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order --></label>
-        <name>Order__c</name>
-        <relationshipLabel><!-- SAP Invoices --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

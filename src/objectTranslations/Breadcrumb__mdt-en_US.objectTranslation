@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>Breadcrumbs</value>
     </caseValues>
-    <fields>
-        <help><!-- Contains the environment for this record. eg: csportal, backoffice, etc --></help>
-        <label><!-- Environment --></label>
-        <name>Environment__c</name>
-    </fields>
-    <fields>
-        <label><!-- ParentPage --></label>
-        <name>ParentPage__c</name>
-    </fields>
-    <fields>
-        <help><!-- Used to replace this breadcrumb with a given label via component property --></help>
-        <label><!-- Replace With Param --></label>
-        <name>Replace_With_Param__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

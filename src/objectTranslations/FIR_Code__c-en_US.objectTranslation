@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>Airports/FIR Codes</value>
     </caseValues>
-    <fields>
-        <label><!-- Contract --></label>
-        <name>Contract__c</name>
-        <relationshipLabel><!-- Airports/FIR Codes --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- FIR Code Name --></label>
-        <name>FIR_Code_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Airport/FIR Code --></label>
-        <name>FIR_Code__c</name>
-        <relationshipLabel><!-- Airport/FIR Codes --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

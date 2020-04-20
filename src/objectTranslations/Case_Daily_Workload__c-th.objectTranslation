@@ -4,54 +4,5 @@
         <plural>false</plural>
         <value><!-- Case Daily Workload --></value>
     </caseValues>
-    <fields>
-        <label><!-- Assigned Alias --></label>
-        <name>Assigned_Alias__c</name>
-    </fields>
-    <fields>
-        <label><!-- Case Number --></label>
-        <name>Case_Number__c</name>
-    </fields>
-    <fields>
-        <label><!-- Case Owner --></label>
-        <name>Case_Owner__c</name>
-    </fields>
-    <fields>
-        <label><!-- Case Subject --></label>
-        <name>Case_Subject__c</name>
-    </fields>
-    <fields>
-        <label><!-- Caser Owner --></label>
-        <name>Caser_Owner__c</name>
-        <relationshipLabel><!-- Case Daily Workloads --></relationshipLabel>
-    </fields>
-    <fields>
-        <label>ปิด</label>
-        <name>Closed__c</name>
-    </fields>
-    <fields>
-        <label>วันที่สร้าง</label>
-        <name>Created_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Last Modified Date --></label>
-        <name>Last_Modified_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Status --></label>
-        <name>Status__c</name>
-    </fields>
-    <fields>
-        <label>เรื่อง</label>
-        <name>Subject__c</name>
-    </fields>
-    <fields>
-        <label><!-- Task Age (Days) --></label>
-        <name>Task_Age_Days__c</name>
-    </fields>
-    <fields>
-        <label><!-- Task --></label>
-        <name>Task__c</name>
-    </fields>
     <nameFieldLabel><!-- Case Daily Workload Name --></nameFieldLabel>
 </CustomObjectTranslation>

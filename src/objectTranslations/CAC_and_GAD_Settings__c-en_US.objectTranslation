@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>CAC and GAD Settings</value>
     </caseValues>
-    <fields>
-        <label><!-- Excluded CAC Location Classes --></label>
-        <name>Excluded_CAC_Location_Classes__c</name>
-    </fields>
-    <fields>
-        <label><!-- Excluded GAD Location Classes --></label>
-        <name>Excluded_GAD_Location_Classes__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,33 +8,5 @@
         <plural>true</plural>
         <value>Detail Page Layout Custom Messages</value>
     </caseValues>
-    <fields>
-        <label><!-- Icon --></label>
-        <name>Icon__c</name>
-    </fields>
-    <fields>
-        <label><!-- Main Object --></label>
-        <name>Main_Object__c</name>
-    </fields>
-    <fields>
-        <label><!-- Message --></label>
-        <name>Message__c</name>
-    </fields>
-    <fields>
-        <label><!-- Multiple Records --></label>
-        <name>Multiple_Records__c</name>
-    </fields>
-    <fields>
-        <label><!-- Query --></label>
-        <name>Query__c</name>
-    </fields>
-    <fields>
-        <label><!-- Related Object --></label>
-        <name>Related_Object__c</name>
-    </fields>
-    <fields>
-        <label><!-- Variant --></label>
-        <name>Variant__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

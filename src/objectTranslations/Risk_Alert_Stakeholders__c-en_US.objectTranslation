@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Risk Alert Stakeholders</value>
     </caseValues>
-    <fields>
-        <label><!-- Stakeholder Email --></label>
-        <name>Email__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

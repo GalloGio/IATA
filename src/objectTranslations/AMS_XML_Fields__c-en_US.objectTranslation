@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>AMS XML Fields</value>
     </caseValues>
-    <fields>
-        <label><!-- Field --></label>
-        <name>Field__c</name>
-    </fields>
-    <fields>
-        <label><!-- Object --></label>
-        <name>Object__c</name>
-    </fields>
-    <fields>
-        <label><!-- Operation Type --></label>
-        <name>Operation_Type__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

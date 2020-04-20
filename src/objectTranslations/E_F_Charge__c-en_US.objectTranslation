@@ -8,38 +8,5 @@
         <plural>true</plural>
         <value>E&amp;F Charges</value>
     </caseValues>
-    <fields>
-        <label><!-- Amount --></label>
-        <name>Amount__c</name>
-    </fields>
-    <fields>
-        <label><!-- Charge --></label>
-        <name>Charge__c</name>
-    </fields>
-    <fields>
-        <label><!-- Code --></label>
-        <name>Code__c</name>
-        <picklistValues>
-            <masterLabel>EF - Boarding Br</masterLabel>
-            <translation><!-- EF - Boarding Br --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>EF - Landing</masterLabel>
-            <translation><!-- EF - Landing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>XF</masterLabel>
-            <translation><!-- XF --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Collected --></label>
-        <name>Collected__c</name>
-    </fields>
-    <fields>
-        <label><!-- E&amp;F Asset --></label>
-        <name>E_F_Asset__c</name>
-        <relationshipLabel><!-- E&amp;F Charges --></relationshipLabel>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

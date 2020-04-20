@@ -8,26 +8,5 @@
         <plural>true</plural>
         <value>EBC Template Tests</value>
     </caseValues>
-    <fields>
-        <help><!-- The template associated with that test --></help>
-        <label><!-- EBC Template --></label>
-        <name>EBC_Template__c</name>
-        <relationshipLabel><!-- EBC Template Tests --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Date at which the test was sent --></help>
-        <label><!-- Event Date --></label>
-        <name>Event_Date__c</name>
-    </fields>
-    <fields>
-        <help><!-- ExactTarget Triggered Send Key --></help>
-        <label><!-- External Id --></label>
-        <name>External_Id__c</name>
-    </fields>
-    <fields>
-        <help><!-- The recipient that received the test --></help>
-        <label><!-- To --></label>
-        <name>To__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

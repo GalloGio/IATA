@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Service Notification Roles</value>
     </caseValues>
-    <fields>
-        <label><!-- Contact Roles --></label>
-        <name>Contact_Roles__c</name>
-        <relationshipLabel><!-- Service Notification Roles --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Service Notification --></label>
-        <name>Service_Notification__c</name>
-        <relationshipLabel><!-- Service Notification Roles --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

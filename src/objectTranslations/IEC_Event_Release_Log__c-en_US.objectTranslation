@@ -8,53 +8,5 @@
         <plural>true</plural>
         <value>IEC Event Release Logs</value>
     </caseValues>
-    <fields>
-        <label><!-- Error Message --></label>
-        <name>Error_Message__c</name>
-    </fields>
-    <fields>
-        <label><!-- Release --></label>
-        <name>IEC_Event_Release__c</name>
-        <relationshipLabel><!-- Logs --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Message --></label>
-        <name>Message__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order --></label>
-        <name>Order__c</name>
-        <relationshipLabel><!-- IEC Event Release Logs --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Stage --></label>
-        <name>Stage__c</name>
-        <picklistValues>
-            <masterLabel>Calculate S&amp;T</masterLabel>
-            <translation><!-- Calculate S&amp;T --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Create order</masterLabel>
-            <translation><!-- Create order --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payment</masterLabel>
-            <translation><!-- Payment --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Send to SAP</masterLabel>
-            <translation><!-- Send to SAP --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Subscriber --></label>
-        <name>Subscriber__c</name>
-        <relationshipLabel><!-- IEC Event Release Logs --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Subscription --></label>
-        <name>Subscription__c</name>
-        <relationshipLabel><!-- IEC Event Release Logs --></relationshipLabel>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

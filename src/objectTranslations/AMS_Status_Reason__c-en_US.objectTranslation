@@ -8,21 +8,5 @@
         <plural>true</plural>
         <value>AMS Status Reason</value>
     </caseValues>
-    <fields>
-        <label><!-- Reason Code --></label>
-        <name>Reason_Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Reason Description --></label>
-        <name>Reason_Description__c</name>
-    </fields>
-    <fields>
-        <label><!-- Status Code --></label>
-        <name>Status_Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Status Description --></label>
-        <name>Status_Description__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

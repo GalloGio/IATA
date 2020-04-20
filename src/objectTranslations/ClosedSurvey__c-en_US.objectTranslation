@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Closed Survey</value>
     </caseValues>
-    <fields>
-        <label><!-- RolesAvailable --></label>
-        <name>RolesAvailable__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

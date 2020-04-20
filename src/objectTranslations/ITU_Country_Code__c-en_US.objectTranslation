@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>ITU Country Code</value>
     </caseValues>
-    <fields>
-        <label><!-- Code --></label>
-        <name>Code__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,28 +8,5 @@
         <plural>true</plural>
         <value>Portal Service Assignments</value>
     </caseValues>
-    <fields>
-        <label><!-- IATA ISO Country --></label>
-        <name>IATA_ISO_Country__c</name>
-        <relationshipLabel><!-- Portal Service Assignment --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- ISO Code --></label>
-        <name>ISO_Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Portal Service --></label>
-        <name>Portal_Service__c</name>
-        <relationshipLabel><!-- Country Visibility Restriction --></relationshipLabel>
-    </fields>
-    <recordTypes>
-        <description><!-- Control portal service visibility by country --></description>
-        <label><!-- Country Assignment --></label>
-        <name>Country_Assignment</name>
-    </recordTypes>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage><!-- This setting cannot be used to restrict IATA EasyPay Country Visibility. Link the IATA ISO Country to the IATA EasyPay service instead. --></errorMessage>
-        <name>Block_IATA_EasyPay_Usage</name>
-    </validationRules>
 </CustomObjectTranslation>

@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>Non-Compliant Countries</value>
     </caseValues>
-    <fields>
-        <label><!-- Display in E-Com --></label>
-        <name>Display_in_E_Com__c</name>
-    </fields>
-    <fields>
-        <label><!-- IATA ISO Country --></label>
-        <name>IATA_ISO_Country__c</name>
-        <relationshipLabel><!-- Non-Compliant Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Product --></label>
-        <name>Product__c</name>
-        <relationshipLabel><!-- Non-Compliant Countries --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>ISSP Reports</value>
     </caseValues>
-    <fields>
-        <label><!-- Portal Service Report --></label>
-        <name>Portal_Service_Report__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

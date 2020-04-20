@@ -4,21 +4,5 @@
         <plural>false</plural>
         <value><!-- BatchNumber --></value>
     </caseValues>
-    <fields>
-        <label>国</label>
-        <name>Country__c</name>
-    </fields>
-    <fields>
-        <label><!-- Deadline date --></label>
-        <name>Deadline_date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Enqueue batch --></label>
-        <name>Enqueue_batch__c</name>
-    </fields>
-    <fields>
-        <label>件名</label>
-        <name>Subject__c</name>
-    </fields>
     <nameFieldLabel><!-- ID --></nameFieldLabel>
 </CustomObjectTranslation>

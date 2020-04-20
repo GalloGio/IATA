@@ -4,13 +4,5 @@
         <plural>false</plural>
         <value>LiveAgentOrgSetting</value>
     </caseValues>
-    <fields>
-        <label><!-- Minutes --></label>
-        <name>Minutes__c</name>
-    </fields>
-    <fields>
-        <label><!-- url --></label>
-        <name>url__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

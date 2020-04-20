@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>IEC Shopping Carts</value>
     </caseValues>
-    <fields>
-        <help><!-- GUID of the shopping cart --></help>
-        <label><!-- CartGuid --></label>
-        <name>CartGuid__c</name>
-    </fields>
-    <fields>
-        <label><!-- Related Contact --></label>
-        <name>Related_Contact__c</name>
-        <relationshipLabel><!-- IEC Shopping Carts --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Total Items in Cart --></label>
-        <name>Total_Items_in_Cart__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

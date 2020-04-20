@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Test Plans</value>
     </caseValues>
-    <fields>
-        <label><!-- Test Plan Description --></label>
-        <name>Test_Plan_Description__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

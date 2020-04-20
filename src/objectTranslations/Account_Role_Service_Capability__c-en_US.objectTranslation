@@ -8,10 +8,5 @@
         <plural>true</plural>
         <value>Account Role Service Capabilities</value>
     </caseValues>
-    <fields>
-        <label><!-- Account Role Services --></label>
-        <name>Account_Role_Services__c</name>
-        <relationshipLabel><!-- Account Role Service Capabilities --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

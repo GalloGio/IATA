@@ -8,26 +8,5 @@
         <plural>true</plural>
         <value>Account Tracking History</value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Account Tracking History --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- ApiName --></label>
-        <name>ApiName__c</name>
-    </fields>
-    <fields>
-        <label><!-- New Value --></label>
-        <name>New_Value__c</name>
-    </fields>
-    <fields>
-        <label><!-- Old Value --></label>
-        <name>Old_Value__c</name>
-    </fields>
-    <fields>
-        <label><!-- What --></label>
-        <name>What__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

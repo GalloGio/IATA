@@ -8,52 +8,5 @@
         <plural>true</plural>
         <value>IEC Terms and Conditions</value>
     </caseValues>
-    <fields>
-        <help><!-- Datetime when the T&amp;C is effective --></help>
-        <label><!-- Effective Start Date --></label>
-        <name>Effective_Start_Date__c</name>
-    </fields>
-    <fields>
-        <help><!-- IS the latest version of T&amp;Cs --></help>
-        <label><!-- Is Current --></label>
-        <name>Is_Current__c</name>
-    </fields>
-    <fields>
-        <label><!-- Related Product Information --></label>
-        <name>Product_Information__c</name>
-        <relationshipLabel><!-- Terms and Conditions --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Formula that concatenates the product information ID and the version number for unicity check --></help>
-        <label><!-- Product Version Formula --></label>
-        <name>Product_Version_Formula__c</name>
-    </fields>
-    <fields>
-        <help><!-- Status of the T&amp;Cs. Can only be modified when it&apos;s Draft. --></help>
-        <label><!-- Status --></label>
-        <name>Status__c</name>
-        <picklistValues>
-            <masterLabel>Draft</masterLabel>
-            <translation><!-- Draft --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Final</masterLabel>
-            <translation><!-- Final --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <help><!-- Text value copied from the formula field for unicity check --></help>
-        <label><!-- Unique Product Version --></label>
-        <name>Unique_Product_Version__c</name>
-    </fields>
-    <fields>
-        <help><!-- Version of the T&amp;C --></help>
-        <label><!-- Version --></label>
-        <name>Version__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage><!-- The T&amp;Cs cannot be edit when the status is Final --></errorMessage>
-        <name>IEC_Cant_change_TnC_when_Final</name>
-    </validationRules>
 </CustomObjectTranslation>

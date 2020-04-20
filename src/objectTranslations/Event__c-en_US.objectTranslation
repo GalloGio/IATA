@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Events</value>
     </caseValues>
-    <fields>
-        <label><!-- Year --></label>
-        <name>Year__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

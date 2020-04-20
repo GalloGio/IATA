@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Agents&apos;s  Locations</value>
     </caseValues>
-    <fields>
-        <label><!-- Address --></label>
-        <name>Address__c</name>
-        <relationshipLabel><!-- Agents&apos;s  Locations --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Agent --></label>
-        <name>Agent__c</name>
-        <relationshipLabel><!-- Agents&apos;s  Locations --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

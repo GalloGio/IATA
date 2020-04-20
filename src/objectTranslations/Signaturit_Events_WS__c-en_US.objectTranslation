@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Signaturit Events WS</value>
     </caseValues>
-    <fields>
-        <label><!-- events_url --></label>
-        <name>events_url__c</name>
-    </fields>
-    <fields>
-        <label><!-- oauth_url --></label>
-        <name>oauth_url__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

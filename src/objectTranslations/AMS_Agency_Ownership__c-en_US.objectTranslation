@@ -8,33 +8,5 @@
         <plural>true</plural>
         <value>AMS Agencies Ownership</value>
     </caseValues>
-    <fields>
-        <label><!-- Owner --></label>
-        <name>AMS_Agency_Owner__c</name>
-        <relationshipLabel><!-- AMS Agencies Ownership --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Account Role --></label>
-        <name>Account_Role__c</name>
-        <relationshipLabel><!-- AMS Agencies Ownership --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- AMS Agencies Ownership --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Agency --></label>
-        <name>Agency__c</name>
-        <relationshipLabel><!-- AMS Agency Ownership --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Migration Executed --></label>
-        <name>Migration_Executed__c</name>
-    </fields>
-    <fields>
-        <label><!-- Percentage --></label>
-        <name>Percentage__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,18 +8,5 @@
         <plural>true</plural>
         <value>SCIM Prov Connector</value>
     </caseValues>
-    <fields>
-        <help><!-- Enable debug logging for all plugins in the SCIM connector. --></help>
-        <label><!-- Enable Debug Logging --></label>
-        <name>Enable_Debug_Loging__c</name>
-    </fields>
-    <fields>
-        <label><!-- FYI Email --></label>
-        <name>FYI_Email__c</name>
-    </fields>
-    <fields>
-        <label><!-- Processor Email --></label>
-        <name>Processor_Email__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

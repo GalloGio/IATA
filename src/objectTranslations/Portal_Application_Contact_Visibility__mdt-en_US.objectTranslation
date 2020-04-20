@@ -8,22 +8,5 @@
         <plural>true</plural>
         <value>Portal Application Contacts Visibility</value>
     </caseValues>
-    <fields>
-        <label><!-- Add Service On Checked --></label>
-        <name>Add_Service_On_Checked__c</name>
-    </fields>
-    <fields>
-        <label><!-- Checkbox Fieldname --></label>
-        <name>Checkbox_Fieldname__c</name>
-    </fields>
-    <fields>
-        <label><!-- Portal Application Setting --></label>
-        <name>Parent__c</name>
-        <relationshipLabel><!-- Portal Application Contacts Visibility --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Remove Service On Unchecked --></label>
-        <name>Remove_Service_On_Unchecked__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

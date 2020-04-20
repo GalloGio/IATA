@@ -8,53 +8,5 @@
         <plural>true</plural>
         <value>GDP File Productions</value>
     </caseValues>
-    <fields>
-        <help><!-- Duration to produce the file in seconds --></help>
-        <label><!-- Duration (second) --></label>
-        <name>Duration__c</name>
-    </fields>
-    <fields>
-        <help><!-- Duration in minutes  for producing this file in AWS --></help>
-        <label><!-- Duration (minute) --></label>
-        <name>Duration_in_minutes__c</name>
-    </fields>
-    <fields>
-        <label><!-- File Specification --></label>
-        <name>File_Specification__c</name>
-        <relationshipLabel><!-- GDP File Productions --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Full SFDC ID --></label>
-        <name>Full_SFDC_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Message --></label>
-        <name>Message__c</name>
-    </fields>
-    <fields>
-        <label><!-- Production Date --></label>
-        <name>Production_Date__c</name>
-    </fields>
-    <fields>
-        <help><!-- Size of the file produced --></help>
-        <label><!-- File Size (kilobyte) --></label>
-        <name>Size__c</name>
-    </fields>
-    <fields>
-        <label><!-- Status --></label>
-        <name>Status__c</name>
-        <picklistValues>
-            <masterLabel>Completed</masterLabel>
-            <translation><!-- Completed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Failed</masterLabel>
-            <translation><!-- Failed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

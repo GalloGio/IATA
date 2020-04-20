@@ -8,24 +8,5 @@
         <plural>true</plural>
         <value>Access to Libraries on Portal</value>
     </caseValues>
-    <fields>
-        <help><!-- Access to Libraries based on Account Category --></help>
-        <label><!-- Category of Account --></label>
-        <name>Category_of_Account__c</name>
-    </fields>
-    <fields>
-        <label><!-- Library visibility --></label>
-        <name>Library_visibility__c</name>
-    </fields>
-    <fields>
-        <help><!-- Access to Libraries based on Account Record Type --></help>
-        <label><!-- Record Type of Account --></label>
-        <name>Record_Type_of_Account__c</name>
-    </fields>
-    <fields>
-        <help><!-- Access to Libraries based on Account Sector --></help>
-        <label><!-- Sector of Account --></label>
-        <name>Sector_of_Account__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

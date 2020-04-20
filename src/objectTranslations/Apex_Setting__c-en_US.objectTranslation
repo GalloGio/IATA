@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Apex Settings</value>
     </caseValues>
-    <fields>
-        <label><!-- Number 1 --></label>
-        <name>Number_1__c</name>
-    </fields>
-    <fields>
-        <label><!-- Text 1 --></label>
-        <name>Text_1__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>GDP Geo Details</value>
     </caseValues>
-    <fields>
-        <label><!-- IATA ISO Country --></label>
-        <name>IATA_ISO_Country__c</name>
-        <relationshipLabel><!-- GDP Geo Details --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Sub Continent --></label>
-        <name>Sub_Continent__c</name>
-    </fields>
-    <fields>
-        <help><!-- Please enter the Country ISO Code this is used for external system mapping(External ID) --></help>
-        <label><!-- System ID --></label>
-        <name>System_ID__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

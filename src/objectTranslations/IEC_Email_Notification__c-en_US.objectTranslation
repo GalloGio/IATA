@@ -8,53 +8,5 @@
         <plural>true</plural>
         <value>IEC Email Notifications</value>
     </caseValues>
-    <fields>
-        <label><!-- Body Title --></label>
-        <name>Body_Title__c</name>
-    </fields>
-    <fields>
-        <label><!-- Body --></label>
-        <name>Body__c</name>
-    </fields>
-    <fields>
-        <label><!-- Confirmation Number --></label>
-        <name>Confirmation_Number__c</name>
-    </fields>
-    <fields>
-        <label><!-- Email Sent? --></label>
-        <name>Email_Sent__c</name>
-    </fields>
-    <fields>
-        <label><!-- Email Template --></label>
-        <name>Email_Template__c</name>
-    </fields>
-    <fields>
-        <label><!-- Name --></label>
-        <name>Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order Date --></label>
-        <name>Order_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Payment Method --></label>
-        <name>Payment_Method__c</name>
-    </fields>
-    <fields>
-        <label><!-- Subtotal --></label>
-        <name>Subtotal__c</name>
-    </fields>
-    <fields>
-        <label><!-- Tax --></label>
-        <name>Tax__c</name>
-    </fields>
-    <fields>
-        <label><!-- To Email --></label>
-        <name>To_Email__c</name>
-    </fields>
-    <fields>
-        <label><!-- Total --></label>
-        <name>Total__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

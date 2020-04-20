@@ -8,18 +8,5 @@
         <plural>true</plural>
         <value>Contact Role Service Permissions</value>
     </caseValues>
-    <fields>
-        <label><!-- Category --></label>
-        <name>Category__c</name>
-    </fields>
-    <fields>
-        <label><!-- Contact Role Service --></label>
-        <name>Contact_Role_Service__c</name>
-        <relationshipLabel><!-- Contact Role Service Permissions --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Url --></label>
-        <name>Url__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,20 +8,5 @@
         <plural>true</plural>
         <value>Agency Operations</value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Agency Operations --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Agency (AMS) --></label>
-        <name>Agency__c</name>
-        <relationshipLabel><!-- Agency Operations --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Operation --></label>
-        <name>Operation__c</name>
-        <relationshipLabel><!-- Agency Operations --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

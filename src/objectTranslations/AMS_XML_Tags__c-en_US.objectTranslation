@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>AMS XML Tags</value>
     </caseValues>
-    <fields>
-        <label><!-- Name --></label>
-        <name>Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Tag --></label>
-        <name>Tag__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

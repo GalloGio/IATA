@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Account Context Activation Settings</value>
     </caseValues>
-    <fields>
-        <label><!-- Email from --></label>
-        <name>Email_From__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

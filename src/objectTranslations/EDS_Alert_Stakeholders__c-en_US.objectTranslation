@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>EDS Alert Stakeholders</value>
     </caseValues>
-    <fields>
-        <label><!-- Email --></label>
-        <name>Email__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

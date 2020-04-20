@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>GCS Product to Queue Assignments</value>
     </caseValues>
-    <fields>
-        <label><!-- Case Area --></label>
-        <name>GCS_Product_Topic__c</name>
-    </fields>
-    <fields>
-        <label><!-- Product Topic --></label>
-        <name>Product_Topic__c</name>
-    </fields>
-    <fields>
-        <label><!-- Queue API Name --></label>
-        <name>Queue_API_Name__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

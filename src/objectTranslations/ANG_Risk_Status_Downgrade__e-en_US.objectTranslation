@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Risk Status Downgrades</value>
     </caseValues>
-    <fields>
-        <label><!-- Accounts --></label>
-        <name>Accounts__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

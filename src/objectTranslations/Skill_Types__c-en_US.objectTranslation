@@ -8,41 +8,5 @@
         <plural>true</plural>
         <value>Skill Types</value>
     </caseValues>
-    <fields>
-        <label><!-- Case Location --></label>
-        <name>Case_Location__c</name>
-    </fields>
-    <fields>
-        <label><!-- Region --></label>
-        <name>Region__c</name>
-        <picklistValues>
-            <masterLabel>Africa &amp; Middle East</masterLabel>
-            <translation><!-- Africa &amp; Middle East --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Americas</masterLabel>
-            <translation><!-- Americas --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Asia &amp; Pacific</masterLabel>
-            <translation><!-- Asia &amp; Pacific --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>China &amp; North Asia</masterLabel>
-            <translation><!-- China &amp; North Asia --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Europe</masterLabel>
-            <translation><!-- Europe --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global</masterLabel>
-            <translation><!-- Global --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Skill Weight --></label>
-        <name>Skill_Weight__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

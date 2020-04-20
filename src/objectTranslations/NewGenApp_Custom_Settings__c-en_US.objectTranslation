@@ -8,11 +8,5 @@
         <plural>true</plural>
         <value>NewGenApp Custom Settings</value>
     </caseValues>
-    <fields>
-        <help><!-- Checked: push notifications are active
-Unchecked: push notifications are off --></help>
-        <label><!-- Push Notifications State --></label>
-        <name>Push_Notifications_State__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,21 +8,5 @@
         <plural>true</plural>
         <value>ISSP FAQ2Case Create Case URL</value>
     </caseValues>
-    <fields>
-        <label><!-- Active --></label>
-        <name>Active__c</name>
-    </fields>
-    <fields>
-        <label><!-- Subtopic --></label>
-        <name>Subtopic__c</name>
-    </fields>
-    <fields>
-        <label><!-- Topic --></label>
-        <name>Topic__c</name>
-    </fields>
-    <fields>
-        <label><!-- URL --></label>
-        <name>URL__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Strategy2Oppty</value>
     </caseValues>
-    <fields>
-        <label><!-- Opportunity Name --></label>
-        <name>Opportunity_Name__c</name>
-        <relationshipLabel><!-- Account Plan Strategies --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Strategy --></label>
-        <name>SFDC_Strategy__c</name>
-        <relationshipLabel><!-- Related Opportunities --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

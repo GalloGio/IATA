@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Cases Open</value>
     </caseValues>
-    <fields>
-        <label><!-- Number of Open Activities --></label>
-        <name>Number_of_Open_Activities__c</name>
-    </fields>
-    <fields>
-        <label><!-- Number of Open Cases --></label>
-        <name>Number_of_Open_Cases__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

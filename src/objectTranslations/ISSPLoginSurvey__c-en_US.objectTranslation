@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>ISSP LoginSurvey</value>
     </caseValues>
-    <fields>
-        <label><!-- PopupDelayTime --></label>
-        <name>PopupDelayTime__c</name>
-    </fields>
-    <fields>
-        <label><!-- Survey Link --></label>
-        <name>Survey_Link__c</name>
-    </fields>
-    <fields>
-        <label><!-- isActive --></label>
-        <name>isActive__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Payment Network Config</value>
     </caseValues>
-    <fields>
-        <label><!-- Maximum Length --></label>
-        <name>Maximum_Length__c</name>
-    </fields>
-    <fields>
-        <label><!-- Payment Network --></label>
-        <name>Payment_Network__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

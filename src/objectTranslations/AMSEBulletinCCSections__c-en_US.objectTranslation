@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>AMSEBulletinCCSections</value>
     </caseValues>
-    <fields>
-        <label><!-- Agency Information --></label>
-        <name>Agency_Information__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order --></label>
-        <name>Order__c</name>
-    </fields>
-    <fields>
-        <label><!-- Track CC History --></label>
-        <name>Track_CC_History__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

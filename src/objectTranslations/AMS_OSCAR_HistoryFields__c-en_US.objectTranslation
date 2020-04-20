@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>AMS OSCAR History Fields</value>
     </caseValues>
-    <fields>
-        <help><!-- Field to be monitored --></help>
-        <label><!-- OSCAR Field Name --></label>
-        <name>FieldName__c</name>
-    </fields>
-    <fields>
-        <help><!-- Get the description from external label or from field label --></help>
-        <label><!-- HasExternalLabel --></label>
-        <name>HasExternalLabel__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

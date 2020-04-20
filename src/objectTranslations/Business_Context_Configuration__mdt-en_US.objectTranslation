@@ -8,14 +8,5 @@
         <plural>true</plural>
         <value>Business Context Configurations</value>
     </caseValues>
-    <fields>
-        <label><!-- Account Create Permission Name --></label>
-        <name>Account_Create_Permission_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Functional Role --></label>
-        <name>Functional_Role__c</name>
-        <relationshipLabel><!-- Business Context Configurations --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

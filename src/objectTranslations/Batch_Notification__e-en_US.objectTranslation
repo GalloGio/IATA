@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Batch Notifications</value>
     </caseValues>
-    <fields>
-        <label><!-- Batch id --></label>
-        <name>Batch_id__c</name>
-    </fields>
-    <fields>
-        <label><!-- message --></label>
-        <name>message__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

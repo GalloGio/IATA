@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>ISSP FAQ2CaseLiveAgentTopics</value>
     </caseValues>
-    <fields>
-        <label><!-- LVA_ButtomCategories --></label>
-        <name>LVA_ButtomCategories__c</name>
-    </fields>
-    <fields>
-        <label><!-- value --></label>
-        <name>value__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

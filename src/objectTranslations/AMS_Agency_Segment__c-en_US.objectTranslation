@@ -8,38 +8,5 @@
         <plural>true</plural>
         <value>Agency Segments (AMS)</value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Agency Segments (AMS) --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Please select the agencz for relationship --></help>
-        <label><!-- Agency --></label>
-        <name>Agency__c</name>
-        <relationshipLabel><!-- Agency Segments (AMS) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Assignation Type --></label>
-        <name>Assignation_Type__c</name>
-        <picklistValues>
-            <masterLabel>Extended</masterLabel>
-            <translation><!-- Extended --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Geographic</masterLabel>
-            <translation><!-- Geographic --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Primary Area</masterLabel>
-            <translation><!-- Primary Area --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <help><!-- Please select the AMS Area for this relationship --></help>
-        <label><!-- Segment --></label>
-        <name>Segment__c</name>
-        <relationshipLabel><!-- Agency Segments (AMS) --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

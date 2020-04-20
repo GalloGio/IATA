@@ -8,18 +8,5 @@
         <plural>true</plural>
         <value><!-- Airport (AMS) --></value>
     </caseValues>
-    <fields>
-        <label><!-- City --></label>
-        <name>City__c</name>
-    </fields>
-    <fields>
-        <label><!-- Code --></label>
-        <name>Code__c</name>
-    </fields>
-    <fields>
-        <label>Negara</label>
-        <name>Country__c</name>
-        <relationshipLabel><!-- Airports (AMS) --></relationshipLabel>
-    </fields>
     <nameFieldLabel><!-- AMS Airport Name --></nameFieldLabel>
 </CustomObjectTranslation>

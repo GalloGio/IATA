@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Cluster to ISO Countries</value>
     </caseValues>
-    <fields>
-        <label><!-- Cluster --></label>
-        <name>Cluster__c</name>
-        <relationshipLabel><!-- Cluster to ISO Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- IATA ISO Country --></label>
-        <name>IATA_ISO_Country__c</name>
-        <relationshipLabel><!-- Cluster to ISO Countries --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

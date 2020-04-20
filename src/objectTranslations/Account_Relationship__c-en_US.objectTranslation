@@ -8,24 +8,5 @@
         <plural>true</plural>
         <value>Accounts Relationship</value>
     </caseValues>
-    <fields>
-        <label><!-- Child Account --></label>
-        <name>Child_Account__c</name>
-        <relationshipLabel><!-- Manage by / Operate by --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- IATA Code --></label>
-        <name>IATACode__c</name>
-    </fields>
-    <fields>
-        <label><!-- Parent Account --></label>
-        <name>Parent_Account__c</name>
-        <relationshipLabel><!-- Manages / Operates --></relationshipLabel>
-    </fields>
-    <recordTypes>
-        <description><!-- To represent a hierarchy instead of a grouping. --></description>
-        <label><!-- Hierarchy --></label>
-        <name>Hierarchy</name>
-    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

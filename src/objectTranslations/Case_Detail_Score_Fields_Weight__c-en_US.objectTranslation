@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Case Detail Score Fields Weight</value>
     </caseValues>
-    <fields>
-        <label><!-- Call Monitoring Weight --></label>
-        <name>Call_Monitoring_Weight__c</name>
-    </fields>
-    <fields>
-        <label><!-- Case Monitoring Weight --></label>
-        <name>Case_Monitoring_Weight__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

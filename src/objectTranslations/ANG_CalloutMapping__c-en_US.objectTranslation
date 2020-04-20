@@ -8,54 +8,5 @@
         <plural>true</plural>
         <value>Newgen ISS Callout Mapping</value>
     </caseValues>
-    <fields>
-        <label><!-- Action --></label>
-        <name>Action__c</name>
-    </fields>
-    <fields>
-        <label><!-- Callout Class --></label>
-        <name>CalloutClass__c</name>
-    </fields>
-    <fields>
-        <label><!-- Change_Code --></label>
-        <name>Change_Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Credential --></label>
-        <name>Credential__c</name>
-    </fields>
-    <fields>
-        <label><!-- Event Type --></label>
-        <name>Event_Type__c</name>
-    </fields>
-    <fields>
-        <label><!-- Field --></label>
-        <name>Field__c</name>
-    </fields>
-    <fields>
-        <label><!-- Integration System --></label>
-        <name>Integration_System__c</name>
-    </fields>
-    <fields>
-        <label><!-- Named Credential --></label>
-        <name>Named_Credential__c</name>
-    </fields>
-    <fields>
-        <label><!-- Type --></label>
-        <name>Type__c</name>
-    </fields>
-    <fields>
-        <label><!-- client_id --></label>
-        <name>client_id__c</name>
-    </fields>
-    <fields>
-        <label><!-- client_secret --></label>
-        <name>client_secret__c</name>
-    </fields>
-    <fields>
-        <help><!-- Create the events only if the value of the field of the object is equal to the specified value --></help>
-        <label><!-- Trigger when Field Equal To --></label>
-        <name>fieldValue__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

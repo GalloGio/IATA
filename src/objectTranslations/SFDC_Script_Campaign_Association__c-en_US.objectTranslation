@@ -8,19 +8,5 @@
         <plural>true</plural>
         <value>Script - Campaign Associations</value>
     </caseValues>
-    <fields>
-        <label><!-- Campaign --></label>
-        <name>Campaign__c</name>
-        <relationshipLabel><!-- Targeted Scripts --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Help for Scripts --></label>
-        <name>Help__c</name>
-    </fields>
-    <fields>
-        <label><!-- Script --></label>
-        <name>Script__c</name>
-        <relationshipLabel><!-- Included In Campaigns --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

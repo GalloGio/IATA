@@ -8,21 +8,5 @@
         <plural>true</plural>
         <value>ExcludedCaseSubject</value>
     </caseValues>
-    <fields>
-        <label><!-- Application Name --></label>
-        <name>Application_Name__c</name>
-        <picklistValues>
-            <masterLabel>ANY</masterLabel>
-            <translation><!-- ANY --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SIS</masterLabel>
-            <translation><!-- SIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TTBS</masterLabel>
-            <translation><!-- TTBS --></translation>
-        </picklistValues>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>ISSP AMS PDF Per Region</value>
     </caseValues>
-    <fields>
-        <label><!-- Address --></label>
-        <name>Address__c</name>
-    </fields>
-    <fields>
-        <label><!-- Link To PDF --></label>
-        <name>Link_To_PDF__c</name>
-    </fields>
-    <fields>
-        <label><!-- Sort Order --></label>
-        <name>Sort_Order__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

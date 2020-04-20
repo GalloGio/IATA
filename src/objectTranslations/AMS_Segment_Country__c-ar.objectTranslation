@@ -108,21 +108,6 @@
         <possessive>Second</possessive>
         <value><!-- الSegment  Country --></value>
     </caseValues>
-    <fields>
-        <label>البلد</label>
-        <name>Country__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- State --></label>
-        <name>ISO_State__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Segment --></label>
-        <name>Segment__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- Segment Country --></nameFieldLabel>
 </CustomObjectTranslation>

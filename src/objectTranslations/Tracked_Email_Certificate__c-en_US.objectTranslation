@@ -8,10 +8,5 @@
         <plural>true</plural>
         <value>Tracked Email Certificates</value>
     </caseValues>
-    <fields>
-        <label><!-- Tracked Email --></label>
-        <name>Tracked_Email__c</name>
-        <relationshipLabel><!-- Tracked Email Certificates --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

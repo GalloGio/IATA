@@ -8,32 +8,5 @@
         <plural>true</plural>
         <value>ISSP AMS International Sales</value>
     </caseValues>
-    <fields>
-        <label><!-- AMS Online Accreditation --></label>
-        <name>AMS_Online_Accreditation__c</name>
-        <relationshipLabel><!-- ISSP AMS International Sales --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Charges Collected --></label>
-        <name>Charges_Collected__c</name>
-    </fields>
-    <fields>
-        <label><!-- IATA Member Airline --></label>
-        <name>IATA_Member_Airline__c</name>
-        <relationshipLabel><!-- ISSP AMS International Sales --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Prepaid Collected --></label>
-        <name>Prepaid_Collected__c</name>
-    </fields>
-    <fields>
-        <help><!-- In Local Currency --></help>
-        <label><!-- Sales Amount --></label>
-        <name>Sales_Amount__c</name>
-    </fields>
-    <fields>
-        <label><!-- Weight (Kg) --></label>
-        <name>Weight_Kg__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

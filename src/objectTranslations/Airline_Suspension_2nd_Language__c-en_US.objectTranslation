@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Airline Suspension 2nd Language</value>
     </caseValues>
-    <fields>
-        <label><!-- Country Name --></label>
-        <name>Country_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Language --></label>
-        <name>Language__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

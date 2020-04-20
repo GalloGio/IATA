@@ -108,22 +108,6 @@
         <possessive>Second</possessive>
         <value><!-- الBatchNumber --></value>
     </caseValues>
-    <fields>
-        <label>البلد</label>
-        <name>Country__c</name>
-    </fields>
-    <fields>
-        <label><!-- Deadline date --></label>
-        <name>Deadline_date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Enqueue batch --></label>
-        <name>Enqueue_batch__c</name>
-    </fields>
-    <fields>
-        <label>الموضوع</label>
-        <name>Subject__c</name>
-    </fields>
     <gender><!-- Masculine --></gender>
     <nameFieldLabel><!-- ID --></nameFieldLabel>
 </CustomObjectTranslation>

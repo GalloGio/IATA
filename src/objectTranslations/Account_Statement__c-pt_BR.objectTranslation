@@ -8,55 +8,6 @@
         <plural>true</plural>
         <value><!-- Account Statement --></value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Account Statements --></relationshipLabel>
-    </fields>
-    <fields>
-        <label>Valor a pagar</label>
-        <name>Amount_to_be_Paid__c</name>
-    </fields>
-    <fields>
-        <label>Saldo Pendente</label>
-        <name>Balance__c</name>
-    </fields>
-    <fields>
-        <label>Ajuste no Faturamento</label>
-        <name>Billing_Adjustment__c</name>
-    </fields>
-    <fields>
-        <label>Valor do Faturamento</label>
-        <name>Billing_Amount__c</name>
-    </fields>
-    <fields>
-        <label><!-- Group --></label>
-        <name>Group__c</name>
-    </fields>
-    <fields>
-        <label><!-- Key --></label>
-        <name>Key__c</name>
-    </fields>
-    <fields>
-        <label><!-- Operation --></label>
-        <name>Operation__c</name>
-    </fields>
-    <fields>
-        <label>Pago</label>
-        <name>Paid__c</name>
-    </fields>
-    <fields>
-        <label>Período</label>
-        <name>Period__c</name>
-    </fields>
-    <fields>
-        <label>Data de Pagamento</label>
-        <name>Remittance_Date__c</name>
-    </fields>
-    <fields>
-        <label>Status</label>
-        <name>Status__c</name>
-    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- Account Statement Name --></nameFieldLabel>
 </CustomObjectTranslation>

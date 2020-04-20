@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>LogAnEnquiryUtil</value>
     </caseValues>
-    <fields>
-        <label><!-- Content --></label>
-        <name>Content__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

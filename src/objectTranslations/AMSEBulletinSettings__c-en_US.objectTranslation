@@ -8,41 +8,5 @@
         <plural>true</plural>
         <value>AMSEBulletinSettings</value>
     </caseValues>
-    <fields>
-        <label><!-- API Name --></label>
-        <name>API_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Daily --></label>
-        <name>Daily__c</name>
-    </fields>
-    <fields>
-        <label><!-- IRR field --></label>
-        <name>IRR_field__c</name>
-    </fields>
-    <fields>
-        <label><!-- Label --></label>
-        <name>Label__c</name>
-    </fields>
-    <fields>
-        <label><!-- Number Order --></label>
-        <name>Number_Order__c</name>
-    </fields>
-    <fields>
-        <label><!-- Weekly --></label>
-        <name>Weekly__c</name>
-    </fields>
-    <fields>
-        <label><!-- do not query --></label>
-        <name>do_not_query__c</name>
-    </fields>
-    <fields>
-        <label><!-- do not show --></label>
-        <name>do_not_show__c</name>
-    </fields>
-    <fields>
-        <label><!-- is field New --></label>
-        <name>is_field_New__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

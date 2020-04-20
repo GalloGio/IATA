@@ -40,22 +40,6 @@
         <plural>true</plural>
         <value><!-- BatchNumber --></value>
     </caseValues>
-    <fields>
-        <label>Land</label>
-        <name>Country__c</name>
-    </fields>
-    <fields>
-        <label><!-- Deadline date --></label>
-        <name>Deadline_date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Enqueue batch --></label>
-        <name>Enqueue_batch__c</name>
-    </fields>
-    <fields>
-        <label>Betreff</label>
-        <name>Subject__c</name>
-    </fields>
     <gender><!-- Neuter --></gender>
     <nameFieldLabel><!-- ID --></nameFieldLabel>
 </CustomObjectTranslation>

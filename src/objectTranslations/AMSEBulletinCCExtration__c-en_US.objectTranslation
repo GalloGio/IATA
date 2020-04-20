@@ -8,21 +8,5 @@
         <plural>true</plural>
         <value>AMSEBulletinCCExtration</value>
     </caseValues>
-    <fields>
-        <label><!-- Daily --></label>
-        <name>Daily__c</name>
-    </fields>
-    <fields>
-        <label><!-- Description --></label>
-        <name>Description__c</name>
-    </fields>
-    <fields>
-        <label><!-- Section --></label>
-        <name>Section__c</name>
-    </fields>
-    <fields>
-        <label><!-- Weekly --></label>
-        <name>Weekly__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,53 +8,6 @@
         <plural>true</plural>
         <value><!-- AMS Operation  Code --></value>
     </caseValues>
-    <fields>
-        <help><!-- If checked will allow more than one value for Remittance Frequency for Agencies of the same country --></help>
-        <label><!-- Allow multiple remittances --></label>
-        <name>Allow_multiple_remittances__c</name>
-    </fields>
-    <fields>
-        <label><!-- CASS Operations --></label>
-        <name>CASS_Operations__c</name>
-        <picklistValues>
-            <masterLabel>Courier</masterLabel>
-            <translation><!-- Courier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>EXP</masterLabel>
-            <translation><!-- EXP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IMP</masterLabel>
-            <translation><!-- IMP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Local</masterLabel>
-            <translation><!-- Local --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label>País</label>
-        <name>Country__c</name>
-        <relationshipLabel><!-- Operations Codes --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Market --></label>
-        <name>Market__c</name>
-        <picklistValues>
-            <masterLabel>Domestic</masterLabel>
-            <translation><!-- Domestic --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>International</masterLabel>
-            <translation><!-- International --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- ISS Billing Environment --></label>
-        <name>Settlement__c</name>
-        <relationshipLabel><!-- Operations Codes --></relationshipLabel>
-    </fields>
     <gender><!-- Feminine --></gender>
     <nameFieldLabel><!-- AMS DPC Operation Name --></nameFieldLabel>
 </CustomObjectTranslation>

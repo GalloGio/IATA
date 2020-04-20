@@ -8,38 +8,5 @@
         <plural>true</plural>
         <value>Answers</value>
     </caseValues>
-    <fields>
-        <label><!-- Answer Coach --></label>
-        <name>Answer_Coach__c</name>
-    </fields>
-    <fields>
-        <label><!-- Answer --></label>
-        <name>Answer__c</name>
-    </fields>
-    <fields>
-        <label><!-- Help for Scripts --></label>
-        <name>Help__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order --></label>
-        <name>Order__c</name>
-    </fields>
-    <fields>
-        <label><!-- Other Answer --></label>
-        <name>Other__c</name>
-    </fields>
-    <fields>
-        <label><!-- Question --></label>
-        <name>Questions__c</name>
-        <relationshipLabel><!-- Answers --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Save to field --></label>
-        <name>Save_to_field__c</name>
-    </fields>
-    <fields>
-        <label><!-- Score --></label>
-        <name>Score__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

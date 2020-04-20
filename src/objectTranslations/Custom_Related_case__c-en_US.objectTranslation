@@ -8,23 +8,5 @@
         <plural>true</plural>
         <value>Custom Related cases</value>
     </caseValues>
-    <fields>
-        <label><!-- Master Case --></label>
-        <name>Master_Case__c</name>
-        <relationshipLabel><!-- Custom Related cases (Master Case) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Parent Case Number --></label>
-        <name>Parent_Case_Number__c</name>
-    </fields>
-    <fields>
-        <label><!-- Parent Case Record Type --></label>
-        <name>Parent_Case_Record_Type__c</name>
-    </fields>
-    <fields>
-        <label><!-- Related Case --></label>
-        <name>Related_Case__c</name>
-        <relationshipLabel><!-- Custom Related cases (Related Case) --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

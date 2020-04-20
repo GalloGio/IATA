@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>Airline Suspension Documents</value>
     </caseValues>
-    <fields>
-        <help><!-- Type in the participation type (CASS / BSP), a white space, and the country name. 
-
-Example: BSP France. --></help>
-        <label><!-- Country Name --></label>
-        <name>Country_Name__c</name>
-    </fields>
-    <fields>
-        <help><!-- The Unique name of the template to merge. --></help>
-        <label><!-- Document Name --></label>
-        <name>Document_Name__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

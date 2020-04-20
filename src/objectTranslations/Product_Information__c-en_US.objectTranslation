@@ -8,58 +8,5 @@
         <plural>true</plural>
         <value>Products Information</value>
     </caseValues>
-    <fields>
-        <label><!-- Has Most Popular Counter --></label>
-        <name>Has_Most_Popular_Counter__c</name>
-    </fields>
-    <fields>
-        <help><!-- Related Product --></help>
-        <label><!-- New Related Product --></label>
-        <name>New_Related_Product__c</name>
-        <relationshipLabel><!-- New Products Information --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Product Audience --></label>
-        <name>Product_Audience__c</name>
-        <picklistValues>
-            <masterLabel>Default</masterLabel>
-            <translation><!-- Default --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Employee</masterLabel>
-            <translation><!-- IATA Employee --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Member</masterLabel>
-            <translation><!-- Member --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Member Airline</masterLabel>
-            <translation><!-- Member Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non Member</masterLabel>
-            <translation><!-- Non Member --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Strategic Member</masterLabel>
-            <translation><!-- Strategic Member --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Related Product Category --></label>
-        <name>Related_Product_Category__c</name>
-        <relationshipLabel><!-- Products Information --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Related Zuora&apos;s Product --></help>
-        <label><!-- Related Product --></label>
-        <name>Related_Product__c</name>
-        <relationshipLabel><!-- Products Information --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage><!-- You cannot have more than one Rate Plan as of Most Popular --></errorMessage>
-        <name>IEC_Validate_Most_Popular_Rate_Plan</name>
-    </validationRules>
 </CustomObjectTranslation>

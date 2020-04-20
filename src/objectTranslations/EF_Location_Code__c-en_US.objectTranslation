@@ -8,38 +8,5 @@
         <plural>true</plural>
         <value>Location Codes</value>
     </caseValues>
-    <fields>
-        <label><!-- Contract BA Id --></label>
-        <name>Contract_BA_Id__c</name>
-    </fields>
-    <fields>
-        <label><!-- Contract --></label>
-        <name>Contract__c</name>
-        <relationshipLabel><!-- Location Codes --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- E&amp;F Airline Billing Agreement --></label>
-        <name>EF_Airline_Billing_Agreement__c</name>
-        <relationshipLabel><!-- Location Codes --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Location Code Details --></label>
-        <name>Location_Code_Details__c</name>
-    </fields>
-    <fields>
-        <label><!-- Location Code --></label>
-        <name>Location_Code__c</name>
-        <relationshipLabel><!-- Location Codes --></relationshipLabel>
-    </fields>
-    <recordTypes>
-        <description><!-- Location Code related to an E&amp;F Airline Billing Agreement --></description>
-        <label><!-- E&amp;F BA Location Code --></label>
-        <name>EF_BA_Location_Code</name>
-    </recordTypes>
-    <recordTypes>
-        <description><!-- Location Code for an E&amp;F Contract --></description>
-        <label><!-- E&amp;F Contract Location Code --></label>
-        <name>EF_Contract_Location_Code</name>
-    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,25 +8,5 @@
         <plural>true</plural>
         <value>Pardot_API</value>
     </caseValues>
-    <fields>
-        <label><!-- API Version --></label>
-        <name>API_Version__c</name>
-    </fields>
-    <fields>
-        <label><!-- Assigned User --></label>
-        <name>Assigned_User__c</name>
-    </fields>
-    <fields>
-        <label><!-- Email --></label>
-        <name>Email__c</name>
-    </fields>
-    <fields>
-        <label><!-- Password --></label>
-        <name>Password__c</name>
-    </fields>
-    <fields>
-        <label><!-- User Key --></label>
-        <name>User_Key__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

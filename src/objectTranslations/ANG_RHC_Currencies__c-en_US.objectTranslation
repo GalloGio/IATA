@@ -8,10 +8,5 @@
         <plural>true</plural>
         <value>RHC Currencies</value>
     </caseValues>
-    <fields>
-        <help><!-- Extended Name of the Currency --></help>
-        <label><!-- Currency Name --></label>
-        <name>Currency_Name__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

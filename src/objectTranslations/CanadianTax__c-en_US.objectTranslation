@@ -4,21 +4,5 @@
         <plural>false</plural>
         <value>Countries Tax</value>
     </caseValues>
-    <fields>
-        <label><!-- ISO Country Name --></label>
-        <name>Country__c</name>
-    </fields>
-    <fields>
-        <label><!-- Province --></label>
-        <name>Province__c</name>
-    </fields>
-    <fields>
-        <label><!-- Tax Name --></label>
-        <name>Tax_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Tax Percentage --></label>
-        <name>Tax_Percentage__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

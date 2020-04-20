@@ -8,33 +8,5 @@
         <plural>true</plural>
         <value>Product Record Type Mapping</value>
     </caseValues>
-    <fields>
-        <label><!-- Division --></label>
-        <name>Division__c</name>
-    </fields>
-    <fields>
-        <label><!-- Record Type for Product --></label>
-        <name>Record_Type_for_Product__c</name>
-        <picklistValues>
-            <masterLabel>GDP</masterLabel>
-            <translation><!-- GDP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Publication</masterLabel>
-            <translation><!-- Publication --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unclassified</masterLabel>
-            <translation><!-- Unclassified --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Sales Channel --></label>
-        <name>Sales_Channel__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage><!-- Division or Sales Channel or both must be specified --></errorMessage>
-        <name>Division_Sales_Channel_Required</name>
-    </validationRules>
 </CustomObjectTranslation>

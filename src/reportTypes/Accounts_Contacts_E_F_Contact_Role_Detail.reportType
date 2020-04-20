@@ -470,7 +470,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Business_PO_Box__c</field>
+            <field>Business_Po_Box__c</field>
             <table>Account</table>
         </columns>
         <columns>

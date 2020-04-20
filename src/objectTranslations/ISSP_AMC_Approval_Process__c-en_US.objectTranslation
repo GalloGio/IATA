@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>ISSP AMC Approval Process</value>
     </caseValues>
-    <fields>
-        <label><!-- ID User --></label>
-        <name>Id_user__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

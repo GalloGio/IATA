@@ -8,10 +8,5 @@
         <plural>true</plural>
         <value>Fobidden Disposal Email Domains</value>
     </caseValues>
-    <fields>
-        <help><!-- Fomat: xxxxxxx.xxx =&gt; Ex: yopmail.com --></help>
-        <label><!-- Domain Name --></label>
-        <name>Domain_Name__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

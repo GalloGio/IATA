@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Financial Monitoring Template</value>
     </caseValues>
-    <fields>
-        <label><!-- Category --></label>
-        <name>Category__c</name>
-    </fields>
-    <fields>
-        <label><!-- Email Template Agency Type --></label>
-        <name>Email_Template_Agency_Type__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

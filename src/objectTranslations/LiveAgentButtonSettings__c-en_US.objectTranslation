@@ -8,33 +8,5 @@
         <plural>true</plural>
         <value>LiveAgentButtonSettings</value>
     </caseValues>
-    <fields>
-        <label><!-- ButtonId --></label>
-        <name>ButtonId__c</name>
-    </fields>
-    <fields>
-        <label><!-- Button Per Topic --></label>
-        <name>Button_Per_Topic__c</name>
-    </fields>
-    <fields>
-        <label><!-- DeploymentId --></label>
-        <name>DeploymentId__c</name>
-    </fields>
-    <fields>
-        <label><!-- Language --></label>
-        <name>Language__c</name>
-    </fields>
-    <fields>
-        <label><!-- Region --></label>
-        <name>Region__c</name>
-    </fields>
-    <fields>
-        <label><!-- Sectors --></label>
-        <name>Sectors__c</name>
-    </fields>
-    <fields>
-        <label><!-- Topic --></label>
-        <name>Topic__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

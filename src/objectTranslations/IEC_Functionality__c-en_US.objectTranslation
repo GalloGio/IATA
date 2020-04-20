@@ -8,37 +8,5 @@
         <plural>true</plural>
         <value>IEC Functionality</value>
     </caseValues>
-    <fields>
-        <help><!-- Audience to choose the functionality setting, choose one of:
-  userId=&lt;reg expr&gt;
-  userName=&lt;reg expr&gt;
-  userEmail=&lt;reg expr&gt;
-  userType=&lt;reg expr&gt;
-  profileId=&lt;reg expr&gt;
-  organizationId=&lt;reg expr&gt;
-  cookie=&lt;cookie name&gt;
-  all=&lt;true | false&gt; --></help>
-        <label><!-- Audience --></label>
-        <name>Audience__c</name>
-    </fields>
-    <fields>
-        <label><!-- Functionality Name --></label>
-        <name>Functionality_Name__c</name>
-    </fields>
-    <fields>
-        <help><!-- Additional setting for the Functionality. --></help>
-        <label><!-- Functionality Value --></label>
-        <name>Functionality_Value__c</name>
-    </fields>
-    <fields>
-        <help><!-- Set to true to Activate the Functionality. --></help>
-        <label><!-- Is Active? --></label>
-        <name>Is_Active__c</name>
-    </fields>
-    <fields>
-        <help><!-- Order of evaluation of the rule assignment. --></help>
-        <label><!-- Order --></label>
-        <name>Order__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

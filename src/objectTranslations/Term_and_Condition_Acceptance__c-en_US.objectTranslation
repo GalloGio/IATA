@@ -8,23 +8,5 @@
         <plural>true</plural>
         <value>Term and Condition Acceptances</value>
     </caseValues>
-    <fields>
-        <label><!-- Contact --></label>
-        <name>Contact__c</name>
-        <relationshipLabel><!-- Term and Condition Acceptances --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Date Accepted --></label>
-        <name>Date_Accepted__c</name>
-    </fields>
-    <fields>
-        <label><!-- Is Accepted --></label>
-        <name>Is_Accepted__c</name>
-    </fields>
-    <fields>
-        <label><!-- Term &amp; Condition --></label>
-        <name>Term_Condition__c</name>
-        <relationshipLabel><!-- Term and Condition Acceptances --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

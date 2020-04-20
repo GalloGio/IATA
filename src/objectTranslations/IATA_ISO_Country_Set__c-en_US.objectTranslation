@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>IATA ISO Country</value>
     </caseValues>
-    <fields>
-        <label><!-- Country Name --></label>
-        <name>Country_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Portal_URL --></label>
-        <name>Portal_URL__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

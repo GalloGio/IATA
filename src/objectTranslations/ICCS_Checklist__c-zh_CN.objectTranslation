@@ -4,38 +4,5 @@
         <plural>false</plural>
         <value><!-- ICCS Checklist --></value>
     </caseValues>
-    <fields>
-        <label><!-- Approved --></label>
-        <name>Approved__c</name>
-    </fields>
-    <fields>
-        <label><!-- Case --></label>
-        <name>Case__c</name>
-        <relationshipLabel><!-- ICCS Checklists --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Flag Confidential --></label>
-        <name>Flag_Confidential__c</name>
-    </fields>
-    <fields>
-        <label><!-- ICCS Confirmation --></label>
-        <name>ICCS_Confirmation__c</name>
-    </fields>
-    <fields>
-        <label><!-- ICCS Joining Form Requested --></label>
-        <name>ICCS_Joining_Form_Requested__c</name>
-    </fields>
-    <fields>
-        <label>等待批准</label>
-        <name>Pending_Approval__c</name>
-    </fields>
     <nameFieldLabel><!-- ICCS Checklist Name --></nameFieldLabel>
-    <recordTypes>
-        <label><!-- ICCS Restricted --></label>
-        <name>ICCS_Restricted</name>
-    </recordTypes>
-    <recordTypes>
-        <label><!-- ICCS Standard --></label>
-        <name>ICCS_Standard</name>
-    </recordTypes>
 </CustomObjectTranslation>

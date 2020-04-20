@@ -8,14 +8,5 @@
         <plural>true</plural>
         <value>DPC2DPC Cases Emails</value>
     </caseValues>
-    <fields>
-        <help><!-- The emails must be separeted by colon &quot;,&quot; --></help>
-        <label><!-- Email --></label>
-        <name>Email__c</name>
-    </fields>
-    <fields>
-        <label><!-- description --></label>
-        <name>description__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

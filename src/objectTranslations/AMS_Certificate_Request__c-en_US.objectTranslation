@@ -8,14 +8,5 @@
         <plural>true</plural>
         <value>Certificate Requests</value>
     </caseValues>
-    <fields>
-        <label><!-- AccountIds --></label>
-        <name>AccountIds__c</name>
-    </fields>
-    <fields>
-        <label><!-- OSCAR --></label>
-        <name>OSCAR__c</name>
-        <relationshipLabel><!-- Certificate Requests --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>pkb_ka</value>
     </caseValues>
-    <fields>
-        <label><!-- apiName --></label>
-        <name>apiName__c</name>
-    </fields>
-    <fields>
-        <label><!-- layout --></label>
-        <name>layout__c</name>
-    </fields>
-    <fields>
-        <label><!-- Pkb --></label>
-        <name>pkb__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

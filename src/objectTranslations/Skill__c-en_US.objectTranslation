@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Skills</value>
     </caseValues>
-    <fields>
-        <label><!-- Auto queue --></label>
-        <name>Auto_queue__c</name>
-        <relationshipLabel><!-- Skills --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Skill Types --></label>
-        <name>Skill_Types__c</name>
-        <relationshipLabel><!-- Skills --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

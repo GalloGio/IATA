@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>Airline Participation Country specifics</value>
     </caseValues>
-    <fields>
-        <label><!-- Download_URL --></label>
-        <name>Download_URL__c</name>
-    </fields>
-    <fields>
-        <label><!-- Library Doc Name --></label>
-        <name>Library_Doc_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Link label --></label>
-        <name>Link_label__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>EBC Template Resources</value>
     </caseValues>
-    <fields>
-        <help><!-- The related resource --></help>
-        <label><!-- EBC Resource --></label>
-        <name>EBC_Resource__c</name>
-        <relationshipLabel><!-- EBC Template Resources --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- The related template --></help>
-        <label><!-- EBC Template --></label>
-        <name>EBC_Template__c</name>
-        <relationshipLabel><!-- EBC Template Resources --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

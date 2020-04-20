@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>Internal Support</value>
     </caseValues>
-    <fields>
-        <label><!-- Support Description --></label>
-        <name>Support_Description__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

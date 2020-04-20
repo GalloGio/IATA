@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>GDP Area Definition</value>
     </caseValues>
-    <fields>
-        <label><!-- Country Selection --></label>
-        <name>Country_Selection__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
-    <webLinks>
-        <label><!-- Manage_Country --></label>
-        <name>Manage_Country</name>
-    </webLinks>
 </CustomObjectTranslation>

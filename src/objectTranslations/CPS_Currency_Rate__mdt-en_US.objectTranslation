@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>CPS Currency Rates</value>
     </caseValues>
-    <fields>
-        <label><!-- Rate --></label>
-        <name>Rate__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

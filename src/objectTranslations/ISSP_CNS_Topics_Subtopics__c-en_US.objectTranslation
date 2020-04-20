@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>ISSP CNS Topics and Subtopics</value>
     </caseValues>
-    <fields>
-        <label><!-- Subtopics2 --></label>
-        <name>Subtopics2__c</name>
-    </fields>
-    <fields>
-        <label><!-- Subtopics --></label>
-        <name>Subtopics__c</name>
-    </fields>
-    <fields>
-        <label><!-- Topic --></label>
-        <name>Topic__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

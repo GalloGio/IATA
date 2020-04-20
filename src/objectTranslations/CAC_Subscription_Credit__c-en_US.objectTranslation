@@ -8,21 +8,5 @@
         <plural>true</plural>
         <value>CAC Subscription Credits</value>
     </caseValues>
-    <fields>
-        <help><!-- Subscription Detail against which the credit is applied --></help>
-        <label><!-- CAC Subscription Detail --></label>
-        <name>CAC_Subscription_Detail__c</name>
-        <relationshipLabel><!-- CAC Subscription Credits --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Credit Applied up on the consumption --></help>
-        <label><!-- Credit --></label>
-        <name>Credit__c</name>
-    </fields>
-    <fields>
-        <help><!-- Date of when the credit has been applied --></help>
-        <label><!-- Date --></label>
-        <name>Date__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

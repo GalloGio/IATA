@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>ANG_ProgressBarSettings</value>
     </caseValues>
-    <fields>
-        <label><!-- Condition --></label>
-        <name>Condition__c</name>
-    </fields>
-    <fields>
-        <label><!-- RecordType --></label>
-        <name>RecordType__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

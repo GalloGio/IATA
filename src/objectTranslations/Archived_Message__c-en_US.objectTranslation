@@ -8,14 +8,5 @@
         <plural>true</plural>
         <value>Archived Email Messages</value>
     </caseValues>
-    <fields>
-        <label><!-- Parent Case --></label>
-        <name>Case__c</name>
-        <relationshipLabel><!-- Archived Email Messages --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- EmailMessage --></label>
-        <name>EmailMessage__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,35 +8,5 @@
         <plural>true</plural>
         <value><!-- Release Task Contact Role --></value>
     </caseValues>
-    <fields>
-        <label>Kontak</label>
-        <name>Contact__c</name>
-        <relationshipLabel><!-- Release Task Roles --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Release Task --></label>
-        <name>Release_Task__c</name>
-        <relationshipLabel><!-- Contact Roles --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Role --></label>
-        <name>Role__c</name>
-        <picklistValues>
-            <masterLabel>Developer</masterLabel>
-            <translation><!-- Developer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation>Lainnya</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Signoff Designee</masterLabel>
-            <translation><!-- Signoff Designee --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tester</masterLabel>
-            <translation><!-- Tester --></translation>
-        </picklistValues>
-    </fields>
     <nameFieldLabel><!-- Release Task Contact Role Name --></nameFieldLabel>
 </CustomObjectTranslation>

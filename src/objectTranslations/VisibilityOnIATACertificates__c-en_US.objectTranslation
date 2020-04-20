@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>VisibilityOnIATACertificates</value>
     </caseValues>
-    <fields>
-        <label><!-- Account Category --></label>
-        <name>Account_Category__c</name>
-    </fields>
-    <fields>
-        <label><!-- Account Status --></label>
-        <name>Account_Status__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

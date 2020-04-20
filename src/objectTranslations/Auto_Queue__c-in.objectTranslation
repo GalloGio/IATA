@@ -8,55 +8,5 @@
         <plural>true</plural>
         <value><!-- Auto Queue --></value>
     </caseValues>
-    <fields>
-        <help><!-- Is auto assignment currently active for this queue --></help>
-        <label>Aktif</label>
-        <name>Active__c</name>
-    </fields>
-    <fields>
-        <label><!-- Queue ID --></label>
-        <name>Queue_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Queue Option --></label>
-        <name>Queue_Option__c</name>
-        <picklistValues>
-            <masterLabel>Continue assignment</masterLabel>
-            <translation><!-- Continue assignment --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Leave on queue</masterLabel>
-            <translation><!-- Leave on queue --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <help><!-- Select the region to which the Auto Queue belongs to. --></help>
-        <label><!-- Region --></label>
-        <name>Region__c</name>
-        <picklistValues>
-            <masterLabel>Africa &amp; Middle East</masterLabel>
-            <translation><!-- Africa &amp; Middle East --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Americas</masterLabel>
-            <translation><!-- Americas --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Asia &amp; Pacific</masterLabel>
-            <translation><!-- Asia &amp; Pacific --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>China &amp; North Asia</masterLabel>
-            <translation><!-- China &amp; North Asia --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Europe</masterLabel>
-            <translation><!-- Europe --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global</masterLabel>
-            <translation><!-- Global --></translation>
-        </picklistValues>
-    </fields>
     <nameFieldLabel><!-- Auto Queue Name --></nameFieldLabel>
 </CustomObjectTranslation>

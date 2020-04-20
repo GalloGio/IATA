@@ -8,48 +8,5 @@
         <plural>true</plural>
         <value>Airport Details</value>
     </caseValues>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Airport Details --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Airport Name --></label>
-        <name>Airport_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- City --></label>
-        <name>City__c</name>
-    </fields>
-    <fields>
-        <label><!-- Code --></label>
-        <name>Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Coordinates --></label>
-        <name>Coordinates__c</name>
-    </fields>
-    <fields>
-        <label><!-- Description --></label>
-        <name>Description__c</name>
-    </fields>
-    <fields>
-        <label><!-- ExtKey --></label>
-        <name>ExtKey__c</name>
-    </fields>
-    <fields>
-        <label><!-- IATA ISO Country --></label>
-        <name>IATA_ISO_Country__c</name>
-        <relationshipLabel><!-- Airports --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- ICAO Code --></label>
-        <name>ICAO_Code__c</name>
-    </fields>
-    <recordTypes>
-        <description><!-- Airports&apos; location information. --></description>
-        <label><!-- Airport --></label>
-        <name>Airport</name>
-    </recordTypes>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

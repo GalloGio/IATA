@@ -8,14 +8,5 @@
         <plural>true</plural>
         <value>Order Item Credit/Debit Memos</value>
     </caseValues>
-    <fields>
-        <label><!-- Amount --></label>
-        <name>Amount__c</name>
-    </fields>
-    <fields>
-        <label><!-- Order Item --></label>
-        <name>OrderItem__c</name>
-        <relationshipLabel><!-- Order Item Credit/Debit Memos --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

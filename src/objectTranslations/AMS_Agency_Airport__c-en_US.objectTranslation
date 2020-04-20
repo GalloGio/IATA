@@ -8,52 +8,5 @@
         <plural>true</plural>
         <value>Agency Airports (AMS)</value>
     </caseValues>
-    <fields>
-        <label><!-- AMS 2 GDP Key --></label>
-        <name>AMS_2_GDP_Key__c</name>
-    </fields>
-    <fields>
-        <label><!-- Account --></label>
-        <name>Account__c</name>
-        <relationshipLabel><!-- Agency Airports (AMS) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Agency --></label>
-        <name>Agency__c</name>
-        <relationshipLabel><!-- Agency Airports (AMS) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Airport --></label>
-        <name>Airport__c</name>
-        <relationshipLabel><!-- Agency Airports (AMS) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Last synchronization --></label>
-        <name>Last_synchronization__c</name>
-    </fields>
-    <fields>
-        <label><!-- Legacy External ID --></label>
-        <name>Legacy_External_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Legacy System --></label>
-        <name>Legacy_System__c</name>
-        <picklistValues>
-            <masterLabel>AIMS</masterLabel>
-            <translation><!-- AIMS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CAIMS</masterLabel>
-            <translation><!-- CAIMS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CNS</masterLabel>
-            <translation><!-- CNS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Webstar</masterLabel>
-            <translation><!-- Webstar --></translation>
-        </picklistValues>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

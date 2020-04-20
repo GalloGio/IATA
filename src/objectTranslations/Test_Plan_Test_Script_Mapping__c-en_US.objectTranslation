@@ -8,15 +8,5 @@
         <plural>true</plural>
         <value>Test Plan/Test Script Mappings</value>
     </caseValues>
-    <fields>
-        <label><!-- Test Plan Name --></label>
-        <name>Test_Plan_Name__c</name>
-        <relationshipLabel><!-- Test Plan/Test Script Mappings --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Test Script Name --></label>
-        <name>Test_Script_Name__c</name>
-        <relationshipLabel><!-- Test Plan/Test Script Mappings --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

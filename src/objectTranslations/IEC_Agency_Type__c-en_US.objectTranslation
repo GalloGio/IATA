@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>IEC Agency Types</value>
     </caseValues>
-    <fields>
-        <label><!-- Agency Program Code --></label>
-        <name>Agency_Program_Code__c</name>
-    </fields>
-    <fields>
-        <label><!-- Agency Program --></label>
-        <name>Agency_Program__c</name>
-    </fields>
-    <fields>
-        <label><!-- Area of Activity --></label>
-        <name>Area_of_Activity__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>Product Bin Ranges</value>
     </caseValues>
-    <fields>
-        <label><!-- EventType --></label>
-        <name>EventType__c</name>
-    </fields>
-    <fields>
-        <label><!-- RecordId --></label>
-        <name>RecordId__c</name>
-    </fields>
-    <fields>
-        <label><!-- RecordType --></label>
-        <name>RecordType__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Sender Tracked Emails</value>
     </caseValues>
-    <fields>
-        <label><!-- Token --></label>
-        <name>Token__c</name>
-    </fields>
-    <fields>
-        <label><!-- email --></label>
-        <name>email__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

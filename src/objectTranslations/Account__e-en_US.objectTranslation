@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>Accounts</value>
     </caseValues>
-    <fields>
-        <label><!-- AccountId --></label>
-        <name>AccountId__c</name>
-    </fields>
-    <fields>
-        <label><!-- Recordtype --></label>
-        <name>RecordType__c</name>
-    </fields>
-    <fields>
-        <label><!-- Type --></label>
-        <name>Type__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

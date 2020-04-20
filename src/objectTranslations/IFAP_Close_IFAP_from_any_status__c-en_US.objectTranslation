@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>IFAP Cancel Assessment from any status</value>
     </caseValues>
-    <fields>
-        <label><!-- UserID --></label>
-        <name>UserID__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

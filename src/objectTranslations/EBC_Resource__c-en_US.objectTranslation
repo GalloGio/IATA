@@ -8,50 +8,5 @@
         <plural>true</plural>
         <value>EBC Resources</value>
     </caseValues>
-    <fields>
-        <label><!-- Billing Account --></label>
-        <name>Billing_Account__c</name>
-        <relationshipLabel><!-- EBC Resources --></relationshipLabel>
-    </fields>
-    <fields>
-        <help><!-- Image height as returned by Exact Target --></help>
-        <label><!-- Height --></label>
-        <name>Height__c</name>
-    </fields>
-    <fields>
-        <help><!-- Image Size --></help>
-        <label><!-- Image Size --></label>
-        <name>Image_Size__c</name>
-    </fields>
-    <fields>
-        <help><!-- Image Type --></help>
-        <label><!-- Image Type --></label>
-        <name>Image_Type__c</name>
-    </fields>
-    <fields>
-        <help><!-- ExactTarget Public URL --></help>
-        <label><!-- Image URL --></label>
-        <name>Image_URL__c</name>
-    </fields>
-    <fields>
-        <help><!-- Is image has been pushed to Exact Target --></help>
-        <label><!-- Is Ready --></label>
-        <name>Is_Ready__c</name>
-    </fields>
-    <fields>
-        <help><!-- Size in KiloBytes --></help>
-        <label><!-- Size KBytes --></label>
-        <name>Size_KBytes__c</name>
-    </fields>
-    <fields>
-        <help><!-- ExactTarget Thumbnail URL --></help>
-        <label><!-- Thumbnail URL --></label>
-        <name>Thumbnail_URL__c</name>
-    </fields>
-    <fields>
-        <help><!-- Image width as returned by Exact Target --></help>
-        <label><!-- Width --></label>
-        <name>Width__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

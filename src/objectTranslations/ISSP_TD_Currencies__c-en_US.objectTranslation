@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>ISSP TD Currencies</value>
     </caseValues>
-    <fields>
-        <label><!-- Currency Label --></label>
-        <name>Currency_Label__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

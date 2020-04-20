@@ -4,22 +4,5 @@
         <plural>false</plural>
         <value><!-- Internal Action --></value>
     </caseValues>
-    <fields>
-        <label><!-- Action Person --></label>
-        <name>Action_Person_text__c</name>
-    </fields>
-    <fields>
-        <label>アクション</label>
-        <name>Action__c</name>
-    </fields>
-    <fields>
-        <label><!-- Due Date --></label>
-        <name>Due_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Related ACR --></label>
-        <name>Related_ACR__c</name>
-        <relationshipLabel><!-- Internal Actions --></relationshipLabel>
-    </fields>
     <nameFieldLabel><!-- Internal Action Name --></nameFieldLabel>
 </CustomObjectTranslation>

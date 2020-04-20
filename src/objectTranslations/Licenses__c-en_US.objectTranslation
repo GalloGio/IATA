@@ -8,24 +8,5 @@
         <plural>true</plural>
         <value>Licenses</value>
     </caseValues>
-    <fields>
-        <label><!-- Business Unit --></label>
-        <name>Business_Unit__c</name>
-        <relationshipLabel><!-- Licenses --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- (Hidden) License Name --></label>
-        <name>License_Name_Hidden__c</name>
-    </fields>
-    <fields>
-        <help><!-- Shows the name of the user that the license is assigned to --></help>
-        <label><!-- License assigned to --></label>
-        <name>License_assigned_to__c</name>
-        <relationshipLabel><!-- Licenses --></relationshipLabel>
-    </fields>
     <startsWith>Consonant</startsWith>
-    <validationRules>
-        <errorMessage><!-- You must start the name of the record with the Business Unit it&apos;s associated with, e.g. IDFS Africa, or Corporate Services. --></errorMessage>
-        <name>Business_Unit_in_name</name>
-    </validationRules>
 </CustomObjectTranslation>

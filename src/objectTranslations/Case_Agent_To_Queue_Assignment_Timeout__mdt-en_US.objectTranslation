@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>Agent2Queue Region Assignment Timeouts</value>
     </caseValues>
-    <fields>
-        <label><!-- Region --></label>
-        <name>Region__c</name>
-    </fields>
-    <fields>
-        <label><!-- Timeout In Minutes --></label>
-        <name>Timeout_In_Minutes__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

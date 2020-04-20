@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>SurveyBatchIgnoreUsers</value>
     </caseValues>
-    <fields>
-        <label><!-- FirstName --></label>
-        <name>FirstName__c</name>
-    </fields>
-    <fields>
-        <label><!-- LastName --></label>
-        <name>LastName__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

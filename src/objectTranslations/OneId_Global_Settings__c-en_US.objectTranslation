@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>OneId Global Settings</value>
     </caseValues>
-    <fields>
-        <label><!-- Community Name --></label>
-        <name>Community_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- ipinfo call enabled --></label>
-        <name>ipinfo_call_enabled__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

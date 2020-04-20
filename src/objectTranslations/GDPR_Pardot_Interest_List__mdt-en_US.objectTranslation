@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>GDPR Pardot Interest Lists</value>
     </caseValues>
-    <fields>
-        <label><!-- Pardot Label --></label>
-        <name>Pardot_label__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

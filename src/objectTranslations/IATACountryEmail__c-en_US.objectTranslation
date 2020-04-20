@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>IATA Country Email</value>
     </caseValues>
-    <fields>
-        <label><!-- Country Email --></label>
-        <name>CountryEmail__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -8,36 +8,5 @@
         <plural>true</plural>
         <value>Campaign Members and Products</value>
     </caseValues>
-    <fields>
-        <label><!-- Campaign --></label>
-        <name>Campaign__c</name>
-        <relationshipLabel><!-- Campaign Members and Products --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Contact --></label>
-        <name>Contact__c</name>
-        <relationshipLabel><!-- Campaign Members and Products --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Invoice Date --></label>
-        <name>Invoice_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- Key2 --></label>
-        <name>Key2__c</name>
-    </fields>
-    <fields>
-        <label><!-- Key --></label>
-        <name>Key__c</name>
-    </fields>
-    <fields>
-        <label><!-- Product --></label>
-        <name>Product__c</name>
-        <relationshipLabel><!-- Campaign Members and Products --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Quantity --></label>
-        <name>Quantity__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

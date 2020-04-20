@@ -8,17 +8,5 @@
         <plural>true</plural>
         <value>TIP Configuration</value>
     </caseValues>
-    <fields>
-        <label><!-- Product Listed By IATA Name --></label>
-        <name>Product_Listed_By_IATA_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Product Termination Max Days --></label>
-        <name>Product_Termination_Max_Days__c</name>
-    </fields>
-    <fields>
-        <label><!-- Voluntary Reliquishment Min Days --></label>
-        <name>Voluntary_Reliquishment_Min_Days__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

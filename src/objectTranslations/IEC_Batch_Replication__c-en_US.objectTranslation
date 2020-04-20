@@ -8,13 +8,5 @@
         <plural>true</plural>
         <value>IEC Batch Replications</value>
     </caseValues>
-    <fields>
-        <label><!-- Batch Name --></label>
-        <name>Batch_Name__c</name>
-    </fields>
-    <fields>
-        <label><!-- Last Modified Date --></label>
-        <name>Last_Modified_Date__c</name>
-    </fields>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

@@ -8,20 +8,5 @@
         <plural>true</plural>
         <value><!-- Segment  Country --></value>
     </caseValues>
-    <fields>
-        <label>Negara</label>
-        <name>Country__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- State --></label>
-        <name>ISO_State__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Segment --></label>
-        <name>Segment__c</name>
-        <relationshipLabel><!-- Segment Countries --></relationshipLabel>
-    </fields>
     <nameFieldLabel><!-- Segment Country --></nameFieldLabel>
 </CustomObjectTranslation>

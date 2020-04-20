@@ -8,9 +8,5 @@
         <plural>true</plural>
         <value>ISSP FAQ2Case Emergencies</value>
     </caseValues>
-    <fields>
-        <label><!-- Subtopic --></label>
-        <name>Subtopic__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

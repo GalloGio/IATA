@@ -8,41 +8,5 @@
         <plural>true</plural>
         <value>Deployment Plans</value>
     </caseValues>
-    <fields>
-        <label><!-- Deployment Date --></label>
-        <name>Deployment_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- IATA Project --></label>
-        <name>IATA_Project__c</name>
-        <picklistValues>
-            <masterLabel>3a</masterLabel>
-            <translation><!-- 3a --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>3b</masterLabel>
-            <translation><!-- 3b --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AMS</masterLabel>
-            <translation><!-- AMS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Business</masterLabel>
-            <translation><!-- Business --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Platform</masterLabel>
-            <translation><!-- Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Support</masterLabel>
-            <translation><!-- Support --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Week --></label>
-        <name>Week__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

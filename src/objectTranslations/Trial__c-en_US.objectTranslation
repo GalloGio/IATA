@@ -8,27 +8,5 @@
         <plural>true</plural>
         <value>IEC Trials</value>
     </caseValues>
-    <fields>
-        <label><!-- Contact --></label>
-        <name>Contact__c</name>
-        <relationshipLabel><!-- IEC Trials --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Ignore --></label>
-        <name>Ignore__c</name>
-    </fields>
-    <fields>
-        <label><!-- Product Rate Plan Information --></label>
-        <name>Product_Rate_Plan_Information__c</name>
-        <relationshipLabel><!-- IEC Trials --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Related Product --></label>
-        <name>Related_Product__c</name>
-    </fields>
-    <fields>
-        <label><!-- Trial Date --></label>
-        <name>Trial_Date__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

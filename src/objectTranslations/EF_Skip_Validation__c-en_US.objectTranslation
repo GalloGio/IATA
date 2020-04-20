@@ -8,10 +8,5 @@
         <plural>true</plural>
         <value>EF Skip Validations</value>
     </caseValues>
-    <fields>
-        <help><!-- E&amp;F Helper Setting to allow end-to-end unit testing of Contract and Billing Agreement approval processes. Used only in unit test setup and should be defaulted to FALSE. --></help>
-        <label><!-- Skip Validation --></label>
-        <name>Skip_Validation__c</name>
-    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>
