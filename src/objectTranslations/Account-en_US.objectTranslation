@@ -595,38 +595,6 @@
         <name>Admission_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Agency Business Model --></label>
-        <name>Agency_Business_Model__c</name>
-        <picklistValues>
-            <masterLabel>Consolidator</masterLabel>
-            <translation><!-- Consolidator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Freight Forwarder</masterLabel>
-            <translation><!-- Freight Forwarder --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Online Travel Agency</masterLabel>
-            <translation><!-- Online Travel Agency --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Retail Leisure</masterLabel>
-            <translation><!-- Retail Leisure --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tour Operator</masterLabel>
-            <translation><!-- Tour Operator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Management Company</masterLabel>
-            <translation><!-- Travel Management Company --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
         <label><!-- Agent Global HQ --></label>
         <name>Agent_Global_HQ__c</name>
     </fields>
@@ -1956,22 +1924,13 @@
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country --></help>
-        <label><!-- eBulletin Multicountry Headquarter --></label>
-        <name>Bulletin_Headquarter__c</name>
-    </fields>
-    <fields>
         <label><!-- Business City Name --></label>
         <name>Business_City_Name__c</name>
     </fields>
     <fields>
         <label><!-- Business City --></label>
         <name>Business_City__c</name>
-        <relationshipLabel><!-- Accounts with Business City --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Business Geo Coordinates --></label>
-        <name>Business_Geo_Coordinates__c</name>
+        <relationshipLabel><!-- Accounts (Business City) --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Business PO Box --></label>
@@ -2311,6 +2270,10 @@
             <translation><!-- Other --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Other Equipment Manufacturer</masterLabel>
+            <translation><!-- Other Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Other Private Sector Association</masterLabel>
             <translation><!-- Other Private Sector Association --></translation>
         </picklistValues>
@@ -2385,10 +2348,6 @@
         <picklistValues>
             <masterLabel>Travel Agency Association</masterLabel>
             <translation><!-- Travel Agency Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Truck Line</masterLabel>
-            <translation><!-- Truck Line --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Vendor</masterLabel>
@@ -4298,14 +4257,6 @@ V - Co-operative --></help>
         <name>DSE__X_Internal__c</name>
     </fields>
     <fields>
-        <label><!-- D&amp;B Company --></label>
-        <lookupFilter>
-            <errorMessage><!-- Value does not exist or the D&amp;B Company entered is out of business. --></errorMessage>
-        </lookupFilter>
-        <name>D_B_Company__c</name>
-        <relationshipLabel><!-- Accounts --></relationshipLabel>
-    </fields>
-    <fields>
         <label><!-- Data Quality Description --></label>
         <name>Data_Quality_Description__c</name>
     </fields>
@@ -4405,15 +4356,6 @@ V - Co-operative --></help>
         <help><!-- Latest year expected. --></help>
         <label><!-- Authorized Signatories --></label>
         <name>Document_Std_Instruction__c</name>
-    </fields>
-    <fields>
-        <label><!-- Domestic Headquarter Account --></label>
-        <name>Domestic_Headquarter_Account__c</name>
-        <relationshipLabel><!-- Legal Domestic Child Accounts --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Domestic Ultimate Account Global ID --></label>
-        <name>Domestic_Ultimate_Account_Global_ID__c</name>
     </fields>
     <fields>
         <label><!-- Due Diligence Remarks --></label>
@@ -4592,58 +4534,6 @@ V - Co-operative --></help>
     <fields>
         <label><!-- Expiry Date --></label>
         <name>Expiry_Date__c</name>
-    </fields>
-    <fields>
-        <label><!-- External Entities CARGO (OTHER) --></label>
-        <name>External_Entities_CARGO_OTHER__c</name>
-    </fields>
-    <fields>
-        <label><!-- External Entities CARGO --></label>
-        <name>External_Entities_CARGO__c</name>
-        <picklistValues>
-            <masterLabel>Global Freight Alliance</masterLabel>
-            <translation><!-- Global Freight Alliance --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>International Air Cargo Association (TIACA)</masterLabel>
-            <translation><!-- International Air Cargo Association (TIACA) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>International Federation of Freight Forwarders (FIATA)</masterLabel>
-            <translation><!-- International Federation of Freight Forwarders (FIATA) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>International Freight Association (IFA)</masterLabel>
-            <translation><!-- International Freight Association (IFA) --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- External Entities PAX (OTHER) --></label>
-        <name>External_Entities_PAX_OTHER__c</name>
-    </fields>
-    <fields>
-        <label><!-- External Entities PAX --></label>
-        <name>External_Entities_PAX__c</name>
-        <picklistValues>
-            <masterLabel>ASTA Small Business Network (former NACTA)</masterLabel>
-            <translation><!-- ASTA Small Business Network (former NACTA) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>American Society of Travel Advisors (ASTA)</masterLabel>
-            <translation><!-- American Society of Travel Advisors (ASTA) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Professional Association of Travel Hosts (PATH)</masterLabel>
-            <translation><!-- Professional Association of Travel Hosts (PATH) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Leaders Network</masterLabel>
-            <translation><!-- Travel Leaders Network --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>World Travel &amp; Tourism Council (WTTC)</masterLabel>
-            <translation><!-- World Travel &amp; Tourism Council (WTTC) --></translation>
-        </picklistValues>
     </fields>
     <fields>
         <label><!-- FAX National --></label>
@@ -4934,15 +4824,6 @@ WSPN-Worldspan --></help>
         <name>Global_ID__c</name>
     </fields>
     <fields>
-        <label><!-- Global Ultimate Account Global ID --></label>
-        <name>Global_Ultimate_Account_Global_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Global Ultimate Headquarter Account --></label>
-        <name>Global_Ultimate_Headquarter_Account__c</name>
-        <relationshipLabel><!-- Legal Global Child Accounts --></relationshipLabel>
-    </fields>
-    <fields>
         <help><!-- Shows the total amount of the active bank guarantees --></help>
         <label><!-- Guaranteed amount --></label>
         <name>Guaranteed_amount__c</name>
@@ -5013,42 +4894,8 @@ WSPN-Worldspan --></help>
         <name>Has_cases_from_last_2_years__c</name>
     </fields>
     <fields>
-        <label><!-- Headquarter Account Global ID --></label>
-        <name>Headquarter_Account_Global_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- Headquarter_Account__c --></label>
-        <name>Headquarter_Account__c</name>
-        <relationshipLabel><!-- Legal Child Accounts --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- Hierarchy Level --></label>
-        <name>Hierarchy_Level__c</name>
-        <picklistValues>
-            <masterLabel>Branch</masterLabel>
-            <translation><!-- Branch --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Domestic</masterLabel>
-            <translation><!-- Domestic --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global</masterLabel>
-            <translation><!-- Global --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Single Location</masterLabel>
-            <translation><!-- Single Location --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
         <label><!-- Higher Level Customer (SAP) --></label>
         <name>Higher_Level_Customer__c</name>
-    </fields>
-    <fields>
-        <label><!-- Holding Parent --></label>
-        <name>Holding_Parent__c</name>
-        <relationshipLabel><!-- Branch --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Holds FS requiring first call letter --></label>
@@ -5101,10 +4948,6 @@ WSPN-Worldspan --></help>
         <label><!-- ISO Shipping State --></label>
         <name>IATA_ISO_Shipping_State__c</name>
         <relationshipLabel><!-- Accounts (ISO Shipping State) --></relationshipLabel>
-    </fields>
-    <fields>
-        <label><!-- IATA Iso Country Name --></label>
-        <name>IATA_Iso_Country_Name__c</name>
     </fields>
     <fields>
         <label><!-- IATA Member Airline --></label>
@@ -6782,11 +6625,6 @@ Approval: Key Contact can see pending request approve it one by one --></help>
         <name>Identify_as_Last_SIDRA_Date__c</name>
     </fields>
     <fields>
-        <help><!-- This field can only be amended from the Global Entity (GE) --></help>
-        <label><!-- Identify as Multicountry Key Hierarchy --></label>
-        <name>Identify_as_Multicountry_Key_Hierarchy__c</name>
-    </fields>
-    <fields>
         <label><!-- In a Airport --></label>
         <name>In_a_Airport__c</name>
     </fields>
@@ -6856,10 +6694,6 @@ Approval: Key Contact can see pending request approve it one by one --></help>
         <name>Is_DGR_Compliant__c</name>
     </fields>
     <fields>
-        <label><!-- Is D&amp;B Branch? --></label>
-        <name>Is_D_B_Branch__c</name>
-    </fields>
-    <fields>
         <label><!-- Is General Public Account --></label>
         <name>Is_General_Public_Account__c</name>
     </fields>
@@ -6882,14 +6716,6 @@ Approval: Key Contact can see pending request approve it one by one --></help>
             <masterLabel>Yes</masterLabel>
             <translation><!-- Yes --></translation>
         </picklistValues>
-    </fields>
-    <fields>
-        <label><!--  Is PO Box Address --></label>
-        <name>Is_PO_Box_Address__c</name>
-    </fields>
-    <fields>
-        <label><!-- IATA airline member check --></label>
-        <name>Is_parent_IATA_airline_member__c</name>
     </fields>
     <fields>
         <label><!-- * Is your firm handling Dangerous Goods? --></label>
@@ -7246,7 +7072,7 @@ J-Joint Vent --></help>
         <name>Location_Type_Ordered__c</name>
     </fields>
     <fields>
-        <label><!-- Agency Location Type --></label>
+        <label><!-- Location Type --></label>
         <name>Location_Type__c</name>
         <picklistValues>
             <masterLabel>AE</masterLabel>
@@ -7275,10 +7101,6 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>ES</masterLabel>
             <translation><!-- ES --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GE</masterLabel>
-            <translation><!-- GE --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>HE</masterLabel>
@@ -7378,10 +7200,6 @@ J-Joint Vent --></help>
         <name>Main_Accreditation_Organization__c</name>
     </fields>
     <fields>
-        <label><!-- Majority Owner Account Global ID --></label>
-        <name>Majority_Owner_Account_Global_ID__c</name>
-    </fields>
-    <fields>
         <label><!-- Manager First Name --></label>
         <name>Manager_First_Name__c</name>
     </fields>
@@ -7440,26 +7258,6 @@ J-Joint Vent --></help>
     <fields>
         <label><!-- Mobile --></label>
         <name>Mobile__c</name>
-    </fields>
-    <fields>
-        <label><!-- Multicountry Key Hierarchy --></label>
-        <name>Multicountry_Key_Hierarchy__c</name>
-    </fields>
-    <fields>
-        <label><!-- NDC Agent --></label>
-        <name>NDC_Agent__c</name>
-        <picklistValues>
-            <masterLabel>No</masterLabel>
-            <translation><!-- No --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Yes</masterLabel>
-            <translation><!-- Yes --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- NDC engagement --></label>
-        <name>NDC_engagement__c</name>
     </fields>
     <fields>
         <label><!-- N Code --></label>
@@ -7786,10 +7584,6 @@ J-Joint Vent --></help>
         <name>Original_Approval_DAte__c</name>
     </fields>
     <fields>
-        <label><!-- Other Type of Subsidiaries --></label>
-        <name>Other_Type_of_Subsidiaries__c</name>
-    </fields>
-    <fields>
         <help><!-- For more information on the pending items click on the report below. --></help>
         <label><!-- Overdue Invoices Indicator --></label>
         <name>Overdue_Invoices_Indicator__c</name>
@@ -7997,10 +7791,6 @@ J-Joint Vent --></help>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- RecordTypeDeveloperName --></label>
-        <name>RecordTypeDeveloperName__c</name>
-    </fields>
-    <fields>
         <label><!-- Record Sharing Criteria AUX --></label>
         <name>Record_Sharing_Criteria_AUX__c</name>
     </fields>
@@ -8084,10 +7874,6 @@ J-Joint Vent --></help>
             <translation><!-- Daily --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>EasyPay</masterLabel>
-            <translation><!-- EasyPay --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Every 10 days</masterLabel>
             <translation><!-- Every 10 days --></translation>
         </picklistValues>
@@ -8102,10 +7888,6 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>Fortnightly</masterLabel>
             <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Long Daily</masterLabel>
-            <translation><!-- Long Daily --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Monthly</masterLabel>
@@ -10039,10 +9821,6 @@ J-Joint Vent --></help>
         <relationshipLabel><!-- Accounts --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Sold_To_Completed --></label>
-        <name>Sold_To_Completed__c</name>
-    </fields>
-    <fields>
         <label><!-- Solicitation Flag --></label>
         <name>Solicitation_Flag__c</name>
     </fields>
@@ -10534,29 +10312,8 @@ J-Joint Vent --></help>
         <name>Verification_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Verification Status --></label>
-        <name>Verification_Status__c</name>
-        <picklistValues>
-            <masterLabel>Partial</masterLabel>
-            <translation><!-- Partial --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Unverified</masterLabel>
-            <translation><!-- Unverified --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Verified</masterLabel>
-            <translation><!-- Verified --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
         <label><!-- WebStar ID --></label>
         <name>WebStar_ID__c</name>
-    </fields>
-    <fields>
-        <label><!-- World Wide Account --></label>
-        <name>World_Wide_Account__c</name>
-        <relationshipLabel><!-- Accounts (Master Parent Id) --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- ICAO 8585 Code --></label>
@@ -10667,32 +10424,6 @@ J-Joint Vent --></help>
         <label><!-- state numeric code --></label>
         <name>state_numeric_code__c</name>
     </fields>
-    <quickActions>
-        <label><!-- Business Address --></label>
-        <name>Business_Address</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- Business Address is a PO Box --></label>
-        <name>Business_Address_is_a_PO_Box</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- Business PO Box Address --></label>
-        <name>Business_PO_Box_Address</name>
-    </quickActions>
-    <recordTypes>
-        <label><!-- Agency WW HQ --></label>
-        <name>Agency_WW_HQ</name>
-    </recordTypes>
-    <recordTypes>
-        <description><!-- Used to create an account of type airport --></description>
-        <label><!-- Airport --></label>
-        <name>Airport</name>
-    </recordTypes>
-    <recordTypes>
-        <description><!-- Used to create an account of type airline branch. Branch being a local office from an existing legal entity being the parent account of this one. --></description>
-        <label><!-- Branch --></label>
-        <name>Branch</name>
-    </recordTypes>
     <recordTypes>
         <description><!-- The new record type for ALL Agencies with NEW data model - Use this for all Agencies --></description>
         <label><!-- Agency --></label>
@@ -10759,10 +10490,6 @@ J-Joint Vent --></help>
         <name>Agency_Name</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The selected country is not enabled for multicountry. --></errorMessage>
-        <name>Agent_Country_Not_Enabled_Multicountry</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- You are not allowed to change the field &quot;Account Name&quot;. --></errorMessage>
         <name>Airline_HO_Name</name>
     </validationRules>
@@ -10804,15 +10531,11 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Block_non_AGM_user_from_modifying_agents</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator. --></errorMessage>
-        <name>Blocks_Users_Editing_Fields_AgencyWWHQ</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- The CASS Number must have 3 digits. --></errorMessage>
         <name>CASS_Number_3_Digits</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The Location Type/Accreditation Model of this account cannot be changed from &apos;HO&apos;, &apos;HE&apos;, or &apos;GE&apos; because it has a Financial Assessment Contact linked to it. --></errorMessage>
+        <errorMessage><!-- The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it. --></errorMessage>
         <name>Cannot_change_HO_location_type</name>
     </validationRules>
     <validationRules>
@@ -10848,20 +10571,8 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>EF_BlockRemoveSISVerifiedOnOperator</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- A branch or Domestic HQ account needs a Parent account --></errorMessage>
-        <name>EF_Branch_ParentAccount</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- A Branch Account needs the same country as its Parent Account --></errorMessage>
-        <name>EF_Branch_SameCountryWithParentAccount</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty --></errorMessage>
         <name>EF_CantSetSISVerifiedIfSISCodeEmpty</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You need to change the Herarchy level to &quot;branch&quot; for a Branch account --></errorMessage>
-        <name>EF_Herarchylevel_branch_for_Branch</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change --></errorMessage>
@@ -10872,51 +10583,11 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>EF_SIS_Location_ID_format_check</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- A verified Airport needs a IATA Code. --></errorMessage>
-        <name>EF_VerificationStatus_Airport_IATACode</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- The &quot;Verified&quot; value is available if a Business address is created. --></errorMessage>
-        <name>EF_VerificationStatus_BusinessAddress</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- The account needs to have a Legal Name. --></errorMessage>
-        <name>EF_VerificationStatus_LegalName</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- The &quot;Partial&quot; value is available if a Business address is created. --></errorMessage>
-        <name>EF_VerificationStatus_Partial_BusiAddres</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Partial verification status is allowed for Operator account only with a category of General aviation or Military only --></errorMessage>
-        <name>EF_VerificationStatus_Partial_Category</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Partial verification status is allowed for Operator account only --></errorMessage>
-        <name>EF_VerificationStatus_Partial_Operator</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You don’t have permission to edit Partially verified accounts --></errorMessage>
-        <name>EF_VerificationStatus_Partial_Permission</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- The &quot;Verified&quot; value is only available for accounts you have access to. --></errorMessage>
-        <name>EF_VerificationStatus_Permission</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- The account needs to have a Sector and a Category. --></errorMessage>
-        <name>EF_VerificationStatus_Sector_Category</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- Head office account can be edited only by administrator, please contact your administrator --></errorMessage>
         <name>Edit_Head_office</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- This field can only be amended from the Global Entity (GE) --></errorMessage>
-        <name>Edit_Identify_Multicountry_for_GE_only</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- An Associate Entity (with proper status) must have a parent account with location type HE OR GE (or has an AE as a parent) --></errorMessage>
+        <errorMessage><!-- An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent) --></errorMessage>
         <name>Enforce_HE_Parent_on_AE_Account</name>
     </validationRules>
     <validationRules>
@@ -10952,7 +10623,7 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Limit_Remittance_Frequency_Options</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- You cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen. --></errorMessage>
+        <errorMessage><!-- You cannot set location type HE/AE if the location class is not P/D and country is not NewGen. --></errorMessage>
         <name>Location_Type_cannot_choose_HE_or_AE</name>
     </validationRules>
     <validationRules>
@@ -11008,24 +10679,12 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>AZAirports</name>
     </webLinks>
     <webLinks>
-        <label><!-- Account_Context_Activation --></label>
-        <name>Account_Context_Activation</name>
-    </webLinks>
-    <webLinks>
         <label><!-- Account_Map --></label>
         <name>Account_Map</name>
     </webLinks>
     <webLinks>
-        <label><!-- Account_Profile_v2 --></label>
-        <name>Account_Profile_v2</name>
-    </webLinks>
-    <webLinks>
         <label><!-- Account_archive --></label>
         <name>Account_archive</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Add_Address --></label>
-        <name>Add_Address</name>
     </webLinks>
     <webLinks>
         <label><!-- BLND_FormFactoryAccountLink --></label>

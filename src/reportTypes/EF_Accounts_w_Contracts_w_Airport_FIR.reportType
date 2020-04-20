@@ -2109,11 +2109,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EF_Client_SIS_Designator__c</field>
-            <table>Account.Contracts</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IATA_Contract_Value__c</field>
             <table>Account.Contracts</table>
         </columns>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Scontrol xmlns="http://soap.sforce.com/2006/04/metadata">
-    <contentSource>HTML</contentSource>
-    <description>Used for ACCA escalation</description>
-    <encodingKey>UTF-8</encodingKey>
-    <name>Accept ACCA Case</name>
-    <supportsCaching>true</supportsCaching>
-</Scontrol>
