@@ -156,9 +156,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 
 
 	}
-	public void closePopup() {
-        isViewPopUpDisplayed = false;
-    }
 
 	public Pagereference next() {
 

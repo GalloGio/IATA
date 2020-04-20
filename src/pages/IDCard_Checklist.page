@@ -37,7 +37,14 @@
 	      function getSelectedApplicationType(type)
 	      {           
 	           next(type);        
-	      }
+          }
+
+          function validateCheckbox(){
+            if('{!isViewPopUpDisplayed}'){
+                alert('{!$Label.IDCard_PopUp_Displayed}');
+                return false;
+		}
+	}
 	
 	    $(document).ready(function () {     
 	       if (!({!isProofEmploymentOptionActive})  && $('#proofEmploymentOption'))
@@ -222,7 +229,7 @@
                                          <!--<apex:commandButton id="btnBack1"   value="{!$Label.IDCard_Back}" action="{!back}" style="width:100px; position:relative; top:15px;" />-->
                                      </td>
                                      <td >
-                                        <apex:commandLink action="{!next}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popup" status="status">
+                                        <apex:commandLink onComplete="validateCheckbox();" action="{!next}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popup" status="status">
                                             <span>{!$Label.ID_Card_Next_button}</span>
                                         </apex:commandLink>
                                         <!--<apex:commandButton id="btnNext2" style="width:100px; position:relative; top:15px;" value="{!$Label.ID_Card_Next_button}" action="{!next}"  rerender="ErrorMsgs" />-->
@@ -230,13 +237,6 @@
                                 </tr>
                             </table>
                         </div>
-                        <apex:outputPanel id="popup">
-                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!isViewPopUpDisplayed}">
-                                 <apex:outputLabel value="{!$Label.IDCard_PopUp_Displayed}" styleClass="labelStyle" escape="false" style="color:black"/>
-                                 <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup">
-                                 </apex:commandButton>
-                            </apex:outputPanel>
-                        </apex:outputPanel>
                     </div>                   
                 </div>              
             </apex:form>
