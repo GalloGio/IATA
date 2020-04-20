@@ -2501,6 +2501,14 @@ la seguente procedura per completarlo :
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>Nome</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Cognome</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Informazioni sull&apos;account aziendale</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -2609,7 +2617,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>Paese</label>
+        <label>Paese/Territorio</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>

@@ -2497,6 +2497,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>İlk Ad</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Soyadı</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Şirket Hesap Bilgisi</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -2605,7 +2613,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>Ülke</label>
+        <label>Bölgesi/Ülkesi</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
