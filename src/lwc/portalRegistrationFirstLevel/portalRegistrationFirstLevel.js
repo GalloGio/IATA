@@ -53,6 +53,8 @@ import CSP_L2_Title								from '@salesforce/label/c.CSP_L2_Title';
 import ISSP_Registration_MR						from '@salesforce/label/c.ISSP_Registration_MR';
 import ISSP_Registration_MRS					from '@salesforce/label/c.ISSP_Registration_MRS';
 import ISSP_Registration_MS						from '@salesforce/label/c.ISSP_Registration_MS';
+import CSP_L1_First_Name                        from '@salesforce/label/c.CSP_L1_First_Name';
+import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1_Last_Name';
 
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
@@ -130,7 +132,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		CSP_L2_Title,
 		ISSP_Registration_MR,
 		ISSP_Registration_MRS,
-		ISSP_Registration_MS
+		ISSP_Registration_MS,
+		CSP_L1_First_Name,
+		CSP_L1_Last_Name
 	}
 
 	get labels() {
