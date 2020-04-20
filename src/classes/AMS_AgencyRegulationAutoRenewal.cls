@@ -414,58 +414,25 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			//FM 24/10/2017 - AMSU-32 - when DGR case use only one mail message for all the Portal Admin, instead of a mail message per each
 			List<String> lPortalAdminsEmailsDGR = new List<String>();
+			Set<String> recipientsEmail = new Set<String>();
 			Map<String, List<String>> mPortalAdminsEmailsDGR = new Map<String, List<String>>();
 			Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
 
 			for(Contact recipient: recipents){
+				if(String.isNotBlank(recipient.Email))
+					recipientsEmail.add(recipient.Email);
+			}
 
-				if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
+			List<Contact> validContacts = [SELECT Id, Email FROM Contact WHERE Email IN :recipientsEmail AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
+			recipientsEmail.clear();
+			for(Contact validContact: validContacts){
+				recipientsEmail.add(validContact.Email);
+			}
 
-					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-					mail.saveAsActivity = true;
-					if(templateToIATA){
-						mail.setTemplateId(tempIata.get(0).Id);
-					} else {
-						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
-					}
-					mail.setTargetObjectId(recipient.Id);
+			for(Contact recipient: recipents){
+				if(recipientsEmail.contains(recipient.Email)){
+					if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
 
-					if(attachments != null){
-						mail.setFileAttachments(attachments);
-					}
-					mail.setWhatId(oscarId);
-					mail.setOrgWideEmailAddressId(owea.Id);
-					mailsToSend.add(mail);
-
-				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
-				//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
-				}else if(isDGR){
-
-					system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
-
-					//FM 24/10/2017 - AMSU-32
-					if(recipient.User_Portal_Status__c == 'Approved Admin'){
-
-						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-						system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
-
-						//lPortalAdminsEmailsDGR.add(recipient.Email);
-						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-							system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
-							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-							aux.add(recipient.Email);
-							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-						}else{
-							system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
-							List<String> aux = new List<String>();
-							aux.add(recipient.Email);
-							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
-						}
-
-						system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
-
-					}else{
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 						mail.saveAsActivity = true;
 						if(templateToIATA){
@@ -475,11 +442,57 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						}
 						mail.setTargetObjectId(recipient.Id);
 
+						if(attachments != null){
+							mail.setFileAttachments(attachments);
+						}
 						mail.setWhatId(oscarId);
-
 						mail.setOrgWideEmailAddressId(owea.Id);
-
 						mailsToSend.add(mail);
+
+					//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
+					//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
+					}else if(isDGR){
+
+						system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
+
+						//FM 24/10/2017 - AMSU-32
+						if(recipient.User_Portal_Status__c == 'Approved Admin'){
+
+							system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
+							system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
+
+							//lPortalAdminsEmailsDGR.add(recipient.Email);
+							if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
+								system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
+								List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
+								aux.add(recipient.Email);
+								mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+							}else{
+								system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
+								List<String> aux = new List<String>();
+								aux.add(recipient.Email);
+								mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+								mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
+							}
+
+							system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
+
+						}else{
+							Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+							mail.saveAsActivity = true;
+							if(templateToIATA){
+								mail.setTemplateId(tempIata.get(0).Id);
+							} else {
+								mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+							}
+							mail.setTargetObjectId(recipient.Id);
+
+							mail.setWhatId(oscarId);
+
+							mail.setOrgWideEmailAddressId(owea.Id);
+
+							mailsToSend.add(mail);
+						}
 					}
 				}
 			}
@@ -535,7 +548,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					emailMsg.Status = '0';
 					mailsToTrackInCase.add(emailMsg);
 				}
-				insert mailsToTrackInCase;
+				
+				try{
+					insert mailsToTrackInCase;
+				} catch(Exception e) {
+					System.debug(loggingLevel.ERROR, '____ [cls AMS_AgencyRegulationAutoRenewal - SendEmail] error - ' + e.getMessage());
+				}
 			}
 		}
 		return new List<Messaging.SingleEmailMessage>();
