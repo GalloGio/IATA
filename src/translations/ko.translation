@@ -2500,6 +2500,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>이름(성 없이)</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>성</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>회사 계정 정보</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -2608,7 +2616,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>국가</label>
+        <label>국가/지역</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
