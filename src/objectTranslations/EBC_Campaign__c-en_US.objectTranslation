@@ -8,5 +8,427 @@
         <plural>true</plural>
         <value>EBC Campaigns</value>
     </caseValues>
+    <fields>
+        <help><!-- Audience targeted by the Master Filter --></help>
+        <label><!-- Audience --></label>
+        <name>Audience__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Billing Account that pay for that campaign --></help>
+        <label><!-- Billing Account --></label>
+        <name>Billing_Account__c</name>
+        <relationshipLabel><!-- EBC Campaigns --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The number of bounced during the first 24 hours --></help>
+        <label><!-- Bounced 24 Hours --></label>
+        <name>Bounced24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of bounced during the first 48 hours --></help>
+        <label><!-- Bounced48Hours --></label>
+        <name>Bounced48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of bounced during the first 7 days --></help>
+        <label><!-- Bounced7Days --></label>
+        <name>Bounced7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- The unique campaign ID --></help>
+        <label><!-- Campaign ID --></label>
+        <name>Campaign_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- The click rate (Unique clicks / Delivered) first 24 hours --></help>
+        <label><!-- Click Rate 24 Hours --></label>
+        <name>ClickRate24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The click rate (Unique clicks / Delivered) first 48 hours --></help>
+        <label><!-- Click Rate 48 Hours --></label>
+        <name>ClickRate48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The click rate (Unique clicks / Delivered) first 7 days --></help>
+        <label><!-- Click Rate 7 Days --></label>
+        <name>ClickRate7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of clicks first 24 hours --></help>
+        <label><!-- Clicks24Hours --></label>
+        <name>Clicks24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of clicks first 48 hours --></help>
+        <label><!-- Clicks48Hours --></label>
+        <name>Clicks48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of delivered (sent - bounced) first 24 hours --></help>
+        <label><!-- Delivered 24 Hours --></label>
+        <name>Delivered24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of delivered (sent - bounced) first 48 hours --></help>
+        <label><!-- Delivered 48 Hours --></label>
+        <name>Delivered48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of delivered (sent - bounced) first 7 days --></help>
+        <label><!-- Delivered7Days --></label>
+        <name>Delivered7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Template used by the campaign to perform the email blast (Matches the Wizard Step 4) --></help>
+        <label><!-- EBC Design --></label>
+        <name>EBC_Design__c</name>
+        <relationshipLabel><!-- EBC Campaigns --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Selected filter --></help>
+        <label><!-- EBC Master Filter --></label>
+        <name>EBC_Master_Filter__c</name>
+        <relationshipLabel><!-- EBC Campaigns --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Exact Target Campaign Record Id. 
+The value is determined by ExactTarget, and this is is only populated once a campaign is uploaded to ExactTarget --></help>
+        <label><!-- Exact Target Campaign Id --></label>
+        <name>Exact_Target_Campaign_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Latest Triggered Send Id used. Source: Exact Target --></help>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Email Sender Name --></help>
+        <label><!-- From Name --></label>
+        <name>From_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Google Analytics code --></help>
+        <label><!-- Google Analytics Tracking Code --></label>
+        <name>Google_Analytics_Tracking_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Should the Google Analytics Tracking Code be output on the HTML template --></help>
+        <label><!-- Is Google Analytics Tracker Active --></label>
+        <name>Is_Google_Analytics_Tracker_Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 1 is valid and meet the validation. --></help>
+        <label><!-- Is Step1 Valid --></label>
+        <name>Is_Step1_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Step1 is writable based on other fields values --></help>
+        <label><!-- Is Step1 Writable --></label>
+        <name>Is_Step1_Writable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 2 is valid and meet the validation. --></help>
+        <label><!-- Is Step2 Valid --></label>
+        <name>Is_Step2_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Step2 is writable based on other fields values --></help>
+        <label><!-- Is Step2 Writable --></label>
+        <name>Is_Step2_Writable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 3 is valid and meet the validation. --></help>
+        <label><!-- Is Step3 Valid --></label>
+        <name>Is_Step3_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Step3 is writable based on other fields values --></help>
+        <label><!-- Is Step3 Writable --></label>
+        <name>Is_Step3_Writable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 4 is valid and meet the validation. --></help>
+        <label><!-- Is Step4 Valid --></label>
+        <name>Is_Step4_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Step4 is writable based on other fields values --></help>
+        <label><!-- Is Step4 Writable --></label>
+        <name>Is_Step4_Writable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 5 is valid and meet the validation. --></help>
+        <label><!-- Is Step5 Valid --></label>
+        <name>Is_Step5_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Step5 is writable based on other fields values --></help>
+        <label><!-- Is Step5 Writable --></label>
+        <name>Is_Step5_Writable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Verify if the Step 6 is valid and meet the validation. --></help>
+        <label><!-- Is Step6 Valid --></label>
+        <name>Is_Step6_Valid__c</name>
+    </fields>
+    <fields>
+        <help><!-- Return the furthest allowed step in the wizard based on the Is_StepX_Valid__c formulas --></help>
+        <label><!-- Maximum Allowed Step --></label>
+        <name>Maximum_Allowed_Step__c</name>
+    </fields>
+    <fields>
+        <help><!-- The EBC_Preference__c email address is copied here when submit for approval in order to use the Workflow Email &amp; Approval Email functionnality --></help>
+        <label><!-- Notification Email --></label>
+        <name>Notification_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of sent email --></help>
+        <label><!-- Number Sent --></label>
+        <name>NumberSent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of recipients --></help>
+        <label><!-- Number of Recipients --></label>
+        <name>Number_of_Recipients__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of unique clicks --></help>
+        <label><!-- Number of Unique Clicks --></label>
+        <name>Number_of_Unique_Clicks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of unique opening --></help>
+        <label><!-- Number of Unique Opens --></label>
+        <name>Number_of_Unique_Opens__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of clicks --></help>
+        <label><!-- Number of Clicks --></label>
+        <name>NumberofClicks__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of opening --></help>
+        <label><!-- Number of Opens --></label>
+        <name>NumberofOpens__c</name>
+    </fields>
+    <fields>
+        <help><!-- The open rate (unique opens / delivered) first 24 hours --></help>
+        <label><!-- Open Rate 24 Hours --></label>
+        <name>OpenRate24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The open rate (unique opens / delivered) first 48 hours --></help>
+        <label><!-- Open Rate 48 Hours --></label>
+        <name>OpenRate48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The open rate (unique opens / delivered) first 7 days --></help>
+        <label><!-- Open Rate 7 Days --></label>
+        <name>OpenRate7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of Opens during first 24 hours --></help>
+        <label><!-- Opens 24 Hours --></label>
+        <name>Opens24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of Opens during first 48 hours --></help>
+        <label><!-- Opens48Hours --></label>
+        <name>Opens48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Schedule date minus 17 business hours (2 business days) --></help>
+        <label><!-- Scheduled Date Valid Until --></label>
+        <name>Scheduled_Date_Valid_Until__c</name>
+    </fields>
+    <fields>
+        <help><!-- The scheduled date of the campaign --></help>
+        <label><!-- Scheduled Date --></label>
+        <name>Scheduled_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date of the begining of the mailing --></help>
+        <label><!-- Send Datetime --></label>
+        <name>Send_Datetime__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of sent emails during the first 24 hours --></help>
+        <label><!-- Sent24Hours --></label>
+        <name>Sent24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of sent emails during the first 48 hours --></help>
+        <label><!-- Sent48Hours --></label>
+        <name>Sent48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The current status of the campaign --></help>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>APPROVED</masterLabel>
+            <translation>Scheduled - Content Accepted</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DELETED</masterLabel>
+            <translation>Deleted</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DRAFT</masterLabel>
+            <translation>Draft</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PENDING_APPROVAL</masterLabel>
+            <translation>Scheduled - Pending Review</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>REJECTED</masterLabel>
+            <translation>Rejected</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SENT</masterLabel>
+            <translation>Sent</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STARTED</masterLabel>
+            <translation>Started</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The email subject of the campaign --></help>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique clicks during the first 24 hours --></help>
+        <label><!-- Unique Clicks 24 Hours --></label>
+        <name>UniqueClicks24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique clicks during the first 48 hours --></help>
+        <label><!-- Unique Clicks 48 Hours --></label>
+        <name>UniqueClicks48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique clicks during the first 7 days --></help>
+        <label><!-- Unique Clicks 7 Days --></label>
+        <name>UniqueClicks7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique opens during the first 24 hours --></help>
+        <label><!-- Unique Opens 24 Hours --></label>
+        <name>UniqueOpens24Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique opens during the first 48 hours --></help>
+        <label><!-- Unique Opens 48 Hours --></label>
+        <name>UniqueOpens48Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of unique opens during the first 7 days --></help>
+        <label><!-- Unique Opens 7 Days --></label>
+        <name>UniqueOpens7Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate if we should continue tracking the campaing or not --></help>
+        <label><!-- is7dFollowUpCompleted --></label>
+        <name>is7dFollowUpCompleted__c</name>
+    </fields>
+    <layouts>
+        <layout>eBroadcast Campaign Layout</layout>
+        <sections>
+            <label><!-- Campaign Components --></label>
+            <section>Campaign Components</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Bounces --></label>
+            <section>Campaign Metrics - Bounces</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Click Count --></label>
+            <section>Campaign Metrics - Click Count</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Click Rate --></label>
+            <section>Campaign Metrics - Click Rate</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Open Count --></label>
+            <section>Campaign Metrics - Open Count</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Open Rate --></label>
+            <section>Campaign Metrics - Open Rate</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Sent &amp; Delivered --></label>
+            <section>Campaign Metrics - Sent &amp; Delivered</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Wizard Steps --></label>
+            <section>Campaign Wizard Steps</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- ExactTarget Technical Information --></label>
+            <section>ExactTarget Technical Information</section>
+        </sections>
+        <sections>
+            <label><!-- Google Analytics use for this Campaign --></label>
+            <section>Google Analytics use for this Campaign</section>
+        </sections>
+        <sections>
+            <label><!-- Scheduling Information --></label>
+            <section>Scheduling Information</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Design can only be changed when the campaign status is Draft --></errorMessage>
+        <name>Design_vs_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The From Name can only be changed when the campaign status is Draft --></errorMessage>
+        <name>FromName_vs_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Google Analytics Settings can only be changed when the campaign status is Draft --></errorMessage>
+        <name>GoogleAnalytics_vs_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Recipients List can only be changed when the campaign status is Draft --></errorMessage>
+        <name>MasterFilter_vs_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Pending Approval status can only result in Approval or Rejection --></errorMessage>
+        <name>Pending_Campaign_Limited_to_Aprv_Rjct</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Rejected campaigns may only be deleted --></errorMessage>
+        <name>Rejected_Campaign_can_only_be_deleted</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Scheduled Date does not respect the 2 business day criteria. --></errorMessage>
+        <name>Scheduled_Date_2_Business_Days</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Scheduled Date MUST be within 31 days. --></errorMessage>
+        <name>Scheduled_Date_31_Business_Days</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Scheduled Date can only be changed when the campaign status is Draft or Approved --></errorMessage>
+        <name>Scheduled_Date_vs_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Subject can only be changed when the campaign status is Draft --></errorMessage>
+        <name>Subject_vs_Status</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Campaign_Tracking --></label>
+        <name>Campaign_Tracking</name>
+    </webLinks>
 </CustomObjectTranslation>
