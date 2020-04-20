@@ -3685,6 +3685,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>CSP_CaseSearchPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
+        <value>Search for Cases</value>
+    </labels>
+    <labels>
         <fullName>CSP_Case_Currency</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3712,14 +3720,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
-    </labels>
-    <labels>
-        <fullName>CSP_CaseSearchPlaceholder</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
-        <value>Search for Cases</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
@@ -11813,7 +11813,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000HmC0&amp;oid=00D2000000008TF&amp;lastMod=1587048852000</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -35295,10 +35295,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+        <value>The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
 The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
@@ -41758,6 +41755,25 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS</shortDescription>
         <value>SIS</value>
+    </labels>
+    <labels>
+        <fullName>SISCaseDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SISCaseDescription</shortDescription>
+        <value>Account legal name: 
+{0}
+
+E&amp;F main contact: 
+{1} {2}
+{3}
+
+Address (business):
+Street {4}
+Zip/Postal Code  {5}
+City  {6}	
+State/Province {7}	
+Country {8}</value>
     </labels>
     <labels>
         <fullName>SISHelpDesk_ExistingPriorityMapping</fullName>

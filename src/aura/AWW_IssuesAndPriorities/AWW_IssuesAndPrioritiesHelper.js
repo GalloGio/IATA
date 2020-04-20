@@ -24,6 +24,31 @@
 
         component.set('v.columns', columns);
     },
+	sortIssues : function (component, fieldname,reverse) {
+		var backup = component.get("v.filteredData");
+		backup.sort(function(a,b) {
+			// special treatment for Priority
+			var rating = {'High':1,'Medium':2,'Low':3};
+			if(fieldname == 'AM_Level_of_importance__c') {
+				if( rating[a[fieldname]] < rating[b[fieldname]]) return 1;
+				else return -1;
+			}
+			if (a[fieldname] === undefined) return 1;
+			if (b[fieldname] === undefined) return -1;
+
+			// checkboxes
+			var checkbox = (typeof a[fieldname] === 'boolean');
+			if(checkbox) {
+				if (a[fieldname] < b[fieldname]) return 1;
+				else return -1;
+			}
+
+			if (a[fieldname].toLowerCase() < b[fieldname].toLowerCase()) return 1;
+			else return -1;
+		});
+		if (reverse < 0) backup.reverse();
+		component.set("v.filteredData",backup);
+	},
     fetchData : function(component) {
         var action = component.get('c.getIssuesAndPriorities');
         var accountId = component.get('v.accountId');
@@ -54,13 +79,18 @@
 
         $A.enqueueAction(action);
     },
-    editRecord : function(component, event) {
+    editRecord : function(component, event, idRow) {
         var modalCmp = component.find('manage-record');
-        modalCmp.showModal(event.getParam('row'));
+        var data = component.get('v.filteredData');
+        for(let i = 0; i < data.length; i++ ){
+            if(data[i].Id == idRow){
+                modalCmp.showModal(data[i]);
+            }
+        }
     },
-    deleteRecord : function(component, event) {
+    deleteRecord : function(component, event, idRow) {
         var modalCmp = component.find('delete-record');
-        modalCmp.showModal(event.getParam('row').Id);
+        modalCmp.showModal(idRow);
     },
     refreshIssues : function(component, showClosed) {
         var data = component.get('v.data');
