@@ -4534,6 +4534,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Invalid email</value>
     </labels>
     <labels>
+        <fullName>CSP_L1_First_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_First_Name</shortDescription>
+        <value>First Name (Given Names)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_Last_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_Last_Name</shortDescription>
+        <value>Last Name (Family Name)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Information</shortDescription>
+        <value>Company Account Info</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Account_Information</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

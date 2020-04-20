@@ -2513,6 +2513,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>名字</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>姓氏</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>公司账户信息</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>

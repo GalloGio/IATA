@@ -2515,6 +2515,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>Nombre</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Apellidos</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Información de la cuenta de la empresa</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -2623,7 +2631,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>País</label>
+        <label>País/Territorio</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
