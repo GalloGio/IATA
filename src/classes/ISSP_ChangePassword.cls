@@ -213,7 +213,7 @@ public without sharing class ISSP_ChangePassword {
 
 			// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field
 			// for the service and the same user could receive several invitations for different services
-			List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: userProvisining[0].SalesforceUser.Email limit 1];
+			List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: userProvisining[0].SalesforceUser.Email and ServiceId__c = null limit 1];
 
 			if(!invitations.isEmpty()){
 				isPrimaryUser = invitations[0].Role__c == 'Primary';

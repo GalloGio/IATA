@@ -154,6 +154,16 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <label>Invitation</label>
+    <nameField>
+        <displayFormat>INV-{00000000}</displayFormat>
+        <label>Invitation Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invitations</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>AccountId__c</fullName>
         <description>Account Id send by FRED application</description>
@@ -386,7 +396,19 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <label>Invitation</label>
+    <fields>
+        <fullName>ServiceId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Specifies which service the invitation is made for</description>
+        <externalId>false</externalId>
+        <label>Service</label>
+        <referenceTo>Service__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -399,13 +421,4 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <nameField>
-        <displayFormat>INV-{00000000}</displayFormat>
-        <label>Invitation Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Invitations</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
 </CustomObject>

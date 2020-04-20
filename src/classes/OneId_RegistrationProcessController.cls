@@ -1089,7 +1089,8 @@ public without sharing class OneId_RegistrationProcessController {
 
 		List<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c,
 				Email__c, First_Name__c, Job_Function__c, Job_Title__c,
-				Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId];
+				Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId
+				and ServiceId__c = null];
 		if(! invitation.isEmpty()) {
 			Invitation__c inv = invitation[0];
 			Contact c = new Contact (
@@ -1113,7 +1114,7 @@ public without sharing class OneId_RegistrationProcessController {
 	@AuraEnabled
 	public static Invitation__c getInvitation(String invitationId) {
 		if(String.isNotBlank(invitationId)) {
-			List<Invitation__c> invitations = [SELECT Id, GADM_Power_User__c FROM Invitation__c WHERE Id = :invitationId LIMIT 1];
+			List<Invitation__c> invitations = [SELECT Id, GADM_Power_User__c FROM Invitation__c WHERE Id = :invitationId and ServiceId__c = null LIMIT 1];
 			if(! invitations.isEmpty()) {
 				return invitations[0];
 			}else{
