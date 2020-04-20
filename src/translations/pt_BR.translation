@@ -24223,6 +24223,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>SIS</name>
     </customLabels>
     <customLabels>
+        <label><!-- SISCaseDescription --></label>
+        <name>SISCaseDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS HelpDesk Existing Priority Mapping --></label>
         <name>SISHelpDesk_ExistingPriorityMapping</name>
     </customLabels>

@@ -24222,6 +24222,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>SIS</name>
     </customLabels>
     <customLabels>
+        <label><!-- SISCaseDescription --></label>
+        <name>SISCaseDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS HelpDesk Existing Priority Mapping --></label>
         <name>SISHelpDesk_ExistingPriorityMapping</name>
     </customLabels>

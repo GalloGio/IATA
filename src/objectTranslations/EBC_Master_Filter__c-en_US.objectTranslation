@@ -77,6 +77,21 @@
             <translation>ANY</translation>
         </picklistValues>
     </fields>
+    <layouts>
+        <layout>EBC Master Filter Layout</layout>
+        <sections>
+            <label><!-- By IATA Code --></label>
+            <section>By IATA Code</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Search Criteria --></label>
+            <section>Search Criteria</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
     <validationRules>
         <errorMessage><!-- Selecting an audience is required --></errorMessage>

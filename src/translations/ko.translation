@@ -24225,6 +24225,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>SIS</name>
     </customLabels>
     <customLabels>
+        <label><!-- SISCaseDescription --></label>
+        <name>SISCaseDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS HelpDesk Existing Priority Mapping --></label>
         <name>SISHelpDesk_ExistingPriorityMapping</name>
     </customLabels>

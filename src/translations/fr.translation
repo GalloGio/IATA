@@ -24266,6 +24266,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>SIS</name>
     </customLabels>
     <customLabels>
+        <label><!-- SISCaseDescription --></label>
+        <name>SISCaseDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS HelpDesk Existing Priority Mapping --></label>
         <name>SISHelpDesk_ExistingPriorityMapping</name>
     </customLabels>

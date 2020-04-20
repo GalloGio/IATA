@@ -24229,6 +24229,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>SIS</name>
     </customLabels>
     <customLabels>
+        <label><!-- SISCaseDescription --></label>
+        <name>SISCaseDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS HelpDesk Existing Priority Mapping --></label>
         <name>SISHelpDesk_ExistingPriorityMapping</name>
     </customLabels>

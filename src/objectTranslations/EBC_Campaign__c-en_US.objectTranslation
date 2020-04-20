@@ -118,10 +118,6 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <name>Is_Google_Analytics_Tracker_Active__c</name>
     </fields>
     <fields>
-        <label><!-- Is Payment Step --></label>
-        <name>Is_Payment_Step__c</name>
-    </fields>
-    <fields>
         <help><!-- Verify if the Step 1 is valid and meet the validation. --></help>
         <label><!-- Is Step1 Valid --></label>
         <name>Is_Step1_Valid__c</name>
@@ -175,10 +171,6 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <help><!-- Verify if the Step 6 is valid and meet the validation. --></help>
         <label><!-- Is Step6 Valid --></label>
         <name>Is_Step6_Valid__c</name>
-    </fields>
-    <fields>
-        <label><!-- Is Step7 Valid --></label>
-        <name>Is_Step7_Valid__c</name>
     </fields>
     <fields>
         <help><!-- Return the furthest allowed step in the wizard based on the Is_StepX_Valid__c formulas --></help>
@@ -276,7 +268,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <name>Status__c</name>
         <picklistValues>
             <masterLabel>APPROVED</masterLabel>
-            <translation>Scheduled</translation>
+            <translation>Scheduled - Content Accepted</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>DELETED</masterLabel>
@@ -287,12 +279,8 @@ The value is determined by ExactTarget, and this is is only populated once a cam
             <translation>Draft</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>EMAIL RECOVER</masterLabel>
-            <translation><!-- EMAIL RECOVER --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>PENDING_APPROVAL</masterLabel>
-            <translation>Pending Review</translation>
+            <translation>Scheduled - Pending Review</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>REJECTED</masterLabel>
@@ -304,7 +292,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         </picklistValues>
         <picklistValues>
             <masterLabel>STARTED</masterLabel>
-            <translation>In Progress</translation>
+            <translation>Started</translation>
         </picklistValues>
     </fields>
     <fields>
@@ -347,6 +335,57 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label><!-- is7dFollowUpCompleted --></label>
         <name>is7dFollowUpCompleted__c</name>
     </fields>
+    <layouts>
+        <layout>eBroadcast Campaign Layout</layout>
+        <sections>
+            <label><!-- Campaign Components --></label>
+            <section>Campaign Components</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Bounces --></label>
+            <section>Campaign Metrics - Bounces</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Click Count --></label>
+            <section>Campaign Metrics - Click Count</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Click Rate --></label>
+            <section>Campaign Metrics - Click Rate</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Open Count --></label>
+            <section>Campaign Metrics - Open Count</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Open Rate --></label>
+            <section>Campaign Metrics - Open Rate</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Metrics - Sent &amp; Delivered --></label>
+            <section>Campaign Metrics - Sent &amp; Delivered</section>
+        </sections>
+        <sections>
+            <label><!-- Campaign Wizard Steps --></label>
+            <section>Campaign Wizard Steps</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- ExactTarget Technical Information --></label>
+            <section>ExactTarget Technical Information</section>
+        </sections>
+        <sections>
+            <label><!-- Google Analytics use for this Campaign --></label>
+            <section>Google Analytics use for this Campaign</section>
+        </sections>
+        <sections>
+            <label><!-- Scheduling Information --></label>
+            <section>Scheduling Information</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
     <validationRules>
         <errorMessage><!-- The Design can only be changed when the campaign status is Draft --></errorMessage>
