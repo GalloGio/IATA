@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Airport Concessionaire;Airport Operator;ANSP;Airport Authority;Other</value>
+        <value xsi:type="xsd:string">Airport Concessionaire;Airport Operator;ANSP;Airport Authority;General Public</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

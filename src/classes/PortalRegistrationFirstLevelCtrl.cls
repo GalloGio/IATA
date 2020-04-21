@@ -245,7 +245,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		List<GCS_CustomerType> customerTypesList = GCS_CustomerType.getCustomerTypesMap().values();
 		for(GCS_CustomerType customerType : customerTypesList){
-			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'Other'){
+			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'General Public'){
 				return customerType.metadataCustomerType.DeveloperName;
 			}
 			
@@ -663,7 +663,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		BucketAccountDetail accDetail = new BucketAccountDetail();
 
-		String sector = selectedMetadataCustomerType.MasterLabel;
+		String sector = '';
+		String category = '';
+		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
+			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
+			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		}
+		else{
+			sector = selectedMetadataCustomerType.MasterLabel;
+			category = 'General Public';
+		}
 
 		String accountQuery = '';
 		accountQuery +='SELECT Id, Sector__c, Category__c';
@@ -681,9 +690,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		if(!String.isEmpty(sector)){
-			accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\'Other\'';
-		}
+		accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\''+ category +'\'';
 
 		List<Account> accList = new List<Account>();
 
@@ -692,15 +699,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(accList.isEmpty()){
 			Account acc = new Account();
 			acc.Reason_for_creation__c = 'Created by customer';
-			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - Other';
+			if(sector == 'Cargo Agent'){
+				acc.Name = 'Freight Forwarder - ' + category;
+			}
+			else{
+				acc.Name = sector + ' - ' + category;
+			}
 			acc.Sector__c = sector;
-			acc.Category__c = 'Other';
-			acc.Category_Other_Value__c = 'Bucket Account';
+			acc.Category__c = category;
 			acc.Is_General_Public_Account__c = true;
-			//acc.IsPartner = true;
 
 			if(!String.isEmpty(country)) {
 				String countryCode = [SELECT ISO_Code__c FROM IATA_ISO_Country__c WHERE ID =: country LIMIT 1].ISO_Code__c;
