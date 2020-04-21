@@ -27,10 +27,11 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		 *  |_ MC Account 1 HE FR
 		 */
 		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
-		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE PT', ac1.Id, ac1.Id, AMS_Utils.AE, pt, '10000001');
-		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000002');
+		Account ac2 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 AE PT', ac1.Id, ac1.Id, AMS_Utils.AE, pt, '10000001');
+		Account ac3 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000002');
+		Account ac5 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000004');
+		insert new List<Account> { ac2, ac3, ac5 };
 		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac3.Id, ac1.Id, AMS_Utils.AE, gb, '10000003');
-		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000004');
 		
 		ANG_TestDataHelper.insertHierarchy(new List<Account> { ac1, ac2, ac3, ac4, ac5 });
 		ANG_TestDataHelper.insertAccountOwner(ac5.Id);
