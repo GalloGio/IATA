@@ -48,6 +48,16 @@ public class ANG_TestDataHelper
 	public static Account insertMulticountryAccount(String name, Id parent, Id topParent, String locationType, IATA_ISO_Country__c isoCountry,
 		String iataCode)
 	{
+		Account acct = createMulticountryAccount(name, parent, topParent, locationType, isoCountry, iataCode);
+		insert acct;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertMulticountryAccount] Inserted account: ' + acct);
+		return acct;
+	}
+
+	public static Account createMulticountryAccount(String name, Id parent, Id topParent, String locationType, IATA_ISO_Country__c isoCountry,
+		String iataCode)
+	{
 		Account acct = createBasicAccount(true);
 		acct.Name = name;
 		acct.ParentId = parent;
@@ -55,14 +65,22 @@ public class ANG_TestDataHelper
 		acct.Location_Type__c = locationType;
 		acct.IATA_ISO_Country__c = isoCountry.Id;
 		acct.IATACode__c = iataCode;
-		insert acct;
 
-		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertMulticountryAccount] Created account: ' + acct);
-
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - createMulticountryAccount] Created account: ' + acct);
 		return acct;
 	}
 
 	public static Account insertStandardAccount(String name, Id parent, String locationType, IATA_ISO_Country__c isoCountry,
+		String iataCode)
+	{
+		Account acct = createStandardAccount(name, parent, locationType, isoCountry, iataCode);
+		insert acct;
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertStandardAccount] Inserted account: ' + acct);
+		return acct;
+	}
+
+	public static Account createStandardAccount(String name, Id parent, String locationType, IATA_ISO_Country__c isoCountry,
 		String iataCode)
 	{
 		Account acct = createBasicAccount(false);
@@ -72,10 +90,8 @@ public class ANG_TestDataHelper
 		acct.Location_Type__c = locationType;
 		acct.IATA_ISO_Country__c = isoCountry.Id;
 		acct.IATACode__c = iataCode;
-		insert acct;
 
-		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - insertStandardAccount] Created account: ' + acct);
-
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_TestDataHelper - createStandardAccount] Created account: ' + acct);
 		return acct;
 	}
 

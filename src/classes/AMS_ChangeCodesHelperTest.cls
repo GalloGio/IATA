@@ -200,7 +200,7 @@ private class AMS_ChangeCodesHelperTest {
 	@isTest
 	public static void testChangesCodesCreationNewGenContext() {
 
-		List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account ];
+		List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, Sector__c, Category__c, ANG_IsNewGenAgency__c from Account ];
 
 		Test.startTest();
 			Account acc1 = accountLst.get(0);

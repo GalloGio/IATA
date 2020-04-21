@@ -1118,9 +1118,12 @@ public class ANG_AgencyChangesHelperTest {
 		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
 		
 		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
-		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+
+		Account ac2 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+		Account ac4 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000003');
+		insert new List<Account>{ ac2, ac4};
+
 		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac2.Id, ac1.Id, AMS_Utils.AE, gb, '10000002');
-		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000003');
 
 		ANG_TestDataHelper.insertHierarchy(new List<Account>{
 			ac1, ac2, ac3, ac4
@@ -1203,10 +1206,11 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Backup_In_Progress__c = false;
 		update oscar;
 
+        Test.stopTest();
+
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
 		
-		Test.stopTest();
 	
 		System.assertEquals('Active', [SELECT Id, Status__c, Account__r.Name FROM Agency_Authorization__c LIMIT 1].Status__c, 'Cash forms of payment should be active after approval');
 	}

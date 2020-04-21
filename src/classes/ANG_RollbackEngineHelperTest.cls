@@ -1,7 +1,10 @@
 @isTest
 private class ANG_RollbackEngineHelperTest {
 
-	private static void setupData(Boolean useAEAccount){
+	@testSetup
+	static void makeData(){
+		Test.startTest();
+		
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
 		insert ctry ;
 
@@ -86,7 +89,7 @@ private class ANG_RollbackEngineHelperTest {
 			TradeName__c = 'Test1 Agency OK'
 			);
 
-		insert New List<Account>{a2,a3};
+		insert new List<Account>{a2,a3};
 
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 		insert hierarchy;
@@ -96,12 +99,7 @@ private class ANG_RollbackEngineHelperTest {
 		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
 		insert new List<AMS_Agencies_relationhip__c>{rel,rel2};
 
-		Contact newContact1 = new Contact(
-		FirstName = 'Joel',
-		LastName = 'Chandler',
-		AccountId = a1.Id
-		);
-
+		Contact newContact1 = new Contact(FirstName = 'Joel', LastName = 'Chandler', AccountId = a1.Id);
 		insert newContact1;
 
 		Id ownerRtId = AMS_Utils.AccountRoleOwnershipRT;
@@ -115,21 +113,30 @@ private class ANG_RollbackEngineHelperTest {
 		authorizations.add(new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		insert authorizations;
 
-		Id oscarRT = AMS_Utils.RECTYPE_NGCHANGES;
+		Test.stopTest();
+	}
+
+	private static void setupData(Boolean useAEAccount) {
+		List<Account> accounts = [SELECT Id, IATACode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, Name, Short_Name__c,
+									  Email__c, Website, Abbreviated_name__c, VAT_Number__c, ANG_Accreditation_Model__c, License_Number__c,
+									  (SELECT Id FROM Contacts)
+								  FROM Account
+								  WHERE IATACode__c IN ( '1234561', '1234591' )];
+		Account a1 = accounts.get(0).IATACode__c == '1234561' ? accounts.get(0) : accounts.get(1);
+		Account a2 = accounts.get(0).IATACode__c == '1234561' ? accounts.get(1) : accounts.get(0);
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = useAEAccount ? a2.id : a1.id,
-			recordTypeId = oscarRT
+			recordTypeId = AMS_Utils.RECTYPE_NGCHANGES
 		);
 
 		insert oscar;
-
 
 		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
 		oscarCase.AccountId = useAEAccount ? a2.id : a1.id;
-		oscarCase.ContactId = newContact1.Id;
+		oscarCase.ContactId = a1.Contacts.get(0).Id;
 		insert oscarCase;
 
 		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
@@ -320,8 +327,6 @@ private class ANG_RollbackEngineHelperTest {
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
 
-		Test.startTest();
-
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
 		Account a1 = new Account(
@@ -378,6 +383,8 @@ private class ANG_RollbackEngineHelperTest {
 			);
 
 		insert a2;
+
+		Test.startTest();
 
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy2');
 		insert hierarchy;
@@ -557,8 +564,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
-		insert ctry ;
+		IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c];
 
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
@@ -930,8 +936,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
-		insert ctry ;
+		IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c];
 
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
