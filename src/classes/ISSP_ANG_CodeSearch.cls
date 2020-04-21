@@ -118,7 +118,7 @@ public class ISSP_ANG_CodeSearch {
 
 			if(!agencies.isEmpty()) {
 				Account reqAgency = agencies[0];
-				String isoCountry = reqAgency.IATA_ISO_Country__r.Name.replace(' ','_');
+				String isoCountry = reqAgency.IATA_ISO_Country__r.Name == null ? '' :reqAgency.IATA_ISO_Country__r.Name.replace(' ','_');
 				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c
 																				FROM IATA_Code_Search_Special_Countries__mdt
 															 													WHERE DeveloperName =:isoCountry LIMIT 1];
