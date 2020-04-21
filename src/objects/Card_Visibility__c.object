@@ -517,9 +517,9 @@
                     <label>Travel Service Intermediaries-TSI (USA Only)</label>
                 </value>
                 <value>
-                    <fullName>Other</fullName>
+                    <fullName>General Public</fullName>
                     <default>false</default>
-                    <label>Other</label>
+                    <label>General Public</label>
                 </value>
             </valueSetDefinition>
             <valueSettings>
@@ -553,7 +553,7 @@
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <controllingFieldValue>General Public</controllingFieldValue>
                 <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>Other</valueName>
+                <valueName>General Public</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>

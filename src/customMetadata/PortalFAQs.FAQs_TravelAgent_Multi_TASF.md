@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">IATA Passenger Sales Agent;Non-IATA Travel Agent;Domestic Agent;Other</value>
+        <value xsi:type="xsd:string">IATA Passenger Sales Agent;Non-IATA Travel Agent;Domestic Agent;General Public</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Individual Government;Inter-Governmental Body;Other</value>
+        <value xsi:type="xsd:string">Individual Government;Inter-Governmental Body;General Public</value>
     </values>
     <values>
         <field>Account_Sector__c</field>
