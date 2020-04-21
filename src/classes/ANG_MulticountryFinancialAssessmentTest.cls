@@ -484,10 +484,11 @@ private class ANG_MulticountryFinancialAssessmentTest {
 
 		insert are;
 
+       	Test.startTest();
+
 		multicountryAdhoc.FA_Second_Deadline_Date__c = System.today().addDays(-1);
 		update multicountryAdhoc;
 
-		Test.startTest();
 
 		ifapAction = IFAP_WebService.applyCashCondition(multicountryAdhoc.Id, multicountryAdhoc.AccountId);
 		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, ifapAction.message);
@@ -523,8 +524,6 @@ private class ANG_MulticountryFinancialAssessmentTest {
 	@isTest static void adhocNonComplianceWithoutFinancialSecurityTest(){
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
-		Test.startTest();
-
 		Case multicountryAdhoc = [SELECT 
 										Id, AccountId, Account.Financial_Assessment_Points__c, 
 										Account.Financial_Review_Result__c, Account.Assessment_Performed_Date__c
@@ -538,6 +537,8 @@ private class ANG_MulticountryFinancialAssessmentTest {
 			fsLst.add(fs);
 		}
 		update fsLst;
+
+        Test.startTest();
 
 		Boolean exceptionRaised = false;
 
@@ -608,8 +609,6 @@ private class ANG_MulticountryFinancialAssessmentTest {
 
 	@isTest static void overlappingNonCompliancesWithFinancialSecurityTest(){
 
-		Test.startTest();
-
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 		
 		Case multicountryAnnual = [SELECT 
@@ -631,6 +630,8 @@ private class ANG_MulticountryFinancialAssessmentTest {
 		);
 
 		insert are;
+
+        Test.startTest();
 
 		multicountryAnnual.Deadline_Date__c = System.today().addDays(-1);
 		multicountryAnnual.FA_Second_Deadline_Date__c = System.today().addDays(-1);
@@ -710,8 +711,6 @@ private class ANG_MulticountryFinancialAssessmentTest {
 
 	@isTest static void overlappingNonCompliancesWithoutFinancialSecurityTest(){
 
-		Test.startTest();
-
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 		
 		Case multicountryAnnual = [SELECT 
@@ -722,12 +721,16 @@ private class ANG_MulticountryFinancialAssessmentTest {
 								   WHERE Financial_Review_Type__c = :AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL
 								   LIMIT 1];
 		
+        FinancialSecurityUtil.acknowledgeRunning = true;
+        
 		List<Financial_Security__c> fsLst = new List<Financial_Security__c>();
 		for(Financial_Security__c fs : [SELECT Id FROM Financial_Security__c WHERE Account__c = :multicountryAnnual.AccountId]){
 			fs.Security_Status__c = 'Expired';
 			fsLst.add(fs);
 		}
 		update fsLst;
+
+        Test.startTest();
 
 		ANG_Risk_Event_Type__c riskEventType = new ANG_Risk_Event_Type__c(ANG_Risk_ID__c = '5');
 
@@ -787,8 +790,6 @@ private class ANG_MulticountryFinancialAssessmentTest {
 
 		insert multicountryQuarterly;
 
-		Test.stopTest();
-
 		String expectedNonComplianceMessage = ANG_MulticountryHelper.NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE.replace('{{caseNumber}}', multicountryAnnual.CaseNumber);
 
 		IFAP_WebService.IFAPActionWrapper ifapAction = IFAP_WebService.removeCashCondition(multicountryQuarterly.Id, multicountryQuarterly.AccountId);
@@ -807,6 +808,8 @@ private class ANG_MulticountryFinancialAssessmentTest {
 		}
 
 		System.assert(exceptionRaised, 'A SidraLiteException should have been raised');
+
+        Test.stopTest();
 
 		multicountryQuarterly.Financial_Review_Result__c = AMS_Utils.FA_RESULT_UNSATISFACTORY_UPDATE_FS;
 		multicountryQuarterly.Financial_Assessment_Points__c = 50;

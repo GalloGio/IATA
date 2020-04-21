@@ -154,6 +154,7 @@ public class AMS_OSCARTriggerHandler {
 						Process__c,
 						Location_Type__c,
 						Account__r.Sector__c, 
+						Account__r.Category__c,
 						Account__r.CNS_Agency__c,
 						Account__r.Parent.Status__c,
 						Account__r.Parent.Accreditation_date__c,
