@@ -1040,11 +1040,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EF_Material__c.Name_of_SME__c</field>
-            <table>Contract.EF_Material_Line_Items__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>EF_Material__c.Non_IATA_product__c</field>
             <table>Contract.EF_Material_Line_Items__r</table>
         </columns>
