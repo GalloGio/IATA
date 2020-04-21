@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Processor;System Solutions Provider;Other</value>
+        <value xsi:type="xsd:string">Processor;System Solutions Provider;General Public</value>
     </values>
     <values>
         <field>Account_Sector__c</field>
