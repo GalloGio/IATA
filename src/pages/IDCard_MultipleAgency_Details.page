@@ -287,15 +287,15 @@ body a:hover {
                             <table class="MultibleAgencyContacts">
 
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 110px;">{!$Label.IDCard_LastName}:</td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_LastName}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.LastName__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 110px;">{!$Label.IDCard_FirstName}:</td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_FirstName}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.FirstName__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 110px;">{!$Label.IDCard_MiddleInitial}:</td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_MiddleInitial}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Middle_Initial__c}</td>
                                 </tr>
                             </table>
@@ -305,15 +305,15 @@ body a:hover {
                             </div>
                             <table class="MultibleAgencyAccounts">
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 110px;">{!$Label.IDCard_AgencyName}:</td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_AgencyName}:</td>
                                     <td class="MultipleAgentsValues" style="height: 37px; vertical-align: top;">{!c.acc.Short_Name__c}</td>
                                 </tr>
                                 <tr id="legalNameRow">
-                                    <td class="MultipleAgentsLabels" style="width: 110px;"></td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;"></td>
                                     <td class="MultipleAgentsValues">{!c.acc.Legal_name__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 110px;">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
+                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
                                     <td class="MultipleAgentsValues">{!c.acc.IATACode__c}</td>
                                 </tr>       
                                 <script>
