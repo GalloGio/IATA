@@ -536,11 +536,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
 				Boolean applyOptOutFA =
-					containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
-					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) &&
+					containsChange(new List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
+					(oscarOnlineAccreditation.ANG_Accreditation_Type__c == AMS_Utils.ACCREDITATIONMODEL_CASH) &&
 					(oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT);
 
-				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
+				if (containsChange(new List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
 					hierarchyAccs = new Map<Id, Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c,
 															  (SELECT Id, ANG_FormOfPayment_ID__c, Status__c
@@ -580,10 +580,16 @@ public with sharing class ANG_AgencyChangesHelper {
 								updateAccountCashFoP(acct, newParentCashMethodFoP);
 						}
 						
-						if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)){
-							// recalculate risk assessment
-							changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
-						}
+					}
+
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)
+						|| (oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_CASH
+							&& oscar.ANG_GFA_Change_Assessment__c == AMS_Utils.GFA_CHANGE_ASSESSMENT_LOW)) {
+						// Recalculate risk assessment:
+						// - If standard agencies are being acquired by multicountry
+						// - If standard change of hierarchy with GFA level is "Low" the agency will not get any risk event 
+						//	 and we need to explicitly trigger the risk assessment calculation
+						changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
 					}
 
 					if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT)){
