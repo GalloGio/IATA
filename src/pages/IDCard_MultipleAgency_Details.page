@@ -119,6 +119,16 @@ body a:hover {
 .btn {
     float: right;
 }
+td.MultipleAgentsLabels{
+    width: 100px;
+}
+.titleIdCards{
+    text-align: left !important; 
+    color: #028FD7; 
+    font-size: .9em; 
+    font-weight: bold; 
+    padding: 5px 2px 4px 5px; 
+}
 
 </style>
 <script>
@@ -281,39 +291,38 @@ body a:hover {
 
                         <apex:column style="vertical-align: top" width="35%">
 
-                            <div style="text-align: left !important; color: #028FD7; font-size: .9em; font-weight: bold; padding: 5px 2px 4px 5px;">
+                            <div class="titleIdCards">
                                     {!$Label.IDCard_AgentDetails}
                             </div>
                             <table class="MultibleAgencyContacts">
-
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_LastName}:</td>
+                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_LastName}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.LastName__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_FirstName}:</td>
+                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_FirstName}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.FirstName__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_MiddleInitial}:</td>
+                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_MiddleInitial}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Middle_Initial__c}</td>
                                 </tr>
                             </table>
                             
-                            <div style="text-align: left !important; color: #028FD7; font-size: .9em; font-weight: bold; padding: 5px 2px 4px 5px; margin-top:20px;">
+                            <div class="titleIdCards" style="margin-top:20px;">
                                     {!$Label.IDCard_CompanyDetails}
                             </div>
                             <table class="MultibleAgencyAccounts">
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_AgencyName}:</td>
+                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_AgencyName}:</td>
                                     <td class="MultipleAgentsValues" style="height: 37px; vertical-align: top;">{!c.acc.Short_Name__c}</td>
                                 </tr>
                                 <tr id="legalNameRow">
-                                    <td class="MultipleAgentsLabels" style="width: 100px;"></td>
+                                    <td class="MultipleAgentsLabels"></td>
                                     <td class="MultipleAgentsValues">{!c.acc.Legal_name__c}</td>
                                 </tr>
                                 <tr>
-                                    <td class="MultipleAgentsLabels" style="width: 100px;">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
+                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
                                     <td class="MultipleAgentsValues">{!c.acc.IATACode__c}</td>
                                 </tr>       
                                 <script>
@@ -338,7 +347,7 @@ body a:hover {
                         </apex:column>
 
                         <apex:column style="vertical-align: top" width="35%">
-                            <div style="text-align: left !important; color: #028FD7; font-size: .9em; font-weight: bold; padding: 5px 2px 4px 5px;">
+                            <div class="titleIdCards">
                                 {!$Label.ID_Card_Photo}
                             </div>     
                             <table class="MultibleAgencyAccounts">

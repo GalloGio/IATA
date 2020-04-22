@@ -69,7 +69,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				if (allCards.size() > 0) {
 					for (ID_Card__c con : allCards) {
-						cContact temp = new cContact(con, String.isNotBlank(con.Photo__c) ? imageDecoder(con) : '');
+						cContact temp = new cContact(con);
 						if (temp.valid)
 							myContacts.add(temp);
 					}
@@ -89,7 +89,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				if (allCards.size() > 0) {
 					for (ID_Card__c con : allCards) {
-						cContact temp = new cContact(con, String.isNotBlank(con.Photo__c) ? imageDecoder(con) : '');
+						cContact temp = new cContact(con);
 						if (temp.valid)
 							myContacts.add(temp);
 					}
@@ -265,9 +265,9 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		public Boolean valid {get; set;}
 		public String photo {get; set;}
 
-		public cContact(ID_Card__c c, String decodePhoto) {
+		public cContact(ID_Card__c c) {
 			con = c;
-			photo = decodePhoto;
+			photo = String.isNotBlank(con.Photo__c) ? PortalProfileCtrl.getPhotoFromAPI(con.Photo__c) : '';
 			selected = '';
 			Account[] temp = [Select Name, Legal_name__c, RecordType.Name, Short_Name__c, IATACode__c,
 							  BillingStreet, BillingState, BillingPostalCode, BillingCountry, BillingCity,
@@ -299,17 +299,5 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 			} else
 				valid = false;
 		}
-	}
-	public String imageDecoder(ID_Card__c idcard) {
-
-		Long timestamp = System.now().getTime()/1000 + 300;
-		String filename = '/' + credential.Bucket + '/' + FOLDER + '/' + idcard.Photo__c;
-
-		String canonical = 'GET\n\n\n' + timestamp + '\n' + filename;
-		Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));
-		String signature = EncodingUtil.base64Encode(bsig);
-
-		return credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
-
 	}
 }

@@ -89,7 +89,7 @@ public class IDCardMultipleAgencyInfoNControllerTest{
 
 				 //test  public class cContact
 			 ID_Card__c c = new ID_Card__c();
-				 iDCardMultipleAgencyInfoNController.cContact ccont = new iDCardMultipleAgencyInfoNController.cContact(c, '');
+				 iDCardMultipleAgencyInfoNController.cContact ccont = new iDCardMultipleAgencyInfoNController.cContact(c);
 				 boolean v = ccont.valid;
 				 ID_Card__c cc = ccont.con;
 				 string s = ccont.selected;
@@ -116,12 +116,12 @@ public class IDCardMultipleAgencyInfoNControllerTest{
 
 				 c.Related_Contact__c = contact.Id;
 
-				 iDCardMultipleAgencyInfoNController.cContact ccont2 = new iDCardMultipleAgencyInfoNController.cContact(c, '');
+				 iDCardMultipleAgencyInfoNController.cContact ccont2 = new iDCardMultipleAgencyInfoNController.cContact(c);
 
 				 theAccount.ShippingCity = 'Lisbon';
 				 update theAccount;
 
-				 iDCardMultipleAgencyInfoNController.cContact ccont3 = new iDCardMultipleAgencyInfoNController.cContact(c, '');
+				 iDCardMultipleAgencyInfoNController.cContact ccont3 = new iDCardMultipleAgencyInfoNController.cContact(c);
 
 		 }
 
