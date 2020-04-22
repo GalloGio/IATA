@@ -310,7 +310,6 @@
                 <value>
                     <fullName>General Public</fullName>
                     <default>false</default>
-                    <isActive>false</isActive>
                     <label>General Public</label>
                 </value>
                 <value>
@@ -413,11 +412,6 @@
                     <fullName>Non-IATA Travel Agent</fullName>
                     <default>false</default>
                     <label>Non-IATA Travel Agent</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <label>Other</label>
                 </value>
                 <value>
                     <fullName>Other Private Sector Association</fullName>
@@ -531,14 +525,6 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
-                <valueName>Individual Government</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Governmental Institution</controllingFieldValue>
-                <valueName>Inter-Governmental Body</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <controllingFieldValue>Airport</controllingFieldValue>
                 <controllingFieldValue>Media</controllingFieldValue>
@@ -555,7 +541,15 @@
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <controllingFieldValue>General Public</controllingFieldValue>
                 <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>Other</valueName>
+                <valueName>General Public</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <valueName>Individual Government</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <valueName>Inter-Governmental Body</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
