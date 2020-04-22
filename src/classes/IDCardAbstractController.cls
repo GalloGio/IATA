@@ -1,9 +1,5 @@
 public abstract class IDCardAbstractController {
 	
-	public static final String CREDENTIAL_NAME = 'IdCard';
-	public static final String FOLDER = 'a0W';
-	protected AmazonCredentials credential {get; private set;}
-
 	protected String selectedLanguage;
 
 	public String Language {get; set;}
@@ -71,7 +67,6 @@ public abstract class IDCardAbstractController {
 	public void initialize(){
 		//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'VER = '+IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_VER))));
 
-		credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
 		mustRedirect = false;
 		pagesurl = new  map<string,string>();
 		pagesurl.put('host' ,  ApexPages.currentPage().getHeaders().get('Host'));
