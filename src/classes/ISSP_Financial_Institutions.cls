@@ -206,9 +206,10 @@ public without sharing class ISSP_Financial_Institutions {
 				}
 			}
 			else {
+				List<Financial_Institution__c> finalFinancialInstitutionList = orderFinancialInstitutions(new Set<Financial_Institution__c>(financialInstitutions));
 				financialInstitutionsFound = true;
-				ssController = new ApexPages.StandardSetController(financialInstitutions);
-				ssController.setPageSize(financialInstitutions.size() > listSize ? listSize : financialInstitutions.size());
+				ssController = new ApexPages.StandardSetController(finalFinancialInstitutionList);
+				ssController.setPageSize(finalFinancialInstitutionList.size() > listSize ? listSize : finalFinancialInstitutionList.size());
 			}
 		}
 
@@ -224,6 +225,20 @@ public without sharing class ISSP_Financial_Institutions {
 		}
 
 		return new List<Financial_Institution__c>(financialInstitutions);
+	}
+
+	private List<Financial_Institution__c> orderFinancialInstitutions(Set<Financial_Institution__c> financialInstitutions) {
+		List<Financial_Institution__c> finalFinancialInstitutionList = new List<Financial_Institution__c>();
+		for (Financial_Institution__c fi: financialInstitutions) {
+			if (fi.Name.contains(GDI_FINANCIAL_INSTITUTION)) {
+				finalFinancialInstitutionList.add(fi);
+				financialInstitutions.remove(fi);
+				break;
+			}
+		}
+		finalFinancialInstitutionList.addAll(financialInstitutions);
+		
+		return new List<Financial_Institution__c>(finalFinancialInstitutionList);
 	}
 
 	public void startGDIPortalAppRightCreation() {

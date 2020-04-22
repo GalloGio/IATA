@@ -1,4 +1,4 @@
-<aura:component controller="GADM_ExternalUserContactDetail_CTRL" description="GADM_ExternalUserContactListDetail">
+<aura:component controller="GADM_ExternalUserContactDetail_CTRL" description="GADM_ExternalUserContactListDetail" access="public">
 
     <!--USER INFORMATION-->
     <aura:attribute name="selectedUserInfo" type="Object"/>

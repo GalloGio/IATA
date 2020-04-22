@@ -66,15 +66,6 @@ private class AMS_UtilsTest {
 	}
 
 	@isTest
-	static void testsendEmailAmsSupport() {
-
-		Test.startTest();
-		//no code coverage for sending emails
-		AMS_Utils.sendEmailAmsSupport( 'test subject', 'test message');
-		Test.stopTest();
-	}
-
-	@isTest
 	static void testgetRecIdFromChangeCode() {
 
 		List <String> sChangeCodeList = new List<String>();

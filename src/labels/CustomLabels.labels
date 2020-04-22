@@ -3685,6 +3685,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>CSP_CaseSearchPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
+        <value>Search for Cases</value>
+    </labels>
+    <labels>
         <fullName>CSP_Case_Currency</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11805,7 +11813,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000HmC0&amp;oid=00D2000000008TF&amp;lastMod=1587048852000</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -21548,7 +21556,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC StepD ProgressBar</shortDescription>
-        <value>D. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_StepD_ProgressBar_CNS</fullName>
@@ -22331,7 +22339,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepA</shortDescription>
-        <value>A. Select Type of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Type of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_StepB_message</fullName>
@@ -22347,7 +22355,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepC</shortDescription>
-        <value>C. Details of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Details of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Summary_Current_Ownership</fullName>
@@ -24543,7 +24551,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
-        <value>E. Validate details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Validate details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
@@ -35287,10 +35295,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+        <value>The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
 The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
@@ -41752,6 +41757,25 @@ Remittance date: {4}
         <value>SIS</value>
     </labels>
     <labels>
+        <fullName>SISCaseDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SISCaseDescription</shortDescription>
+        <value>Account legal name: 
+{0}
+
+E&amp;F main contact: 
+{1} {2}
+{3}
+
+Address (business):
+Street {4}
+Zip/Postal Code  {5}
+City  {6}	
+State/Province {7}	
+Country {8}</value>
+    </labels>
+    <labels>
         <fullName>SISHelpDesk_ExistingPriorityMapping</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -43350,7 +43374,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Is your query an emergency?</value>
+        <value>Is your query an emergency? Emergency queries are only replied to in English.</value>
     </labels>
     <labels>
         <fullName>csp_LastLoginDate</fullName>

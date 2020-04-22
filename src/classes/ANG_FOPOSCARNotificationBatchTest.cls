@@ -58,7 +58,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		Test.setCreatedDate(newCaseFop.Id, Datetime.now().addDays(-15));
 		update newCaseFop;
 
-		SalesforceSupportEmails__c sEmail = new SalesforceSupportEmails__c(Name = 'test', Support_Email__c = 'testSupportEmail@newgen.istest');
+		SalesforceSupportEmails__c sEmail = new SalesforceSupportEmails__c(Name = 'test', Support_Email__c = 'testSupportEmail@newgen.istest', Support_User_Id__c = UserInfo.getUserId());
 		insert sEmail;
 
 		//insert notification template

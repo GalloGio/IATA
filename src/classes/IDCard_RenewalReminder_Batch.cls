@@ -20,35 +20,33 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
 			Integer next2Year = Date.Today().addYears(2).Year();
 
 			//create set of Ids to use in query
-			Set<ID> contactsIds = new Set<id>();
+			Set<String> contactsEmails = new Set<String>();
 			for (Contact c : scope) {
-				contactsIds.add(c.Id);
+				contactsEmails.add(c.Email);
 			}
 
 			//create list of idcards already renewed
-			ID_Card__c[] renewedIDCards = [Select Valid_To_Date__c, Related_Contact__r.Id From ID_Card__c
-										   where Related_Contact__r.Id IN :contactsIds and (Is_Active_Card__c = True OR Card_Status__c = 'Valid ID Card')
-												   and Valid_To_Date__c > NEXT_MONTH];
+			ID_Card__c[] renewedIDCards = [Select Valid_To_Date__c, Email__c From ID_Card__c
+										   where Email__c IN :contactsEmails and (Is_Active_Card__c = True OR Card_Status__c = 'Valid ID Card')
+												   and Valid_To_Date__c > 2020-06-30];
+												   System.debug('renewedIDCards: '+renewedIDCards);
 
-			//create list of pending idcard cases
-			Case[] pendingCases = [Select Id, Contact.Id From Case where Contact.Id IN :contactsIds and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 100];
+			Case[] pendingCases = [Select Id, Contact.Email From Case where Contact.Email IN :contactsEmails and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 100];
 
 			//create set of contacts that will be removed from renewal noticed if already have renewed their idcards or have pending idcard case
-			Set<ID> contactsIdstoIgnore = new Set<id>();
+			Set<String> contactsIdstoIgnore = new Set<String>();
 			for (ID_Card__c idc : renewedIDCards) {
-
-				contactsIdstoIgnore.add(idc.Related_Contact__r.Id);
+				contactsIdstoIgnore.add(idc.Email__c);
 			}
 
 			for (Case cs : pendingCases) {
-
-				contactsIdstoIgnore.add(cs.Contact.Id);
+				contactsIdstoIgnore.add(cs.Contact.Email);
 			}
 
 			//if contact in scope is not included in the list of contacts to ignore we send the renewal
 			for (Contact c : scope) {
 
-				if (!contactsIdstoIgnore.contains(c.Id)) {
+				if (!contactsIdstoIgnore.contains(c.Email)) {
 					c.SendIDCardRenewalNotice__c = true;
 					toBeUpdated.add(c);
 				}
