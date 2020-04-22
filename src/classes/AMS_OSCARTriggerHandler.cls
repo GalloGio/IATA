@@ -3856,7 +3856,9 @@ public class AMS_OSCARTriggerHandler {
 			// ************************************************************
 			// ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
 			// ************************************************************
-			if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES && updatedOSCAR.Process__c != AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			if (updatedOSCAR.Process__c != AMS_Utils.NGCHANGES && updatedOSCAR.Process__c != AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+				&& updatedOSCAR.Process__c != AMS_Utils.NGCONVERSIONMCTOST) {
+				
 				if((oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)) && !AMS_Utils.setChinaCountries.contains(updatedOSCAR.Country_ISO_Code__c)){
 					updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');
 				}
@@ -3869,10 +3871,13 @@ public class AMS_OSCARTriggerHandler {
 			// *****************************************************
 			// ********* STANDARD WITH CASH VALIDATIONS ************
 			// *****************************************************
-			if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NEWGESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCHANGES || updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			if (updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NEWGESTANDARD
+				|| updatedOSCAR.Process__c == AMS_Utils.NGCHANGES || updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY
+				|| updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONMCTOST) {
 
-
-				if((updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NEWGESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && (updatedOscar.RPM_Approval__c == 'Not Started' || updatedOscar.RPM_Approval__c == null)){
+				if (updatedOSCAR.Process__c != AMS_Utils.NGCHANGES && oldOSCAR.Status__c <> updatedOscar.Status__c
+					&& updatedOscar.Status__c == AMS_Utils.OSCAR_CLOSED
+					&& (updatedOscar.RPM_Approval__c == AMS_Utils.NOT_STARTED || updatedOscar.RPM_Approval__c == null)) {
 					updatedOSCAR.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
 				}
 
