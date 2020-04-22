@@ -362,19 +362,7 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 
 
 system.debug(LoggingLevel.ERROR,'------- FINE STEP 2');
-		// ############ STEP 3: ###############
-		// If it's a creation or email has changed, I want to be sure that I'm not creating a duplicate
- system.debug(LoggingLevel.ERROR,'------- INIZIO STEP 3 (email = '+app.Email_admin__c+')');
-		if(isNew || oldapp.Email_admin__c != app.Email_admin__c){
-			for(Contact sameemail : [SELECT Email,Name,VER_Number_2__c
-									 FROM Contact
-									 WHERE Email = :app.Email_admin__c
-									 AND VER_Number_2__c <> :app.VER_Number__c]){
-				printErr('The email address '+app.Email_admin__c+' is already used by the employee '+sameemail.Name);
-				success = false;
-				system.debug(LoggingLevel.ERROR, '*********** SAVE() block a duplicate mail  '+app.Email_admin__c);
-			}
-		}
+
 		if(!success)
 			return null;
  system.debug(LoggingLevel.ERROR,'------- FINE STEP 3');
