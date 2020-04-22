@@ -33805,7 +33805,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Industry_Groups_TOR</name>
         <sections>
             <columns>
-                <label>Group Owner</label>
+                <label><!-- Group Owner  --></label>
                 <name>Group Owner </name>
             </columns>
             <columns>
@@ -33813,7 +33813,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <name>Group Type</name>
             </columns>
             <columns>
-                <label>Reporting to</label>
+                <label><!-- Reporting to  --></label>
                 <name>Reporting to </name>
             </columns>
             <label><!-- Industry Groups --></label>
@@ -34040,7 +34040,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Local_Groups_by_Airlline</name>
         <sections>
             <columns>
-                <label>Phone</label>
+                <label><!--  Phone --></label>
                 <name> Phone</name>
             </columns>
             <columns>
@@ -34060,11 +34060,11 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <name>Job Title</name>
             </columns>
             <columns>
-                <label>Main Account</label>
+                <label><!-- Main Account  --></label>
                 <name>Main Account </name>
             </columns>
             <columns>
-                <label>Main Account</label>
+                <label><!-- Main Account  --></label>
                 <name>Main Account </name>
             </columns>
             <columns>
@@ -34100,7 +34100,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
         <sections>
             <columns>
-                <label>Group Owner</label>
+                <label><!-- Group Owner  --></label>
                 <name>Group Owner </name>
             </columns>
             <columns>
