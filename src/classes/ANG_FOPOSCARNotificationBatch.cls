@@ -107,7 +107,9 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 																	AND ((OSCAR__r.STEP43__c = :AMS_Utils.PASSED
 																			AND OSCAR__r.ANG_Administrative_non_compliance_date__c IN (:DATE_REMINDER_15, :DATE_REMINDER_21, :DATE_REMINDER_27))
 																			OR (OSCAR__r.STEP43__c != :AMS_Utils.PASSED
-																				AND DAY_ONLY(CreatedDate) IN (:DATE_REMINDER_15, :DATE_REMINDER_21, :DATE_REMINDER_27)))))]);
+																				AND DAY_ONLY(CreatedDate) IN (:DATE_REMINDER_15, :DATE_REMINDER_21, :DATE_REMINDER_27)))
+																	AND OSCAR__r.Status__c NOT IN ( :AMS_Utils.OSCAR_CLOSED, :AMS_Utils.OSCAR_CLOSED_NOT_ACCEPTED,
+																									:AMS_Utils.OSCAR_CLOSED_REJECTED, :AMS_Utils.OSCAR_CLOSED_WITHDRAWN )))]);
 	}
 
 	global void execute(Database.BatchableContext BC, List<Case> scope) {
