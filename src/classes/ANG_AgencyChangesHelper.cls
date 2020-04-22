@@ -694,18 +694,18 @@ public with sharing class ANG_AgencyChangesHelper {
 					changesContainer.addAccountToCreateRHC(acct);
 				}
 
-				//Initialize risk information
-				acct.ANG_HE_CashCondition__c = false;
-				acct.Financial_Review_Result__c = null;
-				acct.Assessment_Performed_Date__c = null;
-				acct.Financial_Assessment_Points__c = null;
-				acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
-				acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
-
-				changesContainer.addAccount(acct);
-				
-				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
+				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE
 				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
+					//Initialize risk information for all BSPs except the one that was initially the GE
+					acct.ANG_HE_CashCondition__c = false;
+					acct.Financial_Review_Result__c = null;
+					acct.Assessment_Performed_Date__c = null;
+					acct.Financial_Assessment_Points__c = null;
+					acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
+					acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
+
+					changesContainer.addAccount(acct);
+				
 					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
