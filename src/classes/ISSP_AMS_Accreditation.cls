@@ -2115,6 +2115,12 @@ public without sharing class ISSP_AMS_Accreditation {
 		} else { //This is a NoC
 			Boolean changeOfAccountConcerned = false;
 
+			// always force the contact account's country on the step A, even when returning to that step
+			if (isStep1 && hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+				newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
+				isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+			}
+
 			if(agencyCodesConcerned.isEmpty()){
 				agencyCodesConcerned = getAgencyCodesConcerned();
 			}
