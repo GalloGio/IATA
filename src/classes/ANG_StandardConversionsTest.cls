@@ -441,11 +441,6 @@ private class ANG_StandardConversionsTest {
 			 LIMIT 1
 			];
 
-		System.assert(!acct.ANG_HE_CashCondition__c, 'Cash condition must be false');
-		System.assert(String.isBlank(acct.Financial_Review_Result__c), 'Financial Review Result must be reseted');
-		System.assert(acct.Assessment_Performed_Date__c == null, 'Assessment Performed Date must be reseted');
-		System.assert(acct.Financial_Assessment_Points__c == null, 'Financial Assessment Points must be reseted');
-
 		System.assert(acct.RHC_Informations__r[0].ANG_RHC_Amount__c == null, 'RHC information must be reseted');
 
 		for(Account childAcct : acct.ChildAccounts){
