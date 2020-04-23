@@ -183,8 +183,7 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 				return null;
 			} */
 			if (!isCheckboxGeralOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'CreditCard'));
-				isViewPopUpDisplayed = true;
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage));
 				return null;
 			}
 
@@ -237,6 +236,13 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 		confPage.setRedirect(true);
 		return confPage;
 
+	}
+
+	public void closePopup() {
+		isViewPopUpDisplayed = false;
+	}
+	public void openPopup() {
+		isViewPopUpDisplayed = true;
 	}
 
 }

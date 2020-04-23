@@ -12,20 +12,32 @@
         border-style: solid;
         border-width: 2px;
         top: 50%;
+        left: 40%;
         font-size: 11pt;
-        padding: 25px 10px 25px 10px;
+        padding-left: 30px;
+        padding-right: 3px;
         position: absolute;
         z-index: 9999;
-        width: 800px;
+        width: 310px;
+        height: 150px;
         color: #000;
     } 
     .closeButton {
+        float: right;
+        border: 0 !important;
+        background: none !important;;
+    }
+    .continueButton {
         float: right;
     }
     .labelStyle {
         color: black;
         line-height: 27px;
         width: 700px;
+    }
+    .checkBoxStyle{
+        padding-top: 60px;
+        padding-bottom: 40px;
     }
 </style>
 
@@ -38,13 +50,6 @@
 	      {           
 	           next(type);        
           }
-
-          function validateCheckbox(){
-            if('{!isViewPopUpDisplayed}'){
-                alert('{!$Label.IDCard_PopUp_Displayed}');
-                return false;
-		}
-	}
 	
 	    $(document).ready(function () {     
 	       if (!({!isProofEmploymentOptionActive})  && $('#proofEmploymentOption'))
@@ -114,7 +119,7 @@
         
           
                     <div style="margin-top: 10px; margin-bottom: 10px;">
-                        <h2>{!$Label.IDCard_CheckList_ErrorMessage}</h2>
+                        <h2>{!$Label.IDCard_CheckList_ErrorMessage2}</h2>
                     </div>
                     
                     
@@ -194,16 +199,6 @@
                             <br />
                         </div>
 
-                        <div id="checkboxGeralOption">
-                                <table class="checklistTable">
-                                    <tr>
-                                        <td class="checklistTableChk"><apex:inputCheckbox id="checkboxGeralOptionChkBox" value="{!isCheckboxGeralOptionChecked}" /></td>
-                                        <td>{!$Label.IDCard_CheckBox}</td>
-                                    </tr>  
-                                </table>
-                                <br/>
-                         </div>
-
                         <!--<div id="creditCardAndChequeOption">
     
                             <table class="checklistTable">
@@ -229,7 +224,7 @@
                                          <!--<apex:commandButton id="btnBack1"   value="{!$Label.IDCard_Back}" action="{!back}" style="width:100px; position:relative; top:15px;" />-->
                                      </td>
                                      <td >
-                                        <apex:commandLink onComplete="validateCheckbox();" action="{!next}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popup" status="status">
+                                        <apex:commandLink action="{!openPopup}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popup" status="status">
                                             <span>{!$Label.ID_Card_Next_button}</span>
                                         </apex:commandLink>
                                         <!--<apex:commandButton id="btnNext2" style="width:100px; position:relative; top:15px;" value="{!$Label.ID_Card_Next_button}" action="{!next}"  rerender="ErrorMsgs" />-->
@@ -237,6 +232,14 @@
                                 </tr>
                             </table>
                         </div>
+                        <apex:outputPanel id="popup">
+                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!isViewPopUpDisplayed}">
+                                <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup"/>
+                                <div class="checkBoxStyle"><apex:inputCheckbox id="checkboxGeralOptionChkBox" value="{!isCheckboxGeralOptionChecked}"/>
+                                {!$Label.IDCard_CheckBox}</div>             
+                                <apex:commandButton value="Continue" title="Close the popup" action="{!next}" styleClass="continueButton" rerender="popup"/>                               
+                            </apex:outputPanel>
+                        </apex:outputPanel>
                     </div>                   
                 </div>              
             </apex:form>
