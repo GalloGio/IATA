@@ -2,6 +2,7 @@ public with sharing class PortalFAQsCtrl {
 
 	public static Integer RESULTS_PER_PAGE = 10;
 	public static String LANGUAGE;
+	public static String DEFAULT_LANG_EN='en_US';
 
 	/*
 	* @description Return a FAQ structure based on the user visibility.
@@ -59,20 +60,44 @@ public with sharing class PortalFAQsCtrl {
 
 	@AuraEnabled(cacheable=true)
 	public static List<FAQ__kav> getArticlesWithParam(String selectedParams, Integer limitParam) {
-		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\'';
-		String queryTwo = String.isNotBlank(LANGUAGE) ? ' AND Language = \'' + LANGUAGE + '\'' : '';
-		String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
+		String language = String.isNotBlank(LANGUAGE) ?  LANGUAGE : '';
+		List<FAQ__kav> faqLanList= getArticles(selectedParams,limitParam,language,null);
+		
+		//searches for articles without translations only if there are slots availables
+		if(limitParam-faqLanList.size()>0){
+			set<string> langARSet = new set<string>();
+			for(FAQ__kav faq:faqLanList){
+				langARSet.add(faq.ArticleNumber);
+			}			
+			faqLanList.addAll(getArticles(selectedParams,(limitParam-faqLanList.size()),DEFAULT_LANG_EN,langARSet));		
+		}
+		return faqLanList;
+	}
 
-		String finalQuery = queryOne + queryTwo + queryThree;
+	//generic method to search for pkb articles with a SOQL
+	// Parameters
+	//selectedParams - Selected topics and subtopics to search for
+	//limitParam - Restrict number of returned records
+	//language - FAQ Article language
+	//expectionsSet - set of articles that should be excluded from the search- used for when searching articles in english to remove the articles in the local language
+	public static List<FAQ__kav> getArticles(String selectedParams, Integer limitParam,String language,Set<String> expectionsSet) {
+		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount FROM FAQ__kav WHERE PublishStatus=\'Online\'';
+		String queryTwo = String.isNotBlank(language) ? ' AND Language = \'' + language + '\'' : '';
+		string queryException = expectionsSet!=null?' AND ArticleNumber NOT IN :expectionsSet ':'';		
+		String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC ';
+		String limits=limitParam!=null?' LIMIT ' + limitParam:'';
+
+		String finalQuery = queryOne + queryTwo +queryException+ queryThree+limits;
 		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] finalQuery - ' + finalQuery);
-
+		
 		return Database.query(finalQuery);
+
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<PKB_Article_Feedback_Deflection__c> getArticlesFeedback(String articleIds, String sessionCookie) {
 		String query = 'SELECT Article_ID__c, Article_Title__c, Deflection__c FROM PKB_Article_Feedback_Deflection__c WHERE Session_ID__c = \'' + String.escapeSingleQuotes(sessionCookie) + '\' AND Article_ID__c IN ' + articleIds;
-		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query);
+		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query); 
 
 		return Database.query(query);
 	}
@@ -147,20 +172,34 @@ public with sharing class PortalFAQsCtrl {
 
 			String levels = '';
 			if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
-
+			
 			String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-							 'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
-			String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : ' AND Language = \'' + UserInfo.getLanguage() + '\'';
+						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+			String selectedLang =filtersWrapper.guestUser != null && filtersWrapper.guestUser && String.isNotBlank(filtersWrapper.language)? filtersWrapper.language :  UserInfo.getLanguage();
+			
 			String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
+			//gets list of articles in the user language
+			//to be used on exclusion on english version search
+			set<string> langARSet = new set<string>();
+
+			
+			if(selectedLang != DEFAULT_LANG_EN){ // check only necessary if lang not english
+
+				for(FAQ__kav faq:getArticles(levels, null,selectedLang,null)){
+					langARSet.add(faq.ArticleNumber);
+				}
+			}
+				
+
 			//Since SOSL don't have count, the first requested page is queried to all records
 			//and then the count is retrived from the returned results list. For the next pages
-			//limit and offset is used to improve loading times.
+			//limit and offset is used to improve loading times. 
 			if(requestedPageAux == 0){
 				String finalQuery;
-				if(String.isNotBlank(queryLanguage)) {
-					finalQuery = queryPartOne + queryLanguage + ')';
+				if(String.isNotBlank(selectedLang)) {
+					finalQuery = queryPartOne + ' AND Language = \'' + selectedLang + '\')';
 				} else {
 					finalQuery = queryPartOne + ')';
 				}
@@ -170,27 +209,67 @@ public with sharing class PortalFAQsCtrl {
 				List<List<SObject>> searchList = Search.query(finalQuery);
 				List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
 
+				if(selectedLang != DEFAULT_LANG_EN){ // check only necessary if lang not english
+					//Add articles to set to exclude already retrieved articles				
+					for(FAQ__kav faq:tmpList){
+						langARSet.add(faq.ArticleNumber);
+					}
+					string queryLang = ' AND Language =\''+DEFAULT_LANG_EN+'\'';
+					string queryException = ' AND ArticleNumber NOT IN :langARSet )';
+					
+					Integer offset = (requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE) -tmpList.size(); //calculates the available slots for the articles in english
+
+					String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
+					
+					finalQuery = queryPartOne +queryLang+queryException;
+					if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
+
+					searchList = Search.query(finalQuery);
+					tmpList.addAll((List<FAQ__kav>)searchList[0]);
+				}
+				
+
 				for(Integer i = 0; i<tmpList.size() && i < PortalFAQsCtrl.RESULTS_PER_PAGE; i++){
 					lstToReturn.add(tmpList.get(i));
 				}
-
+				
 				result.records = lstToReturn;
 				result.totalItemCount = tmpList.size();
 			}else{
 				Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
 				String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
 
-				String finalQuery = queryPartOne + ' AND Language = \'' + UserInfo.getLanguage() + '\'' + offsetQuery;
+				String finalQuery = queryPartOne + ' AND Language = \'' +selectedLang + '\'' + offsetQuery;
 				if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
-
+				
 				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
-				List<List<SObject>> searchList = Search.query(finalQuery);
+				List<List<SObject>> searchList = Search.query(finalQuery); // Retrieve articles in selected/ user language
+				
 				List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
+				if(selectedLang != DEFAULT_LANG_EN){
+
+					//Add articles to set to exclude already retrieved articles
+					for(FAQ__kav faq:tmpList){
+						langARSet.add(faq.ArticleNumber);
+					}
+					string queryLang = ' AND Language =\''+DEFAULT_LANG_EN+'\'';
+					string queryException = ' AND ArticleNumber NOT IN :langARSet ';//Exclude retrieved articles
+					
+					offset=offset-tmpList.size();
+
+					offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
+					
+					finalQuery = queryPartOne +queryLang+queryException+offsetQuery;
+					if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
+
+					searchList = Search.query(finalQuery);				
+					tmpList.addAll((List<FAQ__kav>)searchList[0]);
+				}
 				result.records = tmpList;
 			}
-
+			
 		}
-
+		
 		return result;
 	}
 

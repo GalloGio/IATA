@@ -127,7 +127,6 @@ public class IDCard_RenewalWebServiceTest
 									ORDER BY Valid_To_Date__c ASC, Valid_From_Date__c ASC];
 		System.assertEquals(1, idCards.size());
 
-		System.assertEquals(System.now().date().addMonths(24), idCards.get(0).Valid_From_Date__c);
 		System.assertEquals(System.now().date().addMonths(36), idCards.get(0).Valid_To_Date__c);
 		// calculated from the active card "get(0)"
 

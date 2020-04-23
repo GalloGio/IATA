@@ -33,7 +33,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_FAQReachUsBanner_Text
     };
 
-    @track showButton = false;
     @track supportReachUsURL;
     @track data;
     @track columns;
@@ -43,7 +42,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     ];
     @track casesListUrl;
 
-    @track homePageLocal = true;
+    @track homePageLocal = false;
     @api
     get homePage() {
         return this.homePageLocal;
@@ -107,12 +106,14 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
             
         });
         
-        isAdmin().then(result1 => {
-            checkIfIsAirlineUser().then(result2=>{
-                this.showButton = (result1 && result2 && this.homePageLocal);
-            });
-        });
 
+    }
+
+    get showReachUs(){
+        return this.homePageLocal && !this.loading;
+    }
+    get showTopReachUs(){
+        return this.dataRecords & this.homePageLocal && !this.loading;
     }
 	
     redirectToSupport(event) {

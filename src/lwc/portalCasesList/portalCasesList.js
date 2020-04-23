@@ -7,8 +7,8 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFilteredCasesResultsPage from '@salesforce/apex/PortalCasesCtrl.getFilteredCasesResultsPage';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
-import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import companyCasesContactsPicklist from '@salesforce/apex/PortalCasesCtrl.companyCasesContactsPicklist';
+import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 //import labels
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
@@ -28,6 +28,7 @@ import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
 import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
+import CSP_CaseSearchPlaceholder from '@salesforce/label/c.CSP_CaseSearchPlaceholder';
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track label = {
@@ -45,6 +46,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_DateTo,
         CSP_RemoveAllFilters,
         CSP_FAQReachUsBanner_ButtonText,
+        CSP_CaseSearchPlaceholder,
         CSP_Apply
     };
 
@@ -89,6 +91,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     @track normalView = true; //stores if the user is viewing it's own cases
     @track adminView = false; //stores if the user is viewing company cases
     @track filtered = false;
+    @track showCross = false;
 
     @track paginationObject = {
         totalItems: 10,
@@ -116,19 +119,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             this.isAdminUser = results;
         });
 
-        getCountryList()
+        getPickListValues({ sobj : 'Case', field : 'Country_concerned_by_the_query__c' })
         .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            let myCountryOptions = [];
-            let auxmyCountryOptions = [];
-            Object.keys(myResult).forEach(function (el) {
-                auxmyCountryOptions.push({ label: myResult[el], value: el });
-            });
-            //used to order alphabetically
-            auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-            myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+            let auxCountryPickOptions = JSON.parse(JSON.stringify(result));
 
-            this.countryPickOptions = this.getPickWithAllValue(myCountryOptions);
+            //used to order alphabetically
+            this.countryPickOptions = auxCountryPickOptions.sort((a, b) => {return (a.label).localeCompare(b.label)});
+            this.countryPickOptions = this.getPickWithAllValue(this.countryPickOptions);
         });
 
         companyCasesContactsPicklist({})
@@ -241,20 +238,22 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     }
 
-    handleKeyUp(event) {
-        const isEnterKey = event.keyCode === 13;
-        if (isEnterKey) {
-            //search again
-            this.resetPagination();
-            this.searchWithNewFilters();
-        }
-    }
-
     handleInputChange(event) {
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = event.target.value;
+        this.showCross =  event.target.value.length > 0;
         this.filteringObject = filteringObjectAux;
+
+
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            if(this.filteringObject.searchText.length > 3 || this.filteringObject.searchText.length==0) {
+                this.resetPagination();
+                this.searchWithNewFilters();
+            }
+        }, 1300, this);
     }
 
     changeToUserCasesTableView(){
@@ -366,6 +365,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         filteringObjectAux.casesComponent.dateFromFilter = this.dateFromFiltersTemp;
         filteringObjectAux.casesComponent.dateToFilter = this.dateToFiltersTemp;
         this.filteringObject = filteringObjectAux;
+    }
+
+    removeTextSearch(){
+        this.showCross=false;
+        this.filteringObject.searchText=null;
+        this.resetPagination();
+        this.searchWithNewFilters();
     }
 
     getPickWithAllValue(picklist){
