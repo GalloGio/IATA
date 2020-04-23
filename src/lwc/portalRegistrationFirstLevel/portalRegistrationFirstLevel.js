@@ -218,9 +218,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
             loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css')
         ]).then(function(){
             this.jsLoaded = true;
-console.log('after Promise.all!!');
+
             RegistrationUtilsJs.getUserLocation().then(result=> {
-                console.log('result: ',result);
                 this.isSanctioned = result.isRestricted;
                 this.userCountryCode = result.countryCode;
                 this.userCountry = result.countryId;
@@ -233,30 +232,24 @@ console.log('after Promise.all!!');
                     //getConfig
                     getConfig().then(result2 => {
                         var config = JSON.parse(JSON.stringify(result2));
-                        console.log('config: ',config);
-
+                
                         this.config = config;
-console.log('connectedCallback 1!');                          
+                      
                         this._formatCountryOptions(config.countryInfo.countryList);
-                        console.log('connectedCallback 2!');                          
                         this.languageOptions = config.languageList;
-                        console.log('connectedCallback 3!');                          
                         this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
-                        console.log('connectedCallback 4!');                          
                         if(this.isSelfRegistrationEnabled == false){
                             this.isSelfRegistrationDisabled = true;
                             this.isLoading = false;
                             //return;
                         }else{
                             //check localStorage
-                            console.log('connectedCallback 5!');                          
                             if (localStorage != undefined && localStorage.length > 0) {
-                                console.log('connectedCallback 6!');  
                                 this._restoreState();
                             }else{
-console.log('getParamsFromPage start!');  
+
                                 let pageParams = getParamsFromPage();
-console.log('getParamsFromPage',pageParams);                                
+
                                 if(pageParams !== undefined){
                                     if(pageParams.language !== undefined){
                                         this.registrationForm.language = pageParams.language.toLowerCase();
@@ -270,11 +263,10 @@ console.log('getParamsFromPage',pageParams);
                                         //return;
                                     }
                                     if(pageParams.startURL !== ''){
-console.log('pageParams.startURL: ',pageParams.startURL);
+
                                         let prmstr = decodeURIComponent(pageParams.startURL);
 
                                         prmstr = prmstr.replace('/csportal/s/?','');
-console.log('decodeParams: ',prmstr);
                                         
                                         let paramsReturn = {};
 
@@ -285,14 +277,11 @@ console.log('decodeParams: ',prmstr);
                                                 paramsReturn[tmparr[0]] = tmparr[1];
                                             }
                                         }
-console.log('paramsReturn: ',paramsReturn);
-                                        if(paramsReturn.lms !== ''){
+
+                                        if(paramsReturn.lms !== '' && paramsReturn.lms !== undefined){
                                             this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
                                             this.registrationForm.lmsCourse = paramsReturn.RelayState;
                                             this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
-
-console.log('this.registrationForm.lmsRedirectFrom: ',this.registrationForm.lmsRedirectFrom);
-console.log('this.registrationForm.lmsCourse: ',this.registrationForm.lmsCourse);
                                         }
                                         
                                     }
@@ -392,7 +381,7 @@ console.log('this.registrationForm.lmsCourse: ',this.registrationForm.lmsCourse)
                 let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
                 RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
                     if(result == 'true'){
-                       //disposable email alert!
+                        //disposable email alert!
                         this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
                         this.isLoading = false;
                     }else{
@@ -461,7 +450,6 @@ console.log('this.registrationForm.lmsCourse: ',this.registrationForm.lmsCourse)
 
         var contactId = this.userInfo.contactId;
         var accountId = this.userInfo.accountId;
-        console.log('this.registrationForm:',this.registrationForm);
         register({ registrationForm : JSON.stringify(this.registrationForm),
                 customerType : JSON.stringify(this.selectedMetadataCustomerType),
                 contactId : contactId,

@@ -36,9 +36,7 @@ import CSP_L3_Note_F7_LMS                   from '@salesforce/label/c.CSP_L3_Not
 import CSP_L2_Go_To_Service_LMS                   from '@salesforce/label/c.CSP_L2_Go_To_Service_LMS';
 import CSP_L2_SucessUpdateOnly_LMS                   from '@salesforce/label/c.CSP_L2_SucessUpdateOnly_LMS';
 import CSP_L3_Email_Validation_LMS                   from '@salesforce/label/c.CSP_L3_Email_Validation_LMS';
-
-
-
+import CSP_L3_Note_F4_LMS                   from '@salesforce/label/c.CSP_L3_Note_F4_LMS';
 
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
@@ -127,7 +125,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L3_Note_F7_LMS,
 		CSP_L2_Go_To_Service_LMS,
 		CSP_L2_SucessUpdateOnly_LMS,
-		CSP_L3_Email_Validation_LMS
+		CSP_L3_Email_Validation_LMS,
+		CSP_L3_Note_F4_LMS
 	}
 	
 	get labels() {
@@ -279,7 +278,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					}
 
 					if(pageParams.lmsflow === 'flow4'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+						boldStr = '<b>' + CSP_L3_Note_F4_LMS + '</b>';
+						boldStr = boldStr.replace('[Email]',this.contactInfo.Email);
+						boldStr = boldStr.replace('[PersonalEmail]',this.contactInfo.Additional_Email__c);
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
 					}
 
 					if(pageParams.lmsflow === 'flow5'){
