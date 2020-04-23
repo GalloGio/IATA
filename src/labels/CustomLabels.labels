@@ -46150,20 +46150,20 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSL_L2_Got_It</shortDescription>
         <value>Got it</value>
     </labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1a</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1a</shortDescription>
-		<value>We have found an existing IATA Customer Portal user with the personal email you are trying to register with:</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1b</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1b</shortDescription>
-		<value>We have found an existing IATA Customer Portal user with the email you are trying to register with:</value>
-	</labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1a</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1a</shortDescription>
+        <value>We have found an existing IATA Customer Portal user with the personal email you are trying to register with:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1b</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1b</shortDescription>
+        <value>We have found an existing IATA Customer Portal user with the email you are trying to register with:</value>
+    </labels>
     <labels>
         <fullName>CSP_L1_LoginEmail_LMS</fullName>
         <categories>CS Portal</categories>
@@ -46780,22 +46780,22 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP_Verification_L3_Email_PE_2_LMS</shortDescription>
         <value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt; in order to complete the merging of your previous Training profile (login email [ExistingEmail]) to your current one.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
     </labels>
-	<labels>
-		<fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP_Verification_L3_Email_UE_1_LMS</shortDescription>
-		<value>Please click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP_Verification_L3_Email_UE_2_LMS</shortDescription>
-		<value>The Training record associated with your personal email [personalEmail] will be merged with the one associated with your work email [LoginEmail]. From now, please only use this work email to login to the IATA customer portal.&lt;br/&gt;</value>
-	</labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_1_LMS</shortDescription>
+        <value>Please click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_2_LMS</shortDescription>
+        <value>The Training record associated with your personal email [personalEmail] will be merged with the one associated with your work email [LoginEmail]. From now, please only use this work email to login to the IATA customer portal.&lt;br/&gt;</value>
+    </labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_3_LMS</fullName>
         <categories>CS Portal</categories>
