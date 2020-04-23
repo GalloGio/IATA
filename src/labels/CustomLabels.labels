@@ -12085,6 +12085,13 @@ The sum of percentage cannot exceed 100%</value>
         <value>Case Status</value>
     </labels>
     <labels>
+        <fullName>IDCard_CheckBox</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard CheckBox</shortDescription>
+        <value>I have read the required document list.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12109,6 +12116,13 @@ Credit cards accepted are:&lt;br&gt;
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_ErrorMessage</shortDescription>
         <value>All Items must be checked before proceeding to the next page.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CheckList_ErrorMessage2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CheckList_ErrorMessage2</shortDescription>
+        <value>You may need the following document(s) in order to complete the ID Card application. For verification purposes, IATA may request for additional information or documents from the applicant. False declaration will lead to cancellation and blacklisting of ID Card application in the future.</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckList_PageTitle</fullName>
