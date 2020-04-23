@@ -4070,49 +4070,49 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
         <value>Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!</value>
     </labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
-		<value>Thank you for registering to the IATA Customer Portal.</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1c</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1c</shortDescription>
-		<value>Contact Login email</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1d</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1d</shortDescription>
-		<value>Contact Personal email</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1e</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1e</shortDescription>
-		<value>If you still have access to the Login email above, please login to the portal using this Login email.</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1f</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1f</shortDescription>
-		<value>If you do not have access to the Login email address above, please create a new user in our IATA Customer Portal with your current individual work email address as login. If you do not have an individual work email address please click</value>
-	</labels>
-	<labels>
-		<fullName>CSP_Email_Confirmation_Body_Part_1g</fullName>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP Email Confirmation Body Part 1g</shortDescription>
-		<value>to finalize your registration with the Personal email above. Your previous user above will be deactivated and your training record will be transferred to your new user.</value>
-	</labels>    
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
+        <value>Thank you for registering to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1c</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1c</shortDescription>
+        <value>Contact Login email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1d</shortDescription>
+        <value>Contact Personal email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1e</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1e</shortDescription>
+        <value>If you still have access to the Login email above, please login to the portal using this Login email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1f</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1f</shortDescription>
+        <value>If you do not have access to the Login email address above, please create a new user in our IATA Customer Portal with your current individual work email address as login. If you do not have an individual work email address please click</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1g</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1g</shortDescription>
+        <value>to finalize your registration with the Personal email above. Your previous user above will be deactivated and your training record will be transferred to your new user.</value>
+    </labels>
     <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
         <categories>CS Portal</categories>
@@ -23102,14 +23102,6 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>As an Organisation whose shares are not listed, you are required to enter all shareholders&apos; details in the People and Company sections below.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Notify_Change_Legal_Details_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Notify_Change_Legal_Details_CNS</shortDescription>
-        <value>Notify CNS of Change</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Number_of_Years_Traded_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25093,14 +25085,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Branch Location</shortDescription>
         <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following IATA Approved agent:&apos;</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step3_Branch_Location_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Step3 Branch Location CNS</shortDescription>
-        <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following CNS Endorsed Head Office:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Cash_Location</fullName>
@@ -46288,14 +46272,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP_L2_VerificationToP2_LMS</shortDescription>
         <value>. Please check your email inbox (including the junk, clutter etc… folders) and follow the instructions to complete your Training registration.</value>
     </labels>
-	<labels>
-		<fullName>CSP_L2_VerificationToP3_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP_L2_VerificationToP3_LMS</shortDescription>
-		<value>Please Log out from this user and Log In with the user above.</value>
-	</labels>    
+    <labels>
+        <fullName>CSP_L2_VerificationToP3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VerificationToP3_LMS</shortDescription>
+        <value>Please Log out from this user and Log In with the user above.</value>
+    </labels>
     <labels>
         <fullName>CSP_L3_CompleteInformation_LMS</fullName>
         <categories>CS Portal</categories>
@@ -46692,14 +46676,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Is Personal Email</shortDescription>
         <value>Have you already been registered for an IATA Training course in the past (and you know your credentials) and would like to maintain your training record?</value>
     </labels>
-	<labels>
-		<fullName>CSP_L3_Note_F4_LMS</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP_L3_Note_F4_LMS</shortDescription>
-		<value>From now, please use your Work Email [Email] to login to the IATA Customer Portal. Your Personal Email [PersonalEmail] has been stored as additional email.</value>
-	</labels>
+    <labels>
+        <fullName>CSP_L3_Note_F4_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F4_LMS</shortDescription>
+        <value>From now, please use your Work Email [Email] to login to the IATA Customer Portal. Your Personal Email [PersonalEmail] has been stored as additional email.</value>
+    </labels>
     <labels>
         <fullName>CSP_L3_Note_F5_LMS</fullName>
         <categories>CS Portal</categories>
