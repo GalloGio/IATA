@@ -321,8 +321,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		Test.StopTest();
 	}
-    
-    @isTest static void acceptAdemdumWithInvalidFsTest() {
+
+	@isTest static void acceptAdemdumWithInvalidFsTest() {
 
 		Case oscarCase = [Select id from Case where Oscar__c <> null];
 
@@ -341,7 +341,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 			Region__c = 'Europe', 
 			Reception_Date__c = system.today(), 
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = oscarCase.Id
+			Reception_Case__c = oscarCase.Id,
+			Financial_Security_Validation_Case__c = oscarCase.Id
 		);
 		insert FS;
 
@@ -379,7 +380,7 @@ private class ANG_DGIStagingAreaCtrlTest {
 		update controller.stagingFs;
 
 		controller.accept();
-        
+
 		System.assert(findApexPagesMessage(ANG_DGIStagingAreaCtrl.FINANCIAL_SECURITY_ERROR_MESSAGE), 'Expected apex message is: ' + ANG_DGIStagingAreaCtrl.FINANCIAL_SECURITY_ERROR_MESSAGE);
 
 		Test.StopTest();
@@ -401,5 +402,5 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		return false;
 
-    }
+	}
 }
