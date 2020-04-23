@@ -136,6 +136,12 @@ BR()&amp;
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Reason1__c</field>
+            <value>
+                <stringValue>Code Eligibility Review</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <stringValue>012w0000000Ybvu</stringValue>
@@ -267,7 +273,13 @@ BR()&amp;
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
-    <startElementReference>Start_flow_3_days_before_expiry_date</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Start_flow_3_days_before_expiry_date</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>AccountID</name>
