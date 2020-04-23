@@ -1,5 +1,46 @@
-.THIS {
-    width: 100vw;
-    height: 100vh;
-    background-color: white;
-}
+.THIS .narrowColumn{
+    width: 6%;
+  }
+  .THIS .mediumColumn{
+    width: 12%;
+  }
+  .THIS .wideColumn{
+    width: 20%;
+  }
+  .THIS .column-10p{
+    width: 10%;
+  }
+  .THIS .column-30p{
+    width: 30%;
+  }
+  .THIS td {
+    word-wrap: break-word;
+    /*overflow: hidden;*/
+    text-overflow: ellipsis;
+    /*vertical-align: top;*/
+  }
+  .THIS td.allignTop {
+    vertical-align: top;
+  }
+  .THIS .slds-truncate {
+    max-width: 100% !important;
+    max-height: 3em;
+    white-space: normal !important;
+  
+  }
+  
+  .THIS .close-button {
+      border: 0 !important;
+      background-color: transparent !important;
+  }
+  
+  @media (max-width: 1200px) {
+      .THIS .slds-button {
+          display: block !important;
+      }
+  
+      .THIS .slds-truncate {
+          /*word-break: break-all !important;*/
+          white-space: normal !important;
+      }
+  }

@@ -298,7 +298,7 @@ public with sharing class PortalServicesCtrl {
 		for(Portal_Application_Right__c accessAux : userGrantedList) {
 
 			//check if the user have access to treasury dashboard premium
-			if(accessAux.Portal_Application__r.Name == 'Treasury Dashboard - Premium') {
+			if(accessAux.Portal_Application__r.Name == 'Treasury Dashboard - Premium' && accessAux.Right__c == 'Access Granted') {
 				hasPremiumTD = true;
 			}
 

@@ -4785,6 +4785,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <label>Academic Partnership</label>
                 </value>
                 <value>
+                    <fullName>Aircraft Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Maintenance</label>
+                </value>
+                <value>
                     <fullName>Airport &amp; Civil Aviation</fullName>
                     <default>false</default>
                     <label>Airport &amp; Civil Aviation</label>
@@ -22098,6 +22103,10 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>Product_Segment__c</picklist>
             <values>
                 <fullName>Academic Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
                 <default>false</default>
             </values>
             <values>
