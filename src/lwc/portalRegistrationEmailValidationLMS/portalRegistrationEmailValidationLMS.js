@@ -210,10 +210,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
 
-		//Clean in case of the user comes back and try to insert another option or email
-		this.localContactInfo.Username = '';
-		this.localContactInfo.UserId = '';
-
 		if(this.localContactInfo.initialEmail === undefined || this.localContactInfo.initialEmail === '' ){
 			this.localContactInfo.initialEmail = this.localContactInfo.Email;
 		}
@@ -364,10 +360,13 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	next(){
 
 		if(this.validated === true){
-			//set Training info in case of already existing information in order to ByPass Training form
-			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
-			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
-			this.localContactInfo.ExistingTrainingInfo = true;
+			//if not set yet, set Training info in case of already existing information in order to ByPass Training form
+			if(this.localContactInfo.Username !== '' && this.localContactInfo.UserId !== ''
+				&& this.userInfo.existingContactTrainingUsername !== undefined && this.userInfo.existingContactTrainingUserId !== undefined){
+					this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+					this.localContactInfo.ExistingTrainingInfo = true;
+			}
 			this.localContactInfo.flow = this.flow;
 
 			this.dispatchEvent(new CustomEvent('next'));

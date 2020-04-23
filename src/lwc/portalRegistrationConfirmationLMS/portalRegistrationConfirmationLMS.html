@@ -160,6 +160,13 @@
 		</c-portal-registration-generic-modal>
 	</template>
 
+	<template if:true={openVerificationMailSuccessModalLogOut}>
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
+			button1-label="" button2-label={labels.CSP_LogOut} 
+			onbuttontwoaction={button2ActionLogOut}>
+		</c-portal-registration-generic-modal>
+	</template>
+
 	<template if:true={openErrorModal}>
 		<c-portal-registration-generic-modal icon={errorIcon} title={errorModalTitle} message={errorModalMessage}
 			button1-label={labels.CSP_L2_Go_To_Homepage_LMS} button2-label={labels.CSP_L2_Go_To_Service_LMS}
