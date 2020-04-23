@@ -62,6 +62,8 @@ import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS
 import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
 import CSP_L2_SucessUpdate_LMS from '@salesforce/label/c.CSP_L2_SucessUpdate_LMS';
 import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
+import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
+import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_VerificationToP3_LMS';
 
 
 
@@ -91,6 +93,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
+	@track openVerificationMailSuccessModalLogOut = false;
 	@track openErrorModal = false;
 	@track successModalTitle = CSP_L2_Details_Saved;
 	@track successModalMessage = CSP_L2_Details_Saved_Message_LMS;
@@ -161,7 +164,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L_TrainingEmail_LMS,
 		CSP_L_TrainingUser_LMS,
 		CSP_L2_SucessUpdate_LMS,
-		CSP_L3_VerificationMailTitle_LMS
+		CSP_L3_VerificationMailTitle_LMS,
+		CSP_LogOut,
+		CSP_L2_VerificationToP3_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -324,14 +329,28 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
+			let notificationEmail = '';
+			if(this.flow === 'flow3' || this.flow === 'flow4'){
+				notificationEmail = this.localContactInfo.Email;
+			}else{
+				notificationEmail = this.localContactInfo.Additional_Email__c;
+			}
+
 			sendSingleEmail({contactName: contactName,
-								emailAddr: this.localContactInfo.Additional_Email__c,
+								emailAddr: notificationEmail,
 								flow:this.flow,
 								params : JSON.stringify(this.localContactInfo)})
 			.then(result => {
 				if(result.isSuccess == true){
-						this.openVerificationMailSuccessModal = true;
-						this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
+
+						//Check if is Flow 3 or 4 to show the log out button
+						if(this.flow === 'flow3' || this.flow === 'flow4'){
+							this.openVerificationMailSuccessModalLogOut = true;
+							this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Email + CSP_L2_VerificationToP2_LMS + ' ' + CSP_L2_VerificationToP3_LMS + '';
+						}else{
+							this.openVerificationMailSuccessModal = true;
+							this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
+						}
 					}
 					else{
 						this.openErrorModal = true;
@@ -362,6 +381,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	closeVerificationMailSuccessModal(){
 		this.openVerificationMailSuccessModal = false;
+		this.openVerificationMailSuccessModalLogOut = false;
 	}
 
 	closeErrorModal(){
@@ -382,6 +402,10 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	button2Action(){
 		this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
+	}
+
+	button2ActionLogOut(){
+		navigateToPage('/secur/logout.jsp?retUrl=' + CSP_PortalPath + 'login');
 	}
 
 	get displayToS(){

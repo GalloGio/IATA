@@ -162,7 +162,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 																AND RecordtypeId = :RECTYPE_Trainee_YASContDet
 																LIMIT 1];
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
-
+			
 			if(listYCD.size() > 0){
 				 ycd = listYCD[0];
 				ycd.Username__c = regParam.sUsername;
@@ -175,7 +175,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
-				ycd.Preferred_Course__c = regParam.sCourse;
+				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
+					ycd.Preferred_Course__c = regParam.sCourse;
+				}
 			}
 
 			//Check State
@@ -204,6 +206,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			ycd.City_Reference__c = (regParam.sCityId != null && regParam.sCityId != '') ? regParam.sCityId : null;
 			ycd.City_Name__c = (regParam.sCity != null && regParam.sCity != '') ? regParam.sCity : null;
 			ycd.OwnerId = loggedUser.Id;
+
 
 			if(listYCD.size() > 0){
 				update ycd;
@@ -280,10 +283,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			if(contactInfo.flow == 'flow3'){
 
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c FROM Contact WHERE Id = :contactInfo.Id];
+				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate FROM Contact WHERE Id = :contactInfo.Id];
 				con.Email = contactInfo.Email;
 				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
@@ -309,10 +311,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			if(contactInfo.flow == 'flow5'){
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c FROM Contact WHERE Id = :contactInfo.Id];
+				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate FROM Contact WHERE Id = :contactInfo.Id];
 				con.Email = contactInfo.Email;
 				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
@@ -342,7 +343,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				//Inactivate the registering Contact
 				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 													AccountId,Email,Additional_Email__c,Phone,
-													OtherPhone,Salutation,Birthdate,Shipping_Address__c
+													OtherPhone,Salutation,Birthdate
 											FROM Contact WHERE Id = :contactInfo.Id];
 
 				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
@@ -355,7 +356,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				conToInactivate.status__c = 'Inactive';
 				update conToInactivate;
 
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
+				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate
 								FROM Contact WHERE Id = :contactInfo.existingContactId];
 				con.Email = contactInfo.Email;
 				con.Additional_Email__c = contactInfo.Additional_Email;
@@ -486,11 +487,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 			if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
+				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate
 								FROM Contact WHERE Id = :contactInfo.Id];
 				con.Email = contactInfo.Email;
 				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
@@ -565,7 +565,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 														AccountId,Email,Additional_Email__c,Phone,
-														OtherPhone,Salutation,Birthdate,Shipping_Address__c
+														OtherPhone,Salutation,Birthdate
 												FROM Contact WHERE Id = :contactInfo.existingContactId];
 
 					conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
@@ -646,10 +646,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			params.existingTrainingId = (inputMap.get('existingTrainingId') != null) ? string.valueOf(inputMap.get('existingTrainingId')) : '';
 			params.flow = (inputMap.get('flow') != null) ? string.valueOf(inputMap.get('flow')) : '';
 
-			params.Shipping_Address = (inputMap.get('Shipping_Address__c') != null) ? string.valueOf(inputMap.get('Shipping_Address__c')) : '';
-			if(params.Shipping_Address == ''){
-				params.Shipping_Address = (inputMap.get('Shipping_Address') != null) ? string.valueOf(inputMap.get('Shipping_Address')) : '';
-			}
 			params.isPoBox = (inputMap.get('isPoBox') != null) ? string.valueOf(inputMap.get('isPoBox')) : '';
 			params.countryId = (inputMap.get('countryId') != null) ? string.valueOf(inputMap.get('countryId')) : '';
 			params.countryCode = (inputMap.get('countryCode') != null) ? string.valueOf(inputMap.get('countryCode')) : '';
@@ -799,9 +795,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
 					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
 
-					if(flow == 'flow6'){
+					if(flow == 'flow4'){
+						plainBody = plainBody.replace('[Email]',address);
+						plainBody = plainBody.replace('[LoginEmail]',address);
+						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
+					}else if(flow == 'flow6'){
 						plainBody = plainBody.replace('[Email]',address);
 						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
+						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
 					}else{
 						plainBody = plainBody.replace('[Email]',wUserInfo.Email);
 						plainBody = plainBody.replace('[ExistingEmail]',wUserInfo.existingContactEmail);
@@ -997,7 +998,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	public class UserInformationWrapper{
 		public string Email{get;set;}
 		public string Additional_Email{get;set;}
-		public string Shipping_Address{get;set;}
 		public string FirstName{get;set;}
 		public string LastName{get;set;}
 		public string Date_of_Birth{get;set;}

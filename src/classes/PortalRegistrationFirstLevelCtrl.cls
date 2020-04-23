@@ -96,6 +96,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactId{get;set;}
 		public String existingContactName{get;set;}
 		public String existingContactEmail{get;set;}
+		public String existingContactAdditionalEmail{get;set;}
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
 		public String emailConfirmationTemplate{get;set;}
@@ -124,6 +125,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactName{get;set;}
 		@AuraEnabled
 		public String existingContactEmail{get;set;}
+		@AuraEnabled
+		public String existingContactAdditionalEmail{get;set;}
 		@AuraEnabled
 		public String existingContactAccount{get;set;}
 		@AuraEnabled
@@ -306,6 +309,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				userInfo.existingContactId = contactPersonalEmailList.get(0).Id;
 				userInfo.existingContactName = contactPersonalEmailList.get(0).Name;
 				userInfo.existingContactEmail = contactPersonalEmailList.get(0).Email;
+				userInfo.existingContactAdditionalEmail = contactPersonalEmailList.get(0).Additional_Email__c;
 				userInfo.existingContactAccount = contactPersonalEmailList.get(0).Account.Name;
 
 				Set<Id> contactPersonalEmailIds = new Set<Id>{contactPersonalEmailList.get(0).Id};
@@ -320,6 +324,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userInfo.existingContactId = conList.get(0).Id;
 			userInfo.existingContactName = conList.get(0).Name;
 			userInfo.existingContactEmail = conList.get(0).Email;
+			userInfo.existingContactAdditionalEmail = conList.get(0).Additional_Email__c;
 			userInfo.existingContactAccount = conList.get(0).Account.Name;
 			if(!userList.isEmpty()){
 				userInfo.existingContactUsername = userList.get(0).Username;
@@ -342,14 +347,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static List<Contact> returnExistingContact(String email) {
 		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Email = :email];
+		conList = [SELECT id, Name, AccountId, Email, Additional_Email__c, Account.Name FROM Contact WHERE Email = :email];
 		return conList;
 	}
 
 	public static List<Contact> returnExistingContactAdditionalEmail(String additionalEmail) {
 		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Additional_Email__c =: additionalEmail AND Status__c = 'Active'];
+		conList = [SELECT id, Name, AccountId, Email, Additional_Email__c, Account.Name FROM Contact WHERE Additional_Email__c =: additionalEmail AND Status__c = 'Active'];
 		return conList;
 	}
 
@@ -416,7 +421,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			return false;
 		}
 	}
-	
 
 	public static boolean sendConfirmationEmailVF(RegistrationParameters params, string lang){
 		Boolean result = false;
@@ -506,6 +510,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactId = (userInfoMap.get('existingContactId') != null) ? string.valueOf(userInfoMap.get('existingContactId')) : '';
 			params.existingContactName = (userInfoMap.get('existingContactName') != null) ? string.valueOf(userInfoMap.get('existingContactName')) : '';
 			params.existingContactEmail = (userInfoMap.get('existingContactEmail') != null) ? string.valueOf(userInfoMap.get('existingContactEmail')) : '';
+			params.existingContactAdditionalEmail = (userInfoMap.get('existingContactAdditionalEmail') != null) ? string.valueOf(userInfoMap.get('existingContactAdditionalEmail')) : '';
 			params.existingContactAccount = (userInfoMap.get('existingContactAccount') != null) ? string.valueOf(userInfoMap.get('existingContactAccount')) : '';
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
@@ -1041,6 +1046,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				'{!Receiving_User.FirstName}'                    => params.Firstname,
 				'{!ExistingContactName}'                         => params.existingContactName,
 				'{!ExistingContactEmail}'                        => params.existingContactEmail,
+				'{!ExistingContactAdditionalEmail}'              => params.existingContactAdditionalEmail,
 				'{!ExistingContactAccount}'                      => params.existingContactAccount,
 				'{!ExistingContactUsername}'                     => params.existingContactUsername,
 				'{!Community_Url}'                               => oneTimeLink,
