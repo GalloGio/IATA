@@ -99,7 +99,8 @@ private class ANG_MulticountryFinancialAssessmentTest {
 			Region__c = 'Asia & Pacific',
 			Reception_Date__c = System.today(),
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = cc.Id
+			Reception_Case__c = cc.Id,
+            Financial_Security_Validation_Case__c = cc.Id
 		);
 
 		insert fs;
