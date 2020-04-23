@@ -168,7 +168,6 @@ public class ANG_RHCInformationTriggerHandler{
 
 		ANG_RHC_Information__c rhc = rhcLst.get(0);
 		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
-		rhc.ANG_Forecasted_RHC_Effective_date__c = System.today();
 		rhc.ANG_RHC_Effective_Date__c = System.today();
 
 	}
