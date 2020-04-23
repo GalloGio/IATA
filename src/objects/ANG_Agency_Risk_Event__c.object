@@ -431,13 +431,13 @@
         <description>Shows the Id of the source object or the id of the record itself if no source object is used. This field is used by the ANG_RiskEventGenerator to populate the Unique Key</description>
         <externalId>false</externalId>
         <formula>IF(
-	AND(ANG_Created_from__c == "Case", NOT(ISBLANK(ANG_CaseId__c))),
+	AND(ANG_Created_from__c == &quot;Case&quot;, NOT(ISBLANK(ANG_CaseId__c))),
 	ANG_CaseId__c,
 	IF(
-		AND(ANG_Created_from__c == "Agency_Applied_Change_code__c", NOT(ISBLANK(ANG_ChangeCode__c))),
+		AND(ANG_Created_from__c == &quot;Agency_Applied_Change_code__c&quot;, NOT(ISBLANK(ANG_ChangeCode__c))),
 		ANG_ChangeCode__c,
 		IF(
-			AND(ANG_Created_from__c == "AMS_OSCAR__c", NOT(ISBLANK(ANG_OscarId__c))),
+			AND(ANG_Created_from__c == &quot;AMS_OSCAR__c&quot;, NOT(ISBLANK(ANG_OscarId__c))),
 			ANG_OscarId__c,
 			IF(
 				NOT(ISBLANK(ANG_CaseId__c)), 
@@ -454,8 +454,7 @@
 			)
 		)
 	)
-)
-        </formula>
+)</formula>
         <label>Source Id</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
