@@ -90,6 +90,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mccorleys@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -185,6 +189,10 @@
         </recipients>
         <recipients>
             <recipient>krishnanh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
