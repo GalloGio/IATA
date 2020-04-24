@@ -102,12 +102,6 @@
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
 
-            <apex:pageBlockSectionItem rendered="{!!isPassAirline}">
-                        <apex:outputLabel value="* Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market, if available?" style="color:#a31717; font-weight: bold !important;"/>
-                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="hideText('{!$Component.mandateSelect}');"/>
-                    </apex:pageBlockSectionItem>
-
-                    <!-- Upload Bank Mandate section (Without ICCS) -->
                     <apex:outputPanel layout="block" rendered="{!showUploadBankMandate}">
                         <div class="aplabel">
                                 <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false" styleclass="aplabel" rendered="{!isPassAirline}"/>
@@ -115,7 +109,7 @@
                         <p>
                             <b>Please download the Bank Mandate form using the link below:</b>
                             <div id="bankmandatelink_p">
-                                <u><a href="{!URLFOR($Resource.Airline_PASS_Local_Account_Beneficiary)}" target="_blank">BSP / CASS  / PASS Local Bank Account Beneficiary</a></u>
+                                <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS  / PASS Local Bank Account Beneficiary</a></u>
                             </div>
                         </p>
 
@@ -194,15 +188,6 @@
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=false"/>
                 </apex:pageBlockSection>
 
-                <!-- With ICCS and is Member -->
-                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1" rendered="{!showICCSJoinMarket && !isPassAirline}" collapsible="false">
-                    Please download and complete the form in the link below, and upload using the box:
-                    <apex:outputPanel layout="block" rendered="{!ICCSJoiningThisMarketUrl!=null}">
-                        <apex:outputLink value="{!ICCSJoiningThisMarketUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningThisMarketName}</apex:outputLink>
-                    </apex:outputPanel>
-                    <apex:iframe scrolling="false" rendered="{!!isPassAirline}" height="160px"
-                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
-                </apex:pageBlockSection>
 		<apex:pageBlockSection title="Upload Bank Mandate" columns="1" rendered="{!isPassAirline}">
                         <apex:outputpanel >
                             <c:Loading />
