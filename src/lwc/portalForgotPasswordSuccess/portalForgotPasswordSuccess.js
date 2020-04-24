@@ -8,7 +8,7 @@ import successMessageLabel    from '@salesforce/label/c.CSP_Forgot_Password_Succ
 import retryTitleLabel        from '@salesforce/label/c.CSP_Forgot_Password_Retry_Title';
 import retryMessageLabel      from '@salesforce/label/c.CSP_Forgot_Password_Retry_Message';
 import tryAgainLabel          from '@salesforce/label/c.CSP_Try_Again';
-import newAccountMessageLabel from '@salesforce/label/c.CSP_Create_New_Account_Label';
+import newUserMessageLabel    from '@salesforce/label/c.CSP_Create_New_User_Label';
 
 export default class PortalForgotPasswordSuccess extends LightningElement {
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
@@ -23,7 +23,7 @@ export default class PortalForgotPasswordSuccess extends LightningElement {
         retryMessageLabel,
         successMessageLabel,
         createNewAccountLabel,
-        newAccountMessageLabel
+        newUserMessageLabel
     }
 
     toForgotPassword() {
