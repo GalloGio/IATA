@@ -3907,6 +3907,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>New to the IATA Customer Portal?</value>
     </labels>
     <labels>
+        <fullName>CSP_Create_New_Account_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New Account Label</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
         <fullName>CSP_Create_New_User_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
