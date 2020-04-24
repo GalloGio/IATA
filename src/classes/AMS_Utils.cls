@@ -403,6 +403,7 @@ public without sharing class AMS_Utils {
 	/* AMSU-37 */
 	public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+	public static final String APP_03WITHDRAWN = '03-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
 

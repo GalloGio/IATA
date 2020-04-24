@@ -1595,7 +1595,7 @@ global class ANG_OscarProcessHelper {
 
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
-		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
+		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN','03-APPLICATION WITHDRAWN'};
 		Set<String> processes = AMS_Utils.oscarNewProcesses;
 		processes.addall(AMS_Utils.oscarNewGenNewAppProcesses);
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'};
@@ -1788,7 +1788,12 @@ global class ANG_OscarProcessHelper {
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
 					emailMsg.FromAddress = owea[0].Address;
 					emailMsg.FromName = owea[0].DisplayName;
-					emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
+						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					}
+					if(!String.isBlank(mail.getTargetObjectId())) {
+						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
+					}
 					emailMsg.Subject = mail.getSubject();
 					emailMsg.HtmlBody = mail.getHtmlBody();
 					emailMsg.ParentId = oscarCommCaseId; //Attach with the case

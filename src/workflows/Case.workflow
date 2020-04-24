@@ -178,6 +178,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>saremyt@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -13751,7 +13755,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
+            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,CZECH REPUBLIC,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -17421,7 +17425,7 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Czech Republic</value>
+            <value>CZECH REPUBLIC</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>

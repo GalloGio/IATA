@@ -13,15 +13,36 @@
         modalCmp.showModal(record);
     },
     handleRowAction : function(component, event, helper) {
-        var action = event.getParam('action').name;
-        switch (action) {
+        var action = event.getParam('value');
+        let nameAction = action.split("-")
+        switch (nameAction[0]) {
             case 'edit_issue':
-                helper.editRecord(component, event);
+                helper.editRecord(component, event, nameAction[1]);
                 break;
             case 'delete_issue':
-                helper.deleteRecord(component, event);
+                helper.deleteRecord(component, event, nameAction[1]);
                 break;
         }
+    },
+    sortList: function(component, event, helper) {
+        var target = event.getSource();
+        var fieldname = target.get("v.title");
+        var currentSortOrder = component.get('v.sortOrder');
+
+        if(currentSortOrder === undefined) {
+            currentSortOrder = fieldname;
+        }
+
+        var reverse = 1;
+        if(fieldname === currentSortOrder) {
+            currentSortOrder = fieldname+'desc';
+            reverse *= -1;
+        } else {
+            currentSortOrder = fieldname;
+        }
+
+        component.set("v.sortOrder",currentSortOrder);
+        helper.sortIssues(component,fieldname,reverse);
     },
     refreshIssues : function(component, event, helper) {
         var val = component.find('showClosed').get('v.checked');
