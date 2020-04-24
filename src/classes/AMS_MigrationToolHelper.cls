@@ -606,7 +606,7 @@ public without sharing class AMS_MigrationToolHelper {
 		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : '');
 		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'));
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
-		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
+		contact.Name = contact.Company__c != null ? role.Owner_Account__r.Name : role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
 		contact.Phone__c = role.Contact_Phone__c;
 
@@ -627,7 +627,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
 
-		allAccountRoles = [SELECT Id, RecordTypeId, Contact_Phone__c, Contact_Email__c, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Contact__r.FirstName , Contact__r.LastName, Person__c, Person__r.First_Name__c , Person__r.Lastname__c , Person__r.Contact__c,Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c = :accountId and Active__c = true];
+		allAccountRoles = [SELECT Id, RecordTypeId, Contact_Phone__c, Contact_Email__c, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName , Contact__r.LastName, Person__c, Person__r.First_Name__c , Person__r.Lastname__c , Person__r.Contact__c,Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c = :accountId and Active__c = true];
 
 		for(AMS_Account_Role__c role: allAccountRoles){
 
