@@ -231,5 +231,7 @@ export default class PortalDocumentsCategory extends LightningElement {
         let categoryName = event.target.dataset.item;
         const selectedEvent = new CustomEvent('showcategory', { detail: {category:categoryName} });
         this.dispatchEvent(selectedEvent);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
 }
