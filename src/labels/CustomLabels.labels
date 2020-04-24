@@ -4766,6 +4766,14 @@ Please click Next Step button to confirm that your address is correct</value>
 You can easily create a company account in two steps</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Company_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Location</shortDescription>
+        <value>Company Location</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Company_Name</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -41819,6 +41827,25 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS</shortDescription>
         <value>SIS</value>
+    </labels>
+    <labels>
+        <fullName>SISCaseDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SISCaseDescription</shortDescription>
+        <value>Account legal name: 
+{0}
+
+E&amp;F main contact: 
+{1} {2}
+{3}
+
+Address (business):
+Street {4}
+Zip/Postal Code  {5}
+City  {6}	
+State/Province {7}	
+Country {8}</value>
     </labels>
     <labels>
         <fullName>SISHelpDesk_ExistingPriorityMapping</fullName>

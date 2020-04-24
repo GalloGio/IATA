@@ -1,0 +1,68 @@
+<html> 
+<head> 
+<script src="/soap/ajax/9.0/connection.js"></script> 
+<script> 
+function initPage() 
+{
+	sforce.connection.BatchSize=500;
+
+	var result = sforce.connection.query("Select a.Type, a.Name, a.Id, a.BillingCity, (Select Id From Opportunities where CreatedDate > 2006-01-01T15:45:24.000Z), (Select Id From Contacts where CreatedDate > 2006-01-01T15:45:24.000Z) From Account a where a.BillingCity = null and a.BillingCountry= null limit 1000");
+
+
+	var records = result.getArray("records"); 
+
+	var sb = new sforce.StringBuffer(); 
+	sb.append("<table border=1 cellpadding=0 cellspacing=0 > <tr><td>No</td><td>Id</td><td>Name</td><td>Type </td><td>Billing City</td><td>Billing Country</td></tr>"); 
+
+	var moreQuery = true;
+	while (moreQuery) 
+	{
+
+		if (result.size > 0) 
+		{
+			for (var i=0; i<records.length; i++) 
+			{ 
+				var recordset= records[i]; 
+
+				if(recordset.Cases == null && recordset. Opportunities == null) 
+				{ 
+
+					sb.append("<tr><td>").append(i+1).append("</td>"); 
+					sb.append("</td><td> ").append(editLink(recordset, "Id")); 
+					sb.append("</td><td> ").append(editLink(recordset, "Name")); 
+					sb.append("</td><td> ").append(editLink(recordset, "Type")); 
+					sb.append("</td><td> ").append(editLink(recordset, "BillingCity"));
+					sb.append("</td><td> ").append(editLink(recordset, "BillingCountry"));
+				} 
+				sb.append("</td></tr>"); 
+			} 
+		}
+		if (result. queryLocator == null) 
+		{
+                    moreQuery=false;
+                } 
+		else 
+		{
+                	result = sforce.connection.queryMore(result.queryLocator);
+                	 var records = result.getArray("records"); 
+                }
+		if(sb.length>32000)
+		{
+			sb.append("</table>"); 
+			document.body.innerHTML = document.body.innerHTML + "<p>" + sb.toString(); 
+			sb="";
+			sb.append("<table border=1 cellpadding=0 cellspacing=0 > <tr><td>No</td><td>Id</td><td>Name</td><td>Type </td></tr>"); 
+		}
+	}//end of while
+	sb.append("</table>"); 
+	document.body.innerHTML = document.body.innerHTML + "<p>" + sb.toString(); 
+} 
+function editLink(recordset, field) { 
+var value = recordset[field]; 
+return value; 
+} 
+</script> 
+</head> 
+<body onload="initPage();"> 
+</body> 
+</html>
