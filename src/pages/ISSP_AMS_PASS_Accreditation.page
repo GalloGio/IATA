@@ -22,17 +22,8 @@
 
     <style>
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
-        }
-
-       .pbBody {
-        padding-left:10px !important;
-       }
-
-       .pbBody a{color:#337ab7 !important}
-
-        .bPageBlock {
-            border-top-width : thin !important;
         }
 
         .bEditBlock input {
@@ -41,10 +32,6 @@
 
        .btn {
             padding: 2px 12px !important;
-        }
-
-        .btn-progressBar-PASS {
-            padding: 2px 40px !important;
         }
 
         .btn-primary {
@@ -82,23 +69,21 @@
         .errorMsg {color:#d74c3b}
 
         .progress-bar-off {
-                color:#6BBBEA;
-                font-weight:bold;
-                background-image:none !important;
-                background-color:transparent !important;
-                border-right:2px solid white;
-        }
-
-        body .bPageBlock .pbBody .pbSubheader{
-                background-image: url('') !important;
-                background-color:  #1797c0;
-                color: #fff;
+            color:#6BBBEA;
+            font-weight:bold;
+            background-image:none !important;
+            background-color:transparent !important;
+            border-right:2px solid white;
         }
 
         body .bPageBlock .pbBody .summary-subsection .pbSubheader{
                 background-image: url('') !important;
                 background-color: initial;
                 color: initial;
+        }
+
+        body .secondaryPalette.bPageBlock{
+            border-bottom: none !important;
         }
 
         .pbSubheader {
@@ -112,7 +97,7 @@
         }
 
         .tbFooter {
-         text-align:right;
+            text-align:right;
         }
 
         .requiredBlock {
@@ -153,8 +138,7 @@
         .col1_inner {width:25%; vertical-align: text-top;}
         .col2_inner {width:25%; vertical-align: text-top;}
 
-         .row1 {padding-bottom:16px; vertical-align: text-top;}
-
+        .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
     <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
     <script>
