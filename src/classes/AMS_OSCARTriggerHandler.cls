@@ -783,7 +783,7 @@ public class AMS_OSCARTriggerHandler {
 
 		/*** AMSU-37 ***/
 		Set<Id> accountIds = new Set<Id>();
-		Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN};
+		Set<String> reasonsToCheck = new Set<String> {AMS_Utils.APP_DISAPPROVED, AMS_Utils.APP_WITHDRAWN, AMS_Utils.APP_03WITHDRAWN};
 		Set<Id> accountIdsToSkip = new Set<Id>();
 		for(AMS_OSCAR__c oscar : oscarsToInsert) {
 			if(reasonsToCheck.contains(oscar.Account_Reason__c)) {
