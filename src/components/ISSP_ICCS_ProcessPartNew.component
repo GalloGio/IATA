@@ -224,7 +224,7 @@
 									Join Participation (*)
 								</td>
 								<td>
-									<c:ISSP_ICCS_TypedDocument docType="Join Participation" caseProcessCtrl="{! thisCtrl}"/>
+									<c:ISSP_ICCS_TypedDocument docType="ICCS_Join_Participation" caseProcessCtrl="{! thisCtrl}"/>
 								</td>
 							</tr>
 							<tr>
@@ -232,7 +232,7 @@
 									Bank Accounts
 								</td>
 								<td>
-									<c:ISSP_ICCS_TypedDocument docType="Bank Accounts" caseProcessCtrl="{! thisCtrl}"/>
+									<c:ISSP_ICCS_TypedDocument docType="Bank_Accounts" caseProcessCtrl="{! thisCtrl}"/>
 								</td>
 							</tr>
 						</table>
