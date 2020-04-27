@@ -3498,6 +3498,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Assign New Service</shortDescription>
         <value>Assign New Service</value>
+    </labels>    
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
     </labels>
     <labels>
         <fullName>CSP_Branch_Offices</fullName>
@@ -3985,6 +3993,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Deny Access</value>
     </labels>
     <labels>
+        <fullName>CSP_DocumentBookmarkAdded</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkAdded</shortDescription>
+        <value>Document Added to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkRemoved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkRemoved</shortDescription>
+        <value>Document #doc Removed from My Bookmarks</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4023,6 +4047,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
     </labels>
     <labels>
         <fullName>CSP_EF_Invoices</fullName>
@@ -5405,6 +5437,13 @@ You can easily create a company account in two steps</value>
         <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
+        <fullName>CSP_MainCategories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MainCategories</shortDescription>
+        <value>Main Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5504,6 +5543,22 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSPISSP_IATA_NOT_Found_NoAccount</shortDescription>
         <value>No related Account to display.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText1</shortDescription>
+        <value> There is nothing in your bookmarks for now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText2</shortDescription>
+        <value>But when you have, you’ll view the most recent ones with their basic details in this area.</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -6522,6 +6577,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Track</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Track</shortDescription>
+        <value>Track</value>
     </labels>
     <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
