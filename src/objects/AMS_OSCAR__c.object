@@ -3753,7 +3753,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>Parent_OSCAR_Account_Id__c</fullName>
         <description>Formula field to stores the Account Id associated with the parent OSCAR</description>
         <externalId>false</externalId>
-        <formula>IF(ISNULL(Parent_OSCAR__c), Account__c, Parent_OSCAR__r.Account__c)</formula>
+        <formula>IF(OR(ISBLANK(Parent_OSCAR__c), ISNULL(Parent_OSCAR__c)), CASESAFEID(Account__c), CASESAFEID(Parent_OSCAR__r.Account__c))</formula>
         <label>Parent OSCAR Account Id</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
