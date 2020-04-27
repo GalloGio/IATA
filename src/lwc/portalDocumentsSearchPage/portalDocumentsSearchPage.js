@@ -1,162 +1,87 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement,track } from 'lwc';
+
 import { getParamsFromPage } from'c/navigationUtils';
-import CSP_SearchDocuments from '@salesforce/label/c.CSP_SearchDocuments';
-import CSP_Search_TypeIn_text1 from '@salesforce/label/c.CSP_Search_TypeIn_text1';
-import CSP_Search_TypeIn_text2 from '@salesforce/label/c.CSP_Search_TypeIn_text2';
-import CSP_Search_TypeIn_text3 from '@salesforce/label/c.CSP_Search_TypeIn_text3';	
-
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
-
+import CSP_DocumentsAll from '@salesforce/label/c.CSP_DocumentsAll'
+import CSP_BookmarksTabLabel from '@salesforce/label/c.CSP_BookmarksTabLabel'
 export default class PortalDocumentsSearchPage extends LightningElement {
-    @track label = {
-        CSP_SearchDocuments,
-        CSP_Search_TypeIn_text1,
-        CSP_Search_TypeIn_text2,
-        CSP_Search_TypeIn_text3
-    };
 
-    @track topResults = true;
-    @track category = '';
-    @track docId = '';
-    @track documentObject;
-    @track searchText = '';
-    @track categories = [];
-    @track renderNoResults = true;
-    @track loading = true;
-    timeout = null;
-    @track showCross = false;
 
-    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+	@track label={
+		CSP_DocumentsAll,
+		CSP_BookmarksTabLabel
+	}
+	
+	refreshlist=false;
 
-    connectedCallback() {
-        let pageParams = getParamsFromPage();
+	renderedCallback(event){
+		//Check param to render on selected tab, default all Documents
+		let pageParams = getParamsFromPage();       
+		switch(pageParams.tab) {
+			case 'MyBookmarks':
+				this.changeToTab('bookmarksTab');
+				break;
+			case 'AllDocuments':
+			default:
+				this.changeToTab('allTab');
+		}
 
-        if(pageParams !== undefined) {
-            if(pageParams.category !== undefined) {
-                this.category = pageParams.category.replace(/\+/g, ' ');
-                this.topResults = false;
-            }
-            if(pageParams.searchText !== undefined) {
-                this.searchText = decodeURIComponent((pageParams.searchText+'').replace(/\+/g, '%20'));
-                this.docId = pageParams.docId;
-                this.onInputChange(this.searchText);
-            }
-        }
+	}
 
-        let _documentObject = {
-            categories: [],
-            categorySelected: this.category,
-            docId: this.docId,
-            topResults: this.topResults
-        };
 
-        this.documentObject = _documentObject;
-        this.categories = _documentObject.categories;
-    }
 
-    handleHighlightFilter(event) {
-        this.loading = true;    
-        let detailObject = JSON.parse(JSON.stringify(event.detail));
-        this.searchText = '';
-        this.documentObject = detailObject;
-        this.categories = detailObject.categories;
-        this.loading = false;
-    }
 
-    handleFilter(event) {
-        this.loading = true; 
-        let detailObject = JSON.parse(JSON.stringify(event.detail));        
+	//captures any change in either of the tables to refresh on next tab switch/render
+	requestRefreshList(event){
+		event.preventDefault();
+		this.refreshlist=true;
+	}
 
-        this.documentObject = detailObject;
-        this.categories = this.documentObject.categories;
 
-        this.resultsToRender();
-    }
+	//Exposed method to navigate to specific tab
+	navigateToTab(event){
+	   
+		this.template.querySelector('[data-tab='+event.detail.tab+']').click();
+		let cat=event.detail.category;
+		let prodcat=event.detail.prodCategory;
+		if(cat){
+			let ev={
+				detail:{
+					category:cat,
+					prodCateg:prodcat
+				}
+	
+			};
 
-    categoryFilter(event) {
-        this.loading = true; 
-        let detailCategory = JSON.parse(JSON.stringify(event.detail));
-        let detailObject = JSON.parse(JSON.stringify(this.documentObject));   
+			this.template.querySelector('c-portal-document-all-documents').showCategory(ev);
+		}
+				
+	}
+	
+	changetabs(event){
+		let selectTab=event.target.dataset.key;
+		this.changeToTab(selectTab);
+	}
 
-        for(let i = 0; i < detailObject.categories.length; i++) {
-            if(detailObject.categories[i].apiName === detailCategory.apiName &&
-                (
-                    (detailObject.categories[i].noResults !== detailCategory.noResults) ||
-                    detailObject.categories[i].searchText !== detailCategory.searchText ||
-                    detailObject.categories[i].productCategory !== detailCategory.productCategory ||
-                    detailObject.categories[i].countryOfPublication !== detailCategory.countryOfPublication
-                )) {
-                detailObject.categories[i] = detailCategory;
-                break;
-            }
-        }
+	changeToTab(seltab){      
+	  
+		this.template.querySelectorAll('.tab').forEach(elem=>{
+			if(elem.classList.contains('selectedTab')){
+				elem.classList.remove('selectedTab');
+				this.template.querySelector('[data-section='+elem.dataset.key+']').classList.add('slds-hide');
+			}
+			if(elem.dataset.key==seltab){
+				elem.classList.add('selectedTab');
+				this.template.querySelector('[data-section='+elem.dataset.key+']').classList.remove('slds-hide');                
+		   }
+		});
 
-        this.documentObject = detailObject;
-        this.resultsToRender();
-    }
 
-    resultsToRender() {
-        let render = true;
-        let detailObject = JSON.parse(JSON.stringify(this.documentObject));
-        let found = false;
-        if(detailObject.categorySelected === '') {
-            for(let i = 0; i < detailObject.categories.length; i++) {
-                if(detailObject.categories[i].noResults !== 0) {
-                    found = true; 
-                    break;
-                }
-            }
-        } else {
-            for(let i = 0; i < detailObject.categories.length; i++) {
-                if(detailObject.categorySelected === detailObject.categories[i].apiName && detailObject.categories[i].noResults !== 0) {
-                    found = true; 
-                    break;
-                }
-            }
-        }
-
-        if(found) {
-            render = false;
-        }
-        this.renderNoResults = render;
-        this.loading = false;
-    }
-
-    filterInputChange(event) {
-        this.searchText = event.target.value;
-       
-        this.onInputChange(this.searchText);
-    }
-
-    onInputChange(param) {
-        this.loading = true;
-        this.searchText = param;
-        this.showCross = this.searchText.length>0;
-
-        clearTimeout(this.timeout);
-
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        this.timeout = setTimeout(() => {
-          
-            if(this.searchText.length > 2 || this.searchText === '') {
-                let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
-                for(let i = 0; i < _documentObject.categories.length; i++) {
-                    _documentObject.categories[i].searchText = this.searchText;
-                }
-
-                this.documentObject = _documentObject;
-                let _categories = JSON.parse(JSON.stringify(this.categories));
-                for(let i = 0; i < _categories.length; i++) {
-                    _categories[i].searchText = this.searchText;
-                }
-                this.categories = _categories;
-            }
-            this.loading = false;
-        }, 1500, this);
-    }
-
-    removeTextSearch(){
-        this.onInputChange('');
-    }
+		//refresh both lists if there was a change in one of them
+		if(this.refreshlist ===true){
+			this.refreshlist=false;
+			this.template.querySelector('c-portal-document-all-documents').refreshList();
+			this.template.querySelector('c-portal-documents-bookmark-list').refreshList();
+		}
+			
+	}
 }

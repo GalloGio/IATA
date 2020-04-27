@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
-import getSearchDocuments from '@salesforce/apex/PortalDocumentsController.getSearchDocuments';
+import getSearchDocumentsWithBookmarks from '@salesforce/apex/PortalDocumentsController.getSearchDocumentsWithBookmarks';
+import toggleBookmarkDocument from '@salesforce/apex/PortalDocumentsController.toggleBookmarkDocument';
 import getContentDistribution from '@salesforce/apex/CSP_Utils.getContentDistribution';
 import CSP_Search_Documents_ProdType from '@salesforce/label/c.CSP_Search_Documents_ProdType';
 import IDCard_Description from '@salesforce/label/c.IDCard_Description';
@@ -8,7 +9,14 @@ import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';	
 import CurrencyCenter_Open from '@salesforce/label/c.CurrencyCenter_Open';
+import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_DocumentType from '@salesforce/label/c.CSP_DocumentType';
+import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkAdded';
+import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
+import CSP_Success from '@salesforce/label/c.CSP_Success';
+
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 export default class PortalDocumentsCategory extends LightningElement {
     @track label = {
@@ -18,6 +26,11 @@ export default class PortalDocumentsCategory extends LightningElement {
         CSP_Search_NoResults_text1,
         CSP_Search_NoResults_text2,
         CSP_Search_NoResults_text3,
+        CSP_LastUpdate,
+        CSP_DocumentType,
+        CSP_DocumentBookmarkAdded,
+        CSP_DocumentBookmarkRemoved,
+        CSP_Success,
         CurrencyCenter_Open
     };
     @track documentsList = [];
@@ -26,6 +39,8 @@ export default class PortalDocumentsCategory extends LightningElement {
     @track loadingMoreResults = false;
     @track concatValues = [];
     @track totalResults = 0;
+
+    isSpecialBodyCard=true;
 
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
@@ -65,6 +80,22 @@ export default class PortalDocumentsCategory extends LightningElement {
         }, this);
     }
 
+    renderedCallback(){        
+        this.toggleUnderline(this.documentsList.length>0);
+    }
+
+    toggleUnderline(add){
+        //Display the underline for all but the last line in the list
+        this.template.querySelectorAll('.cellDefault').forEach((elem, key, arr)=>{
+            if (key <= (arr.length - 5)){ 
+                if(add) elem.classList.add('underLined');               
+            } else {
+                elem.classList.remove('underLined');
+            }
+        });
+
+    }
+
     scrollListener() {
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
         let totalLength = this.concatValues.length;
@@ -87,7 +118,9 @@ export default class PortalDocumentsCategory extends LightningElement {
         this.totalResults = 0;
         this.concatValues = [];
     }
+   
 
+    @api
     searchDocuments() {
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
@@ -100,28 +133,31 @@ export default class PortalDocumentsCategory extends LightningElement {
             docId: this._documentObject.docId
         };
 
-        getSearchDocuments(getSearchDocumentsObj)
+        getSearchDocumentsWithBookmarks(getSearchDocumentsObj)
             .then(results => {
-                if(results.records.length > 0) {
-                    let docs = JSON.parse(JSON.stringify(results.records));
+                let docs = JSON.parse(results.recordsString);
+                if(docs.length>0) {
                     if(this.page === 0) this.totalResults = results.totalItemCount;
                     
                     let docsMap = {};
                     Object.keys(docs).forEach(function (el) {
-                        if([docs[el].Document_Category__c] !== undefined) {
-                            docsMap[docs[el].Document_Category__c] = docsMap[docs[el].Document_Category__c] || [];
-                            docsMap[docs[el].Document_Category__c].push({
-                                id: docs[el].Id, 
-                                title: docs[el].Title, 
-                                desc: docs[el].Description, 
-                                prodCat: docs[el].Product_Category__c, 
-                                countryPubli: docs[el].Country_of_publication__c !== undefined ? docs[el].Country_of_publication__c.replace(/;/g, ', ') : '', 
-                                category: docs[el].Document_Category__c, 
-                                language: docs[el].Language__c, 
-                                filetype: docs[el].FileType, 
-								url: docs[el].ContentUrl,
-                                isLink: docs[el].FileType === 'LINK' ? true : false,
-                                open: docs[el].Id === __documentObject.docId ? true : false});
+                        if([docs[el].record.Document_Category__c] !== undefined) {
+                            docsMap[docs[el].record.Document_Category__c] = docsMap[docs[el].record.Document_Category__c] || [];
+                            docsMap[docs[el].record.Document_Category__c].push({
+                                Id: docs[el].record.Id, 
+                                Title: docs[el].record.Title, 
+                                Description: docs[el].record.Description, 
+                                Product_Category__c: docs[el].record.Product_Category__c, 
+                                Country_of_publication__c: docs[el].record.Country_of_publication__c !== undefined ? docs[el].record.Country_of_publication__c.split(";").join(", ") : '', 
+                                Document_Category__c: docs[el].record.Document_Category__c, 
+                                Language__c: docs[el].record.Language__c, 
+                                LastModifiedDate: new Date(docs[el].record.LastModifiedDate).toLocaleDateString(),
+								ContentUrl: docs[el].record.ContentUrl,
+                                bookMarked: docs[el].isBookmarked,
+                                ContentDocumentId: docs[el].record.ContentDocumentId,
+                                FileType: docs[el].record.FileType,
+                                isLink: docs[el].record.FileType === 'LINK' ? true : false,
+                                open: docs[el].record.Id === __documentObject.docId ? true : false});
                         }
                     });
                     
@@ -183,7 +219,7 @@ export default class PortalDocumentsCategory extends LightningElement {
             let values = docs[el].value;
             
             for(let key in values) {
-                if(recordIndex === values[key].id && values[key].open === false) {
+                if(recordIndex === values[key].Id && values[key].open === false) {
                     values[key].open = true;
                 } else {
                     values[key].open = false;
@@ -229,24 +265,36 @@ export default class PortalDocumentsCategory extends LightningElement {
 
     categorySelected(event) {
         let categoryName = event.target.dataset.item;
-        let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-        
-        if(__documentObject.categorySelected !== categoryName) {
-            
-            __documentObject.categorySelected = categoryName;
-            __documentObject.topResults = false;
-            /*for(let i = 0; i < __documentObject.categories.length; i++) {
-                if(__documentObject.categories[i].apiName === categoryName) {
-                    __documentObject.categories[i].topResults = false;
-                    __documentObject.categories[i].productCategory = '';
-                    __documentObject.categories[i].countryOfPublication = '';
-                }
-            }*/
+    
+        const selectedEvent = new CustomEvent('showcategory', { detail: {category:categoryName} });
+        this.dispatchEvent(selectedEvent);
 
-    
-            const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
-            this.dispatchEvent(selectedEvent);
-    
-        }
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+    bookmarkDoc(event){
+        let doc=event.target.dataset.item;
+        let selectDoc =this.documentsList[0].value.find(element => element.ContentDocumentId == doc);
+        selectDoc.bkloading=true;
+        toggleBookmarkDocument({
+            docId:doc
+        }).then(val=>{
+            selectDoc.bookMarked=!selectDoc.bookMarked;
+            const event = new ShowToastEvent({
+                title: this.label.CSP_Success,
+                variant:'success',
+                mode:'pester',
+                message: selectDoc.bookMarked ? this.label.CSP_DocumentBookmarkAdded:this.label.CSP_DocumentBookmarkRemoved.replace('#doc',selectDoc.Title),
+            });
+            this.dispatchEvent(event);
+            selectDoc.bkloading=false;
+            
+            this.dispatchEvent(new CustomEvent('refreshlist', { bubbles: true, composed: true }));
+        })
+        .catch(error => {
+            console.error(error);
+            selectDoc.bkloading=false;
+        });
     }
 }

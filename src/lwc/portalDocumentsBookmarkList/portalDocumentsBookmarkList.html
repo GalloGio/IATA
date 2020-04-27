@@ -1,0 +1,110 @@
+<template>
+    <div if:true={hasResults} class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--1-of-1 slds-m-top_medium">            
+            <c-portal-search-box onsearchword={startSearch}></c-portal-search-box>
+        </div> 
+        <div class="slds-col slds-size--1-of-1 slds-grid slds-wrap slds-is-relative slds-m-top_x-small customCardWhite text-xsmall">
+            <div if:true={loadingDocs} class="slds-align--absolute-center slds-col slds-grid slds-size--1-of-1 slds-spinner_container">
+                <lightning-spinner  alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+            <div class="slds-col slds-size--1-of-1" if:false={noSearchResults}>
+                <template for:each={documentsList} for:item="record">
+                    <div key={record.Id} class="slds-col slds-size_1-of-1 slds-grid slds-wrap slds-m-vertical_medium slds-table tableStyle">
+                        <div class="slds-col slds-size_full slds-grid slds-wrap slds-grid_align-center">                      
+                            <div class="slds-col slds-size_11-of-12 slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_2-of-12 slds-grid slds-grid--vertical-align-center cell">
+                                    <div class="slds-col slds-size--1-of-3 slds-grid  cursorPointer slds-align--absolute-center" onclick={openRecordDetail} data-item={record.Id}>
+                                        <lightning-icon class="darkBlueIcon" if:true={record.open} icon-name="utility:chevrondown" size="xx-small" data-item={record.Id}></lightning-icon>
+                                        <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.Id}></lightning-icon>
+                                    </div>
+                                    <div class="slds-col slds-grid slds-size--2-of-3 slds-show_small text-xsmall cellDefault">
+                                        <button class="slds-size--2-of-3 cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.CurrencyCenter_Open}</button>
+                                    </div>
+                                </div>
+                                <div key={record.Id} class="slds-col slds-size_8-of-12 slds-medium-size_6-of-12 slds-grid slds-grid_vertical-align-center text-black text-xsmall text-bold cellDefault"><p class="slds-p-horizontal_x-small titleTruncation ">{record.Title}</p></div>
+                                <div key={record.Id} class="slds-col slds-size_2-of-12 slds-show_small slds-grid slds-grid_vertical-align-center cellDefault text-xsmall"><p>{record.Language__c}</p></div>
+                                <div key={record.Id} class="slds-col slds-size_3-of-12 slds-medium-size_2-of-12 slds-grid slds-grid--vertical-align-center cellDefault">
+                                    <div if:false={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end">
+                                        <span if:true={record.bookMarked} class='bkmicon bookmarked' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title="Remove from My Bookmarks"></span>
+                                        <span if:false={record.bookMarked} class='bkmicon' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title="Add to My Bookmarks"></span>
+                                    
+                                    </div>
+                                    <div if:true={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end slds-is-relative">
+                                        <lightning-spinner class="slds-is-relative slds-p-right_large" alternative-text="Loading" size="small"></lightning-spinner>
+                                    </div>
+                                    <div class=" cursorPointer slds-size--1-of-2 slds-grid slds-align_absolute-center">
+                                        <span class='dnicon' onclick={downloadDocument} data-url={record.ContentUrl} data-item={record.ContentDocumentId} title="Download"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={record.open} class="slds-transition-show slds-col slds-size_1-of-1 slds-grid slds-wrap recordDetail slds-grid_align-end" data-item={record.Id}>
+                                <div class="slds-col slds-size--11-of-12 slds-small-size--11-of-12 slds-p-vertical--medium">
+                                    
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.CSP_Track}</div>
+                                        <ul class ="slds-list_horizontal text-xsmall">
+                                            <li class="docBreadCrumb cursorPointer" onclick={goToAllDocs}>{label.CSP_Documents} </li>
+                                            <li if:true={record.Document_Category__c} class="slds-p-horizontal_x-small"> &nbsp;>&nbsp;</li>
+                                            <li class="docBreadCrumb cursorPointer" onclick={goToCategory} data-doccategory={record.Document_Category__c}>{record.Document_Category__c}</li>
+                                            <li if:true={record.Product_Category__c} class="slds-p-horizontal_x-small"> &nbsp;>&nbsp;</li>
+                                            <li class="docBreadCrumb cursorPointer" onclick={goToCategory} data-doccategory={record.Document_Category__c} data-prodcategory={record.Product_Category__c}> {record.Product_Category__c} </li>
+                                        </ul>
+                                    </div>
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.IDCard_Description}</div>
+                                        <div>{record.Description}</div>
+                                    </div>
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.CSP_Search_Documents_ProdType}</div>
+                                        <div class="text-xsmall">{record.Product_Category__c}</div>
+                                    </div>
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.CSP_Documents_PubliCountry}</div>
+                                        <div class="text-xsmall">{record.Country_of_publication__c}</div>
+                                    </div>
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.CSP_DocumentType}</div>
+                                        <div class="text-xsmall">{record.FileType}</div>
+                                    </div>
+                                    <div class="slds-p-around_medium">
+                                        <div class="text-xxsmall slds-show text-lightGray">{label.CSP_LastUpdate}</div>
+                                        <div class="text-xsmall">{record.LastModifiedDate}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </template>
+            </div>
+            <div if:true={noSearchResults} class="slds-grid slds-p-vertical--xx-large slds-wrap slds-col slds-size--1-of-1">
+                <div  class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap">
+                    <span class="circle slds-grid">
+                        <img class="slds-col slds-align_absolute-center" src={searchIconNoResultsUrl}/>
+                    </span>
+                    <span class="slds-col slds-m-top--medium slds-p-around_small slds-size--1-of-1 slds-text-align--center text-darkGray text-medium text-bold">
+                        {label.CSP_Search_NoResults_text1}
+                    </span>
+                    <span class="slds-size--1-of-1 slds-text-align--center text-xxsmall">
+                       {label.CSP_Search_NoResults_text2} <b>"{keyword}"</b>.
+                    </span>           
+                </div>
+            </div>
+            <div if:true={showPaginator} class="slds-size_full slds-col slds-size--1-of-1" >
+                <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
+            </div>
+        </div>
+    </div>
+    <div if:false={hasResults} class="slds-grid slds-p-top--xx-large slds-wrap">
+        <div if:false={searchMode} class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap">
+            <span class="circle slds-grid">
+                <img class="slds-col slds-align_absolute-center" src={NoResultsIcon}/>
+            </span>
+            <span class="slds-col slds-m-top--medium slds-p-around_small slds-size--1-of-1 slds-text-align--center text-darkGray text-medium text-bold">
+               {label.CSP_NoBookmarksText1}
+            </span>
+            <span class="slds-size--1-of-1 slds-small-size--5-of-12 slds-text-align--center text-lightGray text-xsmall">
+               {label.CSP_NoBookmarksText2}
+            </span>           
+        </div>       
+    </div>
+</template>
