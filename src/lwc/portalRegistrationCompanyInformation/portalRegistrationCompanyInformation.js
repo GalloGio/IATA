@@ -3,38 +3,32 @@ import { LightningElement,track,api } from 'lwc';
 import { loadScript, loadStyle }    from 'lightning/platformResourceLoader';
 import RegistrationUtils            from 'c/registrationUtils';
 
+import getISOCountries              from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
-
-import PhoneFormatter16         from '@salesforce/resourceUrl/PhoneFormatter16';
-import PhoneFormatter           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
-import PhoneFormatterS          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
-import jQuery                   from '@salesforce/resourceUrl/jQuery172';
 
 //custom labels
 import CSP_L2_Create_New_Account            from '@salesforce/label/c.CSP_L2_Create_New_Account';
 import CSP_L2_Company_Information_Message   from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information           from '@salesforce/label/c.CSP_L2_Company_Information';
-import CSP_L2_Trade_Name                    from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Legal_Name                    from '@salesforce/label/c.CSP_L2_Legal_Name';
-import CSP_L2_Phone_Number                  from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address                 from '@salesforce/label/c.CSP_L2_Email_Address';
+import CSP_L2_Company_Name                  from '@salesforce/label/c.CSP_L2_Company_Name';
+import CSP_L2_Work_Location                 from '@salesforce/label/c.CSP_L2_Work_Location';
+import CSP_L2_VAT_Number                    from '@salesforce/label/c.CSP_L2_VAT_Number';
 import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
-import CSP_L2_Next_Address_Information      from '@salesforce/label/c.CSP_L2_Next_Address_Information';
-import CSP_Invalid_Email                    from '@salesforce/label/c.CSP_Invalid_Email';
+import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
-import CSP_L2_Change_Categorization_Warning from '@salesforce/label/c.CSP_L2_Change_Categorization_Warning';
 
 export default class PortalRegistrationCompanyInformation extends LightningElement {
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
 
     // inputs
     @api account;
+    @api address;
     @api originalCustomerType;
     @api customerType;
     @api countryId;
-    @api isTriggeredByRequest;
+    @api internalUser;
 
     // customer type
     @track customerTypesList;
@@ -47,8 +41,6 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @track threePicklists = false;
 
     @track isCategorizationSearchable;
-    // flag to warn user requesting access to a service/topic
-    @track isCategorizationModified = false;
 
     registrationUtilsJs;
 
@@ -58,24 +50,17 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
     @track isAddressInformationButtonDisabled;
 
-    @track isEmailValid = true;
-    @track displayInvalidEmailMessage = false;
-
+    @track localAddress;
+    @track countryOptions;
+    countryData;
+    @track countryListSet = false;
 
     // labels
     _labels = {
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
-        CSP_L2_Company_Information,
-        CSP_L2_Trade_Name,
-        CSP_L2_Legal_Name,
-        CSP_L2_Phone_Number,
-        CSP_L2_Email_Address,
         CSP_L2_Website,
-        CSP_L2_Back_to_Account_Selection,
-        CSP_L2_Next_Address_Information,        
-        CSP_Invalid_Email,
-        CSP_L2_Change_Categorization_Warning
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -84,51 +69,69 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
         this._labels = value;
     }
 
-    checkEmailValidity(){
-        if(this.localAccount.email !== ''){
-            this.registrationUtilsJs.checkEmailIsValid(`${this.localAccount.email}`).then(result=> {
-                if(result == false){
-                    let currentEmailValidity = this.isEmailValid;
-                    this.isEmailValid = false;
-                    this.checkCompletion(currentEmailValidity);
-                }
-                else{
-                    let anonymousEmail = 'iata' + this.localAccount.email.substring(this.localAccount.email.indexOf('@'));
-                    this.registrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-                        if(result == 'true'){
-                            let currentEmailValidity = this.isEmailValid;
-                            this.isEmailValid = false;
-                            this.checkCompletion(currentEmailValidity);
-                        }
-                        else{
-                            let currentEmailValidity = this.isEmailValid;
-                            this.isEmailValid = true;
-                            this.checkCompletion(currentEmailValidity);
-                        }
-                    });
-                }
-            })
+    // labels depending on the origin (internal vs portal)
+    companyInformation;
+    companyName;
+    countryLabel;
+    backToAccountSelection;
+
+
+    get vatLabel(){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c !== undefined){
+            this.localAccount.vatLabel = this.countryData.countryMap[this.localAddress.countryId].Tax_Number_label__c;
         }
         else{
-            let currentEmailValidity = this.isEmailValid;
-            this.isEmailValid = true;
-            this.checkCompletion(currentEmailValidity);
+            this.localAccount.vatLabel = CSP_L2_VAT_Number;
+        }
+        return this.localAccount.vatLabel;
+    }
+
+    get vatHelpText(){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c !== undefined){
+            return this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c;
+        }
+        else{
+            return undefined;
         }
     }
 
-    checkCompletion(currentEmailValidity){
+    get vatClass(){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_help_text__c !== undefined){
+            return 'vatItem IEFixDisplay';
+        }
+        else{
+            return 'companyItem IEFixDisplay';
+        }
+    }
+
+    get vatPlaceholder(){
+        if(this.countryData !== undefined && this.countryData.countryMap[this.localAddress.countryId].Tax_number_format__c !== undefined){
+            return this.countryData.countryMap[this.localAddress.countryId].Tax_number_format__c;
+        }
+        else{
+            return ' ';
+        }
+    }
+
+    checkCompletion(dispatchAnyway){
         var currentCompletionStatus = this.isAddressInformationButtonDisabled;
 
-        this.isAddressInformationButtonDisabled = this.localAccount.legalName === '' 
-                                                    || this.localAccount.phone === ''
-                                                    || !this.isCategorizationSearchable;
+        this.isAddressInformationButtonDisabled = this.localAccount.name === '' 
+                                                    || !this.isCategorizationSearchable
+                                                    || this.localAddress.countryId === '';
 
-        if(this.isAddressInformationButtonDisabled !== currentCompletionStatus || this.isEmailValid !== currentEmailValidity){
-            this.dispatchEvent(new CustomEvent('completionstatus',{detail : (!this.isAddressInformationButtonDisabled && this.isEmailValid)}));
+        if(dispatchAnyway || this.isAddressInformationButtonDisabled !== currentCompletionStatus){
+            this.dispatchEvent(new CustomEvent('completionstatus',{detail : (!this.isAddressInformationButtonDisabled)}));
         }
     }
 
     connectedCallback() {
+        this.localAddress = JSON.parse(JSON.stringify(this.address));
+
+        if(this.localAddress.countryId === ''){
+            this.localAddress.countryId = this.countryId;
+        }
+
         this.localAccount = JSON.parse(JSON.stringify(this.account));
 
         if(this.localAccount.customerType === ''){
@@ -144,43 +147,51 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
 
         this.fakeCategoryPicklist = [];
 
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.companyInformation = 'Account Information';
+            this.companyName = 'Account Name';
+            this.countryLabel = 'Country/Territory of the account\'s contact\'s work location';
+            this.backToAccountSelection = 'Back to Account Info';
+        }
+        else{
+            this.companyInformation = CSP_L2_Company_Information;
+            this.companyName = CSP_L2_Company_Name;
+            this.countryLabel = CSP_L2_Work_Location;
+            this.backToAccountSelection = CSP_L2_Back_to_Account_Selection;
+        }
+
         this.registrationUtilsJs = new RegistrationUtils();
 
-        Promise.all([
-            loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
-            loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css'),
-            loadScript(this, jQuery)
-        ]).then(function(){
-            this.jsLoaded = true;
+        getISOCountries().then(result=>{
+            let countryList = JSON.parse(JSON.stringify(result.countryList));
+            let optionList = this.buildOptions(countryList,false);
 
-            this.registrationUtilsJs.getUserLocation().then(result=> {
-                this.userCountryCode = result.countryCode;
-                this._initializePhoneInput();
-            });
+            this.countryData = result;
+            this.countryOptions = optionList;
 
-        }.bind(this));
-
-        this.checkEmailValidity();
+            if(this.localAddress.countryId !== undefined && this.localAddress.countryId.length > 0){
+                this.changeCountry(this.localAddress.countryId);
+            }
+            this.countryListSet = true;
+        });
 
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }
 
-@track userCountryCode;
+    /* Build option list */
+    buildOptions(dataList, includeEmpty){
+        let optionList = [];
 
-    async _initializePhoneInput(){
-        await(this.jsLoaded == true);
-        await(this.template.querySelector('[data-id="phone"]'));
+        if(includeEmpty){
+            optionList.push({ 'label': '', 'value': '' });
+        }
 
-        var input = this.template.querySelector('[data-id="phone"]');
-        var countryCode = this.userCountryCode;
-
-        window.intlTelInput(input,{
-            initialCountry: countryCode,
-            preferredCountries: [countryCode],
-            placeholderNumberType : "FIXED_LINE"
-            //utilsScript: this.utilsPath,
-            /*autoPlaceholder : "aggressive"*/
+        dataList.forEach(function (data) {
+            optionList.push({ 'label': data.Name, 'value': data.Id });
         });
+
+        return optionList;
     }
 
     setCustomerType(customerType){
@@ -196,15 +207,12 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
                     this.localAccount.customerTypeSector = result.Created_Account_Sector__c;
                     this.localAccount.customerTypeCategory = result.Created_Account_Category__c;
 
-                    if(this.isTriggeredByRequest){
-                        this.isCategorizationModified = result.DeveloperName !== this.originalCustomerType && this.isCategorizationSearchable;
-                    }
-                    this.checkCompletion();
+                    this.checkCompletion(false);
                 });
         }
         else{
             this.isCategorizationSearchable = false;
-            this.checkCompletion();
+            this.checkCompletion(false);
         }
 
         // Update customer type picklists
@@ -286,45 +294,48 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     handleInputValueChange(event){
         var inputName = event.target.name;
         var inputValue = event.target.value;
+
         this.localAccount[inputName] = inputValue;
 
-        if(inputName === 'email'){
-            this.displayInvalidEmailMessage = false;
-            var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
-            emailDiv.classList.remove('slds-has-error');
+        this.checkCompletion(false);
+    }
 
-            this.checkEmailValidity();
-        }
-        else{
-            this.checkCompletion(this.isEmailValid);
+    handleCountryChange(event){
+        let countryId = event.target.value;
+        this.changeCountry(countryId);
+    }
+
+    changeCountry(countryId){
+        if(countryId !== this.localAddress.countryId){
+            let country = this.countryData.countryMap[countryId];
+
+            this.localAddress.countryId = country.Id;
+            this.localAddress.countryCode = country.ISO_Code__c;
+            this.localAddress.countryName = country.Name;
+    
+            this.localAccount.vatNumber = '';
+    
+            this.checkCompletion(true);
         }
     }
 
     // Navigation methods
-    toAccountSelection(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
     }
 
-    @api
-    getEmailValidity(){
-        if(!this.isEmailValid){
-            this.displayInvalidEmailMessage = true;
-            var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
-            emailDiv.classList.add('slds-has-error');
-            return false;
-        }
-        return true;
-    }
-
-    toAddressInformation(){
-        if(this.getEmailValidity()){
-            this.dispatchEvent(new CustomEvent('gotostep', {detail:'4'}));
-        }
+    next(){
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     // @api methods
     @api
     getCompanyInformation(){
         return this.localAccount;
+    }
+
+    @api
+    getAddressInformation(){
+        return this.localAddress;
     }
 }

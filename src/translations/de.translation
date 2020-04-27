@@ -3030,6 +3030,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>Neuen Benutzer anlegen</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Passwort erstellen</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3302,6 +3306,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Ich habe die folgenden Bedingungen gelesen und stimme ihnen zu:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Hallo [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3354,6 +3362,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>Vorname</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Nachname</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Firmenkontoinformationen</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3368,6 +3384,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Um Ihr persönliches Profil mit Ihrem Unternehmenskonto abzugleichen, benötigen wir einige weitere Details. Auf diese Weise können wir überprüfen, ob Ihr Unternehmen bereits bei der International Air Transport Association (IATA) registriert ist.</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Weitere Einzelheiten</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>Wir konnten Ihre Adresse nicht finden. Klicken Sie auf die Schaltfläche Nächster Schritt, um zu bestätigen, dass Ihre Adresse korrekt ist.</label>
@@ -3386,6 +3406,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Zurück zu weiteren Details</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Zurück zur „Geschäftsadresse“</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3402,7 +3426,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>Profil-Vervollständigung &amp; Konto-Auswahl</label>
+        <label>Kontenauswahl &amp; zusätzliche Details</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3410,7 +3434,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Bitte geben Sie Ihre Geschäftsadresse ein.</label>
+        <label>Bitte geben Sie die Geschäftsadresse Ihres Arbeitsortes an.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3462,7 +3486,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>Land</label>
+        <label>Land/Gebiet</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3570,6 +3594,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Nächster Schritt</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Nein</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3618,7 +3646,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Wir haben es jedoch als Entwurf gespeichert, damit Sie später fortfahren können. Möchten Sie das Programm wirklich beenden?</label>
+        <label>Sind Sie sicher, dass Sie aufhören wollen?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3706,7 +3734,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Titel</label>
+        <label>Begrüßung</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3714,8 +3742,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Umsatzsteuer-Nummer</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Webseite</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Land/Gebiet Ihres Arbeitsortes</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Ja</label>
@@ -4220,6 +4256,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Akzeptieren</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Zugriff angefordert</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4340,6 +4380,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Im Rahmen unserer regelmäßigen Aktualisierungen nehmen wir einige Änderungen an unseren Bedingungen vor. Wir empfehlen Ihnen, die Dokumente vollständig zu lesen.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Vielen Dank für Ihr Feedback!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4382,6 +4426,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Erstellung von Benutzern</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Willkommen auf dem Kundenportal der IATA</label>
@@ -24483,6 +24531,14 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Datenschutz</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Nutzungsbedingungen zu</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

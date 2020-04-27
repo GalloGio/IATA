@@ -55,6 +55,10 @@
         <value xsi:type="xsd:string">Recreational</value>
     </values>
     <values>
+        <field>Partial_List_Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Placeholder_Custom_Label__c</field>
         <value xsi:nil="true"/>
     </values>

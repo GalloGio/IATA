@@ -60,6 +60,10 @@
             <translation>ผู้จัดจำหน่ายของสายการบิน</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>สนามบิน</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>สมาคม</translation>
         </picklistValues>
@@ -90,10 +94,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>บริษัทผู้ถือหุ้น</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>พันธมิตรโครงสร้างพื้นฐาน</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>
