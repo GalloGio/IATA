@@ -498,6 +498,11 @@
                     <label>IFTP</label>
                 </value>
                 <value>
+                    <fullName>Medaire</fullName>
+                    <default>false</default>
+                    <label>Medaire</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
