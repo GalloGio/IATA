@@ -57,7 +57,7 @@
                             <lightning-input data-name="contact-search" type="text" value={contactsFilteringObject.searchInput}
                                 placeholder={label.csp_Find_Contact}
                                 onchange={onchangeContactsSearchText}
-                                class="hideInputLabel grayInputPlaceholder">
+                                class="hideInputLabel grayInputPlaceholder titleTruncation">
                             </lightning-input>
                             <div if:true={showCross} class="searchBarIcon slds-m-right--large">
                                 <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>

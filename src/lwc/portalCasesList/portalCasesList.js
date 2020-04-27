@@ -7,8 +7,8 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFilteredCasesResultsPage from '@salesforce/apex/PortalCasesCtrl.getFilteredCasesResultsPage';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
-import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import companyCasesContactsPicklist from '@salesforce/apex/PortalCasesCtrl.companyCasesContactsPicklist';
+import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 //import labels
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
@@ -119,19 +119,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             this.isAdminUser = results;
         });
 
-        getCountryList()
+        getPickListValues({ sobj : 'Case', field : 'Country_concerned_by_the_query__c' })
         .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            let myCountryOptions = [];
-            let auxmyCountryOptions = [];
-            Object.keys(myResult).forEach(function (el) {
-                auxmyCountryOptions.push({ label: myResult[el], value: el });
-            });
-            //used to order alphabetically
-            auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-            myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+            let auxCountryPickOptions = JSON.parse(JSON.stringify(result));
 
-            this.countryPickOptions = this.getPickWithAllValue(myCountryOptions);
+            //used to order alphabetically
+            this.countryPickOptions = auxCountryPickOptions.sort((a, b) => {return (a.label).localeCompare(b.label)});
+            this.countryPickOptions = this.getPickWithAllValue(this.countryPickOptions);
         });
 
         companyCasesContactsPicklist({})

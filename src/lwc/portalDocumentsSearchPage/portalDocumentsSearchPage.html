@@ -10,14 +10,14 @@
                 <!-- RESULTS BY DOCUMENT CATEGORY -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
 
-                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-bottom--medium">
+                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-bottom--x-small">
                         <!-- SEARCH BAR -->
                         <div class="slds-col slds-size_1-of-1">
                             <div class="slds-p-horizontal_small aroundLightGrayBorder inputFilter borderlessInput searchInputContainer text-xsmall ">
                                 <img src={searchIconUrl}>
                                 <lightning-input name="newRecipientTextInput" 
                                  placeholder={label.CSP_SearchDocuments}
-                                    class="hideInputLabel grayInputPlaceholder"
+                                    class="hideInputLabel grayInputPlaceholder titleTruncation"
                                     value={searchText} onchange={filterInputChange}>
                                 </lightning-input>
                                 <div if:true={showCross}  class="searchBarIcon slds-m-right--large">

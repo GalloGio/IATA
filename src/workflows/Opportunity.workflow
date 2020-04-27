@@ -102,6 +102,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>simonovi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siponenp@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -109,16 +113,11 @@
             <recipient>wangw@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>wyattj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
@@ -193,6 +192,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mccorleys@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -201,7 +204,23 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>odelej@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>simonovi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siouffis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siponenp@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>walkers@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
