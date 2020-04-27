@@ -96,6 +96,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Term_Condition__c</fields>
+        <fields>Term_Condition_Version__c</fields>
+        <relatedList>Service_Term_and_Condition__c.Portal_Service__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Account_Role_Services__c.Portal_Service__c</relatedList>
     </relatedLists>
     <relatedLists>
