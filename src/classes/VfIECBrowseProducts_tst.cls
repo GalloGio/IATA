@@ -4,7 +4,7 @@
  * Version: 1.0
  * History:
  */
-@isTest(SeeAllData=true)
+@isTest
 private class VfIECBrowseProducts_tst {
 	private static Product_Category__c myProdCat;
 	private static void Init() {
