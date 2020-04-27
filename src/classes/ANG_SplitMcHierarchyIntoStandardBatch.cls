@@ -93,7 +93,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		AMS_OSCAR__c oscar = getOscarFromCase(accountGE, getOscarCase(accountGE));
 
 		if(currentThreads == finishedThreads){
-			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
+			oscar.Child_OSCAR_Status__c = processSingleBsp
+				? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE
+				: AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
 		}
 		else {
 			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;

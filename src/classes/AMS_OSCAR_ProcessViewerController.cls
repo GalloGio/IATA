@@ -75,7 +75,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
 	public boolean isParentOscar {
 		get {
-			return this.oscar.Parent_OSCAR__c == null;
+			return this.oscar.Parent_OSCAR__c == null && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE;
 		}
 	}
 	
