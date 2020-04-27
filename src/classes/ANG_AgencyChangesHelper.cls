@@ -703,8 +703,6 @@ public with sharing class ANG_AgencyChangesHelper {
 					acct.Financial_Assessment_Points__c = null;
 					acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
 					acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
-
-					changesContainer.addAccount(acct);
 				
 					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
@@ -712,6 +710,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountHE.Id);
 					}
 				}
+
+				changesContainer.addAccount(acct);
 
 				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
