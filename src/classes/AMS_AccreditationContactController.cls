@@ -577,13 +577,11 @@ public with sharing class AMS_AccreditationContactController {
 		List<String> errors = new List<String>();
 		Decimal totalOwnership = 0;
 		Boolean validRange = true;
-		Boolean hasOwner = false;
 
 		for(AccreditationContactWrapper wrapped : acWrapper) {
-			if(wrapped.ac.Financial_interest__c <> null && wrapped.ac.Agency_owner__c) {
+			if(wrapped.ac.Financial_interest__c <> null) {
 				totalOwnership += wrapped.ac.Financial_interest__c;
 				validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
-				hasOwner = true;
 			}
 		}
 
@@ -594,7 +592,7 @@ public with sharing class AMS_AccreditationContactController {
 			}
 		}
 
-		if((totalOwnership < 99.99 || totalOwnership > 100) && hasOwner) {
+		if((totalOwnership < 99.99 || totalOwnership > 100)) {
 			errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
 		}
 
