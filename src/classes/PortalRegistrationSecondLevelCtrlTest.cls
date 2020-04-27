@@ -118,12 +118,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
 	}
 
 	@IsTest
-	static void testSaveContactInfo(){
-		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
-		PortalRegistrationSecondLevelCtrl.saveContactInfo(con);
-	}
-
-	@IsTest
 	static void testGetL2Topics(){
 		List<PortalKnowledge__c> topics = PortalRegistrationSecondLevelCtrl.getL2Topics();
 	}

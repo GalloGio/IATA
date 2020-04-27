@@ -37,7 +37,6 @@ export default class PortalProfilePageHeader extends LightningElement {
     // level 2 registration variables
     @track isFirstLevelUser;
     level2RegistrationTrigger = 'profile';
-    isTriggeredByRequest = false;
     @track displaySecondLevelRegistration = false;
     @track displayAlreadyL2Popup = false;
 
