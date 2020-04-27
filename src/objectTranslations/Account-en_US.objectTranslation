@@ -2262,10 +2262,6 @@
             <translation><!-- Other --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Other Equipment Manufacturer</masterLabel>
-            <translation><!-- Other Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Other Private Sector Association</masterLabel>
             <translation><!-- Other Private Sector Association --></translation>
         </picklistValues>
