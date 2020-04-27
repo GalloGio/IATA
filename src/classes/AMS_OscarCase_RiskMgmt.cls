@@ -9,6 +9,10 @@ At the same time, bulletin memo text (sometimes dinamically calculated) will be 
 **************************************/
 
 public class AMS_OscarCase_RiskMgmt {
+
+	private static final String NOT_CHANGE_CODE_LOG_TEXT = 'NOT change code';
+	private static final String NFS_CHANGE_CODE_LOG_TEXT = 'NFS change code';
+	
 	//Check that trigger is not already running on change codes.
 	private static Boolean run = true;
 	public static Boolean runOnce(){
@@ -86,6 +90,7 @@ public class AMS_OscarCase_RiskMgmt {
 														Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId,
 														Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c,
 														Parent.IFAP_Financial_Year__c, Group_Single_Agent__c, Parent.Financial_Review_Type__c,
+														Account.ANG_Accreditation_Model__c, 
 														(SELECT Id, HOId__c, Case__c, Account__c
 														 FROM Hierarchy_Account_Selections__r)
 													FROM Case
@@ -210,28 +215,30 @@ public class AMS_OscarCase_RiskMgmt {
 				if(ccConfig.Field6__c!=null && ccToBeGenerated){
 					//NEWGEN-5318 - Get the last IFAP case from the related Account's Cases
 					Case lastIFAP;
-					if(ccConfig.Field6__c == 'LastYearIFAP.Status')
-						lastIFAP = findLastIFAP(mapAccounts.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c, c.Parent.Financial_Review_Type__c);
+					if(ccConfig.Field6__c == 'LastYearIFAP.Status'){
+						lastIFAP = IFAP_BusinessRules.findLastFinancialYearIFAP(mapAccounts.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c, c.Parent.Financial_Review_Type__c);
+					}
 
 					ccToBeGenerated = bCheckCondition(c, ccConfig.Field6__c, ccConfig.Field6Values__c.toUpperCase(), mapExistingChangeCodes, lastIFAP);
 
-					if(!CCToBeGenerated && generateNOTnotification && ccConfig.Change_Code__c == 'NOT'){
+					if(!CCToBeGenerated && generateNOTnotification && ccConfig.Change_Code__c == AMS_Utils.NOT_CHANGE_CODE){
 						generateNOTnotification = false;
-						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NOT change code'));
+						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = NOT_CHANGE_CODE_LOG_TEXT));
 					}
 				}
 
-				if(ccConfig.Field7__c != NULL && ccToBeGenerated){
+				if(ccConfig.Field7__c != null && ccToBeGenerated){
 					ccToBeGenerated = bCheckCondition(c, ccConfig.Field7__c, ccConfig.Field7Values__c.toUpperCase(), mapExistingChangeCodes);
 				}
 
 				if(ccToBeGenerated){
 
-					//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
-					if(ccConfig.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && c.Account.ANG_IsNewGenAgency__c
-							&& !mapAccounts.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(mapAccounts.get(c.AccountId).Cases, 'Closed_Non compliance')){
-
-							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
+					// NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+					if (ccConfig.Change_Code__c == AMS_Utils.NFS_CHANGE_CODE && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP
+						&& c.Account.ANG_IsNewGenAgency__c && !mapAccounts.get(c.AccountId).Cases.isEmpty()
+						&& IFAP_BusinessRules.isPreviousIFAPStatusEquals(mapAccounts.get(c.AccountId).Cases, AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE,
+							c.Account.ANG_Accreditation_Model__c, c.Parent.IFAP_Financial_Year__c, c.Parent.Financial_Review_Type__c)) {
+						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = NFS_CHANGE_CODE_LOG_TEXT));
 					} else {
 
 						if(!changeCodesToCreatePerCase.containsKey(c))
@@ -1171,27 +1178,4 @@ public class AMS_OscarCase_RiskMgmt {
 				}
 				return '';
 		}
-
-	/**
-	 * For the given Case list
-	 * find the Last IFAP case in the last Financial Year
-	 */
-	private static Case findLastIFAP(List<Case> caseList, String financialYear, String ifapType) {
-		Case lastIfapCase = null;
-		if (financialYear == null)
-			return null;
-		
-		Integer lastYearIfap = Integer.valueOf(financialYear) - 1;
-		Boolean checkIfapType = ifapType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
-		
-		for (Case c : caseList) {
-			if (c.IFAP_Financial_Year__c == String.valueOf(lastYearIfap)
-				&& (lastIfapCase == null || lastIfapCase.CreatedDate < c.CreatedDate)
-				&& (!checkIfapType || c.Financial_Review_Type__c == ifapType)) {
-				lastIfapCase = c;
-			}
-		}
-
-		return lastIfapCase;
-	}
 }
