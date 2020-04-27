@@ -7,14 +7,11 @@ import CSP_L2_Company_Information_Message from '@salesforce/label/c.CSP_L2_Compa
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
 import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
 import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
-import CSP_L2_Legal_Name from '@salesforce/label/c.CSP_L2_Legal_Name';
-import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
+import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
 
 export default class PortalRegistrationAddressInformation extends LightningElement {
 
@@ -23,6 +20,7 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
     @api address;
     @api addressSuggestions;
     @api countryId;
+    @api internalUser;
 
     @track localAddress;
 
@@ -34,17 +32,11 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         CSP_L2_Business_Address_Information,
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
-        CSP_L2_Company_Information,
         ISSP_MyProfile_SECTOR,
         ISSP_MyProfile_CATEGORY,
-        CSP_L2_Legal_Name,
-        CSP_L2_Trade_Name,
-        CSP_L2_Phone_Number,
-        CSP_L2_Email_Address,
         CSP_L2_Website,
-        CSP_L2_Business_Address_Information_Message,
         CSP_L2_Back_to_Company_Information,
-        CSP_L2_Next_Confirmation
+        CSP_L2_Next_Step
     }
     get labels() {
         return this._labels;
@@ -53,17 +45,37 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         this._labels = value;
     }
 
+    // labels depending on the origin (internal vs portal)
+    companyInformation;
+    companyName;
+    businessAddressInformationMessage;
+    backToCompanyInformation;
+
     connectedCallback() {
         this.localAddress = JSON.parse(JSON.stringify(this.address));
+
+        // define labels depending on the origin (internal vs portal)
+        if(this.internalUser){
+            this.companyInformation = 'Account Information';
+            this.companyName = 'Account Name';
+            this.businessAddressInformationMessage = 'Please provide the business address of the account\'s contact\'s work location.';
+            this.backToCompanyInformation = 'Back to Account Information';
+        }
+        else{
+            this.companyInformation = CSP_L2_Company_Information;            
+            this.companyName = CSP_L2_Company_Name;
+            this.businessAddressInformationMessage = CSP_L2_Business_Address_Information_Message;
+            this.backToCompanyInformation = CSP_L2_Back_to_Company_Information;
+        }
         this.dispatchEvent(new CustomEvent('scrolltotop'));
     }
 
-    toCompanyInformation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+    previous(){
+        this.dispatchEvent(new CustomEvent('previous'));
     }
 
-    toConfirmation(){
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'5'}));
+    next(){
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     setValidationStatus(event){
