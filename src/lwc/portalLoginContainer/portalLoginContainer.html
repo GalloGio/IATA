@@ -1,18 +1,17 @@
 <template>
     <div class="slds-grid slds-wrap containerHeight">
-        <div class="slds-col slds-large-size_5-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1 welcomePanelContainer" >
-            <!-- <img src="/csportal/s/left_panel.png" class="fixedPosition"/>-->
+        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1 welcomePanelContainer" >
             <div class="fixedPosition">
                 <c-portal-welcome-panel class="welcomePanel"></c-portal-welcome-panel>
             </div>
         </div>
 
-        <div class="slds-col slds-large-size_7-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--2 slds-large-order--2 slds-medium-order--2 bodyContent" >
+        <div class="slds-col slds-large-size_6-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--2 slds-large-order--2 slds-medium-order--2 bodyContent" >
             <div class="contentWrapper">
                 <div class="customPaddingHeader">
                     <c-portal-login-header onlanguagechange={handleLanguageChange} preventrefresh={preventrefresh}></c-portal-login-header>
                 </div>
-                <div class="slds-grid slds-grid_align-center">
+                <div class="slds-grid slds-grid_align-center fullHeight">
                     <div style="max-width:448px; width: 100%;" class="customPadding">
                         <slot name="pageBody"></slot>
                     </div>

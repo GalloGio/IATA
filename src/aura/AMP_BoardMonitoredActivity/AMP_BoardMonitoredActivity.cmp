@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:attribute name="bma" type="Objective__c" default="{ 'sobjectType': 'Objective__c'}" />
     <aura:attribute name="comment" type="Comment__c" default="{ 'sobjectType': 'Comment__c'}" />
     <aura:attribute name="accountId" type="String" />

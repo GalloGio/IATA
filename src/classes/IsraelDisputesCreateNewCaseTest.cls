@@ -115,7 +115,8 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		lstRecipient.add('Test11112@test11.com');
 
 		test.startTest();
-
+		
+		String branch = 'temp';
 		System.runAs(newUser) {
 			Boolean fifteenth = IsraelDisputesCreateNewCaseCtrl.isBeforeFifteenth();
 			lstSearchAccounts = IsraelDisputesCreateNewCaseCtrl.searchAccounts('112');
@@ -124,6 +125,7 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 			List<Id> lId = new List<Id>();
 			lId.add(insertedcase.Id);
 			IsraelDisputesCreateNewCaseCtrl.airlineEmailNotification(lId);
+			branch = IsraelDisputesCreateNewCaseCtrl.isBranch();
 		}
 
 		test.stopTest();
@@ -132,5 +134,6 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		System.assertEquals(2, lstSearchAccounts.size());
 		System.assertEquals(4, lstSearchAccountsNoEntry.size());
 		System.assertEquals('GB', cases[0].BSPCountry__c);
+		System.assertEquals('', branch);
 	}
 }

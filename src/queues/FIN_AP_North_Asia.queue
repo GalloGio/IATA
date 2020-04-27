@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>bjsap@iata.org</email>
+    <name>FIN AP - North Asia</name>
+    <queueMembers>
+        <users>
+            <user>hemt@external.iata.org</user>
+            <user>lir@iata.org</user>
+            <user>zhouyj@iata.org</user>
+            <user>huzh@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

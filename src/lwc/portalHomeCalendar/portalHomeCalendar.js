@@ -193,14 +193,30 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     updateEventClassName(data) {
+        
         if (data.lstWeeks) {
             data.lstWeeks.forEach(w => {
                 if (w.lstDays) {
                     w.lstDays.forEach(d => {
+                        let lstEventDots=[];
                         if (d.lstEvents) {
                             d.lstEvents.forEach(e => {
                                 e.className = `eventDot ${e.className}`;
+                                let eventTitle = e.title ? e.title.substr(0,e.title.indexOf('-')) : '';
+                                
+
+                                let foundEvent = false;
+                                lstEventDots.forEach(j =>{
+                                    if(j.className === e.className){
+                                        foundEvent = true;
+                                    }
+                                });
+
+                                if(!foundEvent){
+                                    lstEventDots.push({className : e.className, title: eventTitle});
+                                }
                             });
+                            d.singleLstEvents = lstEventDots;
                         }                        
                     });
                 }
