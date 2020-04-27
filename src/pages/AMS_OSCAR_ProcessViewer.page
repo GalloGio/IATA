@@ -218,7 +218,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                         }
                     }
                     
-                    if ({!oscar.STEP51__c != 'Passed'} && {!ISBLANK(oscar.Parent_OSCAR__c)} && arrayContains(fieldValueToServer,"Authorize Approval")) {
+                    if ({!oscar.STEP51__c != 'Passed'} && {!isParentOscar} && arrayContains(fieldValueToServer,"Authorize Approval")) {
                         alert('The OSCAR can\'t be Approved if Confirm Conversion step is not Passed.');
                         return 'false';
                     }

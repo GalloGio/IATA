@@ -372,7 +372,8 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 				System.assertEquals(AMS_Utils.NOT_APPLICABLE, oscars.get(0).Step51__c);
 			} else {
 				System.assertEquals(null, oscars.get(0).Parent_OSCAR__c);
-				System.assertEquals(AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED, oscars.get(0).Child_OSCAR_Status__c);
+				System.assertEquals(justBsp ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE : AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED,
+					oscars.get(0).Child_OSCAR_Status__c);
 			}
 		} else {
 			System.assertEquals(0, oscars.size());

@@ -2059,6 +2059,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>Error</label>
                 </value>
+                <value>
+                    <fullName>Finished - GE left Alone</fullName>
+                    <default>false</default>
+                    <label>Finished - GE left Alone</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -20105,6 +20110,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
                 <default>false</default>
             </values>
             <values>
