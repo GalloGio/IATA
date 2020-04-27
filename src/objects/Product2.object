@@ -925,7 +925,6 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <controllingFieldValue>IATA Branded Merchandise</controllingFieldValue>
                 <valueName>New</valueName>
             </valueSettings>
             <valueSettings>
@@ -4227,11 +4226,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <fullName>data-and-statistics</fullName>
                     <default>false</default>
                     <label>data-and-statistics</label>
-                </value>
-                <value>
-                    <fullName>IATA Branded Merchandise</fullName>
-                    <default>false</default>
-                    <label>IATA Branded Merchandise</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -18636,10 +18630,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>IATA Branded Merchandise</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
