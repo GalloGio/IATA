@@ -3422,10 +3422,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Zurück zu den Profildetails</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Kontenauswahl &amp; zusätzliche Details</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3632,10 +3628,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Postleitzahl</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Profil-Details</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Fügen Sie Ihre persönlichen Daten hinzu, um Vorschläge über personalisierte Inhalte und Dienste von International Air Transport Association (IATA) zu erhalten.</label>
@@ -34765,7 +34757,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Berichte</label>
             <name>Products</name>
         </sections>
     </reportTypes>

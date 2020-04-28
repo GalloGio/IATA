@@ -3418,10 +3418,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>返回个人资料详细信息</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>帐户选择与其他详细信息</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3628,10 +3624,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>邮政编码</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>个人资料详细信息</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>添加个人详细信息，以使 IATA 提供个性化的内容和服务。</label>
@@ -34752,7 +34744,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>报告/报表</label>
             <name>Products</name>
         </sections>
     </reportTypes>

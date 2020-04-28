@@ -997,6 +997,12 @@
                     <default>false</default>
                     <label>General Public</label>
                 </value>
+                <value>
+                    <fullName>Infrastructure Partner</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Infrastructure Partner</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

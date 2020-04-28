@@ -3421,10 +3421,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>프로필 정보로 돌아가기</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>계정 선택 및 추가 정보</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3631,10 +3627,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>우편 번호</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>프로필 정보</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>국제항공운송협회 (IATA)가 귀하의 맞춤형 콘텐츠 및 서비스를 제안해 드릴 수 있도록 개인 정보를 추가하십시오.</label>
