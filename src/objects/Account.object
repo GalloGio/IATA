@@ -13818,6 +13818,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IRIS_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LEN(Site) = 8, LEFT(Site, 7), IF(LEN(Site) = 11, LEFT(Site, 10), Site))</formula>
+        <label>IRIS Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ISS_SIS_TC_Accepted_Date__c</fullName>
         <externalId>false</externalId>
         <label>SIS TC Accepted Date</label>
