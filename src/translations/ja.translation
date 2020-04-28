@@ -3421,10 +3421,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>プロフィールの詳細に戻る</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>アカウントの選択＆詳細追加</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3631,10 +3627,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>郵便番号</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>プロフィールの詳細</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>個人情報を追加して、IATAがパーソナライズされたコンテンツとサービスを提案できるようにしましょう。</label>

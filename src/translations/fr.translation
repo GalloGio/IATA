@@ -3305,7 +3305,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
-        <label>J&#39;ai lu et j&#39;accepte les conditions suivantes:</label>
+        <label>J&apos;ai lu et j&apos;accepte les conditions suivantes:</label>
         <name>CSP_Have_Read_Terms</name>
     </customLabels>
     <customLabels>
@@ -3421,10 +3421,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Retour aux détails du profil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Sélection du compte et détails supplémentaires</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3433,7 +3429,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez indiquer l&#39;adresse professionnelle de votre lieu de travail.</label>
+        <label>Veuillez indiquer l&apos;adresse professionnelle de votre lieu de travail.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3631,10 +3627,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Code postal</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Détails du profil</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Ajoutez vos données personnelles pour permettre à IATA de suggérer du contenu et des services personnalisés.</label>
@@ -4254,6 +4246,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Services_Accept_Terms --></label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Accès demandé</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4422,7 +4418,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label>Création d&#39;utilisateur</label>
+        <label>Création d&apos;utilisateur</label>
         <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
@@ -24570,7 +24566,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>TC_CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
-        <label>Conditions d&#39;utilisation</label>
+        <label>Conditions d&apos;utilisation</label>
         <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -34798,7 +34794,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Fichiers</label>
             <name>Products</name>
         </sections>
     </reportTypes>
