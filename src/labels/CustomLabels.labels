@@ -17,6 +17,13 @@
         <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
     </labels>
     <labels>
+        <fullName>ADSR_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ADSR_Description</shortDescription>
+        <value>An overview of outstanding/recovered amounts for your airline at regional/country and defaulted agent level including the status of Financial Security Claim.</value>
+    </labels>
+    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2590,6 +2597,15 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>API URL</shortDescription>
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
+    </labels>
+    <labels>
+        <fullName>ASD_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ASD Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. Air Service Desk (ASD) consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+ASD is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to ASD, without the need for separate login details.</value>
     </labels>
     <labels>
         <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
