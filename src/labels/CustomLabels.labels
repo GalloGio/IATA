@@ -26833,13 +26833,6 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
-        <fullName>ISSP_AP_PASS_Form_Administrators_Recommendation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_Form_Administrators_Recommendation</shortDescription>
-        <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
