@@ -1,0 +1,86 @@
+<template>
+    <div class="registration-modal">
+        <div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
+            <span slot="pageBody">
+                <c-portal-custom-card-container>
+                    <span slot="cardBody">
+                        <div data-name="top" class="slds-p-vertical_large mediumTitle text-bold text-small">
+                            <span></span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={cancel}>
+                                <lightning-icon icon-name="utility:close" size="small" class="cursorPointer"
+                                    onclick={cancel}></lightning-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <template if:true={isAccountSelectionStep}>
+                                <c-portal-registration-account-selection
+                                    origin='Salesforce Platform'
+                                    internal-user=true
+                                    customer-type={selectedCustomerType}
+                                    country-id={selectedCountryId}
+                                    account-id={selectedAccountId}
+                                    search-results={searchResults}
+                                    onnextselection={navigateToAccount}
+                                    onnextcreation={goToCompanyInformation}
+                                    onscrolltotop={scrollToTop}
+                                    onstartloading={startLoading}
+                                    onstoploading={stopLoading}
+                                    oncompletionstatus={step1CompletionStatus}>
+                                </c-portal-registration-account-selection>
+                            </template>
+                            <template if:true={isCompanyInformationStep}>
+                                <c-portal-registration-company-information
+                                    internal-user=true
+                                    account={account}
+                                    address={address}
+                                    country-id={selectedCountryId}
+                                    customer-type={selectedCustomerType}
+                                    onprevious={goToAccountSelection}
+                                    onnext={goToAddressInformation}
+                                    onscrolltotop={scrollToTop}
+                                    oncompletionstatus={step2CompletionStatus}>
+                                </c-portal-registration-company-information>
+                            </template>
+                            <template if:true={isAddressInformationStep}>
+                                <c-portal-registration-address-information
+                                    internal-user=true
+                                    account={account}
+                                    address={address}
+                                    country-id={selectedCountryId}
+                                    onprevious={goToCompanyInformation}
+                                    onnext={goToConfirmation}
+                                    onscrolltotop={scrollToTop}
+                                    onstartloading={startLoading}
+                                    onstoploading={stopLoading}
+                                    oncompletionstatus={step3CompletionStatus}>
+                                </c-portal-registration-address-information>
+                            </template>
+                            <template if:true={isConfirmationStep}>
+                                <c-portal-registration-confirmation
+                                    internal-user=true
+                                    address={address}
+                                    account={account}
+                                    country-id={selectedCountryId}
+                                    ongobackfromconfirmation={goBackFromConfirmation}
+                                    onscrolltotop={scrollToTop}
+                                    onstartloading={startLoading}
+                                    onstoploading={stopLoading}
+                                    onsecondlevelregistrationcompletedactiontwo={navigateToAccount}>
+                                </c-portal-registration-confirmation>
+                            </template>
+                        </div>
+                    </span>
+                </c-portal-custom-card-container>        
+            </span>
+            
+        </div>
+
+        <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+            <div class="slds-spinner slds-spinner_medium" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </div>
+</template>
