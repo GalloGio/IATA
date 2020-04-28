@@ -5,5 +5,10 @@
     <targets>
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
-    </targets>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightningCommunity__Default">
+			<property type="String" label="Search Form" name="searchForm" datasource="Simple,Popup,Multipicklist" />
+		</targetConfig>
+	</targetConfigs>
 </LightningComponentBundle>

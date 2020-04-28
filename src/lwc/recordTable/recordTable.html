@@ -1,0 +1,138 @@
+<template>
+	<div id="containerDiv" onmousemove={handlemousemove} onmouseup={handlemouseup}
+		ondblclick={handledblclickresizable}
+		class={mainContainerClass}
+		onscroll={tableOuterDivScrolled}>
+		<div class={headerContainerClass}>
+			<table class={tableClass}>
+				<thead>
+					<tr>
+						<template for:each={fields} for:item="field" for:index="fieldIndex">
+							<th class={field._headerClass} scope="col" style={fixedWidth} aria-label={field.label} key={field.targetField} data-field={field.targetField}>
+								<a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1" onclick={handleclickcolumn}>
+									<span class="slds-assistive-text">Sort by: </span>
+									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
+										<span if:false={field.helptext} class={field._headerLabelClass} title={field.label}>{field.label}</span>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext}>
+											{field.label}
+										</c-advanced-helptext>
+										<span class="slds-icon_container slds-icon-utility-arrowdown" if:true={sortable}>
+											<svg class="slds-icon slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+												<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+											</svg>
+										</span>
+									</div>
+								</a>
+								<div class="slds-resizable" if:true={resizable}>
+									<input type="range" aria-label="Close Date column width" class="slds-resizable__input slds-assistive-text" max="1000" min="20" tabindex="-1" />
+									<span class="slds-resizable__handle" onmousedown={handlemousedown}>
+										<span class="slds-resizable__divider"></span>
+									</span>
+								</div>
+							</th>
+						</template>
+						<th scope="col">
+							<div class="slds-has-flexi-truncate">
+							</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<!-- slds-border_right slds-border_left -->
+        <div id="tableViewInnerDiv" onscroll={tableScrolled} class={bodyContainerClass}>
+			<table class={tableClass} >
+				<thead>
+					<tr>
+						<template for:each={fields} for:item="field" for:index="fieldIndex">
+							<th class={field._headerClass} scope="col" style={fixedWidth} aria-label={field.label} key={field.targetField} data-field={field.targetField}>
+								<a if:false={field._isFirstCol} class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
+									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>&nbsp;</div>
+								</a>
+								<a if:true={field._isFirstCol} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1" onclick={handleclickcolumn}>
+									<span class="slds-assistive-text">Sort by: </span>
+									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
+										<span if:false={field.helptext} class={field._headerLabelClass} title={field.label}>{field.label}</span>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext}>
+											{field.label}
+										</c-advanced-helptext>
+										<span class="slds-icon_container slds-icon-utility-arrowdown" if:true={sortable}>
+											<svg class="slds-icon slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+												<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+											</svg>
+										</span>
+									</div>
+								</a>
+								<div class="slds-resizable" if:true={resizable}>
+									<input type="range" aria-label="Close Date column width" class="slds-resizable__input slds-assistive-text" max="1000" min="20" tabindex="-1" />
+									<span class="slds-resizable__handle" onmousedown={handlemousedown}>
+										<span class="slds-resizable__divider"></span>
+									</span>
+								</div>
+							</th>
+						</template>
+					</tr>
+				</thead>
+                <tbody>
+					<template for:each={records} for:item="record" for:index="recordIndex">
+						<tr key={record._key} onclick={handleClickRow} data-index={recordIndex}>
+							<template for:each={fields} for:item="field" for:index="fieldIndex">
+								<th if:true={field._isFirstCol} key={field.targetField} scope="row" style={fixedWidth}>
+									<div class="slds-truncate dv-dynamic-width slds-var-p-vertical_small" style={fixedWidth}>
+										<c-record-field
+											key={field.targetField}
+											record-index={recordIndex}
+											properties={field}
+											record={record}
+											records={records}
+											onrecordfieldupdate={onRecordFieldUpdate}
+											variant="table">
+										</c-record-field>
+									</div>
+								</th>
+								<td if:false={field._isFirstCol} key={field.targetField} style={fixedWidth}>
+									<div class="slds-truncate dv-dynamic-width slds-var-p-vertical_small" style={fixedWidth}>
+										<c-record-field
+											key={field.targetField}
+											record-index={recordIndex}
+											properties={field}
+											record={record}
+											records={records}
+											onrecordfieldupdate={onRecordFieldUpdate}
+											variant="table">
+										</c-record-field>
+									</div>
+								</td>
+							</template>
+							<td></td>
+						</tr>
+					</template>
+					<tr>
+						<template for:each={fields} for:item="field" for:index="fieldIndex">
+							<th if:true={field._isFirstCol} key={field.targetField} scope="row" class="slds-no-row-hover">
+								<div if:true={field._isShowTotalLabel} class="slds-truncate dv-dynamic-width slds-var-p-vertical_small" style={fixedWidth}>
+									Sum
+								</div>
+							</th>
+							<td if:false={field._isFirstCol} key={field.targetField} class="slds-no-row-hover">
+								<div class="slds-truncate dv-dynamic-width slds-var-p-vertical_small" if:true={field.displayTotal} style={fixedWidth}>
+									<c-record-field
+										key={field.targetField}
+										record-index={totalRowIndex}
+										properties={field}
+										records={records}
+										onrecordfieldupdate={onRecordFieldUpdate}
+										variant="table-column-total">
+									</c-record-field>
+								</div>
+							</td>
+						</template>
+						<td></td>
+					</tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+     
+</template>
+</template>

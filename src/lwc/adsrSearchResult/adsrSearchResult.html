@@ -1,21 +1,189 @@
 <template>
     <c-portal-page-container>
-        <c-iata-content-section title="Search results" slot="componentContent">
-            <div slot="body">
-                <p if:false={hasResults}>There aren't results to show.</p>
-            
-                <div if:true={hasResults}>
-                    <lightning-datatable
-                        data={tableData}
-                        columns={tableColumns}
-                        key-field="operation"
-                        hide-checkbox-column="true"
-                    ></lightning-datatable>
-                </div>
-                <!--<div if:true={tableContent} for:each={tableContent} for:item="tableRow" key={tableRow.operation}>
+            <div slot="componentContent">
 
-                </div>-->
-            </div>
-        </c-iata-content-section>
+				<!-- Welcome area -->
+				<div class={welcomeAreaClass}>
+					<div class="slds-var-p-vertical_medium">
+						<div class="slds-text-align_center">
+							<img class="slds-var-p-vertical_medium" src={searchIconUrl} height="96px" width="96px"/>
+							<div class="text-large text-bold text-linkBlue">{welcomeAreaTitle}</div>
+							<div class="text-xsmall text-gray">{welcomeAreaSubtitle}</span></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Loading spinner area -->
+				<div class={spinnerClass}>
+					<section class="slds-var-p-vertical_xx-large">
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</section>
+				</div>
+
+				<!-- Search box and buttons -->
+				<div class="slds-grid slds-wrap" if:true={hasResults}>
+					<div class="slds-col slds-size_4-of-12">
+						<c-iata-input
+							if:true={displayOperationQuickFilter}
+							name="market"
+							label="Operation"
+							value={filterParams.market}
+							placeholder="Find Operation"
+							icon={searchIcon}
+							icon-styling="top: 1.4rem;"
+							hide-label
+							onkeyup={handleSearchTable}></c-iata-input>
+						<c-iata-input
+							if:true={displayIATACodeQuickFilter}
+							name="iataCode"
+							label="IATA Code"
+							value={filterParams.iataCode}
+							placeholder="Find IATA Code"
+							icon={searchIcon}
+							icon-styling="top: 1.4rem;"
+							hide-label
+							onkeyup={handleSearchTable}></c-iata-input>
+					</div>
+					<div class="slds-col slds-size_8-of-12 slds-align-bottom slds-text-align_right">
+						<form action="" method="POST" target="_blank">
+							<input type="hidden" name="data" value=""/>
+							<input type="hidden" name="params" value=""/>
+							<input type="hidden" name="filters" value=""/>
+							<input type="hidden" name="fields" value=""/>
+							<input type="hidden" name="type" value=""/>
+						</form>
+						<c-iata-button
+							icon="utility:download"
+							icon-right
+							label="XLS"
+							onclick={exportCSV}
+							variant="link"
+							class="slds-var-p-right_small">
+						</c-iata-button>
+						<c-iata-button
+							icon="utility:download"
+							icon-right
+							label="PDF"
+							onclick={exportPDF}
+							variant="link"
+							class="slds-var-p-right_small">
+						</c-iata-button>
+						<c-iata-popup-form
+							if:false={detailTable}
+							name="filter"
+							header="Filter"
+							fields={filterFields}
+							button-label={popupFilterLabel}
+							button-variant="light-contained"
+							button-alignment="left"
+							button-width="medium"
+							button-small-text
+							button-icon={filterIcon}
+							button-icon-size="small"
+							button-icon-right
+							onchange={handleSearchTable}
+							class={popupFilterClass}>
+						</c-iata-popup-form>
+					</div>
+				</div>
+
+				<!-- Results area -->
+				<section class={resultsClass}>
+					<h2>{title}</h2>
+					<article class="slds-var-p-vertical_xx-large">
+					
+						<!-- Error -->
+						<div class="slds-var-m-vertical_medium" if:true={displayError}>
+							<c-scoped-notifications variant="error">
+								<p>An error has ocurred.</p>
+								<lightning-formatted-rich-text value={_errorMEssage}></lightning-formatted-rich-text>
+							</c-scoped-notifications>
+						</div>
+
+						<!-- No Results -->
+						<div if:true={displayNoResults}>
+							<div class="slds-var-m-vertical_medium">
+								<div class="slds-text-align_center">
+									<img class="slds-var-p-vertical_medium" src={searchIconNoResultsUrl}/>
+									<div class="text-large text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
+									<div class="text-xsmall text-gray">{label.CSP_Search_NoResults_text2} the selected filters</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Table -->
+						<div class={tableClass}>
+							<div class="slds-var-m-vertical_medium" if:true={displayChinaMarketWarningMessage}>
+								<c-scoped-notifications variant="warning">
+									Financial Security Status is not available in Agencies located in China. Please contact our support channels via the CS Portal.
+								</c-scoped-notifications>
+							</div>
+							<c-iata-button
+								if:true={displayBackButton}
+								label="Back"
+								variant="link"
+								icon="utility:back"
+								icon-left
+								onclick={handleBack}
+								class="slds-var-p-bottom_medium"
+								></c-iata-button>
+							<c-record-table
+								class="slds-var-p-bottom_medium"
+								if:true={hasResults}
+								fields={tableColumns}
+								records={tableData}
+								default-column-width="15rem"
+								sortable
+								resizable
+								clickable-rows={tableClickableRows}
+								fixed-header
+								fixed-first-column
+								bordered
+								wrap-header
+								highlight-first-column
+								highlight-totals
+								show-total-label
+								filter-function={tableFilter}
+								onclickrow={handleClickRow}
+								></c-record-table>
+							<div class="slds-var-m-top_medium" if:true={showingDetailedResults}>
+								<c-scoped-notifications variant="info">
+									<h3>Note on Agents under Status Repayment Agreement:</h3>
+									<p>
+										Agreement on repayment schedule plan has been reached.  Agent will be reactivated after the completion of the repayment plan and satisfying the conditions of the resolutions.  Failure to honor the repayment agreement will result in removal of the agent from the agency list. Last Installment date will be on the date identified in the table above.
+									</p>
+								</c-scoped-notifications>
+							</div>
+							<div class="slds-var-m-top_medium" if:true={showingDetailedResults}>
+								<c-scoped-notifications variant="info">
+									<p>Airlines should note that the data provided by IATA is based on the data available to IATA at the time of publication. In some cases, the final amount recovered from an agent may differ to the amounts indicated herein, due to a variety of reasons beyond the control of IATA. Amongst these reasons, where an amount is indicated as pending encashment the data may not be current due to some financial securities not having been received at the time of publication.</p>
+									<p>Additionally, there may be cases where IATA is required to adjust an agent's proration where discrepancies are detected. The information provided herein is therefore for reference only, and should not be used by the recipient for business or financial planning until the recipient has received confirmation from IATA that there will be no further adjustments to the data.</p>
+								</c-scoped-notifications>
+							</div>
+
+							<div class="slds-var-m-vertical_medium" if:true={showingDetailedResults}>
+								<ol class="slds-list_ordered slds-list_vertical-space">
+									<template for:each={tableColumns} for:item="column">
+										<template if:true={column.description}>
+											<li key={column.targetField} class="slds-item">
+												<span>{column.label}: </span>
+												<lightning-formatted-rich-text value={column.helptext}></lightning-formatted-rich-text>
+											</li>
+										</template>
+										<template if:false={column.description}>
+											<li key={column.targetField} class="slds-item" if:true={column.helptext}>
+												<span>{column.label}: </span>
+												<lightning-formatted-rich-text value={column.helptext}></lightning-formatted-rich-text>
+											</li>
+										</template>
+									</template>
+								</ol>
+							</div>
+						</div>
+					</article>
+
+				</section>
+					
+			</div>
     </c-portal-page-container>
 </template>

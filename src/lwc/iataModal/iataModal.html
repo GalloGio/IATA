@@ -1,8 +1,6 @@
 <template>
-    <template if:true={isOpen}>
-        <div class="fade-in" style="height: 640px;">
-            <section role="panel" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                aria-describedby="modal-content-id-1" class={modalPanelCss}>
+	<section role="panel" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class={modalPanelClass}>
                 <div class={modalContainerBox}>
                     <header if:false={hideHeader} class="slds-modal__header">
                         <button if:true={showhomebutton} class="slds-button slds-button_icon oss-modal-button_home"
@@ -11,18 +9,14 @@
                             </lightning-icon>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <button if:true={showclosebutton}
-                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        <button if:true={showclosebutton} class="slds-button slds-button_icon slds-modal__close"
                             title="Close" onclick={closeModal}>
-                            <lightning-icon icon-name="utility:close" size="x-small" variant="inverse">
-                            </lightning-icon>
+                            <c-iata-icon icon="utility:close" size="x-small" fill="#999999"></c-iata-icon>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                            <slot name="header">&nbsp;</slot>
-                        </h2>
+						<slot name="header" class="slds-hyphenate">&nbsp;</slot>
                     </header>
-                    <div class={bodyCss} id="bodyDiv1" data-item="bodyDiv" name="bodyDiv">
+                    <div class={bodyClass} id="bodyDiv1" data-item="bodyDiv" name="bodyDiv">
                         
                         <div if:true={displayIcon}>
                             <div class="slds-grid slds-grid_vertical slds-grid_vertical-align-center">
@@ -52,7 +46,5 @@
                 </div>
 
             </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
-        </div>
-    </template>
+            <div class={backdropClass}></div>
 </template>

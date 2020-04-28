@@ -1,0 +1,42 @@
+<template>
+	<div class={formElementClass}>
+		<label class="slds-form-element__label" for="text-id" if:false={hideLabel}>
+			<abbr if:true={required} class="slds-required" title="required">* </abbr>{label}
+		</label>
+		<div class={formElementControlClass}>
+			<c-iata-icon
+				if:true={hasIcon}
+				icon={icon}
+				icon-class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+				icon-styling={iconStyling}
+				size="x-small"
+				no-svg={noSvg}>
+			</c-iata-icon>
+			<input
+				id="text-id"
+				class="slds-input"
+				type={type} 
+				name={name}
+				placeholder={placeholder}
+				value={value}
+				title={title}
+				required={required}
+				disabled={disabled}
+				readonly={readonly}
+				onchange={handleChange}
+				onkeydown={handleKeyDown}
+				onkeyup={handleKeyUp}
+				onkeypress={handleKeyPress}/>
+			<button
+				if:true={clearButton}
+				class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+				title="Clear"
+				onclick={clear}>
+				<svg class="slds-button__icon slds-icon-text-light" aria-hidden="true">
+					<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+				</svg>
+				<span class="slds-assistive-text">Clear</span>
+			</button> 
+		</div>
+	</div>
+</template>

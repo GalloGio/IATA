@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 export default class IataModal extends LightningElement {
 
-    @track isOpen = false;
+	@track isOpen = false;
     @api showclosebutton = false;
     @api showhomebutton = false;
     @api roundCorners = false;
@@ -33,9 +33,9 @@ export default class IataModal extends LightningElement {
     @api size = "medium";
 
     @track modalContainerBox = "slds-modal__container";
-    @track bodyCss = "slds-modal__content slds-p-around_medium ";
+    @track bodyClass = "slds-modal__content slds-p-around_medium slds-text-align_left ";
 
-    //options: neutral | success | warning | error
+    //options: neutral | info | success | warning | error
     @api variant = "neutral";
 
     //options: success | warning | error
@@ -58,11 +58,22 @@ export default class IataModal extends LightningElement {
     closeModal() {
         this.isOpen = false
         this.dispatchEvent(new CustomEvent('modalclose'));
-    }
+	}
+	
+	@api
+	scrollTo(position) {
+		this.template.querySelector("div[name='bodyDiv']").scrollTop = position;
+	}
 
-    get modalPanelCss() {
-        return "panel slds-modal slds-modal_" + this.size + " slds-fade-in-open";
-    }
+    get modalPanelClass() {
+		return "panel slds-modal slds-modal_" + this.size +
+				(this.isOpen ? " slds-fade-in-open" : "");
+	}
+	
+	get backdropClass() {
+		return "slds-backdrop" +
+			(this.isOpen ? " slds-backdrop_open" : "");
+	}
 
     get icon(){
         return this.variantIcon === "success" ? "utility:check" : this.variantIcon === "warning" ? "utility:warning" : "utility:close";

@@ -416,23 +416,32 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 	return contactToServices;
 }
 
+/**
+ * ------------------------------------------------------------
+ * WMO-900 - 2019-01-19 - csaramagaio
+ * changed lstToReturn from list to map
+ * add logic to remove ADSR when user has not access to BSP
+ * ------------------------------------------------------------
+ */
 @AuraEnabled
 public static List<ServiceWrapper> getUserAccessGrantedServices(){
+	User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c,Contact.Preferred_Language__c,LastLoginDate FROM User WHERE Id = :UserInfo.getUserId()];	
+	String contactId = userAux.ContactId;
+	Contact_Sel contactSelector = new Contact_Sel();
+	Contact contAcc = contactSelector.getContactById(contactId);
 
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
 
+	Boolean hasBSPOrCASS = false;
 	Set<Id> serviceIds = new Set<Id>();
 
-	List<ServiceWrapper> lstToReturn = new List<ServiceWrapper>();
+	Map<String, ServiceWrapper> lstToReturn = new Map<String, ServiceWrapper>();
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
 		if(serviceWrapperAux.status == PortalServicesCtrl.PORTAL_ACCESS_GRANTED) {
-			lstToReturn.add(serviceWrapperAux);
+			lstToReturn.put(serviceWrapperAux.recordService.Id, serviceWrapperAux);
 			serviceIds.add(serviceWrapperAux.recordService.Id);
 		}
 	}
-
-	User userAux = [SELECT Id, ContactId,Contact.Preferred_Language__c FROM User WHERE Id = :UserInfo.getUserId()];
-	String contactId = userAux.ContactId;
 
 	List<Portal_Applications__c> lstPA = getNonRequestableServicesList(contactId);
 	List<ServiceWrapper> lstServiceWrapper = new List<ServiceWrapper>();
@@ -440,7 +449,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 	if(!lstPA.isEmpty()) {
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		// Non-requestable services for the contact might have Portal Service Access records, defining if the service belongs to the favorites
-		List<Portal_Application_Right__c> portalServiceAccessesList = [SELECT Id, Portal_Application__r.Id, Is_Favorite__c FROM Portal_Application_Right__c WHERE Contact__r.Id =:contactId];
+		List<Portal_Application_Right__c> portalServiceAccessesList = [SELECT Id, Portal_Application__r.Id, Is_Favorite__c FROM Portal_Application_Right__c WHERE Contact__r.Id =:contactId]; 
 		Map<Id, Portal_Application_Right__c> portalServiceAccessesMap = new Map<Id, Portal_Application_Right__c>();
 		for(Portal_Application_Right__c par : portalServiceAccessesList){
 			portalServiceAccessesMap.put(par.Portal_Application__r.Id, par);
@@ -457,13 +466,31 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 				else{
 					wrappedService.isFavorite = false;
 				}
-				lstServiceWrapper.add(wrappedService);
+				//lstServiceWrapper.add(wrappedService);
+				lstToReturn.put(wrappedService.recordService.Id, wrappedService);
 			}
 		}
-		lstToReturn.addAll(lstServiceWrapper);
+		//lstToReturn.addAll(lstServiceWrapper);
 	}
 
-	return lstToReturn;
+	for(ServiceWrapper serviceWrapperAux : lstToReturn.values()){
+		if(serviceWrapperAux.recordService.Name == 'BSPLink' || serviceWrapperAux.recordService.Name == 'CASSLink'){
+			hasBSPOrCASS = true;
+		}
+	}
+
+	List<String> listToRemove = new List<String>();
+	for(ServiceWrapper serviceWrapperAux : lstToReturn.values()){
+		if(serviceWrapperAux.recordService.Name == 'ADSR' && (!hasBSPOrCASS || (!contAcc.Airline_Credit_Risk_Manager__c && !contAcc.Distribution_Risk_Expert__c))) {
+			listToRemove.add(serviceWrapperAux.recordService.Id);
+		}
+	}
+
+	for(String serviceId : listToRemove){
+		lstToReturn.remove(serviceId);
+	}
+
+	return lstToReturn.values();
 }
 
 @AuraEnabled

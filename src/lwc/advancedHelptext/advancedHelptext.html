@@ -1,0 +1,17 @@
+<template>
+	<div class="tooltip">
+		<!-- use icon variant in the future -->
+		<!--a href="javascript:void(0)" aria-describedby="help" onmouseover={handleOver} onmouseout={handleOut}>
+			<span class="slds-icon_container slds-icon-utility-info">
+				<svg class="slds-icon slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true">
+					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use>
+				</svg>
+				<span class="slds-assistive-text">Click here to learn more</span>
+			</span>
+		</a-->
+		<div class="slds-popover slds-popover_tooltip tooltiptext" role="tooltip">
+			<div class="slds-popover__body"><lightning-formatted-rich-text value={content}></lightning-formatted-rich-text></div>
+		</div>
+		<slot></slot>
+	</div>
+</template>
