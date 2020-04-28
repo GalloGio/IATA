@@ -228,6 +228,15 @@
         <label>ENCODED:{!FilterNames.Task_DelegatedTasks}</label>
     </listViews>
     <listViews>
+        <fullName>Medaire_Approvals_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Medaire Approvals</label>
+        <queue>Medaire_Approvals</queue>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>OpenTasks</fullName>
         <columns>SUBJECT</columns>
         <columns>WHO_NAME</columns>
@@ -2013,13 +2022,4 @@ function updateTask( )
 
 updateTask();</url>
     </webLinks>
-    <listViews>
-        <fullName>Medaire_Approvals_Task</fullName>
-        <filterScope>Queue</filterScope>
-        <label>Medaire Approvals</label>
-        <queue>Medaire_Approvals</queue>
-        <sharedTo>
-            <allInternalUsers/>
-        </sharedTo>
-    </listViews>
 </CustomObject>
