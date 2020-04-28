@@ -3,9 +3,15 @@
 
         <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
     
-        <template if:false={displayAcceptTerms}>
-            <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
+        <template if:true={displayAcceptTerms}>
+            <c-portal-services-terms-and-conditions-modal 
+                portal-service-id={gcsPortalServiceId}
+                contact-id={userInfo.Id}
+                oncancel={logOut} 
+                onaccept={acceptTerms}>
+            </c-portal-services-terms-and-conditions-modal>
         </template>
+
     
     <template if:true={displayRegistrationConfirmation}>
         <c-portal-registration-first-level-confirmation oncloseregistrationpopup={logOut} onhideregistrationpopup={hideRegistration}
@@ -25,7 +31,6 @@
     <template if:true={displaySecondLevelRegistration}>
         <c-portal-registration-second-level 
             trigger={level2RegistrationTrigger}
-            is-triggered-by-request={isTriggeredByRequest}
             onclosesecondlevelregistration={closeSecondLevelRegistration} 
             onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
         </c-portal-registration-second-level>
