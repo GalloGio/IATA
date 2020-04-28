@@ -56,6 +56,10 @@
             <translation>Pemasok Maskapai Penerbangan</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Bandara</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Asosiasi</translation>
         </picklistValues>
@@ -86,10 +90,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>Perusahaan Induk</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Mitra Infrastruktur</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>

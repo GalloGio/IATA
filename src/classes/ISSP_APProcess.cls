@@ -2684,16 +2684,18 @@ global without sharing class ISSP_APProcess {
 	**/
 	private static map<String,list<AmazonFile__c>> retrieveMapAmazonFiles(Id caseId) {
 		map<String,list<AmazonFile__c>> mapAmazonFiles = new map<String,list<AmazonFile__c>>();
-		for (AmazonFile__c file: [
-				SELECT Id, File_Identifier__c
-				FROM AmazonFile__c
-				WHERE Case__c = :caseId]) {
-			list<AmazonFile__c> listFiles = mapAmazonFiles.get(file.File_Identifier__c);
-			if (listFiles==null) {
-				listFiles = new list<AmazonFile__c>();
+		if(caseId != null){
+			for (AmazonFile__c file: [
+					SELECT Id, File_Identifier__c
+					FROM AmazonFile__c
+					WHERE Case__c = :caseId]) {
+				list<AmazonFile__c> listFiles = mapAmazonFiles.get(file.File_Identifier__c);
+				if (listFiles==null) {
+					listFiles = new list<AmazonFile__c>();
+				}
+				listFiles.add(file);
+				mapAmazonFiles.put(file.File_Identifier__c, listFiles);
 			}
-			listFiles.add(file);
-			mapAmazonFiles.put(file.File_Identifier__c, listFiles);
 		}
 		return mapAmazonFiles;
 	}

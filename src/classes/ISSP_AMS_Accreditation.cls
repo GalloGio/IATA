@@ -2875,10 +2875,14 @@ public without sharing class ISSP_AMS_Accreditation {
 		AMS_Accreditation_Contact__c contactToUpsert = newContact;
 		if (contactType == 'Trained Staff') {
 			contactToUpsert = trainedStaffContact;
-			if (!(isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No')
-				&& contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA'
-				&& contactToUpsert.Training_dangerous_goods_completed__c == null) {
+			if (!(isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No') && contactToUpsert.Type_Of_Certificate__c != 'BCH' && contactToUpsert.Type_Of_Certificate__c != 'DGA' && contactToUpsert.Type_Of_Certificate__c != 'TSA' && contactToUpsert.Type_Of_Certificate__c != 'Experience' && contactToUpsert.Training_dangerous_goods_completed__c == null) {
 				contactToUpsert.Training_dangerous_goods_completed__c.addError(Label.ISSP_YouMustEnter);
+				contactSaved = false;
+				return;
+			}
+			
+			if(String.IsBlank(contactToUpsert.Air_cargo_transport_business_exp__c) && contactToUpsert.Type_Of_Certificate__c == 'Experience') {
+				contactToUpsert.Air_cargo_transport_business_exp__c.addError(Label.ISSP_YouMustEnter);
 				contactSaved = false;
 				return;
 			}

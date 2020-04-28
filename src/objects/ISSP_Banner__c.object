@@ -1457,9 +1457,9 @@
                     <label>General Sales Agent</label>
                 </value>
                 <value>
-                    <fullName>Infrastructure Partner</fullName>
+                    <fullName>Airport</fullName>
                     <default>false</default>
-                    <label>Infrastructure Partner</label>
+                    <label>Airport</label>
                 </value>
                 <value>
                     <fullName>Internal Use</fullName>
@@ -2939,7 +2939,7 @@ _blank = new window</description>
         <description>This field allows to specify if the banner is visible to all users, or only to users with id card, or only to users without id card.</description>
         <externalId>false</externalId>
         <label>Banner Availability</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>

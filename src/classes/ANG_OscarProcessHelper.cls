@@ -1595,7 +1595,7 @@ global class ANG_OscarProcessHelper {
 
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
-		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
+		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN','03-APPLICATION WITHDRAWN'};
 		Set<String> processes = AMS_Utils.oscarNewProcesses;
 		processes.addall(AMS_Utils.oscarNewGenNewAppProcesses);
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'};
