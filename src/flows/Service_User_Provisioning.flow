@@ -2,157 +2,23 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <processMetadataValues>
-            <name>apexSelection</name>
+            <name>ActionCallType</name>
             <value>
-                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
+                <stringValue>process</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_1_A2</name>
-        <label>Unassign Medaire Permission Set</label>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>MedAire User Access</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>MedAire User Access</label>
         <locationX>100</locationX>
-        <locationY>300</locationY>
-        <actionName>PermissionSetAssignments</actionName>
-        <actionType>apex</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Remove</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Name</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputPermissionSetName</name>
-            <value>
-                <stringValue>Medaire</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputContact</name>
-            <value>
-                <elementReference>myVariable_current.Contact__r</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>apexSelection</name>
-            <value>
-                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_4_A1</name>
-        <label>Assign Medaire Permission Set</label>
-        <locationX>400</locationX>
         <locationY>200</locationY>
-        <actionName>PermissionSetAssignments</actionName>
-        <actionType>apex</actionType>
+        <actionName>MedAire_User_Access</actionName>
+        <actionType>flow</actionType>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -169,7 +35,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -181,7 +47,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>Portal_Application_Right__c</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -190,233 +56,9 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>inputContact</name>
+            <name>SObject</name>
             <value>
-                <elementReference>myVariable_current.Contact__r</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Add</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Name</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputPermissionSetName</name>
-            <value>
-                <stringValue>Medaire</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>apexSelection</name>
-            <value>
-                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_6_A1</name>
-        <label>Unassign Medaire Permission Set</label>
-        <locationX>600</locationX>
-        <locationY>200</locationY>
-        <actionName>PermissionSetAssignments</actionName>
-        <actionType>apex</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputContact</name>
-            <value>
-                <elementReference>myVariable_current.Contact__r</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Remove</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Name</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputPermissionSetName</name>
-            <value>
-                <stringValue>Medaire</stringValue>
+                <elementReference>myVariable_current</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -431,9 +73,6 @@
         <label>myDecision</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision3</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
@@ -463,198 +102,20 @@
                         <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.Right__c</leftValueReference>
+                <leftValueReference>myVariable_current.Portal_Application__r.Functional_Role__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Access Requested</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_1_pmetdec</targetReference>
-            </connector>
-            <label>Status is Access Requested</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision3</name>
-        <label>myDecision3</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision5</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_4</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Right__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Access Granted</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_4_A1</targetReference>
-            </connector>
-            <label>Status is Access Granted</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>2.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision5</name>
-        <label>myDecision5</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_6</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Right__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Access Denied</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_6_A1</targetReference>
-            </connector>
-            <label>Status is Access Denied</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>myRule_1_pmetdec</name>
-        <label>Previously Met Decision</label>
-        <locationX>100</locationX>
-        <locationY>100</locationY>
-        <defaultConnector>
-            <targetReference>myRule_1_A1</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
-        <rules>
-            <name>myRule_1_pmetnullrule</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>MedAire</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>Previously Met - Null</label>
-        </rules>
-        <rules>
-            <name>myRule_1_pmetrule</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_old.Right__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Access Requested</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Previously Met - Prev</label>
+            <label>MedAire?</label>
         </rules>
     </decisions>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>&quot;Medaire access request for &quot; &amp; [Portal_Application_Right__c].Contact__c.FirstName &amp; &quot; &quot; &amp; [Portal_Application_Right__c].Contact__c.LastName &amp; &quot; (&quot; &amp; [Portal_Application_Right__c].Contact__c.Account.Name  &amp; &quot;).&quot;</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_2_myRule_1_A1_3354166177</name>
-        <dataType>String</dataType>
-        <expression>&quot;Medaire access request for &quot; &amp; {!myVariable_current.Contact__r.FirstName} &amp; &quot; &quot; &amp; {!myVariable_current.Contact__r.LastName} &amp; &quot; (&quot; &amp; {!myVariable_current.Contact__r.Account.Name}  &amp; &quot;).&quot;</expression>
-    </formulas>
-    <interviewLabel>Service_User_Provisioning-20_InterviewLabel</interviewLabel>
+    <description>Process to manage changes to Portal Service Application records for Services. The Process will invoke a sub-process for managing the activities related to onboarding a User for a particular Service.</description>
+    <interviewLabel>Service_User_Provisioning-33_InterviewLabel</interviewLabel>
     <label>Service User Provisioning</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -681,166 +142,6 @@
         </value>
     </processMetadataValues>
     <processType>Workflow</processType>
-    <recordCreates>
-        <name>myRule_1_A1</name>
-        <label>Create Task</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
-        <connector>
-            <targetReference>myRule_1_A2</targetReference>
-        </connector>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Description</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Description</field>
-            <value>
-                <stringValue>Please click on the link under &#39;Related To&#39; and then click &#39;Edit&#39; before choosing the &#39;Access Status&#39;.</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Assigned To ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue>Group;User</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideLabel</name>
-                <value>
-                    <stringValue>Medaire_Approvals</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Queue</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>OwnerId</field>
-            <value>
-                <stringValue>00G3N000001RaSaUAK</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Subject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Formula</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Subject</field>
-            <value>
-                <elementReference>formula_2_myRule_1_A1_3354166177</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Related To ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue>ACCA_Service_Request__c;AMS2GDP_Log__c;AMS_Accreditation_Organization__c;AMS_Address__c;AMS_Affiliation__c;AMS_Agency_A_Change_code_History__c;AMS_Agency_Profile__c;AMS_Agency__c;AMS_Certificate_Request__c;AMS_Inspection__c;AMS_OSCAR_Event__c;AMS_OSCAR__c;AMS_Operation__c;AMS_Owner__c;AMS_Person__c;AMS_Settlement_System__c;AMS_eBulletin_Profile__c;ANG_Agency_Risk_Event__c;ANG_RHC_Information__c;APXTConga4__Composer_QuickMerge__c;APXTConga4__Conga_Email_Staging__c;APXTConga4__Conga_Email_Template__c;AWS_S3_Object__c;Account;Address_Role_Business_Context__c;Airline_Input__c;Airline_Suspension__c;Asset;AssetRelationship;Backlog_history__c;BatchError__c;BatchNumber__c;Business_Context__c;CRMfusionDBR101__Duplicate_Warning__c;CSS_Tracking__c;Campaign;Card_Visibility__c;Case;Cases_Open__c;Certification__c;ChannelProgram;ChannelProgramLevel;Charge_Request__c;CommSubscriptionConsent;Comment__c;Complaint_Action__c;Complaint__c;ContactRequest;Contract;ContractLineItem;Country_Profile__c;Currency_Center_Survey__c;Custom_Related_case__c;DSE__DS_DuplicateBean__c;DSE__DS_Duplicates__c;Data_Submission__c;EBC_Campaign_Email_Tracking__c;EBC_Campaign__c;EF_Billing_Agreement__c;EF_Contact_EF_Contract__c;EF_Contact_Relationship__c;EF_Material_Line_Item__c;ENZ__FTPAttachmentAccessLog__c;E_F_Asset__c;E_and_F_Account_Role_Detail__c;E_and_F_Contact_Role_Detail__c;EmailTemplate__c;Entitlement;FDS_KPI_Reporting__c;Financial_Assessment_Result__c;Financial_Institution__c;Financial_Security__c;IATA_Process_Orchestrator_Step_Action__c;IATA_Process_Orchestrator__c;ICCS_Checklist__c;ID_Card_Application__c;Instant_Surveys__c;Integration_Log__c;KPI_Value__c;Lesson_Learned__c;ListEmail;LiveAgentSession;LiveChatTranscript;LocalGovernance_Meeting__c;LocalGovernance__c;Local_Bank_Mandate_Checklist__c;Mange_Fees_Checklist__c;Objective__c;One_Id_User_Applications__c;Operational_Improvements__c;Opportunity;Order;Participant__c;Participation_Application_Requirement__c;Participation_Online_Application__c;PartnerFundAllocation;PartnerFundClaim;PartnerFundRequest;PartnerMarketingBudget;PartyConsent;PortalUserLocaleSetting__c;Product2;Quality__c;Recommendations_Visibility__c;Release_Task__c;Release__c;Requirement_Basic__c;SFDC_Acct_Plan__c;SFDC_Script__c;SFDC_Strategy__c;ServiceContract;ServiceResource;Services_Rendered__c;Solution;Support_Service_Survey__c;Test_Object_for_Admin__c;Test_Plan__c;Test_Scripts__c;Work_Order__c;Zuora__CustomerAccount__c;Zuora__Payment__c;Zuora__SubscriptionProductCharge__c;Zuora__SubscriptionProductFeature__c;Zuora__SubscriptionRatePlanChargeTier__c;Zuora__SubscriptionRatePlan__c;Zuora__Subscription__c;dglc__Live_Chat_Message__c;eTSP_Certification__c;metazoa3__snapshot_asset__c;metazoa3__snapshot_push__c;operational_Calendar__c;unbabelapi__Unbabel_Translation_Request__c</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>WhatId</field>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordCreates>
     <startElementReference>myDecision</startElementReference>
     <status>Active</status>
     <variables>

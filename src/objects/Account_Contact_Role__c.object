@@ -622,6 +622,10 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -681,6 +685,10 @@
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -748,6 +756,10 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -813,6 +825,10 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -872,6 +888,10 @@
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

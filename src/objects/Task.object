@@ -2013,4 +2013,13 @@ function updateTask( )
 
 updateTask();</url>
     </webLinks>
+    <listViews>
+        <fullName>Medaire_Approvals_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Medaire Approvals</label>
+        <queue>Medaire_Approvals</queue>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
 </CustomObject>
