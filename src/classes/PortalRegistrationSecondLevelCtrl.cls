@@ -347,9 +347,9 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 		String s = Network.getLoginUrl(networks[0].Id);
 
-		Integer i = s.indexOf(networks[0].UrlPathPrefix);
+		Integer i = s.indexOf(Label.CSP_PortalPath);
 
-		s = s.substring(0, i-1) + Label.CSP_PortalPath;
+		s = s.substring(0, i) + Label.CSP_PortalPath;
 
 		return s;
 	}
