@@ -60,12 +60,13 @@ public class PortalDocumentsCtrlTest {
 			insert cwm;
 
 			ContentVersion content = new ContentVersion();
-			content.ContentURL = 'http://www.salesforce.com/';
 			content.Title = 'ContentVersion Test Portal Documents';
-			content.Country_of_publication__c = 'All - Globally';
+			content.Country_of_publication__c = 'Belgium';
 			content.Country_visibilty__c = 'All - Globally';
 			content.Document_Category__c = 'Calendars';
 			content.User_status_access__c = 'Approved User;Approved Admin';
+			content.PathOnClient ='test';
+			content.versiondata=EncodingUtil.base64Decode('Unit Test Attachment Body');
 
 			ContentVersion content2 = new ContentVersion();
 			content2.ContentURL = 'http://www.salesforce.com/';
@@ -85,6 +86,18 @@ public class PortalDocumentsCtrlTest {
 				ContentDocumentId=cv2.contentDocumentId
 			);
 			insert cwd;
+
+
+			insert new Notification_template__c (
+				Subject__c = 'Some subject',
+				Message__c = 'Some message',
+				Type__c = 'Information',
+				Notification_color__c = '#FF5E4D',
+				Admins_Users__c = 'User',
+				Expire_in_days__c = 3,
+				Identifier__c = 'New_Doc_Version_Available',
+				language__c='English'
+			);			
 		}
 	}
 
@@ -185,5 +198,77 @@ public class PortalDocumentsCtrlTest {
 				
 			}
 		Test.stopTest();
+	}
+
+
+	@IsTest
+	static void testNotifyUsersOfNewVersionInsert(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents'];
+		
+		Test.startTest();
+		System.runAs(testUser) {
+			
+			//Bookmark document
+			PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);	
+		
+		}
+
+		ContentVersion cvNew = new ContentVersion();		
+			cvNew.Title = 'ContentVersion Test3 Portal Documents';			
+			cvNew.PathOnClient ='test';
+			cvNew.versiondata=EncodingUtil.base64Decode('Unit Test Attachment Body2');
+			cvNew.sent_Date__c=System.Now()+(2/24);
+			cvNew.contentDocumentId=testContent[0].contentDocumentId;
+
+		insert cvNew;
+
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
+	}
+
+
+	@IsTest
+	static void testNotifyUsersOfNewVersionUpdate(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents' and isLatest=true];
+		
+		Test.startTest();
+			System.runAs(testUser) {				
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);	
+			
+			}
+			contentVersion cv=testContent[0];
+			cv.sent_date__c=system.NOW()+(2/24);//adds 2h to datetime
+
+			update cv;
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
+	}
+
+	@IsTest
+	static void testTriggerNotificationManually(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents' and isLatest=true];
+		
+		Test.startTest();
+			System.runAs(testUser) {				
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);			
+			}
+			
+			//Validation test
+			CSP_Utils.triggerUserNotification(null);
+			
+			CSP_Utils.triggerUserNotification(testContent[0].id);
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
 	}
 }

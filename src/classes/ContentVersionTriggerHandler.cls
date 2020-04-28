@@ -1,5 +1,14 @@
 public class ContentVersionTriggerHandler {
 
+	private class ContentVersionTriggerException extends Exception{}
+
+	public List<ContentVersion> triggerNew = (List<ContentVersion>) Trigger.new;
+	public Map<Id, ContentVersion> oldMap = (Map<Id,ContentVersion>) Trigger.oldMap;
+
+	// ************************************************************
+	// ****************** distribution methods ********************
+	// ************************************************************
+
 	/* */
 	public static Set<Id> getAllActiveCurrencyCenterContactIds() {
 		Set<Id> setOfContacts = new Set<Id>();
@@ -17,14 +26,11 @@ public class ContentVersionTriggerHandler {
 
 	/*All the logic for after insert should go into this*/
 
-	public static void afterInsertContentVersionTriggerHandler() {
+	public void afterInsertContentVersionTriggerHandler() {
 
 		String orgWideEmail = 'IATA Noreply';
 
-		List<ContentVersion> newReportList = (List<ContentVersion>) trigger.New;
-
-		for (ContentVersion cv: newReportList) {
-
+		for (ContentVersion cv:  (List<ContentVersion>)Trigger.new) {
 			String emailReportTemplate = '';
 			if (cv.Title.contains('CurrencyCenterCurrencyRepatriation')) {
 				emailReportTemplate = 'Currency_Center_New_Monthly_Report_Notification';
@@ -81,7 +87,54 @@ public class ContentVersionTriggerHandler {
 					System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> No contacts with access to Currency Center service');
 				}
 			}
+
+
+			if(cv.createdDate <= cv.sent_date__c){
+				notifyUsers(cv.ContentDocumentId,cv.title);
+			}
+		}	
+	}
+
+
+	
+	public void afterUpdateContentVersionTriggerHandler() {
+		for (ContentVersion cv: triggerNew) {
+			if(cv.isLatest==true && (cv.sent_date__c!= oldMap.get(cv.id).sent_date__c) && cv.createdDate <= cv.sent_date__c){
+				ContentVersionTriggerHandler.notifyUsers(cv.ContentDocumentId,cv.title);
+			}
 		}
+	}
+
+
+	//Once a new version in uploaded to salesforce the system needs to notify users that have the document bookmarked in the CS Portal
+	//@param docId: Content Document Id of the document that has a new version uploaded
+	//@param docTitle: Title of the document
+	//Class covered in: PortalDocumentsCtrlTest
+	@future
+	private static void notifyUsers(id docId,string docTitle){
+		set<id> usrIdSubscribedSet =new set<id>();
+		//get all users that have this file bookmarked
+		for(EntitySubscription es: [Select SubscriberId from EntitySubscription where parentId =:docId]){
+			usrIdSubscribedSet.add(es.SubscriberId);
+		}
+
+		//get contactInformation from the users
+		list<Contact> contactList= [SELECT id,Preferred_Language__c FROM Contact WHERE id in (select contactid from user  where id in:usrIdSubscribedSet)];
+		
+		Notification_template__c templ;
+		try{
+			//Get notification template
+			templ=[SELECT id,Subject__c,Message__c,Expire_in_days__c,Alert_Contact_By_Email__c,Type__c,CriticalNotification__c,Language__C,Notification_color__c,
+			( SELECT id,Subject__c,Message__c,Expire_in_days__c,Alert_Contact_By_Email__c,Type__c,CriticalNotification__c,Language__C,Notification_color__c FROM Notification_templates__r)
+			FROM Notification_template__c WHERE Identifier__c='New_Doc_Version_Available'];
+		}catch(DMLException e){
+			throw new ContentVersionTriggerException('No Email Template found');		
+		}			
+				
+		Map<String, list<String>> fieldBindingByGroupMap = new Map<String, list<String>>();
+			fieldBindingByGroupMap.put(null,new list<String>{docTitle});
+		//Trigger mechanism to generate and send the portal notifications
+		ISSP_NotificationUtilities.sendNotification(contactList, templ,null, fieldBindingByGroupMap,null);
 	}
 
 }

@@ -5,6 +5,7 @@ public with sharing class CSP_Utils {
 		public String selfRegistrationUrl {get;set;}
 	}
 
+	public class portalException extends Exception{}
 	@AuraEnabled
 	public static LoginConfig getAuthConfig(){
 		Id networkId = Network.getNetworkId();
@@ -395,8 +396,46 @@ public with sharing class CSP_Utils {
 		public String url { get; set; }
 		@AuraEnabled
 		public String recordsString { get; set; }
-
 	}
+
+	public class searchDetailsWrapper {
+		@AuraEnabled
+		public String searchInput {get; set;}
+		@AuraEnabled
+		public String firstLetter {get; set;}
+		@AuraEnabled
+		public String sortField {get; set;}
+		@AuraEnabled
+		public String sortDirection {get; set;}
+		@AuraEnabled
+		public Integer requestedPage {get; set;}
+	}
+
+
+	//trigger mechanism to generate the portal notifications of the new document version
+	//@param cvId: Content Version Id of the new version that was released
+	//Class covered in: PortalDocumentsCtrlTest	
+	@AuraEnabled
+	public static void triggerUserNotification(string cvId){
+		try{
+
+			if(string.isEmpty(cvId)){
+				return;
+			}
+			//To trigger the notification, the sent_Date__c value needs to be larger than the createdDate,
+			//hence the current datetime being sent
+			update new contentVersion(
+				id=cvId,
+				sent_date__c=system.now()
+			);
+		}catch(Exception e){
+			System.debug(LoggingLevel.FINE, e.getMessage());
+			throw new portalException(Label.ISSP_ANG_GenericError);
+
+		}
+
+	}	
+
 
 
 }
