@@ -24,11 +24,11 @@
     </values>
     <values>
         <field>Fields_Displayed__c</field>
-        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet</value>
+        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet,IATACode__c</value>
     </values>
     <values>
         <field>Fields_Targeted_Exact_Match__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">IATACode__c</value>
     </values>
     <values>
         <field>Fields_Targeted_Partial_Match__c</field>
