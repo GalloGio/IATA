@@ -143,13 +143,20 @@ public class ANG_RiskEventGenerator {
 				}
 			}
 
-			if(objectName == 'Case'){
-				fields.add('Account.ANG_Accreditation_Model__c');
-				fields.add('ParentId');
-				fields.add('Parent.RecordTypeId');
-				fields.add('Parent.IFAP_Financial_Year__c');
-				fields.add('Parent.Financial_Review_Type__c');
-				reQuery = true;
+			switch on objectName {
+				when 'Case' {
+					fields.add('Account.ANG_Accreditation_Model__c');
+					fields.add('ParentId');
+					fields.add('Parent.RecordTypeId');
+					fields.add('Parent.IFAP_Financial_Year__c');
+					fields.add('Parent.Financial_Review_Type__c');
+					reQuery = true;
+				}
+				when 'AMS_OSCAR__c' {
+					fields.add('New_Parent__c');
+					fields.add('ANG_Type_Of_Change__c');
+					fields.add('(SELECT ID, Account__c FROM AMS_Process_Detail__r)');
+				}
 			}
 
 			//INC-484721
@@ -162,8 +169,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				if(objectName == 'AMS_OSCAR__c') fields.add('ANG_Type_Of_Change__c');
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, ' + String.join(new List<String>(fields), ', ') + (objectName == 'AMS_OSCAR__c' ? ', New_Parent__c, (SELECT ID, Account__c FROM AMS_Process_Detail__r)' :'') + ' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, ' + String.join(new List<String>(fields), ', ') + ' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e;
 				else {
