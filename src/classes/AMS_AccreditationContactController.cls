@@ -576,30 +576,16 @@ public with sharing class AMS_AccreditationContactController {
 	public List<String> validateOwnership() {
 		List<String> errors = new List<String>();
 		Decimal totalOwnership = 0;
-		Boolean validRange = true;
 
 		for(AccreditationContactWrapper wrapped : acWrapper) {
 			if(wrapped.ac.Financial_interest__c <> null) {
 				totalOwnership += wrapped.ac.Financial_interest__c;
-				validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
-			}
-		}
-
-		for(AccountWrapper aWrapped : accountWrapper) {
-			if(aWrapped.financialInterest <> null) {
-				totalOwnership += aWrapped.financialInterest;
-				validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
 			}
 		}
 
 		if((totalOwnership < 99.99 || totalOwnership > 100)) {
 			errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
 		}
-
-		if(!validRange) {
-			errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
-		}
-
 		return errors;
 	}
 
