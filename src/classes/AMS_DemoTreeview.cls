@@ -5,7 +5,6 @@ public class AMS_DemoTreeview {
 
 	public Account currentAccount {get;set;}
 	public Account parentAccount {get;set;}
-	public Boolean isHQ {get;set;}
 	public AMS_OSCAR__c currentOscar {get;set;}
 	public Map<Id,String> accreditationAreas {get;set;}
 	public Map<String,String> accreditationAreasOKNOK {get;set;}
@@ -88,56 +87,77 @@ public class AMS_DemoTreeview {
 								from Account  where id =: contextId];
 	}
 
-	public Map <Account,List<Account>> getHierchyChilds(){
-
-		//Only works for a 3 level hierarchy
-
-		Map <Account,List<Account>> accountHierMap = new Map <Account,List<Account>>();
-
-		//AMS_Agencies_Hierarchy__c currentHierarchy = [select id, (select id,Child_Account__c,Parent_Account__c from AMS_Agencies_relationships__r) from AMS_Agencies_Hierarchy__c where id =: this.Parent.hierarchy__c];
-
-		boolean existAcctInfo = false;
-		acctsMap = new Map<Id,Account>();
-		for(AMS_Agencies_relationhip__c auxRelfirstChild : [select Id,Parent_Account__c,Child_Account__c,Hierarchy__c, Parent_Account__r.IATACode__c, Child_Account__r.IATACode__c from AMS_Agencies_relationhip__c where Parent_Account__c =: this.parentAccount.id])
-		{
-			// get Accts Info in the first loop
-			if(!existAcctInfo){
-				acctsMap = getAccountsInfo(auxRelfirstChild.Hierarchy__c);
-				existAcctInfo = true;
-
+	public Map<Account, List<Account>> getHierchyChilds() {
+		Map<Account, List<Account>> accountHierMap = new Map<Account, List<Account>>();
+		
+		boolean firstRun = true;
+		this.acctsMap = new Map<Id, Account>();
+		for (AMS_Agencies_relationhip__c relFirstLevel : [SELECT Id, Parent_Account__c, Child_Account__c, Hierarchy__c,
+																 Parent_Account__r.IATACode__c, Child_Account__r.IATACode__c
+															 FROM AMS_Agencies_relationhip__c
+															 WHERE Parent_Account__c = :this.parentAccount.Id]) {
+			if (firstRun) { // get Accts Info in the first loop
+				firstRun = false;
+				this.acctsMap = getFullHierarchyAccountsInfo(relFirstLevel.Hierarchy__c);
 			}
-
-
-			accountHierMap.put(acctsMap.get(auxRelfirstChild.Child_Account__c),new List<Account>());
-
+			
+			accountHierMap.put(this.acctsMap.get(relFirstLevel.Child_Account__c), new List<Account>());
 		}
-
-		for(AMS_Agencies_relationhip__c auxRelSecondChild : [select Id,Parent_Account__c,Child_Account__c,Hierarchy__c,Parent_Account__r.IATACode__c, Child_Account__r.IATACode__c from AMS_Agencies_relationhip__c where Parent_Account__c in : accountHierMap.keyset()])
-		{
-			accountHierMap.get(acctsMap.get(auxRelSecondChild.Parent_Account__c)).add(acctsMap.get(auxRelSecondChild.Child_Account__c));
-
+		
+		for (AMS_Agencies_relationhip__c relSecondLevel : [SELECT Id, Parent_Account__c, Child_Account__c, Hierarchy__c,
+																  Parent_Account__r.IATACode__c, Child_Account__r.IATACode__c
+															  FROM AMS_Agencies_relationhip__c
+															  WHERE Parent_Account__c IN :accountHierMap.keyset()]) {
+			accountHierMap.get(acctsMap.get(relSecondLevel.Parent_Account__c)).add(acctsMap.get(relSecondLevel.Child_Account__c));
 		}
-
+		
 		return accountHierMap;
-
 	}
 
-	private Map<Id,Account> getAccountsInfo (Id hierarchyID){
-
-		Set<Id> acctIds = new Set<Id>();
-
-		for (AMS_Agencies_relationhip__c relHier : [select id,Child_Account__c,Parent_Account__c,Parent_Account__r.IATACode__c, Child_Account__r.IATACode__c from AMS_Agencies_relationhip__c where Hierarchy__c = : hierarchyID])
-		{
-			if(!acctIds.contains(relHier.Child_Account__c)) acctIds.add(relHier.Child_Account__c);
-			if(!acctIds.contains(relHier.Parent_Account__c)) acctIds.add(relHier.Parent_Account__c);
+	public class HierarchyWrapper {
+		public Account account { get; set; }
+		public List<Account> children { get; set; }
+		public Boolean hasChildren {
+			get {
+				return !children.isEmpty();
+			}
 		}
+		public HierarchyWrapper(Account account, List<Account> children) {
+			this.account = account;
+			this.children = children;
+		}
+	}
 
-		Map<Id,Account> acctsInfo =
-			new Map <Id,Account> ([select id,Name, IATACode__c, Status__c, BillingCountry, BillingCity, Location_Type__c,Location_Class__c
-								from Account where id in :acctIds]);
+	public List<HierarchyWrapper> fullHierarchy {
+		get {
+			if (fullHierarchy == null) {
+				Map<Account, List<Account>> m = getHierchyChilds();
+				fullHierarchy = new List<HierarchyWrapper>();
+				for (Account a : m.keySet())
+					fullHierarchy.add(new HierarchyWrapper(a, m.get(a)));
+			}
 
-		return acctsInfo;
+			return fullHierarchy;
+		}
+		set;
+	}
 
+	private Map<Id, Account> getFullHierarchyAccountsInfo(Id hierarchyId) {
+		
+		Set<Id> acctIds = new Set<Id>();
+		
+		for (AMS_Agencies_relationhip__c relHier : [SELECT id, Child_Account__c, Parent_Account__c, Parent_Account__r.IATACode__c,
+														Child_Account__r.IATACode__c
+													FROM AMS_Agencies_relationhip__c
+													WHERE Hierarchy__c = :hierarchyId]) {
+			acctIds.add(relHier.Child_Account__c);
+			acctIds.add(relHier.Parent_Account__c);
+		}
+		
+		return new Map<Id, Account>([SELECT id, Name, IATACode__c, Status__c, BillingCountry, BillingCity, Location_Type__c,
+										 Location_Class__c
+									 FROM Account
+									 WHERE id IN :acctIds]);
 	}
 
 	private Map<Id,String> fetchAccreditationAreas(){
