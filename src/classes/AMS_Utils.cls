@@ -382,6 +382,8 @@ public without sharing class AMS_Utils {
 	public static final String ACCREDITATION_GOSTANDARD = 'GoStandard';
 	public static final String ACCREDITATION_GOGLOBAL = 'GoGlobal';
 
+	public static final String NEW_HE_GOGLOBAL = 'New HE GoGlobal';
+
 	public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
 
 	public static final String ARC_TRAVEL_AGENT_USA_ONLY = 'ARC Travel Agent (USA Only)';

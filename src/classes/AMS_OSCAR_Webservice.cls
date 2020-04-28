@@ -141,7 +141,7 @@ global class AMS_OSCAR_Webservice {
 										 Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar.Id, Financial_Assessment_requested__c = currentDate);
 
 				if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
-					ifapCase.Subject = ifapCase.Subject.replaceAll(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.ACCREDITATION_GOGLOBAL);
+					ifapCase.Subject = ifapCase.Subject.replace(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY, AMS_Utils.NEW_HE_GOGLOBAL);
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
 				}
