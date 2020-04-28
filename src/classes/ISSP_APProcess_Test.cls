@@ -2469,7 +2469,6 @@ private class ISSP_APProcess_Test
 			ctrl.changeIsPassAirlineMethod();
 
 			System.assert(ctrl.isPassAirline);
-			System.debug('ctrl.passParam: '+ctrl.passParam);
 			System.assertEquals(ctrl.passParam, '&airline=PASS');
 		}
 
@@ -2499,8 +2498,6 @@ private class ISSP_APProcess_Test
 										  FROM IATA_ISO_Country__c
 										  WHERE ISO_Code__c =:testCase.IFAP_Country_ISO__c
 										 LIMIT 1];
-
-		System.debug('isocountry: '+isocountry);
 
 
 

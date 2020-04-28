@@ -570,6 +570,9 @@ global without sharing class ISSP_APProcess {
 					AP_Country_specs__c apcdef = AP_Country_specs__c.getValues('DEFAULT-BankMandate');
 					BankMandateUrl = apcdef.Download_URL__c;
 				}
+				if(isPASS){
+					BankMandateUrl = PageReference.forResource('Airline_PASS_Local_Account_Beneficiary').getUrl();
+				}
 
 				if (isBSP || isCASS || isPASS) {
 					// check if all mandatory files were uploaded
@@ -821,7 +824,7 @@ global without sharing class ISSP_APProcess {
 		String queryString = 'SELECT ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c,Airline_wish_to_join_ICCS__c,Contact_Resp_Job_Title__c,Contact_Resp_F_Name__c,'+
 						'Contact_Resp_L_Name__c,Contact_Resp_Email__c,ANG_Enable_NewGen__c,Id,Receive_HOT_files__c,Default_Commission_Rate__c,'+
 						'Hot_files_delivery_format__c,Submitted_to_IATA__c,VAT_Tax_number_in_your_home_country__c,Online_carrier_in_the_BSP_country__c,Colombia_City_selection__c,'+
-						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c,'+
+						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c,Resp_Phone__c,Type_of_Change_Requested__c,'+
 						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Change_Requested__c,Type_of_Settlement__c';
 		if(isBSP){
 			queryString += ',Type_of_participation_desired__c,ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
@@ -830,7 +833,7 @@ global without sharing class ISSP_APProcess {
 			'Participate_in_any_Commission_Control__c,Participate_in_any_Remit_scheme__c,Accept_payment_Cards_for_BSP_ticket__c,Card_brand_accepted_for_BSP_ticket__c,Other_Card_brand_accepted_for_BSP_ticket__c,'+
 			'Join_BSP_ECCB__c,Local_CC_Settlement_Scheme__c,Visa_merchant_number__c,Visa_Name_of_Acquirer_or_Processor__c,American_Express_Merchant_Number__c,'+
 			'American_Express_Name_of_Acquirer__c,Diners_Merchant_Number__c,Diners_Name_of_Acquirer__c,Master_Card_Merchant_Number__c,Master_Card_Name_of_Acquirer__c,'+
-			'Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c';
+			'Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c,Maximum_Commission_Rate__c,Minimum_Commission_Rate__c';
 		}
 		if(isCASS){
 			queryString += ',Airline_Intra_Europe_Flights__c,Company_Registration_number__c,Name_of_business_comm_assoc__c,Capital_amount_of_the_business__c,Airline_Invoice_Address__c,Territory_Percentage__c,'+
@@ -2316,7 +2319,7 @@ global without sharing class ISSP_APProcess {
 				Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
 				BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
 				ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
-				SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,
+				SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,VAT_Number__c,
 				(SELECT Id FROM Authorized_Signatories_Packages__r)
 				FROM Account
 				WHERE Id = :hqId
@@ -2337,6 +2340,10 @@ global without sharing class ISSP_APProcess {
 		strParentBillingState = hqAccount.BillingState;
 		strParentBillingCode = hqAccount.BillingPostalCode;
 		strParentBillingCountry = hqAccount.BillingCountry;
+		if(isPassAirline && String.isBlank(newForm.VAT_Tax_number_in_your_home_country__c)){
+			newForm.VAT_Tax_number_in_your_home_country__c = hqAccount.VAT_Number__c;
+		}
+
 	}
 
 	Public Id retrieveAirlineConcerned(Account hq, String DesignatorCode, String IATACode, String CountryCode, String AL_Name, Id AL_Id) {
@@ -3418,9 +3425,6 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		for(AP_Country_Requierment__c isoJoiningCountry : isoListJoining){
-			/*if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
-				existingPassCountries.add(isoJoiningCountry.Country__r.Name);
-			}*/
 			if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
 				selectedPassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
 			}
@@ -3431,7 +3435,6 @@ global without sharing class ISSP_APProcess {
 				possiblePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
 			}
 		}
-		System.debug('DB:: activePassCountries'+activePassCountries);
 	}
 
 	public List<passCountriesWrapper> fetchWrapperCaseCountries(Case passCase){

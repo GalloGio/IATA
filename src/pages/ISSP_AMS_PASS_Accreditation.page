@@ -22,17 +22,8 @@
 
     <style>
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
-        }
-
-       .pbBody {
-        padding-left:10px !important;
-       }
-
-       .pbBody a{color:#337ab7 !important}
-
-        .bPageBlock {
-            border-top-width : thin !important;
         }
 
         .bEditBlock input {
@@ -41,10 +32,6 @@
 
        .btn {
             padding: 2px 12px !important;
-        }
-
-        .btn-progressBar-PASS {
-            padding: 2px 40px !important;
         }
 
         .btn-primary {
@@ -82,23 +69,21 @@
         .errorMsg {color:#d74c3b}
 
         .progress-bar-off {
-                color:#6BBBEA;
-                font-weight:bold;
-                background-image:none !important;
-                background-color:transparent !important;
-                border-right:2px solid white;
-        }
-
-        body .bPageBlock .pbBody .pbSubheader{
-                background-image: url('') !important;
-                background-color:  #1797c0;
-                color: #fff;
+            color:#6BBBEA;
+            font-weight:bold;
+            background-image:none !important;
+            background-color:transparent !important;
+            border-right:2px solid white;
         }
 
         body .bPageBlock .pbBody .summary-subsection .pbSubheader{
                 background-image: url('') !important;
                 background-color: initial;
                 color: initial;
+        }
+
+        body .secondaryPalette.bPageBlock{
+            border-bottom: none !important;
         }
 
         .pbSubheader {
@@ -112,7 +97,7 @@
         }
 
         .tbFooter {
-         text-align:right;
+            text-align:right;
         }
 
         .requiredBlock {
@@ -153,8 +138,7 @@
         .col1_inner {width:25%; vertical-align: text-top;}
         .col2_inner {width:25%; vertical-align: text-top;}
 
-         .row1 {padding-bottom:16px; vertical-align: text-top;}
-
+        .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
     <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
     <script>
@@ -215,6 +199,12 @@
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
                 console.log('no empty voffice '+vOfficeType);
+                if(operationType =='Postal_Service'){
+                    document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
+                    hasPermission = true;
+                    vOfficeType ='PASS';
+                    operationType = 'Freight_Forwarder';
+                }
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
@@ -222,9 +212,6 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
 
-                    if(vOfficeType.substring(idx + 3).trim() == 'PASS'){
-                        operationType = 'Freight_Forwarder';
-                    }
 
                     // NHO -
                     console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
@@ -277,20 +264,20 @@
                     <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
                         <apex:outputText value="{!lblStepA}" escape="false"/>
                     </div>
-                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%">
-                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="disableCommandButtonAndTabs()" oncomplete="gotoStep1('Freight_Forwarder', '3');if(hasPermission != true) return false;"  id="Next3" reRender="step1Form">
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%"> 
+                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('Postal_Service', '3');if(hasPermission != true) return false;" id="Next3" reRender="step1Form">
                             <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                             <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepB, lblNoCStepC)}" escape="false"/>
                         </apex:commandLink>
                     </div>
                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="disableCommandButtonAndTabs()" oncomplete="gotoStep1('Freight_Forwarder', '4');if(hasPermission != true) return false;" id="Next4" reRender="step1Form">
+                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="disableCommandButtonAndTabs()" oncomplete="gotoStep1('Postal_Service', '4');if(hasPermission != true) return false;" id="Next4" reRender="step1Form">
                             <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                             <apex:outputText value="{!lblStepC}" escape="false"/>
                         </apex:commandLink>
                     </div>
                      <div class="progress-bar iata-tab progress-bar-off" role="progressbar" onclick="this.onclick=function(){return false;}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
-                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="disableCommandButtonAndTabs()" oncomplete="gotoStep1('Freight_Forwarder', '5');if(hasPermission != true) return false;"  id="Next5" reRender="step1Form">
+                        <apex:commandLink styleclass="link-white" action="{!save}" onclick="disableCommandButtonAndTabs()" oncomplete="gotoStep1('Postal_Service', '5');if(hasPermission != true) return false;"  id="Next5" reRender="step1Form">
                             <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                             <apex:outputText value="{!lblStepD}" escape="false"/>
                         </apex:commandLink>
@@ -317,33 +304,19 @@
                         </apex:outputText>
                     </apex:column>
                 </apex:dataTable>
-                <div style="text-align:center;">
-                    <apex:actionStatus id="buttonLoadingStep1">
-                        <apex:facet name="stop"><apex:outputPanel >
-                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form" onclick="disableCommandButtonAndTabs()" id="CancelButton"/>
-                            <apex:commandButton styleclass="btn btn-default" action="{!save}" oncomplete="gotoStep1('Freight_Forwarder', '3');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" onclick="disableCommandButtonAndTabs()" reRender="step1Form"
-                            id="NextButton"/>
-                        </apex:outputPanel></apex:facet>
-                        <apex:facet name="start"><apex:outputPanel >
-                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
-                            <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
-                        </apex:outputPanel></apex:facet>
-                    </apex:actionStatus>
-                </div>
                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                     <apex:actionStatus id="buttonLoadingStep1">
                     <apex:facet name="stop">
                         <apex:outputPanel >
-                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form" onclick="disableCommandButtonAndTabs()" id="CancelButton"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!save}" oncomplete="gotoStep1('Freight_Forwarder', '3');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" onclick="disableCommandButtonAndTabs()" reRender="step1Form"
-                id="NextButton"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('Postal_Service', '3');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="loadPageOptions(); setArrowListeners();"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"  oncomplete="loadPageOptions();"/>
                         </apex:outputPanel>
                     </apex:facet>
                     <apex:facet name="start">
-                    <apex:outputPanel >
-                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
-                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right"  value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
-                    </apex:outputPanel>
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                        </apex:outputPanel>
                     </apex:facet>
                     </apex:actionStatus>
                 </apex:pageBlockButtons>

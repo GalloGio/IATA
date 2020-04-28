@@ -18414,14 +18414,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Please accept the Terms and Conditions before submitting your Agency Accreditation application to IATA.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Accept_TOS_PASS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Accept TOS PASS</shortDescription>
-        <value>Please accept the Terms and Conditions before submitting your PASS Accreditation application to IATA.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -27331,13 +27323,6 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
-        <fullName>ISSP_AP_PASS_Form_Administrators_Recommendation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_Form_Administrators_Recommendation</shortDescription>
-        <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32898,13 +32883,6 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Freight Forwarder</value>
     </labels>
     <labels>
-        <fullName>ISSP_PASS_Accept_Terms</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_PASS_Accept_Terms</shortDescription>
-        <value>Accept Terms and Conditions</value>
-    </labels>
-    <labels>
         <fullName>ISSP_PASS_Administrators</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32978,13 +32956,6 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <protected>false</protected>
         <shortDescription>ISSP PASS Help User</shortDescription>
         <value>With access to different functions and permissions, as granted and authorized by the company&#39;s PASS Administrator.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_PASS_IATAWebsite</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_PASS_IATAWebsite</shortDescription>
-        <value>https://www.iata.org/pass</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_NewUsers</fullName>

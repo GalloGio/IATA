@@ -323,8 +323,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Reopened_case__c = 0.0,
 			Account_Concerned__c = childAccIcc.Id,
 			IFAP_Country_ISO__c = 'tp',
-			OwnerId = userIcc.Id,
-			OSCAR__c=oscarTest.id
+			OwnerId = userIcc.Id
 
 		);
 		insert caseIcc;
@@ -4975,13 +4974,10 @@ Location_Type__c = 'BR');
 			ctrl.goToFinalStep();
 			ctrl.saveAMSFormAndLeave();
 			Case testCase = [SELECT Id,Subject FROM Case WHERE AccountId =:testAccount2.Id];
-			System.debug('DB CASAEESESA '+testCase.Subject);
 			ApexPages.currentPage().getParameters().put('accType', AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
-			//ctrl = new ISSP_AMS_Accreditation();
 		}
-		List<AMS_Pax_Accreditation_Form__c> form2 = [SELECT Id, Name, Submitted_to_IATA__c,SAAM_Case__r.Subject FROM AMS_Pax_Accreditation_Form__c];
-		System.debug('db lfs '+form2);
+		List<AMS_Pax_Accreditation_Form__c> form2 = [SELECT Id, Name, Submitted_to_IATA__c,SAAM_Case__r.Subject FROM AMS_Pax_Accreditation_Form__c];    
 		AMS_Pax_Accreditation_Form__c form = [SELECT Id, Name, Submitted_to_IATA__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__r.Subject='New Branch - PASS - Portugal'];
 		System.assertEquals(true,form.Submitted_to_IATA__c);
 
