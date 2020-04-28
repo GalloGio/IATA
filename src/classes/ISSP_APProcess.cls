@@ -3305,9 +3305,6 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		for(AP_Country_Requierment__c isoJoiningCountry : isoListJoining){
-			/*if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
-				existingPassCountries.add(isoJoiningCountry.Country__r.Name);
-			}*/
 			if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
 				selectedPassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
 			}
@@ -3318,7 +3315,6 @@ global without sharing class ISSP_APProcess {
 				possiblePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
 			}
 		}
-		System.debug('DB:: activePassCountries'+activePassCountries);
 	}
 
 	public List<passCountriesWrapper> fetchWrapperCaseCountries(Case passCase){
