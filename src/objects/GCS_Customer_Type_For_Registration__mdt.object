@@ -155,6 +155,30 @@ PARTIAL MATCH</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Partial_List_Order__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Partial List Order</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>true</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Placeholder_Custom_Label__c</fullName>
         <description>Custom Label of the sub-categorization&apos;s picklist placeholder</description>
         <externalId>false</externalId>

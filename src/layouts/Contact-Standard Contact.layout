@@ -1074,6 +1074,18 @@
         <fields>NAME</fields>
         <relatedList>Data_Submission__c.User__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Term_Condition__c</fields>
+        <fields>Term_and_Condition_Version_Number__c</fields>
+        <fields>Status__c</fields>
+        <fields>Status_Date__c</fields>
+        <fields>Is_Superseded__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Term_and_Condition_Acceptance__c.Contact__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
