@@ -110,9 +110,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-             <layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
-             </layoutItems>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AccountStatus__c</field>

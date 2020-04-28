@@ -3422,10 +3422,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Torni ai dettagli del profilo</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Selezione del conto e dettagli aggiuntivi</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3434,7 +3430,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Si prega di fornire l&#39;indirizzo della sede di lavoro.</label>
+        <label>Si prega di fornire l&apos;indirizzo della sede di lavoro.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3632,10 +3628,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Codice postale</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Dettagli del profilo</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Aggiunga i suoi dati personali per consentire a IATA di consigliarle contenuti e servizi personalizzati.</label>
@@ -4427,7 +4419,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label>Creazione dell&#39;utente</label>
+        <label>Creazione dell&apos;utente</label>
         <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>

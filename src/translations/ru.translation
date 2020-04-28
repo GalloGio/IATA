@@ -3417,10 +3417,6 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Вернуться к деталям профиля</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Выбор счета и подробная информация</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3627,10 +3623,6 @@
     <customLabels>
         <label>Почтовый индекс</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Детали профиля</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Добавьте свои личные данные, чтобы ИАТA могла предлагать вам персонализированный контент и услуги.</label>

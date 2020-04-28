@@ -3421,10 +3421,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Kembali ke Detail Profil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Seleksi akun &amp; Rincian Tambahan</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3631,10 +3627,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Kode Pos</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Profil lengkap</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Tambahkan detail pribadi Anda untuk mengizinkan IATA (International Air Transport Association) menyarankan konten dan layanan yang dipersonalisasi.</label>

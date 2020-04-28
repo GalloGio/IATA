@@ -3418,10 +3418,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>العودة إلى تفاصيل الملف الشخصي</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>اختيار الحساب وتفاصيل إضافية</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3628,10 +3624,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>الرمز البريدي</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>تفاصيل الملف الشخصي</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>.أضف بياناتك الشخصية للسماح للاتحاد الدولي للنقل الجوي (إياتا) باقتراح محتوى وخدمات مخصصة</label>
@@ -33762,7 +33754,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- ISSP Document Tracker with Amazon Files --></label>
         <name>ISSP_Document_Tracker_with_Amazon_Files</name>
         <sections>
-            <label><!-- AmazonFiles --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>AmazonFiles</name>
         </sections>
         <sections>
@@ -34581,7 +34573,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Participants --></label>
         <name>Participants_with_Contacts</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -34745,7 +34737,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>التقارير</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -34868,7 +34860,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contract Line Items</name>
         </sections>
         <sections>
-            <label><!-- Service Contracts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Service Contracts</name>
         </sections>
     </reportTypes>
