@@ -2814,6 +2814,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>I miei segnalibri</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3064,6 +3068,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Negare l&apos;accesso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento aggiunto ai miei segnalibri</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento #doc rimosso dai miei segnalibri</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
     </customLabels>
     <customLabels>
         <label>Documenti</label>
@@ -3778,6 +3790,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Categorie principali</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Gli utenti possono essere gestiti dalla lista qui sotto.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3804,6 +3820,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Nome</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Non c'è niente nei tuoi segnalibri per ora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Ma quando l'avrete fatto, potrete vedere i più recenti e i loro dettagli principali in quest'area.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
@@ -4345,6 +4369,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Titolo</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Traccia</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Vada qui per accedere direttamente alla sezione Modifiche e accreditamento IATA&lt;/a&gt;</label>
