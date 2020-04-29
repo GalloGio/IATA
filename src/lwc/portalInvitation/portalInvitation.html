@@ -1,0 +1,23 @@
+<template>
+	<lightning-card title={title} icon-name="standard:record">
+		<div class="slds-m-around_medium">
+			<lightning-record-edit-form object-api-name="Invitation__c">
+				<lightning-input-field name="email" field-name="Email__c" value=""></lightning-input-field>
+				
+				<lightning-combobox name="accountRole"
+					label="Account Role"
+					value=""
+					placeholder="Select Account Role.."
+					options={accountRoles}
+					onchange={handleChange}>
+				</lightning-combobox>
+			
+				<!-- <lightning-input-field onchange={handleChange} field-name="AccountRoleId__c" value=""></lightning-input-field> -->
+				<lightning-input-field name="service" onchange={handleChange} field-name="ServiceId__c" value="" class="slds-hide"></lightning-input-field>
+				<div class="slds-m-around_medium">
+					<lightning-button label="Invite" variant="brand" onclick={createInvite}></lightning-button>
+				</div>
+			</lightning-record-edit-form>
+		</div>
+	</lightning-card>
+</template>
