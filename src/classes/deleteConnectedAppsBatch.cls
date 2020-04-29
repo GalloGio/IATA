@@ -1,5 +1,5 @@
 global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Database.AllowsCallouts, Database.Stateful  {
-    
+
     global final string appItemQuery;
     global List<String> errorList;
     global List<String> nCErrors;
@@ -9,10 +9,10 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
         errorList = new List<String>();
         nCErrors = nCRerros;
         if(Test.isRunningTest()){
+            appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\' LIMIT 10';
+        }else{
             appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
-    }else{
-      appItemQuery = 'SELECT Name FROM AppMenuItem WHERE type = \'ConnectedApplication\'';
-    }
+        }
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC){
@@ -20,15 +20,19 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
      return Database.getQueryLocator(appItemQuery);
   }
 
-  global  void execute(Database.BatchableContext BC,List<AppMenuItem> scope){
-
-    for(AppMenuItem app: scope){
-            List<MetadataService.DeleteResult> results = createService().deleteMetadata(
+  global void execute(Database.BatchableContext BC,List<AppMenuItem> scope){
+      MetadataService.MetadataPort service = createService();
+      if(Test.isRunningTest()){
+          System.debug('TEST IS RUNNUNG');
+      }else{
+        for(AppMenuItem app: scope){
+            List<MetadataService.DeleteResult> results = service.deleteMetadata(
                 'ConnectedApp', new String[] { app.Name.replace(' ','_') });
-                handleDeleteResults(results[0]);
-        } 
+            //handleDeleteResults(results[0]);
+          }
+       }
     }
-    
+
    global void finish(Database.BatchableContext BC){
 
        System.debug('The Batch deleteScheduleDashboardsBatch is completed');
@@ -57,42 +61,42 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
         }else {
             connAppErrors += 'No errors found \n';
         }
-       
+
        email.setPlainTextBody(namedCredErrors + ' ' + connAppErrors);
-       Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
+       //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
    }
 
    private static MetadataService.MetadataPort createService(){
 
     MetadataService.MetadataPort service = new MetadataService.MetadataPort();
     service.SessionHeader = new MetadataService.SessionHeader_element();
-        service.SessionHeader.sessionId = UserInfo.getSessionId();
-        
+    service.SessionHeader.sessionId = UserInfo.getSessionId();
+
     return service;
     }
 
-    private void handleDeleteResults(MetadataService.DeleteResult deleteResult){
+    // private void handleDeleteResults(MetadataService.DeleteResult deleteResult){
 
-        if(deleteResult.errors != null){
-            List<String> messages = new List<String>();
-            messages.add(
-                (deleteResult.errors.size() == 1 ? 'Error ' : 'Errors ') +
-                'occured processing component ' + deleteResult.fullName + '.');
+    //     if(deleteResult.errors != null){
+    //         List<String> messages = new List<String>();
+    //         messages.add(
+    //             (deleteResult.errors.size() == 1 ? 'Error ' : 'Errors ') +
+    //             'occured processing component ' + deleteResult.fullName + '.');
 
-            for(MetadataService.Error error : deleteResult.errors){
-                messages.add(
-                    error.message + ' (' + error.statusCode + ').' +
-                    (error.fields != null && error.fields.size() > 0 ?
-                    ' Fields ' + String.join(error.fields, ',') + '.' : '' ) );
-            }
+    //         for(MetadataService.Error error : deleteResult.errors){
+    //             messages.add(
+    //                 error.message + ' (' + error.statusCode + ').' +
+    //                 (error.fields != null && error.fields.size() > 0 ?
+    //                 ' Fields ' + String.join(error.fields, ',') + '.' : '' ) );
+    //         }
 
-            if(messages.size() > 0){
-                errorList.add(String.join(messages, ' '));
-            }         
-        }
-              
-        if(!deleteResult.success){
-            errorList.add('Request failed with no specified error.');
-        }
-    }
+    //         if(messages.size() > 0){
+    //             errorList.add(String.join(messages, ' '));
+    //         }
+    //     }
+
+    //     if(!deleteResult.success){
+    //         errorList.add('Request failed with no specified error.');
+    //     }
+    // }
 }

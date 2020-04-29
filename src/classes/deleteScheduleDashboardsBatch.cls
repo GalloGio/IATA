@@ -4,9 +4,8 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 	global deleteScheduleDashboardsBatch(){
 
 		if(Test.isRunningTest()){
-			scheduleQuery = 'SELECT Id FROM CronTrigger WHERE  CronJobDetail.JobType = \'A\' OR CronJobDetail.JobType = \'8\' OR CronJobDetail.JobType = \'3\' LIMIT 10';
+			scheduleQuery = 'SELECT Id FROM CronTrigger LIMIT 10';
 		}else{
-			System.debug('#2 deleteScheduleDashboards');
 			scheduleQuery = 'SELECT Id FROM CronTrigger WHERE  CronJobDetail.JobType = \'A\' OR CronJobDetail.JobType = \'8\' OR CronJobDetail.JobType = \'3\'';
 		}
 	}
@@ -15,7 +14,7 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 
 	 return Database.getQueryLocator(scheduleQuery);
 	}
-	global  void execute(Database.BatchableContext BC,List<SObject> scope){
+	global void execute(Database.BatchableContext BC,List<SObject> scope){
 
 	  for(SObject cronJob : scope){
 		System.abortJOb(cronJob.Id);
@@ -23,8 +22,11 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 
    }
    global void finish(Database.BatchableContext BC){
-
-	   updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
-	   Database.executeBatch(updateNamedCredentials,10);
+		if(Test.isRunningTest()){
+			System.debug('TEST IS RUNNING');
+		}else{
+			updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
+			Database.executeBatch(updateNamedCredentials,15);
+		}
    }
 }
