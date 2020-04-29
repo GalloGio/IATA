@@ -471,6 +471,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Cargo Agent</label>
                 </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -964,6 +969,8 @@ Name
 &quot;ID Card Online Platform&quot;,$Label.IDCard_NoUSServiceDescription ,
 &quot;IATAN WebStar Online Services&quot;,$Label.IDCard_USServiceDescription,
 &quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
+&quot;IATA Postal Accounts Settlement System&quot;,$Label.ISSP_PASS_PS_Description,
+&quot;PASSlink Single Sign-On&quot;,$Label.ISSP_PASSLink_PS_Description,
 &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List B</label>
@@ -1395,6 +1402,10 @@ IF(OR(
             <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
