@@ -589,7 +589,7 @@ public with sharing class AMS_AccreditationContactController {
 			}
  		}
 
-		if((totalOwnership < 99.99 || totalOwnership > 100)) {
+		if(totalOwnership < 99.99 || totalOwnership > 100) {
 			errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
 		}
 		return errors;
