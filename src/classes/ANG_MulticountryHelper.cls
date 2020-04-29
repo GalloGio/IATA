@@ -730,7 +730,7 @@ public class ANG_MulticountryHelper {
 
 		acquiredAgency.ANG_FA_Opt_out__c = thw.targetGE.ANG_FA_Opt_out__c;
 
-		if(headEntityIdInBSP != null){
+		if (!acquiredAgency.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && headEntityIdInBSP != null) {
 			acquiredAgency.Remittance_frequency__c = headEntityIdInBSP.Remittance_frequency__c;
 		}
 
