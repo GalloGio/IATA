@@ -509,7 +509,7 @@ function getRelatedEmails() {
      + &quot;   WHERE Id = &apos;&quot; + topParentId + &quot;&apos; OR Top_parent__c = &apos;&quot; + topParentId + &quot;&apos;&quot;
      + &quot; )&quot;
      + &quot; AND Status__c = &apos;Active&apos;&quot;
-     + &quot; AND Airline_Credit_Risk_Manager__c = True&quot;;
+     + &quot; AND (Airline_Credit_Risk_Manager__c = True OR Distribution_Risk_Expert__c = True)&quot;;
 
     var queryResult = sforce.connection.query(query);
     var records = queryResult.getArray(&quot;records&quot;);
