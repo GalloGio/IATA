@@ -1,6 +1,30 @@
 @isTest
 public class PASSSCIMMessageEnhancer_Test {
 
+    @testSetup static void methodTest(){
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', Region__c = 'Europe')  ;
+		insert ctry ;
+
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+		insert italy;
+
+		String SECTORPAX = 'Travel Agent';
+		String CATEGORYPAX = 'IATA Passenger Sales Agent';
+		String LOCCLASSPAX = 'P';
+		Account acc = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
+						 Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Location_Class__c = LOCCLASSPAX, Location_Type__c = 'HO',
+						 Status__c = AMS_Utils.ACC_S9_APPROVED);
+		insert acc;
+        System.debug(LoggingLevel.ERROR, 'ola');
+
+		Contact contact = ISSP_ObjectFactory.createNewContact();
+		contact.AccountId = acc.Id;
+        contact.Email='email@email.com';
+		insert contact;
+        User testUser = ISSP_ObjectFactory.createPortalUser(contact);
+    }
+    
 	static testMethod void passTest() {
 
 
@@ -14,7 +38,7 @@ public class PASSSCIMMessageEnhancer_Test {
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'dummy');
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'dummy');
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, '3213213');
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'dummy@iata.org');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'email@email.com');
 
 		Process.PluginRequest request = new Process.PluginRequest(inputParams);
 		instance.enhanceMessage(request);

@@ -32803,6 +32803,13 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Freight Forwarder</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASSLink_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASSLink_PS_Description</shortDescription>
+        <value>If your registration has been approved,  please click here to access the PASS Platform.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Administrators</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32890,6 +32897,13 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <protected>false</protected>
         <shortDescription>ISSP PASS New Admins</shortDescription>
         <value>Extra new PASS administrators</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_PS_Description</shortDescription>
+        <value>Please click here to complete the PASS registration process. PASS is a global digital platform to simplify billing and settlement between airlines and postal operators. For further information, visit www.iata.org/pass.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Participation_Agreement</fullName>
