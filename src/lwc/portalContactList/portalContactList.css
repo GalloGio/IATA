@@ -20,6 +20,10 @@
   padding: 0;
 }
 
+.v-middle {
+  vertical-align: middle;
+}
+
 .underLined {
   border-bottom: 1px solid #e1e1e1;
   padding-bottom: 1%;

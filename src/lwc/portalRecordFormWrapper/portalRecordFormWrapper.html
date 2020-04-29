@@ -182,24 +182,17 @@
                                                             <!--WMO-699 - ACAMBAS: End -->
                                                         </template>
                                                     </template>
-
                                                     <template if:true={field.changeUserStatus}>
-                                                        <div class="changeUserStatus">
-
-                                                            <lightning-output-field class="labelValue textValue"
-                                                                field-name={field.fieldName}>
-                                                            </lightning-output-field>
-                                                            <template if:false={isForEdit}>
-                                                                <span class="changeUserStatusButton">
-                                                                    <lightning-icon icon-name="utility:custom_apps"
-                                                                        size="x-small"
-                                                                        class="darkBlueIcon cursorPointer"
-                                                                        onclick={openChangeUserPortalStatus}>
-                                                                    </lightning-icon>
-                                                                </span>
-                                                            </template>
-                                                        </div>
-
+                                                        <template if:false={isForEdit}>
+                                                            <lightning-icon icon-name="utility:custom_apps"
+                                                                size="x-small"
+                                                                class="darkBlueIcon cursorPointer leftIconPosition slds-m-top_large"
+                                                                onclick={openChangeUserPortalStatus}>
+                                                            </lightning-icon>
+                                                        </template>
+                                                        <lightning-output-field class="labelValue textValue removeLinks"
+                                                            field-name={field.fieldName}>
+                                                        </lightning-output-field>
                                                     </template>
                                                 </div>
                                             </template>

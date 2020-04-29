@@ -110,15 +110,6 @@ input[type="checkbox"] {
   transform: scale(0.75);
 }
 
-.changeUserStatus {
-  float: left;
-}
-
-.changeUserStatusButton {
-  margin-top: 15px;
-  margin-left: 10px;
-}
-
 .invalidValueLabel{
     color: rgb(194, 57, 52);
     padding-left: 5px;
@@ -128,6 +119,7 @@ input[type="checkbox"] {
   pointer-events: none;
   cursor: default;
   text-decoration: none;
+  float: right;
 }
 
 .removeLink{
