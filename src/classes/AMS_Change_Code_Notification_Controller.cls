@@ -20,6 +20,8 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 		if (!lstCases.isEmpty()) {
 			currentCase = lstCases[0];
 		}
+
+
 	}
 
 	public void setNotificationMessage() {
