@@ -839,7 +839,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						acct.ParentId = topEntityPerBspMap.get(acct.IATA_ISO_Country__r.AMS_Settlement_System__c);
 					}
 
-					if(acct.IATA_ISO_Country__r.AMS_Settlement_System__c == accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c){
+					if (!acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+						&& acct.IATA_ISO_Country__r.AMS_Settlement_System__c == accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c) {
 						acct.Remittance_Frequency__c = stagingArea.Remittance_Frequency__c;
 					}
 
@@ -1429,8 +1430,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 		if(oscarAccount == null) {
-			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c 
-							FROM Account 
+			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c,
+								IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+							FROM Account
 							WHERE Id = :oscarToProcess.Account__c];
 		}
 
@@ -1511,7 +1513,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsAffected.add(oscarToProcess.Account__c);
 			}
 
-			if(switchRemittanceFrequency){
+			if (!oscarAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && switchRemittanceFrequency) {
 				oscarAccount.Remittance_frequency__c = newRemittanceFrequency;
 			}
 
@@ -1628,7 +1630,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsAffected.add(accountID);
 			}
 
-			if(switchRemittanceFrequency){
+			if (a.getPopulatedFieldsAsMap().containsKey('IATA_ISO_Country__r')
+				&& !a.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && switchRemittanceFrequency) {
 				a.Remittance_frequency__c = newRemittanceFrequency;
 			}
 
