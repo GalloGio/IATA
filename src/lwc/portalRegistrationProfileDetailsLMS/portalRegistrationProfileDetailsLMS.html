@@ -10,12 +10,12 @@
 				<span class="text-medium">{labels.CSP_L2_Profile_Details}</span>
 			</lightning-layout-item>
 
-			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
+			<!-- <lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
 			</lightning-layout-item>
 
 			<lightning-layout-item size="12" class="IEFixDisplay">
 				<span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
-			</lightning-layout-item>
+			</lightning-layout-item> -->
 
 			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
 			</lightning-layout-item>
@@ -76,94 +76,6 @@
 					</lightning-layout-item>
 				</div>
 
-				<!------------------------------------------      Work Email (email)      -------------------------------------------->
-				<!-- <div class="profileItemLine">
-					<lightning-layout-item size="6">
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								{labels.CSP_L_LoginEmail_LMS}
-							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInput custTextInputSmall">
-								<input type="text" class="slds-input" placeholder=" " value={localContactInfo.Email}
-									readonly />
-							</div>
-						</div>
-					</lightning-layout-item>
-				</div> -->
-
-				<!------------------------------------------      Personal Email (additional email)      -------------------------------------------->
-				<!-- <div class="profileItemLine">
-					<lightning-layout-item size="6">
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								{labels.CSP_L_PersonalEmail_LMS}
-							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInput custTextInputSmall">
-								<input type="text" class="slds-input" placeholder=" "
-									value={localContactInfo.Additional_Email__c} onkeyup={changeAdditional_Email}
-									readonly />
-							</div>
-						</div>
-					</lightning-layout-item>
-				</div> -->
-
-				<!------------------------------------------      LMS Username       -------------------------------------------->
-				<!-- <div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-                           {labels.CSP_L_TrainingEmail_LMS}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Username}
-								onkeyup={changeUsername}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div> -->
-				<!------------------------------------------      LMS User Id     -------------------------------------------->
-				<!-- <div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-                           {labels.CSP_L_TrainingUser_LMS}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div data-id="userDiv" class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input userIdInputClass"
-								placeholder=" "
-								value={localContactInfo.UserId}
-								onkeyup={changeUserId}/>
-						</div>
-						<div class="formElementSpacer">
-							<div if:true={displayErrorUserId}>
-								<div class="slds-form-element__help">{errorMessageUserId}</div>
-							</div>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div> -->
 				<!------------------------------------------      Phone       -------------------------------------------->
 				<div class="profileItem">
 					<lightning-layout-item size="6" class="leftItem">

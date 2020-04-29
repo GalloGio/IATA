@@ -4137,6 +4137,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP Email Confirmation Body Part 3</shortDescription>
         <value>For security reasons, this link is valid for 8 hours. After the time limit has expired, you will have to resubmit your request.</value>
     </labels>
+	<labels>
+		<fullName>CSP_Email_Confirmation_Body_Part_3_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Email Confirmation Body Part 3 LMS</shortDescription>
+		<value>For security reasons, this link is valid for 8 hours. After this time you would need to resubmit your request to access your training account.</value>
+	</labels>
     <labels>
         <fullName>CSP_Email_Domain_Error_Message</fullName>
         <language>en_US</language>
@@ -46674,7 +46682,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_Note_F4_LMS</shortDescription>
-        <value>From now, please use your Work Email [Email] to login to the IATA Customer Portal. Your Personal Email [PersonalEmail] has been stored as additional email.</value>
+        <value>Successfully updated your profile information.&lt;br/&gt;From now, please use your Work Email [Email] to login to the IATA Customer Portal. Your Personal Email [PersonalEmail] has been stored as additional email.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Note_F5_LMS</fullName>
@@ -46746,7 +46754,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Training Validation Description</shortDescription>
-        <value>IATA needs your Training Information to maintain your lifelong Training record with us, and for you to access to your Exams and Courses.</value>
+        <value>Your new account will be created shortly.</value>
     </labels>
 	<labels>
 		<fullName>CSP_L3_Zip_Mandatory_LMS</fullName>
