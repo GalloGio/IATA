@@ -345,14 +345,6 @@ global class ANG_RME_Alert_Service {
 		private WebserviceResult(){
 			isSuccess = true;
 		}
-
-		public RHCMessage getResultMessage(){
-			return this.res;
-		}
-
-		public void setResultMessage(RHCMessage inRes){
-			this.res = inRes;
-		}
 	}
 
 	public static WebserviceResult testWebserviceResult(){
