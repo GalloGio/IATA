@@ -10,6 +10,12 @@ public without sharing class RemoteInvocationTriggerHandler {
 	public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
 	public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
 	public static final String NEWGEN_GDI_ENDO  = 'GDI_ENDORSEMENT';
+	public static final String NEWGEN_GDI_ENDO_PDF = 'GDI_ENDORSEMENT_PDF';
+	public static final String NEWGEN_SAP_PPA  = 'SAP_PPA_RETURN';
+
+	public static final String NEWGEN_SAP_PPA_RT  = 'SAP_PPA';
+
+	public static final String SOURCE_GDI = 'GDI';
 
 	//Remote Invocation Status
 	public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
@@ -19,19 +25,22 @@ public without sharing class RemoteInvocationTriggerHandler {
 	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_EASY_PAY);
 	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', TIP_IFG_REPORT);
 	public static final ID RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_GDI_ENDO);
+	public static final ID RECTYPE_SAP_PPA = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_SAP_PPA_RT);
 
-	//to store the remote invocations with errors
-	public Set<ID> remoteInvocationWithErrors;
+	private Map<String,String> mapTypeRecordtype = new Map<String,String>{
+		NEWGEN_EASY_PAY => RECTYPE_NEWGEN,
+		TIP_IFG_REPORT  => RECTYPE_TIP,
+		NEWGEN_GDI_ENDO => RECTYPE_GDI,
+		NEWGEN_GDI_ENDO_PDF => RECTYPE_GDI,
+		NEWGEN_SAP_PPA  => RECTYPE_SAP_PPA
+	};
 
-	private Map<String,Account> mapIATACodeAccs;
-
-	private Map<String,String> mapTypeRecordtype = new Map<String,String>{  NEWGEN_EASY_PAY => RECTYPE_NEWGEN,
-																			TIP_IFG_REPORT  => RECTYPE_TIP,
-																			NEWGEN_GDI_ENDO => RECTYPE_GDI};
-
-	//private final List<String> typesToProcess = new List<String>{'ANG_IEPRemoteInvocation','ANG_GDIRemoteInvocation'};
-	 private Map<String,String> typesToProcess = new Map<String,String>{  NEWGEN_EASY_PAY => 'ANG_IEPRemoteInvocation',
-																			NEWGEN_GDI_ENDO => 'ANG_GDIRemoteInvocation'};
+	private Map<String,String> typesToProcess = new Map<String,String>{
+		NEWGEN_EASY_PAY => 'ANG_IEPRemoteInvocation',
+		NEWGEN_GDI_ENDO => 'ANG_GDIRemoteInvocation',
+		NEWGEN_GDI_ENDO_PDF => 'ANG_GDIEndorsementPdfRemoteInvocation',
+		NEWGEN_SAP_PPA  => 'ANG_SAP_PPA_RemoteInvocation'
+	};
 
 	public RemoteInvocationTriggerHandler(){
 	}
@@ -42,7 +51,7 @@ public without sharing class RemoteInvocationTriggerHandler {
 
 	public void handleAfterUpdate(){
 		handlePlatformEvent();
-		processInvocationsInProgress(NEWGEN_GDI_ENDO);
+		processInvocationsInProgress(new List<String>{NEWGEN_GDI_ENDO, NEWGEN_GDI_ENDO_PDF});
 
 	}
 
@@ -59,10 +68,9 @@ public without sharing class RemoteInvocationTriggerHandler {
 	}
 
 	public void handleBeforeUpdate(){
-		processInvocationsInProgress(NEWGEN_EASY_PAY);
+		processInvocationsInProgress(new List<String>{NEWGEN_EASY_PAY, NEWGEN_SAP_PPA});
 		handleAutomaticUploadReports();
 	}
-
 
 	public void assignRecordtypeToRequest(){
 		for(Remote_Invocation__c er : triggerNew){
@@ -89,36 +97,49 @@ public without sharing class RemoteInvocationTriggerHandler {
 		}
 	}
 
-	public void processInvocationsInProgress(string whatToProcess){
+	public void processInvocationsInProgress(List<String> whatToProcessLst){
 
-		Set<Remote_Invocation__c> IEPToProcess = new Set<Remote_Invocation__c>();
-		Set<Remote_Invocation__c> GDIToProcess = new Set<Remote_Invocation__c>();
+		Map<String, Set<Remote_Invocation__c>> invocationProcessesMap = fetchRemoteInvocationsInProgressPerType();
 
-		for(Remote_Invocation__c re :  triggerNew){
+		for(String whatToProcess : whatToProcessLst){
+			
+			Set<Remote_Invocation__c> remoteInvocationSet = invocationProcessesMap.get(whatToProcess);
+
+			if(remoteInvocationSet != null && !remoteInvocationSet.isEmpty()){
+				// Get the Type corresponding to the class name
+				Type t = Type.forName(typesToProcess.get(whatToProcess));
+
+				ANG_RemoteInvocationINT processor = (ANG_RemoteInvocationINT) t.newInstance();
+				processor.doSanityCheck(remoteInvocationSet);
+				processor.doProcess(remoteInvocationSet);
+			}
+
+		}
+
+	}
+
+	/**
+	 * Collects all the remote invocation in progress requests from the trigger
+	 * and groups them by request type: invocationProcessesMap
+	 * 
+	 */
+	private Map<String, Set<Remote_Invocation__c>> fetchRemoteInvocationsInProgressPerType(){
+
+		Map<String, Set<Remote_Invocation__c>> invocationProcessesMap = new Map<String, Set<Remote_Invocation__c>>();
+
+		for(Remote_Invocation__c re : triggerNew){
 			if(re.Status__c == REMOTE_INVOCATION_STATUS_PROGRESS && oldMap.get(re.Id).Status__c == REMOTE_INVOCATION_STATUS_INITIALIZING){
-				if(whatToProcess==NEWGEN_GDI_ENDO && re.Request_Type__c==NEWGEN_GDI_ENDO)
-					GDIToProcess.add(re);
-
-				if(whatToProcess==NEWGEN_EASY_PAY && re.Request_Type__c==NEWGEN_EASY_PAY)
-					IEPToProcess.add(re);
+				Set<Remote_Invocation__c> riLst = invocationProcessesMap.get(re.Request_Type__c);
+				if(riLst == null){
+					riLst = new Set<Remote_Invocation__c>();
+				}
+				riLst.add(re);
+				invocationProcessesMap.put(re.Request_Type__c, riLst); 
 			}
 		}
 
-		if(IEPToProcess.isEmpty() && GDIToProcess.isEmpty()) return; // move along, nothing to see here ...
+		return invocationProcessesMap;
 
-		// Get the Type corresponding to the class name
-		Type t = Type.forName(typesToProcess.get(whatToProcess));
-
-		ANG_RemoteInvocationINT processor = (ANG_RemoteInvocationINT)t.newInstance();
-
-		if(whatToProcess==NEWGEN_GDI_ENDO){
-			processor.doProcess(GDIToProcess);
-		}
-
-		if(whatToProcess==NEWGEN_EASY_PAY){
-			processor.doSanityCheck(IEPToProcess);
-			processor.doProcess(IEPToProcess);
-		}
 	}
 
 	public void handleAutomaticUploadReports() {
