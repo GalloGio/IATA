@@ -79,6 +79,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public class RegistrationParameters{
 		public string email{get;set;}
+		public string salutation{get;set;}
 		public string firstName{get;set;}
 		public string lastName{get;set;}
 		public string country{get;set;}
@@ -89,6 +90,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public boolean isNewAccount{get;set;}
 		public string selectedCustomerType {get;set;}
 		public string registrationTime {get;set;}
+		public string termsAndUsageIds {get;set;}
 
 		/*YAS info for matching contact based on additional email temporary*/
 		public String lms{get;set;}
@@ -279,6 +281,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		List<GCS_CustomerType> customerTypesList = GCS_CustomerType.getCustomerTypesMap().values();
 		for(GCS_CustomerType customerType : customerTypesList){
+			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'General Public'){
+				return customerType.metadataCustomerType.DeveloperName;
+			}
+			
 			if((customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category)
 					|| (customerType.metadataCustomerType.Filter_on_Sector__c == sector && customerType.metadataCustomerType.Filter_on_Category__c == category)){
 				return customerType.metadataCustomerType.DeveloperName;
@@ -496,6 +502,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			RegistrationParameters params = new RegistrationParameters();
 			params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
+			params.salutation = (inputMap.get('salutation') != null) ? string.valueOf(inputMap.get('salutation')) : '';
 			params.firstName = (inputMap.get('firstName') != null) ? string.valueOf(inputMap.get('firstName')) : '';
 			params.lastName  = (inputMap.get('lastName') != null) ? string.valueOf(inputMap.get('lastName')) : '';
 			params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
@@ -505,6 +512,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
 			params.registrationTime = string.valueOf(DateTime.Now());
+			params.termsAndUsageIds = (inputMap.get('termsAndUsageIds') != null) ? string.valueOf(inputMap.get('termsAndUsageIds')) : '';
 
 			Map<String, Object> userInfoMap = (Map<String, Object>)JSON.deserializeUntyped(userInfo);
 			params.existingContactId = (userInfoMap.get('existingContactId') != null) ? string.valueOf(userInfoMap.get('existingContactId')) : '';
@@ -620,6 +628,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				registrationRequired = true;
 				//}
 			}
+			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;
@@ -776,13 +785,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		String sector = '';
 		String category = '';
-
-		if(selectedMetadataCustomerType.Can_Account_Be_Created__c == true){
-			sector = selectedMetadataCustomerType.Created_Account_Sector__c;
-			category = selectedMetadataCustomerType.Created_Account_Category__c;
-		}else{
+		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
 			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
 			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		}
+		else{
+			sector = selectedMetadataCustomerType.MasterLabel;
+			category = 'General Public';
 		}
 
 		String accountQuery = '';
@@ -801,12 +810,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		if(!String.isEmpty(sector)){
-			accountQuery +=' AND Sector__c =\''+ sector +'\'';
-		}
-		if(!String.isEmpty(category)){
-			accountQuery +=' AND Category__c =\''+ category +'\'';
-		}
+		accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\''+ category +'\'';
 
 		List<Account> accList = new List<Account>();
 
@@ -815,14 +819,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(accList.isEmpty()){
 			Account acc = new Account();
 			acc.Reason_for_creation__c = 'Created by customer';
-			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - ' + category;
+			if(sector == 'Cargo Agent'){
+				acc.Name = 'Freight Forwarder - ' + category;
+			}
+			else{
+				acc.Name = sector + ' - ' + category;
+			}
 			acc.Sector__c = sector;
 			acc.Category__c = category;
 			acc.Is_General_Public_Account__c = true;
-			//acc.IsPartner = true;
 
 			if(!String.isEmpty(country)) {
 				String countryCode = [SELECT ISO_Code__c FROM IATA_ISO_Country__c WHERE ID =: country LIMIT 1].ISO_Code__c;
@@ -892,6 +899,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			con.AccountId = params.accountId;
 			con.ISO_Country__c = params.country;
+			con.Salutation = params.salutation;
 			con.firstName = params.firstName;
 			con.lastName = params.lastName;
 			con.Phone = params.phone;

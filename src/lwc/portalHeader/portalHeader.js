@@ -25,6 +25,9 @@ import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalSer
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
+import getGCSServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
+import createPendingTermsAndConditionsAcceptances from '@salesforce/apex/ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -120,20 +123,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     // terms
-    @track displayAcceptTerms = true;
+    @track displayAcceptTerms = false;
     @track displayRegistrationConfirmation = false;
     @track displayFirstLogin = false;
     @track firstLogin = false;
 
     // l2 registration
-	level2RegistrationTrigger = 'homepage';
-	level3LMSRegistrationTrigger = 'homepage';
-	isTriggeredByRequest = false;
+    level2RegistrationTrigger = 'homepage';
+    level3LMSRegistrationTrigger = 'homepage';
+    isTriggeredByRequest = false;
 
-	@track registrationlevel = ''; //FOR LMS L3
-	@track thirdLoginLMS = false; //FOR LMS L3
-	@track serviceid = ''; //FOR LMS L3
-
+    @track registrationlevel = ''; //FOR LMS L3
+    @track thirdLoginLMS = false; //FOR LMS L3
+    @track serviceid = ''; //FOR LMS L3
     
     @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
     WiregetUserRecord(result) {
@@ -299,6 +301,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonSideMenuLogoutStyle = 'headerBarButton buttonLogout';
 
     @track trackedIsInOldPortal;
+    userInfo = {};
+
+    @track gcsPortalServiceId;
 
     @api
     get isInOldPortal() {
@@ -447,7 +452,34 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
 
         getContactInfo().then(result => {
+            this.userInfo = JSON.parse(JSON.stringify(result));
             this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+
+            getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result2 => {
+                var gcsPortalServiceId = JSON.parse(JSON.stringify(result2));
+                this.gcsPortalServiceId = gcsPortalServiceId;
+
+                checkLatestTermsAndConditionsAccepted({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result3 => {
+                    let isLatestAccepted = JSON.parse(JSON.stringify(result3));
+                    console.log('latestAccepted :' + isLatestAccepted);
+
+                    if(isLatestAccepted){
+                        this.displayAcceptTerms = false;
+                        if(result.users[0].Portal_Registration_Required__c === true){
+                            this.displayRegistrationConfirmation = true;
+                        }else{
+                            if(this.firstLogin === true){
+                                this.displayFirstLogin = true;
+                            }
+                        }
+                    } else{
+                        createPendingTermsAndConditionsAcceptances({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result4 => {
+                            this.displayAcceptTerms = true;
+                        });
+                    }
+                });
+            });
+
         });
     }
 
@@ -784,20 +816,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-    acceptTerms() {
-
-        const fields = {};
-        fields.Id = Id;
-        fields.ToU_accepted__c = true;
-        fields.Date_ToU_accepted__c = new Date().toISOString();
-        const recordInput = { fields };
-
-        updateRecord(recordInput)
-            .then(() => {
-                this.displayAcceptTerms = true;
-                this.redirectChangePassword();
-            });
-
+    acceptTerms(){
+        this.displayAcceptTerms = false;
+        this.redirectChangePassword();        
     }
 
     confirmRegistration() {

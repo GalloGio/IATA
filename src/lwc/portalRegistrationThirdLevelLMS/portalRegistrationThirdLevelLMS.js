@@ -274,14 +274,11 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.title=CSP_L3_ProfileUpdate_LMS;
 			
 					if(pageParams.lmsflow === 'flow3'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>';
 					}
 
 					if(pageParams.lmsflow === 'flow4'){
-						boldStr = '<b>' + CSP_L3_Note_F4_LMS + '</b>';
-						boldStr = boldStr.replace('[Email]',this.contactInfo.Email);
-						boldStr = boldStr.replace('[PersonalEmail]',this.contactInfo.Additional_Email__c);
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>';
 					}
 
 					if(pageParams.lmsflow === 'flow5'){
@@ -308,16 +305,16 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 						this.contactInfo = JSON.parse(result.userInfo);
 						
 						if(pageParams.lmsflow === 'flow3'){
-							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
 						}
 						if(pageParams.lmsflow === 'flow4'){
-							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
 						}
 						if(pageParams.lmsflow === 'flow5'){
 							this.message=CSP_L3_UpdatingProfileP1_LMS ;
 						}
 						if(pageParams.lmsflow === 'flow6'){
-							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + CSP_L3_Note_F6_LMS + '<br>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br><b>' + CSP_L3_Note_F6_LMS + '</b><br>';
 						}
 						if(pageParams.lmsflow === 'flow7'){
 							boldStr = CSP_L3_Note_F7_LMS;
@@ -333,8 +330,13 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 								//need to wait a few seconds while mulesoft creates the user in YAS, otherwise we can get an SSO error saying the user not existing
 								this.sleep(6000)
 								.then(() => { 
-								
-									if(pageParams.lmsflow === 'flow5'){
+									if(pageParams.lmsflow === 'flow3' || pageParams.lmsflow === 'flow4'){
+										boldStr = '<b>' + CSP_L3_Note_F4_LMS + '</b>';
+										boldStr = boldStr.replace('[Email]',this.contactInfo.Email);
+										boldStr = boldStr.replace('[PersonalEmail]',this.contactInfo.Additional_Email);
+										this.message = this.message + '<br><br>' + boldStr;
+										
+									}else if(pageParams.lmsflow === 'flow5'){
 										this.message = this.message + '<br><br>' + CSP_L2_SucessUpdateOnly_LMS;
 										this.message = this.message.replace('[Email]',this.contactInfo.Email);
 									}else if(pageParams.lmsflow === 'flow7'){

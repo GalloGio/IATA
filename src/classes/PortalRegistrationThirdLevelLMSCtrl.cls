@@ -84,9 +84,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
-			//Update Contact
-			update con;
-
 			//Create Account Role if not existing
 			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
 											FROM Account_Role__c
@@ -190,8 +187,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					ycd.State_Reference__c = listStates[0].Id;
 					ycd.State_Name__c = listStates[0].Name;
 				}else{
-					ycd.State_Name__c = regParam.sStateId;
+					ycd.State_Name__c = regParam.sStateName;
 				}
+			}else{
+				ycd.State_Name__c = regParam.sStateName;
 			}
 
 			if(regParam.isPoBox){
@@ -248,7 +247,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
 
-
+			//Update Contact
+			update con;
 
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
@@ -273,6 +273,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		User loggedUser = CSP_Utils.getLoggedUser();
 
 		RegistrationResult result = new RegistrationResult();
+		Savepoint sp = Database.setSavepoint();
 
 		try{
 			UserInformationWrapper contactInfo = getDataToMail(params);
@@ -458,7 +459,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
 						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
-						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
+						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
 						ycdOld.OwnerId = loggedUser.Id;
 						update ycdOld;
 
@@ -466,7 +467,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						ycdNew.Account_Contact_Role__c = acrOld.Id;
 						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
 						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
-						ycdNew.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
+						ycdNew.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
 						ycdNew.OwnerId = loggedUser.Id;
 						update ycdNew;
 					}
@@ -558,8 +559,37 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						ycd = listYCD[0];
 						ycd.Username__c = contactInfo.Username != ''? contactInfo.Username : ycd.Username__c;
 						ycd.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycd.UserId__c;
-						ycd.Preferred_Course__c = (contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycd.Preferred_Course__c;
+						ycd.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycd.Preferred_Course__c;
 						ycd.OwnerId = loggedUser.Id;
+
+						//Check State
+						if(contactInfo.stateId != ''){
+							List<IATA_ISO_State__c> listStates = [SELECT Id,ISO_Code__c,Name,Valid_for_Address__c
+													FROM IATA_ISO_State__c
+													WHERE Id = :contactInfo.stateId
+													OR ISO_Code__c = :contactInfo.stateId LIMIT 1];
+							if(listStates.size() > 0){
+								ycd.State_Reference__c = listStates[0].Id;
+								ycd.State_Name__c = listStates[0].Name;
+							}else{
+								ycd.State_Name__c = contactInfo.stateName;
+							}
+						}else{
+							ycd.State_Name__c = contactInfo.stateName;
+						}
+
+						if(Boolean.valueOf(contactInfo.isPoBox)){
+							ycd.PO_Box_Address__c = (contactInfo.street != null) ? contactInfo.street : '';
+						}else{
+							ycd.Street__c = (contactInfo.street != null) ? contactInfo.street : '';
+						}
+
+						ycd.Street2__c = (contactInfo.street2 != null) ? contactInfo.street2 : '';
+						ycd.Postal_Code__c = (contactInfo.zip != null && contactInfo.zip != '') ? contactInfo.zip : '00000';
+						ycd.Country_Reference__c = (contactInfo.countryId != null && contactInfo.countryId != '') ? contactInfo.countryId : null;
+						ycd.City_Reference__c = (contactInfo.cityId != null && contactInfo.cityId != '') ? contactInfo.cityId : null;
+						ycd.City_Name__c = (contactInfo.cityName != null && contactInfo.cityName != '') ? contactInfo.cityName : null;
+
 						update ycd;
 					}
 
@@ -593,6 +623,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
 			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
 			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			Database.rollback(sp);
 			return result;
 		}
 		return result;
@@ -748,9 +779,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
 													Label.CSP_Verification_L3_Email_PE_2_LMS;
 					}else{
-						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
+						if(flow == 'flow4'){
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_F4_LMS +
+													Label.CSP_Verification_L3_Email_UE_2_LMS;
+						}else{
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
 													Label.CSP_Verification_L3_Email_UE_2_LMS;
 													// + Label.CSP_Verification_L3_Email_UE_3_LMS;
+						}
 					}
 				}else{
 					//All other Flows that don't match a email or Aditional Email
@@ -797,7 +833,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					if(flow == 'flow4'){
 						plainBody = plainBody.replace('[Email]',address);
-						plainBody = plainBody.replace('[LoginEmail]',address);
+						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
 						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
 					}else if(flow == 'flow6'){
 						plainBody = plainBody.replace('[Email]',address);

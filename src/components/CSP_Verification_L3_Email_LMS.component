@@ -17,7 +17,7 @@
                             
                             <p>{!ExistingContactUsername}</p>
                             
-                            <p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>
+                            <p>{!$Label.CSP_Email_Confirmation_Body_Part_3_LMS}</p>
                             <p>{!$Label.CSP_Email_Signature_Part_1_LMS}</p>
                             <p>{!$Label.CSP_Email_Signature_Part_2_LMS}</p>
                         </td>
