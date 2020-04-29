@@ -49,7 +49,7 @@
 
                 <template if:true={showRecentCasesList}>
                     <div class="recentCasesMargin">
-                        <c-recent-cases home-page = false special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
+                        <c-recent-cases  special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
                     </div>
                 </template>
 
@@ -231,7 +231,6 @@
     <template if:true={displaySecondLevelRegistration}>
         <c-portal-registration-second-level
             trigger={level2RegistrationTrigger}
-            is-triggered-by-request={isTriggeredByRequest}
             onclosesecondlevelregistration={cancelSecondLevelRegistration}
             onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
             onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>

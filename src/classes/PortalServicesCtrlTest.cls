@@ -496,17 +496,13 @@ public class PortalServicesCtrlTest {
 
 		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
 
-
+		Test.StartTest();
 		portal_Application_Right__c appRight = new Portal_Application_Right__c(
 				Portal_Application__c = portalServicelist[0].id,
 				Right__c = 'Access Requested',
 				Contact__c = con.Id
 			);
-
 		insert appRight;
-
-
-		Test.StartTest();
 		Boolean isReq =PortalServicesCtrl.grantAccess(con.id, portalServicelist[0].id, 'Test');
 		Test.StopTest();
 	}

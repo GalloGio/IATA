@@ -714,7 +714,7 @@ public class pkb_mobile_Test {
 
 	@isTest
 	static void testSendEmail() {
-		pkb_mobile_proxy.notifyAdmin(new TestException('Test Exc'), 'testIntro', 'testAdminEmail@test.com');
+		pkb_mobile_proxy.notifyAdmin(new TestException('Test Exc'), 'testIntro', Userinfo.getUserId());
 	}
 
 

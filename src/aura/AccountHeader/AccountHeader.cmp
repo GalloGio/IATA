@@ -1,4 +1,4 @@
-<aura:component controller="AccountHeaderController">
+<aura:component controller="AccountHeaderController" access="public">
     <aura:attribute name="account" type="Account"/>
     <aura:attribute name="SanctionNotice" type="String"/>
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
@@ -198,6 +198,16 @@
                         <p class="slds-text-heading--label slds-truncate">Membership Status</p>
                     </dt>
                     <dd>{!v.account.Membership_status__c}</dd>
+                </dl>
+            </div>
+
+            <!-- PAGE HEADER / ROW 2 / COLUMN 9 -->
+            <div class="slds-col--padded ">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Account Status</p>
+                    </dt>
+                    <dd>{!v.account.AccountStatus__c}</dd>
                 </dl>
             </div>
 

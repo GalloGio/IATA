@@ -1,0 +1,116 @@
+<script src="/soap/ajax/9.0/connection.js"></script>
+
+
+<html>
+
+<body style="text-align: center" >
+<table bgcolor="#aaa462" width="100%">
+<tr height=30>
+<td>
+<span style="color: #ffffff">
+<strong>
+  Case : {!Case.CaseNumber}</strong></span>
+</tr>
+</td>
+</table>
+<p></p>
+<p></p>
+
+<strong>
+Case - Update IATA Code </strong>
+<p></p>
+<hr color="#aaa462" >
+
+<p></p>
+<table border=0 bgcolor=white cellpadding=0 cellspacing=0 width="50%">
+
+<tr>
+
+<td bgcolor="#aaa462" width="50%">
+<span style="color: #ffffff">
+<strong>
+  Enter IATA Code: </strong></span>
+</td>
+
+<td bgcolor=white width="50%">
+<input type="text"name="txtIATACode">
+</td>
+
+</tr>
+
+</table>
+
+<p>
+</p>
+
+<input type=button name=save value="Save" / style="width:100px" onclick="caseUpdate()">
+
+&nbsp;&nbsp;
+
+<input type=button name=Cancel value="Cancel" / style="width:100px" onclick="ToCancel()">
+<p></p>
+<p></p>
+<hr color="#aaa462" >
+
+</body>
+
+</html>
+
+
+<script>
+
+
+function caseUpdate()
+{
+	//debugger;
+	var txtVal=document.all("txtIATACode").value;
+	
+	sforce.connection.sessionId="{!API.Session_ID}";
+	var getAccountRecords = sforce.connection.query("Select Id, Name, IATACode__c FROM Account WHERE IATACode__c ='" +txtVal+ "' ");
+
+	
+	if(getAccountRecords.size==0)
+		{
+			alert("Invalid IATA Code \nPlease Enter a valid IAIA Code");
+		}
+	if(getAccountRecords.size==1)
+		{
+			var arrgetAccountRecords = getAccountRecords.getArray("records");
+			
+			var rgetAccountRecords = arrgetAccountRecords[0];
+			
+			var mgetAccountRecords=rgetAccountRecords.get("IATACode__c");
+			var mgetAccountID=rgetAccountRecords.get("Id");
+	
+		}
+	
+	var arrUpdateCase = new Array();
+    	var updateCase = new sforce.SObject("Case"); 
+    	updateCase.set("IATA_Code__c",mgetAccountRecords); 
+    	updateCase.set("AccountId",mgetAccountID); 
+
+	updateCase.set("Id","{!Case.Id}"); 
+
+	arrUpdateCase.push(updateCase);
+    	
+    	var responseUpdate = sforce.connection.update(arrUpdateCase); 
+    	
+
+    	if(responseUpdate != null && responseUpdate.getClassName && responseUpdate.getClassName() == "AppError") 
+    	{
+        alert("Error while updating Case for IATACode__c");
+    	}
+	 else
+    	{      self.parent.location.replace('/'+ '{!Case.Id}');
+
+    	}
+
+}
+
+
+function ToCancel()
+{
+self.parent.location.replace('/'+ '{!Case.Id}');
+
+}
+</script>
