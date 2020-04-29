@@ -1,6 +1,8 @@
 //Test class coverage by PostCopyScriptTest
 global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject>{
+
 	global final string scheduleQuery;
+
 	global deleteScheduleDashboardsBatch(){
 
 		if(Test.isRunningTest()){
@@ -14,6 +16,7 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 
 	 return Database.getQueryLocator(scheduleQuery);
 	}
+
 	global void execute(Database.BatchableContext BC,List<SObject> scope){
 
 	  for(SObject cronJob : scope){
@@ -22,9 +25,7 @@ global class deleteScheduleDashboardsBatch Implements Database.batchable<sobject
 
    }
    global void finish(Database.BatchableContext BC){
-		if(Test.isRunningTest()){
-			System.debug('TEST IS RUNNING');
-		}else{
+		if(!Test.isRunningTest()){
 			updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
 			Database.executeBatch(updateNamedCredentials,15);
 		}

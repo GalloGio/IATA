@@ -2,58 +2,56 @@ global class updateNamedCredentialsBatch Implements Database.batchable<sobject>,
 
 	global final string namedCredQuery;
 	global List<String> errorList;
-	global List<MetadataService.NamedCredential> namedCredentials = new List<MetadataService.NamedCredential>();
 
-    global updateNamedCredentialsBatch(){
+	global updateNamedCredentialsBatch(){
 
 		errorList = new List<String>();
-        if(Test.isRunningTest()){
+
+		if(Test.isRunningTest()){
 			namedCredQuery = 'SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential LIMIT 10';
 		}else{
 			namedCredQuery = 'SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential';
 		}
-    }
+	}
 
-    global Database.QueryLocator start(Database.BatchableContext BC){
+	global Database.QueryLocator start(Database.BatchableContext BC){
 
-	 return Database.getQueryLocator(namedCredQuery);
+		return Database.getQueryLocator(namedCredQuery);
 	}
 
 	global void execute(Database.BatchableContext BC,List<NamedCredential> scope){
+
 		MetadataService.MetadataPort service = createService();
-        for(NamedCredential nc : scope){
-            MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
+		for(NamedCredential nc : scope){
+			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
 			namedCredential.fullName = nc.DeveloperName;
 			namedCredential.label = nc.MasterLabel;
 			namedCredential.endpoint = nc.endpoint + '/test-postCopyScript';
 			namedCredential.principalType = nc.PrincipalType;
 			namedCredential.protocol = 'NoAuthentication';
 
-			if(Test.isRunningTest()){
-				System.debug('TEST IS RUNNING');
-			}else{
+			if(!Test.isRunningTest()){
 				List<MetadataService.SaveResult> results = service.updateMetadata(new MetadataService.Metadata[] {namedCredential});
 				//handleSaveResults(results[0]);
 			}
 		}
 	}
 
-
    global void finish(Database.BatchableContext BC){
-		if(Test.isRunningTest()){
-			System.debug('TEST IS RUNNING');
-		}else{
-			deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch(errorList);
+
+	   if(!Test.isRunningTest()){
+		   deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch(errorList);
 			Database.executeBatch(deleteConnectedApps,10);
 		}
 	}
 
    private static MetadataService.MetadataPort createService(){
-		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-		service.SessionHeader = new MetadataService.SessionHeader_element();
-		service.SessionHeader.sessionId = UserInfo.getSessionId();
 
-		return service;
+	   MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+	   service.SessionHeader = new MetadataService.SessionHeader_element();
+	   service.SessionHeader.sessionId = UserInfo.getSessionId();
+
+	   return service;
 	}
 
 	// private void handleSaveResults(MetadataService.SaveResult saveResult){
@@ -78,5 +76,5 @@ global class updateNamedCredentialsBatch Implements Database.batchable<sobject>,
 	// 		if(!saveResult.success){
 	// 			errorList.add('Request failed with no specified error.');
 	// 		}
-    // }
+	// }
 }
