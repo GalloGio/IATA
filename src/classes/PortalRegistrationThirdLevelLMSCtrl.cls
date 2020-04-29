@@ -779,9 +779,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
 													Label.CSP_Verification_L3_Email_PE_2_LMS;
 					}else{
-						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
+						if(flow == 'flow4'){
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_F4_LMS +
+													Label.CSP_Verification_L3_Email_UE_2_LMS;
+						}else{
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
 													Label.CSP_Verification_L3_Email_UE_2_LMS;
 													// + Label.CSP_Verification_L3_Email_UE_3_LMS;
+						}
 					}
 				}else{
 					//All other Flows that don't match a email or Aditional Email
