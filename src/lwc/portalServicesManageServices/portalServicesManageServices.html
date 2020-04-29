@@ -21,6 +21,56 @@
             </span>
         </c-portal-page-container>
     </div>
+    <div if:false={componentLoading} class="serviceInfoPanel slds-p-vertical_medium">
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div class="slds-grid slds-size--1-of-1 slds-grid_vertical-stretch slds-wrap slds-gutters-direct_x-small ">                   
+                    <div class="slds-col slds-p-vertical_medium slds-size_1-of-1 slds-medium-size--10-of-12">
+                        <lightning-formatted-rich-text class="introMessage text-xsmall" value={serviceRecord.serviceDescriptionLabel}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                    <div if:false={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12 slds-grid_align-end slds-grid_vertical-align-center">
+                        <div if:false={renderRequest} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <div if:true={serviceRecord.accessGranted}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={label.goToServicelb} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+
+                            <div if:false={serviceRecord.accessGranted}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidt wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                        <div if:true={renderRequest} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <lightning-button-menu if:true={renderCancelRequest} class="text-bold text-xsmall outlinedButtonBorderBlue fullWidth requestedService" variant="container"  label="Access Requested" menu-alignment="right" onselect={cancelServiceAccessRequest}>
+                                <lightning-menu-item class="text-bold" value="cancel_request" label={label.cancelRequestlb}></lightning-menu-item>
+                            </lightning-button-menu>
+                        </div>
+                    </div>
+                    <div if:true={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12  slds-grid_align-end slds-grid_vertical-align-center">
+                        <div if:true={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal"
+                                label={label.goToServicelb} onclick={handleTopAction}>
+                            </lightning-button>
+                        </div>
+                        
+
+                        <div if:false={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <div if:true={isIFG_Service}>
+                                <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton wordBreakNormal">
+                                    {serviceRecord.btnLabel}
+                                </span>
+                            </div>
+                            <div if:false={isIFG_Service}>
+                                <lightning-button class=" slds-grid_align-end baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
 
     <div class="body slds-m-top_xx-large">
         <c-portal-page-container>
@@ -34,123 +84,59 @@
                 <div if:false={componentLoading}>
                     <div if:true={loadReady}>
 
-                        <!-- NORMAL USERS VIEW -->
-                        <div if:false={displayAdminView} class="slds-grid slds-wrap slds-m-top_medium slds-p-around_large slds-m-bottom_xx-large customBorderlessCardWhite">
-
-                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_7-of-12 slds-p-bottom_medium">
-                                <div class="text-medium text-bold">
-                                    {label.aboutlb}
-                                </div>
-                            </div>
-
-                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_5-of-12 slds-p-bottom_medium">
-                                <div if:false={renderRequest}>
-                                    <div if:true={serviceRecord.accessGranted}>
-                                        <lightning-button class="slds-float_right baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={label.goToServicelb} onclick={handleTopAction}>
-                                        </lightning-button>
-                                    </div>
-
-                                    <div if:false={serviceRecord.accessGranted}>
-                                        <lightning-button class="slds-float_right baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={serviceRecord.btnLabel} onclick={handleTopAction}>
-                                        </lightning-button>
-                                    </div>
-                                </div>
-
-                                <div if:true={renderRequest}>
-                                    <div if:true={renderCancelRequest} class="slds-float_right requestedButtonCls">
-                                        <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton">{serviceRecord.btnLabel}</span>
-                                        <lightning-button-menu variant="container" icon-name="utility:threedots_vertical" menu-alignment="right" onselect={cancelServiceAccessRequest}>
-                                            <lightning-menu-item class="text-bold" value="cancel_request" label={label.cancelRequestlb}></lightning-menu-item>
-                                        </lightning-button-menu>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="slds-col slds-p-top_medium slds-size_1-of-1">
-                                <lightning-formatted-rich-text class="introMessage" value={serviceRecord.serviceDescriptionLabel}>
-                                </lightning-formatted-rich-text>
-                            </div>
-
-                        </div>
-
                         <!-- ADMINS VIEW -->
                         <div if:true={displayAdminView} class="slds-grid slds-wrap slds-m-top_medium slds-m-bottom_large">
-                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_10-of-12 slds-large-size_10-of-12 slds-p-bottom_medium">
-                                <div class="text-xsmall">
-                                    {serviceRecord.serviceDescriptionLabel}
-                                </div>
-                            </div>
-                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-bottom_medium" if:true={serviceRecord.accessGranted}>
-                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth slds-float_right"
-                                    label={label.goToServicelb} onclick={handleTopAction}>
-                                </lightning-button>
-                            </div>
-                            
-
-                            <div class="slds-col slds-m-bottom_large" if:false={serviceRecord.accessGranted}>
-                                <div if:true={isIFG_Service}>
-                                    <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton ">
-                                        {serviceRecord.btnLabel}
-                                    </span>
-                                </div>
-                                <div if:false={isIFG_Service}>
-                                    <lightning-button class=" slds-grid_align-end baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={serviceRecord.btnLabel} onclick={handleTopAction}>
-                                    </lightning-button>
-                                </div>
-                            </div>
-
-                            <div class="slds-col slds-size_1-of-1 customBorderlessCardWhite text-xsmall">
-                                <div class="slds-p-around_large">
+                            <div class="slds-col slds-size_1-of-1 text-xxsmall">
+                                <div>
                                     <div class="slds-col  slds-size_1-of-1 text-medium text-bold">
                                         {label.contactslb}
                                     </div>
                                     <div class="slds-col slds-p-top_small slds-size_1-of-1 slds-m-bottom_large">
                                         {label.manageUserslb}
                                     </div>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_1-of-1">
-                                            <div class="slds-grid slds-wrap slds-gutters_direct-x-small slds-grid_align-end">
-                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                                    <!-- FILTER -->
-                                                    <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
-                                                        {label.CSP_Filtered}
-                                                        <img class="slds-float_right" src={filteredIconUrl}>
-                                                    </button>
-                                                    <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
-                                                        {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
-                                                    </button>
+                                    <div class="slds-grid slds-wrap slds-m-vertical--medium">                                       
+                                        <!-- SEARCH -->
+                                        <div class="slds-col slds-grid slds-size_1-of-1 slds-medium-size_4-of-12 slds-order--2 slds-medium-order--1">
+                                            <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12  aroundLightGrayBorder searchBox borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall inputFilter">
+                                                <img src={searchIconUrl}>
+                                                <lightning-input name="newRecipientTextInput"
+                                                    placeholder={label.searchContactPlaceholder}
+                                                    class="hideInputLabel grayInputPlaceholder titleTruncation"
+                                                    onchange={searchRecord}
+                                                    value={searchText}>
+                                                </lightning-input>
+                                                <div if:true={showCross}  class="searchBarIcon slds-m-right--large rotateIcon45Deg">
+                                                    <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
                                                 </div>
-                                                <!-- LIST VIEW -->
-                                                <template if:true={canAddUsers}>
-                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12" if:true={showMassApprove}>    
-                                                        <lightning-button label={label.grantAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassApproveAccess} ></lightning-button>
-                                                    </div>
-                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12" if:true={showMassDeny}>    
-                                                        <lightning-button label={label.denyAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassDenyAccess} ></lightning-button>
-                                                    </div>
-                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">    
-                                                        <lightning-button label={label.addNewUser} class="containedButton fullWidth twoLines" onclick={toggleAddUserModal} ></lightning-button>
-                                                    </div>
-                                                </template>
                                             </div>
                                         </div>
-                                        <div class="slds-col slds-size_1-of-1">
-                                            <div class="slds-grid slds-wrap">
-                                                <!-- SEARCH -->
-                                                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2">
-                                                    <div class="bottomLightGrayBorder slds-m-around_small inputFilter" style="display: flex;">
-                                                            <img src={searchIconUrl} height="24" width="24" />
-                                                            <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
-                                                                class="hideInputLabel borderlessInput grayInputPlaceholder fullWidth"
-                                                            value={searchText} onchange={searchRecord}>
-                                                            </lightning-input>
-                                                    </div>
-                                                </div>
+                                        <div class="slds-grid slds-wrap slds-size--1-of-1  slds-medium-size_8-of-12 slds-order--1 slds-medium-order--2 slds-grid_align-end">
+                                            <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--2 slds-medium-order--1 ">
+                                                <!-- FILTER -->
+                                                <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                    {label.CSP_Filtered}
+                                                    <img class="slds-float_right" src={filteredIconUrl}>
+                                                </button>
+                                                <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                                                </button>
                                             </div>
+                                            <!-- LIST VIEW -->
+                                            <template if:true={canAddUsers}>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2" if:true={showMassApprove}>    
+                                                    <lightning-button label={label.grantAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassApproveAccess} ></lightning-button>
+                                                </div>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2" if:true={showMassDeny}>    
+                                                    <lightning-button label={label.denyAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassDenyAccess} ></lightning-button>
+                                                </div>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2">    
+                                                    <lightning-button label={label.addNewUser} class="containedButton fullWidth twoLines" onclick={toggleAddUserModal} ></lightning-button>
+                                                </div>
+                                            </template>
                                         </div>
                                     </div>
 
-                                    <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray usersTable">
+                                    <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray usersTable customBorderlessCardWhite">
                                         <lightning-datatable data={currentContactPage}
                                                              columns={contactTableColums}
                                                              key-field="Id"
@@ -174,12 +160,12 @@
                                             onlast={handleLastPage}>
                                         </c-paginator>
                                     </div>
-                                    <div if:true={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1">
+                                    <div if:true={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 customBorderlessCardWhite">
                                         <div class="slds-p-vertical_medium slds-text-align_center">
                                             <img src={searchIconNoResultsUrl} />
                                             <div class="text-small text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
-                                            <div class="text-xxsmall text-gray" if:false={filtered}>{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray">"{searchKey}"</span></div>
-                                            <div class="text-xxsmall text-gray" if:true={filtered}>{label.CSP_NoRecordsFilter}</div>
+                                            <div class="text-xxsmall text-gray slds-p-bottom--large" if:false={filtered}>{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray">"{searchKey}"</span></div>
+                                            <div class="text-xxsmall text-gray slds-p-bottom--large" if:true={filtered}>{label.CSP_NoRecordsFilter}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +211,6 @@
     <template if:true={displaySecondLevelRegistration}>
         <c-portal-registration-second-level
             trigger={level2RegistrationTrigger}
-            is-triggered-by-request={isTriggeredByRequest}
             onclosesecondlevelregistration={cancelSecondLevelRegistration}
             onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
             onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>
