@@ -5,6 +5,7 @@ public class AMS_DemoTreeview {
 
 	public Account currentAccount {get;set;}
 	public Account parentAccount {get;set;}
+	public Boolean isHQ {get;set;}
 	public AMS_OSCAR__c currentOscar {get;set;}
 	public Map<Id,String> accreditationAreas {get;set;}
 	public Map<String,String> accreditationAreasOKNOK {get;set;}
