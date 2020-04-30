@@ -400,15 +400,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			//put the contacts in recipents list
 			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
-			System.debug('IATA recipents list: ' + recipents);
 		}
 
 		if(recipents != null){
-
+			System.debug('IATA recipents list: ' + recipents);
 			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-
-			system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
-			system.debug('DGR sendEmailAlert: recipents ' + recipents);
+			String errorMsg;
 
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
@@ -440,30 +437,18 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
 				//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
 				}else if(isDGR){
-
-					system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
-
 					//FM 24/10/2017 - AMSU-32
 					if(recipient.User_Portal_Status__c == 'Approved Admin'){
-
-						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-						system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
-
-						//lPortalAdminsEmailsDGR.add(recipient.Email);
 						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-							system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
 							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
 							aux.add(recipient.Email);
 							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
 						}else{
-							system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
 							List<String> aux = new List<String>();
 							aux.add(recipient.Email);
 							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
 							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
 						}
-
-						system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
 
 					}else{
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -474,11 +459,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 						}
 						mail.setTargetObjectId(recipient.Id);
-
 						mail.setWhatId(oscarId);
-
 						mail.setOrgWideEmailAddressId(owea.Id);
-
 						mailsToSend.add(mail);
 					}
 				}
@@ -487,9 +469,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			//FM 24/10/2017 - AMSU-32
 			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
 				for(String key : mPortalAdminsEmailsDGR.keySet()){
-
-					system.debug('DGR sendEmailAlert: key : ' + key);
-					system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
 
 					Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
 					mailPortalAdmin.saveAsActivity = true;
@@ -535,7 +514,26 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					emailMsg.Status = '0';
 					mailsToTrackInCase.add(emailMsg);
 				}
-				insert mailsToTrackInCase;
+
+				try {
+					insert mailsToTrackInCase;
+				} catch(Exception e){
+					errors.add('The following exception has occurred: ' +e.getMessage()+' :: Line number: ' + e.getLineNumber() ' :: Stack trace: ' +e.getStackTraceString());
+				}
+
+				if(!errors.isEmpty()){
+					List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+					for(SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.setTargetObjectId(supportEmail.Support_User_Id__c);
+						mail.setSubject('AMS_AgencyRegulationAutoRenewal.sendEmailAlert failure');
+						mail.setPlainTextBody(errors);
+						mails.add(mail);
+					}
+					if (!mails.isEmpty()){
+						Messaging.sendEmail(mails);
+					}
+				}
 			}
 		}
 		return new List<Messaging.SingleEmailMessage>();
