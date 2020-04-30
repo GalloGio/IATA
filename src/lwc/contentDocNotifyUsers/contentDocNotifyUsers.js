@@ -6,7 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import LAST_VERSION_ID from '@salesforce/schema/ContentDocument.LatestPublishedVersionId';
 
-import SENT_DATE from '@salesforce/schema/ContentVersion.Sent_Date__c';
+import SENT_DATE from '@salesforce/schema/ContentVersion.notify_users_date__c';
 import CREATED_DATE from '@salesforce/schema/ContentVersion.CreatedDate';
 import triggerUserNotification from '@salesforce/apex/CSP_Utils.triggerUserNotification';
 

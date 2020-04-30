@@ -89,7 +89,7 @@ public class ContentVersionTriggerHandler {
 			}
 
 
-			if(cv.createdDate <= cv.sent_date__c){
+			if(cv.createdDate <= cv.notify_users_date__c){
 				notifyUsers(cv.ContentDocumentId,cv.title);
 			}
 		}	
@@ -99,7 +99,7 @@ public class ContentVersionTriggerHandler {
 	
 	public void afterUpdateContentVersionTriggerHandler() {
 		for (ContentVersion cv: triggerNew) {
-			if(cv.isLatest==true && (cv.sent_date__c!= oldMap.get(cv.id).sent_date__c) && cv.createdDate <= cv.sent_date__c){
+			if(cv.isLatest==true && (cv.notify_users_date__c!= oldMap.get(cv.id).notify_users_date__c) && cv.createdDate <= cv.notify_users_date__c){
 				ContentVersionTriggerHandler.notifyUsers(cv.ContentDocumentId,cv.title);
 			}
 		}

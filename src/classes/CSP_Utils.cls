@@ -422,11 +422,11 @@ public with sharing class CSP_Utils {
 			if(string.isEmpty(cvId)){
 				return;
 			}
-			//To trigger the notification, the sent_Date__c value needs to be larger than the createdDate,
+			//To trigger the notification, the notify_users_date__c value needs to be larger than the createdDate,
 			//hence the current datetime being sent
 			update new contentVersion(
 				id=cvId,
-				sent_date__c=system.now()
+				notify_users_date__c=system.now()
 			);
 		}catch(Exception e){
 			System.debug(LoggingLevel.FINE, e.getMessage());

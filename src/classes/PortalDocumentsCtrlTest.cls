@@ -218,7 +218,7 @@ public class PortalDocumentsCtrlTest {
 			cvNew.Title = 'ContentVersion Test3 Portal Documents';			
 			cvNew.PathOnClient ='test';
 			cvNew.versiondata=EncodingUtil.base64Decode('Unit Test Attachment Body2');
-			cvNew.sent_Date__c=System.Now()+(2/24);
+			cvNew.notify_users_date__c=System.Now()+(2/24);
 			cvNew.contentDocumentId=testContent[0].contentDocumentId;
 
 		insert cvNew;
@@ -242,7 +242,7 @@ public class PortalDocumentsCtrlTest {
 			
 			}
 			contentVersion cv=testContent[0];
-			cv.sent_date__c=system.NOW()+(2/24);//adds 2h to datetime
+			cv.notify_users_date__c=system.NOW()+(2/24);//adds 2h to datetime
 
 			update cv;
 		Test.stopTest();
