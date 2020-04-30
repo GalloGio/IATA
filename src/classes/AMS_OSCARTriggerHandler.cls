@@ -3056,10 +3056,8 @@ public class AMS_OSCARTriggerHandler {
 
 
 	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
-
-		Map<Id, Integer> contacts = null;
-
-		Map<Id, Integer> allPercentages = null;
+		Map<Id, Set<String>> contacts = null;
+		Map<Id, Double> allPercentages = null;
 
 		for(AMS_OSCAR__c oscar: oscars){
 
@@ -3074,40 +3072,71 @@ public class AMS_OSCARTriggerHandler {
 					allPercentages = getAllOWnersPercentage(oscars);
 				}
 
-				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
-					continue;
-				else
-					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180
-						Double requiredOwnership = 99.99;
-						String errorMessage = 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+				Set<String> errorMessages = contacts.get(oscar.AMS_Online_Accreditation__c);
+				if(errorMessages <> null) {
+					for(String errorMessage : errorMessages) {
 						oscar.addError(errorMessage);
 					}
+				} else {
+					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180//WMO-492
+						oscar.addError('Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.');
+					}
+				}
 
 			}
 		}
 
 	}
 
-	public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
-
+	public static Map<Id, Set<String>> getAccreditationContacts(List<AMS_Oscar__c> oscars) {
 		Set<Id> onlineForms = new Set<Id>();
-
-		for(AMS_OSCAR__c oscar : oscars)
+		for(AMS_OSCAR__c oscar : oscars) {
 			onlineForms.add(oscar.AMS_Online_Accreditation__c);
-
-		List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
-
-		Map<Id,Integer> toReturn = new Map<Id,Integer>();
-
-		for(AggregateResult ar: sumPercentageAR){
-			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
 		}
 
-		return toReturn;
+		//WMO-492
+		Set<Id> recordTypes = new Set<Id>();
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner'));
 
+		List<AMS_Accreditation_Contact__c> accContacts = [SELECT AMS_Pax_Accreditation_Form__c, Financial_interest__c 
+			from AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c in :onlineForms AND Agency_owner__c = true AND RecordTypeId IN :recordTypes];
+
+		Map<Id,Set<String>> res = new Map<Id,Set<String>>();
+		Map<Id,Decimal> totalOwnership = new Map<Id,Decimal>();
+
+		for(AMS_Accreditation_Contact__c accContact : accContacts) {
+			Set<String> errMessages = res.get(accContact.AMS_Pax_Accreditation_Form__c);
+			if(errMessages == null) {
+				errMessages = new Set<String>();
+				res.put(accContact.AMS_Pax_Accreditation_Form__c, errMessages);
+			}
+
+			Decimal ownership = totalOwnership.get(accContact.AMS_Pax_Accreditation_Form__c);
+			if(ownership == null) {
+				totalOwnership.put(accContact.AMS_Pax_Accreditation_Form__c, accContact.Financial_interest__c);
+			} else {
+				totalOwnership.put(accContact.AMS_Pax_Accreditation_Form__c, ownership + accContact.Financial_interest__c);
+			}
+
+			if(accContact.Financial_interest__c <= 0 || accContact.Financial_interest__c > 100) {
+				errMessages.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%. Please correct agency owners before passing the Sanity Check.');
+			}
+		}
+
+		for(Id accredId : totalOwnership.keySet()) {
+			Decimal accrTotalOwnership = totalOwnership.get(accredId);
+			if(!(accrTotalOwnership >= 99.99 && accrTotalOwnership <= 100)) {
+				res.get(accredId).add('Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.');
+			}
+		}
+
+		return res;
 	}
 
-	public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+	public static Map<Id, Double> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
 
 		Set<Id> accounts = new Set<Id>();
 
@@ -3116,19 +3145,19 @@ public class AMS_OSCARTriggerHandler {
 
 		List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
 
-		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+		Map<Id,Double> toReturn = new Map<Id,Double>();
 
 		for(AggregateResult ar: sumPercentageAR){
-			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+			toReturn.put((Id)ar.get('Id'), Double.valueOf(ar.get('percentage')));
 		}
 
 		return toReturn;
 
 	}
 
-	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
-
-		return percentages.get(oscar.Account__c) < 99.99;//AMSU-180
+	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Double> percentages){
+		Double percentage = percentages.get(oscar.Account__c);//WMO-492
+		return percentage >= 99.99 && percentage <= 100;//AMSU-180
 
 	}
 
