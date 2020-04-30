@@ -102,15 +102,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>simonovi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siponenp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>wangw@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wyattj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -192,6 +192,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mccorleys@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -201,6 +205,10 @@
         </recipients>
         <recipients>
             <recipient>odelej@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>simonovi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
