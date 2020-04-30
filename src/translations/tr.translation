@@ -3417,10 +3417,6 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Profil Detaylarına Geri Dönün</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Hesap Seçme ve Ek Detaylar</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3627,10 +3623,6 @@
     <customLabels>
         <label>Posta Kodu</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Profil Detayları</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
@@ -24537,7 +24529,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>TC_CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
-        <label>Kullanım Koşulları&#39;nı</label>
+        <label>Kullanım Koşulları&apos;nı</label>
         <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -34575,7 +34567,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Oscars with AMS online accreditation --></label>
         <name>Oscars_with_AMS_online_accreditation</name>
         <sections>
-            <label><!-- AMS Online Accreditations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>

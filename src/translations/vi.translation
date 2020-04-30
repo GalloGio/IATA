@@ -3420,10 +3420,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Quay lại Chi tiết Hồ sơ doanh nghiệp</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Lựa chọn tài khoản &amp; Chi tiết bổ sung</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3630,10 +3626,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Mã bưu điện</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Chi tiết Hồ sơ cá nhân</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Bổ sung những thông tin còn thiếu trên Hồ sơ cá nhân của quý khách để IATA có thể đề xuất các nội dung và dịch vụ được cá nhân hóa dành riêng cho quý khách.</label>
@@ -34758,7 +34750,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Các báo cáo</label>
             <name>Products</name>
         </sections>
     </reportTypes>

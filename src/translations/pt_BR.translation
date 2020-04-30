@@ -3421,10 +3421,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Voltar aos Detalhes do Perfil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Seleção de conta e detalhes adicionais</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3631,10 +3627,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>CEP</label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Detalhes de Perfil</label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label>Adicione seus dados pessoais para permitir que a IATA sugira conteúdo e serviços personalizados.</label>
@@ -34759,7 +34751,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Relatorios / Reportes</label>
             <name>Products</name>
         </sections>
     </reportTypes>
