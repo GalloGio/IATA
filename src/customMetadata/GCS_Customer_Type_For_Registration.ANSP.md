@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Infrastructure Partner</value>
+        <value xsi:type="xsd:string">Airport</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -52,7 +52,11 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Infrastructure_Partner</value>
+        <value xsi:type="xsd:string">Airport</value>
+    </values>
+    <values>
+        <field>Partial_List_Order__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Placeholder_Custom_Label__c</field>
