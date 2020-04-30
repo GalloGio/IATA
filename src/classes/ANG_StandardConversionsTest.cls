@@ -417,40 +417,13 @@ private class ANG_StandardConversionsTest {
 
 		assertChangeCodes(oscar.Id, 'CNV', accountsInvolvedSet);
 
-		acct = 
-			[SELECT
-				Id,
-				ANG_HE_RiskStatus__c,
-				ANG_HE_CashCondition__c,
-				Financial_Review_Result__c,
-				Assessment_Performed_Date__c,
-				Financial_Assessment_Points__c,
-				ANG_HE_RiskHistoryAssessment__c,
-				(SELECT Id, ANG_RHC_Amount__c FROM RHC_Informations__r),
-				(SELECT 
-					Id,
-					ANG_HE_RiskStatus__c,
-					ANG_HE_CashCondition__c,
-					Financial_Review_Result__c,
-					Assessment_Performed_Date__c,
-					Financial_Assessment_Points__c,
-					ANG_HE_RiskHistoryAssessment__c
-				 FROM ChildAccounts)
-			 FROM Account
-			 WHERE Id = :acct.Id
-			 LIMIT 1
-			];
+		acct = [SELECT Id,
+					(SELECT Id, ANG_RHC_Amount__c FROM RHC_Informations__r)
+				FROM Account
+				WHERE Id = :acct.Id
+				LIMIT 1];
 
 		System.assert(acct.RHC_Informations__r[0].ANG_RHC_Amount__c == null, 'RHC information must be reseted');
-
-		for(Account childAcct : acct.ChildAccounts){
-			System.assert(!childAcct.ANG_HE_CashCondition__c, 'Cash condition must be false');
-			System.assert(String.isBlank(childAcct.Financial_Review_Result__c), 'Financial Review Result must be reseted');
-			System.assert(childAcct.Assessment_Performed_Date__c == null, 'Assessment Performed Date must be reseted');
-			System.assert(acct.Financial_Assessment_Points__c == null, 'Financial Assessment Points must be reseted');
-			System.assert(childAcct.ANG_HE_RiskStatus__c == AMS_Utils.NOT_APPLICABLE, 'Risk Status must be reseted');
-			System.assert(childAcct.ANG_HE_RiskHistoryAssessment__c == AMS_Utils.NOT_APPLICABLE, 'Risk History Assessment must be reseted');
-		}
 
 	}
 
