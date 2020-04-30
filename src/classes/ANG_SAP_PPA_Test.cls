@@ -88,7 +88,7 @@ private class ANG_SAP_PPA_Test {
 	@isTest static void noCasesTest() {
 		Test.startTest();
 
-		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC('0987564', '123', 'test', 'PPA');
+		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC('0987564', '123', 'test', AMS_Utils.SAP_PAYMENT_TYPE_PPA);
 		System.assertEquals('Case not found', resp.statusDescription);
 		System.assertEquals('404', resp.statusCode);
 
@@ -100,7 +100,7 @@ private class ANG_SAP_PPA_Test {
 
 		Test.startTest();
 
-		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', 'PPA');
+		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', AMS_Utils.SAP_PAYMENT_TYPE_PPA);
 		System.assertEquals('Case has no associated OSCAR', resp.statusDescription);
 		System.assertEquals('409', resp.statusCode);
 
@@ -112,7 +112,7 @@ private class ANG_SAP_PPA_Test {
 
 		Test.startTest();
 
-		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', 'PPA');
+		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', AMS_Utils.SAP_PAYMENT_TYPE_PPA);
 		System.assertEquals('Case has already a PPA Number', resp.statusDescription);
 		System.assertEquals('409', resp.statusCode);
 
@@ -124,7 +124,7 @@ private class ANG_SAP_PPA_Test {
 
 		Test.startTest();
 
-		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', 'PPA');
+		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, '123', 'test', AMS_Utils.SAP_PAYMENT_TYPE_PPA);
 		System.assertEquals('OK', resp.statusDescription);
 		System.assertEquals('200', resp.statusCode);
 
@@ -151,7 +151,7 @@ private class ANG_SAP_PPA_Test {
 		Test.startTest();
 		Test.setMock(WebServiceMock.class, new MockSAPDigitalInvoice());
 
-		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, orderItems[0].Invoice_Number__c, '', 'PPA');
+		ANG_SAP_PPA.WSResponse resp = ANG_SAP_PPA.putPPAToSFDC(fetchedCase.Id, orderItems[0].Invoice_Number__c, '', AMS_Utils.SAP_PAYMENT_TYPE_PPA);
 		System.assertEquals('500', resp.statusCode);
 
 		Test.stopTest();
