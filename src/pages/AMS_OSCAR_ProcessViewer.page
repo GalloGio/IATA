@@ -183,12 +183,12 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
   
                 //NEWGEN-5544 - Confirmation message for BSP with Remittance Frequency per State
                 //Steps Sanity Check - STEP6__c = Passed || RPM_Approval__c Step = Authorize Approval & oscar.ANG_Type_Of_Change__c = Location & Account.RF != Pax_Accreditation.RF
-                var rfAccount = '{!oscar.Account__r.Remittance_frequency__c}';
-                var rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
-                var rfPerState = '{!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c}';
-                var typeChange = '{!oscar.ANG_Type_Of_Change__c}';
+                const rfAccount = '{!oscar.Account__r.Remittance_frequency__c}';
+                const rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
+                const rfPerState = {!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c};
+                const typeChange = '{!oscar.ANG_Type_Of_Change__c}';
 
-                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState == true && showConfirmationRFChange == true){
+                if(typeChange === 'Location' && rfAccount !== rfStagingArea && rfPerState === true && showConfirmationRFChange === true){
                     if (!confirm("Remittance Frequency has changed. Do you want to proceed?")){
                         return 'false';
                     }
