@@ -143,7 +143,7 @@
 											Bank Accounts (*)
 										</td>
 										<td>
-											<c:ISSP_ICCS_TypedDocument docType="Bank Accounts" caseProcessCtrl="{! thisCtrl}"/>
+											<c:ISSP_ICCS_TypedDocument docType="Bank_Accounts" caseProcessCtrl="{! thisCtrl}"/>
 										</td>
 									</tr>
 								</table>
