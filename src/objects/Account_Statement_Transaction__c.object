@@ -143,173 +143,185 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Line detail for each transaction in account statements</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
-        <fullName>Account__c</fullName>
+        <fullName>Amount__c</fullName>
         <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>Account Statements</relationshipLabel>
-        <relationshipName>Account_Statements</relationshipName>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <description>Description field</description>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Key__c</fullName>
+        <description>This will be used to find the parent id when a record is inserted, so will only be mandatory when you don&apos;t provide a parent Id</description>
+        <externalId>false</externalId>
+        <label>Parent Key</label>
+        <length>38</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Statement</label>
+        <referenceTo>Account_Statement__c</referenceTo>
+        <relationshipLabel>Account Statement Transactions</relationshipLabel>
+        <relationshipName>Account_Statement_Transactions</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Amount_to_be_Paid__c</fullName>
-        <externalId>false</externalId>
-        <label>Amount to be paid</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>3</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>Balance__c</fullName>
-        <externalId>false</externalId>
-        <label>Balance</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>3</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>Billing_Adjustment__c</fullName>
-        <externalId>false</externalId>
-        <formula>Billing_Amount__c -  Amount_to_be_Paid__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Billing Adjustment</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>Billing_Amount__c</fullName>
-        <externalId>false</externalId>
-        <label>Billing Amount</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>3</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>Group__c</fullName>
-        <externalId>false</externalId>
-        <label>Group</label>
-        <length>14</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Key__c</fullName>
+        <fullName>Transaction_Id__c</fullName>
         <caseSensitive>false</caseSensitive>
-        <description>Concatenatin of Client Code + Period</description>
         <externalId>true</externalId>
-        <label>Key</label>
-        <length>38</length>
+        <label>Transaction Id</label>
+        <length>10</length>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>Operation__c</fullName>
+        <fullName>Transaction_Type__c</fullName>
         <externalId>false</externalId>
-        <label>Operation</label>
-        <length>14</length>
+        <label>Transaction Type</label>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Automatic Match</fullName>
+                    <default>false</default>
+                    <label>Automatic Match</label>
+                </value>
+                <value>
+                    <fullName>Billing Adjustement</fullName>
+                    <default>false</default>
+                    <label>Billing Adjustement</label>
+                </value>
+                <value>
+                    <fullName>Clawback</fullName>
+                    <default>false</default>
+                    <label>Clawback</label>
+                </value>
+                <value>
+                    <fullName>Compensation</fullName>
+                    <default>false</default>
+                    <label>Compensation</label>
+                </value>
+                <value>
+                    <fullName>Expected Remittance</fullName>
+                    <default>false</default>
+                    <label>Expected Remittance</label>
+                </value>
+                <value>
+                    <fullName>Expected Settlement</fullName>
+                    <default>false</default>
+                    <label>Expected Settlement</label>
+                </value>
+                <value>
+                    <fullName>Manual Match</fullName>
+                    <default>false</default>
+                    <label>Manual Match</label>
+                </value>
+                <value>
+                    <fullName>Post Billing Dispute</fullName>
+                    <default>false</default>
+                    <label>Post Billing Dispute</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
-        <fullName>Paid__c</fullName>
+        <fullName>Value_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Paid</label>
-        <precision>18</precision>
+        <label>Value Date</label>
         <required>false</required>
-        <scale>3</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>Period__c</fullName>
-        <externalId>false</externalId>
-        <label>Period</label>
-        <length>10</length>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Remittance_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Remittance Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
-    <fields>
-        <fullName>Status__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(
-  Balance__c=0,
-   $Label.ISSP_Fullpayment,
-  IF(Balance__c&gt;0, $Label.ISSP_Pending, $Label.ISSP_Excess)
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <label>Account Statement</label>
+    <label>Account Statement Transaction</label>
     <nameField>
+        <displayFormat>T-{0000000000}</displayFormat>
         <label>Account Statement Name</label>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Account Statements</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <pluralLabel>Account Statement Transactions</pluralLabel>
     <recordTypes>
         <fullName>ICE_Balance</fullName>
         <active>true</active>
         <description>Client Balance detail for Account Statements (ICE)</description>
         <label>ICE Balance</label>
+        <picklistValues>
+            <picklist>Transaction_Type__c</picklist>
+            <values>
+                <fullName>Automatic Match</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing Adjustement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clawback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expected Remittance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expected Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manual Match</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Billing Dispute</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>
