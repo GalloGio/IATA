@@ -16,6 +16,9 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
+                <field>CS_Portal_link__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>CNS_Article__c</field>
             </layoutItems>
             <layoutItems>
