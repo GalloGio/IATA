@@ -46,19 +46,21 @@ public class ADSRServiceTest {
 		
 		Financial_Security__c fs1a = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.today().addDays(-1),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Insurance Bond',
-			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashment in progress', Two_months_passed_expiry__c = false);
+			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashment in progress',
+			Two_months_passed_expiry__c = false);
 		Financial_Security__c fs1b = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.today().addDays(-1),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Insurance Bond',
-			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Active', Two_months_passed_expiry__c = false);
+			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Active',
+			Two_months_passed_expiry__c = false);
 		
 		Financial_Security__c fs2a = new Financial_Security__c(Account__c = agency2.Id, Reception_Date__c = Date.today().addDays(-3),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Encashment_Date__c = Date.today().addDays(-1),
-			Release_Date__c = Date.today().addDays(-1), Financial_Institution__c = fi1.Id, Security_Type__c = 'Insurance Bond', Amount__c = 1,
-			Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashed');
+			Release_Date__c = Date.today().addDays(-1), Financial_Institution__c = fi1.Id, Security_Type__c = 'Insurance Bond',
+			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashed');
 		Financial_Security__c fs2b = new Financial_Security__c(Account__c = agency2.Id, Reception_Date__c = Date.today().addDays(-3),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Insurance Bond',
 			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Active');
-		insert new List<Financial_Security__c> { fs1a, fs1b};//, fs2a, fs2b };
+		insert new List<Financial_Security__c> { fs1a, fs1b }; // , fs2a, fs2b };
 		
 		Id rtHQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		
