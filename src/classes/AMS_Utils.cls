@@ -298,6 +298,7 @@ public without sharing class AMS_Utils {
 
 	// Case - Origin
 	public static final String CASE_ORIGIN_PORTAL = 'Portal';
+	public static final String CASE_ORIGIN_GDI_PORTAL = 'GDI Portal';
 	public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
 	public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';
 
@@ -423,6 +424,9 @@ public without sharing class AMS_Utils {
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';
 
+	public static final String CL = 'CL';
+	public static final String MC = 'MC';
+
 	public static final String CC = 'CC';
 	public static final String CA = 'CA';
 	public static final String EP = 'EP';
@@ -444,15 +448,35 @@ public without sharing class AMS_Utils {
 	/* AMSU-37 */
 	public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
+	public static final String APP_03WITHDRAWN = '03-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
 	public static final String NEW_CHANGE_CODE = 'NEW';
 	public static final String FIN_CHANGE_CODE = 'FIN';
 	public static final String NOT_CHANGE_CODE = 'NOT';
 	public static final String NFS_CHANGE_CODE = 'NFS';
+	public static final String GDI_CHANGE_CODE = 'GDI';
+	public static final String GDN_CHANGE_CODE = 'GDN';
+	
+	public static final String INVOICE_STATUS_NA = 'N/A';
+	public static final String INVOICE_STATUS_PAID = 'Paid';
+	public static final String INVOICE_STATUS_NOT_PAID = 'Not paid';
+	public static final String INVOICE_STATUS_FULLY_PAID = 'Fully paid';
+	public static final String INVOICE_STATUS_OUTSTANDING = 'Outstanding';
 
+	public static final String SAP_PAYMENT_TYPE_PPA = 'PPA';
+
+	
 	public static final String FINANCIAL_SECURITY_STATUS_ACTIVE = 'Active';
 	public static final String FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY = 'Close to Expiry Date';
+	public static final String FINANCIAL_SECURITY_STATUS_NOT_ACTIVE = 'Not Active yet';
+	public static final String FINANCIAL_SECURITY_TYPE_GDI = 'GDI';
+
+	public static final String OPPORTUNITY_CLOSED_WON = 'Closed Won';
+	public static final String OPPORTUNITY_CLOSED_LOST = 'Closed Lost';
+	public static final String OPPORTUNITY_LINEITEM_SECURITY_STATUS_DRAFT = 'Draft';
+
+	public static final String NEW_INTERACTION_ATTACHMENT = 'New Attachment';
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 

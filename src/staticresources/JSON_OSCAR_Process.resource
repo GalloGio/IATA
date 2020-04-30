@@ -6741,30 +6741,30 @@
                 "DisplayFields": [
                   "Billing_Document_Number__c",
                   "Send_invoice__c",
-                  "STEP47__c"                  
+                  "STEP47__c"
                 ],
                 "IsDependent": false
               },
               {
-                "Name": "STEP48",
+                "Name": "STEP9",
                 "Required": [],
                 "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded"
                   },
                   {
                     "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed"
                   },
                   {
                     "Status": "Not Applicable",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable"
                   }
                 ],
                 "DisplayFields": [
-                  "STEP48__c"                  
+                  "STEP9__c"
                 ],
                 "IsDependent": false
               }
