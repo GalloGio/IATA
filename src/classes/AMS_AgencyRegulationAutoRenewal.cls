@@ -405,7 +405,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		if(recipents != null){
 			System.debug('IATA recipents list: ' + recipents);
 			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-			String errorMsg;
+			String errorMsg = '';
 
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
@@ -518,16 +518,16 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				try {
 					insert mailsToTrackInCase;
 				} catch(Exception e){
-					errors.add('The following exception has occurred: ' +e.getMessage()+' :: Line number: ' + e.getLineNumber() ' :: Stack trace: ' +e.getStackTraceString());
+					errorMsg='The following exception has occurred: ' +e.getMessage()+' :: Line number: ' + e.getLineNumber() +' :: Stack trace: ' +e.getStackTraceString();
 				}
 
-				if(!errors.isEmpty()){
+				if(String.isNotBlank(errorMsg)){
 					List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 					for(SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 						mail.setTargetObjectId(supportEmail.Support_User_Id__c);
 						mail.setSubject('AMS_AgencyRegulationAutoRenewal.sendEmailAlert failure');
-						mail.setPlainTextBody(errors);
+						mail.setPlainTextBody(errorMsg);
 						mails.add(mail);
 					}
 					if (!mails.isEmpty()){
