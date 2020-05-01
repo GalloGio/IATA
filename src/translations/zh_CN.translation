@@ -22573,6 +22573,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
         <name>OneId_FRED_Terms_0</name>
     </customLabels>
