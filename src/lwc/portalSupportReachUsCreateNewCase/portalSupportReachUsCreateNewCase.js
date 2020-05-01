@@ -642,9 +642,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //checks if the input is not fullfilled for the Agents.
     checkForErrors() {
-        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
+        this.childComponent = this.template.querySelector('[data-id="iatalookup"]');
 
-        if (this.childComponent.length === 0) {
+        if (this.childComponent && this.childComponent.getSelection().length === 0) {
             this.requiredClass = ' slds-has-error';
 
             throw new Error(this.showErrorToast());
