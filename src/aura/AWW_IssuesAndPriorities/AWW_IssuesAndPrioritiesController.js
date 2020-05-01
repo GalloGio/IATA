@@ -8,7 +8,8 @@
         var modalCmp = component.find('manage-record');
         var record = {
             'Account__c': component.get('v.accountId'),
-            'sobjectType': 'Objective__c'
+            'sobjectType': 'Objective__c',
+            'AM_Public__c': true
         };
         modalCmp.showModal(record);
     },
