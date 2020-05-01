@@ -63,18 +63,6 @@ private class PermissionSetAssignmentsTest {
 		permissionSets.records.add(new PermissionSet(Name = testPermissionSet1Name, Label = 'Test Permission Set 1'));
 		permissionSets.insertRecords();
 	}
-	@isTest static void testConstructors(){
-		Test.startTest();
-		List<PermissionSetAssignment> permissionSetList = new PermissionSetAssignments().records;
-		System.assertEquals(0, permissionSetList.size(), 'Empty List<PermissionSetAssignent> not returned');        
-		permissionSetList = new PermissionSetAssignments(new List<PermissionSetAssignment>{new PermissionSetAssignment()}).records;
-		System.assertEquals(1, permissionSetList.size(), 'List<PermissionSetAssignent> of size 1 not returned');
-		Test.stopTest();
-	}
-	@isTest static void testAssignPermissionSetsToContacts(){
-		List<String> permissionSetNameList = new List<String>{testPermissionSet1Name};
-		PermissionSetAssignments permissionSetAssignments = new PermissionSetAssignments();
-		Contact contact = [SELECT Id FROM Contact WHERE Email = :email LIMIT 1];
 
 	@isTest static void testConstructors(){
 		Test.startTest();
@@ -151,4 +139,4 @@ private class PermissionSetAssignmentsTest {
 		List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
 		System.assertEquals(0, permissionSetAssignmentList.size(), 'Permission set not unassigned as expected.');
 	}
-}
+} 
