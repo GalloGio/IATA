@@ -63,7 +63,6 @@ private class PermissionSetAssignmentsTest {
         permissionSets.records.add(new PermissionSet(Name = testPermissionSet1Name, Label = 'Test Permission Set 1'));
         permissionSets.insertRecords();
     }
-
     @isTest static void testConstructors(){
         Test.startTest();
         List<PermissionSetAssignment> permissionSetList = new PermissionSetAssignments().records;
@@ -72,7 +71,6 @@ private class PermissionSetAssignmentsTest {
         System.assertEquals(1, permissionSetList.size(), 'List<PermissionSetAssignent> of size 1 not returned');
         Test.stopTest();
     }
-
     @isTest static void testAssignPermissionSetsToContacts(){
         List<String> permissionSetNameList = new List<String>{testPermissionSet1Name};
         PermissionSetAssignments permissionSetAssignments = new PermissionSetAssignments();
@@ -86,5 +84,57 @@ private class PermissionSetAssignmentsTest {
 		PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :testPermissionSet1Name LIMIT 1];
         List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
         System.assertEquals(1, permissionSetAssignmentList.size(), 'PermissionSet Assignment List size not equal to 1.');
+    }
+    @isTest static void testUnassignPermissionSetsToContacts(){
+        List<String> permissionSetNameList = new List<String>{testPermissionSet1Name};
+        PermissionSetAssignments permissionSetAssignments = new PermissionSetAssignments();
+        Contact contact = [SELECT Id FROM Contact WHERE Email = :email LIMIT 1];
+
+        Test.startTest();
+        permissionSetAssignments.assignPermissionSetsToContacts(permissionSetNameList, new List<Contact>{contact});
+        permissionSetAssignments.unAssignPermissionSetsToContacts(permissionSetNameList, new List<Contact>{contact});
+        Test.stopTest();
+        
+        User user = [SELECT Id FROM User WHERE ContactId = :contact.Id LIMIT 1];
+		PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :testPermissionSet1Name LIMIT 1];
+        List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
+        System.assertEquals(0, permissionSetAssignmentList.size(), 'PermissionSet Assignment List size not equal to 0.');
+    }
+    @isTest static void testAddModifyPermissionSetsToContacts(){
+        Contact contact = [SELECT Id FROM Contact WHERE Email = :email LIMIT 1];
+        PermissionSetAssignments.PermissionSetAssignmentRequest permissionSetAssignmentRequest = new PermissionSetAssignments.PermissionSetAssignmentRequest();
+        permissionSetAssignmentRequest.operation = 'Add';
+        permissionSetAssignmentRequest.inputPermissionSetName = testPermissionSet1Name;
+        permissionSetAssignmentRequest.inputContact = contact;
+
+		Test.startTest();
+		PermissionSetAssignments.modifyPermissionSetsToContacts(new List<PermissionSetAssignments.PermissionSetAssignmentRequest>{permissionSetAssignmentRequest});
+        Test.stopTest();
+        
+        User user = [SELECT Id FROM User WHERE ContactId = :contact.Id LIMIT 1];
+		PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :testPermissionSet1Name LIMIT 1];
+        List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
+        System.assertEquals(1,permissionSetAssignmentList.size(), 'Permission set not assigned as expected.');
+    }
+    @isTest static void testRemoveModifyPermissionSetsToContacts(){
+        Contact contact = [SELECT Id FROM Contact WHERE Email = :email LIMIT 1];
+        PermissionSetAssignments.PermissionSetAssignmentRequest permissionSetAssignmentRequest = new PermissionSetAssignments.PermissionSetAssignmentRequest();
+        permissionSetAssignmentRequest.operation = 'Remove';
+        permissionSetAssignmentRequest.inputPermissionSetName = testPermissionSet1Name;
+        permissionSetAssignmentRequest.inputContact = contact;
+        
+        User user = [SELECT Id FROM User WHERE ContactId = :contact.Id LIMIT 1];
+		PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :testPermissionSet1Name LIMIT 1];
+        insert new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = permissionSet.Id);
+        
+        List<PermissionSetAssignment> permissionSetAssignmentList1 = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
+        System.assertEquals(1, permissionSetAssignmentList1.size(), 'PermissonSetAssignment not inserted correctly.');
+
+        Test.startTest();
+        PermissionSetAssignments.modifyPermissionSetsToContacts(new List<PermissionSetAssignments.PermissionSetAssignmentRequest>{permissionSetAssignmentRequest});
+        Test.stopTest();
+
+        List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
+        System.assertEquals(0, permissionSetAssignmentList.size(), 'Permission set not unassigned as expected.');
     }
 }
