@@ -9994,6 +9994,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2EANNUAL%2EREVALIDATION</fullName>
@@ -13391,6 +13406,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2EMAJOR%2ECHANGES%2E1%2E0</fullName>
@@ -16735,6 +16765,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20148,6 +20193,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37661,6 +37721,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

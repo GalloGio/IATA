@@ -22612,6 +22612,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
         <name>OneId_FRED_Terms_0</name>
     </customLabels>
