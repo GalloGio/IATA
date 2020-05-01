@@ -1,4 +1,4 @@
-@isTest
+@isTest 
 private class ContactsSelectorTest {
 	private static String email = 'abc@def.cominvalid';
     
