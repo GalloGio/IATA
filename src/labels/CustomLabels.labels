@@ -38656,6 +38656,22 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>To request access to FRED+ the mandatory fields &quot;Salutation&quot;, &quot;Job Title&quot; and &quot;Mobile Phone&quot; need to be filled. To update these field proceed to the &quot;My Profile&quot; section of this page.</value>
     </labels>
     <labels>
+        <fullName>OneId_FRED_RegistrationProcess</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId FRED RegistrationProcess</shortDescription>
+        <value>Verifiers should NOT use this form. Instead, please refer to the FAQ section for registration instructions.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_RegistrationProcess_URL</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId FRED RegistrationProcess URL</shortDescription>
+        <value>https://www.iata.org/fred#tab-5</value>
+    </labels>
+    <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
         <categories>OneId</categories>
         <language>en_US</language>

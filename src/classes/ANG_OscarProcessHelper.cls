@@ -1117,13 +1117,14 @@ global class ANG_OscarProcessHelper {
 
 			changeCode.name = changeCodeConfig.Name;
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
+			changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
 
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
 
-			if(theOscar.SIDRA_lite_reason__c == null)
+			if(theOscar.SIDRA_lite_reason__c == null && memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
-			else
+			else if(memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
 			changeCode.memoText = memoTextTemp;

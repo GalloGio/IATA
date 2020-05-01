@@ -1,7 +1,7 @@
 global without sharing class ANG_SAP_PPA {
 	webservice static WSResponse putPPAToSFDC(String caseId, String ppaNumber, string fileBody, string fileType){
 
-		Set<String> setAllowedFileType = new Set<String>{'PPA'}; //Add here new file type, uppercase
+		Set<String> setAllowedFileType = new Set<String>{AMS_Utils.SAP_PAYMENT_TYPE_PPA}; //Add here new file type, uppercase
 
 		try{
 			if(ppaNumber==null || ppaNumber=='') return new WSResponse('400', 'Empty PPANumber element');
