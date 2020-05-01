@@ -31,7 +31,6 @@ export default class PortalServicesAvailableServicesListCard extends NavigationM
     @api requiresSecondLevelRegistration;
     @api isFirstLevelUser;
     level2RegistrationTrigger = 'service';
-    isTriggeredByRequest = true;
     
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;

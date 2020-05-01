@@ -1,47 +1,22 @@
 /*
  * This trigger fires on every opportunity event and calls the appropriate method from the RCRMUtil class.
  */
-trigger OpportunityHandler on Opportunity (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
+trigger OpportunityHandler on Opportunity (after insert, after update, before update) {
 
-	if (Trigger.isInsert) {
+	if (Trigger.isInsert && Trigger.isAfter) {
 
-		if (Trigger.isBefore) {
+		RCRMUtil.HandleRCRMOpportunityAfterInsert(Trigger.newMap);
+		ANG_OpportunityHandler.updateOscarIfOfferIdInserted(Trigger.oldMap, Trigger.newMap);
 
-		} else if (Trigger.isAfter) {
-
-			RCRMUtil.HandleRCRMOpportunityAfterInsert(Trigger.newMap);
-
-		}
-
-
-	} else if (Trigger.isUpdate) {
+	} else if (Trigger.isUpdate) { 
 
 		if (Trigger.isBefore) {
-
-			//RCRMUtil.ValidateRCRMOppAmountWhenClosing(Trigger.newMap, Trigger.oldMap);
-
 			RCRMUtil.HandleRCRMOpportunityBeforeUpdate(Trigger.newMap, Trigger.oldMap);
-
-		} else if (Trigger.isAfter) {
-
+		} 
+		else if (Trigger.isAfter) {
+			ANG_OpportunityHandler.updateOscarIfOfferIdInserted(Trigger.oldMap, Trigger.newMap);
 		}
 
-
-	} else if (Trigger.isDelete) {
-
-		if (Trigger.isBefore) {
-
-		} else if (Trigger.isAfter) {
-
-		}
-
-
-	} else if (Trigger.isUnDelete) {
-
-		if (Trigger.isAfter) {
-
-		}
-
-	}
+	} 
 
 }

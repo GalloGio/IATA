@@ -56,6 +56,10 @@
             <translation>航空公司供应商</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>飞机场</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>协会</translation>
         </picklistValues>
@@ -86,10 +90,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>控股公司</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>基础设施合作伙伴</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>

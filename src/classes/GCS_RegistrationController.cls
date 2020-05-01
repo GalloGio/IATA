@@ -132,7 +132,7 @@ public without sharing class GCS_RegistrationController{
 		}
 
 		String query = 'SELECT Id, RecordType.DeveloperName, ACLI_Status__c, Status__c ' + fieldsToRetrieve +' FROM Account';
-		String filters = ' WHERE Is_General_Public_Account__c = false';
+		String filters = ' WHERE Is_General_Public_Account__c = false AND AccountStatus__c = \'Active\'';
 
 		// Filter on Record Type
 		if(customerType.Filter_on_Record_Type__c != '' && customerType.Filter_on_Record_Type__c != null){
@@ -262,13 +262,6 @@ public without sharing class GCS_RegistrationController{
 				List<String> result = new List<String>();
 
 				Account acc = accounts[i];
-
-				// remove accounts which are not verified
-				if((acc.RecordType.DeveloperName == 'IATA_Airline' && acc.ACLI_Status__c == 'Inactive Company')
-					|| (acc.RecordType.DeveloperName == 'IATA_Agency' && acc.Status__c == 'Terminated')
-					|| (acc.RecordType.DeveloperName == 'IATA_GSA' && acc.Status__c == 'Terminated')){
-					continue;
-				}
 
 				totalAccounts++;
 
