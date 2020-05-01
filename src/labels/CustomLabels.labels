@@ -42222,7 +42222,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SisProcessCaseSubject</shortDescription>
-        <value>SIS E&amp;F customer creation</value>
+        <value>SIS E&amp;F Customer Creation</value>
     </labels>
     <labels>
         <fullName>SisProcessEmailBody</fullName>
