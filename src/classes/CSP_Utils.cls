@@ -429,7 +429,21 @@ public with sharing class CSP_Utils {
 				notify_users_date__c=system.now()
 			);
 		}catch(Exception e){
-			System.debug(LoggingLevel.FINE, e.getMessage());
+			//send email w/ errors
+			List<String> emailAddresses = new List<String>();
+			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){ 
+				emailAddresses.add(supportEmail.Support_Email__c);
+				//add more email addresses if needed
+			}
+
+			if (!emailAddresses.isEmpty()){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setToAddresses(emailAddresses);    
+				mail.setSubject('ERROR - User has an issue triggering the Portal Notification Generation');
+				mail.setPlainTextBody('The user '+Userinfo.getName()+' id: '+Userinfo.getUserId()+' had the following error while triggering the notification generation for a new available version on the' + system.now() + '\n\nERRORS:\n' +e.getMessage());
+				Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+			}
+			
 			throw new portalException(Label.ISSP_ANG_GenericError);
 
 		}

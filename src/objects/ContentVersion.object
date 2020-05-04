@@ -2414,7 +2414,7 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>notify_users_date__c</fullName>        
+        <fullName>Notify_Users_Date__c</fullName>             
         <description>Field used to trigger notification for users who have the document bookmarked in CS Portal. To trigger notification, This fields needs to be large than record's created Date</description>
         <defaultValue>NOW()-100</defaultValue>
         <externalId>false</externalId>
