@@ -53,6 +53,28 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CS_Portal_link__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Language,&apos;en_US&apos;),
+
+ IF($Organization.Id ==&apos;00D2000000008TF&apos;,
+   IF(IsVisibleInPkb==true,
+     &apos;https://portal.iata.org/s/faq-article?article=&apos;+UrlName,
+     &apos;https://portal.iata.org/s/support-view-article?article=&apos;+UrlName
+   ),
+   IF(IsVisibleInPkb==true,
+    &apos;/s/faq-article?article=&apos;+UrlName,
+    &apos;/s/support-view-article?article=&apos;+UrlName
+   )
+ ),
+ &apos;Check English version for URL&apos;
+)</formula>
+        <label>CS Portal link</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Categories__c</fullName>
         <externalId>false</externalId>
         <label>Categories</label>
