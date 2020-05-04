@@ -496,13 +496,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(1000000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -561,13 +559,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(571429, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -626,13 +622,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(1285714, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -691,13 +685,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(10000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -756,13 +748,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(90000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 
