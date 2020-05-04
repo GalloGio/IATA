@@ -22308,6 +22308,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>

@@ -16,7 +16,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The MedAire_User_Access-6 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke MedAire_User_Access-6, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The MedAire_User_Access-3 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke MedAire_User_Access-3, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,8 +42,8 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The MedAire_User_Access-6 invocable process failed to start because a valid value wasn&#39;t found. This can happen when entities that invoke MedAire_User_Access-6, such as other processes, don&#39;t have values for either the SObject or SObjectId. For example: 
--An SObject or SObject ID wasn&#39;t specified.
+                <stringValue>The MedAire_User_Access-3 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke MedAire_User_Access-3, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+-An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
         </inputParameters>
@@ -95,7 +95,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -106,7 +106,7 @@
             </processMetadataValues>
             <name>inputPermissionSetName</name>
             <value>
-                <stringValue>MedAire</stringValue>
+                <stringValue>SSO_MedAire</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -137,7 +137,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -235,7 +235,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -246,7 +246,7 @@
             </processMetadataValues>
             <name>inputPermissionSetName</name>
             <value>
-                <stringValue>MedAire</stringValue>
+                <stringValue>SSO_MedAire</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -277,7 +277,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -375,7 +375,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -386,7 +386,7 @@
             </processMetadataValues>
             <name>inputPermissionSetName</name>
             <value>
-                <stringValue>MedAire</stringValue>
+                <stringValue>SSO_MedAire</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -417,7 +417,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -709,11 +709,11 @@
                 <stringValue>&quot;Medaire access request for &quot; &amp; [Portal_Application_Right__c].Contact__c.FirstName &amp; &quot; &quot; &amp; [Portal_Application_Right__c].Contact__c.LastName &amp; &quot; (&quot; &amp; [Portal_Application_Right__c].Contact__c.Account.Name  &amp; &quot;).&quot;</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_6884311620</name>
+        <name>formula_2_myRule_1_A1_0050749361</name>
         <dataType>String</dataType>
         <expression>&quot;Medaire access request for &quot; &amp; {!SObject.Contact__r.FirstName} &amp; &quot; &quot; &amp; {!SObject.Contact__r.LastName} &amp; &quot; (&quot; &amp; {!SObject.Contact__r.Account.Name}  &amp; &quot;).&quot;</expression>
     </formulas>
-    <interviewLabel>MedAire_User_Access-6_InterviewLabel</interviewLabel>
+    <interviewLabel>MedAire_User_Access-3_InterviewLabel</interviewLabel>
     <label>MedAire User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -752,7 +752,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -763,7 +763,7 @@
             </processMetadataValues>
             <field>Description</field>
             <value>
-                <stringValue>Please click on the link under &#39;Related To&#39; and then click &#39;Edit&#39; before choosing the &#39;Access Status&#39;.</stringValue>
+                <stringValue>Please click on the link under &apos;Related To&apos; and then click &apos;Edit&apos; before choosing the &apos;Access Status&apos;.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -805,7 +805,7 @@
             </processMetadataValues>
             <field>OwnerId</field>
             <value>
-                <stringValue>00G3N000001RaSaUAK</stringValue>
+                <stringValue>00G5J000000bhaLUAQ</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -830,7 +830,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -841,7 +841,7 @@
             </processMetadataValues>
             <field>Subject</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_6884311620</elementReference>
+                <elementReference>formula_2_myRule_1_A1_0050749361</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
