@@ -400,6 +400,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			//put the contacts in recipents list
 			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
+			System.debug('IATA recipents list: ' + recipents);
 		}
 
 		if(recipents != null){
@@ -439,6 +440,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				}else if(isDGR){
 					//FM 24/10/2017 - AMSU-32
 					if(recipient.User_Portal_Status__c == 'Approved Admin'){
+						//lPortalAdminsEmailsDGR.add(recipient.Email);
 						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
 							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
 							aux.add(recipient.Email);
@@ -449,7 +451,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
 							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
 						}
-
 					}else{
 						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 						mail.saveAsActivity = true;
@@ -469,7 +470,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			//FM 24/10/2017 - AMSU-32
 			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
 				for(String key : mPortalAdminsEmailsDGR.keySet()){
-
 					Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
 					mailPortalAdmin.saveAsActivity = true;
 					mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
@@ -486,8 +486,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					mailsToSend.add(mailPortalAdmin);
 				}
 			}
-
-			system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
 
 			//Return emails to be sent once ANG_:OscarProcess.createPCIComplianceOscars
 			if(!sendEmail) return mailsToSend;
@@ -514,7 +512,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					emailMsg.Status = '0';
 					mailsToTrackInCase.add(emailMsg);
 				}
-
 				try {
 					insert mailsToTrackInCase;
 				} catch(Exception e){

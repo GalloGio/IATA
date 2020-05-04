@@ -3025,6 +3025,10 @@
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>Yeni kullanıcı oluştur</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Şifre oluşturun</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3297,6 +3301,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Okudum ve aşağıdaki şartları kabul ediyorum:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Merhaba [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3349,6 +3357,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>İlk Ad</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Soyadı</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Şirket Hesap Bilgisi</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3363,6 +3379,10 @@
     <customLabels>
         <label>Kişisel profilinizi şirket hesabınızla eşleştirmek için daha fazla ayrıntıya ihtiyacımız var. Bu, şirketinizin zaten IATA &apos;da kayıtlı olup olmadığını kontrol etmemize yardımcı olacaktır.</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ek Detaylar</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>Adresinizi bulamadık. Adresinizin doğru olduğunu onaylamak için lütfen Sonraki Adım düğmesini tıklayın.</label>
@@ -3381,6 +3401,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Ek Detaylara Dön</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>İş Adres Bilgisi&apos;ne Geri Dönün</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3393,11 +3417,7 @@
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Profil Detaylarına Geri Dönün</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Profil Tamamlama &amp; Hesap Seçimi</label>
+        <label>Hesap Seçme ve Ek Detaylar</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3405,7 +3425,7 @@
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Lütfen işletme adres bilgilerinizi doldurun.</label>
+        <label>Lütfen ofisinizin adresini belirtin</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3457,7 +3477,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>Ülke</label>
+        <label>Bölgesi/Ülkesi</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3565,6 +3585,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Sonraki adım</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Hayır</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3601,10 +3625,6 @@
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Profil Detayları</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -3613,7 +3633,7 @@
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Ama daha sonra devam edebilmeniz için taslak olarak kaydettik. Çıkmak istediğinizden emin misiniz?</label>
+        <label>Çıkmak istediğinizden emin misiniz?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3701,7 +3721,7 @@
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Ünvan</label>
+        <label>Hitap</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3709,8 +3729,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>KDV Numarası</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Web Sitesi</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>İş yerinizin Bölgesi/Ülkesi</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Evet</label>
@@ -4213,6 +4241,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>Kabul Et</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Erişim İstendi</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4333,6 +4365,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Düzenli güncellemelerin bir parçası olarak, bizim şartları birkaç değişiklik yapıyoruz. Biz tam belgeleri okumanızı öneriyoruz.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Geri bildiriminiz için teşekkür ederiz.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4375,6 +4411,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanıcı Oluşturma</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>IATA Müşteri Portalı&apos;na hoşgeldiniz</label>
@@ -22268,6 +22308,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22542,6 +22586,14 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24483,6 +24535,14 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Gizlilik Politikası</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Kullanım Koşulları&apos;nı</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
@@ -33809,7 +33869,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Industry_Groups_TOR</name>
         <sections>
             <columns>
-                <label>Group Owner</label>
+                <label><!-- Group Owner  --></label>
                 <name>Group Owner </name>
             </columns>
             <columns>
@@ -33817,7 +33877,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <name>Group Type</name>
             </columns>
             <columns>
-                <label>Reporting to</label>
+                <label><!-- Reporting to  --></label>
                 <name>Reporting to </name>
             </columns>
             <label><!-- Industry Groups --></label>
@@ -34044,7 +34104,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Local_Groups_by_Airlline</name>
         <sections>
             <columns>
-                <label>Phone</label>
+                <label><!--  Phone --></label>
                 <name> Phone</name>
             </columns>
             <columns>
@@ -34064,11 +34124,11 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <name>Job Title</name>
             </columns>
             <columns>
-                <label>Main Account</label>
+                <label><!-- Main Account  --></label>
                 <name>Main Account </name>
             </columns>
             <columns>
-                <label>Main Account</label>
+                <label><!-- Main Account  --></label>
                 <name>Main Account </name>
             </columns>
             <columns>
@@ -34104,7 +34164,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
         <sections>
             <columns>
-                <label>Group Owner</label>
+                <label><!-- Group Owner  --></label>
                 <name>Group Owner </name>
             </columns>
             <columns>
@@ -34519,7 +34579,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Oscars with AMS online accreditation --></label>
         <name>Oscars_with_AMS_online_accreditation</name>
         <sections>
-            <label><!-- AMS Online Accreditations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>

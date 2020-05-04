@@ -48,10 +48,14 @@
     </values>
     <values>
         <field>Is_Active__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Parent__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Partial_List_Order__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>

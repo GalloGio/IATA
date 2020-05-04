@@ -159,6 +159,10 @@
     width: 24px;
 }
 
+.currentStep{
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 800px) {
     .header .headerTitle{
         font-size: 18px;
