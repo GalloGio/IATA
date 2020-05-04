@@ -22347,6 +22347,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22621,6 +22625,14 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
