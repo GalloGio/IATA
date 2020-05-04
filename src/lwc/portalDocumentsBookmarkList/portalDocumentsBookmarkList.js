@@ -19,6 +19,7 @@ import CSP_NoBookmarksText2 from '@salesforce/label/c.CSP_NoBookmarksText2';
 import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkAdded';
 import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
+import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 
 import CurrencyCenter_Open from '@salesforce/label/c.CurrencyCenter_Open';
 
@@ -42,6 +43,7 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
         CSP_DocumentBookmarkAdded,
         CSP_DocumentBookmarkRemoved,
         CSP_Success,
+        PKB2_js_error,
         CurrencyCenter_Open
     };
 
@@ -212,7 +214,14 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
 
         })
         .catch(error => {
-            console.error(error);
+            const event = new ShowToastEvent({
+                title: this.label.PKB2_js_error,
+                variant:'error',
+                mode:'pester',
+                message: error,
+            });
+            this.dispatchEvent(event);
+
             selectDoc.bkloading=false;
         });
     }

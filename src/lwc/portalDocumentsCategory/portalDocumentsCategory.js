@@ -15,6 +15,7 @@ import CSP_DocumentType from '@salesforce/label/c.CSP_DocumentType';
 import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkAdded';
 import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
+import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -31,6 +32,7 @@ export default class PortalDocumentsCategory extends LightningElement {
         CSP_DocumentBookmarkAdded,
         CSP_DocumentBookmarkRemoved,
         CSP_Success,
+        PKB2_js_error,
         CurrencyCenter_Open
     };
     @track documentsList = [];
@@ -293,7 +295,14 @@ export default class PortalDocumentsCategory extends LightningElement {
             this.dispatchEvent(new CustomEvent('refreshlist', { bubbles: true, composed: true }));
         })
         .catch(error => {
-            console.error(error);
+            const event = new ShowToastEvent({
+                title: this.label.PKB2_js_error,
+                variant:'error',
+                mode:'pester',
+                message: error,
+            });
+            this.dispatchEvent(event);
+
             selectDoc.bkloading=false;
         });
     }
