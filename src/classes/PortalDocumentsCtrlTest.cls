@@ -97,7 +97,12 @@ public class PortalDocumentsCtrlTest {
 				Expire_in_days__c = 3,
 				Identifier__c = 'New_Doc_Version_Available',
 				language__c='English'
-			);			
+			);		
+			
+			insert new SalesforceSupportEmails__c(
+				Support_Email__c='test@test.com',
+				name='TemplaName'
+			);
 		}
 	}
 
@@ -264,6 +269,14 @@ public class PortalDocumentsCtrlTest {
 			
 			//Validation test
 			CSP_Utils.triggerUserNotification(null);
+
+			//Validation test invalid Id
+			try{
+
+				CSP_Utils.triggerUserNotification('testInvalidId');
+			}catch(Exception e){
+				System.assertEquals(Label.ISSP_ANG_GenericError,e.getMessage());
+			}
 			
 			CSP_Utils.triggerUserNotification(testContent[0].id);
 		Test.stopTest();
