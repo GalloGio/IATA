@@ -146,7 +146,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
@@ -163,26 +163,76 @@
         <relationshipLabel>Term and Condition Acceptances</relationshipLabel>
         <relationshipName>Term_and_Condition_Acceptances</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Date_Accepted__c</fullName>
-        <description>Date when the related Term &amp; Condition has been accepted by the related Contact</description>
+        <description>DEPRECATED, use Status and Status Date fields
+Date when the related Term &amp; Condition has been accepted by the related Contact</description>
         <externalId>false</externalId>
         <label>Date Accepted</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
         <fullName>Is_Accepted__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Indicates if the related Term and Condition was accepted by the related Contact</description>
+        <description>DEPRECATED, use Status and Status Date fields
+Indicates if the related Term and Condition was accepted by the related Contact</description>
         <externalId>false</externalId>
         <label>Is Accepted</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Superseded__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the record has been superseded</description>
+        <externalId>false</externalId>
+        <label>Is Superseded</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status_Date__c</fullName>
+        <description>Date of the last status change</description>
+        <externalId>false</externalId>
+        <label>Status Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accepted</fullName>
+                    <default>false</default>
+                    <label>Accepted</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Term_Condition__c</fullName>
@@ -194,13 +244,42 @@
         <relationshipLabel>Term and Condition Acceptances</relationshipLabel>
         <relationshipName>Term_and_Condition_Acceptances</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>Term_and_Condition_Version_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Term_Condition__r.Version_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Term and Condition Version Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>Term and Condition Acceptance</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Term_Condition__c</columns>
+        <columns>Term_and_Condition_Version_Number__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Is_Superseded__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>TCA-{000000}</displayFormat>
         <label>Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Term and Condition Acceptances</pluralLabel>

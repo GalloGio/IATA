@@ -16,7 +16,7 @@
                 <div key={tile.categoryName} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
                     <div class="slds-p-around_xx-small cursorPointer customBorderlessCardWhite" onclick={seeDocuments} data-item={tile.categoryName}>
                         <img src={tile.imageURL} class="folder" data-item={tile.categoryName}/>
-                        <span class="slds-p-left_x-small text-xsmall text-black" data-item={tile.categoryName}>{tile.categoryName}</span>
+                        <span class="slds-p-left_x-small text-xsmall text-black" data-item={tile.categoryName}>{tile.label}</span>
                     </div>
                 </div>
             </template>
