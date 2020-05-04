@@ -27,9 +27,13 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 	private string verNumber;
 	public Boolean accountStatusTerminated {get; set;} // INC183592
 
+	public Boolean showPopup {get; set;}
+	public String selectedAction {get;set;}
+	public Account theAccount {get;set;}
+	public String[] shippingAddress {get; set;}
+
 	public IDCardPortalController() {
 		system.debug('**** PORTAL CONTROLLER ***** ');
-
 		initialize(true);
 		limited = false;
 		accountStatusTerminated = false;
@@ -44,6 +48,9 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 		system.debug('**** PORTAL CONTROLLER 3 ***** ' + verNumber);
 		verNumber = verNumber.trim();
 		system.debug('**** PORTAL CONTROLLER 4***** ' + Decimal.valueof(verNumber.replaceAll(',', '')));
+
+		if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE))
+		IATACodeLocation = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_IATACODE));
 
 		system.debug('Select  c.Id,c.Middle_Initial__c, c.VER_Number__c ,c.LastName, c.FirstName, c.Email, c.Gender__c, c.UIR__c, c.Date_of_Birth__c,c.Account.TradeName__c,  c.Account.IATACode__c, c.Account.BillingStreet, c.Account.BillingState, c.Account.BillingPostalCode, c.Account.BillingCountry,  c.Account.BillingCity From Contact c where c.VER_Number__c =\'' + verNumber + '\' limit 1');
 		Contact[] tempContact = [Select  c.Id, c.Middle_Initial__c, c.VER_Number__c , c.LastName, c.FirstName, c.Email, c.Gender__c, c.UIR__c, c.Date_of_Birth__c, c.Account.TradeName__c, c.Account.IATACode__c, c.Account.BillingStreet, c.Account.BillingState, c.Account.BillingPostalCode, c.Account.BillingCountry, c.Account.BillingCity From Contact c where c.VER_Number__c = : Decimal.valueof(verNumber.replaceAll(',', '')) limit 1];
@@ -84,23 +91,47 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			if (cReplacementAvailableIdCards.size() > 0) { isReplacementAvailable = true; }
 			else { isReplacementAvailable = false; }
 
-			if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE))
-				IATACodeLocation = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_IATACODE));
-
 			// INC183592
 			if (System.currentPageReference().getParameters().containsKey('Terminated')){
 				system.debug(('--------> ' + System.currentPageReference().getParameters().containsKey('Terminated')));
-
+				
 				accountStatusTerminated = true;
 			} else {
 				accountStatusTerminated = false;
 			}
 				system.debug('accountStatusTerminated: ' + accountStatusTerminated);
-
+		   
 		}
 		system.debug('**** PORTAL CONTROLLER 6***** ' + verNumber);
 		// check to see if the language was stored in a cookie
 		system.debug('**** PORTAL CONTROLLER 7***** ' + verNumber);
+
+		showPopup = false;
+		selectedAction = '';
+		Account[] accounts = [Select Short_Name__c, ID_Card_KeyAccount_features__c,  Name, Legal_name__c, 
+								IATACode__c, BillingStreet, BillingState, BillingPostalCode, BillingCountry, 
+								BillingCity, ShippingStreet, ShippingState, ShippingPostalCode, ShippingCountry,
+								ShippingCity, IDCard_Key_Account__c
+								FROM Account 
+								WHERE (RecordType.Name = 'Agency' OR RecordType.Name = 'Domestic Agency') 
+								AND IATACode__c = :IATACodeLocation AND (Status__c = : IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Status__c = 'Terminated')];
+		theAccount = null;
+		if (accounts.size() > 0) {
+			theAccount = accounts[0];
+		}
+		IDCardAgencyDetailsController.ShippingAddress address = new IDCardAgencyDetailsController.ShippingAddress(theAccount);
+		shippingAddress = address.theAddress;
+	   
+	}
+
+	public void openPopup(){
+		this.showPopup = true;
+		selectedAction = apexpages.currentpage().getparameters().get('typeForPopup');
+		System.debug('selectedAction' + selectedAction);
+	}
+
+	public void closePopup(){
+		this.showPopup = false;
 	}
 
 	public Pagereference next() {
@@ -112,7 +143,8 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 
 			Pagereference nextPage ;
 
-			string action = apexpages.currentpage().getparameters().get('myaction');
+			//string action = apexpages.currentpage().getparameters().get('myaction');
+			string action = selectedAction;
 			boolean reissueRenewableClicked = false;
 			/*
 			if ((action == IDCardUtil.APPlICATIONTYPE_REISSUE_RENEWAL) && isReissue_Renewal) {
@@ -133,18 +165,10 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 
 			// pass ID Card Application Id
 			ID_Card_Application__c idCardApp = new ID_Card_Application__c();
-
+			
 			String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 			String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
-
-			Account[] accounts = [Select a.Short_Name__c, a.ID_Card_KeyAccount_features__c,  a.Name, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity, a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.IDCard_Key_Account__c
-								  FROM Account a WHERE (a.RecordType.Name = 'Agency' OR a.RecordType.Name = 'Domestic Agency') AND IATACode__c = : IATACodeLocation AND (a.Status__c = : IDCardUtil.ALLOWED_ACCOUNT_STATUS OR a.Status__c = 'Terminated')];
-			Account theAccount = null;
-
-			if (accounts.size() > 0) {
-				theAccount = accounts[0];
-			}
-
+			
 			String feature = theAccount.ID_Card_KeyAccount_features__c;
 			system.debug('theAccount.ID_Card_KeyAccount_features__c: ' + theAccount.ID_Card_KeyAccount_features__c);
 			if (feature == null)feature = '';

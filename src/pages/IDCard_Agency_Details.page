@@ -19,19 +19,6 @@
                 text-decoration:none !important; 
             }
 
-			.customPopup {
-			    background-color: white;
-			    border-style: solid;
-			    border-width: 2px;
-			    left: 25%;
-    			top: 30%;
-			    font-size: 11pt;
-			    padding: 10px;
-			    position: absolute;
-			    z-index: 9999;
-			    width: 800px;
-			}
-
             .closeButton {
                 float: right;
             }
@@ -82,39 +69,6 @@
                         <apex:pageBlock >
                             <!--<apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false"/><br/><br/>-->
 
-                            <apex:outputPanel id="popup">
-
-                                <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
-                                    <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup" >
-                                    </apex:commandButton>
-                                    <apex:pageblockSection columns="1">
-                                        <apex:pageBlockSectionItem dataStyle="display:block;width:800px;">                         
-                                            <apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="display:block;width:770px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
-                                            <apex:outputText value="{!theAccount.Short_Name__c}" label="" style="display:block;width:800px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
-                                            <apex:outputText value="{!shippingAddress[0]}" label="" style="display:block;width:800px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
-                                            <apex:outputText value="{!shippingAddress[1]}" label="" style="display:block;width:800px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
-                                            <apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[2]}" label="" style="display:block;width:800px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem dataStyle="text-align:center;display:block;width:800px;">
-                                            <apex:outputText value="{!shippingAddress[3]}" label="" style="display:block;width:800px;"/>
-                                        </apex:pageblockSectionItem>
-                                        <apex:pageBlockSectionItem >
-                                         <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="display:block;width:770px;"/>
-                                        </apex:pageblockSectionItem>
-                                    </apex:pageblockSection>
-                                    <apex:commandButton value="Continue..." action="{!next}" styleClass="closeButton" rerender="popup">
-                                    </apex:commandButton>
-                                </apex:outputPanel>
-                            </apex:outputPanel>
-
                             <h1>{!$Label.IDCard_AgencyDetails}</h1>
                              <apex:pageMessage summary="{!ErrMsg}" rendered="{!HasError}" severity="error" strength="2" escape="false" />                      
                                                           
@@ -155,8 +109,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <!--<apex:commandLink action="{!next}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true">-->
-                                                <apex:commandLink action="{!showPopup}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true" rerender="">
+                                                <apex:commandLink action="{!next}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true">
                                                 <span>{!$Label.IDCard_ApplyingFirstIDCard}</span>
                                                 </apex:commandLink>
                                                 <!--<apex:commandButton action="{!next}" value="{!$Label.IDCard_ApplyingFirstIDCard}" id="btnNext" rendered="true">

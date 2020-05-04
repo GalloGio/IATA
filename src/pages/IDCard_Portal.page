@@ -26,11 +26,31 @@
                 alert("{!$Label.IDCard_PortalPage_SubMenu_ReplaceNotActive}");
             }
             else 
-            {                  
-                next(type);
+            {            
+                openPopup(type);
             }        
         }
+
     </script>
+
+    <style type="text/css">
+        .customPopup {
+            background-color: white;
+            border-style: solid;
+            border-width: 2px;
+            left: 25%;
+            top: 30%;
+            font-size: 11pt;
+            padding: 10px;
+            position: absolute;
+            z-index: 9999;
+            width: 800px;
+        }
+
+        .closeButton {
+            float: right;
+        }
+    </style>
 </head>
 
 <body>
@@ -56,10 +76,50 @@
                     <h1>{!$Label.IDCard_Landing_Title}</h1>
                 </div>
                 <div class="background">
+
+                    <div style="width:900px; margin:0 auto;">
+                        <apex:outputPanel id="popup">
+                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!showPopup}">
+                                <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="Msgs,popup" >
+                                </apex:commandButton>
+                                <apex:pageBlock >
+                                    <apex:pageblockSection columns="1">
+                                        <apex:pageBlockSectionItem dataStyle="display:block;width:800px;">                         
+                                            <apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="display:block;width:770px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+                                            <apex:outputText value="{!theAccount.Short_Name__c}" label="" style="display:block;width:800px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+                                            <apex:outputText value="{!shippingAddress[0]}" label="" style="display:block;width:800px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+                                            <apex:outputText value="{!shippingAddress[1]}" label="" style="display:block;width:800px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+                                            <apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[2]}" label="" style="display:block;width:800px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem dataStyle="text-align:center;display:block;width:800px;">
+                                            <apex:outputText value="{!shippingAddress[3]}" label="" style="display:block;width:800px;"/>
+                                        </apex:pageblockSectionItem>
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="display:block;width:770px;"/>
+                                        </apex:pageblockSectionItem>
+                                    </apex:pageblockSection>
+                                </apex:pageBlock>
+                                <apex:commandButton value="Continue..." action="{!next}" styleClass="closeButton" rerender="popup">
+                                </apex:commandButton>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </div>
+
                     <br />
                     <apex:pageMessage summary="{!errMsg}" rendered="{!HasError}" severity="error" strength="2" />
                     <br />
                     <div style="width: 1000px; margin: 0 auto;">
+                        <apex:actionFunction name="openPopup" action="{!openPopup}" rerender="Msgs,popup">
+                            <apex:param name="typeForPopup" value="" />
+                        </apex:actionFunction>
                         <apex:actionFunction name="next" action="{!next}" rerender="Msgs">
                             <apex:param name="myaction" value="" />
                         </apex:actionFunction>

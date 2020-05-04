@@ -59,6 +59,21 @@ public class IDCardMultipleAgencyInfoNControllerTest{
 				iDCardMultipleAgencyInfoNController = new IDCardMultipleAgencyInfoNController();
 				// Next page
 				nextPage = iDCardMultipleAgencyInfoNController.next();
+				
+				// Set valid account parameters for the page.
+				dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c;
+				controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_REPLACEMENT));
+				controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[4].IATA_Code__c));
+				controllerPage.getParameters().put(IDCardUtil.PARAM_FNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[4].First_Name__c));
+				controllerPage.getParameters().put(IDCardUtil.PARAM_LNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[4].Last_Name__c));
+				controllerPage.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(dateTemp.format('yyyy-MM-dd')));
+				controllerPage.getParameters().put('selected', '003R000000m7o96');
+				controllerPage.getParameters().put('myaction', IDCardUtil.APPLICATIONTYPE_REPLACEMENT);
+				controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter('1111111'));
+				Test.setCurrentPage (controllerPage);
+				iDCardMultipleAgencyInfoNController = new IDCardMultipleAgencyInfoNController();
+				// Next page
+				nextPage = iDCardMultipleAgencyInfoNController.next();
 
 				//Test LangItems, HasError and getErrMsg
 				iDCardMultipleAgencyInfoNController.getLangItems();
@@ -66,8 +81,6 @@ public class IDCardMultipleAgencyInfoNControllerTest{
 				testString = iDCardMultipleAgencyInfoNController.NewApp;
 				Integer testInteger = iDCardMultipleAgencyInfoNController.nbrContactsFound;
 				List<SelectOption> tempSelectOption = iDCardMultipleAgencyInfoNController.getItems();
-				iDCardMultipleAgencyInfoNController.showPopup();
-				iDCardMultipleAgencyInfoNController.closePopup();
 		}
 
 		 public static TestMethod void TestNext(){
