@@ -22304,6 +22304,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>

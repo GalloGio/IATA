@@ -22306,6 +22306,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
