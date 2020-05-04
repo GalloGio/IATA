@@ -84,13 +84,17 @@ public class ADSRServiceTest {
 		
 		Test.startTest();
 		System.runAs(u) {
+			List<ADSRController.PicklistWrapper> regions = ADSRController.getRegions();
+			List<ADSRController.PicklistWrapper> allMarkets = ADSRController.getMarkets(null);
+			List<ADSRController.PicklistWrapper> americasMarkets = ADSRController.getMarkets('Americas');
 			
-			ADSRController.getRegions();
-			ADSRController.getMarkets(null);
-			ADSRController.getMarkets('Americas');
-			
+			System.assertEquals(5, regions.size());
+			System.assertEquals(9, allMarkets.size());
+			System.assertEquals(9, americasMarkets.size());
 		}
+		
 		Test.stopTest();
+		
 	}
 	
 	@isTest
@@ -107,8 +111,22 @@ public class ADSRServiceTest {
 		Test.startTest();
 		
 		System.runAs(u) {
+			ADSRService.SummaryReport report = ADSRController.getReport('Americas', '', '', '');
 			
-			ADSRController.getReport('Americas', '', '', '');
+			Boolean hasCassColombia = false;
+			for (ADSRService.SummaryReportGroup reportGroup : report.groups) {
+				if (reportGroup.operation.toLowerCase().contains('colombia') && reportGroup.operation.toLowerCase().contains('cass')) {
+					hasCassColombia = true;
+					Decimal charged = 0;
+					for (ADSRService.SummaryReportDetail detail : reportGroup.details) {
+						charged += detail.charged;
+					}
+					System.assertEquals(charged, reportGroup.totalCharged);
+				}
+			}
+			
+			System.assertEquals('014', report.airlineCode);
+			System.assert(hasCassColombia);
 		}
 		
 		Test.stopTest();
@@ -129,8 +147,9 @@ public class ADSRServiceTest {
 		Test.startTest();
 		
 		System.runAs(u) {
+			ADSRService.SummaryReport report = ADSRController.getReport('', '', '', '6019323001');
 			
-			ADSRController.getReport('', '', '', '6019323001');
+			System.assertNotEquals(null, report.groups);
 		}
 		
 		Test.stopTest();
@@ -149,12 +168,16 @@ public class ADSRServiceTest {
 		
 		Test.startTest();
 		
+		Boolean throwsError = false;
+		
 		System.runAs(u) {
 			try {
 				ADSRController.getReport('Americas', '', '', '');
 			} catch (AuraHandledException e) {
-				
+				throwsError = true;
 			}
+		
+			System.assert(throwsError);
 		}
 		
 		Test.stopTest();
@@ -174,12 +197,16 @@ public class ADSRServiceTest {
 		
 		Test.startTest();
 		
+		Boolean throwsError = false;
+		
 		System.runAs(u) {
 			try {
 				ADSRController.getReport('', '', '', '');
 			} catch (AuraHandledException e) {
-				
+				throwsError = true;
 			}
+		
+			System.assert(throwsError);
 		}
 		
 		Test.stopTest();
@@ -199,12 +226,16 @@ public class ADSRServiceTest {
 		
 		Test.startTest();
 		
+		Boolean throwsError = false;
+		
 		System.runAs(u) {
 			try {
 				ADSRController.getReport('Americas', '', '', 'XPTO123');
 			} catch (AuraHandledException e) {
-				
+				throwsError = true;
 			}
+			
+			System.assert(throwsError);
 		}
 		
 		Test.stopTest();
@@ -215,6 +246,8 @@ public class ADSRServiceTest {
 	static void testExportPDF() {
 		String jsonString = [SELECT Body FROM StaticResource WHERE Name = 'ADSR_Export_Data_Test'].Body.toString();
 		Map<String, Object> jsonObject = (Map<String, Object>) ((List<Object>) JSON.deserializeUntyped(jsonString)).get(0);
+		
+		Test.startTest();
 		
 		PageReference pdfPage = Page.ADSRExportPDF;
 		Test.setCurrentPage(pdfPage);
@@ -228,12 +261,19 @@ public class ADSRServiceTest {
 		}
 		
 		ADSRExportController exportPdf = new ADSRExportController();
+		
+		System.assertEquals('pdf', exportPdf.exportFormat);
+		
+		Test.stopTest();
+		
 	}
 	
 	@isTest
 	static void testExportCSV() {
 		String jsonString = [SELECT Body FROM StaticResource WHERE Name = 'ADSR_Export_Data_Test'].Body.toString();
 		Map<String, Object> jsonObject = (Map<String, Object>) ((List<Object>) JSON.deserializeUntyped(jsonString)).get(1);
+		
+		Test.startTest();
 		
 		PageReference csvPage = Page.ADSRExportCSV;
 		Test.setCurrentPage(csvPage);
@@ -247,6 +287,10 @@ public class ADSRServiceTest {
 		}
 		
 		ADSRExportController exportCsv = new ADSRExportController();
+		
+		System.assertEquals('csv', exportCsv.exportFormat);
+		
+		Test.stopTest();
 	}
 	
 }
