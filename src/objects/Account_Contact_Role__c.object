@@ -852,6 +852,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Medaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP</fullName>
                 <default>false</default>
             </values>
