@@ -277,7 +277,7 @@
     <formulas>
         <name>SisCaseSubject</name>
         <dataType>String</dataType>
-        <expression>{!$Label.SisProcessCaseSubject}</expression>
+        <expression>{!$Label.SisProcessCaseSubject} &amp; &apos; - &apos; &amp; {!Account.Name}</expression>
     </formulas>
     <interviewLabel>Account Context Activation SIS Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Context Activation SIS Subflow</label>
