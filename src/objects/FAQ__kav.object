@@ -54,6 +54,7 @@
     </fields>
     <fields>
         <fullName>CS_Portal_link__c</fullName>
+        <description>Direct link for the article from CS Portal site, only the english version will contain a shareable link</description>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL(Language,&apos;en_US&apos;),
 
