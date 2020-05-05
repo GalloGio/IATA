@@ -65,20 +65,46 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
 
 	public Pagereference cancelPendingMassOperation() {
 		if(toCancel !=null) {
-			applicationToCancel = [SELECT id, Mass_order_Application__c, Application_Status__c from ID_Card_Application__c where Mass_order_Application__c = : toCancel];
+			applicationToCancel = [SELECT id, Mass_order_Application__c, Application_Status__c,ID_Card_Fee_Discount__c,ITDI_Courses_Fee__c, IDCard_Expedite_Delivery_Fee__c, ID_Card_Fee__c, Applicable_Fee__c,Physical_Card_Fee__c, Promotion_Code__c from ID_Card_Application__c where Mass_order_Application__c = : toCancel];
 
+			String promotionCode;	
+
+			for(ID_Card_Application__c app:applicationToCancel){
+				if(String.isNotBlank(app.Promotion_Code__c)){
+					promotionCode = app.Promotion_Code__c;
+					break;
+				}
+			}
+			System.debug('### promotionCode ' + promotionCode);
+			List<Promotion__c> listPromotion = new List<Promotion__c>();
+			if(String.isNotBlank(promotionCode)){
+				listPromotion = [SELECT Id, Promotion_Code__c, Promotion_Value__c FROM Promotion__c WHERE Promotion_Code__c = : promotionCode LIMIT 1];
+			}
+			System.debug('### listPromotion ' + listPromotion);
+			List<ID_Card_Application__c> listToUpdate = new List<ID_Card_Application__c>();	
 			for(ID_Card_Application__c app:applicationToCancel) {
 				app.Mass_order_Application__c = null;
-				app.Application_Status__c = 'Pending';
+				app.Application_Status__c = 'Pending';		
+				System.debug('###app ' + app);
+				if(String.isNotBlank(app.Promotion_Code__c)){
+					if(app.ID_Card_Fee_Discount__c != null) app.ID_Card_Fee_Discount__c = app.ID_Card_Fee_Discount__c * 100 / (100+listPromotion[0].Promotion_Value__c);
+					if(app.ID_Card_Fee__c != null) app.ID_Card_Fee__c = app.ID_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
+					if(app.Physical_Card_Fee__c != null) app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
+					app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;
+					app.Promotion_Code__c = '';	
+				}
+				System.debug('###app1 ' + app);
+				listToUpdate.add(app);							
 			}
-
-			update 	applicationToCancel;
+		
+			
 			for(ID_Card_Application__c app:IdCardApplications) {
 				if(app.Id == toCancel){
 					app.Application_Status__c = 'Cancelled';
-					update app;
+					listToUpdate.add(app);
 				}
 			}
+			update listToUpdate;
 		}
 
 		toCancel = null;
