@@ -69,6 +69,18 @@ public class AMS_OSCAR_ProcessViewerController {
 		get {return AMS_Utils.NGCONVERSIONTOMULTICOUNTRY; }
 	}
 
+	public String NGVR {
+		get {
+			return AMS_Utils.NGVR;
+		}
+	}
+	
+	public String MULTICOUNTRY {
+		get {
+			return AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		}
+	}
+
 	public String CONFIRM_MC_CONVERSION_MSG {
 		get { return 'By clicking OK you confirm that you want to proceed with changing the accreditation type of the entire hierarchy to GoStandard.'; }
 	}
@@ -532,7 +544,17 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Region_formula__c, Account__r.Location_Type__c, Account__r.Bulletin_Headquarter__c, Account__r.Identify_as_Multicountry_Key_Hierarchy__c, New_Parent__r.ANG_Accreditation_Model__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+		return '' //
+			+ ' SELECT ' + fields + ', ' //
+			+ ' 	AMS_Online_Accreditation__r.Ready_for_Accreditation__c, RecordType.Name, RecordType.DeveloperName, ' //
+			+ ' 	Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, ' //
+			+ ' 	AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, ' //
+			+ ' 	Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, ' //
+			+ ' 	Account__r.Region_formula__c, Account__r.Location_Type__c, Account__r.Bulletin_Headquarter__c, Account__r.Identify_as_Multicountry_Key_Hierarchy__c, ' //
+			+ ' 	New_Parent__r.ANG_Accreditation_Model__c, Account__r.ANG_Accreditation_Model__c ' //
+			+ ' FROM AMS_OSCAR__c ' //
+			+ ' WHERE Id =: oscarId ' //
+			+ ' LIMIT 1';
 	}
 
 	private AMS_OSCAR__c fetchOscarFields(ID oscarId){
