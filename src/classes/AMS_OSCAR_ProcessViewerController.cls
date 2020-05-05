@@ -282,16 +282,24 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 	}
 
-	public Boolean blockFAoptOut{
-		get{
-			if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return true; }
-			return (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE));
+	public Boolean blockFAoptOut {
+		get {
+			if (oscar.Process__c == AMS_Utils.NEWHESTANDARD) {
+				return true;
+			} else if (oscar.ANG_Type_Of_Change__c != null) {
+				return (oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)
+					|| (oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_Parent__c != null
+						&& oscar.New_Parent__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY));
+			}
+			return false;
 		}
 	}
 
-	public Boolean hideFAoptOut{
-		get{
-			if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return false; }
+	public Boolean hideFAoptOut {
+		get {
+			if (oscar.Process__c == AMS_Utils.NEWHESTANDARD) {
+				return false;
+			}
 			return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c);
 		}
 	}
@@ -299,8 +307,6 @@ public class AMS_OSCAR_ProcessViewerController {
 	public String selectedTab{get;set;}
 
 	public AMS_OSCAR_ProcessViewerController() {
-
-
 
 		Id objectId = ApexPages.currentPage().getParameters().get('id');
 
@@ -320,8 +326,7 @@ public class AMS_OSCAR_ProcessViewerController {
 				loadJsonFile();
 			}
 
-
-		}else{
+		} else {
 
 			this.oscar = fetchOscarFields(objectId);
 			this.oscarId = this.oscar.Id;
@@ -333,7 +338,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
 		}
 
-	selectedTab = 'tab1';
+		selectedTab = 'tab1';
 
 	}
 
@@ -485,9 +490,7 @@ public class AMS_OSCAR_ProcessViewerController {
 	}
 
 	private boolean isObjectCase(Id objectToFind){
-
 		return AMS_Utils.findObjectNameFromRecordIdPrefix(objectToFind).equalsIgnoreCase('CASE');
-
 	}
 
 	private Case fetchCaseFields(ID objectId, Boolean isIdFromOscar){
@@ -529,7 +532,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Region_formula__c, Account__r.Location_Type__c, Account__r.Bulletin_Headquarter__c, Account__r.Identify_as_Multicountry_Key_Hierarchy__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Region_formula__c, Account__r.Location_Type__c, Account__r.Bulletin_Headquarter__c, Account__r.Identify_as_Multicountry_Key_Hierarchy__c, New_Parent__r.ANG_Accreditation_Model__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
 	}
 
 	private AMS_OSCAR__c fetchOscarFields(ID oscarId){
@@ -549,7 +552,6 @@ public class AMS_OSCAR_ProcessViewerController {
 
 
 	private void loadJsonFile(){
-
 
 		/*
 		 *  LOAD JSON TO OBJECT
