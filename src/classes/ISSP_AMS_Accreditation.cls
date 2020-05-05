@@ -2628,7 +2628,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			SFDCAccount.Name = hqAccount.Name;
 		}
 
-		if (!isFirstHE && isMultiCountryAccredittedAddingAEs()) {
+		if (!isFirstHE && (isMultiCountryAccredittedAddingAEs() || isMultiCountryNewAE)) {
 			SFDCAccount.ParentId = fetchHEAgency(newForm.Branch_Office_Country__r.AMS_Settlement_System__c);
 		} else {
 			SFDCAccount.ParentId = vHQAccountId;
