@@ -64,27 +64,22 @@ public without sharing class ISSP_AMS_Accreditation {
 	{
 		get
 		{
-			List<String> codes = new List<String>();
-			if (!String.isBlank(newForm.Agency_Codes_Concerned__c)) {
-				codes = newForm.Agency_Codes_Concerned__c.split(',');
-			}
-
-			if (accountConcerned != null)
-				codes.add(accountConcerned.IATACode__c);
-			Map<Id, Account> countries = getSelectedBranchList(codes);
-
 			Set<String> countriesLabels = new Set<String>();
-			for (Account a : countries.values())
-			{
-				IATA_ISO_Country__c country = fetchISOCountry(a.Country_ISO_Code__c);
-				countriesLabels.add(getAmsAllLangCountryLabel(country, UserInfo.getLanguage()));
+
+			if(String.isNotBlank(newForm.MultiCountry_Countries_Concerned__c)){
+				for(String countryIsoCode : newForm.MultiCountry_Countries_Concerned__c.split(',')){
+					if(String.isNotBlank(countryIsoCode)){
+						IATA_ISO_Country__c country = fetchISOCountry(countryIsoCode.trim());
+						countriesLabels.add(getAmsAllLangCountryLabel(country, UserInfo.getLanguage()));
+					}
+				}
 			}
 
-			String countriesLabel = '';
-			for (String s : countriesLabels)
-				countriesLabel += (countriesLabel == '' ? '' : ', ') + s;
+			List<String> countriesLabelLst = new List<String>(countriesLabels);
+			countriesLabelLst.sort();
 
-			return countriesLabel;
+			return String.join(countriesLabelLst, ', ');
+
 		}
 		set;
 	}
