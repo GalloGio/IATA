@@ -3025,6 +3025,10 @@
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Create New User Label --></label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP  Create Password --></label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3297,6 +3301,10 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Have_Read_Terms --></label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Home_WelcomeTitle --></label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3349,6 +3357,14 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L1_First_Name --></label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_Last_Name --></label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_L2_Account_Information --></label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3363,6 +3379,10 @@
     <customLabels>
         <label><!-- CSP_L2_Account_Selection_Message --></label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Additional_Details --></label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_L2_Address_Not_Found_Message --></label>
@@ -3381,6 +3401,10 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Back_to_Additional_Details --></label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_L2_Back_to_Business_Address_Information --></label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3391,10 +3415,6 @@
     <customLabels>
         <label><!-- CSP_L2_Back_to_Edit --></label>
         <name>CSP_L2_Back_to_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_L2_Back_to_Profile_Details --></label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_L2_Banner_Title --></label>
@@ -3565,6 +3585,10 @@
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Next_Step --></label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_L2_No --></label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3599,10 +3623,6 @@
     <customLabels>
         <label><!-- CSP_L2_Postal_Code --></label>
         <name>CSP_L2_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_L2_Profile_Details --></label>
-        <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_L2_Profile_Details_Message --></label>
@@ -3709,8 +3729,16 @@
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_VAT_Number --></label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_L2_Website --></label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Work_Location --></label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_L2_Yes --></label>
@@ -4213,6 +4241,10 @@
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Services_Accept_Terms --></label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Services_AccessRequested --></label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4333,6 +4365,10 @@
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Terms_Updated_Message --></label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ThanksFeedback --></label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4375,6 +4411,10 @@
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User_Creation --></label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Welcome Email Subject --></label>
@@ -22225,6 +22265,10 @@
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22499,6 +22543,14 @@
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24435,6 +24487,14 @@
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TC_CSP_Privacy_Policy --></label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TC_CSP_Terms_of_Use --></label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>

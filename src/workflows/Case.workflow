@@ -4092,10 +4092,6 @@
         <description>Send email notification for a new comment on a case</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Partner User Role</recipient>
-            <type>caseTeam</type>
-        </recipients>
-        <recipients>
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>

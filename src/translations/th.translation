@@ -3026,6 +3026,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>สร้างผู้ใช้ใหม่</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>สร้างรหัสผ่าน</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3298,6 +3302,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>ฉันได้อ่านและยอมรับเงื่อนไขดังต่อไปนี้:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>ยินดีต้อนรับ [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3350,6 +3358,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>ชื่อจริง</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>นามสกุล</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>ข้อมูลบัญชีบริษัท</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3364,6 +3380,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>เราต้องการรายละเอียดเพิ่มเติม เพื่อให้สามารถจับคู่โปรไฟล์ส่วนบุคคลของคุณกับบัญชีบริษัทของคุณได้. ขั้นตอนนี้จะช่วยให้เราตรวจสอบได้ว่าบริษัทของคุณได้ลงทะเบียนกับ IATA แล้วหรือไม่</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดเพิ่มเติม</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>เราไม่พบที่อยู่ของคุณ โปรดกดปุ่ม &quot;ขั้นตอนต่อไป&quot; เพื่อยืนยันว่าที่อยู่ของคุณถูกต้อง</label>
@@ -3382,6 +3402,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>กลับไปที่รายละเอียดเพิ่มเติม</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>กลับไปที่ข้อมูลที่อยู่ของธุรกิจ</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3394,11 +3418,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>กลับไปที่ &quot;รายละเอียดโปรไฟล์&quot;</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>การสร้างและเพิ่มข้อมูลโปรไฟล์ &amp; การเลือกบัญชี</label>
+        <label>เลือกบัญชีและรายละเอียดเพิ่มเติม</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3406,7 +3426,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>กรุณากรอกข้อมูลที่อยู่ธุรกิจของคุณ</label>
+        <label>โปรดระบุที่อยู่ของสถานที่ทำงานของคุณ</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3458,7 +3478,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>ประเทศ</label>
+        <label>ประเทศ/เขตพ</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3566,6 +3586,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>ขั้นตอนต่อไป</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>ไม่ใช่</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3602,10 +3626,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>รายละเอียดโปรไฟล์</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>เพิ่มรายละเอียดส่วนบุคคลของคุณ เพื่อให้ IATA สามารถแนะนำเนื้อหาและบริการที่เหมาะกับคุณ</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -3614,7 +3634,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>แต่เราได้บันทึกไว้เป็นฉบับร่าง เพื่อให้คุณสามารถดำเนินการต่อได้ในภายหลัง คุณแน่ใจหรือไม่ว่าต้องการเลิกการทำงาน?</label>
+        <label>คุณแน่ใจว่าคุณต้องการที่จะเลิก?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3702,7 +3722,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>หัวข้อ</label>
+        <label>คำทักทาย</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3710,8 +3730,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>หมายเลขภาษี</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>เว็บไซต์</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ / เขตพื้นที่ของสถานที่ทำงานของคุณ</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>ใช่</label>
@@ -4214,6 +4242,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>ยอมรับ</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>มีการขอการเข้าถึง</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4334,6 +4366,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>ในฐานะที่เป็นส่วนหนึ่งของการปรับปรุงปกติของเราเรากำลังทำการเปลี่ยนแปลงบางอย่างเป็นไปตามข้อกำหนดของเรา เราขอแนะนำให้คุณอ่านเอกสารในเต็มรูปแบบ</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>ขอขอบคุณสำหรับข้อคิดเห็นของคุณ!</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4376,6 +4412,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>การสร้างผู้ใช้</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>ยินดีต้อนรับสู่พอร์ทัลสำหรับลูกค้าIATA (สมาคมการขนส่งทางอากาศระหว่างประเทศ)</label>
@@ -22267,6 +22307,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22541,6 +22585,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24480,6 +24532,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>นโยบายความเป็นส่วนตัว</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>เงื่อนไขการใช้งาน</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
@@ -34706,7 +34766,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>รายงาน</label>
             <name>Products</name>
         </sections>
     </reportTypes>

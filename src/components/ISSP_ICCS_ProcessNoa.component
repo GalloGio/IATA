@@ -84,7 +84,7 @@
 								NoA Release
 							</td>
 							<td>
-								<c:ISSP_ICCS_TypedDocument docType="NoA Release" caseProcessCtrl="{! thisCtrl}"/>
+								<c:ISSP_ICCS_TypedDocument docType="NoA_Release" caseProcessCtrl="{! thisCtrl}"/>
 							</td>
 						</tr>
 
@@ -93,7 +93,7 @@
 								Revised Instructions
 							</td>
 							<td>
-								<c:ISSP_ICCS_TypedDocument docType="Revised Instructions" caseProcessCtrl="{! thisCtrl}"/>
+								<c:ISSP_ICCS_TypedDocument docType="ICCS_Revised_Instructions" caseProcessCtrl="{! thisCtrl}"/>
 							</td>
 						</tr>
 					</table>
