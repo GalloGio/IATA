@@ -5,6 +5,7 @@
     <apex:attribute name="sourceSystem" description="source" type="String" required="false" assignTo="{!source}" />
     <apex:attribute name="scrollable" description="scrollable" type="Boolean" required="false" assignTo="{!scroll}" />
     <apex:attribute name="showAttachFileButton" description="showAttachFileButton" type="Boolean" required="false" default="true"/>
+    <apex:attribute name="showTransferAttachments" description="show transfer attachments button" type="Boolean" required="false" default="true"/>
 
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
     <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
@@ -100,7 +101,7 @@
             <apex:pageblockButtons location="top">
                 <apex:outputPanel rendered="{!NOT(isPortal)}">
                     <c:UploadMultipleFileToAmazonButton sObjectId="{!sObjectId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="{!uploader}" sourceSystem="{!source}"/>
-                    <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
+                    <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" rendered="{!showTransferAttachments}" />
                     <apex:commandButton value="{!$Label.Oscar_Attachments}" onclick="oscarAttachments();return false;" rendered="{!ParentIsOscar}" />
                     <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
                     <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" />

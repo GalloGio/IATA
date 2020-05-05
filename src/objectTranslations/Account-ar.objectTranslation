@@ -56,6 +56,10 @@
             <translation>مزود الطيران</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>مطار</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>جمعية</translation>
         </picklistValues>
@@ -86,10 +90,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>الشركة القابضة</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>شريك البنية التحتية</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>

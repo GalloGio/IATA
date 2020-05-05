@@ -2170,14 +2170,6 @@
             <translation><!-- Governmental Aviation --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Ground Handler</masterLabel>
-            <translation><!-- Ground Handler --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Handling Agent</masterLabel>
-            <translation><!-- Handling Agent --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Hotel</masterLabel>
             <translation><!-- Hotel --></translation>
         </picklistValues>
@@ -2268,10 +2260,6 @@
         <picklistValues>
             <masterLabel>Other</masterLabel>
             <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other Equipment Manufacturer</masterLabel>
-            <translation><!-- Other Equipment Manufacturer --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Other Private Sector Association</masterLabel>
@@ -8088,10 +8076,6 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>IATA</masterLabel>
             <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Internal Use</masterLabel>

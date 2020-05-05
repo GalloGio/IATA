@@ -352,6 +352,7 @@
         <columns>NAME</columns>
         <columns>Active__c</columns>
         <columns>Status__c</columns>
+        <columns>Region__c</columns>
         <columns>Skill_P1_Weighting__c</columns>
         <columns>Skill_P2_Weighting__c</columns>
         <columns>Skill_P3_Weighting__c</columns>
@@ -359,6 +360,7 @@
         <columns>Open_Case_Workload_Weighting__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>All1</fullName>

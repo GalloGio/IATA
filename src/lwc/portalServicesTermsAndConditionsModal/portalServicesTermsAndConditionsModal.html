@@ -1,0 +1,53 @@
+<template>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+
+                <!-- Popup Header ->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">-->
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span>{labels.OneId_TermsAndConditions}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={cancel}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={cancel}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+                    <div class="slds-p-horizontal_large slds-p-vertical_large text-small termsMessage">
+                        <span>{labels.CSP_Terms_Updated_Message}</span>
+                    </div>
+                </div>
+
+                <div class="slds-is-relative">
+                    <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+                        <div class="slds-m-left_x-small slds-m-bottom_small">
+                            <c-portal-services-terms-and-conditions
+                                portal-service-id={portalServiceId}
+                                contact-id={contactId}
+                                language={language}
+                                onacceptancechanged={tcAcceptanceChanged}>
+                            </c-portal-services-terms-and-conditions>        
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
+                            <lightning-button variant="brand" disabled={acceptDisabled} class="slds-m-top_small containedButton"
+                                label={labels.CSP_Services_Accept_Terms} onclick={accept}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+                <div class="slds-spinner slds-spinner_medium" role="status">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>    
+        </div>
+    </section>
+</template>
