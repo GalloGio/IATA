@@ -57,7 +57,7 @@ public without sharing class ADSRController {
 	
 	@AuraEnabled(cacheable=false)
 	public static ADSRService.SummaryReport getReport(String region, String service, String markets, String agent) {
-		User u = [SELECT Id, Name, Contact.Account.Id, Contact.Account.Name, Contact.Account.Airline_Code__c
+		User u = [SELECT Id, Name, Contact.Account.Id, Contact.Account.Name, Contact.Account.IATACode__c, Contact.Account.Airline_Prefix__c
 				  FROM User
 				  WHERE Id = :UserInfo.getUserId()];
 		

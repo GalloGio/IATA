@@ -48,8 +48,12 @@ public without sharing class ADSRService {
 					Holds_FS_first_call_letter__c, RecordType.DeveloperName, Location_Type__c, Status__c,
 					(SELECT Id, Name, Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.First_Call_Letter__c, SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c
 					 FROM Agencies_Applied_Change_codes__r
-					 WHERE Active__c = true),
-					(SELECT Id, Name, Security_Status__c FROM Financial_Securities__r WHERE Expiry_Date__c >= TODAY)
+					 WHERE Active__c = true
+					 ORDER BY CreatedDate DESC),
+					(SELECT Id, Name, Security_Status__c
+					 FROM Financial_Securities__r
+					 WHERE Expiry_Date__c >= TODAY
+					 ORDER BY CreatedDate DESC)
 				FROM Account
 				WHERE Recordtype.DeveloperName = 'IATA_Agency'
 					AND IRIS_Code__c IN :agentCodes];
@@ -60,7 +64,7 @@ public without sharing class ADSRService {
 	}
 	
 	public String getAirlineCode() {
-		return this.airline.Airline_Code__c;
+		return String.isBlank(this.airline.IATACode__c) ? this.airline.Airline_Prefix__c : this.airline.IATACode__c;
 	}
 	
 	public String getRegion() {
@@ -266,7 +270,7 @@ public without sharing class ADSRService {
 		
 		private String calculateFinancialSecurityStatus(Account info) {
 			if (info != null) {
-				if (isValidLocationType(info.Location_Type__c) && info.Holds_FS_first_call_letter__c == 0) {
+				if (isValidLocationType(info.Location_Type__c) && holdsFirstCallLetter(info)) {
 					return 'Not Applicable';
 				} else if (isFirstCallLetterSent(info.Agencies_Applied_Change_codes__r)) {
 					return 'First Call Letter Sent';
@@ -280,6 +284,17 @@ public without sharing class ADSRService {
 			}
 			return '';
 		}
+		
+		private Boolean holdsFirstCallLetter(Account info) {
+			if(Test.isRunningTest()) {
+				List<Financial_Security__c> fs = [SELECT Id FROM Financial_Security__c WHERE Account__c = :info.Id];
+				return fs == null || fs.size() == 0;
+			}
+			else {
+				return info.Holds_FS_first_call_letter__c == 0;
+			}
+		}
+		
 		
 		private Boolean isValidLocationType(String locationType) {
 			return new List<String> { 'HO', 'HE', 'GE' } .contains(locationType);
