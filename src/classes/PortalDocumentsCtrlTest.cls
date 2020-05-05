@@ -101,6 +101,7 @@ public class PortalDocumentsCtrlTest {
 			
 			insert new SalesforceSupportEmails__c(
 				Support_Email__c='test@test.com',
+				Support_User_Id__c=Userinfo.getUserId(),
 				name='TemplaName'
 			);
 		}
