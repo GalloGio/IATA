@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Military</label>
+    <label>Airport Owner but not Operator</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">Military</value>
+        <value xsi:type="xsd:string">Airport Owner but not Operator</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Airline</value>
+        <value xsi:type="xsd:string">Airport</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Fields_Displayed__c</field>
-        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet,Airline_designator__c</value>
+        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet</value>
     </values>
     <values>
         <field>Fields_Targeted_Exact_Match__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Fields_Targeted_Partial_Match__c</field>
-        <value xsi:type="xsd:string">Airline_designator__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Filter_on_Category__c</field>
@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">Operator, Standard_Account</value>
+        <value xsi:type="xsd:string">Others, Standard_Account</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Airline</value>
+        <value xsi:type="xsd:string">Airport</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
