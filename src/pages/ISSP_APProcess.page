@@ -53,17 +53,17 @@
                         </div>
                         <div class="panel-body" id="body-enquiries">
 
-                            <c:ISSP_APProcess_Progress step="{!stepNumber}"
-                                operationType="{!strOperationType}"
-                                areaType="{!strAreaType}"
-                                changeType="{!strChangeType}"
-                                isSIS="{!isSISMember}" />
-                            <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
-                                Any doubts? Please check out our&nbsp;
-                                <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
-                            </apex:outputPanel>
-                            
                             <apex:form id="step1-form" styleClass="form-horizontal">
+                                <c:ISSP_APProcess_Progress step="{!stepNumber}"
+                                    operationType="{!strOperationType}"
+                                    areaType="{!strAreaType}"
+                                    changeType="{!strChangeType}"
+                                    isSIS="{!isSISMember}" />
+                                <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+                                    Any doubts? Please check out our&nbsp;
+                                    <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+                                </apex:outputPanel>
+
                                 <apex:actionFunction name="changeIsPassAirline" action="{!changeIsPassAirlineMethod}" immediate="true" rerender="step1-form,cmdButtonsBlock" status="WaitingStatus" oncomplete="refreshCountryList();">
                                         <apex:param value="" assignTo="{!strOT}" name="strOT"/>
                                     </apex:actionFunction>

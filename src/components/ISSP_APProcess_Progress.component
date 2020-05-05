@@ -21,7 +21,7 @@
 </style>
 
     <!-- BSP -->
-    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!CONTAINS(operationType,'BSP')}">
+    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{! NOT(ISNULL(operationType)) && CONTAINS(operationType,'BSP')}">
         <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
              <span class="progress-tab-step">A</span> Participation Country &amp; Type
         </div>
@@ -37,7 +37,7 @@
     </apex:outputPanel>
 
     <!-- CASS -->
-    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!CONTAINS(operationType,'CASS')}">
+    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{! NOT(ISNULL(operationType)) && CONTAINS(operationType,'CASS')}">
         <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
              <span class="progress-tab-step">A</span> Participation Country &amp; Type
         </div>
@@ -53,7 +53,7 @@
     </apex:outputPanel>
 
         <!-- ICH -->
-    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{!CONTAINS(operationType,'ICH')}">
+    <apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{! NOT(ISNULL(operationType)) && CONTAINS(operationType,'ICH')}">
         <div class="progress-bar iata-tab {!IF(step==1,'tabl-active','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
              <span class="progress-tab-step">A</span> Participation type
         </div>
