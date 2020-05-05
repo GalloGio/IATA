@@ -333,8 +333,8 @@ public class ANG_RHCHelper {
 		Decimal rhcAmount = (fsAmount * fsPercentage/100);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - rhcAmount] RHC Amount: ' + rhcAmount);
 
-		/*NEWGEN-4881 - comment logic to set ANG_RHC_Amount
-		rhc.ANG_RHC_Amount__c = rhcAmount; */
+		/*NEWGEN-4881 - comment logic to set ANG_RHC_Amount*/
+		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
 	}
