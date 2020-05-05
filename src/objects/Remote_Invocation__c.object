@@ -384,66 +384,6 @@ When MS sets “In Progress”, trigger to fire</description>
                 <fullName>GDI_ENDORSEMENT_PDF</fullName>
                 <default>false</default>
             </values>
-			
-            <values>
-                <fullName>TIP_AUTO_REPORTS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIP_IFG_REPORT</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Source__c</picklist>
-            <values>
-                <fullName>GDI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IEP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IFG</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Initializing</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>TIP_AUTO_REPORTS</fullName>
-        <active>true</active>
-        <description>TIP Auto Reports</description>
-        <label>TIP_AUTO_REPORTS</label>
-        <picklistValues>
-            <picklist>Request_Type__c</picklist>
-            <values>
-                <fullName>ANG_IEP_MODEL_A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GDI_ENDORSEMENT</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>TIP_AUTO_REPORTS</fullName>
                 <default>false</default>
@@ -519,6 +459,65 @@ When MS sets “In Progress”, trigger to fire</description>
             </values>
             <values>
                 <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>TIP_AUTO_REPORTS</fullName>
+        <active>true</active>
+        <description>TIP Auto Reports</description>
+        <label>TIP_AUTO_REPORTS</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_AUTO_REPORTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
