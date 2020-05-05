@@ -38,7 +38,7 @@ public class ADSRServiceTest {
 		insert newCon;
 		
 		User newUser = ISSP_ObjectFactory.createPortalUser(newCon);
-
+		
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account agency1 = new Account(name = 'MALCA-AMIT CANADA, INC.', IATA_ISO_Country__c = canada.Id, Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
 			ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN, Location_type__c = 'HO', OwnerId = UserInfo.getUserId(),
@@ -49,56 +49,56 @@ public class ADSRServiceTest {
 		Account agency3 = new Account(name = 'CARGO ARTISTS INC.', IATA_ISO_Country__c = canada.Id, Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
 			ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT, Location_type__c = 'HO', OwnerId = UserInfo.getUserId(),
 			Location_Class__c = 'P', recordtypeId = rtId, Site = '60193020010');
-        Account agency4 = new Account(name = 'INTERCONTINENTAL VIAGENS E  TURISMO LTDA.', IATA_ISO_Country__c = brazil.Id, Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-			ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT, Location_type__c = 'HO', OwnerId = UserInfo.getUserId(),
-			Location_Class__c = 'P', recordtypeId = rtId, Site = '57528860');
+		Account agency4 = new Account(name = 'INTERCONTINENTAL VIAGENS E  TURISMO LTDA.', IATA_ISO_Country__c = brazil.Id,
+			Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT, ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+			Location_type__c = 'HO', OwnerId = UserInfo.getUserId(), Location_Class__c = 'P', recordtypeId = rtId, Site = '57528860');
 		insert new List<Account> { agency1, agency2, agency3, agency4 };
-		    
+		
 		Financial_Institution__c fi1 = new Financial_Institution__c(Name = 'FI1', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
 			Country__c = 'Canada');
-        Financial_Institution__c fi2 = new Financial_Institution__c(Name = 'FI2', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
+		Financial_Institution__c fi2 = new Financial_Institution__c(Name = 'FI2', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
 			Country__c = 'Brazil');
-        insert new List<Financial_Institution__c> { fi1, fi2 };
+		insert new List<Financial_Institution__c> { fi1, fi2 };
 		
 		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		Case receptionCase = new Case(Subject = 'Case Test', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation');
-		case sidraCase = new Case(Subject = 'SIDRA Case Agency 4', Region__c = 'Americas', Origin = 'Portal',
-									CaseArea__c = 'Accreditation', BSP_CASS__c = 'BSP',
-									E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
-									IATAcode__c = '57528860',
-									RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
-									Visible_on_ISS_Portal__c = true, ContactId = newCon.Id,
-									Handover_Bankruptcy_Lawyer__c = Date.today(), First_Call_Letter__c = 'Sent');
+		case sidraCase = new Case(Subject = 'SIDRA Case Agency 4', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation',
+			BSP_CASS__c = 'BSP', E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive', IATAcode__c = '57528860',
+			RecordTypeId = caseRT_FDS_ICCS_Email_to_Case, Visible_on_ISS_Portal__c = true, ContactId = newCon.Id, Handover_Bankruptcy_Lawyer__c = Date.today(),
+			First_Call_Letter__c = 'Sent');
 		insert new List<Case> { receptionCase, sidraCase };
-
-		//Agency 1
+		
+		// Agency 1
 		Financial_Security__c fs1a = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.today().addDays(-1),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee',
 			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashment in progress',
-			Two_months_passed_expiry__c = false, First_Call_Letter_required1__c='Yes');
-		Financial_Security__c fs1b = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.newInstance(2020, 4, 27),
-			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee',
-			Amount__c = 1, Expiry_Date__c = Date.newInstance(2020, 4, 29), Region__c = 'Americas', Security_Status__c = 'Expired',
-			Two_months_passed_expiry__c = false, First_Call_Letter_required1__c='Yes');
-		//Agency 2
+			Two_months_passed_expiry__c = false, First_Call_Letter_required1__c = 'Yes');
+		Financial_Security__c fs1b = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.newInstance(2020,
+			4, 27), Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id,
+			Security_Type__c = 'Financial Guarantee', Amount__c = 1, Expiry_Date__c = Date.newInstance(2020, 4, 29), Region__c = 'Americas',
+			Security_Status__c = 'Expired', Two_months_passed_expiry__c = false, First_Call_Letter_required1__c = 'Yes');
+		// Agency 2
 		Financial_Security__c fs2a = new Financial_Security__c(Account__c = agency2.Id, Reception_Date__c = Date.today().addDays(-3),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Encashment_Date__c = Date.today().addDays(-1),
 			Release_Date__c = Date.today().addDays(-1), Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee',
-			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashed', First_Call_Letter_required1__c='Yes');
+			Amount__c = 1, Expiry_Date__c = Date.today().addDays(1), Region__c = 'Americas', Security_Status__c = 'Encashed',
+			First_Call_Letter_required1__c = 'Yes');
 		Financial_Security__c fs2b = new Financial_Security__c(Account__c = agency2.Id, Reception_Date__c = Date.today().addDays(-3),
 			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee',
-			Amount__c = 1, Expiry_Date__c = Date.today().addDays(-1), Region__c = 'Americas', Security_Status__c = 'Expired', First_Call_Letter_required1__c='Yes');
-        //Agency 4
-        Financial_Security__c fs4a = new Financial_Security__c(Account__c = agency4.Id, Reception_Date__c = Date.today(),
-			Reception_Case__c = receptionCase.Id, Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee',
-			Amount__c = 1, Expiry_Date__c = Date.today().addDays(+5), Region__c = 'Americas', Security_Status__c = 'Active', First_Call_Letter_required1__c='Yes');
-		insert new List<Financial_Security__c> {  fs1a, fs1b, fs2a, fs2b, fs4a  };
+			Amount__c = 1, Expiry_Date__c = Date.today().addDays(-1), Region__c = 'Americas', Security_Status__c = 'Expired',
+			First_Call_Letter_required1__c = 'Yes');
+		// Agency 4
+		Financial_Security__c fs4a = new Financial_Security__c(Account__c = agency4.Id, Reception_Date__c = Date.today(), Reception_Case__c = receptionCase.Id,
+			Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee', Amount__c = 1,
+			Expiry_Date__c = Date.today().addDays(+5), Region__c = 'Americas', Security_Status__c = 'Active', First_Call_Letter_required1__c = 'Yes');
+		insert new List<Financial_Security__c> { fs1a, fs1b, fs2a, fs2b, fs4a };
 		
-        Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(Account__c = agency1.Id, Change_Code__c = 'DEF');
-        Agency_Applied_Change_code__c ch2 = new Agency_Applied_Change_code__c(Account__c = agency2.Id, Change_Code__c = 'RPY');
-        Agency_Applied_Change_code__c ch3 = new Agency_Applied_Change_code__c(Account__c = agency3.Id, Change_Code__c = 'REI');
-        Agency_Applied_Change_code__c ch4 = new Agency_Applied_Change_code__c(Account__c = agency4.Id, Change_Code__c = 'NEW', SIDRA_Case__c = sidraCase.Id);
-        insert new List<Agency_Applied_Change_Code__c> { ch1, ch2, ch3, ch4 };
+		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(Account__c = agency1.Id, Change_Code__c = 'DEF');
+		Agency_Applied_Change_code__c ch2 = new Agency_Applied_Change_code__c(Account__c = agency2.Id, Change_Code__c = 'RPY');
+		Agency_Applied_Change_code__c ch3 = new Agency_Applied_Change_code__c(Account__c = agency3.Id, Change_Code__c = 'REI');
+		Agency_Applied_Change_code__c ch4 = new Agency_Applied_Change_code__c(Account__c = agency4.Id, Change_Code__c = 'NEW',
+			SIDRA_Case__c = sidraCase.Id);
+		insert new List<Agency_Applied_Change_Code__c> { ch1, ch2, ch3, ch4 };
 	}
 	
 	@isTest
@@ -139,7 +139,8 @@ public class ADSRServiceTest {
 			
 			Boolean hasCassColombia = false;
 			for (ADSRService.SummaryReportGroup reportGroup : report.groups) {
-				if (reportGroup.operation.toLowerCase().contains('colombia') && reportGroup.operation.toLowerCase().contains('cass')) {
+				if (reportGroup.operation.toLowerCase().contains('colombia')
+					&& reportGroup.operation.toLowerCase().contains('cass')) {
 					hasCassColombia = true;
 					Decimal charged = 0;
 					for (ADSRService.SummaryReportDetail detail : reportGroup.details) {
@@ -200,7 +201,7 @@ public class ADSRServiceTest {
 			} catch (AuraHandledException e) {
 				throwsError = true;
 			}
-		
+			
 			System.assert(throwsError);
 		}
 		
@@ -229,7 +230,7 @@ public class ADSRServiceTest {
 			} catch (AuraHandledException e) {
 				throwsError = true;
 			}
-		
+			
 			System.assert(throwsError);
 		}
 		

@@ -286,15 +286,13 @@ public without sharing class ADSRService {
 		}
 		
 		private Boolean holdsFirstCallLetter(Account info) {
-			if(Test.isRunningTest()) {
+			if (Test.isRunningTest()) {
 				List<Financial_Security__c> fs = [SELECT Id FROM Financial_Security__c WHERE Account__c = :info.Id];
 				return fs == null || fs.size() == 0;
-			}
-			else {
+			} else {
 				return info.Holds_FS_first_call_letter__c == 0;
 			}
 		}
-		
 		
 		private Boolean isValidLocationType(String locationType) {
 			return new List<String> { 'HO', 'HE', 'GE' } .contains(locationType);
