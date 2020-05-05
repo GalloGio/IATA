@@ -54,7 +54,9 @@ New TIDS
 New MSO
 New HE lite
 New HE standard
+New HE Multicountry
 New AE
+New AE Multicountry
 GSA / MSO / Handling Agent
 FoP Management
 Accreditation Type
