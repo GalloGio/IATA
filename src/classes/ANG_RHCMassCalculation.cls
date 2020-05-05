@@ -159,6 +159,7 @@ public class ANG_RHCMassCalculation {
 				+ ' FROM ANG_RHC_Information__c' // 
 				+ ' WHERE ANG_CashCondition__c = false' // 
 				+ ' 	AND ANG_RHC_Amount_Equals_FS__c = false ' // 
+				+ ' 	AND ANG_AccountId__r.ANG_CashCondition__c = false ' //
 				+ ' 	AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c NOT IN :skipBsps ' // 
 				+ ' 	AND ANG_AccountId__r.ANG_Accreditation_Model__c = \'' + AMS_Utils.ACCREDITATIONMODEL_CASH + '\' ' // 
 				+ ' 	AND ANG_AccountId__r.Location_Type__c != \'' + AMS_Utils.GE + '\'';
