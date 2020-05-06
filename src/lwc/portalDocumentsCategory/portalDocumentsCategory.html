@@ -19,7 +19,7 @@
                                             <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.Id}></lightning-icon>
                                         </div>
                                         <div class="slds-col slds-grid slds-size--2-of-3 slds-show_small text-xsmall cellDefault">
-                                            <button class="slds-size--2-of-3 cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.CurrencyCenter_Open}</button>
+                                            <button class="cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.CurrencyCenter_Open}</button>
                                         </div>
                                     </div>
                                     <div key={record.Id} class="slds-col slds-size_7-of-12 slds-medium-size_6-of-12 slds-grid slds-grid_vertical-align-center text-black text-xsmall text-bold cellDefault"><p class="slds-p-horizontal_x-small titleTruncation ">{record.Title}</p></div>
@@ -34,7 +34,7 @@
                                             <lightning-spinner class="slds-is-relative slds-p-right_large" alternative-text="Loading" size="small"></lightning-spinner>
                                         </div>
                                         <div class=" cursorPointer slds-size--1-of-2 slds-grid slds-align_absolute-center">
-                                            <span class='dnicon' onclick={downloadDocument} data-url={record.ContentUrl} data-item={record.ContentDocumentId} title="Download"></span>
+                                            <span class='dnicon' onclick={downloadDocument} data-name={record.Title} data-url={record.ContentUrl} data-item={record.Id} title="Download"></span>
                                         </div>
                                     </div>
                                 </div>
