@@ -35,21 +35,22 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
 
 	global void finish(Database.BatchableContext BC){
 
-	   Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-	   String [] toAddress = new String[] {'claudio.catarino@isobar.com'};
-	   email.setToAddresses(toAddress);
-	   email.setSubject('Sandbox Post Deploymment Script Batch');
+		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+		String [] toAddress = new String[] {'claudio.catarino@isobar.com'};
+		email.setToAddresses(toAddress);
+		email.setSubject('Sandbox Post Deploymment Script Batch');
 
-	   String namedCredErrors = 'Named Credentials errors: \n';
-	   String connAppErrors = 'Connected Apps errors: \n';
+		String namedCredErrors = 'Named Credentials errors: \n';
+		String connAppErrors = 'Connected Apps errors: \n';
 
-	   if(!nCErrors.isEmpty()){
-		   for(String nc: nCErrors){
-			   namedCredErrors += nc + '\n';
+		if(!nCErrors.isEmpty()){
+			for(String nc: nCErrors){
+				namedCredErrors += nc + '\n';
 			}
-	   }else {
-		   namedCredErrors += 'No errors found \n';
+		}else{
+			namedCredErrors += 'No errors found \n';
 	   }
+
 	   if(!nCErrors.isEmpty()){
 		   for(String ca: errorList){
 			   connAppErrors += ca + '\n';
@@ -58,8 +59,8 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
 			connAppErrors += 'No errors found \n';
 		}
 
-	   email.setPlainTextBody(namedCredErrors + ' ' + connAppErrors);
-	   //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
+		email.setPlainTextBody(namedCredErrors + ' ' + connAppErrors);
+		//Messaging.sendEmail(new Messaging.SingleEmailMessage[] { email });
 	}
 
 	private static MetadataService.MetadataPort createService(){
@@ -70,7 +71,7 @@ global class deleteConnectedAppsBatch Implements Database.batchable<sobject>, Da
 
 		return service;
 	}
-
+	//This part of the code as the porpouse of treating the erros to send by email
 	// private void handleDeleteResults(MetadataService.DeleteResult deleteResult){
 
 	//     if(deleteResult.errors != null){

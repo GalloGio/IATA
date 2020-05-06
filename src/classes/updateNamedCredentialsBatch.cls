@@ -37,23 +37,23 @@ global class updateNamedCredentialsBatch Implements Database.batchable<sobject>,
 		}
 	}
 
-   global void finish(Database.BatchableContext BC){
+	global void finish(Database.BatchableContext BC){
 
-	   if(!Test.isRunningTest()){
-		   deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch(errorList);
+		if(!Test.isRunningTest()){
+			deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch(errorList);
 			Database.executeBatch(deleteConnectedApps,10);
 		}
 	}
 
-   private static MetadataService.MetadataPort createService(){
+	private static MetadataService.MetadataPort createService(){
 
-	   MetadataService.MetadataPort service = new MetadataService.MetadataPort();
-	   service.SessionHeader = new MetadataService.SessionHeader_element();
-	   service.SessionHeader.sessionId = UserInfo.getSessionId();
+		MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+		service.SessionHeader = new MetadataService.SessionHeader_element();
+		service.SessionHeader.sessionId = UserInfo.getSessionId();
 
 	   return service;
 	}
-
+	//This part of the code as the porpouse of treating the erros to send by email
 	// private void handleSaveResults(MetadataService.SaveResult saveResult){
 	// 		if(saveResult.errors != null){
 	// 			List<String> messages = new List<String>();
