@@ -211,8 +211,8 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
-    </listViews>
+        <label>Completed Tasks</label>
+    </listViews>    
     <listViews>
         <fullName>DelegatedTasks</fullName>
         <columns>SUBJECT</columns>
@@ -225,7 +225,16 @@
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <filterScope>Delegated</filterScope>
-        <label>ENCODED:{!FilterNames.Task_DelegatedTasks}</label>
+        <label>Delegated Tasks</label>
+    </listViews>    
+    <listViews>
+        <fullName>Medaire_Approvals_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Medaire Approvals</label>
+        <queue>Medaire_Approvals</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>OpenTasks</fullName>
@@ -255,7 +264,7 @@
             <value>LAST_N_DAYS:30</value>
         </filters>
         <label>ENCODED:{!FilterNames.Task_OpenTasks}</label>
-    </listViews>
+    </listViews>    
     <listViews>
         <fullName>OverdueTasks</fullName>
         <columns>SUBJECT</columns>
@@ -302,8 +311,8 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_RecurringTasks}</label>
-    </listViews>
+        <label>Recurring Tasks</label>
+    </listViews>    
     <listViews>
         <fullName>TodaysTasks</fullName>
         <columns>SUBJECT</columns>
@@ -359,7 +368,7 @@
             <field>DUE_DATE</field>
             <operation>equals</operation>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
+        <label>Unscheduled Tasks</label>
     </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>

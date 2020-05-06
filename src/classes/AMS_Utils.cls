@@ -13,6 +13,8 @@ public without sharing class AMS_Utils {
 	public static final String FAILED = 'Failed';
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
+	public static final String NOT_STARTED = 'Not Started';
+	public static final String COMPLETED = 'Completed';
 
 	public static final String AUTH_APPROVAL = 'Authorize Approval';
 	public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
@@ -264,6 +266,7 @@ public without sharing class AMS_Utils {
 
 	// Case - Origin
 	public static final String CASE_ORIGIN_PORTAL = 'Portal';
+	public static final String CASE_ORIGIN_GDI_PORTAL = 'GDI Portal';
 	public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
 	public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';
 
@@ -362,6 +365,8 @@ public without sharing class AMS_Utils {
 
 	public static final String CC = 'CC';
 	public static final String CA = 'CA';
+	public static final String CL = 'CL';
+	public static final String MC = 'MC';
 	public static final string EP = 'EP';
 	public static final string BOP = 'BOP';
 	public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
@@ -386,6 +391,28 @@ public without sharing class AMS_Utils {
 	public static final String APP_03WITHDRAWN = '03-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+	public static final String GDI_CHANGE_CODE = 'GDI';
+	public static final String GDN_CHANGE_CODE = 'GDN';
+	
+	public static final String INVOICE_STATUS_NA = 'N/A';
+	public static final String INVOICE_STATUS_PAID = 'Paid';
+	public static final String INVOICE_STATUS_NOT_PAID = 'Not paid';
+	public static final String INVOICE_STATUS_FULLY_PAID = 'Fully paid';
+	public static final String INVOICE_STATUS_OUTSTANDING = 'Outstanding';
+
+	public static final String SAP_PAYMENT_TYPE_PPA = 'PPA';
+
+	
+	public static final String FINANCIAL_SECURITY_STATUS_ACTIVE = 'Active';
+	public static final String FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY = 'Close to Expiry Date';
+	public static final String FINANCIAL_SECURITY_STATUS_NOT_ACTIVE = 'Not Active yet';
+	public static final String FINANCIAL_SECURITY_TYPE_GDI = 'GDI';
+
+	public static final String OPPORTUNITY_CLOSED_WON = 'Closed Won';
+	public static final String OPPORTUNITY_CLOSED_LOST = 'Closed Lost';
+	public static final String OPPORTUNITY_LINEITEM_SECURITY_STATUS_DRAFT = 'Draft';
+
+	public static final String NEW_INTERACTION_ATTACHMENT = 'New Attachment';
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
