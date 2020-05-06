@@ -1307,6 +1307,8 @@
     <listViews>
         <fullName>All_SIS</fullName>
         <columns>NAME</columns>
+        <columns>Call_Day__c</columns>
+        <columns>Period_Code__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
