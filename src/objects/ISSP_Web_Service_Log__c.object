@@ -646,6 +646,11 @@
             <operation>equals</operation>
             <value>TODAY</value>
         </filters>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>contains</operation>
+            <value>GUERREIRO</value>
+        </filters>
         <label>today logs</label>
         <language>en_US</language>
     </listViews>
