@@ -731,6 +731,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
 
+			//The account related with the oscar is the HE
+			Account accountHE = changesContainer.accountsMap.get(oscar.Account__c);
+
+			//If the agency was initially the GE we need to trigger 
+			//the risk assessment recalculation for that one
+			//The remaining accounts will get an Auth. Sell Cash risk event
+			//and therefore the risk assessment will take place at that moment
+			if(accountHE.Id == oscar.Parent_OSCAR_Account_Id__c){
+				changesContainer.addAccountToCalculateRiskAssessment(accountHE.Id);
+			}
+
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
 
 			for(Account acct : changesContainer.accountsMap.values()){
