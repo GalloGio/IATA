@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="GCS_RegistrationController">
+<aura:component access="public" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="GCS_RegistrationController">
 
     <!-- User & Service Info -->
     <aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />

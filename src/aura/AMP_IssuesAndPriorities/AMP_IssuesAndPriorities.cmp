@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />

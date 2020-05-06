@@ -1,4 +1,4 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AWW_PerformanceCtrl" access="public">
     <aura:attribute name="header" type="String" default="New"/>
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="errorMessage" type="String"/>

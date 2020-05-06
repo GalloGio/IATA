@@ -16,17 +16,9 @@
         <members>*</members>
         <name>GlobalValueSet</name>
     </types>
-        <types>
-        <members>*</members>
-        <name>CustomLabel</name>
-    </types> 
-        <types>
-        <members>*</members>
-        <name>Translations</name>
-    </types>
     <types>
         <members>*</members>
         <name>Queue</name>
     </types>
-    <version>45.0</version>
+    <version>47.0</version>
 </Package>

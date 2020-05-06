@@ -160,7 +160,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,MADGDCCSMGR@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -168,6 +168,38 @@
         </recipients>
         <recipients>
             <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>concessios@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mohananb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siddiquio@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wangyy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>weitz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>xiewp@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/Calendar_Change_Approval_Confimation</template>
@@ -1374,6 +1406,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>concessios@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1454,6 +1490,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>quliyevaa@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rabahh@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1466,6 +1506,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>shahb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>sughayerm@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1475,6 +1519,10 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vidalk@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3983,7 +4031,7 @@
     </alerts>
     <alerts>
         <fullName>Send_Email_to_Online_store_support</fullName>
-        <ccEmails>servicedesk@iata.org</ccEmails>
+        <ccEmails>kurups@external.iata.org</ccEmails>
         <ccEmails>szpyndam@iata.org</ccEmails>
         <ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
@@ -4043,10 +4091,6 @@
         <fullName>Send_email_notification_for_a_new_comment_on_a_case</fullName>
         <description>Send email notification for a new comment on a case</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>Partner User Role</recipient>
-            <type>caseTeam</type>
-        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -13707,7 +13751,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
+            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,CZECH REPUBLIC,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -17377,7 +17421,7 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Czech Republic</value>
+            <value>CZECH REPUBLIC</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>

@@ -125,6 +125,7 @@ src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_usa_cc.md
 src/quickActions/GuestCommunityCase.quickAction
 src/quickActions/NewCommunityCase.quickAction
 
+src/reportTypes/Accounts_with_or_without_activities.reportType
 
 src/layouts/EntityMilestone-Object Milestone Layout.layout
 src/layouts/ListEmail-List Email Layout.layout

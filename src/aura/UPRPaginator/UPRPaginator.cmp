@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:attribute name="pages" type="integer"/>
     <aura:attribute name="page" type="integer"/>
     

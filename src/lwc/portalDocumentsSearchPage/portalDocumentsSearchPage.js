@@ -24,6 +24,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     @track renderNoResults = true;
     @track loading = true;
     timeout = null;
+    @track showCross = false;
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
     searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
@@ -124,17 +125,20 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
     filterInputChange(event) {
         this.searchText = event.target.value;
+       
         this.onInputChange(this.searchText);
     }
 
     onInputChange(param) {
         this.loading = true;
         this.searchText = param;
+        this.showCross = this.searchText.length>0;
 
         clearTimeout(this.timeout);
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
+          
             if(this.searchText.length > 2 || this.searchText === '') {
                 let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
                 for(let i = 0; i < _documentObject.categories.length; i++) {
@@ -150,5 +154,42 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             }
             this.loading = false;
         }, 1500, this);
+    }
+
+    removeTextSearch(){
+        this.onInputChange('');
+    }
+    
+    showCategory(event) {
+        //Handles category selection from category's results( right panel)
+        let categoryName = event.detail.category;
+        let __documentObject = JSON.parse(JSON.stringify(this.documentObject));
+
+
+        __documentObject.refreshFilter=true;
+        if(__documentObject.categorySelected !== categoryName ||__documentObject.refreshFilter===true ) {            
+            __documentObject.categorySelected = categoryName;
+            __documentObject.topResults = false;
+            for(let i = 0; i < __documentObject.categories.length; i++) {
+                if(__documentObject.categories[i].apiName === categoryName) {
+                    __documentObject.categories[i].topResults = false;
+                    __documentObject.categories[i].productCategory = '';
+                    __documentObject.categories[i].countryOfPublication = '';
+                    __documentObject.categories[i].show = true;
+                } else {
+                    __documentObject.categories[i].show = false;
+                }
+            }               
+        }
+
+
+        this.loading = true;        
+
+
+        this.documentObject = __documentObject;
+        this.categories = this.documentObject.categories;
+
+
+        this.resultsToRender();
     }
 }
