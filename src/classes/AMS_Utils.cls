@@ -291,6 +291,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
 	public static final String CATEGORY_COURIER = 'Courier';
 	public static final String CATEGORY_IATA_CARGO_AGENT = 'IATA Cargo Agent';
+	public static final String CATEGORY_NON_IATA_FREIGHT_FORWARDER = 'Non-IATA Cargo Agent';
 	public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
 	public static final String CATEGORY_ANSP = 'ANSP';
 	public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';

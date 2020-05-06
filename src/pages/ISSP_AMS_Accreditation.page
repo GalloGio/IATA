@@ -401,7 +401,12 @@
         }
 
         function redirectToPDF() {
-            window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
+
+            if({!isCNSAgency}){
+                window.open('/ISSP_AMS_PDF_NoC_CNS?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
+            }else{
+                window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
+            }
         }
 
 		function navigateToComparison() {
@@ -1221,7 +1226,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',IF(isCNSAgency, SUBSTITUTE(SUBSTITUTE(newForm.Agent_Type__c, 'HO', 'Head Office'),'BR', 'Branch'), newForm.Agent_Type__c)))} {!IF(isCNSAgency, '', amsOfficeType)} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
@@ -1255,7 +1260,7 @@
             <apex:form id="FinalForm">
                 <apex:facet name="header">
                     <apex:outputPanel style="margin:20px 0px;font-size:110%" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step5_ReviewBeforeSubmit}"/>
+                        <apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.SSP_AMS_Step5_ReviewBeforeSubmit_CNS, $Label.ISSP_AMS_Step5_ReviewBeforeSubmit)}"/>
                     </apex:outputPanel>
                    </apex:facet>
            </apex:form>
@@ -1362,7 +1367,7 @@
         <apex:pageBlock rendered="{!isNoticeOfChange}" >
             <apex:facet name="header">
                 <apex:outputPanel style="margin:20px 0px;font-size:110%" >
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step5_ReviewBeforeSubmit}"/>
+                    <apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.SSP_AMS_Step5_ReviewBeforeSubmit_CNS, $Label.ISSP_AMS_Step5_ReviewBeforeSubmit)}"/>
                 </apex:outputPanel>
                </apex:facet>
         </apex:pageBlock>
@@ -1378,6 +1383,8 @@
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC_Change_First_CNS}" rendered="{!AND(isCNSAgency, isNoticeOfChange)}"/>
+                            <br/><br/>
                             <apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.ISSP_AMS_NoC_TC_Change_CNS, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1))}"/>
                             <br/><br/>
                             <apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.ISSP_AMS_NoC_TC_Change_CNS2, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2))}"/>

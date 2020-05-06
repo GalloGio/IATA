@@ -771,12 +771,12 @@
 
                                         <apex:pageblocksectionitem rendered="{!showAccreditation}">
                                             <apex:outputPanel >
-                                            <apex:outputlabel value="{!$Label.ISSP_AMS_Form}" for="amsFormLink" rendered="{!OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management')}"/>
+                                            <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Form_CNS, $Label.ISSP_AMS_Form)}" for="amsFormLink" rendered="{!OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management')}"/>
 
                                             <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZH76&oid=00D2000000008TF" width="40" height="35" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management'))}"/>
                                             </apex:outputPanel>
                                             <apex:outputText >
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&step=2" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!$Label.ISSP_AMS_Click_here}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&step=2" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!IF(isCNSAgency, $Label.ISSP_AMS_Click_here_CNS, $Label.ISSP_AMS_Click_here)}</apex:outputLink>
 
                                             <apex:outputLink value="/ISSP_ANG_PCI?caseId={!newCase.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!newCase.Reason1__c=='FoP Management'}">{!$Label.ISSP_ANG_Click_Here_PCI}</apex:outputLink>
 
@@ -793,7 +793,7 @@
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
                                                 <apex:outputlink value="{!IF(isTravelAccreditation,'/ISSP_AMS_PDF_ApplicationForm?caseId=', '/ISSP_AMS_PDF_CGO?caseId=') + newCase.Id}" id="amsFormLink" target="_new" rendered="{!AND(BEGINS(newCase.Reason1__c, 'New'), newCase.Reason1__c != 'New HE standard', newCase.Reason1__c != 'New HE lite', newCase.Reason1__c != 'New AE')}">
-                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                    {!IF(isCNSAgency, $Label.ISSP_AMS_Download_PDF_Copy_CNS, $Label.ISSP_AMS_Download_PDF_Copy)}
                                                 </apex:outputlink>
 
                                                 <apex:outputlink value="{!fullnameNOCFile}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
@@ -803,11 +803,11 @@
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
                                                 <apex:outputlink value="{!IF(OR(newCase.Reason1__c == 'New HE standard',newCase.Reason1__c == 'New HE lite'),'/ISSP_AMS_PDF_ANG_PAX_HE?caseId='+ newCase.Id,'')}" id="amsHEFormLink" rendered="{!OR(newCase.Reason1__c == 'New HE standard', newCase.Reason1__c == 'New HE lite')}" target="_new">
-                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                    {!IF(isCNSAgency, $Label.ISSP_AMS_Download_PDF_Copy_CNS, $Label.ISSP_AMS_Download_PDF_Copy)}
                                                 </apex:outputlink>
                                                 <apex:outputlink value="{!'/ISSP_AMS_PDF_ANG_PAX_AE?caseId='+ newCase.Id}" id="amsAEFormLink" rendered="{!
                                                 newCase.Reason1__c == 'New AE'}" target="_new">
-                                                    {!$Label.ISSP_AMS_Download_PDF_Copy}
+                                                    {!IF(isCNSAgency, $Label.ISSP_AMS_Download_PDF_Copy_CNS, $Label.ISSP_AMS_Download_PDF_Copy)}
                                                 </apex:outputlink>
                                             </apex:outputText>
                                             <!--         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" id="theCommandLink"/>  -->

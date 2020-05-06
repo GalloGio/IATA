@@ -14,7 +14,8 @@
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
 	                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
-	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
+	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + $Label.ISSP_AMS_Reason_New_HO}" rendered="{!NOT(isCNSAgency)}"/>
+	                    	<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(newForm.Agent_Type__c, 'HO', 'Head Office'),'BR', 'Branch')}" rendered="{!isCNSAgency}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
 	                    	<apex:outputText value="{!amsAllLangCountryLabel}"/> 
 	    			</apex:panelGrid>

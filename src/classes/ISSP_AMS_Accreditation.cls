@@ -204,7 +204,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		get {
 			if(lblCNSAgencyTitle == null) {
 				if(isCNSAgency && newCase.Reason1__c != null) {
-					lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ';
+					lblCNSAgencyTitle = Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ';
 
 					if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
 						lblCNSAgencyTitle += Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR;
@@ -715,7 +715,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblNoCStepD = communityName == 'CNS' ? Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS : Label.ISSP_AMS_NOC_StepD_ProgressBar;
 
 		lblStep1Title = communityName == 'CNS' ? Label.ISSP_AMS_Step1_Title_CNS : isocountry.AMS_Accreditation_New_Labels__c ? Label.ISSP_AMS_Step1_Title_New : Label.ISSP_AMS_Step1_Title;
-
+		if((isCNSAgency && con.Account.IATACode__c == null) || (isCNSAgency && con.Account.IATACode__c != null && hqAccount.Location_Class__c == 'R')){
+			lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS_HO;
+		}else if(isCNSAgency && con.Account.IATACode__c != null && hqAccount.Location_Class__c == 'C'){
+			lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS_BR;
+		}
 		lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
 		lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
 
@@ -1079,7 +1083,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		// It's not a separate legal entity
 		// It's null when it's a branch.
 		if (amsOfficeType == 'Branch' && (newForm.AE_separate_Legal_Entity__c == null || newForm.AE_separate_Legal_Entity__c == 'No')) {
-			if (newForm.ISSP_AMS_VAT_number_input__c == null)
+			if (newForm.ISSP_AMS_VAT_number_input__c == null && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_INDEPENDENT)
 				if (isEUcountry) { //Need to remove first 2 chars (ISO County code) for VAT input field for EU countries since not required by validation WS
 					if (con.Account.VAT_Number__c != null)
 						newForm.ISSP_AMS_VAT_number_input__c = con.Account.VAT_Number__c.substring(2);
@@ -1696,9 +1700,13 @@ public without sharing class ISSP_AMS_Accreditation {
 					} else {
 						if (communityName=='CNS') {
 							if(isCNSAgency){
-								options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
-								options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
-								options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
+								if(hqAccount.Location_Class__c == 'C'){
+									options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
+									options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
+								}else if(hqAccount.Location_Class__c == 'R'){
+									options.add(new SelectOption(AMS_Utils.TYPE_CNS_HO, Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO));
+									options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
+								}
 							}else{
 								options.add(new SelectOption(AMS_Utils.TYPE_CGO_BRANCH, Label.ISSP_AMS_OPTION_CGO_BRANCH_CNS));
 							}	
@@ -2318,7 +2326,7 @@ public without sharing class ISSP_AMS_Accreditation {
 												(newForm.Agent_Type__c != AMS_Utils.CATEGORY_CASSASSOCIATE && newForm.Agent_Type__c != AMS_Utils.CATEGORY_IMPORT_AGENT && newForm.Agent_Type__c != AMS_Utils.CATEGORY_COURIER)))
 				RECORD_TYPE_ID = OSCAR_RECORD_TYPE_ID;
 
-			if (isNewCase || changeOfAccountConcerned) {
+			if ((isNewCase || changeOfAccountConcerned)  && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_INDEPENDENT ) {
 				accountStagingFieldMapping(accountConcerned, AMS_Utils.CASE_REASON_NEW_HO, false);
 				newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
 
@@ -2879,7 +2887,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			}else{
 				if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
 					locationClass = 'C';
-				}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE){
+				}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER){
 					locationClass = 'R';
 				}
 			}
@@ -3638,13 +3646,17 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		if (!newform.Accept_terms_and_conditions__c && !isMultiCountry) {
-			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
+			if(isCNSAgency){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS_CNS));
+			}else{
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
+			}
 			return null;
 		}
 
 		//INC355752 - add attachment to case after submission
 		if(isNoticeOfChange) {
-			attachNOCFormToCase(newCase.Id, isBankAccountChange);
+			attachNOCFormToCase(newCase.Id, isBankAccountChange, isCNSAgency);
 		}
 
 		try {
@@ -3952,8 +3964,14 @@ public without sharing class ISSP_AMS_Accreditation {
 		upsert ownersCopy;
 	}
 
-	private static void attachNOCFormToCase(Id caseId, Boolean isBankAccountChange) {
-		PageReference pdfNOC = new Pagereference('/ISSP_AMS_PDF_NoC?caseId=' + caseId + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange);
+	private static void attachNOCFormToCase(Id caseId, Boolean isBankAccountChange, boolean isCNSAgency) {
+		String pageToRedirect = '';
+		if(isCNSAgency){
+			pageToRedirect = '/ISSP_AMS_PDF_NoC_CNS?caseId=';
+		}else{
+			pageToRedirect = '/ISSP_AMS_PDF_NoC?caseId=';
+		}
+		PageReference pdfNOC = new Pagereference(pageToRedirect + caseId + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange);
 		Blob bodyNOC;
 
 		try {
@@ -6148,11 +6166,14 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		Map<String, String> folderMap = getMapAmazonFileIdentifiers();
-
 		for (AMS_Accreditation_Requirement__c thisReq : List_CountryReqments) {
 			if (thisReq.File_to_Upload__c == 'Mandatory') {
 				if (!folderMap.containsKey(thisReq.File_Identifier2__c)) {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload + ' ' + thisReq.Name));
+					if(isCNSAgency){
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload_CNS + ' ' + thisReq.Name));
+					}else{
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload + ' ' + thisReq.Name));
+					}
 
 					if (thisReq.File_Identifier2__c == AMS_Utils.CGO_SIGNED_CONTRACT || thisReq.File_Identifier2__c == AMS_Utils.NOC_SIGNED_CONTRACT) {
 						redirectToStepE = true;
@@ -6437,17 +6458,48 @@ public without sharing class ISSP_AMS_Accreditation {
 									AND CASS_contact__c = true];
 
 
-		if(isCNSAgency && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
+		if(isCNSAgency){
 			Boolean haveOneFinancialAssessmentContact = false;
 			for(AMS_Accreditation_Contact__c aac: List_AgencyContacts){
 				if(aac.Financial_Assessment_Contact__c){
 					haveOneFinancialAssessmentContact = true;
 				}
 			}
-			if(!haveOneFinancialAssessmentContact){
+			if(!haveOneFinancialAssessmentContact && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Required_Financial_Assessment_Contact));
+				errorFound = true;
 			}
-		}							
+
+			Integer numberOfOffices = 0;
+			Integer numberOfWarehouse = 0;
+			Id rtIdOff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office');
+			Id rtIdWar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse');
+			for(AMS_Facility__c af : facilityList){
+				if(af.recordTypeId == rtIdOff){
+					numberOfOffices++;
+				}else if(af.recordTypeId == rtIdWar){
+					numberOfWarehouse++;
+				}
+			}
+
+			if(numberOfOffices == 0 && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_Office_Alert));
+				errorFound = true;
+			}
+			if(numberOfWarehouse == 0 && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_warehouse_Alert));
+				errorFound = true;
+			}
+			if(trainedStaffList.size() < 2 && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert));
+				errorFound = true;
+			}
+
+			if(trainedStaffList.size() < 1 && (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT)){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR));
+				errorFound = true;
+			}
+		}						
 
 		if (isNoticeOfChange && !isBankAccountChange) {
 			if (newform.Is_change_legal_name__c && newForm.Notify_Change_Legal_Details__c) {
@@ -6457,7 +6509,11 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 
 				if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
-					newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+					if(isCNSAgency){
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
+					}else{
+						newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+					}
 					errorFound = true;
 				}
 			}
@@ -7229,8 +7285,17 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (!validateBROfficeDetails())
 				errorFound = true;
 
-			if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
-				newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+			if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_IP) {
+				if(isCNSAgency){
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
+				}else{
+					newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+				}
+				errorFound = true;
+			}
+			
+			if(isCNSAgency && newForm.Branch_Office_Phone__c == null){
+				newForm.Branch_Office_Phone__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
 
@@ -7391,14 +7456,32 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		if(isCNSAgency && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO)){
-			Boolean haveContact = false;
+			Boolean haveSecurityContact = false;
+			Boolean havePortalAdministrator = false;
+			Boolean haveInvoicingContact = false;
 			for(AMS_Accreditation_Contact__c acc: List_AgencyContacts){
-				if(acc.Security_Contact__c || acc.Authorised_signatory__c || acc.Portal_administrator__c || acc.Invoicing_Contact__c){
-					haveContact = true;
+				if(acc.Security_Contact__c){
+					haveSecurityContact = true;
 				}
+				if(newForm.ISSP_AMS_Portal_admin__c != null){
+					havePortalAdministrator = true;
+				}
+				if(newForm.ISSP_AMS_Invoicing_Contact__c != null){
+					haveInvoicingContact = true;
+				}
+				
 			}
-			if(!haveContact){
+			if(!haveSecurityContact){
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Contact_Required));
+				errorFound = true;
+			}
+			if(!havePortalAdministrator){
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.SSP_AMS_CNS_Portal_Admin_Required));
+				errorFound = true;
+			}
+			if(!haveInvoicingContact){
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Invoicing_Contact_Required));
+				errorFound = true;
 			}
 		}else{
 
@@ -7422,10 +7505,18 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (!(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
 			if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
 				if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship') {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'SECTIONS 2.1 PEOPLE - Please ensure that the % Total Ownership equals 100%.'));
+					if(isCNSAgency){
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Error_Message_Section_3_Ownership));
+					}else{
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'SECTIONS 2.1 PEOPLE - Please ensure that the % Total Ownership equals 100%.'));
+					}
 				}
 				else {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'SECTIONS 2.1 PEOPLE & 2.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.'));
+					if(isCNSAgency){
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Error_Message_Section_3_Ownership));
+					}else{
+						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'SECTIONS 2.1 PEOPLE & 2.2 COMPANIES - Please ensure that the % Total Ownership equals 100%.'));
+					}
 				}
 
 				errorFound = true;
@@ -7455,7 +7546,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
-			newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+			if(isCNSAgency){
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
+			}else{
+				newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
+			}
 			errorFound = true;
 		}
 
@@ -7575,11 +7670,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		if (hlpMap.containsKey('FIN_CONTACT')) {
-			txtHelpFinContact = (String) hlpMap.get('FIN_CONTACT').get(fldName);
+			txtHelpFinContact = isCNSAgency ? Label.ISSP_AMS_CNS_FIN_Contact_Help : (String) hlpMap.get('FIN_CONTACT').get(fldName);
 		}
 
 		if (hlpMap.containsKey('PORTAL_ADMIN')) {
-			txtHelpPortalAdmin = (String) hlpMap.get('PORTAL_ADMIN').get(fldName);
+			txtHelpPortalAdmin = isCNSAgency ? Label.ISSP_AMS_CNS_Portal_Admin_Help : (String) hlpMap.get('PORTAL_ADMIN').get(fldName);
 		}
 
 		if (hlpMap.containsKey('GROSS_SALES')) {

@@ -367,7 +367,7 @@
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
-                                    <strong>{!$Label.ISSP_AMS_Agency_Accreditation}</strong>
+                                    <strong>{!IF(isCNSAgency, $Label.ISSP_AMS_Agency_Endorsement, $Label.ISSP_AMS_Agency_Accreditation)}</strong>
                                 </div>
                             </header>
                                 

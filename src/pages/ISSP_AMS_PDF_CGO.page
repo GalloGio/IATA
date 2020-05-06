@@ -75,7 +75,7 @@
     <body>
     
         <div class="header">
-            <div style="{!if(communityName=='CNS', 'text-align:center;', '')}"><apex:image height="{!if(communityName=='CNS', '70px', '')}" width="{!if(communityName=='CNS', '', '100%')}" value="{!IF(newlabels,URLFOR($Resource.AP_PDF_Header_FIATA),if(communityName=='CNS', URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header)))}"/></div> <!-- CNS UPDATE -->
+            <div style="{!if(OR(communityName=='CNS', isCNSAgency), 'text-align:center;', '')}"><apex:image height="{!if(OR(communityName=='CNS', isCNSAgency), '70px', '')}" width="{!if(OR(communityName=='CNS', isCNSAgency), '', '100%')}" value="{!IF(newlabels,URLFOR($Resource.AP_PDF_Header_FIATA),if(OR(communityName=='CNS', isCNSAgency), URLFOR($Resource.AP_PDF_Header_CNS), URLFOR($Resource.AP_PDF_Header)))}"/></div> <!-- CNS UPDATE -->
         </div>
           
          <center>
@@ -104,7 +104,7 @@
                         "$Label.ISSP_AMS_Month_None")}&nbsp;{!YEAR(TODAY())}
                      </td>
                     <td width="33%" align="center">
-                        <a href="{!IF(communityName=='CNS', 'http://www.cnsc.net', 'http://www.iata.org')}"> {!IF(communityName=='CNS', 'www.cnsc.net', 'www.iata.org')}</a> <!-- CNS UPDATE -->
+                        <a href="{!IF(OR(communityName=='CNS', isCNSAgency), 'http://www.cnsc.net', 'http://www.iata.org')}"> {!IF(OR(communityName=='CNS', isCNSAgency), 'www.cnsc.net', 'www.iata.org')}</a> <!-- CNS UPDATE -->
                     </td>
                     <td width="33%" align="right">
                         {!$Label.ISSP_Page} <span class="pagenumber"/> {!$Label.ISSP_of} <span class="pagecount"/>

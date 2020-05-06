@@ -250,7 +250,7 @@
                                                                       </apex:facet>
 
         <!-- basto1p -->
-        <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(f.fieldPath!='Portal_Case_Status__c',true,false)}" />
+        <apex:outputText value="{!if(AND(isCNSAgency, f.fieldPath == 'Type_of_case_Portal__c'), SUBSTITUTE(item[f.fieldPath], 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), item[f.fieldPath])}" rendered="{!IF(f.fieldPath!='Portal_Case_Status__c',true,false)}" />
 
         <!-- basto1p -->
         <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Case_Status__c',true,false)}">
@@ -427,19 +427,19 @@
                                                                   <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c != 'CNS Endorsement & Changes'}" >
                                                                     <apex:outputPanel rendered="{!IF(app.IsSCIMIFG__c,IF(app.Right__c=='Access Granted', IF(app.Technical_Provisioning_Status__c=='External Access Granted', true,false),false), IF(app.Right__c=='Access Granted', true,false))}" >
                                                                     <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',IF(communityName != null, app.Application_Start_URL__c+'?communityName='+communityName, app.Application_Start_URL__c))}">
-                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(app.PortalServiceTranslatedName__c, 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
+                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(SUBSTITUTE(app.PortalServiceTranslatedName__c, 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
                                                                     </a>
                                                                     </apex:outputPanel>
                                                                     <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
-                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(app.PortalServiceTranslatedName__c, 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
+                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(SUBSTITUTE(app.PortalServiceTranslatedName__c, 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
                                                                     </apex:outputPanel>
                                                                     <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
-                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(app.PortalServiceTranslatedName__c, 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
+                                                                      <h5>{!if(isCNSAgency, SUBSTITUTE(SUBSTITUTE(app.PortalServiceTranslatedName__c, 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
                                                                     </apex:outputPanel>
                                                                     </apex:outputPanel>
                                                                     <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c == 'CNS Endorsement & Changes'}" >
                                                                         <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
-                                                                            <h5>{!if(isCNSAgency, SUBSTITUTE(app.PortalServiceTranslatedName__c, 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
+                                                                            <h5>{!if(isCNSAgency, SUBSTITUTE(SUBSTITUTE(app.PortalServiceTranslatedName__c, 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), 'IATA', 'CNS'), app.PortalServiceTranslatedName__c)}</h5>
                                                                         </a>
                                                                     </apex:outputPanel>
                                                                     <!-- /temp for CNS -->
