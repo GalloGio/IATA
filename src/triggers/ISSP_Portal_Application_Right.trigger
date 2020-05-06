@@ -54,6 +54,13 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
 
+	//E&F APPS
+	EF_PortalApplicationRightHandler EF_handler = new EF_PortalApplicationRightHandler();
+	if (Trigger.isAfter && Trigger.isInsert) EF_handler.onAfterInsert();
+	if (Trigger.isAfter && Trigger.isUpdate) EF_handler.onAfterUpdate();
+	if (Trigger.isAfter && Trigger.isDelete) EF_handler.onAfterDelete();
+	//end of E&F APPS
+
 	if(Trigger.isDelete) {
 
 		Set<Id> disableContactIdSet = new Set<Id>();
