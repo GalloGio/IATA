@@ -3789,7 +3789,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
-        <label>主なカテゴリー</label>
+        <label>メインのカテゴリー</label>
         <name>CSP_MainCategories</name>
     </customLabels>
     <customLabels>
@@ -25187,11 +25187,11 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>csp_Basics_Section_label</name>
     </customLabels>
     <customLabels>
-        <label>今のところブックマークには何もない</label>
+        <label>現在ブックマークはありません。</label>
         <name>CSP_NoBookmarksText1</name>
     </customLabels>
     <customLabels>
-        <label>しかし、その際には、最新のものを基本的な詳細とともにこのエリアで見ることができます。</label>
+        <label>最新のものと詳細をこのエリアで見ることができます。</label>
         <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
