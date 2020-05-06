@@ -825,7 +825,14 @@
         try {
             if (str==null) return '';
             if (typeof str=='string' && str.trim()=='') return '';
-            var result = moment(str).format('D MMM YYYY');
+            var result;
+            var lang = "{!UserLanguage}";
+            if(lang == 'ja' || lang == 'ko'){
+                result= moment(str).format('LL');
+                }
+            else{
+                result= moment(str).format('D MMM YYYY');
+                }
             return result=='Invalid date'? str: result;
         }catch (e) {
             return str;
