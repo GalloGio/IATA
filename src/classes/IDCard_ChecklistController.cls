@@ -6,11 +6,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Boolean isCreditCardOptionActive {get; private set;}
 	public Boolean isCreditCardAndChequeOptionActive {get; private set;}
 
-	public Boolean isPictureOptionChecked {get; set;}
-	public Boolean isProofEmploymentOptionChecked {get; set;}
-	public Boolean isProofNameOptionChecked {get; set;}
-	public Boolean isCreditCardOptionChecked {get; set;}
-	public Boolean isPictureOptionRecurringChecked {get; set;}
 	public Boolean isCheckboxGeralOptionChecked {get; set;}
 	public Boolean isViewPopUpDisplayed {get; set;}
 	//public Boolean isCreditCardAndChequeOptionChecked {get;set;}
@@ -160,37 +155,11 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Pagereference next() {
 
 		try {
-/*
-			if (isPictureOptionActive && !isPictureOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'Picture'));
-				return null;
-			}
-/*			if (!isPictureOptionActive && !isPictureOptionRecurringChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'Picture'));
-				return null;
-			}
-			if (isProofEmploymentOptionActive && !isProofEmploymentOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'ProffEmpl'));
-				return null;
-			}
-
-			if (isProofNameOptionActive && !isProofNameOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'Name'));
-				return null;
-			}
-			if (isCreditCardOptionActive && !isCreditCardOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage + 'CreditCard'));
-				return null;
-			} */
 			if (!isCheckboxGeralOptionChecked) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage));
 				return null;
 			}
 
-			/*if(isCreditCardAndChequeOptionActive && !isCreditCardAndChequeOptionChecked) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage+ 'cehceck'));
-				return null;
-			}*/
 			Pagereference prApplicationForm = null;
 
 			// New Application

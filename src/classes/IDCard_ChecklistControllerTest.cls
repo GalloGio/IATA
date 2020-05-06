@@ -38,19 +38,13 @@ public class IDCard_ChecklistControllerTest{
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
 		Test.setCurrentPage (controllerPage);
-		// Testing New Application with a Picture Checkbox not checked
+		// Testing New Application with checkbox not checked
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = false;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
+		iDCard_ChecklistController.isCheckboxGeralOptionChecked = false; 
 		nextPage = iDCard_ChecklistController.next();
-		// Testing New Application with all checked
+		// Testing New Application with checkbox checked
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
+		iDCard_ChecklistController.isCheckboxGeralOptionChecked = true;
 		nextPage = iDCard_ChecklistController.next();
 
 
@@ -62,68 +56,16 @@ public class IDCard_ChecklistControllerTest{
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
 		Test.setCurrentPage (controllerPage);
-		// Testing Replacement with a Proof of Employment not checked
+		// Testing Replacement with checkbox not checked 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = false;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
+		iDCard_ChecklistController.isCheckboxGeralOptionChecked = false; 
 		nextPage = iDCard_ChecklistController.next();
-		// Testing Replacement with with all checked
+		// Testing Replacement with checkbox checked
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
+		iDCard_ChecklistController.isCheckboxGeralOptionChecked = true;
 		nextPage = iDCard_ChecklistController.next();
 		nextPage = iDCard_ChecklistController.back();
-		// Set Page parameters and call Next function
-		controllerPage.setCookies(new Cookie[]{languageCookies});
-		controllerPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].Id));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_RENEWAL));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
-		Test.setCurrentPage (controllerPage);
-		// Testing Renewal with a Proof of Name not checked
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = false;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
-		nextPage = iDCard_ChecklistController.next();
-		nextPage = iDCard_ChecklistController.back();
-		// Testing Renewal with with all checked
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
-		nextPage = iDCard_ChecklistController.next();
-		nextPage = iDCard_ChecklistController.back();
-
-		// Set Page parameters and call Next function
-		controllerPage.setCookies(new Cookie[]{languageCookies});
-		controllerPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].Id));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_REISSUE));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
-		Test.setCurrentPage (controllerPage);
-		// Testing Reissue with Credit Card Information not checked
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = false;
-		nextPage = iDCard_ChecklistController.next();
-		nextPage = iDCard_ChecklistController.back();
-		// Testing Reissue with with all checked
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isPictureOptionChecked  = true;
-		iDCard_ChecklistController.isProofEmploymentOptionChecked  = true;
-		iDCard_ChecklistController.isProofNameOptionChecked  = true;
-		iDCard_ChecklistController.isCreditCardOptionChecked  = true;
-		nextPage = iDCard_ChecklistController.next();
-		nextPage = iDCard_ChecklistController.back();
+		
 		//Test LangItems, HasError and getErrMsg
 		iDCard_ChecklistController.getLangItems();
 
