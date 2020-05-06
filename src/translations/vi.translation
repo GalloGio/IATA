@@ -2812,7 +2812,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>đánh dấu của tôi</label>
+        <label>đánh dấu trang của tôi</label>
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
@@ -3788,7 +3788,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Nhưng hạng mục chinh</label>
+        <label>Những hạng mục chính</label>
         <name>CSP_MainCategories</name>
     </customLabels>
     <customLabels>
@@ -3848,7 +3848,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_NoBookmarksText1</name>
     </customLabels>
     <customLabels>
-        <label>Nhưng khi bạn có, bạn sẽ xem những cái gần đây nhất với các chi tiết cơ bản của chúng trong lĩnh vực này.</label>
+        <label>Nhưng khi bạn có, bạn sẽ xem được những trang gần đây nhất với thông tin cơ bản ở phần này.</label>
         <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>

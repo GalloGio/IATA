@@ -2813,7 +2813,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>Bookmark Saya</label>
+        <label>Penanda Halaman Saya</label>
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
@@ -3849,7 +3849,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_NoBookmarksText1</name>
     </customLabels>
     <customLabels>
-        <label>Tetapi ketika sudah, Anda akan melihat yang terbaru dengan detail dasar di area ini.</label>
+        <label>Apabila muncul, maka Anda akan dapat melihat yang terbaru dengan detail dasar di area ini.</label>
         <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
