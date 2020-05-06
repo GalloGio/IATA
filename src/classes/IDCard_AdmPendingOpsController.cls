@@ -592,7 +592,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
 				app.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
 				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, validPromotion, isToPrint);
-				app.CurrencyIsoCode = priceTable.CurrencyIsoCode;
 				app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
 				app.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
