@@ -636,6 +636,7 @@ public class AMS_AccountHierarchySelectionController {
 				if (isMulticountry && isOnlyGeBspLeft())
 					oscar.Change_of_Hierarchy_Scenario__c = AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE;
 				
+				oscar.MC_Hierarchy_Confirmation_Datetime__c  = Datetime.now();
 				update oscar;	
 				
 				//must be after save, to pass validations on the details
