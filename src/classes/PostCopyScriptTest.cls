@@ -187,28 +187,31 @@ public class PostCopyScriptTest {
 	}
 
 	@isTest
-	static void testUpdateNamedCredentials(){
-		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
+	static void testStartBatchSequence(){
 		Test.startTest();
+		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
 		PostCopyScript script = new PostCopyScript();
-		script.updateNamedCredentials();
+		script.startBatchSequence();
 		Test.stopTest();
 	}
 
 	@isTest
-	static void testDeleteConnectedApps(){
+	static void testUpdateNamedCredentialsBatch(){
 		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
 		Test.startTest();
-		PostCopyScript script = new PostCopyScript();
-		script.deleteConnectedApps();
+		updateNamedCredentialsBatch updateNamedCredentials = new updateNamedCredentialsBatch();
+		Database.executeBatch(updateNamedCredentials,10);
 		Test.stopTest();
 	}
 
 	@isTest
-	static void testDeleteScheduleDashboards(){
+	static void testDeleteConnectedAppsBatch(){
+		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
 		Test.startTest();
-		PostCopyScript script = new PostCopyScript();
-		script.deleteScheduleDashboards();
+		List<String> errorList = new List<String>();
+		errorList.add('ErrorTest');
+		deleteConnectedAppsBatch deleteConnectedApps = new deleteConnectedAppsBatch(errorList);
+		Database.executeBatch(deleteConnectedApps,10);
 		Test.stopTest();
 	}
 }
