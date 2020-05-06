@@ -120,12 +120,6 @@ public class ANG_RHCHelper {
 		Map<Id, String> isoCountries = new Map<Id, String>();
 		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
 
-		//NEWGEN-4881 - RHC amount effective from first day of next calendar period
-		Map<ID, List<Account>> mapBspIdAccountList = new Map<ID, List<Account>>();
-		Map<ID, Date> mapBillingPeriodPerAccount = new Map<ID, Date>();
-		Set<String> remittanceFrequencySet = new Set<String>();
-		//NEWGEN-4881-END
-
 		if(!accountsIds.isEmpty()){
 			for(Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Financial_Assessment_Points__c, ANG_RiskStatus__c,
 								Remittance_frequency__c, ANG_Accreditation_Model__c, (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
@@ -312,6 +306,7 @@ public class ANG_RHCHelper {
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
 		Decimal newValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newValue, 9999999999999999.99);
+		rhc.ANG_RHC_Amount__c = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newValue);
 	}
@@ -319,8 +314,6 @@ public class ANG_RHCHelper {
 	/**
 	* Calculates the RHC Amount Forecasted that will correspond
 	* to a percent of the financial security amount
-	* Also set the RHC Forecasted RHC Effedtive Date with the 1st billing period
-	* for the specific BSP country and remittance Frequency
 	*
 	* @param rhc: ANG_RHC_Information__c
 	* @param fsAmount: Decimal
