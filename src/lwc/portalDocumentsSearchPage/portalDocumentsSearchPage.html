@@ -38,7 +38,7 @@
                                 <div class="slds-col slds-size_1-of-1">
                                     <template for:each={categories} for:item="keyValue" for:index="keyValueIndex">
                                         <div key={keyValue.apiName}>
-                                            <c-portal-documents-category document-object={keyValue} onfilter={handleFilter} oncategoryfilter={categoryFilter}></c-portal-documents-category>
+                                            <c-portal-documents-category document-object={keyValue} onfilter={handleFilter} oncategoryfilter={categoryFilter} onshowcategory={showCategory}></c-portal-documents-category>
                                         </div>
                                     </template>
                                 </div>
