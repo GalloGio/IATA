@@ -288,11 +288,6 @@ public class ANG_RHCHelper {
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] exceedingFs: ' + exceedingFs);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] percentageOfExceedingFs: ' + percentageOfExceedingFs);
 
-		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
-		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
-
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
-
 		// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
 		// if that is not defined then we get the AMS Country Specific Attributes for the ww country (All countries)
 		// If the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
@@ -304,11 +299,21 @@ public class ANG_RHCHelper {
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] minimumRHCAmount: ' + minimumRHCAmount);
 
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
-		Decimal newValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
-		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newValue, 9999999999999999.99);
-		rhc.ANG_RHC_Amount__c = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
+		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
 
-		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newValue);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
+
+		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
+		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
+
+
+		Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+
+		Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
+		rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newRHCForecastedValue);
 	}
 
 	/**
