@@ -1,4 +1,4 @@
-public with sharing class subscriberListCtrl {
+public without sharing class subscriberListCtrl {
 
 
     //Retrieves list of the document subscribers
