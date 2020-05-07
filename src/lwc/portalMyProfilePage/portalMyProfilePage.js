@@ -45,12 +45,26 @@ export default class PortalMyProfilePage extends LightningElement {
         });
 
         getContactDetails().then(result => {
-            let contact = JSON.parse(JSON.stringify(result.contact));
-            contact.cardName   = result.cardName   !== undefined ? result.cardName   : undefined;
-            contact.cardPhoto  = result.cardPhoto  !== undefined ? result.cardPhoto  : undefined;
+            let contact = result.contact;
+			contact.cardName   = result.cardName   !== undefined ? result.cardName   : undefined;
+			contact.cardPhoto  = result.cardPhoto  !== undefined ? result.cardPhoto  : undefined;
             contact.cardNumber = result.cardNumber !== undefined ? result.cardNumber : undefined;
-            contact.cardDate   = result.cardDate   !== undefined ? result.cardDate   : undefined;
-            contact.cardStatus = result.cardStatus !== undefined ? result.cardStatus : undefined;
+            contact.cardDate = result.cardDate !== undefined ? result.cardDate : undefined;
+			contact.cardStatus = result.cardStatus !== undefined ? result.cardStatus : undefined;
+			contact.trainingUsername = result.trainingUsername !== undefined ? result.trainingUsername : undefined;
+			contact.trainingUserId = result.trainingUserId !== undefined ? result.trainingUserId : undefined;
+			contact.shippingCountryRef = result.shippingCountryRef !== undefined ? result.shippingCountryRef : undefined;
+			contact.shippingCountry = result.shippingCountry !== undefined ? result.shippingCountry : undefined;
+			contact.shippingStateRef = result.shippingStateRef !== undefined ? result.shippingStateRef : undefined;
+			contact.shippingState = result.shippingState !== undefined ? result.shippingState : undefined;
+			contact.shippingPostalCode = result.shippingPostalCode !== undefined ? result.shippingPostalCode : undefined;
+			contact.shippingPOBoxAddress = result.shippingPOBoxAddress !== undefined ? result.shippingPOBoxAddress : undefined;
+			contact.shippingCityRef = result.shippingCityRef !== undefined ? result.shippingCityRef : undefined;
+			contact.shippingCity = result.shippingCity !== undefined ? result.shippingCity : undefined;
+			contact.shippingStreet1 = result.shippingStreet1 !== undefined ? result.shippingStreet1 : undefined;
+			contact.shippingStreet2 = result.shippingStreet2 !== undefined ? result.shippingStreet2 : undefined;
+			contact.trainingId = result.trainingId !== undefined ? result.trainingId : undefined;
+			contact.additionalEmail = result.Additional_Email__c !== undefined ? result.Additional_Email__c : undefined;
 
             this.contactInfo = contact;
         });
@@ -90,11 +104,11 @@ export default class PortalMyProfilePage extends LightningElement {
                 mapOfValuesContactLocal.push({
                     'value': sectionMapContactLocal[i].lstFieldWrapper,
                     'key': sectionMapContactLocal[i].cardTitle,
-                    'showfunction': (sectionMapContactLocal[i].cardKey === 'Professional'),
-                    'isEditable': sectionMapContactLocal[i].isEditable,
-                    'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
-		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
-                    'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
+                    'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
+					'isEditable': sectionMapContactLocal[i].isEditable,
+					'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
+					'sectionKeyName': sectionMapContactLocal[i].cardKey,
+					'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
                 });
             }
 
