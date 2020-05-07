@@ -20,11 +20,15 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Origin NOT_IN, Phone_Redirected_to_Web__c IS_FALSE</value>
+        <value xsi:type="xsd:string">Origin NOT_IN, Owner &lt;&gt;</value>
     </values>
     <values>
         <field>Origin__c</field>
         <value xsi:type="xsd:string">IATA Internal User</value>
+    </values>
+    <values>
+        <field>Owner__c</field>
+        <value xsi:type="xsd:string">00520000001GoTQAA0</value>
     </values>
     <values>
         <field>Reason1__c</field>

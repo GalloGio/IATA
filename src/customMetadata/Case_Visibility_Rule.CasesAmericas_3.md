@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>CasesChinaNorthAsia_1</label>
+    <label>CasesAmericas_3</label>
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
@@ -20,17 +20,15 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Origin NOT_IN, Owner &lt;&gt;</value>
+        <value xsi:type="xsd:string">Phone_Redirected_to_Web__c =</value>
     </values>
     <values>
         <field>Origin__c</field>
-        <value xsi:type="xsd:string">Internal Case
-Voicemail
-IATA Internal User</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Owner__c</field>
-        <value xsi:type="xsd:string">00520000001GoTQAA0</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Reason1__c</field>
@@ -38,7 +36,7 @@ IATA Internal User</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>
-        <value xsi:type="xsd:string">01220000000Q36WAAS</value>
+        <value xsi:type="xsd:string">012200000000AQFAA2</value>
     </values>
     <values>
         <field>Status__c</field>
