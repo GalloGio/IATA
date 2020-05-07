@@ -2185,7 +2185,7 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
 
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
+		for (Contact con : [SELECT Id, Name, Email, IsEmailBounced, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
 			(SELECT Id, Portal_Application__r.Name FROM Portal_Application_Rights__r WHERE ANG_Portal_Service_Role__c = 'IEP Admin')
 			FROM Contact WHERE AccountId IN :accsMap.keySet()
 			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
@@ -2206,10 +2206,9 @@ global class ANG_OscarProcessHelper {
 				return null;
 			}
 
-
 			fieldsOfObject = new Map<String,Object>();
 			fieldsOfObject.put('Account_Concerned__c',acc.Id);
-				fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
+			fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
 			fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 			fieldsOfObject.put('Region__c',acc.Region_formula__c);
 			fieldsOfObject.put('CaseArea__c','Accreditation Process');
@@ -2219,7 +2218,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 			fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 
-			 	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+			Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
 			//assign to queue
 			if(!Test.isRunningTest()){
@@ -2237,22 +2236,21 @@ global class ANG_OscarProcessHelper {
 		}
 
 		if (!casesToInsert.isEmpty())
-		 		insert casesToInsert;
+		 	insert casesToInsert;
 
-		 	Set<Id> casesIds = new Set<Id>();
+		Set<Id> casesIds = new Set<Id>();
 		for (Case cse : casesToInsert){
 			casesIds.add(cse.Id);
 		}
 
-		 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
-		 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
-		 	}
+	 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+	 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+	 	}
 
 		//AMS_OSCAR__c:
 		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>();
 
 		for (Account acc : accs){
-
 			fieldsOfObject = new Map<String,Object>();
 			fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :(model == 'B+' ? AMS_Utils.IEPMODELBPLUSACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP))));
 			fieldsOfObject.put('Status__c','Open');
@@ -2265,39 +2263,28 @@ global class ANG_OscarProcessHelper {
 			accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
 
-
-
 		if(!oscarsToInsert.isEmpty())
 			insert oscarsToInsert;
 
-
 		OrgWideEmailAddress[] owea;
-
-
 		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-
 		List<Case> casesToUpdate = new List<Case>();
-
 
 		for (Account acc: accs){
 
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-
-
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
-
 
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
 
 		//sending email with url for portal
 		for (Account acc: accs){
-
-			if(model != 'B+') AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);
-
+			Contact accContact = accOscarObjsMap.get(acc.Id).con;
+			if(model != 'B+' && !accContact.IsEmailBounced && accContact.Email.indexOf('.inactive') == -1) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);
 		}
 		return oscarsToInsert;
 	}

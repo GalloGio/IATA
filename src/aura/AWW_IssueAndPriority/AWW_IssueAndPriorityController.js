@@ -30,5 +30,13 @@
             component.set('v.errorMessage', null);      
             helper.handleSave(component);            
         }
+    },  
+    cleanCheckboxes : function(component, event, helper) {
+        var cbs = component.find("amCheckbox");
+        var checkCmp1 = event.getSource();
+        for (var i = 0; i < cbs.length; i++) {
+            cbs[i].set("v.checked", false);
+        }
+        checkCmp1.set("v.checked", true);
     }
 })

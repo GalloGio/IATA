@@ -35099,6 +35099,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- User Provisioning Accounts --></description>
         <label><!-- User Provisioning Accounts --></label>
         <name>User_Provisioning_Accounts</name>

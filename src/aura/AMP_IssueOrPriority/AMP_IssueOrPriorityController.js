@@ -23,14 +23,8 @@
 		statusValues.push('Out Of Scope');
 
 		component.set("v.statusValues", statusValues);
-
-
     },
-    // delete : function(component, evt, helper) {
-    //   var issue = component.get("v.issue");
-    //   var deleteEvent = component.getEvent("deleteIssue");
-    //   deleteEvent.setParams({ "issue": issue }).fire();
-    // },
+
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
@@ -54,6 +48,16 @@
         helper.fillDivisionOptions(component, divisionValues, division);
 
     },
+
+    cleanCheckboxes : function(component, event, helper) {  
+        var cbs = component.find("amCheckbox"); 
+        var checkCmp1 = event.getSource();  
+        for (var i = 0; i < cbs.length; i++) {  
+            cbs[i].set("v.value", false);   
+        }   
+        checkCmp1.set("v.value", true); 
+    },
+
     cancelEditMode : function(component, event, helper) {
         var issue = component.get("v.issue");
         if(issue.Id === undefined) {
@@ -64,6 +68,7 @@
         }
         component.set("v.isEditMode", false);
     },
+
     deleteItem : function(component, event, helper) {
         // Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
 
@@ -104,6 +109,7 @@
         // Set the Id bound to the View
         cmp.set("v.issue", issue);
     },
+
     cancelEdit : function(component, event, helper) {
         var issue = component.get("v.issue");
 
@@ -116,6 +122,7 @@
         }
         component.set("v.isEditMode", false);
     },
+    
     HandleIssueOrPriorityError: function(component, event, helper) {
         var componentIndex = event.getParam("index");
         var issueId = event.getParam("issueId");
