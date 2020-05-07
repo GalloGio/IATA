@@ -383,6 +383,20 @@
         </div>
     </div>
 
+    <!--INVITE MODAL-->
+    <div if:true={showInviteModal} >
+        <c-portal-popup-container size="twoQuarters">
+            <span slot="modalHeader">
+                <span>{label.addNewUser}</span>
+            </span>
+
+            <span slot="modalBody">
+            <c-portal-invitation oncancel={cancelInvite}></c-portal-invitation>
+            </span>
+            
+        </c-portal-popup-container>
+    </div>
+
     <!-- FILTER MODAL -->
     <div if:true={viewServicesFiltersModal} >
         <c-portal-popup-container size="half">

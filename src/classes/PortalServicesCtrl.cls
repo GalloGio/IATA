@@ -853,11 +853,53 @@ public with sharing class PortalServicesCtrl {
 
 
 	@AuraEnabled
-	public static void requestAccess(string applicationId){
-		User userAux = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-	
-		//invokes request method, ignoring visibility
-		ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
+	public static void requestAccess(String applicationId, String applicationName){
+		User userAux = [SELECT ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Id = :UserInfo.getUserId()];
+
+		if(applicationName.equals('E&F APPS')){
+			List<Invitation__c> listInvitation = [SELECT Id, AccountId__c, AccountRoleId__c FROM Invitation__c WHERE Email__c =: userAux.Contact.Email ORDER BY CreatedDate DESC];
+			if(listInvitation.isEmpty()){
+				throw new portalServiceException('The user has no invitation for this service.');
+			} else {
+				List<String> errorsList = new List<String>();
+				
+				//create service access right Access Granted
+				ISSP_AvailableServices.newAppsRequest(applicationId, applicationName, userAux.ContactId);
+				//create Account Contact Role
+				Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
+				accountContactRole.Account__c = listInvitation[0].AccountId__c;
+				accountContactRole.Account_Role__c = listInvitation[0].AccountRoleId__c;
+				accountContactRole.Contact__c = userAux.ContactId;
+				accountContactRole.Service_Rendered__c = 'Other';
+				accountContactRole.Status__c = 'Active';
+				Database.SaveResult result = Database.insert(accountContactRole);
+				
+				if(result.getErrors().isEmpty()) {
+					//create E&F Contact Role Detail
+					E_and_F_Contact_Role_Detail__c contactRoleDetail = new E_and_F_Contact_Role_Detail__c();
+					contactRoleDetail.Contact_Role__c = accountContactRole.Id;
+					contactRoleDetail.CurrencyIsoCode = userAux.CurrencyIsoCode;
+					contactRoleDetail.E_F_Account_Role_Detail__c = accountContactRole.Id;
+					contactRoleDetail.RecordTypeId = SERVICE_ADMIN_EF_ID;
+					result = Database.insert(contactRoleDetail);
+					
+					if(!result.getErrors().isEmpty()) {
+						for(Database.Error error : result.getErrors()) {
+							errorsList.add(error.getMessage());
+						}
+						throw new portalServiceException(String.join(errorsList, '\n'));
+					}
+				} else {
+					for(Database.Error error : result.getErrors()) {
+						errorsList.add(error.getMessage());
+					}
+					throw new portalServiceException(String.join(errorsList, '\n'));
+				}
+			}
+		} else {
+			//invokes request method, ignoring visibility
+			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
+		}
 	}
 
 	private static void alignStatus(ServiceWrapper sw,string newStatus){

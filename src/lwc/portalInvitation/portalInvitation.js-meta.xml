@@ -6,6 +6,8 @@
 		<target>lightning__AppPage</target>
 		<target>lightning__RecordPage</target>
 		<target>lightning__HomePage</target>
+		<target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
 	</targets>
 	<description>
 		Renders a form to enter an email and select an account enabling the user to inivite another user to a service.

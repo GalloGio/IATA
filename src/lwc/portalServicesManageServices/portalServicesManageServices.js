@@ -228,6 +228,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track contactsToAdd = [];
     @track grantingAccess = false;
     @track canAddUsers = false;
+	@track showInviteModal = false;
 
     //IEP Rolelist
     @track roleList;
@@ -1076,6 +1077,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                     });
             }
+            if (this.serviceName.includes('E&F APPS')){
+                this.showInviteModal = this.isEFAdmin = this.isServiceAdmin;
+                this.showAddUserModal = !this.showAddUserModal;
+            }
         }
     }
 
@@ -1394,6 +1399,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
+	cancelInvite() {
+		this.showInviteModal = false;
+	}
+	
     cancelSecondLevelRegistration(){
         this.displaySecondLevelRegistrationPopup = false;
         this.displaySecondLevelRegistration = false;

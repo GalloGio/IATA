@@ -1,23 +1,36 @@
 <template>
-	<lightning-card title={title} icon-name="standard:record">
 		<div class="slds-m-around_medium">
 			<lightning-record-edit-form object-api-name="Invitation__c">
-				<lightning-input-field name="email" field-name="Email__c" value=""></lightning-input-field>
+				
+				<div class="customTextInput">
+					<lightning-input label="Email" role="textbox" class="textInput" field-name="Email__c" value="" onchange={handleChangeEvent}></lightning-input>
+				</div>
 				
 				<lightning-combobox name="accountRole"
-					label="Account Role"
+					label="Account"
 					value=""
-					placeholder="Select Account Role.."
+					placeholder="Select Account Role..."
 					options={accountRoles}
-					onchange={handleChange}>
+					onchange={handdleChange}>
 				</lightning-combobox>
-			
-				<!-- <lightning-input-field onchange={handleChange} field-name="AccountRoleId__c" value=""></lightning-input-field> -->
-				<lightning-input-field name="service" onchange={handleChange} field-name="ServiceId__c" value="" class="slds-hide"></lightning-input-field>
-				<div class="slds-m-around_medium">
-					<lightning-button label="Invite" variant="brand" onclick={createInvite}></lightning-button>
+				
+				<lightning-combobox name="role"
+					label="Role"
+					value=""
+					placeholder="Select Role..."
+					options={roles}
+					onchange={handdleChange}>
+				</lightning-combobox>
+				
+				<lightning-input-field field-name="ServiceId__c" value="" class="slds-hide"></lightning-input-field>
+				<div class="slds-m-top_medium slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+					<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+						<button type="button" class="containedButton fullWidth twoLines" onclick={createInvite}>Invite</button>
+					</div>
+					<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+						<button type="button" class="containedButton fullWidth twoLines" onclick={cancel}>Cancel</button>
+					</div>
 				</div>
 			</lightning-record-edit-form>
 		</div>
-	</lightning-card>
 </template>
