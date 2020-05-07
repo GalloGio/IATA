@@ -9,14 +9,10 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
 	}
 
 	global void execute(Database.BatchableContext BC, list<Contact>  scope) {
-		try {
-			for (Contact c : scope) {
-				c.SendIDCardRenewalNotice__c = true;
-			}
-			Update scope;
-		} catch (Exception e) {
-			System.debug(' IDCard_RenewalReminder_Batch  Error ' + e);
+		for (Contact c : scope) {
+			c.SendIDCardRenewalNotice__c = true;
 		}
+		Update scope;
 	}
 
 	global void finish(Database.BatchableContext BC) {}
