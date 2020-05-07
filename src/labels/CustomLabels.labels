@@ -46794,7 +46794,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
 		<language>en_US</language>
 		<protected>false</protected>
 		<shortDescription>CSP_Verification_L3_Email_UE_1_F4_LMS</shortDescription>
-		<value>Please click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
+		<value>Please &lt;b&gt;ensure that you are logged out from your IATA Customer Portal account&lt;/b&gt;, and then click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
 	</labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>

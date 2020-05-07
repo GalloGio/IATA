@@ -1,5 +1,12 @@
 import { LightningElement,track,api } from 'lwc';
 
+import RegistrationUtils                        from 'c/registrationUtils';
+
+import getContactInfo               	from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
+import validateFullName							from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateFullName';
+import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
+
 //custom labels
 import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS';
 import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
@@ -18,6 +25,20 @@ import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmati
 import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
+import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
+
+import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
+import CSP_Invalid_Email from '@salesforce/label/c.CSP_Invalid_Email';
+import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS';
+import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
+import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
+import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
+import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
+import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_VerificationToP3_LMS';
+import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
+import CSP_Close from '@salesforce/label/c.CSP_Close';
+import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
+
 
 export default class PortalRegistrationAddressInformationLMS extends LightningElement {
 
@@ -25,9 +46,33 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@api address;
 	@api countryId;
 	@api recordId;
+	@api contactId;
+	@api additionalEmail;
 	
 	@track localAddress;
+	@track localAdditionalEmail;
 	@track isSaving = false;
+	@track savedForm = 0;
+
+	@track errorMessage = ""; 
+	@track displayError = false;
+	@track displaySubmitError = false;
+	@track localContactInfo;
+	@track contactInfo;
+	@track userInfo = {}
+	@track messageFlow6;
+	@track messageFlow7;
+
+	@track isLoading = false;
+	@track lms;
+	@track existingUsernameVisibility = false;
+	@track existingPersonalUsernameVisibility = false;
+	@track existingUsernameNotMatchingF6Visibility = false;
+	@track validated = false;
+	@track isFullNameMatching = true;
+
+	@track openVerificationMailSuccessModal = false;
+	@track openVerificationMailSuccessModalLogOut = false;
 
 	// flag to enable/disable the "Next Step / Confirmation" button
 	@track isConfirmationButtonDisabled;
@@ -50,8 +95,22 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_L2_Next_Confirmation,
 		CSP_Next_LMS,
 		SaveLabel,
-		CancelLabel
+		CancelLabel,
+		CSP_L3_PersonalEmail_LMS,
+		CSP_Registration_Existing_User_Message_Not_Matching_F6,
+		CSP_Invalid_Email,
+		CSP_Registration_Existing_Work_Message_LMS,
+		CSP_L3_ExistingContact_LMS,
+		CSP_L3_VerificationMailTitle_LMS,
+		CSP_L2_VerificationToP1_LMS,
+		CSP_L2_VerificationToP2_LMS,
+		CSP_L2_VerificationToP3_LMS,
+		CSP_L2_RegistrationFailed_LMS,
+		CSP_Close,
+		CSP_LogOut
 	}
+
+
 	get labels() {
 		return this._labels;
 	}
@@ -60,8 +119,40 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	}
 
 	connectedCallback() {
+
+		this.lms = 'yas';
+
+		if(this.additionalEmail !== null && this.additionalEmail !== '' && this.additionalEmail != undefined){
+			this.validated = true;
+		}
+
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
+		this.localAdditionalEmail = this.additionalEmail;
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
+
+
+		// Retrieve Contact information
+		getContactInfo()
+			.then(result => {
+
+				this.localContactInfo = JSON.parse(JSON.stringify(result));
+				this.contactFound = this.contactInfo != null;
+
+				if(!this.contactFound){
+					return;
+				}
+
+				this.localContactInfo.lms = 'yas';
+				
+				this.localContactInfo.serviceid = this.serviceid;
+		})
+		.catch((error) => {
+			this.openMessageModalFlowRegister = true;
+			this.message = CSP_L2_RegistrationFailed_LMS + error;
+			console.log('Error1: ', error);
+			console.log('Error2: ', JSON.parse(JSON.stringify(error)));
+		})
+		
 	}
 
 	toCompanyInformation(){
@@ -90,11 +181,13 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	}
 
 	startLoading(){
-		this.dispatchEvent(new CustomEvent('startloading'));
+		// this.dispatchEvent(new CustomEvent('startloading'));
+		this.isLoading = true;
 	}
 
 	stopLoading(){
-		this.dispatchEvent(new CustomEvent('stoploading'));
+		// this.dispatchEvent(new CustomEvent('stoploading'));
+		this.isLoading = false;
 	}
 
 	@api
@@ -106,16 +199,16 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	}
 
 	closeModal() { 
-		console.log('closeModal!!');
 		this.dispatchEvent(new CustomEvent('closemodal'));
 	}
 
 	handleSubmit(event) {
-		console.log('handleSubmit!!');
 		this.isSaving = true;
 		
 		this.localAddress = JSON.parse(JSON.stringify(this.getAddressInformation() ));
-		console.log('this.localAddress:', this.localAddress);
+		let contactSubmit = {
+			'Additional_Email__c':''
+		};
 		let addressSubmit = {
 			'PO_Box_Address__c':'',
 			'Country_Reference__c':'',
@@ -130,6 +223,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			'Postal_Code__c':''
 		};
 
+		contactSubmit.Additional_Email__c = this.localAdditionalEmail;
 		addressSubmit.Country_Reference__c = this.localAddress.countryId; 
 		addressSubmit.Country__c = this.localAddress.countryName;
 		addressSubmit.State_Reference__c = this.localAddress.stateId;
@@ -140,24 +234,261 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		addressSubmit.Street2__c = this.localAddress.street2;
 		addressSubmit.Postal_Code__c = this.localAddress.zip;
 		addressSubmit.PO_Box_Address__c = this.localAddress.isPoBox === true ? this.localAddress.PO_Box_Address__c : '';
-		console.log('addressSubmit:', addressSubmit);
+		
 		this.template.querySelector('lightning-record-edit-form').submit(addressSubmit);
-		console.log('handleSubmit END!!');
+		
 	}
 	
 	handleSucess(event) {
-		console.log('handleSucess!!');
 		this.isSaving = false;
-		this.closeModal();
-		console.log('handleSucess END!!');
+
+		if(this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
+
+			this.localContactInfo.flow = this.flow;
+			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
+			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
+			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
+			this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
+			this.localContactInfo.Additional_Email__c = this.localAdditionalEmail;
+
+			//Move address info into ContactInfo
+			this.localContactInfo.isPoBox = this.localAddress.isPoBox;
+			this.localContactInfo.countryId = this.localAddress.countryId;
+			this.localContactInfo.countryCode = this.localAddress.countryCode;
+			this.localContactInfo.countryName = this.localAddress.countryName;
+			this.localContactInfo.stateId = this.localAddress.stateId;
+			this.localContactInfo.stateName = this.localAddress.stateName;
+			this.localContactInfo.cityId = this.localAddress.cityId;
+			this.localContactInfo.cityName = this.localAddress.cityName;
+			this.localContactInfo.street = this.localAddress.street;
+			this.localContactInfo.street2 = this.localAddress.street2;
+			this.localContactInfo.zip = this.localAddress.zip;
+
+			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
+
+			let notificationEmail = this.localAdditionalEmail;
+
+			sendSingleEmail({contactName: contactName,
+								emailAddr: notificationEmail,
+								flow:this.flow,
+								params : JSON.stringify(this.localContactInfo)})
+			.then(result => {
+				if(result.isSuccess == true){
+
+					this.openVerificationMailSuccessModal = true;
+					this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c + CSP_L2_VerificationToP2_LMS;
+					
+				}else{
+					this.openErrorModal = true;
+					if(result.message !== ''){
+						this.errorModalMessage = result.message;
+					}else{
+						this.errorModalMessage = CSP_L2_RegistrationFailed_LMS;
+					}
+				}
+				this.stopLoading();
+			})
+			.catch(error => {
+				console.log('Error: ', JSON.parse(JSON.stringify(error)));
+				this.openErrorModal = true;
+				this.errorModalMessage = JSON.parse(JSON.stringify(error));
+				this.stopLoading();
+			});
+		}
+
+		//this.closeModal();
+	
     }
 
     handleError(event) {
 		this.isSaving = false;
-		console.log('handleError - event: ', event);
     }
 
     onRecordSubmit(event) {
 		this.isSaving = true;
-    }
+	}
+	
+	handleFieldChange(event){
+		this.localAdditionalEmail = event.target.value;
+		this.validated = false;
+		this.existingPersonalUsernameVisibility = false;
+		this.existingUsernameVisibility = false;
+		this.existingUsernameNotMatchingF6Visibility = false;
+	}
+
+	button1Action(){
+		this.closeModal();
+	}
+
+	next(){
+
+		if(this.validated === true){
+			//this.dispatchEvent(new CustomEvent('Submit'));
+			this.handleSubmit();
+		}else{
+
+			let auxEmail = this.localAdditionalEmail;
+
+			const RegistrationUtilsJs = new RegistrationUtils();
+	
+			if(auxEmail !== '' && this.validated === false){
+
+				this.flow = 'flow5';
+
+				this.startLoading();
+				RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
+					if(result == false){
+						//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+						this.isLoading = false;
+					}else{
+						let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
+						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
+							if(result2 === 'true'){
+							//todo:disposable email alert!
+								//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+								this.stopLoading();
+							}else{
+								//todo:check if the email address is associated to a contact and/or a user
+								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
+								//but the "E-Mail" field is pre-populated and, by default, not editable.
+								//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
+								//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
+								//button is displayed on the form.
+								// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
+
+								getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
+
+									var userInfo = JSON.parse(JSON.stringify(result3));
+									this.userInfo = userInfo;
+												
+									if(userInfo.hasExistingContact == true){
+											if(this.flow === 'flow5'){
+												this.flow = 'flow6';
+											}
+
+											console.log('Going to validate Full Name');
+											//validate the 60% on the name comparison
+											validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
+												.then(result4 => {
+													if(result4 === 'not_matching'){
+														this.isFullNameMatching = false;
+														if(this.flow === 'flow6'){
+															this.existingUsernameNotMatchingF6Visibility = true;
+														}
+													}else if(result4 === 'existing_user'){
+														this.isFullNameMatching = true;
+														this.existingUsernameVisibility = true;
+														this.localContactInfo.existingContactId = userInfo.contactId;
+														this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+														this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+														this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+														this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+														this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+														this.localContactInfo.existingContactName = userInfo.existingContactName;
+														this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+														this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+														
+														this.messageFlow6 = CSP_Registration_Existing_Work_Message_LMS;
+														this.messageFlow6 = this.messageFlow6.replace('[Email]',this.localContactInfo.Email);
+													}
+												})
+												.catch((error) => {
+													this.stopLoading();
+													console.log('Error: ', JSON.parse(JSON.stringify(error)));
+													console.log('Error: ', error);
+												});
+
+											this.stopLoading();
+										// }
+									}else{
+										if(userInfo.hasExistingContactPersonalEmail == true){
+											
+												if(this.flow === 'flow5'){
+													this.flow = 'flow7';
+												}
+
+												//validate the 60% on the name comparison
+												validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
+												.then(result4 => {
+												
+													if(result4 === 'not_matching'){
+														this.isFullNameMatching = false;
+														this.existingUsernameNotMatchingF6Visibility = true;
+														
+													}else if(result4 === 'existing_user'){
+														this.isFullNameMatching = true;
+														this.existingPersonalUsernameVisibility = true;
+														this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+														this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+														this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+														this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+														this.localContactInfo.existingContactId = userInfo.existingContactId;
+														this.localContactInfo.existingContactName = userInfo.existingContactName;
+														this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+														this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+
+														this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+														this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+														this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+														this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+														this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+													}
+												})
+												.catch((error) => {
+													this.stopLoading();
+													console.log('Error: ', JSON.parse(JSON.stringify(error)));
+												});
+												this.stopLoading();
+											// }
+											//Send Verification email
+											//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+											this.stopLoading();
+										}else{
+
+											this.stopLoading();
+											this.localContactInfo.flow = this.flow;
+
+											// this.dispatchEvent(new CustomEvent('Submit'));
+											this.handleSubmit();
+										}
+									}
+									this.validated = true;
+								})
+								.catch(error => {
+									console.log('Error: ', JSON.parse(JSON.stringify(error)));
+									console.log('Error: ', error);
+									this.stopLoading();
+									
+								});
+							}
+						});
+					}
+				});
+			}else{
+				this.localContactInfo.flow = this.flow;
+				// this.dispatchEvent(new CustomEvent('Submit'));
+				this.handleSubmit();
+			}
+			
+		}
+		this.localContactInfo.flow = this.flow;
+	}
+
+	/* ==============================================================================================================*/
+	/* Helper Methods
+	/* ==============================================================================================================*/
+
+
+	_showEmailValidationError(state, message){
+		var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
+		this.errorMessage = message;
+		this.displayError = state;
+
+		if(state == true){
+			emailDiv.classList.add('slds-has-error');
+		}else{
+			emailDiv.classList.remove('slds-has-error');
+		}
+	}
+
 }

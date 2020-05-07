@@ -99,6 +99,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactName{get;set;}
 		public String existingContactEmail{get;set;}
 		public String existingContactAdditionalEmail{get;set;}
+		public Boolean hasExistingContactPersonalEmail{get;set;}
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
 		public String emailConfirmationTemplate{get;set;}
@@ -308,7 +309,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		userInfo.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
 
 		/*LMS YAS check for existing contact/user based on additional email field*/
-		if(!userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
+		//if(!userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
+		if(!userInfo.hasExistingContact){
 			List<Contact> contactPersonalEmailList = returnExistingContactAdditionalEmail(email);//TODOMAC: get the contact having training records
 			userInfo.hasExistingContactPersonalEmail = contactPersonalEmailList.size() > 0 ? true : false;
 			if(!contactPersonalEmailList.isEmpty()){
@@ -326,7 +328,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				}
 			}
 
-		}else if(userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
+		// }else if(userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
+		}else if(userInfo.hasExistingContact){
 			userInfo.existingContactId = conList.get(0).Id;
 			userInfo.existingContactName = conList.get(0).Name;
 			userInfo.existingContactEmail = conList.get(0).Email;
@@ -338,7 +341,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
+		// if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
+		if(userInfo.existingContactId != null){
 			List<Training_Contact_Role_Details__c> contactTrainingInfo = returnExistingContactTrainingInfo(userInfo.existingContactId);
 			if(!contactTrainingInfo.isEmpty()){
 				userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
@@ -453,7 +457,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 		}
 
-		if(params.existingContactName != null && params.existingContactName != ''){
+		if(params.existingContactName != null && params.existingContactName != '' && params.hasExistingContactPersonalEmail){
 			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
 		}else{
 			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
@@ -519,6 +523,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactName = (userInfoMap.get('existingContactName') != null) ? string.valueOf(userInfoMap.get('existingContactName')) : '';
 			params.existingContactEmail = (userInfoMap.get('existingContactEmail') != null) ? string.valueOf(userInfoMap.get('existingContactEmail')) : '';
 			params.existingContactAdditionalEmail = (userInfoMap.get('existingContactAdditionalEmail') != null) ? string.valueOf(userInfoMap.get('existingContactAdditionalEmail')) : '';
+			params.hasExistingContactPersonalEmail = (userInfoMap.get('hasExistingContactPersonalEmail') != null) ? Boolean.valueOf(userInfoMap.get('hasExistingContactPersonalEmail')) : false;
+			
 			params.existingContactAccount = (userInfoMap.get('existingContactAccount') != null) ? string.valueOf(userInfoMap.get('existingContactAccount')) : '';
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
@@ -566,6 +572,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//Create User
 			OneIdUtils.Mode mode = OneIdUtils.MODE.CSP;
 			NewUserDetail usr = createNewUser(con, string.valueOf(mode), con.Preferred_Language__c, null, false, true);
+			system.debug('usr: ' + usr);
 			if(usr.userId!= null) {
 				Database.rollback(sp);
 				result.isSuccess = true;
@@ -1398,5 +1405,5 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				update userList;
 		}
 	}
-
+	
 }

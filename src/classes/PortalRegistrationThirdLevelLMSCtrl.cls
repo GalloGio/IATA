@@ -514,6 +514,22 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				extraValues.add(contactInfo.street2);
 				extraValues.add(contactInfo.existingTrainingId);
 
+				//Need to liberate the additional email 1st to empty in order not to give duplicate error
+				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
+														AccountId,Email,Additional_Email__c,Phone,
+														OtherPhone,Salutation,Birthdate
+												FROM Contact WHERE Id = :contactInfo.existingContactId];
+
+				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
+				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
+				conToInactivate.Email = conToInactivate.Email + '.inactive';
+				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+					conToInactivate.Additional_Email__c = '';
+				}
+
+				conToInactivate.status__c = 'Inactive';
+				update conToInactivate;
+
 				RegistrationResult regRes = registration(con, extraValues);
 
 				Set<String> contIds = new Set<String>();
@@ -593,27 +609,16 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						update ycd;
 					}
 
-					Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-														AccountId,Email,Additional_Email__c,Phone,
-														OtherPhone,Salutation,Birthdate
-												FROM Contact WHERE Id = :contactInfo.existingContactId];
-
-					conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-					conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
-					conToInactivate.Email = conToInactivate.Email + '.inactive';
-					if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-						conToInactivate.Additional_Email__c = '';
-					}
-
-					conToInactivate.status__c = 'Inactive';
-					update conToInactivate;
-
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
 					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
+				}else{
+					regRes.isSuccess = false;
+					regRes.message = 'An Error Occured! Regitration Not Completed!';
+					Database.rollback(sp);
 				}
 				return regRes;
 			}
