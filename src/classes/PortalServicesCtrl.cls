@@ -8,6 +8,7 @@ public with sharing class PortalServicesCtrl {
 	Public static final String PORTAL_USER_APPROVED='Approved User';
 	Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 	Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
+	public static final String SERVICE_ADMIN_EF_ID = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Service_Admin');
 
 	public class portalServiceException extends Exception {}
 
@@ -534,42 +535,38 @@ public with sharing class PortalServicesCtrl {
 	@AuraEnabled (cacheable=false)
 	public static ServiceWrapper getServiceDetails(string serviceId){
 
-		ServiceWrapper temp = null;
+		ServiceWrapper serviceDetails = null;
+		User user = [SELECT Id,ContactId, Contact.Account.ANG_IEP_Status_FF__c, Contact.Preferred_Language__c,LastLoginDate FROM User WHERE Id =: Userinfo.getUserId()];
+		String contactId = user.ContactId;
+		String iepStatus = user.Contact.Account.ANG_IEP_Status_FF__c;
+		Boolean isAdmin = PortalServicesCtrl.isPortalAdminUser();
+		Contact contAcc = AMS_Utils.getIEPContact(contactId);
+		Boolean isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);
 
-		//use all salesforce logic and the custom settings logic to get the services and filter by the requested service
-		List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
-		for(ServiceWrapper serviceWrapperAux : lstAllServices) {
-			if(serviceWrapperAux.recordService.id == serviceId) {
-				serviceWrapperAux.userContactId=DAL_ISSP.getUser(UserInfo.getUserId()).contactId; //Adds user contact to wrapper
+		PortalApplications_Sel portalApplicationsSelector = new PortalApplications_Sel();
+		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
 
-				if(serviceWrapperAux.addUsersEnable) {
-					serviceWrapperAux.totalNrContacts =PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
-				}
-				temp= serviceWrapperAux;
+		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
+
+			PortalApplicationRight_Sel portalApplicationRightSelector = new PortalApplicationRight_Sel();
+			List<Portal_Application_Right__c> userGrantedList = portalApplicationRightSelector.getPortalApplicationRightsByContactIdAndServiceId(contactId, serviceId);
+
+			for(Portal_Application_Right__c accessAux : userGrantedList) {
+
+				serviceDetails = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, user, true);
+				serviceDetails.portalApplicationRightId = accessAux.Id;
+				serviceDetails.isFavorite = accessAux.Is_Favorite__c;
 			}
+
+			if(serviceDetails == null){
+				serviceDetails = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user, true);
+			}
+
+			if(serviceDetails.addUsersEnable)
+				serviceDetails.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
 		}
 
-		User user = [select Id,ContactId, Contact.Preferred_Language__c,LastLoginDate from User where Id=:Userinfo.getUserId()];
-
-		//if user is admin and does not have access to this service, it's ok to retrieve anyway
-		if(PortalServicesCtrl.isPortalAdminUser() && temp == null){
-			User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c FROM User WHERE Id = :UserInfo.getUserId()];
-			String contactId = userAux.ContactId;
-			String iepStatus = userAux.Contact.Account.ANG_IEP_Status_FF__c;
-			Boolean isAdmin = PortalServicesCtrl.isPortalAdminUser();
-			Contact contAcc = AMS_Utils.getIEPContact(contactId);
-			Boolean isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);
-
-			PortalApplications_Sel portalApplicationsSelector = new PortalApplications_Sel();
-			List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
-	
-			if(lstServicesAux != null && !lstServicesAux.isEmpty()){
-				temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user, true);
-				temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
-			}
-		}
-
-		return temp;
+		return serviceDetails;
 	}
 
 	//returns the total number of contacts for that service
@@ -747,7 +744,7 @@ public with sharing class PortalServicesCtrl {
 		}
 	}
 
-	public class ServiceWrapper {
+	public without sharing class ServiceWrapper {
 		@AuraEnabled
 		public string status {get; set;}
 		@AuraEnabled
@@ -764,6 +761,8 @@ public with sharing class PortalServicesCtrl {
 		public boolean useDefaultRole {get; set;}
 		@AuraEnabled
 		public boolean isAdmin {get; set;}
+		@AuraEnabled
+		public boolean isServiceAdmin {get; set;}
 		@AuraEnabled
 		public boolean addUsersEnable {get; set;}
 		@AuraEnabled
@@ -792,14 +791,19 @@ public with sharing class PortalServicesCtrl {
 			this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(recordService.name);
 			this.status = status;
 			this.isAdmin=isAdmin;
+			this.isServiceAdmin = false;
+			String contactId = String.valueOf(user.ContactId).left(15); //to be sure that it as the same length as the formula field
+			if(recordService.Name.equals('E&F APPS')){
+				List<E_and_F_Contact_Role_Detail__c> serviceList = [SELECT Id FROM E_and_F_Contact_Role_Detail__c WHERE Contact_Id__c =: contactId AND ContactFunctionalRole__c = 'E&F' AND RecordTypeId =: PortalServicesCtrl.SERVICE_ADMIN_EF_ID];
+				this.isServiceAdmin = !serviceList.isEmpty();
+			}
 			this.iepStatus=iepStatus;
 			this.isAuthorisedSignatory=isAuthorisedSignatory;
 			if(this.isEasyPayService) {
 				this.addUsersEnable = isAdmin;
 				this.accountNotOpenError = (iepStatus != ANG_ISSP_PortalServiceHelper.STATUS_OPEN);
 			} else {
-				//	this.addUsersEnable = !recordService.Cannot_be_managed_by_portal_admin__c;
-				this.addUsersEnable =  isAdmin;
+				this.addUsersEnable = recordService.Name.equals('E&F APPS') ? isServiceAdmin : isAdmin;
 				this.accountNotOpenError = false;
 			}
 
@@ -1398,8 +1402,10 @@ public with sharing class PortalServicesCtrl {
 
 		if(!portalServices.isEmpty()){
 			Boolean isEasyPay = portalServices[0].Name.contains('IATA EasyPay');
+			Boolean isEAndF = portalServices[0].Name.equals('E&F APPS');
 
-			Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == false || isEasyPay;
+			Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == false || isEasyPay || isEAndF;
+		
 
 			return isAdmin && canManage;
 		}
