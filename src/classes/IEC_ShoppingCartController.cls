@@ -17,7 +17,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		return 	vfOrder.orderItems == null || vfOrder.orderItems.size() == 0;
 	}set;}
 
-	public Boolean bAreProductsCompliant { get; set; }
+	public Boolean isCountryCompliant { get; set; }
 
 
 	public String cartProducts {get;set;}
@@ -117,7 +117,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 		//-- Validate country compliance
 		validateCountryCompliance();
-		if (! bAreProductsCompliant){
+		if (!isCountryCompliant){
 			return null;
 		}
 		//addErrorMessage(labels.get('msgErrorCartNotCompliant'));
@@ -189,7 +189,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 
 			validateCountryCompliance();
-			if (! bAreProductsCompliant){
+			if (!isCountryCompliant){
 				return null;
 			}
 
@@ -227,7 +227,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 
 			validateCountryCompliance();
-			if (! bAreProductsCompliant){
+			if (!isCountryCompliant){
 				return null;
 			}
 
@@ -245,7 +245,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		 **************************************************************************************************************/
 	public PageReference continueShopping()
 	{
-		if (! bAreProductsCompliant)
+		if (!isCountryCompliant)
 		{
 			addErrorMessage(labels.get('msgErrorCartNotCompliant'));
 			return null;
@@ -327,7 +327,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 		//-- Validate all product in cart are compliant
 		validateCountryCompliance();
-		if(!bAreProductsCompliant)
+		if(!isCountryCompliant)
 		{
 			//addErrorMessage(labels.get('msgErrorCartNotCompliant'));
 			return null;
@@ -355,49 +355,11 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			return ref;
 	}
 
-	/**************************************************************************************************************
-		 *  validateCountryCompliance: method to validate if all the products in the cart are country compliant       *
-		 *  Author: David Daboué  - Samy Saied                                                                        *
-		 **************************************************************************************************************/
 	public void validateCountryCompliance()
 	{
-		List<Id> productIds = new List<Id>();
-		for(OrderItem_DTO oi : vfOrder.orderItems)
-			productIds.add(oi.productId);
-
-
-		Set<String> countryCodes = new Set<String>();
-
-		if(loggedCustomer != null)
-		{
-			if (!String.isBlank(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c);
-			if (!String.isBlank(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c);
-		}
-
-		Map<Id, Boolean> mapProduct2Id_Compliance = Product_Svc.IsProductAndCountryCompliant(productIds, countryCodes);
-
-		bAreProductsCompliant = true;
-
-				if (!mapProduct2Id_Compliance.isEmpty())
-				{
-					for (Id idProduct : mapProduct2Id_Compliance.keySet())
-					{
-						for (OrderItem_DTO oi : vfOrder.orderItems)
-						{
-							if (idProduct == oi.productId) {
-								// If product is compliant, then move to the next one
-								if (mapProduct2Id_Compliance.get(idProduct)) {
-									oi.IsCompliant = true;
-								}
-								else {
-									oi.IsCompliant = false;
-									bAreProductsCompliant = false;
-									addErrorMessage(String.format(labels.get('msgErrorProductNotCompliant'), new String[]{oi.productName, oi.productCode}));
-								}
-						break;
-							}
-						}
-					}
+		isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{vfOrder.billToAddress.countryCode,vfOrder.shipToAddress.countryCode});
+		if(!isCountryCompliant){
+			addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 		}
 	}
 

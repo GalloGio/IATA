@@ -191,41 +191,19 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		};
 	}
 
-	/**************************************************************************************************************
-		 *  validateCountryCompliance: method to validate that all the products in customer's cart  				  *
-		 *		are country compliant 																				  *
-		 *  Author: David Daboué                                                                                      *
-		 **************************************************************************************************************/
 	public void validateCountryCompliance()
 	{
-		List<Id> productIds = new List<Id>();
-			for (OrderItem_DTO oi : vfOrder.orderItems) productIds.add(oi.productId);
-
-		Map<Id, Boolean> mapProduct2Id_Compliance = Product_Svc.IsProductAndCountryCompliant(productIds, new Set<String>{vfOrder.billToAddress.countryCode});
-
-		Map<String, String> labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
-		Boolean bAreProductsCompliant = true;
-				if (!mapProduct2Id_Compliance.isEmpty()) {
-					for (Id idProduct : mapProduct2Id_Compliance.keySet()) {
-						// display error message with product name/number
-						for (OrderItem_DTO oi : vfOrder.orderItems) {
-							if (idProduct == oi.productId) {
-								if (!mapProduct2Id_Compliance.get(idProduct)) {
-									bAreProductsCompliant = false;
-							addErrorMessage(String.format(labels.get('msgWarnProductNotCompliant'), new String[]{oi.productName, oi.productCode}));
-								}
-						break;
-							}
-						}
-					}
+		Boolean isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{vfOrder.billToAddress.countryCode,vfOrder.shipToAddress.countryCode});
+		if(!isCountryCompliant){
+			addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 		}
 	}
 
 	/**************************************************************************************************************
-		 *  refreshBillToProvinces: method calls when customer change his countryto retrieve available states 		  *
-		 *  Author: David Daboué                                                                                      *
-		 **************************************************************************************************************/
-		 public String selectedStateCode{get;set;}
+	*  refreshBillToProvinces: method calls when customer change his countryto retrieve available states 		  *
+	*  Author: David Daboué                                                                                      *
+	**************************************************************************************************************/
+	public String selectedStateCode{get;set;}
 	public void refreshBillToProvinces()
 	{
 		//-- Update isRequiredField

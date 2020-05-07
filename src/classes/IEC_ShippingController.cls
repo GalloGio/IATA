@@ -3,7 +3,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 	public Order sfOrder{get;set;}
 	public Order_DTO vfOrder{get;set;}
 
-	public Boolean bAreProductsCompliant; //validate all products in the cart are country compliant
+	public Boolean isCountryCompliant;
 
 	public String updateItemId{get;set;}
 	//public OrderItem_DTO updateItem{get;set;}
@@ -299,7 +299,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 	 **************************************************************************************************************/
 	public PageReference generateQuote()
 	{
-		if (!bAreProductsCompliant)
+		if (!isCountryCompliant)
 		{
 			addErrorMessage(labels.get('msgErrorCartNotCompliant'));return null;
 		}
@@ -713,34 +713,11 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 		return addresses;
 	}
 
-
-	/**************************************************************************************************************
-	 *  validateCountryCompliance: method to validate that all the products in customer's cart                    *
-	 *      are country compliant                                                                                 *
-	 *  Author: Samy Saied                                                                                        *
-	 **************************************************************************************************************/
 	public void validateCountryCompliance()
 	{
-		List<Id> productIds = new List<Id>();
-		for (OrderItem_DTO oi : vfOrder.orderItems) productIds.add(oi.productId);
-
-		mapProduct2Id_Compliance = Product_Svc.IsProductAndCountryCompliant(productIds, new Set<String>{vfOrder.billToAddress.countryCode});
-
-
-		bAreProductsCompliant = true;
-		if (!mapProduct2Id_Compliance.isEmpty()) {
-			for (Id idProduct : mapProduct2Id_Compliance.keySet()) {
-				// display error message with product name/number
-				for (OrderItem_DTO oi : vfOrder.orderItems) {
-					if (idProduct == oi.productId) {
-						if (!mapProduct2Id_Compliance.get(idProduct)) {
-							bAreProductsCompliant = false;
-							addErrorMessage(String.format(labels.get('msgWarnProductNotCompliant'), new String[]{oi.productName, oi.productCode}));
-						}
-						break;
-					}
-				}
-			}
+		isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{vfOrder.billToAddress.countryCode,vfOrder.shipToAddress.countryCode});
+		if(!isCountryCompliant){
+			addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 		}
 	}
 
@@ -1256,7 +1233,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
 		//Validate Country COmplaince for Products in the cart
 		validateCountryCompliance();
-		if(!bAreProductsCompliant) return null;
+		if(!isCountryCompliant) return null;
 
 		//Validate Shipping Informations
 		if(!isShipToValid()) return null;

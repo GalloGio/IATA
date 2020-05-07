@@ -17,7 +17,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	public Boolean bIsOutOfStock{get;set;}
 	public Boolean bIsPreOrder{get;set;}
 	public Boolean bIsDirectSales{get;set;}
-	public Boolean bIsProductCompliant{get;set;}
+	public Boolean isCountryCompliant{get;set;}
 
 	public List<EComProduct_DTO> lstRelatedProducts {get;set;}
 
@@ -186,7 +186,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 			//Validate Product compliance
 			validateCountryCompliance();
-			if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+			if (!isCountryCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
 				addErrorMessage(labels.get('msgErrorProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
@@ -235,7 +235,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 		try
 		{
-			if (!bIsProductCompliant)
+			if (!isCountryCompliant)
 			{
 				System.debug('Product Is Not Compliant');
 
@@ -265,20 +265,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		}
 	}
 
-	/**************************************************************************************************************
-	 *  validateCountryCompliance: method call to validate that the current product is country compliant 		  *
-	 *  Author: Samy - David Daboué                                                                               *
-	 **************************************************************************************************************/
 	public void validateCountryCompliance()
 	{
-		Set<String> countryCodes = new Set<String>();
-
-		if(loggedCustomer != null)
-		{
-			if (!String.isBlank(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c);
-			if (!String.isBlank(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c);
-		}
-
-		bIsProductCompliant = Product_Svc.IsProductAndCountryCompliant(Product.ProductId, countryCodes);
+		isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c,loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c});
 	}
 }

@@ -407,6 +407,14 @@ public without sharing class IECUtil {
 		return mapResults;
 	}
 
+	public static Boolean validateCountriesCompliance(List<String> lstISOCode){
+		for (IATA_ISO_Country__c country : [SELECT Id, Is_Non_Compliant__c FROM IATA_ISO_Country__c WHERE ISO_Code__c in :lstISOCode]){
+			if(country.Is_Non_Compliant__c)
+				return false; 
+		}
+		return true;
+	}
+
 	public static List<String> GetCountryNameFromISOCode(List<String> lstISOCode) {
 		if (lstISOCode == null || lstISOCode.size() == 0) return null;
 
