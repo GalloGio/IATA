@@ -64,7 +64,8 @@ Change of Hierarchy
 Annual revalidation
 PCI DSS Compliant
 Onboarding IEP Model A
-IEP Bank account setup</value>
+IEP Bank account setup
+Major Changes</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>
