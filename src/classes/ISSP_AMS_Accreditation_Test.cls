@@ -4840,35 +4840,35 @@ Location_Type__c = 'BR');
 			update testCase;
 			ctrl.newCase = testCase;
 			auxStr = ctrl.lblCNSAgencyTitle;
-			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR);
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR);
 			
 			testCase.Reason1__c = AMS_Utils.CASE_REASON_BR_INDEPENDENT;
 			update testCase;
 			ctrl.lblCNSAgencyTitle = null;
 			ctrl.newCase = testCase;
 			auxStr = ctrl.lblCNSAgencyTitle;
-			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR);
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR);
 			
 			testCase.Reason1__c = AMS_Utils.CASE_REASON_NEW_HO;
 			update testCase;
 			ctrl.lblCNSAgencyTitle = null;
 			ctrl.newCase = testCase;
 			auxStr = ctrl.lblCNSAgencyTitle;
-			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ' + Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
 
 			testCase.Reason1__c = AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO;
 			update testCase;
 			ctrl.lblCNSAgencyTitle = null;
 			ctrl.newCase = testCase;
 			auxStr = ctrl.lblCNSAgencyTitle;
-			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ' + Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
 			
 			testCase.Reason1__c = AMS_Utils.CASE_REASON_BR_COMERCIAL;
 			update testCase;
 			ctrl.lblCNSAgencyTitle = null;
 			ctrl.newCase = testCase;
 			auxStr = ctrl.lblCNSAgencyTitle;
-			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' - ' + Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR);
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR);
 
 
 			List<SelectOption> testListOpp = ctrl.legalStatusList;
