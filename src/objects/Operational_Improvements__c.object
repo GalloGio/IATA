@@ -5576,6 +5576,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Zambia</controllingFieldValue>
                 <controllingFieldValue>Zimbabwe</controllingFieldValue>
                 <controllingFieldValue>India</controllingFieldValue>
+                <controllingFieldValue>Cote d&apos;Ivoire</controllingFieldValue>
                 <controllingFieldValue>Samoa</controllingFieldValue>
                 <controllingFieldValue>Gabon</controllingFieldValue>
                 <controllingFieldValue>Georgia</controllingFieldValue>
@@ -5886,6 +5887,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Zambia</controllingFieldValue>
                 <controllingFieldValue>Zimbabwe</controllingFieldValue>
                 <controllingFieldValue>India</controllingFieldValue>
+                <controllingFieldValue>Cote d&apos;Ivoire</controllingFieldValue>
                 <controllingFieldValue>Samoa</controllingFieldValue>
                 <controllingFieldValue>Gabon</controllingFieldValue>
                 <controllingFieldValue>Georgia</controllingFieldValue>
