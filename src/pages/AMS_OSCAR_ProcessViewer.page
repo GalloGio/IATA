@@ -200,7 +200,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 					showHierarchyConfirmationMessage = "step to Confirm the hierarchy structure";
 				} else if ({!oscar.Process__c == NGVR} && {!oscar.Account__r.ANG_Accreditation_Model__c == MULTICOUNTRY}
 					&& arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP6__c")) {
-					showHierarchyConfirmationMessage = 'agency locations on "edit accounts involved page"';
+					showHierarchyConfirmationMessage = 'agency locations on "Edit accounts involved page"';
 				}
 				
 				if (showHierarchyConfirmationMessage !== undefined) {
