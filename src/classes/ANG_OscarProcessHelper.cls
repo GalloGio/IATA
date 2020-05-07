@@ -78,7 +78,7 @@ global class ANG_OscarProcessHelper {
 					FROM AMS_Pax_Accreditation_Form__c
 					WHERE Id = :onlineAccreditationId FOR UPDATE];
 
-			AMS_OSCAR__c oscar = [select Account__c, Account__r.Parent.Status__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
+			AMS_OSCAR__c oscar = [select Account__c, Account__r.Parent.Status__c, Account__r.Parent.Accreditation_date__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c,
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
@@ -715,7 +715,7 @@ global class ANG_OscarProcessHelper {
 
 		try {
 
-			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 									(SELECT Id, Reason_Code__c, Reason_Description__c
 									 FROM Agencies_Applied_Change_codes__r
 									 WHERE Active__c = true)
@@ -750,7 +750,7 @@ global class ANG_OscarProcessHelper {
 	//ACAMBAS - NEWGEN-4822 - Start
 	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
 
-		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 												(SELECT Id, Reason_Code__c, Reason_Description__c
 									 			 FROM Agencies_Applied_Change_codes__r
 									 			 WHERE Active__c = true)
@@ -889,7 +889,7 @@ global class ANG_OscarProcessHelper {
 				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
 					accountIdsChanged.add(aaObject.AccountId);
 
-				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account where Id in :accountIdsChanged]);
 
 				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
 

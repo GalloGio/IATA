@@ -358,11 +358,18 @@ public with sharing class IFAP_BusinessRules {
 
 	public static Boolean AccountCountryHasChanged(Case oldCase, Case newCase) {
 
-		/*// get account associated to the old and new Case*/
-		Account oldAcc = [Select Id, BillingCountry, Type from Account where Id = : oldCase.AccountId limit 1];
-		Account newAcc = [Select Id, BillingCountry, Type from Account where Id = : newCase.AccountId limit 1];
+		if(oldCase.AccountId != newCase.AccountId){
+			/*// get account associated to the old and new Case*/
+			Map<Id, Account> acctMap = new Map<Id, Account>([SELECT Id, BillingCountry FROM Account WHERE Id IN (:oldCase.AccountId, :newCase.AccountId)]);
 
-		return (oldAcc.BillingCountry != newAcc.BillingCountry);
+			Account oldAcc = acctMap.get(oldCase.AccountId);
+			Account newAcc = acctMap.get(newCase.AccountId);
+
+			return (oldAcc.BillingCountry != newAcc.BillingCountry);
+		}
+
+		return false;
+
 	}
 
 	/*// ** replaces validation rule: IFAP_FS_validation_check_box*/
@@ -553,11 +560,18 @@ public with sharing class IFAP_BusinessRules {
 	/**
 	* Compare the status of the last IFAP from the list provided (used on Risk Event Creation)
 	**/
-	public static boolean isPreviousIFAPStatusEquals(List<Case> cases, String status){
+	public static boolean isPreviousIFAPStatusEquals(List<Case> cases, String status, String accreditationModel, String financialYear, String financialReviewType){
 		if(cases == null || cases.isEmpty()) return false;
 
 		Case lastIFAP;
 		DateTime auxlastCreatedDT;
+
+		if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+			if(financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
+				lastIfap = findLastFinancialYearIFAP(cases, financialYear, financialReviewType);
+			}
+			return lastIfap != null && lastIfap.Status == status;
+		}
 
 		for(Integer i = 0; i < cases.size(); i++){
 
@@ -566,6 +580,32 @@ public with sharing class IFAP_BusinessRules {
 				lastIFAP = cases[i];
 			}
 		}
+
 		return lastIFAP.Status == status;
+
 	}
+
+	/**
+	 * For the given Case list
+	 * find the Last IFAP case in the last Financial Year
+	 */
+	public static Case findLastFinancialYearIFAP(List<Case> caseList, String financialYear, String ifapType) {
+		Case lastIfapCase = null;
+		if (financialYear == null)
+			return null;
+		
+		Integer lastYearIfap = Integer.valueOf(financialYear) - 1;
+		Boolean checkIfapType = ifapType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+		
+		for (Case c : caseList) {
+			if (c.IFAP_Financial_Year__c == String.valueOf(lastYearIfap)
+				&& (lastIfapCase == null || lastIfapCase.CreatedDate < c.CreatedDate)
+				&& (!checkIfapType || c.Financial_Review_Type__c == ifapType)) {
+				lastIfapCase = c;
+			}
+		}
+
+		return lastIfapCase;
+	}
+
 }

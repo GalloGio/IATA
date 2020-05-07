@@ -1,5 +1,8 @@
 public with sharing class ANG_AgencyChangesHelper {
 
+	@TestVisible
+	private static final String CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION = 'Cannot pass sanity check until all the related BSPs OSCAR cases have passed sanity checks.';
+	private static final String ERROR_TOKEN = 'ERROR';
 	public static Boolean testRunnningForNonBackup = false;
 	public static Boolean isMigrationRunning = false;
 	public static AChangeStructure changesContainer = null;
@@ -21,7 +24,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public List<Account> accountsToCreateRhcInformationLst;
 		public List<ANG_Agency_Risk_Event__c> inactivateRiskEventLst;
-		public Id newParent;
+		public Id newParentId;
 		public List<AMS_Agencies_relationhip__c> relationsToDeleteLst;
 		public List<ANG_RHC_Information__c> deactivateRhcInformationLst;
 		public List<Agency_Authorization__c> agencyAuthorizationToUpdateLst;
@@ -46,7 +49,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsToRecalculateFsAmounts = new Set<Id>();
 			accountsToCreateRhcInformationLst = new List<Account>();
 			inactivateRiskEventLst = new List<ANG_Agency_Risk_Event__c>();
-			newParent = null;
+			newParentId = null;
 			relationsToDeleteLst = new List<AMS_Agencies_relationhip__c>();
 			deactivateRhcInformationLst = new List<ANG_RHC_Information__c>();
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
@@ -88,7 +91,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void addRiskEventsToInactivate(List<ANG_Agency_Risk_Event__c> riskEventLst, Id newParentId){
 			inactivateRiskEventLst.addAll(riskEventLst);
-			this.newParent = newParentId;
+			this.newParentId = newParentId;
 		}
 
 		public void addAccountToCreateRHC(Account account){
@@ -125,18 +128,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void runPreDeletes(){
 
-			if(relationsToDeleteLst != NULL && !relationsToDeleteLst.isEmpty()){
+			if(relationsToDeleteLst != null && !relationsToDeleteLst.isEmpty()){
 				delete relationsToDeleteLst;
 			}
 
-			if(deactivateRhcInformationLst != NULL && !deactivateRhcInformationLst.isEmpty()){
+			if(deactivateRhcInformationLst != null && !deactivateRhcInformationLst.isEmpty()){
 				ANG_RHCHelper.deactivateRHCInfo(deactivateRhcInformationLst);
 			}
 
 		}
 
 		public void runPostDeletes(){
-			if(hierarchiesToDeleteMap != NULL && !hierarchiesToDeleteMap.isEmpty()){
+			if(hierarchiesToDeleteMap != null && !hierarchiesToDeleteMap.isEmpty()){
 				delete hierarchiesToDeleteMap.values();
 			}
 		}
@@ -191,20 +194,20 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
 
-			if(accountsToCreateRhcInformationLst != NULL && !accountsToCreateRhcInformationLst.isEmpty()){
+			if(accountsToCreateRhcInformationLst != null && !accountsToCreateRhcInformationLst.isEmpty()){
 				ANG_RHCHelper.createRHCInfo(accountsToCreateRhcInformationLst, false);
 			}
 
-			if(agencyAuthorizationToUpdateLst != NULL && !agencyAuthorizationToUpdateLst.isEmpty()){
+			if(agencyAuthorizationToUpdateLst != null && !agencyAuthorizationToUpdateLst.isEmpty()){
 				update agencyAuthorizationToUpdateLst;
 			}
 
-			if(calculateRiskAssessmentMap != NULL && !calculateRiskAssessmentMap.isEmpty()){
+			if(calculateRiskAssessmentMap != null && !calculateRiskAssessmentMap.isEmpty()){
 				System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - runUpsert] Calculate risk assessment for accounts: ' + calculateRiskAssessmentMap.keySet());
 				new ANG_RiskAssessmentEngine(calculateRiskAssessmentMap).assessment();
 			}
 
-			if(riskAlertsToUpdateLst != NULL && !riskAlertsToUpdateLst.isEmpty()){
+			if(riskAlertsToUpdateLst != null && !riskAlertsToUpdateLst.isEmpty()){
 				update riskAlertsToUpdateLst;
 			}
 
@@ -216,12 +219,12 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_FinancialSecurityTriggerHandler.triggerFsAmountsRecalculation(accountsToRecalculateFsAmounts, true, true);
 			}
 
-			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
+			if(moveFsAndRiskEventsMap != null && !moveFsAndRiskEventsMap.isEmpty()){
 				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
 			}
 
-			if(inactivateRiskEventLst != NULL && !inactivateRiskEventLst.isEmpty()){
-				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst, newParent));
+			if(inactivateRiskEventLst != null && !inactivateRiskEventLst.isEmpty()){
+				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst, newParentId));
 			}
 
 			return hasUpserted;
@@ -241,10 +244,17 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		AMS_OSCAR__c oscar = oscars[0];
 
-		if(oscar.Process__c == AMS_UTils.NGCONVERSIONTOMULTICOUNTRY){
-			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [BEFORE CONVERSION] BEGIN SOQL:' + Limits.getQueries());
+		if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [BEFORE CONVERSION] Begin SOQL:' + Limits.getQueries());
 			handleConversionToMulticountry(oscar);
-			System.debug(LoggingLevel.FINE, '##SSHK## [ANG_AgencyChangesHelper.handleNewGenChangesProcess] [AFTER CONVERSION] END SOQL:' + Limits.getQueries());
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [AFTER CONVERSION] After SOQL:' + Limits.getQueries());
+			return;
+		}
+
+		if(oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [BEFORE CONVERSION] Begin SOQL:' + Limits.getQueries());
+			handleConversionToStandard(oscar);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleNewGenChangesProcess] [AFTER CONVERSION] After SOQL:' + Limits.getQueries());
 			return;
 		}
 
@@ -255,8 +265,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){
-				oscar.addError('There is a backup in progress for this Oscar, please wait a few moments until it finishes.');
-				return;
+			oscar.addError('There is a backup in progress for this Oscar, please wait a few moments until it finishes.');
+			return;
 		}
 
 		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c != AMS_Utils.PASSED && oscar.Change_effective_as_of__c > Date.today()) {
@@ -268,7 +278,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null){
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
-
 
 			Boolean isAllHierarchySelected = false;
 			Boolean oscarHierFAOptOut;
@@ -283,7 +292,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 			accountIdsInvolvedSet.add(oscar.Account__c);
 
-			if(containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY}, oscar.ANG_Type_Of_Change__c) && oscar.Previous_HE__c != NULL){
+			if(containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY}, oscar.ANG_Type_Of_Change__c) && oscar.Previous_HE__c != null){
 				accountIdsInvolvedSet.add(oscar.Previous_HE__c);
 			}
 
@@ -293,18 +302,27 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
-			Boolean isMulticountry = (oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+			Boolean isMulticountry = 
+				(oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || 
+				AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)) &&
+				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD) &&
+				!AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT);
 
 			Set<Id> accountIdsInvolvedSetAux = new Set<Id>();
 			accountIdsInvolvedSetAux.addAll(accountIdsInvolvedSet);
 
-			if(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c != null)
+			if(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c != null){
 				accountIdsInvolvedSetAux.add(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c);
+			}
 
 			//Fetch active change codes for each account (added subquery on getAccounts() method): map accountId -> active change code
 			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = fetchActiveChangeCodesFromAccounts(changesContainer.accountsMap.values());
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
+
+				Id parentAccountLeftAlone = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)
+					? changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c
+					: null;
 
 				if(!validateTypeOfChange(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c))
 					return;
@@ -315,8 +333,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				String prevAccreditationModel = changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c;
 
 				/** NEWGEN-5848 PREVENT Copy Data to Account if Multicountry Change of Hierarchy*/
-				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
-				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
+				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)){
+					changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
+				}
 
 				System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
 				System.debug('[ANG_AgencyChangesHelper] Checkpoint1 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
@@ -348,7 +367,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 						Set<Id> accountIdSet = new Set<Id>{oscar.Account__c};
 
-						if(isMulticountry) accountIdset.add(oscar.New_Parent__c);
+						if(isMulticountry){
+							accountIdset.add(oscar.New_Parent__c);
+						}
 
 						allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(accountIdSet);
 
@@ -414,15 +435,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 					}
 
-					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE &&
-						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
-
-						if(changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
-						else{
-							String dlResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
-							if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
-							else changesContainer.accountsMap.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
-						}
+					if(oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION){
+						createDueDiligenceCase(oscar, changesContainer.accountsMap.get(oscar.Account__c));
 					}
 
 				}
@@ -505,6 +519,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				}
 
+				if (parentAccountLeftAlone != null)
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, parentAccountLeftAlone, true));
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
 				Map<Id,Account> hierarchyAccs;
@@ -513,50 +529,84 @@ public with sharing class ANG_AgencyChangesHelper {
 					config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 				/** NEWGEN-5848 PREVENT Copy Data to Account if Multicountry Change of Hierarchy*/
-				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
-				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
+				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)){
+					changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
+				}
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-
 				Boolean applyOptOutFA =
-					containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
-					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) &&
+					containsChange(new List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
+					(oscarOnlineAccreditation.ANG_Accreditation_Type__c == AMS_Utils.ACCREDITATIONMODEL_CASH) &&
 					(oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT);
 
-				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
+				if (containsChange(new List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c, (SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE ANG_FormOfPayment_ID__c IN ('CA', 'EP','CC')) FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+					hierarchyAccs = new Map<Id, Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Is_PCI_compliant__c,
+															  (SELECT Id, ANG_FormOfPayment_ID__c, Status__c
+															   FROM Agency_Authorizations__r
+															   WHERE ANG_FormOfPayment_ID__c IN (:AMS_Utils.CA, :AMS_Utils.EP, :AMS_Utils.CC))
+														  FROM Account
+														  WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+
+					Account newParent;
+					if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
+						newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
+					else
+						newParent = hierarchyAccs.get(oscar.New_parent__c);
 
 					// If opt-out is not applicable we'll put the value of the new parent
-					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){
-
-						Account newParent;
-						if (changesContainer.accountsMap.keySet().contains(oscar.New_Parent__c))
-							newParent = changesContainer.accountsMap.get(oscar.New_Parent__c);
-
-						else
-							newParent = hierarchyAccs.get(oscar.New_parent__c);
-
+					if(oscar.ANG_FA_Opt_out__c == AMS_Utils.NOT_APPLICABLE){
 						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), newParent.ANG_FA_Opt_out__c == null ? false : newParent.ANG_FA_Opt_out__c);
-
 					//else we'll get the value input on the oscar AND apply it to all the accounts involved + the new parent's entire hierarchy
 					}else {
 						changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
 					}
 
 					//If it is a multicountry hierarchy split => updates forms of payments (CC, CA, EP)
-					if(isMulticountry && accountIdsInvolvedSet.contains(oscar.New_parent__c)){
+					if (isMulticountry && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT)) {
 						ANG_MulticountryHelper.processAgenciesFormsOfPayment(hierarchyAccs.values(), changesContainer);
 					}
 
+					// if it is a ST to MC acquisition
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY) || 
+						AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD)){
+						// recalculate the FoP aligned with the new parent
+						Agency_Authorization__c newParentCashMethodFoP = getAccountCashFoP(newParent);
+						
+						for (Account acct : changesContainer.accountsMap.values()) {
+							// Update cash form of payments according to the new parent (GE or HE) cash FoP status
+							if (acct.Id != newParent.Id && newParentCashMethodFoP != null)
+								updateAccountCashFoP(acct, newParentCashMethodFoP);
+						}
+						
+					}
+
+					if (AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)
+						|| (oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_CASH
+							&& oscar.ANG_GFA_Change_Assessment__c == AMS_Utils.GFA_CHANGE_ASSESSMENT_LOW)) {
+						// Recalculate risk assessment:
+						// - If standard agencies are being acquired by multicountry
+						// - If standard change of hierarchy with GFA level is "Low" the agency will not get any risk event 
+						//	 and we need to explicitly trigger the risk assessment calculation
+						changesContainer.addAccountToCalculateRiskAssessment(newParent.Id);
+					}
+
+					if(AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT)){
+						for(Account acct : changesContainer.accountsMap.values()){
+							Agency_Authorization__c cashMethodFoP = getAccountCashFoP(acct);
+							if(cashMethodFoP != null){
+								cashMethodFoP.Status__c = AMS_Utils.ACTIVE;
+								changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoP);
+							}
+						}
+					}
+
 				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
-				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && !applyOptOutFA) {
-
-					changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), FALSE);
-
+				} else if (containsChange(new List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && !applyOptOutFA) {
+					changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), false);
 				//all other major changes
-				}else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
+				} else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
 
 					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
 					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
@@ -564,7 +614,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
 
 					if(applyOptOutFA){
-						ANG_OscarProcessHelper.updateCaseStatusForAccounts(new Set<Id>{oscar.Account__c}, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
+						ANG_OscarProcessHelper.updateCaseStatusForAccounts(new Set<Id>{oscar.Account__c}, AMS_Utils.RECTYPE_IFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
 					}
 
 				}
@@ -604,7 +654,138 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static void handleConversionToMulticountry(AMS_OSCAR__c oscar){
+	private static void handleConversionToStandard(AMS_OSCAR__c oscar){
+
+		AMS_OSCAR__c oldOSCAR = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
+
+		changesContainer = new AChangeStructure();
+
+		Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+
+		//Sanity check passed
+		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Sanity check step passed');
+			
+			if(!canProceedWithConversionStep(oscar, 'STEP6__c', new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
+				return;
+			}
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			//The account related with the oscar is the HE
+			Account accountHE = changesContainer.accountsMap.get(oscar.Account__c);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+
+				if(acct.Location_Type__c == AMS_Utils.HE){
+					// If there is an existing RHC record removes it
+					List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects('RHC_Informations__r');
+
+					if(rhcLst != null && !rhcLst.isEmpty()){
+						changesContainer.addRhcInformationToDeactivate(rhcLst.get(0));
+					}
+					//Create a new RHC record
+					changesContainer.addAccountToCreateRHC(acct);
+				}
+
+				//Initialize risk information
+				acct.ANG_HE_CashCondition__c = false;
+				acct.Financial_Review_Result__c = null;
+				acct.Assessment_Performed_Date__c = null;
+				acct.Financial_Assessment_Points__c = null;
+				acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
+				acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
+				
+				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
+				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
+					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
+					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
+						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountHE.Id);
+					}
+				}
+
+				changesContainer.addAccount(acct);
+
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+
+			}
+
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, accountsCurrentChangeCode);
+
+			createDueDiligenceCase(oscar, accountHE);
+			
+		} //Approval step passed 
+		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Approval step passed');
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			//The account related with the oscar is the HE
+			Account accountHE = changesContainer.accountsMap.get(oscar.Account__c);
+
+			//If the agency was initially the GE we need to trigger 
+			//the risk assessment recalculation for that one
+			//The remaining accounts will get an Auth. Sell Cash risk event
+			//and therefore the risk assessment will take place at that moment
+			if(accountHE.Id == oscar.Parent_OSCAR_Account_Id__c){
+				changesContainer.addAccountToCalculateRiskAssessment(accountHE.Id);
+			}
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+				Agency_Authorization__c cashMethodFoP = getAccountCashFoP(acct);
+				if(cashMethodFoP != null){
+					cashMethodFoP.Status__c = AMS_Utils.ACTIVE;
+					changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoP);
+				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+			}
+
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.APPROVAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
+
+		} //Withdrawal Finalization step passed
+		else if(oscar.STEP4__c == AMS_Utils.PASSED && oldOSCAR.STEP4__c != AMS_Utils.PASSED){
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Withdrawal finalization step passed');
+
+			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
+			allAccountsInvolvedSet.add(oscar.Account__c);
+
+			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
+
+			for(Account acct : changesContainer.accountsMap.values()){
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+			}
+
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_CASH, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
+
+		}
+
+		if(changesContainer.changesStruct != null){
+			changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
+		}
+
+		if(changesContainer != null){
+			changesContainer.runUpsert();
+		}
+
+	}
+
+	private static void handleConversionToMulticountry(AMS_OSCAR__c oscar){
 
 		AMS_OSCAR__c oldOSCAR = (AMS_OSCAR__c) Trigger.oldMap.get(oscar.Id);
 
@@ -669,7 +850,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						acct.ParentId = topEntityPerBspMap.get(acct.IATA_ISO_Country__r.AMS_Settlement_System__c);
 					}
 
-					if(acct.IATA_ISO_Country__r.AMS_Settlement_System__c == accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c){
+					if (!acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+						&& acct.IATA_ISO_Country__r.AMS_Settlement_System__c == accountGE.IATA_ISO_Country__r.AMS_Settlement_System__c) {
 						acct.Remittance_Frequency__c = stagingArea.Remittance_Frequency__c;
 					}
 
@@ -685,13 +867,13 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
-					if(riskEventsLst != NULL && !riskEventsLst.isEmpty()){
+					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
 
 					List<ANG_Risk_Alert__c> riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
 
-					if(riskAlertsLst != NULL && !riskAlertsLst.isEmpty()){
+					if(riskAlertsLst != null && !riskAlertsLst.isEmpty()){
 						moveRiskAlerts(riskAlertsLst, accountGE.Id);
 						changesContainer.addRiskAlertsToUpdate(riskAlertsLst);
 					}
@@ -700,13 +882,13 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects('RHC_Informations__r');
 
-				if(rhcLst != NULL && !rhcLst.isEmpty()){
+				if(rhcLst != null && !rhcLst.isEmpty()){
 					changesContainer.addRhcInformationToDeactivate(rhcLst.get(0));
 				}
 
 				List<AMS_Agencies_Hierarchy__c> hierarchyLst = (List<AMS_Agencies_Hierarchy__c>) acct.getSObjects('Main_Accounts__r');
 
-				if(hierarchyLst != NULL && !hierarchyLst.isEmpty()){
+				if(hierarchyLst != null && !hierarchyLst.isEmpty()){
 					hierarchiesToDeleteLst.add(hierarchyLst.get(0));
 				}
 
@@ -715,19 +897,15 @@ public with sharing class ANG_AgencyChangesHelper {
 				//Fetch all child accounts that are inactive (terminated, not in operation, not accreditated, listed, blank)
 				List<Account> childAcctsLst = (List<Account>) acct.getSObjects('ChildAccounts');
 
-				if(childAcctsLst != NULL && !childAcctsLst.isEmpty()){
+				if(childAcctsLst != null && !childAcctsLst.isEmpty()){
 					for(Account childAcct : childAcctsLst){
-						childAcct.Top_Parent__c = NULL;
-						childAcct.ParentId = NULL;
+						childAcct.Top_Parent__c = null;
+						childAcct.ParentId = null;
 						changesContainer.addAccount(childAcct);
 					}
 				}
 
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != NULL){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}
 
@@ -746,9 +924,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 			);
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.SANITYCHECK, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 		else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
@@ -762,19 +938,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			changesContainer.addAccountToCalculateRiskAssessment(accountGE.Id);
 
-			Agency_Authorization__c geCashMethodFoP = NULL;
-
-			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
-
-			if(formOfPaymentsLst != NULL && !formOfPaymentsLst.isEmpty()){
-				//Fetch cash form of payment from GE
-				for(Agency_Authorization__c aa : formOfPaymentsLst){
-					if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
-						geCashMethodFoP = aa;
-						break;
-					}
-				}
-			}
+			Agency_Authorization__c geCashMethodFoP = getAccountCashFoP(accountGE);
 
 			for(Account acct : changesContainer.accountsMap.values()){
 
@@ -782,36 +946,21 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
-					if(riskEventsLst != NULL && !riskEventsLst.isEmpty()){
+					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
 
 				}
 
 				//Update cash form of payments according to the GE cash FoP status
-				if(acct.Id != accountGE.Id && geCashMethodFoP != NULL){
-					formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
+				if (acct.Id != accountGE.Id && geCashMethodFoP != null)
+					updateAccountCashFoP(acct, geCashMethodFoP);
 
-					for(Agency_Authorization__c aa : formOfPaymentsLst){
-						if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA){
-							aa.Status__c = geCashMethodFoP.Status__c;
-							changesContainer.addAgencyAuthorizationToUpdate(aa);
-							break;
-						}
-					}
-				}
-
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != NULL){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.APPROVAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 		else if(oscar.STEP4__c == AMS_Utils.PASSED && oldOSCAR.STEP4__c != AMS_Utils.PASSED){
@@ -822,26 +971,18 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
 
 			for(Account acct : changesContainer.accountsMap.values()){
-
-				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-
-				if(activeChgCode != NULL){
-					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
-				}
-
+				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 			}
 
-			ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, changesContainer);
+			changesContainer = processChangeCodeGeneration(oscar, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, AMS_Utils.WITHDRAWAL, allAccountsInvolvedSet, accountsCurrentChangeCode);
 
 		}
 
-		if(changesContainer.changesStruct != NULL){
+		if(changesContainer.changesStruct != null){
 			changesContainer = ANGcreateAAChangeCodes(changesContainer.changesStruct.values(), changesContainer.changeCodesToCreateDef, new List<AMS_OSCAR__c> {oscar}, changesContainer.accountsToApplyChangeCodes, false, changesContainer);
 		}
 
-		if(changesContainer != NULL){
+		if(changesContainer != null){
 			changesContainer.runUpsert();
 		}
 
@@ -860,7 +1001,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			for(Account acct : accountLst){
 				List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
 
-				if(riskEventsLst != NULL && !riskEventsLst.isEmpty()){
+				if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 					riskEventsToDeactivateLst.addAll(riskEventsLst);
 				}
 			}
@@ -998,11 +1139,11 @@ public with sharing class ANG_AgencyChangesHelper {
 			Id childBSP = rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c;
 
 			//If the GE was involved in the swap we need to update the relation
-			Boolean needsUpdate = (swapAccountsWrapper.newGE != NULL);
+			Boolean needsUpdate = (swapAccountsWrapper.newGE != null);
 
 			//If the change of location involves both of the accounts
 			//from this relationship (rel) we basically swap them
-			if(childAcct != NULL && parentAcct != NULL){
+			if(childAcct != null && parentAcct != null){
 				rel.Child_Account__c = parentAcct.Id;
 				rel.Parent_Account__c = childAcct.Id;
 				needsUpdate = true;
@@ -1010,7 +1151,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			else {
 
 				//Means that the current child in this relationship was swapped
-				if(childAcct != NULL){
+				if(childAcct != null){
 					//If we are upon a change of location involving different BSPs
 					//and the given child is the new GE the parent in this relationship
 					//must be updated to become the new GE
@@ -1023,7 +1164,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 
-				if(parentAcct != NULL && //Means that the current parent in this relationship is being swapped
+				if(parentAcct != null && //Means that the current parent in this relationship is being swapped
 					(!swapAccountsWrapper.diffBSP || //if in the scope of a location change in the same BSP
 					//If we are swapping an AE with a GE and the current child
 					//in the relationship is not in the old GE's BSP (location change in different BSPs)
@@ -1039,7 +1180,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				//If both of the accounts in this relationship were NOT involved in the swap
 				//and the BSP of the given child account is the same as the new GE's BSP
 				//we need to update the parent to be the new GE
-				if(childAcct == NULL && parentAcct == NULL && childBSP == swapAccountsWrapper.bspNewGE){
+				if(childAcct == null && parentAcct == null && childBSP == swapAccountsWrapper.bspNewGE){
 					rel.Parent_Account__c = swapAccountsWrapper.newGE;
 					needsUpdate = true;
 				}
@@ -1050,7 +1191,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				//If the child in this relationship was not involved in the swap
 				//we need to update the account itself (parent and eventually top parent if the GE was swaped)
-				if(childAcct == NULL){
+				if(childAcct == null){
 
 					Account acct  = new Account(Id = rel.Child_Account__c);
 
@@ -1065,7 +1206,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 					//If there is a new GE in the hierarchy we must update the top parent
-					if(swapAccountsWrapper.newGE != NULL){
+					if(swapAccountsWrapper.newGE != null){
 						acct.Top_Parent__c = swapAccountsWrapper.newGE;
 					}
 
@@ -1081,7 +1222,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
-		if(swapAccountsWrapper.newGE <> NULL){
+		if(swapAccountsWrapper.newGE <> null){
 			AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(id = hierarchyId, Main_account__c = swapAccountsWrapper.newGE);
 			toReturn.addHierarchy(hierarchy);
 		}
@@ -1184,7 +1325,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = hierarchiesRelationships;
 
-		if(accountHierarchyRelationships == NULL){
+		if(accountHierarchyRelationships == null){
 			accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c, oscarToProcess.New_parent__c});
 		}
 
@@ -1195,20 +1336,21 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-		Id topParentId = oscarAccount.Top_Parent__c != NULL ? oscarAccount.Top_Parent__c : oscarAccount.Id;
-
-		if(!accountIdsInvolvedSet.contains(topParentId)){
-			toReturn.addAccountToCalculateRiskAssessment(topParentId);
+		
+		// When processing the scenario where a standard hierarchy is acquired by a multicountry one 
+		// the risk assessment recalculation takes place after the approval step and therefore we need to skip at this point 
+		if(!AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY)){
+			Id topParentId = oscarAccount.Top_Parent__c != null ? oscarAccount.Top_Parent__c : oscarAccount.Id;
+			if(!accountIdsInvolvedSet.contains(topParentId)){
+				toReturn.addAccountToCalculateRiskAssessment(topParentId);
+			}
+			toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 		}
 
-		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
-
-		Boolean isHierarchySplit = accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c);
+		Boolean isHierarchySplit = AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
 
 		if(isHierarchySplit){
 
-			oscarToProcess.Generate_risk_event_MC__c = true;
 			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c();
 			newHierarchy.Hierarchy_Name__c = 'NewGen Hierarchy';
 			newHierarchy.Main_Account__c = oscarToProcess.New_parent__c;
@@ -1241,17 +1383,22 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account parentAccount = toReturn.accountsMap.get(relation.Parent_Account__c);
 			Account childAccount = toReturn.accountsMap.get(relation.Child_Account__c);
 
-			if(parentAccount != NULL && !processedAgenciesIdSet.contains(parentAccount.Id)){
+			if(parentAccount != null && !processedAgenciesIdSet.contains(parentAccount.Id)){
 				ANG_MulticountryHelper.processAgency(parentAccount, oscarToProcess.Account__c, oscarToProcess.New_parent__c, relation.Parent_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, null, thw, toReturn, isHierarchySplit);
 				processedAgenciesIdSet.add(parentAccount.Id);
 			}
 
-			if(childAccount != NULL && !processedAgenciesIdSet.contains(childAccount.Id)){
+			if(childAccount != null && !processedAgenciesIdSet.contains(childAccount.Id)){
 				ANG_MulticountryHelper.processAgency(childAccount, oscarToProcess.Account__c, oscarToProcess.New_parent__c, relation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, relation, thw, toReturn, isHierarchySplit);
 				processedAgenciesIdSet.add(childAccount.Id);
 			}
 
 			i++;
+		}
+
+		//Make sure to process the scenario when a single HE is acquired by a multicountry hierarchy
+		if(!processedAgenciesIdSet.contains(oscarAccount.Id)){
+			ANG_MulticountryHelper.processAgency(oscarAccount, oscarToProcess.Account__c, oscarToProcess.New_parent__c, oscarAccount.IATA_ISO_Country__r.AMS_Settlement_System__c, null, thw, toReturn, isHierarchySplit);
 		}
 
 		return toReturn;
@@ -1277,6 +1424,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		Boolean switchRemittanceFrequency = false;
 		Boolean doesItContainAccreditationType = containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscarToProcess.ANG_Type_Of_Change__c);
 		Set<Id> accountsAffected = new Set<Id>();
+		String oldAccreditationModel = '';
 
 		System.debug('[ANG_AgencyChangesHelper] - doesItContainAccreditationType is set to ' + doesItContainAccreditationType);
 
@@ -1290,30 +1438,37 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
+		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+		if(oscarAccount == null) {
+			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c,
+								IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+							FROM Account
+							WHERE Id = :oscarToProcess.Account__c];
+		}
+
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
 
 			//Map<Id,Account> accountsMap;
 
-			if(newHEaccount == null)
+			if(newHEaccount == null) {
 				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c from Account where Id = :oscarToProcess.New_parent__c];
-
-			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-			if(oscarAccount == null)
-				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.Account__c];
+			}
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
-
 				switchAccreditationModel = true;
 				newAccreditationModel = newHEaccount.ANG_Accreditation_Model__c;
-
+				oldAccreditationModel = oscarAccount.ANG_Accreditation_Model__c;
 			}
 
 			if(newHEaccount.Remittance_frequency__c != oscarAccount.Remittance_frequency__c){
-
 				switchRemittanceFrequency = true;
 				newRemittanceFrequency = newHEaccount.Remittance_frequency__c;
 			}
+		} else if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT)) {
+			switchAccreditationModel = true;
+			newAccreditationModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
+			oldAccreditationModel = oscarAccount.ANG_Accreditation_Model__c;
 		}
 
 		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
@@ -1343,7 +1498,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				System.debug('[ANG_AgencyChangesHelper] Inserted new Hierarchy with Id:' + newH.Id + ' since the destination account is a single Account.');
 			}
 
-			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
+			oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
 
 			if(oscarAccount.Location_type__c == AMS_Utils.HE){
 				// it should have his own hierarchy, so we need to remove it since he is becoming an AE.
@@ -1369,7 +1524,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsAffected.add(oscarToProcess.Account__c);
 			}
 
-			if(switchRemittanceFrequency){
+			if (!oscarAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && switchRemittanceFrequency) {
 				oscarAccount.Remittance_frequency__c = newRemittanceFrequency;
 			}
 
@@ -1399,8 +1554,10 @@ public with sharing class ANG_AgencyChangesHelper {
 							toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 				}
-				if(newAccreditationModel ==  'Cash')
+				
+				if(newAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
 					toUpsert = performCashTransformation(accountsAffected);
+				}
 
 				if(!toUpsert.isEmpty())
 					upsert toUpsert;
@@ -1455,6 +1612,10 @@ public with sharing class ANG_AgencyChangesHelper {
 				newHe.ANG_HE_RiskHistoryAssessment__c = null;
 				newHe.ANG_HE_RiskStatus__c = 'Not Applicable';
 
+				if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT) && switchAccreditationModel) {
+					newHe.ANG_Accreditation_Model__c = newAccreditationModel;
+				}
+
 				toReturn.addAccount(newHe);
 
 				continue;
@@ -1480,7 +1641,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsAffected.add(accountID);
 			}
 
-			if(switchRemittanceFrequency){
+			if (a.getPopulatedFieldsAsMap().containsKey('IATA_ISO_Country__r')
+				&& !a.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && switchRemittanceFrequency) {
 				a.Remittance_frequency__c = newRemittanceFrequency;
 			}
 
@@ -1537,13 +1699,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}
 
-			if(newAccreditationModel ==  'Cash')
+			if(newAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH && oldAccreditationModel != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 				toUpsert = performCashTransformation(accountsAffected);
+			}
 
 			if(!toUpsert.isEmpty()){
-
 				upsert toUpsert;
-
 			}
 		}
 
@@ -2116,7 +2277,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<Id> operationsIds = new Set<Id>();
 
-		if(operationsInputIds != NULL && !operationsInputIds.isEmpty()){
+		if(operationsInputIds != null && !operationsInputIds.isEmpty()){
 			operationsIds.addAll(operationsInputIds);
 		}
 
@@ -2126,7 +2287,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 		}
 
-		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Settlement_System__c WHERE RecordtypeID = :settlementRTId' + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));	}
+		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r' +(classType != null ? ' WHERE Class_Type__c = :classType' : '') +' ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Settlement_System__c WHERE RecordtypeID = :settlementRTId' + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));
+	}
 
 	/**
 	Returns operationCodes and respective BSP Configurations
@@ -2346,7 +2508,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				List<ANG_Risk_Alert__c> riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
 
-				if(riskAlertsLst != NULL && !riskAlertsLst.isEmpty()){
+				if(riskAlertsLst != null && !riskAlertsLst.isEmpty()){
 					moveRiskAlerts(riskAlertsLst, newParentId);
 					changesContainer.addRiskAlertsToUpdate(riskAlertsLst);
 				}
@@ -2380,7 +2542,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		private static Agency_Applied_Change_Code__c fetchActiveChangeCodeFromAccount(Account acct){
 			List<Agency_Applied_Change_code__c> changeCodeLst = (List<Agency_Applied_Change_code__c>) acct.getSObjects('Agencies_Applied_Change_Codes__r');
-			if(changeCodeLst != NULL && !changeCodeLst.isEmpty()){
+			if(changeCodeLst != null && !changeCodeLst.isEmpty()){
 				return changeCodeLst.get(0);
 			}
 			return null;
@@ -2392,7 +2554,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			for(Account acct : accountLst){
 				Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
-				if(activeChgCode != NULL){
+				if(activeChgCode != null){
 					accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
 				}
 			}
@@ -2400,4 +2562,88 @@ public with sharing class ANG_AgencyChangesHelper {
 			return accountsCurrentChangeCode;
 
 		}
+	
+	private static Agency_Authorization__c getAccountCashFoP(Account account) {
+		List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) account.getSObjects('Agency_Authorizations__r');
+		
+		if (formOfPaymentsLst != null) {
+			for (Agency_Authorization__c aa : formOfPaymentsLst) {
+				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA)
+					return aa;
+			}
+		}
+		
+		return null;
+	}
+
+	private static void updateAccountCashFoP(Account acct, Agency_Authorization__c fop) {
+		if (fop == null)
+			return;
+		
+		List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) acct.getSObjects('Agency_Authorizations__r');
+		
+		if (formOfPaymentsLst != null) {
+			for (Agency_Authorization__c aa : formOfPaymentsLst) {
+				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA) {
+					aa.Status__c = fop.Status__c;
+					changesContainer.addAgencyAuthorizationToUpdate(aa);
+					return;
+				}
+			}
+		}
+	}
+
+	private static Boolean canProceedWithConversionStep(AMS_OSCAR__c oscar, String stepToCheck, Set<String> stepValues, String errorMessage){
+
+		//If we are processing the OSCAR associated with 
+		//the agency that was initially the GE we need to check 
+		//if all the other OSCARs for each HE already passed the given step
+		if(oscar.Parent_OSCAR__c == null){
+
+			AMS_OSCAR__c queriedOscar = AMS_OSCARTriggerHandler.queriedOscarsMap.get(oscar.Id);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Retrieved Child OSCARs: ' + queriedOscar);
+
+			if(!queriedOscar.Child_OSCARs__r.isEmpty()){
+				for(AMS_OSCAR__c childOscar : queriedOscar.Child_OSCARs__r){
+					if(childOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST && !stepValues.contains((String) childOscar.get(stepToCheck))){
+						oscar.addError(errorMessage);
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+
+	}
+
+	private static void pushAccountCurrentChangeCodes(Account acct, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode){
+		Agency_Applied_Change_code__c activeChgCode = fetchActiveChangeCodeFromAccount(acct);
+		if(activeChgCode != null){
+			accountsCurrentChangeCode.put(activeChgCode.Account__c, activeChgCode);
+		}
+	}
+
+	private static ANG_AgencyChangesHelper.AChangeStructure processChangeCodeGeneration(AMS_OSCAR__c oscar, String accreditationModel, String currentStep, Set<Id> allAccountsInvolvedSet, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode){
+		ANG_AgencyChangesConfigHelper.ChangesConfig config = ANG_AgencyChangesConfigHelper.getConfig(oscar, accreditationModel);
+		return generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, currentStep, allAccountsInvolvedSet, changesContainer);
+	}
+
+	private static void createDueDiligenceCase(AMS_OSCAR__c oscar, Account account){
+		if (account.IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE){
+
+			if(account.Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS){
+				oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
+			} else {
+				String dueDiligenceResult = AMS_OSCAR_Webservice.createAMLCaseWithNoOscarUpdate(oscar);
+				if (dueDiligenceResult.startsWith(ERROR_TOKEN)){
+					oscar.addError(dueDiligenceResult);
+				} else {
+					account.Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
+				}
+			}
+
+		}
+	}
+
 }

@@ -16097,10 +16097,6 @@
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Чтобы сообщить IATA об изменении реквизитов банковского счета, обращайтесь к нам</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
