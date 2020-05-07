@@ -304,6 +304,8 @@ export default class AdsrSearchResult extends LightningElement {
 		this.searchParams.region = null;
 		this.searchParams.agent = null;
 		this.filterParams.market = null;
+		this.filterParams.service = [];
+		this.filterParams.markets = [];
 		this.filterParams.iataCode = null;
 		
 		this.tableType = filters.type;

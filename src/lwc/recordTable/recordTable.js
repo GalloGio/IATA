@@ -5,6 +5,7 @@ export default class RecordTable extends RecordCollection {
 
 	@api resizable = false;
 	@api sortable = false;
+	@api scrollable = false; /* TODO: implement the logic to remove the scrollbar when it is not scrollable */ 
 	@api clickableRows = false;
 	@api bordered = false;
 	@api borderedCols = false;
@@ -12,10 +13,13 @@ export default class RecordTable extends RecordCollection {
 	@api wrapHeader = false;
 	@api fixedHeader = false;
 	@api fixedFirstColumn = false;
+	@api fixedScrollbar = false;
 	@api highlightFirstColumn = false;
 	@api showTotalLabel = false;
 	@api highlightTotals = false;
 	@api defaultColumnWidth = '10rem';
+
+	tableWidth = '100%';
 
 	sortingField = null;
 	sortingDirection = null;
@@ -32,8 +36,16 @@ export default class RecordTable extends RecordCollection {
 		this.initialize();
 	}
 
+	renderedCallback() {
+		this.tableWidth = this.template.querySelector('.slds-table').offsetWidth + 'px';
+	}
+
 	get fixedWidth() {
 		return `width:${this.defaultColumnWidth};`;
+	}
+
+	get footerWidth() {
+		return `width:${this.tableWidth};`
 	}
 
 	get mainContainerClass() {
@@ -67,7 +79,13 @@ export default class RecordTable extends RecordCollection {
 	get bodyContainerClass() {
 		return 'slds-scrollable_x tableViewInnerDiv body-container ' +
 			(this.fixedHeader ? 'fixed-header syncscroll ' : '') +
-			(this.fixedFirstColumn ? 'fixed-first-column ' : '');
+			(this.fixedFirstColumn ? 'fixed-first-column ' : '') + 
+			(this.fixedScrollbar ? 'fixed-scrollbar ' : '');
+	}
+
+	get footerContainerClass() {
+		return 'footer-container ' + 
+			(this.scrollable && this.fixedScrollbar ? 'fixed-scrollbar ' : '');
 	}
 
 	@api get fields() {
@@ -181,6 +199,9 @@ export default class RecordTable extends RecordCollection {
  
     tableScrolled(event) {
 		this.template.querySelector(".header-container").scrollLeft = event.target.scrollLeft;
+		if(this.fixedScrollbar){
+			this.template.querySelector(".body-container").scrollLeft = event.target.scrollLeft;
+		}
         if (this.enableInfiniteScrolling) {
             if ((event.target.scrollTop + event.target.offsetHeight) >= event.target.scrollHeight) {
                 this.dispatchEvent(new CustomEvent('showmorerecords', {
@@ -264,6 +285,7 @@ export default class RecordTable extends RecordCollection {
 			headerThs.forEach((th, ind) => {
 				th.style.width = tableThs[ind].style.width;
 			})
+			this.tableWidth = this.template.querySelector('.slds-table').offsetWidth + 'px';
         }
     }
  
@@ -279,7 +301,8 @@ export default class RecordTable extends RecordCollection {
             rowTds.forEach((td, ind) => {
                 rowTds[ind].style.width = this._initWidths[ind];
             });
-        });
+		});
+		this.tableWidth = this.template.querySelector('.slds-table').offsetWidth + 'px';
     }
  
     paddingDiff(col) {
@@ -310,6 +333,9 @@ export default class RecordTable extends RecordCollection {
 				//record.push( o );
 			}
 		);
+		if(ret.length > 0) {
+			ret[ret.length-1][this.fields[0].targetField] = 'Sum';
+		}
 		return ret;
 	}
  
