@@ -195,6 +195,10 @@
         <description>Approval Rejected by RPM</description>
         <protected>false</protected>
         <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
             <type>owner</type>
         </recipients>
         <recipients>
@@ -483,6 +487,10 @@
         <description>Inform CQM about Rejected Quality EXE by GPO</description>
         <protected>false</protected>
         <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
             <type>owner</type>
         </recipients>
         <recipients>
@@ -497,6 +505,10 @@
         <fullName>Inform_CQM_about_approved_Quality_EXE_by_Dir_of_Distribution</fullName>
         <description>Inform CQM about approved Quality EXE by Dir. of Distribution</description>
         <protected>false</protected>
+        <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -540,6 +552,10 @@
         <description>Inform RQM about approved Quality EXE by GPO</description>
         <protected>false</protected>
         <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
             <type>owner</type>
         </recipients>
         <recipients>
@@ -562,6 +578,10 @@
         <fullName>Inform_RQM_about_approved_Quality_EXE_by_RD_AD_ISS</fullName>
         <description>Inform RQM about approved Quality EXE by RD / AD ISS</description>
         <protected>false</protected>
+        <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -630,6 +650,10 @@
         <fullName>RQM_Rejection</fullName>
         <description>RQM Rejection</description>
         <protected>false</protected>
+        <recipients>
+            <field>DistributionList__c</field>
+            <type>email</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>

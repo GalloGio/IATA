@@ -50,6 +50,11 @@ public class ANG_GDIRemoteInvocationTest {
 		Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=acc.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='GDI', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
 		insert FS;
 
+		// NEWGEN-5208 - The service will now also send the INT_011 request
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
+
 		ID oppRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity');
 		Opportunity opp = new Opportunity(AccountId = acc.id, CloseDate = Date.today(), CurrencyIsoCode = OpportunityCurrency, Name ='OPP - ' , RecordTypeId = oppRecordtype, StageName = 'Pending', Related_Oscar__c = oscar.id, GDI_Offer_Id__c='001');
 		insert opp;

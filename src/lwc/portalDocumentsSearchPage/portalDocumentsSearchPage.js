@@ -159,4 +159,37 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     removeTextSearch(){
         this.onInputChange('');
     }
+    
+    showCategory(event) {
+        //Handles category selection from category's results( right panel)
+        let categoryName = event.detail.category;
+        let __documentObject = JSON.parse(JSON.stringify(this.documentObject));
+
+
+        __documentObject.refreshFilter=true;
+        if(__documentObject.categorySelected !== categoryName ||__documentObject.refreshFilter===true ) {            
+            __documentObject.categorySelected = categoryName;
+            __documentObject.topResults = false;
+            for(let i = 0; i < __documentObject.categories.length; i++) {
+                if(__documentObject.categories[i].apiName === categoryName) {
+                    __documentObject.categories[i].topResults = false;
+                    __documentObject.categories[i].productCategory = '';
+                    __documentObject.categories[i].countryOfPublication = '';
+                    __documentObject.categories[i].show = true;
+                } else {
+                    __documentObject.categories[i].show = false;
+                }
+            }               
+        }
+
+
+        this.loading = true;        
+
+
+        this.documentObject = __documentObject;
+        this.categories = this.documentObject.categories;
+
+
+        this.resultsToRender();
+    }
 }

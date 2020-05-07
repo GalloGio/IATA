@@ -10,11 +10,15 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 
 		//Parse body request
 		String offerId = '';
+		String offerDateStr = '';
+
 		try{
 			Map<String, Object> reqBody = (Map<String, Object>)JSON.deserializeUntyped(body.toString());
 
 			offerId = (String)reqBody.get('offerId');
 			System.debug('##offerId: '+offerId);
+
+			offerDateStr = (String)reqBody.get('offerExchangeRateDate');
 
 		}catch(Exception e){
 			ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', 'Invalid body')), 500);
@@ -26,6 +30,17 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 			return;
 		}
 
+		if(String.isBlank(offerDateStr)){
+			ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerExchangeRateDate')), 400);
+			return;
+		}
+
+		Id otherOppId = oppWithSameOfferId(offerId);
+		if (otherOppId != null) {
+			ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', 'Duplicate value on record: ' + otherOppId)), 500);
+			return;
+		}
+		
 		//Take a database snapshot to rollback in case of exception or something not being created succesfully
 		System.Savepoint sp = Database.setSavePoint();
 
@@ -35,9 +50,10 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 
 			Opportunity opp = new Opportunity(GDI_Offer_Id__c = offerId, CloseDate = Date.today().addYears(1), Name = 'OPP - '+oscar[0].name,
 								StageName = 'Pending', Related_Oscar__c = oscar[0].Id, AccountId = oscar[0].Account__c,
-								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'));
+								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'),
+								Offer_exchange_rate_date__c = Date.valueOf(offerDateStr));
 
-			insert opp;
+			System.enqueueJob(new AsyncDML_Util(new List<SObject>{opp}, AsyncDML_Util.DML_INSERT, true));
 
 			//return message, Id of Record Created (oscar)
 			ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT077_SuccessPayload(oscar[0].Id)), 200);
@@ -53,5 +69,10 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 		public INT077_SuccessPayload(string sId){
 			this.recordId = sId;
 		}
+	}
+	
+	private static Id oppWithSameOfferId(String offerId) {
+		List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE GDI_Offer_Id__c = :offerId];
+		return opps.isEmpty() ? null : opps.get(0).Id;
 	}
 }
