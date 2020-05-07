@@ -3,7 +3,7 @@ import { getParamsFromPage } from'c/navigationUtils';
 import CSP_SearchDocuments from '@salesforce/label/c.CSP_SearchDocuments';
 import CSP_Search_TypeIn_text1 from '@salesforce/label/c.CSP_Search_TypeIn_text1';
 import CSP_Search_TypeIn_text2 from '@salesforce/label/c.CSP_Search_TypeIn_text2';
-import CSP_Search_TypeIn_text3 from '@salesforce/label/c.CSP_Search_TypeIn_text3';	
+import CSP_Search_TypeIn_text3 from '@salesforce/label/c.CSP_Search_TypeIn_text3';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -34,11 +34,11 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
         if(pageParams !== undefined) {
             if(pageParams.category !== undefined) {
-                this.category = pageParams.category.replace(/\+/g, ' ');
+                this.category = pageParams.category;
                 this.topResults = false;
             }
             if(pageParams.searchText !== undefined) {
-                this.searchText = decodeURIComponent((pageParams.searchText+'').replace(/\+/g, '%20'));
+                this.searchText = pageParams.searchText;
                 this.docId = pageParams.docId;
                 this.onInputChange(this.searchText);
             }
@@ -56,7 +56,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     }
 
     handleHighlightFilter(event) {
-        this.loading = true;    
+        this.loading = true;
         let detailObject = JSON.parse(JSON.stringify(event.detail));
         this.searchText = '';
         this.documentObject = detailObject;
@@ -65,8 +65,8 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     }
 
     handleFilter(event) {
-        this.loading = true; 
-        let detailObject = JSON.parse(JSON.stringify(event.detail));        
+        this.loading = true;
+        let detailObject = JSON.parse(JSON.stringify(event.detail));
 
         this.documentObject = detailObject;
         this.categories = this.documentObject.categories;
@@ -75,9 +75,9 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     }
 
     categoryFilter(event) {
-        this.loading = true; 
+        this.loading = true;
         let detailCategory = JSON.parse(JSON.stringify(event.detail));
-        let detailObject = JSON.parse(JSON.stringify(this.documentObject));   
+        let detailObject = JSON.parse(JSON.stringify(this.documentObject));
 
         for(let i = 0; i < detailObject.categories.length; i++) {
             if(detailObject.categories[i].apiName === detailCategory.apiName &&
@@ -103,14 +103,14 @@ export default class PortalDocumentsSearchPage extends LightningElement {
         if(detailObject.categorySelected === '') {
             for(let i = 0; i < detailObject.categories.length; i++) {
                 if(detailObject.categories[i].noResults !== 0) {
-                    found = true; 
+                    found = true;
                     break;
                 }
             }
         } else {
             for(let i = 0; i < detailObject.categories.length; i++) {
                 if(detailObject.categorySelected === detailObject.categories[i].apiName && detailObject.categories[i].noResults !== 0) {
-                    found = true; 
+                    found = true;
                     break;
                 }
             }
@@ -125,7 +125,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
     filterInputChange(event) {
         this.searchText = event.target.value;
-       
+
         this.onInputChange(this.searchText);
     }
 
@@ -138,7 +138,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-          
+
             if(this.searchText.length > 2 || this.searchText === '') {
                 let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
                 for(let i = 0; i < _documentObject.categories.length; i++) {

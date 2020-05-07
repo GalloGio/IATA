@@ -6,7 +6,6 @@
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
 import { LightningElement, track, wire }     from 'lwc';
-import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
 import { getRecord }                         from 'lightning/uiRecordApi';
 import userId                                from '@salesforce/user/Id';
 import getContactInfo                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
@@ -21,7 +20,7 @@ import CSP_Complete_Profile                  from '@salesforce/label/c.CSP_Compl
 import CSP_PortalPath                        from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalFirstLogin extends LightningElement {
-    
+
     /* ==============================================================================================================*/
     /* Attributes
     /* ==============================================================================================================*/
@@ -46,9 +45,9 @@ export default class PortalFirstLogin extends LightningElement {
     }
 
     connectedCallback(){
-        
+
         console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
-        
+
         getContactInfo()
             .then(result => {
                 this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
