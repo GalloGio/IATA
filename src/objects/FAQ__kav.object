@@ -56,20 +56,20 @@
         <fullName>CS_Portal_link__c</fullName>
         <description>Direct link for the article from CS Portal site, only the english version will contain a shareable link</description>
         <externalId>false</externalId>
-        <formula>IF( ISPICKVAL(Language,&apos;en_US&apos;),
-
+        <formula>IF(ISPICKVAL(PublishStatus,&apos;Online&apos;),
+IF( ISPICKVAL(Language,&apos;en_US&apos;),
  IF($Organization.Id ==&apos;00D2000000008TF&apos;,
    IF(IsVisibleInPkb==true,
      &apos;https://portal.iata.org/s/faq-article?article=&apos;+UrlName,
-     &apos;https://portal.iata.org/s/support-view-article?article=&apos;+UrlName
+     IF(IsVisibleInPrm,&apos;https://portal.iata.org/s/support-view-article?article=&apos;+UrlName,&apos;Article not available in the Portal&apos;)
    ),
    IF(IsVisibleInPkb==true,
     &apos;/s/faq-article?article=&apos;+UrlName,
-    &apos;/s/support-view-article?article=&apos;+UrlName
+    IF(IsVisibleInPrm,&apos;/s/support-view-article?article=&apos;+UrlName,&apos;Article not available in the Portal&apos;)
    )
  ),
  &apos;Check English version for URL&apos;
-)</formula>
+),&apos;Only published versions have a shareable link&apos;)</formula>
         <label>CS Portal link</label>
         <required>false</required>
         <type>Text</type>
