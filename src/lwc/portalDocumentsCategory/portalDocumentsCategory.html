@@ -19,15 +19,15 @@
                                             <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.Id}></lightning-icon>
                                         </div>
                                         <div class="slds-col slds-grid slds-size--2-of-3 slds-show_small text-xsmall cellDefault">
-                                            <button class="cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.CurrencyCenter_Open}</button>
+                                            <button class="cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.ISSP_View}</button>
                                         </div>
                                     </div>
                                     <div key={record.Id} class="slds-col slds-size_7-of-12 slds-medium-size_6-of-12 slds-grid slds-grid_vertical-align-center text-black text-xsmall text-bold cellDefault"><p class="slds-p-horizontal_x-small titleTruncation ">{record.Title}</p></div>
                                     <div key={record.Id} class="slds-col slds-size_2-of-12 slds-show_small slds-grid slds-grid_vertical-align-center cellDefault text-xsmall"><p>{record.Language__c}</p></div>
                                     <div key={record.Id} class="slds-col slds-size_3-of-12 slds-medium-size_2-of-12 slds-grid slds-grid--vertical-align-center cellDefault">
                                         <div if:false={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end">
-                                            <span if:true={record.bookMarked} class='bkmicon bookmarked' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title="Remove from My Bookmarks"></span>
-                                            <span if:false={record.bookMarked} class='bkmicon' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title="Add to My Bookmarks"></span>
+                                            <span if:true={record.bookMarked} class='bkmicon bookmarked' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title={label.CSP_BookmarkDocRemToolTip}></span>
+                                            <span if:false={record.bookMarked} class='bkmicon' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title={label.CSP_BookmarkDocAddToolTip}></span>
                                         
                                         </div>
                                         <div if:true={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end slds-is-relative">

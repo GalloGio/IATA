@@ -8,13 +8,15 @@ import CSP_Documents_PubliCountry from '@salesforce/label/c.CSP_Documents_PubliC
 import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';	
-import CurrencyCenter_Open from '@salesforce/label/c.CurrencyCenter_Open';
+import ISSP_View from '@salesforce/label/c.ISSP_View';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import CSP_DocumentType from '@salesforce/label/c.CSP_DocumentType';
 import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkAdded';
 import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
+import CSP_BookmarkDocAddToolTip from '@salesforce/label/c.CSP_BookmarkDocAddToolTip';
+import CSP_BookmarkDocRemToolTip from '@salesforce/label/c.CSP_BookmarkDocRemToolTip';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -31,9 +33,11 @@ export default class PortalDocumentsCategory extends LightningElement {
         CSP_DocumentType,
         CSP_DocumentBookmarkAdded,
         CSP_DocumentBookmarkRemoved,
+        CSP_BookmarkDocAddToolTip,
+        CSP_BookmarkDocRemToolTip,
         CSP_Success,
         PKB2_js_error,
-        CurrencyCenter_Open
+        ISSP_View
     };
     @track documentsList = [];
     @track _documentObject;
