@@ -21,6 +21,10 @@
     table-layout: fixed;
 }
 
+.imgSize{
+    max-width:48px;
+    max-height: 48px;
+}
 
 .titleTruncation {
     overflow: hidden;
