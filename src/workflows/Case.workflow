@@ -2021,6 +2021,10 @@
             <recipient>SIDRA LO CASS</recipient>
             <type>caseTeam</type>
         </recipients>
+        <recipients>
+            <recipient>ortizcedl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_TER07_Notification_to_LO_2_days_before_TER_email_to_LO</template>
     </alerts>
