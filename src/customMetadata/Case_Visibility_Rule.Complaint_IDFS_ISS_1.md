@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Origin NOT_IN, Owner &lt;&gt;</value>
+        <value xsi:type="xsd:string">Origin NOT_IN, OwnerID &lt;&gt;</value>
     </values>
     <values>
         <field>Origin__c</field>
