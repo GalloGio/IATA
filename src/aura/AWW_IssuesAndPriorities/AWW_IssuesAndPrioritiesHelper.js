@@ -10,8 +10,7 @@
             {label: 'Global', fieldName: 'AM_Global__c', fixedWidth: 80, type: 'boolean'},
             {label: 'Regional', fieldName: 'AM_Regional__c', fixedWidth: 85, type: 'boolean'},
             {label: 'Local', fieldName: 'AM_Local__c', fixedWidth: 80, type: 'boolean'},
-            {label: 'Issues with IATA', fieldName: 'AM_Issue_with_IATA__c', fixedWidth: 90, type: 'boolean'},
-            {label: 'Visible to all IATA', fieldName: 'AM_Public__c', fixedWidth: 90, type: 'boolean'}
+            {label: 'Issues with IATA', fieldName: 'AM_Issue_with_IATA__c', fixedWidth: 90, type: 'boolean'}
         ];
 
         if(component.get('v.canEdit') == true || component.get('v.haveAMPIssuesAndPriorities') == true) {
