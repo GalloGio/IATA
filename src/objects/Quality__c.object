@@ -3951,11 +3951,6 @@ Permanent: Relates to a country specific legal or regulatory matter, outsourcing
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Permanent</fullName>
-                    <default>false</default>
-                    <label>Permanent</label>
-                </value>
-                <value>
                     <fullName>Temporary</fullName>
                     <default>false</default>
                     <label>Temporary</label>
@@ -16358,10 +16353,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Temporary</fullName>
                 <default>false</default>
             </values>
@@ -21842,10 +21833,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27377,10 +27364,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32932,10 +32915,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Temporary</fullName>
                 <default>false</default>
             </values>
@@ -38280,10 +38259,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43660,10 +43635,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49151,10 +49122,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54686,10 +54653,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60225,10 +60188,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Temporary</fullName>
                 <default>false</default>
             </values>
@@ -65681,10 +65640,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71184,10 +71139,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklist>Exception_Type__c</picklist>
             <values>
                 <fullName>One-off</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Permanent</fullName>
                 <default>false</default>
             </values>
             <values>

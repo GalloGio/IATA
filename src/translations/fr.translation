@@ -3029,6 +3029,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>Créer un nouvel utilisateur</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Créer un mot de passe</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3301,6 +3305,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>J&apos;ai lu et j&apos;accepte les conditions suivantes:</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Bonjour [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3353,6 +3361,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>Prénom</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Informations sur le compte de l&apos;entreprise</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3367,6 +3383,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Pour faire correspondre votre profil personnel au compte de votre entreprise, nous avons besoin de plus d&apos;informations. Cela nous aidera à vérifier si votre entreprise est déjà enregistrée auprès de l&apos;IATA.</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Détails supplémentaires</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>Nous n&apos;avons pas trouvé votre adresse. Veuillez cliquer sur le bouton « Étape suivante » pour confirmer que votre adresse est correcte.</label>
@@ -3385,6 +3405,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>Retour aux détails supplémentaires</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Retour à l&apos;adresse de l&apos;entreprise</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3397,11 +3421,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>Retour aux détails du profil</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Terminer le processus de renseignement du profil et sélection du compte</label>
+        <label>Sélection du compte et détails supplémentaires</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3409,7 +3429,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez remplir les informations d&apos;adresse de votre entreprise.</label>
+        <label>Veuillez indiquer l&apos;adresse professionnelle de votre lieu de travail.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3461,7 +3481,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>Pays</label>
+        <label>Pays/Territoire</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3569,6 +3589,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>Prochaine étape</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>Non</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3605,10 +3629,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>Détails du profil</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>Ajoutez vos données personnelles pour permettre à IATA de suggérer du contenu et des services personnalisés.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -3617,7 +3637,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>Mais nous l&apos;avons enregistré en tant que brouillon afin que vous puissiez continuer plus tard. Êtes-vous sûr de vouloir quitter ?</label>
+        <label>Êtes-vous sûr de vouloir arrêter?</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3705,7 +3725,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>Titre</label>
+        <label>Salutation</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3713,8 +3733,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>Numéro de TVA</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Site Internet</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Pays/Territoire de votre lieu de travail</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>Oui</label>
@@ -4218,6 +4246,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Services_Accept_Terms --></label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>Accès demandé</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4338,6 +4370,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>Dans le cadre de nos mises à jour régulières, nous apportons quelques modifications à nos conditions. Nous vous encourageons à lire les documents dans leur intégralité.</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Merci pour vos commentaires.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4380,6 +4416,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Création d&apos;utilisateur</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>Bienvenue sur le portail client IATA</label>
@@ -22307,6 +22347,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22581,6 +22625,14 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24520,6 +24572,14 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>Politique de confidentialité</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>Conditions d&apos;utilisation</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
@@ -34746,7 +34806,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Fichiers</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -35080,6 +35140,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>

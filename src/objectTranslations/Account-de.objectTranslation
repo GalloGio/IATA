@@ -60,6 +60,10 @@
             <translation>Fluggesellschafts-Anbieter</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Flughafen</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Verband</translation>
         </picklistValues>
@@ -90,10 +94,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>Holding-Gesellschaft</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Infrastruktur-Partner</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>

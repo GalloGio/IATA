@@ -3026,6 +3026,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>创建新用户</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>创建密码</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3298,6 +3302,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>我已阅读并同意以下条款：</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>您好 [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3350,6 +3358,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>名字</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>姓氏</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>公司账户信息</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3364,6 +3380,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>为了使您的个人资料与公司账户匹配，我们需要更多详细信息。这将帮助我们检查您的公司是否已在 IATA 注册。</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>其他详细信息</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>我们找不到您的地址。请点击下一步按钮以确认您的地址是否正确。</label>
@@ -3382,6 +3402,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>返回其他详细信息</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>返回公司地址信息</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3394,11 +3418,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>返回个人资料详细信息</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>个人资料填写与账户选择</label>
+        <label>帐户选择与其他详细信息</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3406,7 +3426,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>请填写您的公司地址信息。</label>
+        <label>请提供您的工作地点的地址。</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3566,6 +3586,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>下一步</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>不是</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3602,10 +3626,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>个人资料详细信息</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>添加个人详细信息，以使 IATA 提供个性化的内容和服务。</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -3614,7 +3634,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>但是我们会将其保存为草稿，以便您以后可以继续填写。您确定要退出吗？</label>
+        <label>你确定要退出吗？</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3702,7 +3722,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>标题</label>
+        <label>称呼</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3710,8 +3730,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>增值税号</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label>网站</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>你的工作地点所在的国家/地区</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>是</label>
@@ -4214,6 +4242,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>接受</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>访问请求</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4334,6 +4366,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>作为我们定期更新的一部分，我们将对我们的条款进行一些修改。我们鼓励您阅读完整的文件。</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>感谢您的反馈意见。</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4376,6 +4412,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>用户创建</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>欢迎使用 国际航空运输协会 (IATA) 客户门户</label>
@@ -22257,6 +22297,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22531,6 +22575,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24470,6 +24522,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label>隐私政策</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>使用条款</label>
+        <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
@@ -34696,7 +34756,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>报告/报表</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -35030,6 +35090,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>

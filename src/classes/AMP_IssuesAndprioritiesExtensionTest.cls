@@ -66,7 +66,6 @@ private class AMP_IssuesAndprioritiesExtensionTest
 			issuesAndPrioritiesExtension.sortBySource();
 			issuesAndPrioritiesExtension.sortByRegional();
 			issuesAndPrioritiesExtension.sortByGlobal();
-			issuesAndPrioritiesExtension.sortByPublic();
 			issuesAndPrioritiesExtension.sortByCanIATASupport();
 			issuesAndPrioritiesExtension.sortByIssueWithIATA();
 			issuesAndPrioritiesExtension.sortByStatus();

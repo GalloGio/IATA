@@ -27,7 +27,7 @@ export default class PortalDocumentsTiles extends NavigationMixin(LightningEleme
             let iconFolderAux = this.iconFolder;
             
             Object.keys(docs).forEach(function (el) { 
-                tempDocs.push({ categoryName : docs[el].label, imageURL: iconFolderAux });
+                tempDocs.push({ categoryName : docs[el].value, imageURL: iconFolderAux, label: docs[el].label });
             });
 
             this.lstTiles = tempDocs;

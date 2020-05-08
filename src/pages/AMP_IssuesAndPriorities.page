@@ -162,7 +162,7 @@
                     </apex:commandLink>
                 </apex:facet>
                     <apex:outputField value="{!i.AM_Global__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.AM_Global__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
+                    <apex:inputField styleClass="input-checkbox" value="{!i.AM_Global__c}" onClick="cleanCheckboxes(this)" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
                 <apex:column styleClass="narrow-table-column">
 
@@ -174,7 +174,7 @@
                         </apex:commandLink>
                     </apex:facet>
                     <apex:outputField value="{!i.AM_Regional__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.AM_Regional__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
+                    <apex:inputField styleClass="input-checkbox" value="{!i.AM_Regional__c}" onClick="cleanCheckboxes(this)" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
                 <apex:column styleClass="narrow-table-column">
 
@@ -186,33 +186,21 @@
                     </apex:commandLink>
                 </apex:facet>
                     <apex:outputField value="{!i.AM_Local__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.AM_Local__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
+                    <apex:inputField styleClass="input-checkbox" value="{!i.AM_Local__c}" onClick="cleanCheckboxes(this)" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
                 <apex:column styleClass="narrow-table-column">
-
                     <apex:facet name="header">
-                    <apex:commandLink action="{! sortByIssueWithIATA }" styleClass="narrow-table-column"
-                        reRender="issueTable">Issue with IATA
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
+                        <apex:commandLink action="{! sortByIssueWithIATA }" styleClass="narrow-table-column"
+                            reRender="issueTable">
+                            <apex:outputLabel value="Issue with IATA" />
+                            <img src="/s.gif" alt="Help" class="helpIcon" title="{!$Label.issue_with_iata}"/>
+                            <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Issue_with_IATA__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
+                        </apex:commandLink>
+                    </apex:facet>
                     <apex:outputField value="{!i.AM_Issue_with_IATA__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
                     <apex:inputField value="{!i.AM_Issue_with_IATA__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column>
-                <apex:column styleClass="narrow-table-column">
-
-                    <apex:facet name="header">
-                    <apex:commandLink action="{! sortByPublic }" styleClass="narrow-table-column"
-                        reRender="issueTable">Visible to all IATA
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Public__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
-                                    <apex:outputPanel layout="none" rendered="{!sortOrder == ' AM_Public__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
-                    </apex:commandLink>
-                </apex:facet>
-                    <apex:outputField value="{!i.AM_Public__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
-                    <apex:inputField value="{!i.AM_Public__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
-                </apex:column>
-
             </apex:pageBlockTable>
 
         </apex:outputPanel>
@@ -233,6 +221,14 @@
     $(document).ready(function(){
       enableShowMoreOrLess();
     });
+    function cleanCheckboxes(ev) {
+        var instate=(ev.checked);
+        var cbs = document.getElementsByClassName("input-checkbox");
+        for (var i = 0; i < cbs.length; i++) {
+            cbs[i].checked = false;
+        }
+        ev.checked = true;
+    }
     function enableShowMoreOrLess() {
       $('.show-more').click(function() {
         event.preventDefault();

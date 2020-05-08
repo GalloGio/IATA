@@ -30,7 +30,7 @@ private class Attachment_Batch_Test {
 	@isTest static void test_Attachment_case() {
 
 		//Create Case
-		Case case1 = new Case(Status = 'Open');
+		Case case1 = new Case(Status = 'Open', Origin = 'Airline Participation');
         insert case1;
         
         //Close the case

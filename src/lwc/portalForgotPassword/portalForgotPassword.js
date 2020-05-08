@@ -9,7 +9,7 @@ import createNewAccountLabel    from '@salesforce/label/c.CSP_Create_New_Account
 import troubleshootingLabel     from '@salesforce/label/c.CSP_Troubleshooting';
 import forgotPasswordLabel      from '@salesforce/label/c.CSP_Forgot_Password';
 import passwordInfoLabel        from '@salesforce/label/c.CSP_Forgot_Password_Info';
-import newAccountMessageLabel   from '@salesforce/label/c.CSP_Create_New_Account_Label';
+import newUserMessageLabel      from '@salesforce/label/c.CSP_Create_New_User_Label';
 import troubleshootingInfoLabel from '@salesforce/label/c.CSP_Troubleshooting_Info';
 
 export default class ForgotPasswordOneId extends LightningElement {
@@ -22,17 +22,17 @@ export default class ForgotPasswordOneId extends LightningElement {
 	@api isSelfRegistrationEnabled;
 	@api troubleShootingUrl;
 
-	labels = {
-		emailLabel,
-		loginLabel,
-		submitLabel,
-		passwordInfoLabel,
-		forgotPasswordLabel,
-		createNewAccountLabel,
-		troubleshootingLabel,
-		newAccountMessageLabel,
-		troubleshootingInfoLabel
-	};
+    labels = {
+        emailLabel,
+        loginLabel,
+        submitLabel,
+        passwordInfoLabel,
+        forgotPasswordLabel,
+        createNewAccountLabel,
+        troubleshootingLabel,
+        newUserMessageLabel,
+        troubleshootingInfoLabel
+    };
 
 	get pageParams(){
 		return getParamsFromPage();

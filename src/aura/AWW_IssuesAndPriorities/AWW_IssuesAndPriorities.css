@@ -22,6 +22,14 @@
 .THIS th.narrowColumn > span.slds-truncate {
   white-space: normal !important;
 }
+.THIS th.medColumn > span.slds-truncate.issuewiata {  
+  white-space: normal !important;
+  max-height: inherit;
+  vertical-align: middle;
+  display: inline-block;
+  height: inherit;
+  width: min-content;
+}
 .THIS .uiMenuList--default .uiMenuItem>a {
       height: 2em;
 }
@@ -32,6 +40,22 @@
 .THIS .close-button {
     border: 0 !important;
     background-color: transparent !important;
+}
+.THIS .slds-icon-action-description.custom-help-text {  
+  margin-left: 3px;
+  background-color: #706e6b;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1rem;
+  width: 1rem;
+  padding: 0;
+} 
+.THIS .custom-help-text svg {  
+  fill: #fff;
+  width: 0.60rem;
+  height: 0.6rem;
+  margin-left: 0.2rem;
 }
 
 @media (max-width: 1200px) {

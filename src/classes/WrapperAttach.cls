@@ -287,7 +287,13 @@ global class WrapperAttach implements Comparable {
 
 			AmazonFile__c aFile = this.fileAmazon.amazonfile.clone(false, true);
 			aFile.Full_Name_Unique__c = destFileName;
-			aFile.Case__c = sobjectId;
+			
+			if(String.valueOf(sobjectId.getSObjectType()) == 'Case'){
+				aFile.Case__c = sobjectId;
+			}
+			else {
+				aFile.sObject_Id__c = sobjectId;
+			}
 
 			AmazonFile cloned = this.fileAmazon.clone();
 			cloned.amazonFile = aFile;
