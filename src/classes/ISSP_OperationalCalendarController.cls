@@ -530,16 +530,23 @@ global without sharing class ISSP_OperationalCalendarController {
 				listEvents.add(event4);
 				if (sisType!=null && sisType.contains('ICH')) {
 					EventWrapper event5 = new EventWrapper();
-					event5.title = 'SIS ICH Settlement Day';
+					event5.title = 'ICH Settlement Day (Associated Members)';
 					event5.start = operation.Settlement_Day_Associated_Members__c;
 					event5.allDay = true;
 					event5.className = 'event_5';
 					event5.description = description;
 					listEvents.add(event5);
+					EventWrapper event6 = new EventWrapper();
+					event6.title = 'SIS ICH Call Day';
+					event6.start = operation.Call_Day__c;
+					event6.allDay = true;
+					event6.className = 'event_6';
+					event6.description = description;
+					listEvents.add(event6);
 				}
 				if (sisType!=null && sisType.contains('ACH')) {
 					EventWrapper event5 = new EventWrapper();
-					event5.title = 'SIS ACH Settlement Day';
+					event5.title = 'Settlement Day (ACH)';
 					event5.start = operation.Settlement_Day_ACH_Transactions__c;
 					event5.allDay = true;
 					event5.className = 'event_5';
