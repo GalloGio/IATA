@@ -153,7 +153,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                                 Country_of_publication__c: docs[el].record.Country_of_publication__c !== undefined ? docs[el].record.Country_of_publication__c.split(";").join(", ") : '', 
                                 Document_Category__c: docs[el].record.Document_Category__c, 
                                 Language__c: docs[el].record.Language__c, 
-                                LastModifiedDate: new Date(docs[el].record.LastModifiedDate).toLocaleDateString(),
+                                LastModifiedDate: new Date(docs[el].record.LastModifiedDate.substring(0,docs[el].record.LastModifiedDate.indexOf('.'))).toLocaleDateString(),                            
 								ContentUrl: docs[el].record.ContentUrl,
                                 bookMarked: docs[el].isBookmarked,
                                 ContentDocumentId: docs[el].record.ContentDocumentId,

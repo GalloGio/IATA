@@ -82,7 +82,7 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
             docList.forEach(elem=>{
                 elem.bookMarked=true;
                 elem.Country_of_publication__c=elem.Country_of_publication__c?elem.Country_of_publication__c.split(";").join(", ") : '';
-                elem.LastModifiedDate=new Date(elem.LastModifiedDate).toLocaleDateString();
+                elem.LastModifiedDate=new Date(elem.LastModifiedDate.substring(0,elem.LastModifiedDate.indexOf('.'))).toLocaleDateString();                
             });
             
             this.searchMode= this.keyword.length>0;
