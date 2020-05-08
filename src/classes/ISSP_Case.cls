@@ -322,8 +322,11 @@ public without sharing class ISSP_Case {
 		SurveyLanguage = UserInfo.getLanguage() ;
 
 		popContact();
-
-		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+		if(con != null){
+			isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+		}else{
+			isCNSAgency = false;
+		}
 		
 		//TF - SP9-C5
 		ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
