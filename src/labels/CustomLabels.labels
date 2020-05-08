@@ -12417,6 +12417,13 @@ Accepted documents for independent travel consultant/contractor/broker are:&lt;b
 Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;Applying for a first ID Card&quot;; or &quot;Go back to the Login Page&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
+        <fullName>IDCard_Continue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Continue</shortDescription>
+        <value>Continue</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Continue_Button</fullName>
         <language>en_US</language>
         <protected>false</protected>

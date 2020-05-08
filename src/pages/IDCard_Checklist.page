@@ -237,7 +237,7 @@
                                 <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup"/>
                                 <div class="checkBoxStyle"><apex:inputCheckbox id="checkboxGeralOptionChkBox" value="{!isCheckboxGeralOptionChecked}"/>
                                 {!$Label.IDCard_CheckBox}</div>             
-                                <apex:commandButton value="Continue" title="Close the popup" action="{!next}" styleClass="continueButton" rerender="popup"/>                               
+                                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" rerender="popup"/>                               
                             </apex:outputPanel>
                         </apex:outputPanel>
                     </div>                   

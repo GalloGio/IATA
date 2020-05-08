@@ -209,6 +209,9 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 
 	public void closePopup() {
 		isViewPopUpDisplayed = false;
+		if(isCheckboxGeralOptionChecked){
+			isCheckboxGeralOptionChecked = false;
+		}
 	}
 	public void openPopup() {
 		isViewPopUpDisplayed = true;
