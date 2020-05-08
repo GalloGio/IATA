@@ -20,8 +20,10 @@ import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkA
 import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
+import CSP_BookmarkDocAddToolTip from '@salesforce/label/c.CSP_BookmarkDocAddToolTip';
+import CSP_BookmarkDocRemToolTip from '@salesforce/label/c.CSP_BookmarkDocRemToolTip';
 
-import CurrencyCenter_Open from '@salesforce/label/c.CurrencyCenter_Open';
+import ISSP_View from '@salesforce/label/c.ISSP_View';
 
 import { refreshApex } from '@salesforce/apex';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -44,7 +46,9 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
         CSP_DocumentBookmarkRemoved,
         CSP_Success,
         PKB2_js_error,
-        CurrencyCenter_Open
+        CSP_BookmarkDocAddToolTip,
+        CSP_BookmarkDocRemToolTip,
+        ISSP_View
     };
 
     @track bookmarkData;//  wire result 
