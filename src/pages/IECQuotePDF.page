@@ -2,7 +2,6 @@
     
     <apex:stylesheet value="{!URLFOR($Resource.quotePDF)}"  />
 
-
     <!-- PDF Header -->
     <!-- Logo on the top of the page -->
     <div id="top_left">
@@ -16,7 +15,7 @@
 
     <table>
         <tr>
-            <td valign="top" width="59%">
+            <td valign="top" width="59%" style="font-family: Arial Unicode MS;">
                 {!vfQuote.billToContact.contactName} <br /> 
                 {!vfQuote.billToContact.accountName} <br />
                 {!vfQuote.billToAddress.street1} <br />
@@ -74,7 +73,7 @@
 
         <apex:repeat value="{!vfQuote.orderItems}" var="item">
         <tr style="padding-top:60px" class="item-row">
-            <td class="item-name">
+            <td class="item-name" style="font-family: Arial Unicode MS;">
                 {!item.productName}<br />
                 Product # {!item.productCode}
             </td>
@@ -95,102 +94,6 @@
                 </apex:outputText>
             </td>
             <td align="right" class="item-discount">
-
-                <!-- break down of discount -->
-                <!-- Discount in standardPrice -->
-                <!-- <apex:repeat value="{!item.PriceInfo.standardPrice}" var="pd"> -->
-                    <!-- Discount Amount -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountAmount != null && pd.discountAmount != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, currency}"> -->
-                            <!-- <apex:param value="{!pd.discountAmount}"/> -->
-                        <!-- </apex:outputText> <br /> -->
-                    <!-- </apex:outputPanel> -->
-                    <!-- Discount percentage -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountPercentage != null && pd.discountPercentage != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, 00.00}%"> -->
-                            <!-- <apex:param value="{!pd.discountPercentage}"/> -->
-                        <!-- </apex:outputText><br /> -->
-                    <!-- </apex:outputPanel> -->
-                    
-                <!-- </apex:repeat> -->
-
-                <!-- Discount in customerPrice -->
-                <!-- <apex:repeat value="{!item.PriceInfo.customerPrice}" var="pd"> -->
-                    <!-- Discount Amount -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountAmount != null && pd.discountAmount != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, currency}"> -->
-                            <!-- <apex:param value="{!pd.discountAmount}"/> -->
-                        <!-- </apex:outputText><br /> -->
-                    <!-- </apex:outputPanel> -->
-                    <!-- Discount percentage -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountPercentage != null && pd.discountPercentage != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, 00.00}%"> -->
-                            <!-- <apex:param value="{!pd.discountPercentage}"/> -->
-                        <!-- </apex:outputText><br /> -->
-                    <!-- </apex:outputPanel> -->
-                <!-- </apex:repeat> -->
-
-                <!-- Discount in regionPrice -->
-                <!-- <apex:repeat value="{!item.PriceInfo.regionPrice}" var="pd"> -->
-                    <!-- Discount Amount -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountAmount != null && pd.discountAmount != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, currency}"> -->
-                            <!-- <apex:param value="{!pd.discountAmount}"/> -->
-                        <!-- </apex:outputText> <br /> -->
-                    <!-- </apex:outputPanel> -->
-                    <!-- Discount percentage -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountPercentage != null && pd.discountPercentage != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, 00.00}%"> -->
-                            <!-- <apex:param value="{!pd.discountPercentage}"/> -->
-                        <!-- </apex:outputText><br /> -->
-                    <!-- </apex:outputPanel> -->
-                    
-                <!-- </apex:repeat> -->
-
-                <!-- Discount in countryPrice -->
-                <!-- <apex:repeat value="{!item.PriceInfo.countryPrice}" var="pd"> -->
-                    <!-- Discount Amount -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountAmount != null && pd.discountAmount != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, currency}"> -->
-                            <!-- <apex:param value="{!pd.discountAmount}"/> -->
-                        <!-- </apex:outputText> <br /> -->
-                    <!-- </apex:outputPanel> -->
-                    <!-- Discount percentage -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountPercentage != null && pd.discountPercentage != 0}" > -->
-                        <!-- <apex:outputText value="{!pd.discountName}" /> discount: -->
-                        <!-- <apex:outputText value="{0, number, 00.00}%"> -->
-                            <!-- <apex:param value="{!pd.discountPercentage}"/> -->
-                        <!-- </apex:outputText><br /> -->
-                    <!-- </apex:outputPanel> -->
-                    
-                <!-- </apex:repeat> -->
-
-                <!-- Discount in preSalePrice -->
-                <!-- <apex:repeat value="{!item.PriceInfo.preSalePrice}" var="pd"> -->
-                    <!-- Discount Amount -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountAmount != null && pd.discountAmount != 0}" >
-                        <apex:outputText value="{!pd.discountName}" /> discount:
-                        <apex:outputText value="{0, number, currency}">
-                            <apex:param value="{!pd.discountAmount}"/>
-                        </apex:outputText> <br />
-                    </apex:outputPanel> -->
-                    <!-- Discount percentage -->
-                    <!-- <apex:outputPanel rendered="{!pd.discountPercentage != null && pd.discountPercentage != 0}" >
-                        <apex:outputText value="{!pd.discountName}" /> discount:
-                        <apex:outputText value="{0, number, 00.00}%">
-                            <apex:param value="{!pd.discountPercentage}"/>
-                        </apex:outputText><br />
-                    </apex:outputPanel> -->
-                <!-- </apex:repeat> -->
-                <!-- End break down of discount -->
-
                 <apex:outputText value="{0, number, currency}">
                     <apex:param value="{!item.discountAmount}"/>
                 </apex:outputText>
@@ -264,5 +167,4 @@
         </tr>
         </tbody>
     </table>
-
 </apex:page>

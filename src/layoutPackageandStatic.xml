@@ -10,10 +10,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomLabel</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>CustomMetadata</name>
     </types>
     <types>
@@ -95,10 +91,6 @@
     <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Translations</name>
     </types>
     <version>47.0</version>
 </Package>
