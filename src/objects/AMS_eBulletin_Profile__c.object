@@ -177,6 +177,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Agency_Info_Forms_of_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To show changes on Forms of Payment applicable to Passenger and Domestic programs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Changes on Forms of Payment applicable to Passenger and Domestic programs</inlineHelpText>
+        <label>Forms of Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Agency_Info_Irregularities__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Irregularities</description>
@@ -606,7 +617,8 @@
      Agency_Info_Defaults__c == false, 
      Agency_Info_Termination_Closures__c == false,
      Agency_Info_Reviews__c == false, 
-    Agency_Info_Reinstatements__c == false 
+     Agency_Info_Reinstatements__c == false,
+     Agency_Info_Forms_of_Payment__c == false
   ),false
   )</errorConditionFormula>
         <errorMessage>DAILY Bulletin - Please select at least the Agency Information of interest</errorMessage>
@@ -680,7 +692,8 @@ Agency_Info_Termination_Closures__c == false,
 Agency_Info_Reviews__c == false,
 Agency_Info_New_Aplication_Processes__c == false,
 Agency_Info_Agency_Changes__c == false, 
-Agency_Info_Reinstatements__c == false 
+Agency_Info_Reinstatements__c == false,
+Agency_Info_Forms_of_Payment__c == false
 ),false 
 )</errorConditionFormula>
         <errorMessage>WEEKLY Bulletin - Please select the Agency Information of interest</errorMessage>

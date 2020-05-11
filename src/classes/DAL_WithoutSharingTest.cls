@@ -32,6 +32,7 @@ public with sharing class DAL_WithoutSharingTest {
 		parent.Location_Type__c = 'HO';
 		parent.RecordTypeId = rtIdBr;
 		parent.IATACode__c = '100';
+		parent.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
 		insert parent;
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
@@ -46,6 +47,7 @@ public with sharing class DAL_WithoutSharingTest {
 		child.ANG_IEP_Status__c = 'No IEP Account';
 		child.Location_Type__c = 'HE';
 		child.Location_Class__c = 'P';
+		child.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
 		insert child;
 
 		Contact con = ISSP_ObjectFactory.createNewContact();

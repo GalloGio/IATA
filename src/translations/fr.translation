@@ -16139,10 +16139,6 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez nous contacter pour informer l’IATA d’un changement de coordonnées bancaires		</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>

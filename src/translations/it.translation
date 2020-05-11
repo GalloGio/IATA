@@ -16106,10 +16106,6 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Per comunicare un eventuale modifica delle coordinate bancarie contattare IATA</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
