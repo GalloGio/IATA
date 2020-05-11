@@ -7526,6 +7526,18 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <label>Cambiar imagen</label>
         <name>ID_Card_Change_Photo_Button</name>
     </customLabels>
+        <customLabels>
+        <label>He leído la lista de documentos requeridos.</label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
+        <label>Es posible que necesite los siguientes documentos para completar la solicitud de la tarjeta ID Card. Con fines de verificación, IATA podrá pedir documentos o información adicionales al solicitante. Una declaración falsa dará lugar a la cancelación y bloqueo futuro de la solicitud de la tarjeta ID Card.</label>
+        <name>IDCard_CheckList_ErrorMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label>Siguiente</label>
+        <name>IDCard_Continue</name>
+    </customLabels>
     <customLabels>
         <label>Por favor, confirme el reemplazo de tarjeta ID</label>
         <name>ID_Card_Confirm_Replacement</name>

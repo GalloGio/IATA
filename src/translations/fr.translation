@@ -7533,6 +7533,18 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Change_Photo_Button</name>
     </customLabels>
     <customLabels>
+        <label>J’ai lu la liste des documents requis.</label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
+        <label>Le ou les documents suivants pourraient être nécessaires afin de compléter la demande de carte d&apos;identité. À des fins de vérification, il est possible que IATA vous demande des informations ou des documents supplémentaires. Une fausse déclaration entraînera une annulation et bloquera toute demande future.</label>
+        <name>IDCard_CheckList_ErrorMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label>Continuer</label>
+        <name>IDCard_Continue</name>
+    </customLabels>
+    <customLabels>
         <label>Veuillez confirmer le remplacement de la Carte</label>
         <name>ID_Card_Confirm_Replacement</name>
     </customLabels>
