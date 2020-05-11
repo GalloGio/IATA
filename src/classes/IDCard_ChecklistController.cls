@@ -5,8 +5,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Boolean isProofNameOptionActive {get; private set;}
 	public Boolean isCreditCardOptionActive {get; private set;}
 	public Boolean isCreditCardAndChequeOptionActive {get; private set;}
-
-	public Boolean isCheckboxGeralOptionChecked {get; set;}
 	public Boolean isViewPopUpDisplayed {get; set;}
 	//public Boolean isCreditCardAndChequeOptionChecked {get;set;}
 
@@ -155,7 +153,7 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Pagereference next() {
 
 		try {
-			if (!isCheckboxGeralOptionChecked) {
+			if (!isViewPopUpDisplayed) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage));
 				return null;
 			}
@@ -209,9 +207,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 
 	public void closePopup() {
 		isViewPopUpDisplayed = false;
-		if(isCheckboxGeralOptionChecked){
-			isCheckboxGeralOptionChecked = false;
-		}
 	}
 	public void openPopup() {
 		isViewPopUpDisplayed = true;

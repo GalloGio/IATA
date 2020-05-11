@@ -38,13 +38,13 @@ public class IDCard_ChecklistControllerTest{
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
 		Test.setCurrentPage (controllerPage);
-		// Testing New Application with checkbox not checked
+		// Testing New Application 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isCheckboxGeralOptionChecked = false; 
+		iDCard_ChecklistController.isViewPopUpDisplayed = false; 
 		nextPage = iDCard_ChecklistController.next();
-		// Testing New Application with checkbox checked
+		// Testing New Application 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isCheckboxGeralOptionChecked = true;
+		iDCard_ChecklistController.isViewPopUpDisplayed = true;
 		nextPage = iDCard_ChecklistController.next();
 
 
@@ -56,13 +56,14 @@ public class IDCard_ChecklistControllerTest{
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
 		Test.setCurrentPage (controllerPage);
-		// Testing Replacement with checkbox not checked 
+		// Testing Replacement 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isCheckboxGeralOptionChecked = false; 
+		iDCard_ChecklistController.isViewPopUpDisplayed = false; 
 		nextPage = iDCard_ChecklistController.next();
-		// Testing Replacement with checkbox checked
+		nextPage = iDCard_ChecklistController.back();
+		// Testing Replacement 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isCheckboxGeralOptionChecked = true;
+		iDCard_ChecklistController.isViewPopUpDisplayed = true;
 		nextPage = iDCard_ChecklistController.next();
 		nextPage = iDCard_ChecklistController.back();
 		
