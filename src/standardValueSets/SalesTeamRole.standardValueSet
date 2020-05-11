@@ -16,4 +16,14 @@
         <default>false</default>
         <label>Portal Administrator</label>
     </standardValue>
+    <standardValue>
+        <fullName>Customer Service Champion</fullName>
+        <default>false</default>
+        <label>Customer Service Champion</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Agency Management Champion</fullName>
+        <default>false</default>
+        <label>Agency Management Champion</label>
+    </standardValue>
 </StandardValueSet>
