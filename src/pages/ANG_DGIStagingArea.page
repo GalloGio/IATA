@@ -135,7 +135,7 @@
                     <apex:actionRegion>
 
                         <apex:pageBlockSectionItem>
-                            <apex:outputLabel value="Add Certificate of Endorsment" />
+                            <apex:outputLabel value="Add Certificate of Endorsement" />
                             <apex:inputCheckbox value="{!addCertificate}" id="addCertificateId"> 
                                 <apex:actionsupport event="onchange" rerender="stagingAreaForm" action="{!createStagingAreaDefault}" />
                             </apex:inputCheckbox>

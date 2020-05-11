@@ -627,6 +627,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>ISSP Page Hover For BSP Agency</label>
     </fieldSets>
     <fieldSets>
@@ -1302,6 +1307,8 @@
     <listViews>
         <fullName>All_SIS</fullName>
         <columns>NAME</columns>
+        <columns>Call_Day__c</columns>
+        <columns>Period_Code__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
