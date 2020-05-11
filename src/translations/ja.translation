@@ -26131,6 +26131,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>issp_apppicker_select_role</name>
     </customLabels>
     <customLabels>
+        <label><!-- issue with iata help text --></label>
+        <name>issue_with_iata</name>
+    </customLabels>
+    <customLabels>
         <label><!-- label custom price --></label>
         <name>label_custom_price</name>
     </customLabels>
@@ -32788,6 +32792,19 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Cases with WW HQ Agents Accounts --></description>
+        <label><!-- Cases with WW HQ Agents Accounts --></label>
+        <name>Cases_with_WW_HQ_Agents_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Cases with World Wide Accounts --></description>
         <label><!-- Cases with World Wide Accounts --></label>
         <name>Cases_with_World_Wide_Accounts</name>
@@ -35101,6 +35118,15 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>
