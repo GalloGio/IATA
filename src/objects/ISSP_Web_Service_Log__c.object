@@ -392,8 +392,12 @@
             <field>Error_Code__c</field>
             <operation>notEqual</operation>
         </filters>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>equals</operation>
+            <value>ProcessBSPLinkFromCase</value>
+        </filters>
         <label>BSPlink</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Debug_View</fullName>
