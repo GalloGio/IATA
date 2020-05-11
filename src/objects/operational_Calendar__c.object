@@ -788,6 +788,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>Call_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Protest_Deadline__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>

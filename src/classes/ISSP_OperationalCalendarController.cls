@@ -537,7 +537,7 @@ global without sharing class ISSP_OperationalCalendarController {
 					event5.description = description;
 					listEvents.add(event5);
 					EventWrapper event6 = new EventWrapper();
-					event6.title = 'SIS ICH Call Day';
+					event6.title = 'ICH Call Day';
 					event6.start = operation.Call_Day__c;
 					event6.allDay = true;
 					event6.className = 'event_6';
