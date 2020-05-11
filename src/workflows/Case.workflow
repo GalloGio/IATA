@@ -1550,15 +1550,15 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2970,10 +2970,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3039,6 +3035,10 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3119,10 +3119,6 @@
         </recipients>
         <recipients>
             <recipient>garciatef@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gilj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3207,6 +3203,10 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
