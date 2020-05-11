@@ -252,6 +252,9 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
         let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject));
         paginationObjectAux.currentPage = requestedPage;
         this.paginationObject = paginationObjectAux;      
+
+        document.body.scrollTop = 0; // For Safari
+        window.scrollTo({top: 0, behavior: 'smooth'});
 	}
 
 }
