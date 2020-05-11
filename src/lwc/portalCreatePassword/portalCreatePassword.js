@@ -198,7 +198,7 @@ export default class PortalCreatePassword extends LightningElement {
 			createUser({
 				paramStr : JSON.stringify(this.registrationParams),
 				password : this.password,
-				landingPage : startUrl,
+				landingPage : this._startUrl,
 				urlParams : this.pageParams
 			}).then(result => {
 				if(result.isSuccess){
