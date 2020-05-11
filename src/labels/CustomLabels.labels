@@ -4470,6 +4470,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP First Login Desc</shortDescription>
         <value>Your account has been created successfully. You can now discover the standard features within the Portal. Some other features require further details, please complete your Profile for full access.</value>
     </labels>
+	<labels>
+		<fullName>CSP_First_Login_Desc_LMS_IE</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP First Login Desc LMS</shortDescription>
+		<value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
+	</labels>    
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
         <categories>CS Portal</categories>
@@ -4478,6 +4486,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP First Login Title</shortDescription>
         <value>Welcome on board</value>
     </labels>
+	<labels>
+		<fullName>CSP_First_Login_Title_IE</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP First Login Title</shortDescription>
+		<value>Welcome to the IATA Customer Portal</value>
+	</labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
@@ -6000,7 +6016,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
-        <value>The Personal email you have provided is already associated with an existing user. Please use your own Personal email address and not a shared email.</value>
+        <value>The Personal email you have provided is already associated with an existing user whose name is different from yours. Please use your own Personal email address and not a shared email.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Retry_Message</fullName>
@@ -46303,14 +46319,22 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Email Infoermation</shortDescription>
         <value>Email information</value>
     </labels>
+	<labels>
+		<fullName>CSP_L3_ExistingContact_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Existing Contact</shortDescription>
+		<value>The personal email you have provided is already used with this login email [Existing_email]. In order to ensure the data integrity of your training record, personal and work emails must be unique. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If the above personal email address is correct and [Email] is your current work email, please click save (once) to merge your training account. Your merged login will be [Email]. &lt;/li&gt;</value>
+	</labels>
     <labels>
-        <fullName>CSP_L3_ExistingContact_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Existing Contact</shortDescription>
-		<value>The personal email you have provided is already used with this login email [Existing_email]. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If [Email] is your current work email address, please click next so your training record can be merged. From then on you will only be able to login using [Email]. &lt;/li&gt;&lt;li&gt;If [Existing_email] is your current work email address, please login in with this email instead. &lt;/li&gt;&lt;li&gt;If you work for more than one organization and both work emails are relevant/valid, contact us so we can ensure the integrity of your training records with us. &lt;/li&gt;&lt;/ul&gt;</value>
-    </labels>
+		<fullName>CSP_L3_ExistingContact_LMS2</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Existing Contact</shortDescription>
+		<value>&lt;li&gt;If the above personal email address is correct but [Existing_email] is your current work email, please click cancel and log back in using this work email instead. Please &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;contact us&lt;/a&gt; quoting both work emails if you wish to merge your training record.&lt;/li&gt;&lt;li&gt;If you work for more than one organization and both work emails are relevant/valid, please only input your personal email on the user where most of the training will happen.&lt;/li&gt;&lt;/ul&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_L3_ExistingUser_LMS</fullName>
         <categories>CS Portal</categories>
@@ -46834,6 +46858,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
 		<protected>false</protected>
 		<shortDescription>CSP Registration Existing work Message</shortDescription>
 		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above work email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
+	</labels>
+    <labels>
+		<fullName>CSP_Registration_Existing_Work_Message_LMS_Profile</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Registration Existing work Message</shortDescription>
+		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click save. Once you confirm you have access to the above Personal email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
 	</labels>
 	<labels>
         <fullName>Contact_Email</fullName>

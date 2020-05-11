@@ -21,7 +21,14 @@
 
                     <div class="slds-p-right_large slds-p-top_medium headerTitle">
                         <span class="slds-p-left_large">
-                            <span><img src={successIcon} height="55" width="55" class=""></span>
+                            <div if:false={isIEBrowser}>
+                                <span><img src={successIcon} height="55" width="55" class=""></span>
+                            </div>
+                            <div if:true={isIEBrowser}>
+                                <div if:false={isL3Registration}>
+                                    <span><img src={successIcon} height="55" width="55" class=""></span>
+                                </div>
+                            </div>
                         </span>
                         <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                             <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
@@ -43,7 +50,17 @@
 
                                 <div class="slds-p-bottom_x-small">
                                     <span class="text-medium text-darkGray text-bold">
-                                        <span>{labels.CSP_First_Login_Title}</span>
+                                        <div if:false={isIEBrowser}>
+                                            <span>{labels.CSP_First_Login_Title}</span>
+                                        </div>
+                                        <div if:true={isIEBrowser}>
+                                            <div if:true={isL3Registration}>
+                                                <span>{labels.CSP_First_Login_Title_IE}</span>
+                                            </div>
+                                            <div if:false={isL3Registration}>
+                                                <span>{labels.CSP_First_Login_Title}</span>
+                                            </div>
+                                        </div>
                                         <br/>
                                         <span>{userName}</span>
                                     </span>
@@ -67,13 +84,23 @@
                                     </div>
                                     <div if:true={isL3Registration}>
                                     
-                                        <div class="slds-p-bottom_x-large" style="max-width: 480px;">
-                                            <lightning-formatted-rich-text value={labels.CSP_First_Login_Desc_LMS} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
-                                            <!--<span class="fixed-text text-gray">{labels.CSP_First_Login_Desc}</span>-->
+                                        <div if:false={isIEBrowser}>
+                                            <div class="slds-p-bottom_x-large" style="max-width: 480px;">
+                                                <lightning-formatted-rich-text value={labels.CSP_First_Login_Desc_LMS} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                                            </div>
+                                            
+                                            <div class="slds-p-bottom_large slds-float_right" style="width:70%;">
+                                                <lightning-button class="containedButtonLogin" label={labels.CSP_Complete_Profile_LMS} onclick={handleAccept} ></lightning-button>
+                                            </div>
                                         </div>
-                                        
-                                        <div class="slds-p-bottom_large slds-float_right" style="width:70%;">
-                                            <lightning-button class="containedButtonLogin" label={labels.CSP_Complete_Profile_LMS} onclick={handleAccept} ></lightning-button>
+                                        <div if:true={isIEBrowser}>
+                                            <div class="slds-p-bottom_x-large" style="max-width: 480px;">
+                                                <lightning-formatted-rich-text value={labels.CSP_First_Login_Desc_LMS_IE} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                                            </div>
+                                            
+                                            <div class="slds-p-bottom_large slds-float_right" style="width:70%;">
+                                                <lightning-button class="containedButtonLogin" label={labels.CSP_LogOut} onclick={handleLogOut} ></lightning-button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -1656,7 +1656,9 @@ public with sharing class PortalServicesCtrl {
 		}
 
 		String baseUrl = Site.getBaseSecureUrl();
-		String pathPrefix = Site.getPathPrefix().replace('/s', '');
+		baseUrl = baseUrl.replace('/s', '');
+		//String pathPrefix = Site.getPathPrefix().replace('/s', '');
+		String pathPrefix = '';
 
 		if(requiredDataPopulated && latestToSAccepted && serviceExists){
 	

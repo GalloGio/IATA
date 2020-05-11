@@ -3504,7 +3504,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
 			accountConcerned.TradeName__c = newForm.Trade_Name__c;
 		}
-
 		upsert accountConcerned;
 	}
 
@@ -3534,9 +3533,10 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		try {
-			if (isNoticeOfChange && !isBankAccountChange && newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && isocountry.Enable_Minor_Changes_from_Portal__c)
-				updateAccountDetails();
-
+			//INC536200 - Minor Change should be only applied directly into the account for AMS agency
+			Set<String> newgenLocations = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.AE};
+			if (isNoticeOfChange && !isBankAccountChange && newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && isocountry.Enable_Minor_Changes_from_Portal__c && !newgenLocations.contains(hqAccount.Location_Type__c)) updateAccountDetails();
+			
 			if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID) {
 				setPortalAdminContact(); //Portal Admin is stored on AMS Form; for OSCAR Countries need to set AMS Contact as Portal Admin on submit
 				setInvoicingContact(); // CB AMSU-10
