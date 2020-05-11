@@ -38,6 +38,13 @@
         <value>Active</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Invoiced</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Invoiced</shortDescription>
+        <value>Invoiced</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
