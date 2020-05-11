@@ -22,8 +22,8 @@
 }
 
 .imgSize{
-    max-width:48px;
-    max-height: 48px;
+    width:48px;
+    height: 48px;
 }
 
 .titleTruncation {
