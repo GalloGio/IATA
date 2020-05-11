@@ -34,9 +34,13 @@
 			<div class="profileItem">
 				<lightning-layout-item size="6" class="rightItem">
 					<div class="dataLabel">{labels.CSP_L2_Date_of_Birth}</div>
-					<div class="dataValue">{contactInfo.Birthdate}</div>
+					<div class="dataValue">
+						<lightning-formatted-date-time value={contactInfo.Birthdate}
+						year="numeric" month="2-digit" day="2-digit"></lightning-formatted-date-time>
+					</div>
 				</lightning-layout-item>
 			</div>
+
 			
 			<lightning-layout-item padding="around-small" size="12">
 			</lightning-layout-item>

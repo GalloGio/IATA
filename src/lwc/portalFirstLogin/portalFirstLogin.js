@@ -21,7 +21,9 @@ import CSP_Complete_Profile                  from '@salesforce/label/c.CSP_Compl
 import CSP_PortalPath                        from '@salesforce/label/c.CSP_PortalPath';
 import CSP_First_Login_Desc_LMS				 from '@salesforce/label/c.CSP_First_Login_Desc_LMS';
 import CSP_Complete_Profile_LMS				 from '@salesforce/label/c.CSP_Complete_Profile_LMS';
-
+import CSP_LogOut 							 from '@salesforce/label/c.CSP_LogOut';
+import CSP_First_Login_Title_IE 			 from '@salesforce/label/c.CSP_First_Login_Title_IE';
+import CSP_First_Login_Desc_LMS_IE 			 from '@salesforce/label/c.CSP_First_Login_Desc_LMS_IE';
 
 export default class PortalFirstLogin extends LightningElement {
 
@@ -33,6 +35,7 @@ export default class PortalFirstLogin extends LightningElement {
 	@track userName = "";
 	@track isFirstLevelUser;
 	@track isL3Registration = false;
+	@track isIEBrowser = false;
 
 	@api registrationlevel; //FOR LMS L3
 
@@ -43,7 +46,10 @@ export default class PortalFirstLogin extends LightningElement {
 		CSP_Complete_Profile,
 		CSP_PortalPath,
 		CSP_First_Login_Desc_LMS,
-		CSP_Complete_Profile_LMS
+		CSP_Complete_Profile_LMS,
+		CSP_LogOut,
+		CSP_First_Login_Title_IE,
+		CSP_First_Login_Desc_LMS_IE
 	}
 
 	get labels() {
@@ -55,7 +61,8 @@ export default class PortalFirstLogin extends LightningElement {
 
 	connectedCallback(){
 
-		console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
+        let browser = this.browserType();
+		this.isIEBrowser = browser.indexOf('IE') >= 0 ? true : false;
 
 		if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
 			this.isL3Registration = true;
@@ -69,7 +76,6 @@ export default class PortalFirstLogin extends LightningElement {
 
 	@wire(getRecord, { recordId: userId, fields: ['User.Name'] })
 	WireGetUserRecord(result) {
-		console.log('result: ', result);
 		if (result.data) {
 			let user = JSON.parse(JSON.stringify(result.data));
 			let userName = user.fields.Name.value;
@@ -78,22 +84,39 @@ export default class PortalFirstLogin extends LightningElement {
 	}
 
 	handleCloseModal(){
-		console.log('closefirstloginpopup');
 		this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
 	}
 
 	handleAccept(){
 		//Changes to accomodate LMS L3
-
-		console.log('PortalFirstLogin - handleAccept this.registrationlevel - ', this.registrationlevel);
-		if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
-			console.log('triggerthirdlevelregistrationlms');
+	if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
 			this.dispatchEvent(new CustomEvent('triggerthirdlevelregistrationlms'));
 		}else{
 			if(this.isFirstLevelUser){
-				console.log('triggersecondlevelregistration');
 				this.dispatchEvent(new CustomEvent('triggersecondlevelregistration'));
 			}
 		}
 	}
+
+	handleLogOut(){
+		navigateToPage('/secur/logout.jsp?retUrl=' + CSP_PortalPath + 'login');
+    }
+    
+    browserType(){
+		let ua= navigator.userAgent;
+		let tem;
+		let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+
+		if(/trident/i.test(M[1])){
+			tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+			return 'IE '+(tem[1] || '');
+		}
+		if(M[1]=== 'Chrome'){
+			tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+			if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+		}
+		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+		return M.join(' ');
+	}	
 }

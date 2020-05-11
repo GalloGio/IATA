@@ -41,6 +41,7 @@ import CSP_L3_WorkEmail_LMS from '@salesforce/label/c.CSP_L3_WorkEmail_LMS';
 import CSP_L_PersonalEmail_LMS from '@salesforce/label/c.CSP_L_PersonalEmail_LMS';
 import CSP_L3_ExistingUser_LMS from '@salesforce/label/c.CSP_L3_ExistingUser_LMS';
 import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
+import CSP_L3_ExistingContact_LMS2 from '@salesforce/label/c.CSP_L3_ExistingContact_LMS2';
 import CSP_L3_StillWorkingP1_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP1_LMS';
 import CSP_L3_StillWorkingP2_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP2_LMS';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -189,6 +190,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L_PersonalEmail_LMS,
 		CSP_L3_ExistingUser_LMS,
 		CSP_L3_ExistingContact_LMS,
+		CSP_L3_ExistingContact_LMS2,
 		CSP_L3_StillWorkingP1_LMS,
 		CSP_L3_StillWorkingP2_LMS,
 		CSP_L3_Email_Validation_LMS,
@@ -525,7 +527,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 																this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 																this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
-																this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+																this.messageFlow7 = CSP_L3_ExistingContact_LMS + CSP_L3_ExistingContact_LMS2;
 																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 																this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 																this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);

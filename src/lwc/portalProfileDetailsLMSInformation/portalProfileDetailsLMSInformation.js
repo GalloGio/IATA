@@ -29,8 +29,9 @@ import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_L
 
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
 import CSP_Invalid_Email from '@salesforce/label/c.CSP_Invalid_Email';
-import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS';
+import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS_Profile';
 import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
+import CSP_L3_ExistingContact_LMS2 from '@salesforce/label/c.CSP_L3_ExistingContact_LMS2';
 import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
 import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
 import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
@@ -70,6 +71,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@track existingUsernameNotMatchingF6Visibility = false;
 	@track validated = false;
 	@track isFullNameMatching = true;
+	@track isMailChanged = false;
+	@track initialMail = '';
 
 	@track openVerificationMailSuccessModal = false;
 	@track openVerificationMailSuccessModalLogOut = false;
@@ -101,6 +104,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_Invalid_Email,
 		CSP_Registration_Existing_Work_Message_LMS,
 		CSP_L3_ExistingContact_LMS,
+		CSP_L3_ExistingContact_LMS2,
 		CSP_L3_VerificationMailTitle_LMS,
 		CSP_L2_VerificationToP1_LMS,
 		CSP_L2_VerificationToP2_LMS,
@@ -122,19 +126,21 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 		this.lms = 'yas';
 
+		//Set the initial mail to test if after changing the email to check if the change is equal to the initial email
+		this.initialMail = this.additionalEmail;
+
 		if(this.additionalEmail !== null && this.additionalEmail !== '' && this.additionalEmail != undefined){
 			this.validated = true;
 		}
+		
 
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
 		this.localAdditionalEmail = this.additionalEmail;
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
-
-
+	
 		// Retrieve Contact information
 		getContactInfo()
 			.then(result => {
-
 				this.localContactInfo = JSON.parse(JSON.stringify(result));
 				this.contactFound = this.contactInfo != null;
 
@@ -242,7 +248,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	handleSucess(event) {
 		this.isSaving = false;
 
-		if(this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
+		
+		if(this.isMailChanged && (this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7') ){
 
 			this.localContactInfo.flow = this.flow;
 			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
@@ -294,10 +301,10 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 				this.errorModalMessage = JSON.parse(JSON.stringify(error));
 				this.stopLoading();
 			});
+		}else{
+			this.closeModal();
 		}
 
-		//this.closeModal();
-	
     }
 
     handleError(event) {
@@ -310,7 +317,16 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	
 	handleFieldChange(event){
 		this.localAdditionalEmail = event.target.value;
-		this.validated = false;
+
+		//validate if the change return the email to its initial value
+		if(this.localAdditionalEmail === this.initialMail){
+			this.isMailChanged = false;
+			this.validated = true;
+		}else{
+			this.isMailChanged = true;
+			this.validated = false;
+		}
+		
 		this.existingPersonalUsernameVisibility = false;
 		this.existingUsernameVisibility = false;
 		this.existingUsernameNotMatchingF6Visibility = false;
@@ -427,7 +443,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 														this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 														this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
-														this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+														this.messageFlow7 = CSP_L3_ExistingContact_LMS + CSP_L3_ExistingContact_LMS2;
 														this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 														this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 														this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
