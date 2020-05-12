@@ -335,6 +335,21 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		System.assertEquals(1, controller.getRfPicklistValues().size());
 		System.assertEquals(false, controller.isOSCARCorrection);
 		System.assertEquals(false, controller.isStandardAgency);
+		System.assertEquals(false, controller.isSplitMcHierarchy);
+
+		controller.rfPerState = true;
+		controller.getRfPicklistValues();
+
+		controller.rightOptionsRF = new List<SelectOption> { new SelectOption('op1', 'op1') };
+		controller.save();
+
+		controller.rightOptionsRF.add(new SelectOption('op2', 'op2'));
+		controller.rightOptionsRF.add(new SelectOption('op3', 'op3'));
+		controller.save();
+		
+		controller.rfPerState = null;
+		controller.accreditationObj = null;
+		System.assertEquals(false, controller.rfPerState);
 
 		Test.stopTest();
 	}

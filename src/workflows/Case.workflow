@@ -15536,9 +15536,9 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Financial_Review_Type__c</field>
             <operation>notEqual</operation>
-            <value>Multicountry Annual</value>
+            <value>Multicountry Annual,Multicountry Quarterly,Multicountry Adhoc</value>
         </criteriaItems>
-        <description>When the case status changes to Submitted, the new case field  FA Submitted date field is automatically updated</description>
+        <description>When the case status changes to Submitted, the new case field  FA Submitted date field is automatically updated (except for multicountry agents)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

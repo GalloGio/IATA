@@ -526,7 +526,7 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY))
+			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST))
 				&& !hasFRRequiredStep) {
 				oscar.Dossier_Validation__c = Date.today();
 				oscar.Validation_result__c = 'Passed';
@@ -807,7 +807,7 @@ public with sharing class AMS_OSCAR_Automation {
 			if (oscar != null) {
 				oscar.Withdrawal_result__c = 'Passed';
 
-				if(oscar.Process__c == AMS_Utils.NGCHANGES){
+				if(oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
 					List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
 					if(riskEvents != null && !riskEvents.isEmpty()){
 						for(ANG_Agency_Risk_Event__c rEvent : riskEvents)
@@ -1186,9 +1186,9 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-
-				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
-					list<Account> acc = [SELECT ID, (SELECT ID FROM RHC_Informations__r) FROM ACCOUNT WHERE ID =:oscar.Account__c ];
+				Boolean isMulticountrySplit = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
+				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || isMulticountrySplit){
+					List<Account> acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :(isMulticountrySplit ? oscar.New_parent__c : oscar.Account__c) ];
 					List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
 
 					if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && !String.isBlank(pax[0].Preferred_RHC_currency__c)){

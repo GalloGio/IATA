@@ -57,11 +57,20 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 		result = controller.getIsAgencyChange();
 		result = controller.isNewGenHEProcess;
 		result = controller.isAnalystProfile;
-		/* commented as per NEWGEN-3301
-		result = controller.canBeDisplayed('Is_PCI_compliant__c',AMS_Utils.NGCORRECTION,'Corporate Card');
-		result = controller.canBeDisplayed('Is_PCI_compliant__c',AMS_Utils.NEWHELITE,'Corporate Card');
-		result = controller.canBeDisplayed('AnotherStuff',AMS_Utils.NGCORRECTION,'Corporate Card');
-		*/
+		System.assertNotEquals(null, controller.NGCONVERSIONMCTOSTANDARD);
+		System.assertNotEquals(null, controller.NGCONVERSIONTOMULTICOUNTRY);
+		System.assertNotEquals(null, controller.CONFIRM_MC_CONVERSION_MSG);
+		System.assert(controller.isParentOscar);
+		System.assertEquals(null, controller.cannotProceedConversionToStandardMessage);
+		System.assert(! controller.isGEwithNoHierarchy);
+		System.assert(! controller.isAMSCheckRemittance);
+		System.assert(! controller.getIsGDIWithNoParentCase());
+		System.assert(! controller.isNewGEConversion);
+		System.assert(! controller.isNewGE);
+		System.assert(! controller.isValidationCompleted);
+		System.assert(! controller.isNewgenRT);
+		System.assert(! controller.blockFAoptOut);
+		System.assert(controller.hideFAoptOut);
 		Test.stopTest();
 	}
 
