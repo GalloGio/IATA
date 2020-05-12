@@ -502,13 +502,6 @@
 
         function loadMultiCountryNoC() {
             if ({!isNoticeOfChange} && {!isStep1}) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
-                    $('[id$="nocThirdQuestion"]').find("input")[1].checked = true; //default select as a temporary solution
-
-                    $('[id$="nocThirdQuestion"]').find("input")[1].disabled = true;
-                    $('[id$="nocThirdQuestion"]').find("input")[0].disabled = true;
-                }
-
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
@@ -548,8 +541,9 @@
 
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
-                    $('[id$="nocThirdQuestion"]').css('display', 'none');
-                } else if ('{!hqAccount.Sector__c}' == 'Travel Agent') {
+                }
+
+                if ('{!hqAccount.Sector__c}' == 'Travel Agent' && !{!isBankAccountChange}) {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
 
@@ -768,7 +762,7 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
                                             {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
@@ -965,7 +959,7 @@
                                 </div>
                             </div>
 
-                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocThirdQuestion" style="display: none;">
+                            <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
                                 <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
                                     <div class="form-group">
                                         <label for="typeOfChange" class="col-lg-3 control-label">
@@ -1393,8 +1387,8 @@
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
                         <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
-                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!NOT(isMCAccredited)}"/>
-                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!isMCAccredited}" onclick="showfinalConfirmationNoCMCModal();"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!OR(NOT(isMCAccredited), isBankAccountChange)}"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!AND(isMCAccredited, NOT(isBankAccountChange))}" onclick="showfinalConfirmationNoCMCModal();"/>
                         
                         <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5NoC"/>
                     </apex:outputPanel></apex:facet>

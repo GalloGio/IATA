@@ -115,7 +115,7 @@
         </rules>
     </decisions>
     <description>Process to manage changes to Portal Service Application records for Services. The Process will invoke a sub-process for managing the activities related to onboarding a User for a particular Service.</description>
-    <interviewLabel>Service_User_Provisioning-33_InterviewLabel</interviewLabel>
+    <interviewLabel>Service_User_Provisioning-1_InterviewLabel</interviewLabel>
     <label>Service User Provisioning</label>
     <processMetadataValues>
         <name>ObjectType</name>

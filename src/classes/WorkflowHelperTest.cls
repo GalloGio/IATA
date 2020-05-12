@@ -90,7 +90,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Name','NewGenAgencyAE');
 		fieldsOfObject.put('Short_Name__c','NewGenAgency');
 		fieldsOfObject.put('Location_Class__c','P');
-		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Location_Type__c',AMS_Utils.AE);
 		fieldsOfObject.put('Remittance_frequency__c','M');
 		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
 		fieldsOfObject.put('Company_Type__c','A');
@@ -152,7 +152,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Name','NewGenAgencyAE');
 		fieldsOfObject.put('Short_Name__c','NewGenAgency');
 		fieldsOfObject.put('Location_Class__c','P');
-		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Location_Type__c',AMS_Utils.AE);
 		fieldsOfObject.put('Remittance_frequency__c','M');
 		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
 		fieldsOfObject.put('Company_Type__c','A');

@@ -58,8 +58,8 @@ public  class CaseChildHelper {
 		// 1) have no parent case, status "Assessment Performed" and "Resubmission of accounts" != null
 		// 2) have the have status "Assessment Performed" and a parent
 		for(integer i=0; i < news.size(); i++) {
-			// I consider only IFAP cases
-			if(news[i].RecordTypeId != IFAPrt)
+			// Only consider IFAP cases for standard agents
+			if(news[i].RecordTypeId != IFAPrt || AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(news[i].Financial_Review_Type__c))
 				continue;
 
 			// INC196368 - added exception to skip validation for IATA System user profile

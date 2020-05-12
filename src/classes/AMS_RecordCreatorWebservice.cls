@@ -31,6 +31,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
+	public static String CONVERT_TO_ST = 'ANG.CONVERT.MC.TO.ST';
 	private static Id mainRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
 	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
@@ -82,7 +83,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 					ownerId = cse.OwnerId;
 				}
 
-				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC)){
+				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST)){
 					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
 				}
 			}
@@ -115,9 +116,14 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 				oscarCase.OSCAR__c = oscarId;
 
-				if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
-					if(oscarCase.AccountId != realAccountId)
+				if (typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV)
+					|| typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV)
+					|| typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWNAE)
+					|| typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV)
+					|| typeOfProcess.equalsIgnoreCase(CONVERT_TO_ST)) {
+					if (oscarCase.AccountId != realAccountId)
 						oscarCase.AccountId = realAccountId;
+				}
 
 				String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
 
@@ -360,6 +366,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 			return AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY;
 		}
 
+		if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_ST)) {
+			return AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD;
+		}
+
 		return null;
 	}
 
@@ -425,7 +435,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			}
 		}
 
-		Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT, AMS_Utils.NGCONVERSIONTOMULTICOUNTRY};
+		Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT, AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NGCONVERSIONMCTOST};
 		if(processesToUpdateCaseOnOscar.contains(processType)){
 			oscar.Oscar_Communication_Case_Id__c = caseId;
 		}
@@ -661,7 +671,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			throw new CalloutException('Account Id must be filled.');
 
 		Account account = new Account(Id = accountId);
-		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, Sector__c , Category__c,  (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
+		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, ANG_IsNewGenAgency__c, Sector__c , Category__c,(SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
 		if(a == null)
 			throw new CalloutException('Account could not be found.');

@@ -3,41 +3,62 @@
 **/
 public with sharing class SidraLiteHelperForIFAP {
 
-	public class SidraLiteException extends Exception {}
+	public class SidraLiteException extends Exception { }
 
 	public static final set<String> STATUS_FOR_FA = new set<String>{
-		'Agent Notified (Mail)',
-		'Agent Notified (Email)',
-		'Financial Statements Uploaded',
-		'Sanity Check Failure'};
-	public static final set<String> STATUS_FOR_FS = new set<String>{
-			'Financial Security Requested'};
+		AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_MAIL,
+		AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_EMAIL,
+		AMS_Utils.CASE_STATUS_FINANCIAL_STATEMENTS_UPLOADED,
+		AMS_Utils.CASE_STATUS_SANITY_CHECK_FAILURE
+	};
+	public static final set<String> STATUS_FOR_FS = new set<String>{AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
 	public static final set<String> STATUS_NOT_VALID = new set<String>{
-		'Action Needed',
-		'Agent to be Notified',
-		'Agent to be notified (Email)',
-		'Assessment Performed',
-		'Financial Security Provided',
-		'Re-open/ed',
-		'Submitted',
-		'Assessment Cancelled',
-		'Closed'};
+		AMS_Utils.CASE_STATUS_ACTION_NEEDED,
+		AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED,
+		AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED_EMAIL,
+		AMS_Utils.CASE_STATUS_ASSESSMENT_PERFORMED,
+		AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_PROVIDED,
+		AMS_Utils.CASE_STATUS_RE_OPENED,
+		AMS_Utils.CASE_STATUS_SUBMITTED,
+		AMS_Utils.CASE_STATUS_ASSESSMENT_CANCELED,
+		AMS_Utils.CASE_STATUS_CLOSED
+	};
+	
+	private static final String FS_LETTER_NOT_TICKED = 'The "FS Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.';
+	private static final String FA_LETTER_NOT_TICKED = 'The "FA Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.';
+	private static final String INVALID_ACTION_CLICK_APPLY_CASH_CONDITION = 'Invalid action, you need to click on the button in order to apply Cash condition true.';
+	private static final String INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION = 'Invalid action, you need to click on the button in order to remove Cash condition.';
+	private static final String SIDRA_LITE_CANNOT_BE_CREATED = 'A SIDRA lite case cannot be created when the parent case status is {{parentStatus}}';
+	private static final String SIDRA_LITE_PROCESS_THIRD_NON_COMPLIANCE_WARNING = 'Process third non-compliance date, continue?';
+	@TestVisible
+	private static final String SIDRA_LITE_PROCESS_SECOND_NON_COMPLIANCE_WARNING = 'Process second non-compliance date, continue?';
 
 	/**
 		Bussines Rules checked before inserting and updating SIDRA lite Cases
 	**/
 	public static void checkBussinessRules(Case parentCase) {
+
+		IFAP_WebService.IFAPActionWrapper ifapAction = ANG_MulticountryHelper.assessOnGoingNonCompliance(parentcase);
+
+		if(ifapAction != null){
+			if(ifapAction.redirectUserToIFAP){
+				throw new WSSidraLite.ShowOnGoingNonComplianceConfirmationException(ifapAction.message);
+			} else {
+				throw new SidraLiteException(ifapAction.message);
+			}
+		}
+
 		// check parent status if FA letter sent
 		if ( !parentCase.FA_Letter_Sent__c && STATUS_FOR_FA.contains(parentCase.Status) ){
-			throw new SidraLiteException('The "FA Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.');
+			throw new SidraLiteException(FA_LETTER_NOT_TICKED);
 		}
 		// check parent status if FS letter sent
 		if ( !parentCase.FS_Letter_Sent__c && STATUS_FOR_FS.contains(parentCase.Status) ){
-			throw new SidraLiteException('The "FS Letter Sent" check box has not been ticked, kindly send the physical letter requesting the financial documents to the Agent before you proceed.');
+			throw new SidraLiteException(FS_LETTER_NOT_TICKED);
 		}
 		// check parent status
 		if ( STATUS_NOT_VALID.contains(parentCase.Status) ){
-			throw new SidraLiteException('A SIDRA lite case cannot be created when the parent case status is ' + parentCase.Status);
+			throw new SidraLiteException(SIDRA_LITE_CANNOT_BE_CREATED.replace('{{parentStatus}}', parentCase.Status));
 		}
 
 		/*NEWGEN-5320*/
@@ -46,24 +67,20 @@ public with sharing class SidraLiteHelperForIFAP {
 	}
 
 	public static void verifyNewgenBusinessRules(Case parentCase){
-		boolean firstRule =  parentCase.Financial_Review_Result__c <> null && parentCase.Financial_Review_Result__c <> '';
-		boolean secondRule = parentCase.Assessment_Performed_Date__c > parentCase.FA_Second_Deadline_Date__c;
 
-		Account acct= [Select Id, ANG_IsNewGenAgency__c,ANG_CashCondition__c, (Select Id from Financial_Securities__r where Security_Status__c IN ('Active','Close to Expiry Date')) from Account where Id=:parentCase.accountId];
+		Account acct = [SELECT Id, ANG_IsNewGenAgency__c, ANG_CashCondition__c,
+							(SELECT Id
+							 FROM Financial_Securities__r
+							 WHERE Security_Status__c IN (:AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, :AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY))
+						FROM Account
+						WHERE Id = :parentCase.accountId];
 
-		if(firstRule && secondRule && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c){
-			throw new SidraLiteException('Invalid action, you need to click on the button in order to remove Cash condition.');
+		if(IFAP_WebService.isAssessmentPerformed(parentCase) && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c){
+			throw new SidraLiteException(INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION);
 		}
 
-		Set<String> statusIFAP = new set<String>{'Agent Notified (Mail)','Agent Notified (Email)','Financial Statements Uploaded','Sanity Check Failure'};
-
-		firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
-		secondRule = STATUS_FOR_FA.contains(parentCase.Status);
-
-		boolean thirdRule = !acct.Financial_Securities__r.isEmpty();
-
-		if(firstRule && secondRule && thirdRule && acct.ANG_IsNewGenAgency__c){
-			throw new SidraLiteException('Invalid action, you need to click on the button in order to apply Cash condition true.');
+		if(parentCase.FA_Second_Deadline_Date__c < System.today() && STATUS_FOR_FA.contains(parentCase.Status) && !acct.Financial_Securities__r.isEmpty() && acct.ANG_IsNewGenAgency__c){
+			throw new SidraLiteException(INVALID_ACTION_CLICK_APPLY_CASH_CONDITION);
 		}
 
 	}
@@ -158,15 +175,15 @@ public with sharing class SidraLiteHelperForIFAP {
 	public static void throwPopUpMessage(Case parentCase) {
 		if (isFS(parentCase)) {
 			if (parentCase.FS_third_non_compliance_date__c != null) {
-				throw new WSSidraLite.ShowConfirmationException('Process third non-compliance date, continue?');
+				throw new WSSidraLite.ShowConfirmationException(SIDRA_LITE_PROCESS_THIRD_NON_COMPLIANCE_WARNING);
 			} else {
-				throw new WSSidraLite.ShowConfirmationException('Process second non-compliance date, continue?');
+				throw new WSSidraLite.ShowConfirmationException(SIDRA_LITE_PROCESS_SECOND_NON_COMPLIANCE_WARNING);
 			}
 		} else {
 			if (parentCase.Third_FA_non_Compliance_Date__c != null) {
-				throw new WSSidraLite.ShowConfirmationException('Process third non-compliance date, continue?');
+				throw new WSSidraLite.ShowConfirmationException(SIDRA_LITE_PROCESS_THIRD_NON_COMPLIANCE_WARNING);
 			} else {
-				throw new WSSidraLite.ShowConfirmationException('Process second non-compliance date, continue?');
+				throw new WSSidraLite.ShowConfirmationException(SIDRA_LITE_PROCESS_SECOND_NON_COMPLIANCE_WARNING);
 			}
 		}
 	}

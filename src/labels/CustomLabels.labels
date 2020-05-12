@@ -523,6 +523,14 @@
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
     </labels>
+	<labels>
+        <fullName>AMS_OSCAR_CONFIRM_CONVERSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CONFIRM_CONVERSION</shortDescription>
+        <value>Confirm Conversion</value>
+    </labels>
     <labels>
         <fullName>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</fullName>
         <categories>LeftSidePanel, Headers</categories>
@@ -1002,6 +1010,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP50</shortDescription>
         <value>Confirm Financial Security Information</value>
+    </labels>
+	<labels>
+        <fullName>AMS_OSCAR_STEP51</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP51</shortDescription>
+        <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -26349,14 +26364,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
-        <categories>ISSP, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
-        <value>In order to notify IATA of a change of bank account details please contact us</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -44724,6 +44731,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>select role</shortDescription>
         <value>Select your role</value>
+    </labels>
+    <labels>
+        <fullName>issue_with_iata</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>issue with iata help text</shortDescription>
+        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
     </labels>
     <labels>
         <fullName>label_custom_price</fullName>

@@ -225,7 +225,7 @@
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <filterScope>Delegated</filterScope>
-        <label>ENCODED:{!FilterNames.Task_DelegatedTasks}</label>
+        <label>Delegated Tasks</label>
     </listViews>
     <listViews>
         <fullName>Medaire_Approvals_Task</fullName>
@@ -233,7 +233,7 @@
         <label>Medaire Approvals</label>
         <queue>Medaire_Approvals</queue>
         <sharedTo>
-            <allInternalUsers/>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -311,7 +311,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_RecurringTasks}</label>
+        <label>Recurring Tasks</label>
     </listViews>
     <listViews>
         <fullName>TodaysTasks</fullName>

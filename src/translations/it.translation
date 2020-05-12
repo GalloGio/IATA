@@ -16106,10 +16106,6 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Per comunicare un eventuale modifica delle coordinate bancarie contattare IATA</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -22312,6 +22308,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -26129,6 +26129,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- select role --></label>
         <name>issp_apppicker_select_role</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- issue with iata help text --></label>
+        <name>issue_with_iata</name>
     </customLabels>
     <customLabels>
         <label><!-- label custom price --></label>
@@ -32211,6 +32215,27 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agencies (AMS) --></description>
         <label><!-- Agencies (AMS) --></label>
         <name>Agencies_AMS</name>
@@ -32781,6 +32806,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Case Milestones --></label>
             <name>Case Milestones</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with WW HQ Agents Accounts --></description>
+        <label><!-- Cases with WW HQ Agents Accounts --></label>
+        <name>Cases_with_WW_HQ_Agents_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Cases --></label>
@@ -35101,6 +35139,15 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>
