@@ -28866,7 +28866,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected1</shortDescription>
-        <value>We regret to inform you that your request to access</value>
+        <value>This is an important message affecting your access to services in the IATA Customer Portal. Your request to access</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected2</fullName>
@@ -28874,14 +28874,21 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected2</shortDescription>
-        <value>Service has been rejected by your company administrator,</value>
+        <value>has been deactivated. For additional information, you can refer to your main user or raise a query to the IATA Customer Service team,</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected3</shortDescription>
-        <value>Please, refer to your administrator for any further inquiries on this matter.</value>
+        <value>has been rejected by your company administrator,</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected3_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected3.1</shortDescription>
+        <value>.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected4</fullName>
@@ -28898,6 +28905,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected4_CNS</shortDescription>
         <value>Service has been rejected by your CNS Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected5</shortDescription>
+        <value>For additional information, you can refer to your company administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected_subject1</fullName>
@@ -29587,7 +29601,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>This is a system generated message. Please do not reply.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
