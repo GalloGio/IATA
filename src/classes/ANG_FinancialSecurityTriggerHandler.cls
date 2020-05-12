@@ -166,6 +166,27 @@ public class ANG_FinancialSecurityTriggerHandler{
 	}
 
 	/**
+	 * Financial Securities that will be updated with the new Converted Amount
+	 */
+	public static Set<Financial_Security__c> fsToUpdateConvertedAmountSet = new Set<Financial_Security__c>();
+
+	/**
+	 * Add the Active Account's Financial Securities to the fsToUpdateConvertedAmountSet list
+	 */
+	private static void addFsToUpdateConvertedAmount(List<Financial_Security__c> fsLst){
+
+		for(Financial_Security__c fs : fsLst){
+			if(!Trigger.newMap.containsKey(fs.Id) && FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
+				fsToUpdateConvertedAmountSet.add(new Financial_Security__c(
+					Id = fs.Id,
+					ANG_ConvertedAmount__c = fs.ANG_ConvertedAmount__c
+				));
+			}
+		}
+	}
+
+
+	/**
 	 * Calculate the Total and Minimum Financial Security amount and
 	 * update the correspondent amounts on the RHC information record
 	 *
@@ -205,8 +226,11 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//the financial securities in status 'Active' or 'Close to Expiry Date'
 			//associated with the given account must be considered
 			else if(calculateTotalFs && acct.RHC_Informations__r.size() == 1){
+				//Applied conversion for all the Account's Financial Securities
+				ANG_Risk_Helper.convertFSAmount(acct.Financial_Securities__r, accountsMap);
 				decimal fsAmount = ANG_Risk_Helper.sumFSConvertedAmounts(acct.Financial_Securities__r);
 				setFinancialSecurityOnRHC(acct, fsAmount);
+				addFsToUpdateConvertedAmount(acct.Financial_Securities__r);
 			}
 
 		}
@@ -233,6 +257,10 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 					//If the current account has a parent means that we have to aggregate the amounts by the parent
 					Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
+
+					//Applied conversion for all the Account's Financial Securities
+					ANG_Risk_Helper.convertFSAmount(acct.Financial_Securities__r, allHierarchyAccountsMap);
+					addFsToUpdateConvertedAmount(acct.Financial_Securities__r);
 
 					//Sum all the financial security converted amounts and adds the resulting amount to the parent (if already exists on the map totalFsAmountAggregatedByParent)
 					processAggregatedAmountsByAccount(accId, totalFsAmountAggregatedByParent, ANG_Risk_Helper.sumFSConvertedAmounts(acct.Financial_Securities__r));
@@ -404,6 +432,11 @@ public class ANG_FinancialSecurityTriggerHandler{
 		if(!map2Insert.values().isEmpty()){
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - doDml] RHC Records to upsert: ' + map2Insert);
 			upsert map2Insert.values() ANG_UniqueKey__c;
+		}
+		//Perform the update of all the Active Financial Securities with the new Converted Amounts
+		if(!fsToUpdateConvertedAmountSet.isEmpty()){
+			convertedAmountUpdateFlag = true;
+			update new List<Financial_Security__c>(fsToUpdateConvertedAmountSet);
 		}
 	}
 
