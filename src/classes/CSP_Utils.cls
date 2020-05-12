@@ -435,7 +435,9 @@ public with sharing class CSP_Utils {
 		System.debug(loggingLevel.FINE, '____ [cls CSP_Utils - generateUrl] params - ' + params);
 
 		String prefix = '';
-		if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).subStringBeforeLast('/');
+		List<Network> csportal = [Select id from Network where name =: 'CS Portal' Limit 1];
+		String netWorkId = csportal.isEmpty() ? Network.getNetworkId() : csportal.get(0).Id;
+		if(netWorkId != null) prefix = Network.getLoginURL(netWorkId).subStringBeforeLast('/');
 
 		return prefix + '/' + pageName + '?' + CSP_Utils.assembleParams(params);
 	}
