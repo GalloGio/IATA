@@ -24,7 +24,8 @@ public static Map<String, String> getUserOptions(String portalUser){
 
 	List<User> userContactAccountOptions = [SELECT id, Contact.Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
 																					Contact.User_Portal_Status__c, ContactId, Contact.Account.ICCS_Membership_Status__c,
-																					Contact.Account.Top_Parent__r.ICCS_Membership_Status__c, Contact.Account.Top_Parent__c
+																					Contact.Account.Top_Parent__r.ICCS_Membership_Status__c, Contact.Account.Top_Parent__c,
+																					Contact.Account.Location_Type__c, Contact.Account.ANG_Accreditation_Model__c
 																					FROM User WHERE Id =:portalUser];
 
 	if(!userContactAccountOptions.isEmpty()) {
@@ -46,6 +47,14 @@ public static Map<String, String> getUserOptions(String portalUser){
 			}
 			else{
 				userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
+			}
+
+			if (u.Contact.Account.Location_Type__c != null) {
+				userOptions.put('Location_Type', u.Contact.Account.Location_Type__c);
+			}
+
+			if (u.Contact.Account.ANG_Accreditation_Model__c != null) {
+				userOptions.put('Accreditation_model', u.Contact.Account.ANG_Accreditation_Model__c);
 			}
 		}
 	}

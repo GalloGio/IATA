@@ -168,10 +168,10 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 		if(Test.isRunningTest()){
 			Id oscarId = controller.getId();
-			this.oscar = [SELECT Id, Account__c, New_parent__c, STEP45__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+			this.oscar = [SELECT Id, Account__c, New_parent__c, STEP45__c, MC_Hierarchy_Confirmation_Datetime__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
 		}
 		else {
-			controller.addFields(new List<String>{'Account__c', 'New_parent__c', 'STEP45__c'});
+			controller.addFields(new List<String>{'Account__c', 'New_parent__c', 'STEP45__c', 'MC_Hierarchy_Confirmation_Datetime__c'});
 			this.oscar = (AMS_OSCAR__c) controller.getRecord();
 		}
 
@@ -450,6 +450,12 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 			if(!processDetailLst.isEmpty()){
 				insert processDetailLst;
+			}
+
+			if(this.oscar.MC_Hierarchy_Confirmation_Datetime__c != null) {
+				// reset confirmation date
+				this.oscar.MC_Hierarchy_Confirmation_Datetime__c = null;
+				update this.oscar;
 			}
 
 			closeTab = true;

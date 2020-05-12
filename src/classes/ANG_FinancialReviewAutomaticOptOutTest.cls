@@ -323,7 +323,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		insert new List<AMS_Accreditation_Contact__c>{owner, ownerChg};
 
 		Case cseIfap = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			Status = 'Open',
 			Region__c = 'Asia & Pacific',
 			Origin= 'Agent Financial Review Notification',
@@ -338,7 +338,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		Case cseChgIfap = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
+			RecordTypeId = AMS_Utils.RECTYPE_IFAP,
 			Status = 'Open',
 			Region__c = 'Asia & Pacific',
 			Origin= 'Agent Financial Review Notification',
@@ -682,7 +682,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 WHERE
 				AccountId = :oscar.Account__c
 			 AND
-				RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP
+				RecordTypeId = :AMS_Utils.RECTYPE_IFAP
 			]
 		);
 

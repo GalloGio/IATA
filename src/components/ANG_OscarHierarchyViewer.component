@@ -61,7 +61,7 @@
         .tree li::after {
             border-top: 1px solid #999;
             height: 20px;
-            top: 25px;
+            top: 30px;
             width: 25px;
         }
 
@@ -160,15 +160,12 @@
 	    <div class="tree well">
 	        <ul>
 				<li>
-					<apex:outputPanel>{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
+					<apex:outputPanel >{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
 
                     <apex:image styleClass="verificationIcon" value="{!IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png') )) }" width="17" height="17"/>
 
-<!--
-                    <div>{!parentAccount.Name}</div>
--->
                     <br></br>
-                    <apex:commandLink  onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[parentAccount.Id]}','SA-{!parentAccount.IATACode__c}');return false;" rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] != 'XXX'}">
+                    <apex:commandLink onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[parentAccount.Id]}','SA-{!parentAccount.IATACode__c}');return false;" rendered="{!currentAccount.id == parentAccount.id && accreditationAreas[parentAccount.Id] != 'XXX'}">
                         <div class="tooltip" >{!parentAccount.Name}
                             <span class="tooltiptext">Open this account's staging area</span>
                         </div>
@@ -183,31 +180,61 @@
                     <div>{!parentAccount.Status__c}</div>
 
                     <ul>
-						<apex:repeat value="{!HierchyChilds}" var="c">
+						<apex:repeat value="{!fullHierarchy}" var="c">
 							<li>
-								<apex:outputPanel>
+								<apex:outputPanel >
                                     <i class="icon-folder-open icon-minus-sign"></i>
-                                    {!c.Location_Type__c} ({!c.Location_Class__c})
+                                    {!c.account.Location_Type__c} ({!c.account.Location_Class__c})
                                 </apex:outputPanel>
 
-                                <apex:image styleClass="verificationIcon" value="{!IF(NOT(accountsActive[c.IATACode__c]), URLFOR($Resource.AMS_Icons, 'not_applicable.png'), IF(accreditationAreasOKNOK[c.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[c.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png')) )) }" width="17" height="17"/>
-
+                                <apex:image styleClass="verificationIcon" value="{!IF(NOT(accountsActive[c.account.IATACode__c]), URLFOR($Resource.AMS_Icons, 'not_applicable.png'), IF(accreditationAreasOKNOK[c.account.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[c.account.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png')) )) }" width="17" height="17"/>
 
                                 <br></br>
                                 
-                                <apex:commandLink onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[c.Id]}','SA-{!c.IATACode__c}');return false;" rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] != 'XXX'}">
-                                    <div class="tooltip" >{!c.Name}
+                                <apex:commandLink onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[c.account.Id]}','SA-{!c.account.IATACode__c}');return false;" rendered="{!currentAccount.id != c.account.Id && accreditationAreas[c.account.Id] != 'XXX'}">
+                                    <div class="tooltip" >{!c.account.Name}
                                         <span class="tooltiptext">Open this account's staging area</span>
                                     </div>
                                 </apex:commandLink>
                                 
-                                <apex:outputText rendered="{!currentAccount.id != c.id && accreditationAreas[c.Id] == 'XXX'}">
-                                    <div> {!c.Name} </div>
+                                <apex:outputText rendered="{!currentAccount.Id != c.account.Id && accreditationAreas[c.account.Id] == 'XXX'}">
+                                    <div> {!c.account.Name} </div>
                                 </apex:outputText>
 
-                                <div>{!c.IATACode__c}</div>
-                                <div>{!c.BillingCountry} - {!c.BillingCity}</div>
-                                <div>{!c.Status__c}</div>
+                                <div>{!c.account.IATACode__c}</div>
+                                <div>{!c.account.BillingCountry} - {!c.account.BillingCity}</div>
+								<div>{!c.account.Status__c}</div>
+								
+								<apex:outputPanel rendered="{!c.hasChildren}" layout="none">
+									<ul>
+										<apex:repeat value="{!c.children}" var="cc">
+											<li>
+												<apex:outputPanel >
+													<i class="icon-folder-open icon-minus-sign"></i>
+													{!cc.Location_Type__c} ({!cc.Location_Class__c})
+												</apex:outputPanel>
+				
+												<apex:image styleClass="verificationIcon" value="{!IF(NOT(accountsActive[cc.IATACode__c]), URLFOR($Resource.AMS_Icons, 'not_applicable.png'), IF(accreditationAreasOKNOK[cc.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[cc.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png')) )) }" width="17" height="17"/>
+				
+												<br></br>
+                                
+												<apex:commandLink onclick="openSubtab('/apex/ANG_AccreditationAreaViewer?Id={!accreditationAreas[cc.Id]}','SA-{!cc.IATACode__c}');return false;" rendered="{!currentAccount.id != cc.Id && accreditationAreas[cc.Id] != 'XXX'}">
+													<div class="tooltip" >{!cc.Name}
+														<span class="tooltiptext">Open this account's staging area</span>
+													</div>
+												</apex:commandLink>
+												
+												<apex:outputText rendered="{!currentAccount.Id != cc.Id && accreditationAreas[cc.Id] == 'XXX'}">
+													<div> {!cc.Name} </div>
+												</apex:outputText>
+				
+												<div>{!cc.IATACode__c}</div>
+												<div>{!cc.BillingCountry} - {!cc.BillingCity}</div>
+												<div>{!cc.Status__c}</div>
+											</li>
+										</apex:repeat>
+									</ul>
+								</apex:outputPanel>
 							</li>
 						</apex:repeat>
 					</ul>
