@@ -241,4 +241,30 @@ private class CaseDueDiligenceTest {
 			System.assert(false,'Wrong exception');
 		}
 	}
+
+	static testMethod void testvalidatePASS() {
+		List<Case_Reason_Service__c> caseReasonServiceSettings = new List<Case_Reason_Service__c> {
+			new Case_Reason_Service__c(Name = AMS_Utils.passCountryCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason),
+				new Case_Reason_Service__c(Name = AMS_Utils.passAggregatorCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason),
+				new Case_Reason_Service__c(Name = AMS_Utils.passAirlineCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason)
+				};
+					insert caseReasonServiceSettings;
+		Account account = new Account(
+			Name='testaccount',
+			Date_of_last_clearance__c = Date.today()
+		);
+		insert account;
+
+		Case cse = new Case(
+			AccountId = account.Id,
+			RecordTypeId = RT_ICCS_ASP_ID,
+			CaseArea__c = 'Airline Joining',
+			Reason1__c = AMS_Utils.passAirlineCaseReason
+		);
+		insert cse;
+
+		Test.startTest();
+		assertException(cse,account);
+		Test.stopTest();
+	}
 }

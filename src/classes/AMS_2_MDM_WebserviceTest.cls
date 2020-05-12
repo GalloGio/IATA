@@ -256,7 +256,6 @@ public class AMS_2_MDM_WebserviceTest {
 	}
 
 
-
 	public static testmethod void test_AMS_2_MDM_WS_AgencyDetails() {
 
 		// instantiate the web service proxy

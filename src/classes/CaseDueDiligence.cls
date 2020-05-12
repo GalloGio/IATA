@@ -113,6 +113,10 @@ public with sharing class CaseDueDiligence {
 			if (REASONS_FOR_BSP_CASS.contains(cse.Reason1__c)) {
 				checkDueDiligence(account,3);
 			}
+			//PASS
+			if( cse.Reason1__c == AMS_Utils.passAirlineCaseReason || cse.Reason1__c == AMS_Utils.passCountryCaseReason || cse.Reason1__c == AMS_Utils.passAggregatorCaseReason){
+				checkDueDiligence(account,3);
+			}	
 			//NOA   (TBD)
 		}
 		//ICH
