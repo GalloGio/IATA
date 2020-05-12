@@ -82,7 +82,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		Contact co1 = new Contact(AccountId = a1.id, 
 			Lastname = 'test1', 
-			Email = 'test@test.com', 
+			Email = DateTime.now().getTime() + 'fopcontact@test.com', 
 			BSP_CASS_Payment_contact__c = true);
 
 		insert new List<Contact>{

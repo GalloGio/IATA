@@ -1550,15 +1550,15 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2020,6 +2020,10 @@
         <recipients>
             <recipient>SIDRA LO CASS</recipient>
             <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ortizcedl@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_TER07_Notification_to_LO_2_days_before_TER_email_to_LO</template>
@@ -2966,10 +2970,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3035,6 +3035,10 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3115,10 +3119,6 @@
         </recipients>
         <recipients>
             <recipient>garciatef@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gilj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3203,6 +3203,10 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezja@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

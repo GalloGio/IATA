@@ -12,5 +12,9 @@
         <members>*</members>
         <name>CustomObjectTranslation</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>ReportType</name>
+    </types>
     <version>47.0</version>
 </Package>
