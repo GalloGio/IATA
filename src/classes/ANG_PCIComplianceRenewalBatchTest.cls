@@ -45,7 +45,7 @@ public with sharing class ANG_PCIComplianceRenewalBatchTest {
 	@isTest static void testPCIComplianceRenewaOSCARcreationNoContact() {
 
 		//create custom settings for support email
-		SalesforceSupportEmails__c supportEmail = new SalesforceSupportEmails__c(name='test', Support_Email__c='test@iata.org');
+		SalesforceSupportEmails__c supportEmail = new SalesforceSupportEmails__c(name='test', Support_Email__c='test@iata.org', Support_User_Id__c = UserInfo.getUserId());
 		insert supportEmail;
 
 		List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();

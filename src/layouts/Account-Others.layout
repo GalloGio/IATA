@@ -82,6 +82,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AccountStatus__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -141,6 +145,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason_for_creation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comments_Reason_for_creation__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -551,6 +559,17 @@
             <sortOrder>22</sortOrder>
         </platformActionListItems>
     </platformActionList>
+    <relatedContent>
+        <relatedContentItems>
+            <layoutItem>
+                <height>200</height>
+                <page>ANG_AccountTrackingHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItem>
+        </relatedContentItems>
+    </relatedContent>
     <relatedLists>
         <fields>MEMBER_NAME</fields>
         <fields>TEAM_MEMBER_ROLE</fields>

@@ -66,15 +66,6 @@ private class AMS_UtilsTest {
 	}
 
 	@isTest
-	static void testsendEmailAmsSupport() {
-
-		Test.startTest();
-		//no code coverage for sending emails
-		AMS_Utils.sendEmailAmsSupport( 'test subject', 'test message');
-		Test.stopTest();
-	}
-
-	@isTest
 	static void testgetRecIdFromChangeCode() {
 
 		List <String> sChangeCodeList = new List<String>();
@@ -799,6 +790,9 @@ private class AMS_UtilsTest {
 
 		result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWHESTANDARD, 'value');
 		System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_CASH);
+
+		result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWGESTANDARD, 'value');
+		System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
 		result = AMS_Utils.decodeAMFromOscarProcess('something', 'value');
 		System.assertEquals(result, 'value');

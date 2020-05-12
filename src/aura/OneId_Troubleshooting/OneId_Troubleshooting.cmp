@@ -1,4 +1,4 @@
-<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes" controller="OneId_Troubleshooting_Controller">
+<aura:component access="public" extends="c:Base" implements="forceCommunity:availableForAllPageTypes" controller="OneId_Troubleshooting_Controller">
     
     <aura:attribute type="String" name="serviceName"/>
     <aura:attribute type="Boolean" name="isGuestUser"/>

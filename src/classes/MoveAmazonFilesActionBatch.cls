@@ -15,7 +15,7 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 	/**
 	* Receives as argument amazonFilesToMoveMap that will contain
 	* the mapping between each amazon file wrapper (WrapperAttach)
-	* with the case Id for which the file should be moved to
+	* with the object Id for which the file should be moved to
 	*/
 	public MoveAmazonFilesActionBatch(Map<WrapperAttach, Id> amazonFilesToMoveMap){
 		this.amazonFilesToMoveLst = new List<WrapperAttach>();
@@ -41,9 +41,9 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 		List<MoveAmazonFilesActionWrapper> afWrapperLst = new List<MoveAmazonFilesActionWrapper>();
 
 		for(WrapperAttach wa : scope){
-			Id newCaseId = amazonFilesMapping.get(wa.fileAmazon.amazonFile.Full_Name_Unique__c);
-			afWrapperLst.add(moveAmazonFile(wa, newCaseId));
-			scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, newCaseId);
+			Id objectId = amazonFilesMapping.get(wa.fileAmazon.amazonFile.Full_Name_Unique__c);
+			afWrapperLst.add(moveAmazonFile(wa, objectId));
+			scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, objectId);
 		}
 
 		Savepoint sp = Database.setSavepoint();
@@ -118,12 +118,12 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 
 	}
 
-	public static MoveAmazonFilesActionWrapper moveAmazonFile(WrapperAttach wa, Id newCaseId){
+	public static MoveAmazonFilesActionWrapper moveAmazonFile(WrapperAttach wa, Id objectId){
 
 		MoveAmazonFilesActionWrapper afWrap = new MoveAmazonFilesActionWrapper();
 
 		try {
-			AmazonFile transferedFile = wa.transfer(newCaseId);
+			AmazonFile transferedFile = wa.transfer(objectId);
 			wa.cloneToRecicleBin();
 			wa.fileAmazon.deleteFileOnlyFromS3();
 
@@ -136,7 +136,7 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 			System.debug(LoggingLevel.ERROR, '____ [cls MoveAmazonFilesActionBatch - moveAmazonFile] Exception Stacktrace: ' + e.getStackTraceString());
 			afWrap.errorLogToInsert = new Technical_Logs__c(
 				Record__c = wa.fileAmazon.amazonFile.Id,
-				Operation__c = 'MoveAmazonFilesActionBatch - Moving amazon file to case ' + newCaseId,
+				Operation__c = 'MoveAmazonFilesActionBatch - Moving amazon file to object ' + objectId,
 				Status__c = e.getMessage(),
 				Log__c = e.getStackTraceString()
 			);

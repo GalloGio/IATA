@@ -1,15 +1,18 @@
 <template>
-    <div class="bottomLightGrayBorder slds-m-around_small">
+    <div class="slds-m-bottom_x-small slds-p-horizontal_small aroundLightGrayBorder inputFilter borderlessInput searchInputContainer  text-xsmall inputFilter ">
         <img src={searchIconUrl}>
         <lightning-input name="newRecipientTextInput" placeholder={label.CSP_SearchFAQ}
-            class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
+            class="hideInputLabel grayInputPlaceholder titleTruncation"
             value={searchText} onchange={onInputChange}>
         </lightning-input>
+        <div if:true={showCross}  class="searchBarIcon slds-m-right--large">
+            <lightning-icon class="cursorPointer rotateIcon45Deg" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+        </div>
     </div>
     <!-- ARTICLES -->
     <div if:true={loading} class="spinnerContainer">
         <lightning-spinner size="medium"></lightning-spinner>
-    </div>
+    </div> 
 
     <div if:false={loading}>
         <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">

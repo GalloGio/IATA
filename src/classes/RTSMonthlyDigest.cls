@@ -2,12 +2,13 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 	//runs every month on first day at 4a.m.
 	public static String CRON_EXP = '0 0 4 1 * ?';
 
-   global void execute(SchedulableContext ctx) {
+	global void execute(SchedulableContext ctx) {
 
 		List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
+		List<String> toAddressesNoUsers = new List<String>();
+		List<Id> toAddressesUsers = new List<Id>();
 
 		if(sManagers.isEmpty()){
-			System.debug('Warning: No RTS Senior Managemrs found');
 			return;
 		}
 
@@ -15,28 +16,40 @@ global without sharing class RTSMonthlyDigest implements Schedulable {
 		List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
 		if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
-			System.debug('Warning: No email template or org wide email found');
 			return;
 		}
 
-		List<String> toAddresses = new List<String>();
+		List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 		for (RTS_Senior_Manager__c sManager: sManagers) {
-			if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
-				toAddresses.add(sManager.Email__c);
+			if (sManager.Active__c && String.isNotBlank(sManager.User_Id__c))
+				toAddressesUsers.add(sManager.User_Id__c);
+			else
+				toAddressesNoUsers.add(sManager.Email__c);
 		}
 
-		if(toAddresses.isEmpty()){
-			 System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
-			 return;
+		for(Id targetUser: toAddressesUsers) {
+			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+			email.setTemplateId(eTemplates.get(0).Id);
+			email.setTargetObjectId(targetUser);
+			email.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+			email.saveAsActivity = false;
+			mails.add(email);
 		}
 
-		EmailTemplate template = eTemplates.get(0);
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setToAddresses(toAddresses);
-		mail.setTemplateId(template.Id);
-		mail.setTargetObjectId(UserInfo.getUserId());
-		mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
-		mail.saveAsActivity = false;
-		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-   }
+		if(!toAddressesNoUsers.isEmpty()){
+			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+			email.setToAddresses(toAddressesNoUsers);
+			email.setTemplateId(eTemplates.get(0).Id);
+			email.setTargetObjectId(UserInfo.getUserId());
+			email.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+			email.saveAsActivity = false;
+			mails.add(email);
+		}
+
+		if(mails.isEmpty()){
+			return;
+		}
+
+		Messaging.sendEmail(mails);
+	}
 }

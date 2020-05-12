@@ -2061,27 +2061,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
-
-		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
-
-		Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
-				Active__c = true
-		, Account__c = accId
-		, Change_Code__c = changeCodeDefinition.name
-		, OSCAR__c = oscar.Id
-		, Bulletin_Information__c = (changeCodeDefinition.memoText == null) ? '' : changeCodeDefinition.memoText.toUpperCase()
-		, Reason_Code__c = changeCodeDefinition.reasonCode
-		, Reason_Description__c = changeCodeDefinition.reasonDesc
-		, Source__c = source
-		, CreatedDate_User__c = convertToHubEffectiveDate(system.today())
-				//, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
-		);
-
-		return aacNEW;
-
-	}
-
 	public static boolean sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
 		if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){

@@ -74,7 +74,8 @@ public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject
 		}
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-						mail.setToAddresses(new List<String>{UserInfo.getUserEmail()});
+						mail.setTargetObjectId(UserInfo.getUserId());
+			mail.setSaveAsActivity(false);
 						mail.setSubject('Request '+ (p == Process.PROVISIONAL ? 'Provisional RHC' : 'Balance Update' ) + ' Batch results');
 						mail.setSenderDisplayName('Batch Processing Completed');
 						mail.setPlainTextBody('Batch Process has been completed. End Time: ' + system.now() + '\n\n'+

@@ -1,5 +1,15 @@
 public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocationINT{
 
+	private static final String MISSING_MANDATORY_FIELDS = 'Missing mandatory fields';
+	private static final String ACCOUNT_NOT_FOUND = 'Account not found!';
+	private static final String OFFER_ID_NOT_FOUND = 'Offer ID not found';
+	private static final String OFFER_ID_DIFFERENT_IATA_CODE = 'Offer ID is associated to a different IATA Code';
+	private static final String NO_ARTEFACT_MATCH = 'The Remote invocation does not have a match for a remote invocation artifact. ';
+	private static final String INVALID_REQUEST_TYPE = 'Invalid Request Type';
+	private static final String VERIFY_RELATED_ARTEFACTS = 'Verify related artefacts for details';
+	private static final String GDI_EULER_HERMES = 'GDI - Euler Hermes';
+	private static final String NEWGEN_GENERIC_PRICEBOOK = 'NewGen Generic';
+
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		map<string, string> mapOfferIdIataCode = new map<string,string>();	//Map index: offer Id. Value: related IATA Code. Arriving from interface.
 		Map<String, PricebookEntry> mapCurrencyISOCodePBE = new map<String,pricebookentry>();
@@ -13,15 +23,16 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		Id pb;
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-			//let's see if the source and request type are consistent
-			if(ri.Source__c=='GDI'){
+
+			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO){
+				//let's see if the source and request type are consistent
+				if (ri.Source__c == RemoteInvocationTriggerHandler.SOURCE_GDI) {
 					setValidRemoteInvocation.add(ri);
 					currencyIsoCodeToFetch.add(ri.CurrencyISOCode);
-
-			}else{
-				//ri.Status__c = 'Failed';
-				//ri.Status_detail__c = 'Invalid Request Type';
-				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
+				}
+				else{
+					mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = AMS_Utils.FAILED, Status_detail__c = INVALID_REQUEST_TYPE));
+				}
 			}
 
 		}
@@ -34,9 +45,9 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 
 		//Fetch the priceBook along with all entries
 		try{
-			dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
+			dfltFI = [Select id from Financial_Institution__c where name = :GDI_EULER_HERMES];
 
-			if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = 'NewGen Generic'].id;
+			if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = :NEWGEN_GENERIC_PRICEBOOK].id;
 			else pb = Test.getStandardPricebookId();
 
 			for(pricebookentry pbe : [SELECT id,unitprice,product2id,product2.name,CurrencyIsoCode FROM pricebookentry WHERE pricebook2id = :pb AND currencyISOCode in :currencyIsoCodeToFetch])
@@ -44,10 +55,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		}
 		catch(Exception e){
 			for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-				/*ri.Status__c = 'Failed';
-				ri.Status_Detail__c = 'Exception while fetching products ' + e.getMessage();
-				mapRemoteInvocationToUpdates.put(ri.id, ri);*/
-				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Exception while fetching products ' + e.getMessage()));
+				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = AMS_Utils.FAILED, Status_detail__c = 'Exception while fetching products ' + e.getMessage()));
 			}
 			update mapRemoteInvocationToUpdates.values();
 			return;
@@ -64,22 +72,19 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		for(Remote_Invocation__c ri: lsRI){
 			//Check if there is any artefact related to the remote invocation
 			if(ri.Remote_Invocation_Artefacts__r.size()==0){
-				/*ri.Status__c = 'Failed';
-				ri.Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact.';
-				mapRemoteInvocationToUpdates.put(ri.id, ri);*/
-				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact. '));
+				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = AMS_Utils.FAILED, Status_detail__c = NO_ARTEFACT_MATCH));
 			}else{
 				//Check to see if pricebook with given currency exists
 				if(!mapCurrencyISOCodePBE.containsKey(ri.CurrencyISOCode)){
-					ri.Status__c = 'Failed';
+					ri.Status__c = AMS_Utils.FAILED;
 					ri.Status_detail__c = 'Product with currency ' + ri.CurrencyISOCode + ' not found';
 					mapRemoteInvocationToUpdates.put(ri.id, ri);
 				}else{
 					for(Remote_Invocation_Artefact__c artifact: ri.Remote_Invocation_Artefacts__r){
 						//Check all necessary fields are populated
 						if(string.isBlank(artifact.Internal_ID__c) || string.isBlank(artifact.External_ID__c) || string.isBlank(string.valueOf(artifact.Valid_From__c)) || string.isBlank(string.valueOf(artifact.Amount__c))){
-							artifact.Request_Result__c = 'Failed';
-							artifact.Status_Detail__c = 'Missing mandatory fields';
+							artifact.Request_Result__c = AMS_Utils.FAILED;
+							artifact.Status_Detail__c = MISSING_MANDATORY_FIELDS;
 							listArtifactsToUpdate.add(artifact);
 						}else{
 							mapOfferIdIataCode.put(artifact.External_ID__c, artifact.Internal_ID__c);
@@ -112,16 +117,16 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		// 3) if both exists, IATA Code is associated to OfferId received
 		for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.values()){
 			if(!mapIATACodeId.containsKey(artifact.Internal_ID__c)){
-				artifact.Request_Result__c = 'Failed';
-				artifact.Status_Detail__c = 'Account not found!';
+				artifact.Request_Result__c = AMS_Utils.FAILED;
+				artifact.Status_Detail__c = ACCOUNT_NOT_FOUND;
 				listArtifactsToUpdate.add(artifact);
 				mapValidArtefacts.remove(artifact.Id);
 				continue;
 			}
 
 			if(!mapOpty.containsKey(artifact.External_ID__c)){
-				artifact.Request_Result__c = 'Failed';
-				artifact.Status_Detail__c = 'Offer ID not found';
+				artifact.Request_Result__c = AMS_Utils.FAILED;
+				artifact.Status_Detail__c = OFFER_ID_NOT_FOUND;
 				listArtifactsToUpdate.add(artifact);
 				mapValidArtefacts.remove(artifact.Id);
 				continue;
@@ -129,8 +134,8 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 
 			if(mapOpty.containsKey(artifact.External_ID__c)){
 				if(mapOpty.get(artifact.External_ID__c).AccountId != mapIATACodeId.get(artifact.Internal_ID__c)){
-					artifact.Request_Result__c = 'Failed';
-					artifact.Status_Detail__c = 'Offer ID is associated to a different IATA Code';
+					artifact.Request_Result__c = AMS_Utils.FAILED;
+					artifact.Status_Detail__c = OFFER_ID_DIFFERENT_IATA_CODE;
 					listArtifactsToUpdate.add(artifact);
 					mapValidArtefacts.remove(artifact.Id);
 					continue;
@@ -139,7 +144,6 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		}
 
 		if(!mapValidArtefacts.isEmpty()){
-			//Yippee ki-yay! Let's process the artefacts
 			list<case> lsCaseToUpd = new list<case>();
 			list<AMS_Oscar__c> lsOscarToUpdate = new list<AMS_OSCAR__c>();
 			List<Opportunitylineitem> stagingFSs = new List<Opportunitylineitem>();
@@ -150,18 +154,17 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 			for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.Values()){
 				Opportunity opp = mapOpty.get(artifact.External_ID__c);
 
-				lsCaseToUpd.add(new Case(New_interaction__c = 'New Attachment', ID = opp.Related_Oscar__r.Oscar_Communication_Case_Id__c));
+				lsCaseToUpd.add(new Case(New_interaction__c = AMS_Utils.NEW_INTERACTION_ATTACHMENT, ID = opp.Related_Oscar__r.Oscar_Communication_Case_Id__c));
 				lsOscarToUpdate.add(new AMS_OSCAR__c(id=opp.Related_Oscar__c, Financial_Security_Received__c = system.today()));
 
 				Opportunitylineitem stagingFs = new Opportunitylineitem();
 
 				stagingFs.OpportunityId = opp.Id;
 				stagingFs.OSCAR_GDI__c = opp.Related_Oscar__c;
-				stagingFs.Security_Type__c = 'GDI';
-				stagingFs.Security_Status__c = 'Draft';
+				stagingFs.Security_Type__c = AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI;
+				stagingFs.Security_Status__c = AMS_Utils.OPPORTUNITY_LINEITEM_SECURITY_STATUS_DRAFT;
 				stagingFs.Quantity = 1;
 
-				//if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
 				stagingFs.Region__c = opp.Account.Region_formula__c;
 				stagingFs.Financial_Institution__c = dfltFI.Id;
 				stagingFs.TotalPrice = artifact.Amount__c;
@@ -183,23 +186,22 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 			update mapOpty.values();
 			if(!stagingFSs.isEmpty()) insert stagingFSs;
 
-			//weird what I'm doing, but is needed
 			map<string,id> mapIdCreated = new map<string,id>();
 			for(Opportunitylineitem oli:stagingFSs)
 				mapIdCreated.put(string.valueOf(oli.SourceId__c), oli.Id);
 
 			for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.Values()){
-				artifact.Request_Result__c = 'Completed';
+				artifact.Request_Result__c = AMS_Utils.COMPLETED;
 				artifact.Status_Detail__c = '';
 				artifact.Object_ID_Created__c = mapIdCreated.get(artifact.Id);
 				listArtifactsToUpdate.add(artifact);
 
 				if(!mapRemoteInvocationToUpdates.containsKey(artifact.Remote_Invocation__c))
-				mapRemoteInvocationToUpdates.put(artifact.Remote_Invocation__c, new Remote_Invocation__c(id=artifact.Remote_Invocation__c, Status__c = 'Completed'));
+				mapRemoteInvocationToUpdates.put(artifact.Remote_Invocation__c, new Remote_Invocation__c(id=artifact.Remote_Invocation__c, Status__c = AMS_Utils.COMPLETED));
 			}
 		}else{
 			for(Remote_Invocation__c ri: lsRI){
-				mapRemoteInvocationToUpdates.put(ri.Id, new Remote_Invocation__c(id=ri.Id, Status__c = 'Failed', Status_detail__c='Verify related artefacts for details'));
+				mapRemoteInvocationToUpdates.put(ri.Id, new Remote_Invocation__c(id=ri.Id, Status__c = AMS_Utils.FAILED, Status_detail__c=VERIFY_RELATED_ARTEFACTS));
 			}
 		}
 
