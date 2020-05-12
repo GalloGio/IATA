@@ -418,7 +418,7 @@ private class ANG_MulticountryRHCTest {
 			 	ANG_AccountId__c = :accountGE.Id
 			];
 
-		System.assertNotEquals(rhcInfo.ANG_RHC_Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c, 'RHC Amount must NOT be effective yet');
+		System.assertEquals(rhcInfo.ANG_RHC_Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c, 'RHC Amount must be effective yet');
 
 		Test.startTest();
 

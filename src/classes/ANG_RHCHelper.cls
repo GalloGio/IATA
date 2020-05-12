@@ -5,7 +5,7 @@ public class ANG_RHCHelper {
 		Id accountId;
 		String riskStatus;
 		String cashConditions;
-		String rhcAmountForecasted;
+		String rhcAmount;
 		String currencyIsoCode;
 		String rhcEffectiveDate;
 		String templateLanguage;
@@ -452,10 +452,10 @@ public class ANG_RHCHelper {
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
 
-					riuw.rhcAmountForecasted = '';
+					riuw.rhcAmount = '';
 
-					if(rhc.ANG_RHC_Amount_Forecasted__c != NULL){
-						riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
+					if(rhc.ANG_RHC_Amount__c != NULL){
+						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.format();
 					}
 
 					riuw.rhcEffectiveDate = '';
@@ -530,13 +530,13 @@ public class ANG_RHCHelper {
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
+			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
 			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
+			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
 			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
@@ -575,7 +575,7 @@ public class ANG_RHCHelper {
 			nt.Message__c = nt.Message__c
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
-							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmountForecasted) + ' ' + riuw.CurrencyIsoCode)
+							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmount) + ' ' + riuw.CurrencyIsoCode)
 							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
 			notifications.add(nt);
 		}
