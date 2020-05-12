@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help>付款方式的变更表（适用于客运代理人及国内项目）</help>
+        <label>付款方式</label>
+        <name>Agency_Info_Forms_of_Payment__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -4,33 +4,33 @@ private class ANG_AccountHierarchySelectionTest {
 	private static void loadCredentials() {
 		EF_AttachmentListController.runningForEF = false;
 
-				Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-				List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-				creds.add(Amazon_Cred);
-				creds.add(GenericAttach);
-				creds.add(recycleBin);
-				insert creds;
+		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+		creds.add(Amazon_Cred);
+		creds.add(GenericAttach);
+		creds.add(recycleBin);
+		insert creds;
 
 
-				list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-						new AWSKey__c(
-								name = 'adevconf',
-								Key__c = 'asd',
-								Secret__c = 'asd',
-								IAS_configuration_name__c = 'asdas',
-								IAS_Access_Point__c = 'asd',
-								Bucket__c = 'asd',
-								AWS_ENDPOINT_URL__c = 'asd')
-				};
-				insert AWS_KEYs;
-		}
+		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+			new AWSKey__c(name = 'adevconf',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd')
+		};
+		insert AWS_KEYs;
+	}
 
 	@testSetup static void createData() {
 		// call data creating classes and other setup
 		// data created here must be queried in order
 		// to be accessed on test methods
+		Test.startTest();
 
 		IATA_ISO_Country__c ctry 	  = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		IATA_ISO_Country__c chinaCtry = new IATA_ISO_Country__c (Name='	China (People\'s Republic of)',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Enable_NewGen_Pilot__c = true);
@@ -193,6 +193,12 @@ private class ANG_AccountHierarchySelectionTest {
 							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
 							 TC_Major_Shareholding__c = false, TC_VMFR__c = true,
 							 TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
+		
+		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'Change~Hierarchy', TC_Location_type__c = false,
+			TC_Legal_status__c = false, TC_Location__c = false, TC_Accreditation_Type__c = false,
+			TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
+			TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+			TCA_Sanity_check__c = 'CHH', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'HCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
 		insert customsettings;
 
@@ -341,6 +347,7 @@ private class ANG_AccountHierarchySelectionTest {
 			AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1',
 			Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com',
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+		Test.stopTest();
 	}
 
 	@isTest
@@ -789,21 +796,6 @@ private class ANG_AccountHierarchySelectionTest {
 			Location_Class__c = GE2.Location_Class__c,
 			Location_Type__c = GE2.Location_Type__c,
 			SAAM_Case__c = oscarCase.Id,
-			/*Account_Name__c = 'Lisbon Travel Gods',
-			ISSP_AMS_Legal_Status__c = 'Association',
-			Short_Name__c = 'Lisbon Travel Gods',
-			TradeName__c = 'Lisbon Travel Gods',
-			Trade_Name__c = 'Lisbon Travel Gods',
-			ISSP_AMS_License_No__c = '111222333',
-			ISSP_AMS_VAT_Number_Input__c = '111222333',
-			Branch_Office_Email__c = 'ltg23@fefff2.com',
-			Website__c = 'wwww.asdasidsss12233.pt',
-			Branch_Office_Phone__c = '123456780',
-			Branch_Office_Phone_National__c = '123456780',
-			Branch_Office_FAX__c = '123456780',
-			Branch_Office_Fax_National__c = '123456780',
-			Abbreviated_name__c = 'Lisbon Travel Gods',
-			VAT_Number_2__c = '111222333',*/
 			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
 		insert stagingArea;
@@ -812,24 +804,11 @@ private class ANG_AccountHierarchySelectionTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		update oscar;
 
-		//finish preparing the data
-		system.debug('##ARD PT: ' + bspPT.id);
-		system.debug('##ARD ES: ' + bspES.id);
-		system.debug('##ARD DK: ' + bspDK.id);
-
 		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
 		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()){
 			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.AE ) i.selected = true;
 		}
 		controller.handleSelection();
-		system.debug('##ARD hesPerBSPs: ' + controller.hesPerBSPs);
-
-		system.debug('##ARD controller.showBSPPanel: ' + controller.showBSPPanel);
-
-
-		//just one, DK
-		//controller.hesPerBSPs.values().get(0).p.ParentId = AE4.id;
-		//system.debug('##ARD controller.hesPerBSPs.get(0).ParentId: ' + controller.hesPerBSPs.values().get(0).p.ParentId);
 
 		controller.save();
 		//aqui deve conter o erro
@@ -838,12 +817,211 @@ private class ANG_AccountHierarchySelectionTest {
 			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.HE ) i.selected = true;
 		}
 		controller.handleSelection();
+
+		List<String> actualNotes = controller.noteList;
 		//deve setar automaticamente o HE como api
 		controller.save();
 
 		AMS_OSCAR__c osc =  [SELECT HE_per_BSP_Mapping__c FROM AMS_OSCAR__C WHERE ID = :oscar.id];
 
-		system.debug('##ARD FINAL result to assert: ' + osc.HE_per_BSP_Mapping__c);
 		Test.stopTest();
+	}
+
+	@isTest
+	static void mcBeingAcuiredByStandard() {
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
+		
+		Account GE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account HE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', GE1.Id, GE1.Id, AMS_Utils.HE, gb, '10000001');
+		Account AE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', HE1.Id, GE1.Id, AMS_Utils.AE, gb, '10000002');
+		Account HE2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', GE1.Id, GE1.Id, AMS_Utils.HE, fr, '10000003');
+		Account AE2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE FR', HE2.Id, GE1.Id, AMS_Utils.AE, fr, '10000004');
+
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		
+		Account newParentES = new Account(IATA_ISO_Country__c = gb.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account newParent',
+			Short_Name__c = 'Account newParent',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.HE,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		insert newParentES;
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			GE1, HE1, AE1, HE2, AE2
+		});
+		
+		Contact contact = new Contact(AccountId = GE1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = GE1.id,
+			New_parent__c = newParentES.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = GE1.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = GE1.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = HE1.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = HE1.IATA_ISO_Country__c,
+			Location_Class__c = HE1.Location_Class__c,
+			Location_Type__c = HE1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()) {
+			if (i.acc.IATA_ISO_Country__c == gb.id) {
+				i.selected = true;
+			} else {
+				i.selected = false;
+				i.main = false;
+			}
+		}
+
+		controller.handleSelection();
+
+		controller.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		controller.oscar.New_parent__c = newParentES.Id;
+		controller.currentGE = GE1;
+
+		List<String> actualNotes = controller.noteList;
+
+		controller.FetchNewParent();
+
+		controller.save();
+
+		System.assertEquals(AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD, controller.oscar.Change_of_Hierarchy_Scenario__c, 'The scenario should be the acquisition of mc locations by a standard hierarchy');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void bspSplit() {
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
+		
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account ac2 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac2.Id, ac1.Id, AMS_Utils.AE, gb, '10000002');
+		Account ac4 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000003');
+		Account ac5 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE FR', ac4.Id, ac1.Id, AMS_Utils.AE, fr, '10000004');
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			ac1, ac2, ac3, ac4, ac5 
+		});
+
+		Contact contact = new Contact(AccountId = ac1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ac1.id,
+			New_parent__c = ac4.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = ac1.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = ac1.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = ac4.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = ac4.IATA_ISO_Country__c,
+			Location_Class__c = ac4.Location_Class__c,
+			Location_Type__c = ac4.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()) {
+			if (i.acc.IATA_ISO_Country__c == fr.id) {
+				i.selected = true;
+			} else {
+				i.selected = false;
+				i.main = false;
+			}
+		}
+
+		controller.handleSelection();
+
+		controller.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		controller.oscar.New_parent__c = ac4.Id;
+		controller.currentGE = ac1;
+
+		List<String> actualNotes = controller.noteList;
+
+		controller.FetchNewParent();
+
+		controller.save();
+
+		System.assertEquals(AMS_Utils.MULTICOUNTRY_BSP_SPLIT, controller.oscar.Change_of_Hierarchy_Scenario__c, 'The scenario should be the splitting of a single BSP from a MC Hierarchy');
+
+		Test.stopTest();
+
+
 	}
 }
