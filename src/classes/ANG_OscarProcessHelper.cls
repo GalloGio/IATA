@@ -78,7 +78,7 @@ global class ANG_OscarProcessHelper {
 					FROM AMS_Pax_Accreditation_Form__c
 					WHERE Id = :onlineAccreditationId FOR UPDATE];
 
-			AMS_OSCAR__c oscar = [select Account__c, Account__r.Parent.Status__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
+			AMS_OSCAR__c oscar = [select Account__c, Account__r.Parent.Status__c, Account__r.Parent.Accreditation_date__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c,
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
@@ -715,7 +715,7 @@ global class ANG_OscarProcessHelper {
 
 		try {
 
-			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 									(SELECT Id, Reason_Code__c, Reason_Description__c
 									 FROM Agencies_Applied_Change_codes__r
 									 WHERE Active__c = true)
@@ -750,7 +750,7 @@ global class ANG_OscarProcessHelper {
 	//ACAMBAS - NEWGEN-4822 - Start
 	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
 
-		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c,
 												(SELECT Id, Reason_Code__c, Reason_Description__c
 									 			 FROM Agencies_Applied_Change_codes__r
 									 			 WHERE Active__c = true)
@@ -889,7 +889,7 @@ global class ANG_OscarProcessHelper {
 				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
 					accountIdsChanged.add(aaObject.AccountId);
 
-				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account where Id in :accountIdsChanged]);
 
 				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
 
@@ -1117,13 +1117,14 @@ global class ANG_OscarProcessHelper {
 
 			changeCode.name = changeCodeConfig.Name;
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
+			changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
 
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
 
-			if(theOscar.SIDRA_lite_reason__c == null)
+			if(theOscar.SIDRA_lite_reason__c == null && memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
-			else
+			else if(memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
 			changeCode.memoText = memoTextTemp;
@@ -2184,7 +2185,7 @@ global class ANG_OscarProcessHelper {
 
 		Map<Id,Contact> contactAcc = new Map<Id,Contact>();
 
-		for (Contact con : [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
+		for (Contact con : [SELECT Id, Name, Email, IsEmailBounced, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, AccountId,
 			(SELECT Id, Portal_Application__r.Name FROM Portal_Application_Rights__r WHERE ANG_Portal_Service_Role__c = 'IEP Admin')
 			FROM Contact WHERE AccountId IN :accsMap.keySet()
 			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
@@ -2205,10 +2206,9 @@ global class ANG_OscarProcessHelper {
 				return null;
 			}
 
-
 			fieldsOfObject = new Map<String,Object>();
 			fieldsOfObject.put('Account_Concerned__c',acc.Id);
-				fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
+			fieldsOfObject.put('ContactId',contactAcc.get(acc.Id).Id);
 			fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
 			fieldsOfObject.put('Region__c',acc.Region_formula__c);
 			fieldsOfObject.put('CaseArea__c','Accreditation Process');
@@ -2218,7 +2218,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 			fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 
-			 	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+			Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
 			//assign to queue
 			if(!Test.isRunningTest()){
@@ -2236,22 +2236,21 @@ global class ANG_OscarProcessHelper {
 		}
 
 		if (!casesToInsert.isEmpty())
-		 		insert casesToInsert;
+		 	insert casesToInsert;
 
-		 	Set<Id> casesIds = new Set<Id>();
+		Set<Id> casesIds = new Set<Id>();
 		for (Case cse : casesToInsert){
 			casesIds.add(cse.Id);
 		}
 
-		 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
-		 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
-		 	}
+	 	for(Case insertedCase : [Select ownerId, Account_Concerned__c from Case where Id in :casesIds]){
+	 		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+	 	}
 
 		//AMS_OSCAR__c:
 		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>();
 
 		for (Account acc : accs){
-
 			fieldsOfObject = new Map<String,Object>();
 			fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :(model == 'B+' ? AMS_Utils.IEPMODELBPLUSACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP))));
 			fieldsOfObject.put('Status__c','Open');
@@ -2264,39 +2263,28 @@ global class ANG_OscarProcessHelper {
 			accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
 
-
-
 		if(!oscarsToInsert.isEmpty())
 			insert oscarsToInsert;
 
-
 		OrgWideEmailAddress[] owea;
-
-
 		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-
 		List<Case> casesToUpdate = new List<Case>();
-
 
 		for (Account acc: accs){
 
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-
-
 			System.debug('[ANG_OscarProcessHelper.createIEPAccountOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
-
 
 		if(!casesToUpdate.isEmpty())
 			update casesToUpdate;
 
 		//sending email with url for portal
 		for (Account acc: accs){
-
-			if(model != 'B+') AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);
-
+			Contact accContact = accOscarObjsMap.get(acc.Id).con;
+			if(model != 'B+' && !accContact.IsEmailBounced && accContact.Email.indexOf('.inactive') == -1) AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);
 		}
 		return oscarsToInsert;
 	}

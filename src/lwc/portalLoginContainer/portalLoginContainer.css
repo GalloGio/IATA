@@ -34,9 +34,10 @@
        padding-bottom: 6rem !important;*/
    }
    .fixedPosition{
-       /*max-width: 600px;*/
-       height: 100%;
-       /*position: fixed; */
+       max-width: inherit;
+       width: inherit;
+       left: 0;
+       position: fixed;
    }
    .containerHeight{
        /*height:925px;

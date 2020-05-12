@@ -1,7 +1,10 @@
 @isTest
 private class ANG_RollbackEngineHelperTest {
 
-	private static void setupData(Boolean useAEAccount){
+	@testSetup
+	static void makeData(){
+		Test.startTest();
+		
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
 		insert ctry ;
 
@@ -86,7 +89,7 @@ private class ANG_RollbackEngineHelperTest {
 			TradeName__c = 'Test1 Agency OK'
 			);
 
-		insert New List<Account>{a2,a3};
+		insert new List<Account>{a2,a3};
 
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 		insert hierarchy;
@@ -96,12 +99,7 @@ private class ANG_RollbackEngineHelperTest {
 		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a3.Id);
 		insert new List<AMS_Agencies_relationhip__c>{rel,rel2};
 
-		Contact newContact1 = new Contact(
-		FirstName = 'Joel',
-		LastName = 'Chandler',
-		AccountId = a1.Id
-		);
-
+		Contact newContact1 = new Contact(FirstName = 'Joel', LastName = 'Chandler', AccountId = a1.Id);
 		insert newContact1;
 
 		Id ownerRtId = AMS_Utils.AccountRoleOwnershipRT;
@@ -115,21 +113,30 @@ private class ANG_RollbackEngineHelperTest {
 		authorizations.add(new Agency_Authorization__c(Account__c = a1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		insert authorizations;
 
-		Id oscarRT = AMS_Utils.RECTYPE_NGCHANGES;
+		Test.stopTest();
+	}
+
+	private static void setupData(Boolean useAEAccount) {
+		List<Account> accounts = [SELECT Id, IATACode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, Name, Short_Name__c,
+									  Email__c, Website, Abbreviated_name__c, VAT_Number__c, ANG_Accreditation_Model__c, License_Number__c,
+									  (SELECT Id FROM Contacts)
+								  FROM Account
+								  WHERE IATACode__c IN ( '1234561', '1234591' )];
+		Account a1 = accounts.get(0).IATACode__c == '1234561' ? accounts.get(0) : accounts.get(1);
+		Account a2 = accounts.get(0).IATACode__c == '1234561' ? accounts.get(1) : accounts.get(0);
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = useAEAccount ? a2.id : a1.id,
-			recordTypeId = oscarRT
+			recordTypeId = AMS_Utils.RECTYPE_NGCHANGES
 		);
 
 		insert oscar;
-
 
 		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
 		oscarCase.AccountId = useAEAccount ? a2.id : a1.id;
-		oscarCase.ContactId = newContact1.Id;
+		oscarCase.ContactId = a1.Contacts.get(0).Id;
 		insert oscarCase;
 
 		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
@@ -178,11 +185,6 @@ private class ANG_RollbackEngineHelperTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
 		update oscar;
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
 		Test.StopTest();
 
 		List<Agency_Authorization__c> autorizations = [Select Id,Status__c from Agency_Authorization__c];
@@ -240,11 +242,6 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.StopTest();
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
 		for(Account acct: accts){
 
 			System.assertEquals('Test1 Agency OK',acct.Name);
@@ -326,9 +323,6 @@ private class ANG_RollbackEngineHelperTest {
 	}
 
 	@isTest static void RollbackTest2() {
-
-		Test.startTest();
-
 		setupData(false);
 
 		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
@@ -390,31 +384,83 @@ private class ANG_RollbackEngineHelperTest {
 
 		insert a2;
 
+		Test.startTest();
+
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy2');
 		insert hierarchy;
 
 		AMS_Agencies_relationhip__c relsToInsert = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id);
 		insert relsToInsert;
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-		beh.setNewParentHierarchyId(a1.Id);
+		Contact con1 = [SELECT Id, AccountId FROM Contact WHERE FirstName = 'Joel' LIMIT 1];
 
-		beh.executeAdhoc();
-*/
+		con1.Financial_Assessment_Contact__c = true;
+		update con1;
 
-		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+		Portal_Applications__c pApp = new Portal_Applications__c(Name = 'IFAP');
+		insert pApp;
+		
+		insert new Portal_Application_Right__c(Portal_Application__c = pApp.Id, 
+			Right__c = 'Access Granted',
+			Contact__c = con1.Id);
+
+		AMS_OSCAR__c oscar = [SELECT Id FROM AMS_OSCAR__c];
 
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 		oscar.New_parent__c = a1.Id;
 
 		update oscar;
 
-		Account setupAccountAE = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1234591'];
+		Financial_Institution__c fi = new Financial_Institution__c(Name = 'FI1', 
+			Institution_Type__c = 'Bank');
+		insert fi;
 
-		Account setupAccountAE3 = [Select Id, ParentId, Location_Type__c,Top_Parent__c from Account where location_Type__c = 'AE' and IATAcode__c = '1264011'];
+		Case oscarCase = [SELECT Id FROM Case LIMIT 1];
 
-		Test.StopTest();
+		insert new Financial_Security__c(CurrencyIsoCode='USD', 
+			Account__c = a1.Id, 
+			Amount__c = 3000, 
+			Expiry_Date__c = System.today().addDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = oscarCase.Id,
+			Financial_Security_Validation_Case__c = oscarCase.Id);
+
+		insert new ANG_RHC_Information__c(ANG_AccountId__c = a1.id,
+			CurrencyIsoCode ='EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			ANG_Financial_Security__c = 0);
+
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(Name = 'Risk Event Test',
+			ANG_Description__c = 'Risk Event Test',
+			ANG_Expiration__c = 24,
+			ANG_Risk_ID__c = 'testRiskId',
+			Limit_Cash_conditions__c = false);
+
+		insert ret;
+
+		insert new ANG_Agency_Risk_Event__c(ANG_AccountId__c = a1.id,
+			ANG_Risk_Type__c = ret.id,
+			ANG_Issued_Date__c = System.today(),
+			ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE);
+
+		Account setupAccountAE;
+		Account setupAccountAE3;
+		
+		for (Account a : [SELECT Id, ParentId, Location_Type__c, Top_Parent__c, IATAcode__c
+						FROM Account
+						WHERE location_Type__c = 'AE'
+							AND IATAcode__c IN ( '1234591', '1264011' )]) {
+			if (a.IATAcode__c == '1234591') {
+				setupAccountAE = a;
+			} else {
+				setupAccountAE3 = a;
+			}
+		}
 
 		delete [Select Id From AMS_Agencies_relationhip__c where Id <> :relsToInsert.Id and Child_Account__c <> :setupAccountAE3.Id];
 
@@ -427,7 +473,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		List<AMS_Agencies_relationhip__c> relationsAfterChange = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
 
-		System.debug('relationsAfterChange are:'+relationsAfterChange);
+		Test.stopTest();
 
 		System.assertEquals(3,relationsAfterChange.size());
 
@@ -438,12 +484,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		List<AMS_Agencies_relationhip__c> relationsAfterRollback = [Select Id, Child_Account__c, Child_Account__r.IATACode__c, Child_Account__r.ParentId, Parent_Account__c,Parent_Account__r.IATAcode__c,Parent_Account__r.ParentId, Hierarchy__c from AMS_Agencies_relationhip__c];
 
-		System.debug('relationsAfterRollback are:'+relationsAfterRollback);
-
 		System.assertEquals(3,relationsAfterRollback.size());
-
-		System.debug('Accounts are:' + [Select Id, Location_Type__c, IATAcode__c, ParentId, Top_Parent__c, Name from Account]);
-
 	}
 
 	@isTest static void RollbackTest3() {
@@ -523,8 +564,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
-		insert ctry ;
+		IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c];
 
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
@@ -813,7 +853,7 @@ private class ANG_RollbackEngineHelperTest {
 			IATA_ISO_Country__c = ctry.id,
 			RecordTypeId = accountAgencyRT,
 			IATACode__c='1234001',
-			Location_Type__c='HE',
+			Location_Type__c=AMS_Utils.AE,
 			Name='Test1 Agency OK NEW BIG BOSS',
 			Short_Name__c='Test1 Agency',
 			Sector__c = 'Travel Agent',
@@ -896,8 +936,7 @@ private class ANG_RollbackEngineHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c = true)  ;
-		insert ctry ;
+		IATA_ISO_Country__c ctry = [SELECT Id FROM IATA_ISO_Country__c];
 
 		Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
 
@@ -1038,13 +1077,6 @@ private class ANG_RollbackEngineHelperTest {
 			oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
 			update oscar;
 
-/*
-		ANG_BackupEngineHelper beh = new ANG_BackupEngineHelper(oscar.Id);
-
-		beh.executeAdhoc();
-*/
-
-
 		Account a2 = new Account(
 			Is_PCI_compliant__c = 'Yes',
 			ANG_HE_RiskStatus__c = 'B',
@@ -1076,21 +1108,15 @@ private class ANG_RollbackEngineHelperTest {
 		insert hierarchy;
 
 		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a2.Id, Child_Account__c = a1.Id, Hierarchy__c = hierarchy.Id);
+		
+		newContact1.Financial_Assessment_Contact__c = false;
+		update newContact1;
 
+		a1.Location_Type__c = AMS_Utils.AE;
 		a1.ParentId = a2.Id;
 		a1.Top_Parent__c = a2.Id;
 
 		update a1;
-
-		For(Technical_Logs__c tlog : [Select Id,Log__c,Status__c,Record__c,Operation__c from Technical_Logs__c])
-			System.System.debug(tlog);
-		/*
-		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
-		reh.executeAdhoc();
-
-		System.assertEquals(true,[Select Id from AMS_Agencies_relationhip__c].size() == 0);
-		System.assertEquals(true,[Select Id from AMS_Agencies_Hierarchy__c].size() == 0);
-		*/
 
 	}
 
@@ -1164,6 +1190,7 @@ private class ANG_RollbackEngineHelperTest {
 			);
 		update rtsAlert;
 
+		heAccount.Location_Type__c=AMS_Utils.AE;
 		heAccount.ParentId = a1.Id;
 		heAccount.Top_Parent__c = a1.Id;
 		update heAccount;

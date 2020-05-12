@@ -310,7 +310,6 @@
                 <value>
                     <fullName>General Public</fullName>
                     <default>false</default>
-                    <isActive>false</isActive>
                     <label>General Public</label>
                 </value>
                 <value>
@@ -526,6 +525,26 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <controllingFieldValue>Holding Company</controllingFieldValue>
+                <controllingFieldValue>Media</controllingFieldValue>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <controllingFieldValue>Recreational</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <controllingFieldValue>Accommodation</controllingFieldValue>
+                <controllingFieldValue>Airline</controllingFieldValue>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <controllingFieldValue>Association</controllingFieldValue>
+                <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
+                <controllingFieldValue>Financial Institution</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>General Public</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <valueName>Individual Government</valueName>
             </valueSettings>
             <valueSettings>
@@ -539,22 +558,6 @@
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Airline Holding Company</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Authority</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Concessionaire</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Operator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Media</controllingFieldValue>
@@ -639,6 +642,22 @@
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>TIDS Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Authority</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Concessionaire</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Operator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
@@ -836,6 +855,11 @@
                     <label>Airline Supplier</label>
                 </value>
                 <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+                <value>
                     <fullName>All</fullName>
                     <default>false</default>
                     <label>All</label>
@@ -883,6 +907,7 @@
                 <value>
                     <fullName>Infrastructure Partner</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>Infrastructure Partner</label>
                 </value>
                 <value>

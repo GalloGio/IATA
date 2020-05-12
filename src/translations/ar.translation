@@ -3026,6 +3026,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
+        <label>إنشاء مستخدم جديد</label>
+        <name>CSP_Create_New_User_Label</name>
+    </customLabels>
+    <customLabels>
         <label>إنشاء كلمة مرور</label>
         <name>CSP_Create_Password</name>
     </customLabels>
@@ -3298,6 +3302,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>:لقد قرأت ووافقت على الشروط التالية</label>
+        <name>CSP_Have_Read_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>مرحباً!</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
@@ -3350,6 +3358,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>الاسم الأول</label>
+        <name>CSP_L1_First_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم الأخير</label>
+        <name>CSP_L1_Last_Name</name>
+    </customLabels>
+    <customLabels>
         <label>معلومات حساب الشركة</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3364,6 +3380,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>.(IATA - لمطابقة ملفك الشخصي مع حساب شركتك ، نحتاج إلى مزيد من التفاصيل. سيساعدنا ذلك في التحقق مما إذا كانت شركتك مسجلة بالفعل لدى الاتحاد الدولي للنقل الجوي (إياتا</label>
         <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>تفاصيل اضافية</label>
+        <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
         <label>.لم نتمكن من العثور على عنوانك.الرجاء النقر على زر &quot;الخطوة التالية&quot; لتأكيد صحة عنوانك</label>
@@ -3382,6 +3402,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
+        <label>العودة إلى تفاصيل إضافية</label>
+        <name>CSP_L2_Back_to_Additional_Details</name>
+    </customLabels>
+    <customLabels>
         <label>العودة إلى معلومات عنوان العمل</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
@@ -3394,11 +3418,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
-        <label>العودة إلى تفاصيل الملف الشخصي</label>
-        <name>CSP_L2_Back_to_Profile_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>استكمال الملف الشخصي &amp; اختيار الحساب</label>
+        <label>اختيار الحساب وتفاصيل إضافية</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3406,7 +3426,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>.يرجى ملء بيانات عنوان عملكم</label>
+        <label>يرجى ادخال عنوان  الحالي للمقر الخاص بكم</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3458,7 +3478,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>البلد</label>
+        <label>البلد/الإقليم</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3566,6 +3586,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Next_Confirmation</name>
     </customLabels>
     <customLabels>
+        <label>الخطوة التالية</label>
+        <name>CSP_L2_Next_Step</name>
+    </customLabels>
+    <customLabels>
         <label>لا</label>
         <name>CSP_L2_No</name>
     </customLabels>
@@ -3602,10 +3626,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
-        <label>تفاصيل الملف الشخصي</label>
-        <name>CSP_L2_Profile_Details</name>
-    </customLabels>
-    <customLabels>
         <label>.أضف بياناتك الشخصية للسماح للاتحاد الدولي للنقل الجوي (إياتا) باقتراح محتوى وخدمات مخصصة</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
@@ -3614,7 +3634,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label>لكننا حفظناه كمسودة حتى تتمكن من المتابعة لاحقًا. هل أنت متأكد من أنك تريد الخروج؟</label>
+        <label>هل أنت متأكد من أنك تريد الخروج؟</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
@@ -3702,7 +3722,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
-        <label>العنوان</label>
+        <label>تحية</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -3710,8 +3730,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Trade_Name</name>
     </customLabels>
     <customLabels>
+        <label>ظريبه الشراء</label>
+        <name>CSP_L2_VAT_Number</name>
+    </customLabels>
+    <customLabels>
         <label> الموقع الإلكتروني</label>
         <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد / الإقليم من موقع عملك</label>
+        <name>CSP_L2_Work_Location</name>
     </customLabels>
     <customLabels>
         <label>نعم</label>
@@ -4214,6 +4242,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_TIPReports_Title</name>
     </customLabels>
     <customLabels>
+        <label>قبول</label>
+        <name>CSP_Services_Accept_Terms</name>
+    </customLabels>
+    <customLabels>
         <label>الوصول مطلوب</label>
         <name>CSP_Services_AccessRequested</name>
     </customLabels>
@@ -4334,6 +4366,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label>.كجزء من التحديثات العادية، ونحن جعل بعض التغييرات على شروطنا. نحن نشجعك على قراءة الوثائق بالكامل</label>
+        <name>CSP_Terms_Updated_Message</name>
+    </customLabels>
+    <customLabels>
         <label>نشكركم على ملاحظاتكم.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
@@ -4376,6 +4412,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء اسم المستخدم</label>
+        <name>CSP_User_Creation</name>
     </customLabels>
     <customLabels>
         <label>مرحبًا بكم في بوابة عملاء إياتا</label>
@@ -16058,10 +16098,6 @@ and
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>لإبلاغ اتحاد النقل الجوي الدولي «إياتا» (IATA) عن تغييرٍ في بيانات الحساب المصرفي يُرجى الاتصال بنا</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -22250,6 +22286,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
+        <label><!-- MedAire_Service_Description --></label>
+        <name>MedAire_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Media --></label>
         <name>Media</name>
     </customLabels>
@@ -22524,6 +22564,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess --></label>
+        <name>OneId_FRED_RegistrationProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId FRED RegistrationProcess URL --></label>
+        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -24465,6 +24513,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label>سياسة الخصوصية</label>
+        <name>TC_CSP_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label>شروط الاستخدام</label>
+        <name>TC_CSP_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Name of the GDPR community in the URL --></label>
         <name>TECH_GDPR_Community_Name</name>
     </customLabels>
@@ -26051,6 +26107,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- select role --></label>
         <name>issp_apppicker_select_role</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- issue with iata help text --></label>
+        <name>issue_with_iata</name>
     </customLabels>
     <customLabels>
         <label><!-- label custom price --></label>
@@ -32133,6 +32193,27 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agencies (AMS) --></description>
         <label><!-- Agencies (AMS) --></label>
         <name>Agencies_AMS</name>
@@ -32703,6 +32784,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Case Milestones --></label>
             <name>Case Milestones</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with WW HQ Agents Accounts --></description>
+        <label><!-- Cases with WW HQ Agents Accounts --></label>
+        <name>Cases_with_WW_HQ_Agents_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Cases --></label>
@@ -33706,7 +33800,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- ISSP Document Tracker with Amazon Files --></label>
         <name>ISSP_Document_Tracker_with_Amazon_Files</name>
         <sections>
-            <label><!-- AmazonFiles --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>AmazonFiles</name>
         </sections>
         <sections>
@@ -34525,7 +34619,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Participants --></label>
         <name>Participants_with_Contacts</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -34689,7 +34783,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ICCS Product Currencies</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>التقارير</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -34812,7 +34906,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contract Line Items</name>
         </sections>
         <sections>
-            <label><!-- Service Contracts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Service Contracts</name>
         </sections>
     </reportTypes>
@@ -35023,6 +35117,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>
