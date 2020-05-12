@@ -1,56 +1,71 @@
 <template>
     <!-- RESULTS -->
-    <div if:true={documentsResults}>
+    <div if:true={documentsResults} class="slds-p-bottom_medium">
         <template for:each={documentsList} for:item="keyValue" for:index="keyValueIndex">
-            <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
+            <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key} body-without-margins={isSpecialBodyCard}>
 
                 <span slot="cardTitle" class="cursorPointer" onclick={categorySelected} data-item={keyValue.key}>
                     {keyValue.label} ({keyValue.noResults})
                 </span>
 
-                <span slot="cardBody">
-                    <template for:each={keyValue.value} for:item="record">
-                        <div key={record.id}>
-                        <table class="slds-col slds-size_1-of-1 slds-m-vertical_medium slds-table tableStyle" key={record.id}>
-                            <tbody key={record.id}>
-                                <tr>
-                                    <td class="underLinded firstColInfo">
-                                        <div class="cursorPointer" onclick={openRecordDetail} data-item={record.id}>
-                                            <lightning-icon class="darkBlueIcon" if:true={record.open} icon-name="utility:chevrondown" size="xx-small" data-item={record.id}></lightning-icon>
-                                            <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.id}></lightning-icon>
+                <span slot="cardBody">                   
+                    <div class="slds-grid slds-wrap slds-is-relative text-xsmall">                       
+                        <template for:each={keyValue.value} for:item="record">
+                            <div key={record.Id} class="slds-size_1-of-1 slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap slds-p-horizontal_none">
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_2-of-12 slds-grid slds-grid--vertical-align-center cell">
+                                        <div class="slds-col slds-size--1-of-3 slds-grid  cursorPointer slds-align--absolute-center" onclick={openRecordDetail} data-item={record.Id}>
+                                            <lightning-icon class="darkBlueIcon" if:true={record.open} icon-name="utility:chevrondown" size="xx-small" data-item={record.Id}></lightning-icon>
+                                            <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.Id}></lightning-icon>
                                         </div>
-                                    </td>
-                                    <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} data-url={record.url} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
-                                    <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo titleTruncation">{record.title}</td>
-                                    <td key={record.id} class="underLinded fourthColInfo">{record.language}</td>
-                                    <td key={record.id} class="underLinded fourthColInfo">{record.filetype}</td>
-                                    <td key={record.id} class="underLinded"><lightning-icon class="darkBlueIcon cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} data-url={record.url} onclick={downloadDocument}></lightning-icon></td>
-                                </tr>
-                                <tr if:true={record.open} data-item={record.id}>
-                                    <td class="recordDetail noPadding" colspan="6">
-                                        <div class="slds-p-horizontal_large slds-p-vertical_large">
-                                            <div class="slds-p-around_medium">
-                                                <div class="text-xxsmall textInfo">{label.IDCard_Description}</div>
-                                                <div class="text-xsmall">{record.desc}</div>
-                                            </div>
-                                            <div class="slds-p-around_medium">
-                                                <div class="text-xxsmall textInfo">{label.CSP_Search_Documents_ProdType}</div>
-                                                <div class="text-xsmall">{record.prodCat}</div>
-                                            </div>
-                                            <div class="slds-p-around_medium">
-                                                <div class="text-xxsmall textInfo">{label.CSP_Documents_PubliCountry}</div>
-                                                <div class="text-xsmall">{record.countryPubli}</div>
-                                            </div>
+                                        <div class="slds-col slds-grid slds-size--2-of-3 slds-show_small text-xsmall cellDefault">
+                                            <button class="cursorPointer buttonInfo  " data-name={record.Title} data-item={record.Id} data-url={record.ContentUrl} onclick={viewDocument}>{label.ISSP_View}</button>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        
-                    </template>
+                                    </div>
+                                    <div key={record.Id} class="slds-col slds-size_7-of-12 slds-medium-size_6-of-12 slds-grid slds-grid_vertical-align-center text-black text-xsmall text-bold cellDefault"><p class="slds-p-horizontal_x-small titleTruncation ">{record.Title}</p></div>
+                                    <div key={record.Id} class="slds-col slds-size_2-of-12 slds-show_small slds-grid slds-grid_vertical-align-center cellDefault text-xsmall"><p>{record.Language__c}</p></div>
+                                    <div key={record.Id} class="slds-col slds-size_3-of-12 slds-medium-size_2-of-12 slds-grid slds-grid--vertical-align-center cellDefault">
+                                        <div if:false={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end">
+                                            <span if:true={record.bookMarked} class='bkmicon bookmarked' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title={label.CSP_BookmarkDocRemToolTip}></span>
+                                            <span if:false={record.bookMarked} class='bkmicon' onclick={bookmarkDoc} data-item={record.ContentDocumentId} title={label.CSP_BookmarkDocAddToolTip}></span>
+                                        
+                                        </div>
+                                        <div if:true={record.bkloading} class="slds-align-content-center slds-size--1-of-2 slds-grid slds-grid_align-end slds-is-relative">
+                                            <lightning-spinner class="slds-is-relative slds-p-right_large" alternative-text="Loading" size="small"></lightning-spinner>
+                                        </div>
+                                        <div class=" cursorPointer slds-size--1-of-2 slds-grid slds-align_absolute-center">
+                                            <span class='dnicon' onclick={downloadDocument} data-name={record.Title} data-url={record.ContentUrl} data-item={record.Id} title="Download"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div if:true={record.open} class="slds-transition-show slds-col slds-size_1-of-1 slds-grid slds-wrap recordDetail slds-grid_align-center" data-item={record.Id}>
+                                    <div class="slds-col slds-size--11-of-12 slds-small-size--11-of-12 slds-p-vertical--medium">
+                                        <div class="slds-p-around_medium">
+                                            <div class="text-xxsmall slds-show text-lightGray">{label.IDCard_Description}</div>
+                                            <div>{record.Description}</div>
+                                        </div>
+                                        <div class="slds-p-around_medium">
+                                            <div class="text-xxsmall slds-show text-lightGray">{label.CSP_Search_Documents_ProdType}</div>
+                                            <div class="text-xsmall">{record.Product_Category__c}</div>
+                                        </div>
+                                        <div class="slds-p-around_medium">
+                                            <div class="text-xxsmall slds-show text-lightGray">{label.CSP_Documents_PubliCountry}</div>
+                                            <div class="text-xsmall">{record.Country_of_publication__c}</div>
+                                        </div>
+                                        <div class="slds-p-around_medium">
+                                            <div class="text-xxsmall slds-show text-lightGray">{label.CSP_DocumentType}</div>
+                                            <div class="text-xsmall">{record.FileType}</div>
+                                        </div>
+                                        <div class="slds-p-around_medium">
+                                            <div class="text-xxsmall slds-show text-lightGray">{label.CSP_LastUpdate}</div>
+                                            <div class="text-xsmall">{record.LastModifiedDate}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                    
+                        </template>
+                    </div>
                 </span>
-
             </c-portal-custom-card-container>
         </template>
         <div class="endOfTable"></div>

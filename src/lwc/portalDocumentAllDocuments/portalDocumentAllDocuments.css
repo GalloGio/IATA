@@ -1,0 +1,43 @@
+.searchStyle {
+    display: inline-block;
+    width: 80%;
+}
+
+.inputFilter {
+    display: flex;
+    align-items: center;
+}
+
+.inputFilter lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}
+
+.emptyGrayAreaSize{
+    height: 50px;
+}
+
+.selectedTab .tabLabel, .seletedTab:hover .tabLabel{
+    color:#f04632;
+    border-bottom: 5px solid #f04632;
+    pointer-events: none; 
+}
+
+.tab:hover >.tabLabel{
+    color:#f04632;
+    border-bottom: 2px solid #f04632;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
+}
+
+
+.itemTab,.tabLabel {
+    white-space: nowrap;
+}
+
+.circle{
+    height: 128px;
+    width: 128px;
+    background-color: rgba(30, 50, 250, 0.05);
+    border-radius: 50%;
+}
