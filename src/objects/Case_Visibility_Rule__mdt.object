@@ -71,7 +71,7 @@ NOT_NULL</description>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Owner__c</fullName>
+        <fullName>OwnerID__c</fullName>
         <description>This field contains the case owner id</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>

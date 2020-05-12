@@ -27,7 +27,7 @@
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>Owner__c</field>
+        <field>OwnerID__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>

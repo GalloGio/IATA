@@ -27,7 +27,7 @@
         <value xsi:type="xsd:string">Internal Case</value>
     </values>
     <values>
-        <field>Owner__c</field>
+        <field>OwnerID__c</field>
         <value xsi:type="xsd:string">005w0000006YchL</value>
     </values>
     <values>

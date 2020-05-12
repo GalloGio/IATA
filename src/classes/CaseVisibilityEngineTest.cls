@@ -87,9 +87,10 @@ private class CaseVisibilityEngineTest {
 					   FROM Account];
 		
 		Test.startTest();
+		Id recycleBinId = (Id) UtilityCS__c.getValues('CaseRecycleBinIds').Value__c;
 		Case cse = new Case(AccountId = acc.Id, ContactId = acc.Contacts[0].Id, RecordTypeId = RecordTypeSingleton.getInstance()
 			.getRecordTypeId('Case', 'Cases_Global'), Subject = 'Test', Type = 'Request', Status = 'Open', Origin = 'Phone',
-				Phone_Redirected_to_Web__c = true);
+				Phone_Redirected_to_Web__c = true, OwnerId = recycleBinId);
 		insert cse;
 		
 		cse = [SELECT Visible_on_ISS_Portal__c FROM Case WHERE Id = :cse.Id];
