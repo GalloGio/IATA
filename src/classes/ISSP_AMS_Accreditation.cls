@@ -6590,12 +6590,10 @@ public without sharing class ISSP_AMS_Accreditation {
 						&& !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
 						if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
 
-							if(newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
-								if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership : Label.ISSP_AMS_Validation_Percent_Ownership_AE));
-								} else {
-									ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership2 : Label.ISSP_AMS_Validation_Percent_Ownership2_AE));
-								}
+							if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship' || newForm.ISSP_AMS_Legal_Status__c == null) {
+								ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership : Label.ISSP_AMS_Validation_Percent_Ownership_AE));
+							} else {
+								ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO ? Label.ISSP_AMS_Validation_Percent_Ownership2 : Label.ISSP_AMS_Validation_Percent_Ownership2_AE));
 							}
 							errorFound = true;
 						}
