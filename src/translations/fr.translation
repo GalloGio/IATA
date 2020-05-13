@@ -16139,10 +16139,6 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez nous contacter pour informer l’IATA d’un changement de coordonnées bancaires		</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -26170,6 +26166,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>issp_apppicker_select_role</name>
     </customLabels>
     <customLabels>
+        <label><!-- issue with iata help text --></label>
+        <name>issue_with_iata</name>
+    </customLabels>
+    <customLabels>
         <label><!-- label custom price --></label>
         <name>label_custom_price</name>
     </customLabels>
@@ -32250,6 +32250,27 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agencies (AMS) --></description>
         <label><!-- Agencies (AMS) --></label>
         <name>Agencies_AMS</name>
@@ -32820,6 +32841,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Case Milestones --></label>
             <name>Case Milestones</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with WW HQ Agents Accounts --></description>
+        <label><!-- Cases with WW HQ Agents Accounts --></label>
+        <name>Cases_with_WW_HQ_Agents_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Cases --></label>
@@ -35140,6 +35174,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- UAT Scenario --></label>
             <name>UAT Scenario</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- User Presence --></description>
+        <label><!-- User Presence --></label>
+        <name>User_Presence</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -78,6 +78,14 @@
                 <behavior>Edit</behavior>
                 <field>BSP_Domestic_Only__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PASS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Settlement_System_PASS__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

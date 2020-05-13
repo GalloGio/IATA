@@ -6,9 +6,6 @@
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Web_App_View</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -209,7 +206,7 @@
                 <field>BIETA_Member__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ICH_Member__c</field>
             </layoutItems>
             <layoutItems>
@@ -613,6 +610,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Participant_formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_PASS_Participations__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

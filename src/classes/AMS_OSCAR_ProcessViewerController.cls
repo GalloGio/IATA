@@ -4,19 +4,27 @@ public class AMS_OSCAR_ProcessViewerController {
 		public String stepName;
 		public String process;
 		public String optToHide;
+		public Boolean checkEmptyOscarParent;
 
-		public HideOptionStepWrapper(String stepName, String process, String optToHide){
+		public HideOptionStepWrapper(String stepName, String process, String optToHide, Boolean checkEmptyOscarParent){
 			this.stepName = stepName;
 			this.process = process;
 			this.optToHide = optToHide;
+			this.checkEmptyOscarParent = checkEmptyOscarParent;
 		}
 	}
 
 	private static Map<String, List<HideOptionStepWrapper>> hideOptsByStepMap = new Map<String, List<HideOptionStepWrapper>>{
 		'STEP45__c' =>
 			new List<HideOptionStepWrapper>{
-				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NOT_APPLICABLE),
-				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NEWGESTANDARD, AMS_Utils.NOT_APPLICABLE)
+				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NGCONVERSIONTOMULTICOUNTRY, AMS_Utils.NOT_APPLICABLE, false),
+				new HideOptionStepWrapper('STEP45__c', AMS_Utils.NEWGESTANDARD, AMS_Utils.NOT_APPLICABLE, false)
+				
+			},
+
+		'STEP51__c' =>
+			new List<HideOptionStepWrapper>{
+				new HideOptionStepWrapper('STEP51__c', AMS_Utils.NGCONVERSIONMCTOST, AMS_Utils.NOT_APPLICABLE, true)
 			}
 	};
 
@@ -52,6 +60,48 @@ public class AMS_OSCAR_ProcessViewerController {
 	public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
 
 	private static Set<String> analystProfiles = new Set<String>{'FDS Hub Analyst ARM'};
+
+	public String NGCONVERSIONMCTOSTANDARD {
+		get { return AMS_Utils.NGCONVERSIONMCTOST; }
+	}
+
+	public String NGCONVERSIONTOMULTICOUNTRY {
+		get {return AMS_Utils.NGCONVERSIONTOMULTICOUNTRY; }
+	}
+
+	public String NGVR {
+		get {
+			return AMS_Utils.NGVR;
+		}
+	}
+	
+	public String MULTICOUNTRY {
+		get {
+			return AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		}
+	}
+
+	public String CONFIRM_MC_CONVERSION_MSG {
+		get { return 'By clicking OK you confirm that you want to proceed with changing the accreditation type of the entire hierarchy to GoStandard.'; }
+	}
+
+	public boolean isParentOscar {
+		get {
+			return this.oscar.Parent_OSCAR__c == null && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE;
+		}
+	}
+	
+	public String cannotProceedConversionToStandardMessage {
+		get {
+			if(this.oscar.Account__r.Location_Type__c == AMS_Utils.GE && 
+				(String.isNotBlank(this.oscar.Account__r.Bulletin_Headquarter__c) ||
+				this.oscar.Account__r.Identify_as_Multicountry_Key_Hierarchy__c))
+			{
+				return 'Please uncheck the "Identify as key multicountry hierarchy" and delete the "eBulletin Multicountry Headquarter" fields on the GE account in order to proceed';	
+			}
+			return null;
+		}
+	}
 
 	public Boolean showRequiredOverlay{
 		get{
@@ -244,16 +294,24 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 	}
 
-	public Boolean blockFAoptOut{
-		get{
-			if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return true; }
-			return (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE));
+	public Boolean blockFAoptOut {
+		get {
+			if (oscar.Process__c == AMS_Utils.NEWHESTANDARD) {
+				return true;
+			} else if (oscar.ANG_Type_Of_Change__c != null) {
+				return (oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)
+					|| (oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_Parent__c != null
+						&& oscar.New_Parent__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY));
+			}
+			return false;
 		}
 	}
 
-	public Boolean hideFAoptOut{
-		get{
-			if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return false; }
+	public Boolean hideFAoptOut {
+		get {
+			if (oscar.Process__c == AMS_Utils.NEWHESTANDARD) {
+				return false;
+			}
 			return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c);
 		}
 	}
@@ -261,8 +319,6 @@ public class AMS_OSCAR_ProcessViewerController {
 	public String selectedTab{get;set;}
 
 	public AMS_OSCAR_ProcessViewerController() {
-
-
 
 		Id objectId = ApexPages.currentPage().getParameters().get('id');
 
@@ -282,8 +338,7 @@ public class AMS_OSCAR_ProcessViewerController {
 				loadJsonFile();
 			}
 
-
-		}else{
+		} else {
 
 			this.oscar = fetchOscarFields(objectId);
 			this.oscarId = this.oscar.Id;
@@ -295,7 +350,7 @@ public class AMS_OSCAR_ProcessViewerController {
 
 		}
 
-	selectedTab = 'tab1';
+		selectedTab = 'tab1';
 
 	}
 
@@ -374,6 +429,10 @@ public class AMS_OSCAR_ProcessViewerController {
 					firstExpanded = true;
 				}
 
+				if (step.name == 'STEP6') { // sanity check
+					if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && isParentOscar && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED)
+						step.saveActionEnabled = false;
+				}
 			}
 
 		}
@@ -430,22 +489,6 @@ public class AMS_OSCAR_ProcessViewerController {
 		return picklistValues;
 	}
 
-	/* Commented as per NEWGEN-3301
-	@TestVisible private boolean canBeDisplayed(String fieldName, String oscarProcess, String fieldValue){
-
-		 // if(!(fieldName == 'Is_PCI_compliant__c' && fieldValue == 'Corporate Card'))
-			return true;
-
-		if(!AMS_Utils.oscarNewGenProcesses.contains(oscarProcess))
-			return true;
-
-		if(oscarProcess == AMS_Utils.NGCORRECTION || oscarProcess == AMS_Utils.NGFOP)
-			return true;
-
-		return false;
-
-	}*/
-
 	public class StepFieldsDataWrapper{
 		public String fieldApiName{get;set;}
 		public String fieldLabel{get;set;}
@@ -459,9 +502,7 @@ public class AMS_OSCAR_ProcessViewerController {
 	}
 
 	private boolean isObjectCase(Id objectToFind){
-
 		return AMS_Utils.findObjectNameFromRecordIdPrefix(objectToFind).equalsIgnoreCase('CASE');
-
 	}
 
 	private Case fetchCaseFields(ID objectId, Boolean isIdFromOscar){
@@ -503,7 +544,17 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Region_formula__c  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+		return '' //
+			+ ' SELECT ' + fields + ', ' //
+			+ ' 	AMS_Online_Accreditation__r.Ready_for_Accreditation__c, RecordType.Name, RecordType.DeveloperName, ' //
+			+ ' 	Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, ' //
+			+ ' 	AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, ' //
+			+ ' 	Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, ' //
+			+ ' 	Account__r.Region_formula__c, Account__r.Location_Type__c, Account__r.Bulletin_Headquarter__c, Account__r.Identify_as_Multicountry_Key_Hierarchy__c, ' //
+			+ ' 	New_Parent__r.ANG_Accreditation_Model__c, Account__r.ANG_Accreditation_Model__c ' //
+			+ ' FROM AMS_OSCAR__c ' //
+			+ ' WHERE Id =: oscarId ' //
+			+ ' LIMIT 1';
 	}
 
 	private AMS_OSCAR__c fetchOscarFields(ID oscarId){
@@ -512,22 +563,6 @@ public class AMS_OSCAR_ProcessViewerController {
 
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 
-
-
-		/*oscars =    [SELECT Id, Status__c, Account__c, Process__c,RPM_Approval__c,Issue_credit_note_withdrawal__c,Bank_Guarantee_Currency__c,
-					Send_FS_request__c, Comments_validate__c,Comments_approval__c, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Name,
-					Release_FS_withdrawal__c,Issue_Withdrawal_notification__c,Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,
-					Release_FS_if_applicable__c, Billing_Document_Number__c, Financial_Review_Result__c,Send_invoice__c,Send_inspection_request__c,
-					Send_agreement__c,Update_DPC__c,Update_IRIS__c,Update_BSPLink_CASSLink__c,Update_Portal_Setup__c,Welcome_pack__c,Off_site_storage__c,
-					Welcome_call__c,Change_effective_as_of__c,Bank_Guarantee_amount__c,CurrencyIsoCode,STEP1__c, STEP2__c, STEP3__c, STEP4__c, STEP5__c,
-					STEP6__c, STEP7__c, STEP8__c, STEP9__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c,
-					STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c, STEP25__c,STEP26__c,STEP27__c,STEP28__c,STEP29__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
-					Late_notified_change__c, Confirm_DGR_DGA__c,Update_IRIS_processing__c, Send_approval_letter__c, Issue_rejection_notification_pack__c,
-					AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c,
-					Country_Specifics_Approval__c,Update_AIMS_Approval__c,Update_AIMS_Disapproval__c,Close_IFAP_Disapproval__c,Cancel_Inspection_Requests_Disapproval__c,
-					Update_AIMS_Rejection__c,Close_IFAP_Rejection__c,Cancel_Inspection_Requests_Rejection__c,Country_Specifics_Disapproval__c,Country_Specifics_Rejection__c,
-					Roll_back_account_data__c , RecordType.Name, RecordType.DeveloperName
-					from AMS_OSCAR__c where Id =: oscarId LIMIT 1];*/
 		oscars = Database.query(getAllFieldQuery());
 
 		if(!oscars.isEmpty())
@@ -539,7 +574,6 @@ public class AMS_OSCAR_ProcessViewerController {
 
 
 	private void loadJsonFile(){
-
 
 		/*
 		 *  LOAD JSON TO OBJECT
@@ -582,8 +616,14 @@ public class AMS_OSCAR_ProcessViewerController {
 
 		if(stepWrapperLst != NULL){
 			for(HideOptionStepWrapper hosw : stepWrapperLst){
-				if(oscar.Process__c == hosw.process){
-					optsToHideSet.add(hosw.optToHide);
+				if(oscar.Process__c == hosw.process) {
+					if (hosw.checkEmptyOscarParent) {
+						if (hosw.process == AMS_Utils.NGCONVERSIONMCTOST && String.isBlank(oscar.Parent_OSCAR__c)) {
+							optsToHideSet.add(hosw.optToHide);
+						}
+					} else {
+						optsToHideSet.add(hosw.optToHide);
+					}
 				}
 			}
 		}
