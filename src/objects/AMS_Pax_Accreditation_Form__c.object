@@ -6652,32 +6652,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </valueSet>
     </fields>
     <fields>
-        <fullName>VAT_Exemption__c</fullName>
-        <description>Part of Section 3 of the PASS Online Accreditation Form for the Head Office Accreditation</description>
-        <externalId>false</externalId>
-        <label>VAT Exemption</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Yes</fullName>
-                    <default>false</default>
-                    <label>Yes</label>
-                </value>
-                <value>
-                    <fullName>No</fullName>
-                    <default>false</default>
-                    <label>No</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Type_of_Change__c</fullName>
         <description>First question of Notice Of Change</description>
         <externalId>false</externalId>
@@ -6714,6 +6688,32 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAT_Exemption__c</fullName>
+        <description>Part of Section 3 of the PASS Online Accreditation Form for the Head Office Accreditation</description>
+        <externalId>false</externalId>
+        <label>VAT Exemption</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>VAT_Number_2__c</fullName>
@@ -7935,7 +7935,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -7946,7 +7946,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -8896,7 +8896,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -8907,7 +8907,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9813,7 +9813,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9824,7 +9824,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -10730,7 +10730,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -10741,7 +10741,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -11647,7 +11647,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -11658,7 +11658,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -12576,7 +12576,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -12587,7 +12587,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -13505,7 +13505,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -13516,7 +13516,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -14434,7 +14434,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -14445,7 +14445,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -15363,7 +15363,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -15374,7 +15374,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -16381,7 +16381,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -16392,7 +16392,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -17353,7 +17353,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -17364,7 +17364,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -19339,7 +19339,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -19350,7 +19350,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -20420,7 +20420,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -20431,7 +20431,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -21472,7 +21472,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -21483,7 +21483,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -22557,7 +22557,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -22568,7 +22568,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -23658,7 +23658,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -23669,7 +23669,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -24123,64 +24123,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>NDC_Transactions__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Remittance_frequency__c</picklist>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>D</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>F</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>T</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>V</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>W</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Mail_Category_Inbound__c</picklist>
             <values>
                 <fullName>C</fullName>
@@ -24270,7 +24212,65 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
+        <picklistValues>
+            <picklist>NDC_Transactions__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Special_Type__c</picklist>
             <values>
                 <fullName>ETOE</fullName>
@@ -24293,7 +24293,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -24304,7 +24304,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -25343,7 +25343,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -25354,7 +25354,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -26308,7 +26308,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -26319,7 +26319,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -27300,7 +27300,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -27311,7 +27311,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -28265,7 +28265,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -28276,7 +28276,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -29315,7 +29315,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -29326,7 +29326,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -30409,7 +30409,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -30420,7 +30420,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -31506,7 +31506,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>VAT_Exemption__c</picklist>
+            <picklist>Type_of_Change__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -31517,7 +31517,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Type_of_Change__c</picklist>
+            <picklist>VAT_Exemption__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>

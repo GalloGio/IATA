@@ -523,7 +523,7 @@
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>AMS_OSCAR_CONFIRM_CONVERSION</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -1011,7 +1011,7 @@
         <shortDescription>AMS OSCAR STEP50</shortDescription>
         <value>Confirm Financial Security Information</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP51</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9431,15 +9431,6 @@ Once your IATA EasyPay accounts are opened, you can use this service to:
         <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
     </labels>
     <labels>
-        <fullName>IATA_Store_Service_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Store Service Description</shortDescription>
-        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store. 
-
-Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
-    </labels>
-    <labels>
         <fullName>IATA_Global_Delivery_Center_Address</fullName>
         <categories>ISSP,_AMS_PASS</categories>
         <language>en_US</language>
@@ -9451,6 +9442,15 @@ Torre Europa &lt;br/&gt;
 Paseo de la Castellana, 95, 4th floor &lt;br/&gt;
 28046 Madrid &lt;br/&gt;
 Spain</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Store_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Store Service Description</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store. 
+
+Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>
@@ -25427,6 +25427,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Please select who should be the Financial Administrator for your Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Validation_MC_Conversion_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation MC Conversion Countries</shortDescription>
+        <value>Please select agencies from at least 2 BSPs</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Validation_PASS_Admin</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25440,13 +25447,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Validation_PASS_User</shortDescription>
         <value>Please verify any Person who may have PASS Admin and PASS User checked, a Person can be only one of them.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Validation_MC_Conversion_Countries</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Validation MC Conversion Countries</shortDescription>
-        <value>Please select agencies from at least 2 BSPs</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Validation_Percent_Ownership</fullName>
@@ -32962,14 +32962,14 @@ Please download, complete and upload the PASS agreement as a scanned document.</
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS Help Admin</shortDescription>
-        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&#39;s other PASS users.</value>
+        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&apos;s other PASS users.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Help_User</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS Help User</shortDescription>
-        <value>With access to different functions and permissions, as granted and authorized by the company&#39;s PASS Administrator.</value>
+        <value>With access to different functions and permissions, as granted and authorized by the company&apos;s PASS Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_NewUsers</fullName>
@@ -33049,7 +33049,7 @@ I, undersigned, hereby represents and declare that I am duty authorized to submi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS Users</shortDescription>
-        <value>If it&#39;s necessary to create PASS Users, please provide details.</value>
+        <value>If it&apos;s necessary to create PASS Users, please provide details.</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
