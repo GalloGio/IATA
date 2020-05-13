@@ -177,3 +177,7 @@ input[type="checkbox"] {
   padding-bottom: 1%;
   padding-top: 1%;
 }
+orangeIcon {
+  line-height: 1;
+  vertical-align: text-top;
+}
