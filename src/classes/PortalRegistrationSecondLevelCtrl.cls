@@ -23,7 +23,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static Contact getContactInfo() {
 		User loggedUser = CSP_Utils.getLoggedUser();
 
-		List<Contact> con = [SELECT Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c
+		List<Contact> con = [SELECT (SELECT Portal_Registration_Required__c FROM users), Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c
 		FROM Contact
 		WHERE Id = :loggedUser.contactId];
 
@@ -32,17 +32,6 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		}
 
 		return con[0];
-	}
-
-	@AuraEnabled
-	public static String saveContactInfo(Contact con){
-		try{
-			update con;
-			return 'success';
-		}
-		catch(Exception e){
-			return e.getMessage();
-		}
 	}
 
 	@AuraEnabled
@@ -348,4 +337,20 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		insert psa;
 	}
 
+	@AuraEnabled
+	public static String getCSPortalPath(){
+		List<Network> networks = [select id, Name, UrlPathPrefix from Network where name ='CS Portal'];
+
+		if(networks.isEmpty()){
+			return '';
+		}
+
+		String s = Network.getLoginUrl(networks[0].Id);
+
+		Integer i = s.indexOf(Label.CSP_PortalPath);
+
+		s = s.substring(0, i) + Label.CSP_PortalPath;
+
+		return s;
+	}
 }

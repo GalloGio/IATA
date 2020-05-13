@@ -422,7 +422,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>BSP_Name__c</field>
             <table>Account</table>
-        </columns>        
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BSPCountry_del__c</field>
@@ -2420,6 +2420,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>LastModifiedDate</field>
+            <table>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IATA_Designator__c</field>
             <table>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r</table>
         </columns>
         <columns>
