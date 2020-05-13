@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help>Änderungen der Zahlungsarten für das Passagier- und Inlandsprogramm</help>
+        <label>Zahlungsarten</label>
+        <name>Agency_Info_Forms_of_Payment__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,4 +1,5 @@
-public with sharing class AMS_OSCAR_TestDataFactory
+@isTest
+public class AMS_OSCAR_TestDataFactory
 {
 	public static void createOSCARtestData()
 	{
