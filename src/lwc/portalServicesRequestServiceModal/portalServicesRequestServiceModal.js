@@ -739,16 +739,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
         }
 
-        requestServiceAccess({ applicationId: this.trackedServiceId })
+        requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
             .then(() => {
                 //Show toas with confirmation            
-                //this.showSpinner = false;
-                if (this.isAdmin) {
-                    this.showPopUp = false; // for admins no success box
+                if(this.serviceName == 'E&F APPS'){
                     this.showSpinner = false;
+                    this.showPopUp = true; // for e&f success box
                     this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {
-                    this.showSpinner = false;
+                    if (this.isAdmin) {
+                        this.showPopUp = false; // for admins no success box
+                        this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+                    } else {
+                        this.showSpinner = false;
+                    }
                 }
             }).catch(error => {
                 console.error(error);
