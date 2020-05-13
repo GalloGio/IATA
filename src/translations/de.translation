@@ -441,6 +441,10 @@
         <name>AMS_OSCAR_CODEASSIGNMENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_CONFIRM_CONVERSION --></label>
+        <name>AMS_OSCAR_CONFIRM_CONVERSION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_CORRECTION_ALL_HIERARCHY --></label>
         <name>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</name>
     </customLabels>
@@ -707,6 +711,10 @@
     <customLabels>
         <label><!-- AMS OSCAR STEP50 --></label>
         <name>AMS_OSCAR_STEP50</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP51 --></label>
+        <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -7384,6 +7392,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>IATA_GDPR_White_Logo</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA_Global_Delivery_Center_Address --></label>
+        <name>IATA_Global_Delivery_Center_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IATA Store Service Description --></label>
         <name>IATA_Store_Service_Description</name>
     </customLabels>
@@ -12888,6 +12900,10 @@ and
         <name>ISSP_AMS_Domestic</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PASS_PDF_Copy --></label>
+        <name>ISSP_AMS_Download_PASS_PDF_Copy</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Download PDF Copy --></label>
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
@@ -12900,12 +12916,20 @@ and
         <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Email_Branch_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_Branch_PASS_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Antragsentwurf für die Agenturakkreditierung für eine Zweigniederlassung</label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Email Change Subject --></label>
         <name>ISSP_AMS_Email_Change_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Email_HO_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_HO_PASS_Subject</name>
     </customLabels>
     <customLabels>
         <label>Antragsentwurf für die Agenturakkreditierung für eine Hauptniederlassung</label>
@@ -13184,6 +13208,10 @@ and
         <name>ISSP_AMS_First_Page_Summary_Header_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS First Page Summary Header PASS --></label>
+        <name>ISSP_AMS_First_Page_Summary_Header_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Form --></label>
         <name>ISSP_AMS_Form</name>
     </customLabels>
@@ -13404,6 +13432,14 @@ and
         <name>ISSP_AMS_LeftNav_Section2_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav Section2 PASS --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section2_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS_Branch</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3 --></label>
         <name>ISSP_AMS_LeftNav_Section3</name>
     </customLabels>
@@ -13426,6 +13462,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3_Cargo_Intermediary --></label>
         <name>ISSP_AMS_LeftNav_Section3_Cargo_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section3_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section3_PASS_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section4 --></label>
@@ -13564,8 +13604,16 @@ and
         <name>ISSP_AMS_Local_Details_Please_Enter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Please_Enter_PASS --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Local Details Title --></label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_Local_Details_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Aggregator --></label>
@@ -14164,6 +14212,10 @@ and
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_No_Company_Owners_PASS --></label>
+        <name>ISSP_AMS_NoC_No_Company_Owners_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Geben Sie bitte den geschätzten Bruttoumsatz der IATA-Fluggesellschaften aus internationalen Luftverkehrsleistungen an.</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
@@ -14416,6 +14468,10 @@ and
         <name>ISSP_AMS_No_Pending_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_No_Pending_PASS --></label>
+        <name>ISSP_AMS_No_Pending_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -14516,6 +14572,14 @@ and
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS BRANCH --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS HO --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX SA --></label>
         <name>ISSP_AMS_OPTION_PAX_SA</name>
     </customLabels>
@@ -14530,6 +14594,90 @@ and
     <customLabels>
         <label><!-- ISSP AMS Ownership Update --></label>
         <name>ISSP_AMS_Ownership_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Admin --></label>
+        <name>ISSP_AMS_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Application --></label>
+        <name>ISSP_AMS_PASS_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Government_Owned_Company --></label>
+        <name>ISSP_AMS_PASS_Branch_Government_Owned_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Contact --></label>
+        <name>ISSP_AMS_PASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Email_Description --></label>
+        <name>ISSP_AMS_PASS_Email_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION1 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION2 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 1 text 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2_1_text_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_User --></label>
+        <name>ISSP_AMS_PASS_User</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_PAX_Company --></label>
@@ -14664,12 +14812,20 @@ and
         <name>ISSP_AMS_STEP_3_1_Identi_Appro_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Title PASS BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_1_Title_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_2 Title --></label>
         <name>ISSP_AMS_STEP_3_2_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS STEP 3_2 Title New --></label>
         <name>ISSP_AMS_STEP_3_2_Title_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_2_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Sales Instructions --></label>
@@ -14776,12 +14932,20 @@ and
         <name>ISSP_AMS_Step0_Intro_Accred_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_Accred_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
         <name>ISSP_AMS_Step0_Intro_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_PASS</name>
     </customLabels>
     <customLabels>
         <label>Kleinere Änderungen an den Angaben zur Ihrer Agentur, z. B. Telefonnummer, E-Mail-Adresse etc. können direkt auf Ihrer Seite &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Unternehmensdaten&lt;/a&gt; vorgenommen werden.</label>
@@ -14834,6 +14998,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step0 SAA New --></label>
         <name>ISSP_AMS_Step0_SAA_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_SAA_PASS --></label>
+        <name>ISSP_AMS_Step0_SAA_PASS</name>
     </customLabels>
     <customLabels>
         <label>Specific Sales Activity</label>
@@ -14900,6 +15068,10 @@ and
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step1_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;strong&gt;ANMERKUNG:&lt;/strong&gt; Für jeden Agenturstandort, für den eine Zulassung beantragt wird, ist ein separates Formular erforderlich.</label>
         <name>ISSP_AMS_Step1_Separate_Application</name>
     </customLabels>
@@ -14916,12 +15088,20 @@ and
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title PASS --></label>
+        <name>ISSP_AMS_Step1_Title_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Antragsentwürfe müssen innerhalb von 2 Wochen eingereicht werden. Anderenfalls müssen Sie den Akkreditierungsvorgang erneut beginnen.</label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
         <label>Checkliste für</label>
         <name>ISSP_AMS_Step2_Check_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 Check List PASS --></label>
+        <name>ISSP_AMS_Step2_Check_List_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step2 Instructions --></label>
@@ -14934,6 +15114,10 @@ and
     <customLabels>
         <label>B: Landesanforderungen überprüfen</label>
         <name>ISSP_AMS_Step2_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step2_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_3_1_Title --></label>
@@ -15014,6 +15198,10 @@ and
     <customLabels>
         <label>Wird Ihre Firma vollständig - oder teilweise - von einer oder mehren anderen Unternehmen kontrolliert, tragen Sie bitte hier die entsprechenden Angaben ein (es sei denn, Ihre Firma ist eine juristische Person, deren Aktien an einer Börse gelistet sind oder regelmäßig an einem Freiverkehrsmarkt gehandelt werden).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Companies_PASS --></label>
+        <name>ISSP_AMS_Step3_4_Companies_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 Companies SubTitle --></label>
@@ -15384,6 +15572,10 @@ and
         <name>ISSP_AMS_Step3_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step3 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step3_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step3 Save Anytime --></label>
         <name>ISSP_AMS_Step3_Save_Anytime</name>
     </customLabels>
@@ -15394,6 +15586,10 @@ and
     <customLabels>
         <label>D: Dokumente hochladen</label>
         <name>ISSP_AMS_Step4_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step4 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step4_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step4 Upload &amp; Continue --></label>
@@ -15504,6 +15700,10 @@ and
         <name>ISSP_AMS_StepsAll_Import_Agent_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll PASS Participant Title --></label>
+        <name>ISSP_AMS_StepsAll_PASS_Participant_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Passenger_Title --></label>
         <name>ISSP_AMS_StepsAll_Passenger_Title</name>
     </customLabels>
@@ -15526,6 +15726,10 @@ and
     <customLabels>
         <label>An IATA abschicken</label>
         <name>ISSP_AMS_Submit_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS TC PASS --></label>
+        <name>ISSP_AMS_TC_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS T&amp;Cs1 --></label>
@@ -15552,6 +15756,10 @@ and
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Trade Reg Number PASS --></label>
+        <name>ISSP_AMS_Trade_Reg_Number_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Trained_Staff_Name --></label>
         <name>ISSP_AMS_Trained_Staff_Name</name>
     </customLabels>
@@ -15570,6 +15778,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Update Agency New --></label>
         <name>ISSP_AMS_Update_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Update Agency PASS --></label>
+        <name>ISSP_AMS_Update_Agency_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Update HO details --></label>
@@ -15616,6 +15828,14 @@ and
         <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_Admin --></label>
+        <name>ISSP_AMS_Validation_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_User --></label>
+        <name>ISSP_AMS_Validation_PASS_User</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
         <name>ISSP_AMS_Validation_Percent_Ownership</name>
     </customLabels>
@@ -15634,6 +15854,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Portal Admin --></label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation Portal Admin --></label>
+        <name>ISSP_AMS_Validation_Portal_Admin_PASS</name>
     </customLabels>
     <customLabels>
         <label>Details der Niederlassung ansehen/aktualisieren</label>
@@ -16602,6 +16826,10 @@ and
     <customLabels>
         <label><!-- ISSP_AP_New_Joining_App --></label>
         <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_Withdraw --></label>
+        <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
@@ -17787,12 +18015,20 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Draft_PASS_Process --></label>
+        <name>ISSP_Email_Draft_PASS_Process</name>
+    </customLabels>
+    <customLabels>
         <label>Vielen Dank für die Erstellung eines Antragsentwurfs zur Zulassung als IATA-Reisebüro für Ihre Hauptniederlassung (Niederlassung)</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
         <label>Sie erhalten Zugriff auf alle laufenden Akkreditierungs- und Änderungsanträge, wenn Sie den untenstehenden Link anklicken und sich mit Ihrer E-Mail-Adresse im Portal anmelden:</label>
         <name>ISSP_Email_Draft_Process2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Draft_Process_PASS --></label>
+        <name>ISSP_Email_Draft_Process_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_GiveUsFeedback --></label>
@@ -18835,6 +19071,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Loading PASS Details --></label>
+        <name>ISSP_Loading_PASS_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Angaben zur Reiseagentur laden...</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
@@ -19410,6 +19650,98 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label><!-- ISSP Owner Name --></label>
         <name>ISSP_Owner_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS --></label>
+        <name>ISSP_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASSLink_PS_Description --></label>
+        <name>ISSP_PASSLink_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Administrators --></label>
+        <name>ISSP_PASS_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Administrators Rec --></label>
+        <name>ISSP_PASS_Administrators_Rec</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agent --></label>
+        <name>ISSP_PASS_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agreement --></label>
+        <name>ISSP_PASS_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Airline_Checklist --></label>
+        <name>ISSP_PASS_Airline_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS BankMandate --></label>
+        <name>ISSP_PASS_BankMandate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Checklist --></label>
+        <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Download_Documents --></label>
+        <name>ISSP_PASS_Download_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help Admin --></label>
+        <name>ISSP_PASS_Help_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help User --></label>
+        <name>ISSP_PASS_Help_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS NewUsers --></label>
+        <name>ISSP_PASS_NewUsers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS New Admins --></label>
+        <name>ISSP_PASS_New_Admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_PS_Description --></label>
+        <name>ISSP_PASS_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Agreement --></label>
+        <name>ISSP_PASS_Participation_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_AgreementTerms --></label>
+        <name>ISSP_PASS_Participation_AgreementTerms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Checklist --></label>
+        <name>ISSP_PASS_Participation_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_And_Conditions --></label>
+        <name>ISSP_PASS_Terms_And_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Conditions --></label>
+        <name>ISSP_PASS_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Use --></label>
+        <name>ISSP_PASS_Terms_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS TextAreas --></label>
+        <name>ISSP_PASS_TextAreas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Users --></label>
+        <name>ISSP_PASS_Users</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
@@ -20167,6 +20499,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- ISSP Requirements --></label>
         <name>ISSP_Requirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Requirements PASS --></label>
+        <name>ISSP_Requirements_PASS</name>
     </customLabels>
     <customLabels>
         <label>Passwort zurücksetzen</label>
@@ -30901,6 +31237,23 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account Contacts Role - Contacts --></description>
+        <label><!-- Account Contacts Role - Contacts --></label>
+        <name>Account_Contacts_Role_Contacts</name>
+        <sections>
+            <label><!-- Account Contacts Role --></label>
+            <name>Account Contacts Role</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account Participants --></description>
         <label><!-- Account Participants --></label>
         <name>Account_Participants</name>
@@ -32217,6 +32570,30 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Address Role Business Context --></label>
         <name>Address_Role_Business_Context</name>
         <sections>
+            <columns>
+                <label><!-- Clearance level --></label>
+                <name>Clearance level</name>
+            </columns>
+            <columns>
+                <label><!-- Date of last clearance --></label>
+                <name>Date of last clearance</name>
+            </columns>
+            <columns>
+                <label><!-- Legal Name --></label>
+                <name>Legal Name</name>
+            </columns>
+            <columns>
+                <label><!-- SIS 3-Digit Code --></label>
+                <name>SIS 3-Digit Code</name>
+            </columns>
+            <columns>
+                <label><!-- Sold_To_Completed --></label>
+                <name>Sold_To_Completed</name>
+            </columns>
+            <columns>
+                <label><!-- VAT Number 1 --></label>
+                <name>VAT Number 1</name>
+            </columns>
             <label><!-- Account Information --></label>
             <name>Account Information</name>
         </sections>
@@ -34769,7 +35146,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <name>E&amp;amp;F Airline Billing Agreement</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Berichte</label>
             <name>Products</name>
         </sections>
     </reportTypes>
