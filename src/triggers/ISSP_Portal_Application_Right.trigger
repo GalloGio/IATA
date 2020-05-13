@@ -433,12 +433,6 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	}
 
 	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
-		system.debug('WILL START PASS FUTURE METHOD');
-
-		// Validate: Give permission set only to Accounts with record type == 'Standard Account'
-		//List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name = 'Standard Account' and id in :contactIdPASSAccreditationSet];
-		//contactIdPASSAccreditationSet = (new Map<Id, SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
-
 		if (!ISSP_UserTriggerHandler.preventTrigger){
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);

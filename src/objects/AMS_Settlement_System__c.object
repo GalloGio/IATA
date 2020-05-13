@@ -788,6 +788,17 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Settlement_Model__c</picklist>
+            <values>
+                <fullName>Funds Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reported Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>

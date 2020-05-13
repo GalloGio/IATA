@@ -141,7 +141,6 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-
 				res = True;
 			}
 
@@ -154,14 +153,18 @@ public with sharing class AMS_OSCAR_Automation {
 		public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
 			system.debug('Start AUTOMATION AMS_OSCAR_Step9_succeeded.processWork');
 
-			Boolean res = False;
+			Boolean res = false;
 
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
-				oscar.Invoice_status__c = 'Paid';
-				if (oscar.STEP17__c == 'Not Started' || oscar.STEP17__c == 'Not Applicable' || oscar.STEP17__c == 'Passed')
+				if(oscar.Process__c <> AMS_Utils.NGGDI){
+					oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_PAID;
+				}
+
+				if (oscar.STEP17__c == AMS_Utils.NOT_STARTED || oscar.STEP17__c == AMS_Utils.NOT_APPLICABLE || oscar.STEP17__c == AMS_Utils.PASSED){
 					oscar.Process_Start_Date__c = Date.today();
-				res = True;
+				}
+				res = true;
 			}
 
 			return res;
@@ -176,7 +179,9 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-				oscar.Invoice_status__c = 'Outstanding';
+				if(oscar.Process__c <> AMS_Utils.NGGDI){
+					oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_OUTSTANDING;
+				}
 				oscar.Proof_of_payment_received__c = Date.today();
 				res = True;
 			}
@@ -194,7 +199,7 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-				oscar.Invoice_status__c = 'N/A';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_NA;
 				res = True;
 			}
 
@@ -521,7 +526,7 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR|| oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY))
+			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR))
 				&& !hasFRRequiredStep) {
 				oscar.Dossier_Validation__c = Date.today();
 				oscar.Validation_result__c = 'Passed';
@@ -802,7 +807,7 @@ public with sharing class AMS_OSCAR_Automation {
 			if (oscar != null) {
 				oscar.Withdrawal_result__c = 'Passed';
 
-				if(oscar.Process__c == AMS_Utils.NGCHANGES){
+				if(oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST){
 					List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_OscarId__c = :oscar.Id];
 					if(riskEvents != null && !riskEvents.isEmpty()){
 						for(ANG_Agency_Risk_Event__c rEvent : riskEvents)
@@ -1181,9 +1186,9 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-
-				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
-					list<Account> acc = [SELECT ID, (SELECT ID FROM RHC_Informations__r) FROM ACCOUNT WHERE ID =:oscar.Account__c ];
+				Boolean isMulticountrySplit = AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
+				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || isMulticountrySplit){
+					List<Account> acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :(isMulticountrySplit ? oscar.New_parent__c : oscar.Account__c) ];
 					List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
 
 					if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && !String.isBlank(pax[0].Preferred_RHC_currency__c)){
@@ -1365,7 +1370,7 @@ public with sharing class AMS_OSCAR_Automation {
 				oscar.Payment_requested__c = Date.today();
 				oscar.Invoice_deadline__c = Date.today() + 7;
 
-				oscar.STEP48__c = 'In Progress';
+				oscar.STEP9__c = AMS_Utils.IN_PROGRESS;
 
 				res = true;
 			}
@@ -1381,7 +1386,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
-				oscar.Invoice_status__c = 'Paid';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_PAID;
 
 
 				res = true;
@@ -1398,7 +1403,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
-				oscar.Invoice_status__c = 'Outstanding';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_OUTSTANDING;
 
 				res = true;
 			}
@@ -1413,7 +1418,7 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-				oscar.Invoice_status__c = 'N/A';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_NA;
 
 				res = true;
 			}

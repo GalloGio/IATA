@@ -2245,7 +2245,6 @@ global without sharing class ISSP_APProcess {
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			attach.moveToBucket();
 		} catch (Exception e) {
-			System.debug('PASS deleteAmazonAttachment ' + e.getMessage());
 			throw e;
 		}
 	}

@@ -50,8 +50,6 @@
                 <th class="headerRow" ><div>Regional</div></th>
                 <th class="headerRow" ><div>Local</div></th>
                 <th class="headerRow" ><div>Issue with IATA</div></th>
-                <th class="headerRow" ><div>Visible to all IATA</div></th>
-
             </tr>
         </thead>
 
@@ -67,7 +65,6 @@
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Regional__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Local__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Issue_with_IATA__c}"/></td>
-                <td class="dataCell " ><apex:outputField value="{!i.AM_Public__c}"/></td>
             </tr>
         </apex:repeat>
 

@@ -3,8 +3,7 @@ public class PASSSCIMUser_Test {
 
 	@isTest
 	static void PASSSCIMUser_fillUpSCIMMessage_Test() {
-		PASSSCIMUser pScimUser = new PASSSCIMUser('name', 'familyname', 'givenname', 'externalid', 'email@email.com');
-
+		Test.startTest();
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', Region__c = 'Europe')  ;
 		insert ctry ;
 
@@ -22,19 +21,9 @@ public class PASSSCIMUser_Test {
 
 		Contact contact = ISSP_ObjectFactory.createNewContact();
 		contact.AccountId = acc.Id;
+		contact.Email='email@email.com';
 		insert contact;
-
-		User testUser = New User(
-				Alias = 'standt', Email='email@email.com',
-				ContactId = contact.Id,
-				EmailEncodingKey='UTF-8', LastName='Testinglaz', LanguageLocaleKey='en_US',
-				LocaleSidKey='en_US', ProfileId = '00ew0000001QoBp',
-				TimeZoneSidKey='America/Los_Angeles', UserName='testlazusername@test.com',
-				License_Cost_Center__c = 'ISF005CH01',
-				IsActive = true
-		);
-		insert testUser;
-
+		User testUser = ISSP_ObjectFactory.createPortalUser(contact);
 		ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 		AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = acc.Id, Process__c = 'MAJOR.CHANGES');
 		insert theOscar;
@@ -61,16 +50,16 @@ public class PASSSCIMUser_Test {
 			First_name__c = contact.FirstName, Last_Name__c = contact.LastName, Email__c = contact.Email, Contact__c = contact.Id, Agency_owner__c = true,
 			AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, Financial_interest__c = 50, RecordTypeId=rtPerson, PASS_Admin__c = true));
 		insert theStagingConts;
-		System.debug('MMSA:: theStagingConts: ' + theStagingConts);
+		PASSSCIMUser pScimUser = new PASSSCIMUser('name', 'familyname', 'givenname', 'externalid', testUser.email);
 
-		pScimUser.fillUpSCIMMessage('email@email.com');
+		Test.stopTest();
+		
 		List<AMS_Accreditation_Contact__c> amsContacts = [SELECT Id FROM AMS_Accreditation_Contact__c];
 		System.assertEquals(1, amsContacts.size());
 	}
 
 	@isTest
 	static void PASSSCIMUser_fillUpSCIMMessage_Test2() {
-		PASSSCIMUser pScimUser = new PASSSCIMUser('name', 'familyname', 'givenname', 'externalid', 'email@email.com');
 
 		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
@@ -95,8 +84,7 @@ public class PASSSCIMUser_Test {
 				IsActive = true
 		);
 		insert testUser;
-
-		pScimUser.fillUpSCIMMessage('email@email.com');
+		PASSSCIMUser pScimUser = new PASSSCIMUser('name', 'familyname', 'givenname', 'externalid', testUser.email);
 		List<AMS_Accreditation_Contact__c> amsContacts = [SELECT Id FROM AMS_Accreditation_Contact__c];
 		System.assertEquals(0, amsContacts.size());
 	}
