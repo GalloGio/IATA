@@ -1,13 +1,14 @@
-public with sharing class PortalServicesCtrl {
+public without sharing class PortalServicesCtrl {
 
-
-	Public static final String PORTAL_ACCESS_GRANTED='Access Granted';
-	Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
-	Public static final String PORTAL_ACCESS_DENIED='Access Denied';
-	Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
-	Public static final String PORTAL_USER_APPROVED='Approved User';
-	Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
-	Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
+	public static final String EFAPPS='E&F APPS';
+	public static final String PORTAL_ACCESS_GRANTED='Access Granted';
+	public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
+	public static final String PORTAL_ACCESS_DENIED='Access Denied';
+	public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
+	public static final String PORTAL_USER_APPROVED='Approved User';
+	public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
+	public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
+	public static final String SERVICE_ADMIN_EF_ID = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Service_Admin');
 
 	public class portalServiceException extends Exception {}
 
@@ -856,46 +857,8 @@ public with sharing class PortalServicesCtrl {
 	public static void requestAccess(String applicationId, String applicationName){
 		User userAux = [SELECT ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Id = :UserInfo.getUserId()];
 
-		if(applicationName.equals('E&F APPS')){
-			List<Invitation__c> listInvitation = [SELECT Id, AccountId__c, AccountRoleId__c FROM Invitation__c WHERE Email__c =: userAux.Contact.Email ORDER BY CreatedDate DESC];
-			if(listInvitation.isEmpty()){
-				throw new portalServiceException('The user has no invitation for this service.');
-			} else {
-				List<String> errorsList = new List<String>();
-				
-				//create service access right Access Granted
-				ISSP_AvailableServices.newAppsRequest(applicationId, applicationName, userAux.ContactId);
-				//create Account Contact Role
-				Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
-				accountContactRole.Account__c = listInvitation[0].AccountId__c;
-				accountContactRole.Account_Role__c = listInvitation[0].AccountRoleId__c;
-				accountContactRole.Contact__c = userAux.ContactId;
-				accountContactRole.Service_Rendered__c = 'Other';
-				accountContactRole.Status__c = 'Active';
-				Database.SaveResult result = Database.insert(accountContactRole);
-				
-				if(result.getErrors().isEmpty()) {
-					//create E&F Contact Role Detail
-					E_and_F_Contact_Role_Detail__c contactRoleDetail = new E_and_F_Contact_Role_Detail__c();
-					contactRoleDetail.Contact_Role__c = accountContactRole.Id;
-					contactRoleDetail.CurrencyIsoCode = userAux.CurrencyIsoCode;
-					contactRoleDetail.E_F_Account_Role_Detail__c = accountContactRole.Id;
-					contactRoleDetail.RecordTypeId = SERVICE_ADMIN_EF_ID;
-					result = Database.insert(contactRoleDetail);
-					
-					if(!result.getErrors().isEmpty()) {
-						for(Database.Error error : result.getErrors()) {
-							errorsList.add(error.getMessage());
-						}
-						throw new portalServiceException(String.join(errorsList, '\n'));
-					}
-				} else {
-					for(Database.Error error : result.getErrors()) {
-						errorsList.add(error.getMessage());
-					}
-					throw new portalServiceException(String.join(errorsList, '\n'));
-				}
-			}
+		if(applicationName.equals(EFAPPS)){
+			PortalInvitationHelper.requestAccessEF(applicationId, applicationName, userAux);
 		} else {
 			//invokes request method, ignoring visibility
 			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);

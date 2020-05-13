@@ -101,7 +101,7 @@ public without sharing class Invite_User_CTRL {
 		try {
 			if (contact == null && invitation != null) {
 				insert invitation;
-				invitation = [SELECT Id, Salutation__c, AccountId__c, Email__c, Last_Name__c, First_Name__c FROM Invitation__c WHERE Id =: invitation.Id and ServiceId__c = null];
+				invitation = [SELECT Id, Salutation__c, AccountId__c, Email__c, Last_Name__c, First_Name__c FROM Invitation__c WHERE Id =: invitation.Id];
 				return sendEmail(true, invitation, null);
 			} else if (contact != null) {
 				requestServiceViaInvitation('GADM', existingRolePowerUser ? 'Power User' : 'User', contact.Id, existingUserSelectedAccount);

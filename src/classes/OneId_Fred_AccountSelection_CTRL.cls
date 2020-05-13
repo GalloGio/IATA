@@ -1,9 +1,7 @@
 public without sharing class OneId_Fred_AccountSelection_CTRL {
 	public class RegistrationResponse {
-		@AuraEnabled
-		public boolean success {get; set;}
-		@AuraEnabled
-		public String error  {get; set;}
+		@AuraEnabled public boolean success {get; set;}
+		@AuraEnabled public String error  {get; set;}
 
 		public RegistrationResponse(Boolean success) {
 			this.success = success;
@@ -44,19 +42,19 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			//con.User_Portal_Status__c ='Pending Approval';
 			con.Community__c = 'FRED Customer Portal';
 			}
-			
+
 			// Define account fields
 			acc.Legal_name__c = acc.Name;
 
 			// Determine if is primary or a guest
 			system.debug('@@@ isGuest '+isGuest);
-			
+
 			// Retrieve the number of primary and secondary fred users for the selected account
 			list<PermissionSetAssignment> fredUsers = [SELECT AssigneeId, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name in ('FRED_Primary_User', 'FRED_SSO') AND Assignee.AccountId =: acc.Id];
 
-			set<Id> primariesIds = new set<Id>();
-			set<Id> secondariesIds = new set<Id>();
-			
+			Set<Id> primariesIds = new Set<Id>();
+			Set<Id> secondariesIds = new Set<Id>();
+
 			for(PermissionSetAssignment psa : fredUsers) {
 				if(psa.PermissionSet.Name == 'FRED_Primary_User'){
 					primariesIds.add(psa.AssigneeId);
@@ -78,7 +76,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				createPrimary = createPrimary || nbOfPrimaryInAccount == 0; // Account doesn't have primary user so I became the unique primary user
 				system.debug('@@@ createPrimary? '+createPrimary);
 			}
-			
+
 
 			// INC431553 : For verifiers, limits don't apply
 			Id recordTypeVerifierId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers');
@@ -94,12 +92,12 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			else{
 				config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c, Invitation_Primary_Max__c, Invitation_Secondary_Max__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
 			}
-			
-			
+
+
 			System.debug('SMH LIMIT PRIMARY: '+nbOfPrimaryInAccount+' over '+config.Max_Number_Of_Primary_User__c);
 			System.debug('SMH LIMIT SECONDARY: '+nbOfSecondaryInAccount+' over '+config.Max_Number_Of_Secondary_User__c);
 			System.debug('SMH isGuest '+isGuest);
-			
+
 			if(!isInvitation) {
 			if((createPrimary && nbOfPrimaryInAccount >= config.Max_Number_Of_Primary_User__c) || (!createPrimary && nbOfSecondaryInAccount >= config.Max_Number_Of_Secondary_User__c)) {
 				// Limit reached
@@ -109,7 +107,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				return new RegistrationResponse(false, Label.OneId_Max_Account_Reached2);
 			}
 			}
-				
+
 
 			Savepoint sp = Database.setSavepoint();
 			try {
@@ -117,7 +115,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				if(isGuest)
 					returnedString = LightningRegistrationProcess.createContactAndAccount(con, acc, selectedCustomerType, serviceName);
 				else {// Another way to user creation because Site.createUserPortal does not work with a user connected (secondary user created by primary user)
-					
+
 					returnedString = createSecondary(con, acc, selectedCustomerType, serviceName, userTypeToCreate);
 				}
 
@@ -162,10 +160,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				Id rtID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
 				if (rtID!=null)
 					acc.recordtypeid = rtID;
-				
+
 				if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
 					acc.Category_Other_Value__c = null;
-				
+
 				//Assign countries and states
 				if (!String.isBlank(acc.BillingCountry)) {
 					List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
@@ -173,7 +171,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 						acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
 					}
 				}
-				
+
 				database.insert(acc);
 			}
 			List <Account> lstacc = [select id from account where id=:acc.id];
@@ -190,11 +188,11 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			}
 			String thisNickname;
 			if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
-				thisNickname = con.lastName.substring(0, 3)+Datetime.now().formatLong();
+				thisNickname = con.lastName.subString(0, 3)+Datetime.now().formatLong();
 			else
 				thisNickname = con.lastName+Datetime.now().formatLong();
 
-		
+
 			if (thisNickname.length() > 40){
 				system.debug('more than 40');
 				thisNickname = thisNickname.left(40);
@@ -206,10 +204,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 			System.debug('>>con ' + con);
 
-			string UID = Comm_User_Helper.NewGuid();
+			String UID = Comm_User_Helper.NewGuid();
 			User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
 			//User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
-			
+
 			// Set Fred profile => Request by Mehdi to use ISSP Profile to avoid managing a new one
 			u.ProfileID = [SELECT Id FROM profile WHERE name = 'ISS Portal (Partner)' LIMIT 1][0].Id;
 			u.Community__c = servName;
@@ -235,9 +233,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 	@AuraEnabled
 	public Static void checkConAvailable (Contact con){
-		Id rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');   
+		Id rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-		
+
 		if(ec.size() > 0){
 			System.debug('Update Contact');
 			con.Id = ec[0].Id;
@@ -267,7 +265,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 								PermissionSetId = ps.Id
 							)
 						);
-					} 
+					}
 				}
 				if(! assignment.isEmpty())
 					insert assignment;
@@ -275,28 +273,10 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 		}
 	}
 
-	
+
 	public class SearchWrap {
-		@AuraEnabled
-		public list<Account> accList {get; set;}
-		@AuraEnabled
-		public Integer totalAccListNotLimited {get; set;}
-		/*
-		@AuraEnabled
-		public Account HQAccount {get; set;}
-		@AuraEnabled
-		public Account acc {get; set;}
-		@AuraEnabled
-		public String msg {get; set;}
-		@AuraEnabled
-		public String buttonLabel {get; set;}
-		@AuraEnabled
-		public Boolean accountFound {get; set;}
-		@AuraEnabled
-		public Boolean showCreateAccount {get; set;}
-		@AuraEnabled
-		public Boolean showcreateother {get; set;}
-		*/
+		@AuraEnabled public list<Account> accList {get; set;}
+		@AuraEnabled public Integer totalAccListNotLimited {get; set;}
 	}
 
 	@AuraEnabled
@@ -314,7 +294,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			Integer n = [SELECT Count() FROM PermissionSetAssignment WHERE PermissionSet.name = 'FRED_Primary_User' AND AssigneeId =: UserInfo.getUserId()];
 			param.isFredPrimaryUser = n > 0;
 			param.primaryUserId = UserInfo.getUserId();
-			
+
 
 			// Get account linked to primary user - To block account selection
 			User u = [SELECT AccountId FROM User WHERE Id =: UserInfo.getUserId()];
@@ -335,9 +315,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 			// Get info from invitation
 			if(isInvitation) {
-				list<Invitation__c> invitation = [SELECT  AccountId__c, Role__c FROM Invitation__c WHERE Id =: invitationId and ServiceId__c = null];
+				list<Invitation__c> invitation = [SELECT  AccountId__c, Role__c FROM Invitation__c WHERE Id =: invitationId];
 				if(! invitation.isEmpty()) {
-					list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c]; 
+					list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: invitation[0].AccountId__c];
 					if(! acct.isEmpty()) {
 						param.partnerAccount = acct[0];
 						param.createPrimary = invitation[0].Role__c == 'Primary';
@@ -349,7 +329,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				// Check if a user has been created earlier in the process, because email address was referring to an existing contact without a user
 				List<User> users = [SELECT AccountId FROM User WHERE Email =: con.Email LIMIT 1];
 				if(!users.isEmpty()){
-					list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: users.get(0).AccountId]; 
+					list<Account> acct = [SELECT Id, Name, RecordType.Name FROM Account WHERE Id =: users.get(0).AccountId];
 					if(! acct.isEmpty()) {
 						param.partnerAccount = acct[0];
 						param.isAlreadyPartner = true;
@@ -357,28 +337,21 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				}
 			}
 		}
-		
+
 		return param;
 	}
 
 	public class InitParam {
-		@AuraEnabled
-		Boolean isGuest {get; set;}
-		@AuraEnabled
-		Boolean isFredPrimaryUser {get; set;}
-		@AuraEnabled
-		String primaryUserId {get; set;}
-		@AuraEnabled
-		Account partnerAccount {get; set;}
-		@AuraEnabled
-		Boolean isAlreadyPartner {get; set;}
-		@AuraEnabled
-		Boolean createPrimary {get; set;}
-		@AuraEnabled
-		Boolean isInvitation {get; set;}
+		@AuraEnabled Boolean isGuest {get; set;}
+		@AuraEnabled Boolean isFredPrimaryUser {get; set;}
+		@AuraEnabled String primaryUserId {get; set;}
+		@AuraEnabled Account partnerAccount {get; set;}
+		@AuraEnabled Boolean isAlreadyPartner {get; set;}
+		@AuraEnabled Boolean createPrimary {get; set;}
+		@AuraEnabled Boolean isInvitation {get; set;}
 	}
 
-	
+
 	@AuraEnabled
 	public static SearchWrap getAccountsByType(String customerType, String userInput) {
 		system.debug(customerType+' => '+userInput);
@@ -386,7 +359,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 		String recordTypeSearch = customerType;
 
-		set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
+		Set<String> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
 
 		String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, RecordTypeId FROM Account WHERE ';
 		queryStr += ' RecordType.DeveloperName in :recordTypesSet';
@@ -419,13 +392,13 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			queryStr2 += ' AND (Name like \'%' + userInput + '%\'';
 			queryStr2 += ' OR ICAO_Iso_2_Code__c like \'%' + userInput + '%\'';
 			queryStr2 += ' OR ICAO_Iso_3_Code__c like \'%' + userInput + '%\')';
-			
+
 			sw.totalAccListNotLimited = Database.countQuery('select count()'+queryStr2);
 
 			queryStr += queryStr2;
 			queryStr += ' LIMIT '+Label.OneId_AccountSearch_Limit; // Default limit is 20
 		}
-		
+
 		list<Account> accs = new list<Account>();
 		accs = Database.query(queryStr);
 		system.debug(accs);
@@ -437,9 +410,9 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 	public static list<CustomerTypeByServicePicklist> getCustomerTypeBySP(String serviceName) {
 		list<CustomerTypeByServicePicklist> listCustomerTypeSP = new list<CustomerTypeByServicePicklist>();
 		One_Id_Service_Provider_Config__c customerTypeAvailable = [SELECT Customer_Type_Activation__c FROM One_Id_Service_Provider_Config__c WHERE Service_Provider_Name__c =: serviceName LIMIT 1];
-		
+
 		if(customerTypeAvailable != null) {
-			String[] cts = customerTypeAvailable.Customer_Type_Activation__c.split(';');    
+			String[] cts = customerTypeAvailable.Customer_Type_Activation__c.split(';');
 			For(String ct : cts)
 				listCustomerTypeSP.add(new CustomerTypeByServicePicklist(ct, ct));
 		}
@@ -447,10 +420,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 	}
 
 	public class CustomerTypeByServicePicklist {
-		@AuraEnabled
-		public String label {get; set;}
-		@AuraEnabled
-		public String value {get; set;}
+		@AuraEnabled public String label {get; set;}
+		@AuraEnabled public String value {get; set;}
 		public CustomerTypeByServicePicklist(String l, String v) {
 			label = l;
 			value = v;
