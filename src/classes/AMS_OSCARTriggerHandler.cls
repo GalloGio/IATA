@@ -296,8 +296,10 @@ public class AMS_OSCARTriggerHandler {
 			List<Account> acctLst = new List<Account>(
 				[SELECT
 					Id,
-					ANG_FA_Opt_out__c
-				FROM  
+					ANG_FA_Opt_out__c,
+					Sector__c,
+					Category__c
+				FROM
 					Account
 				WHERE
 					Id IN :accountIdSet
@@ -951,7 +953,7 @@ public class AMS_OSCARTriggerHandler {
 					BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-					,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name FROM Account WHERE Id IN :targetAccountsIds]);
+					,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Sector__c, Category__c FROM Account WHERE Id IN :targetAccountsIds]);
 
 			//AMSU-184 - add Branch_Office_Country__r.ISO_Code__c
 			Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
@@ -2388,12 +2390,15 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
+		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Status__c, Account__r.Sector__c, Account__r.CNS_Agency__c,Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
+
 		//check which oscars are related to Cargo Agencies and have passed sanity check
 		//for(AMS_OSCAR__c oscar:[SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]){
 		for(AMS_OSCAR__c oscar:(List<AMS_OSCAR__c>)Trigger.New){
 			if ((oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT) && oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-				if(queriedOscarsMap.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO)
+				//PASS - ignore the accounts with category "Postal Operators"
+				if(oscarAux.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO && oscarAux.get(oscar.Id).Account__r.Category__c != AMS_Utils.categoryPass)
 					oscarsToProcess.add(oscar);
 			}
 		}
@@ -2814,7 +2819,7 @@ public class AMS_OSCARTriggerHandler {
 
 		//find all agencies involved
 		//DTULLO: Added Record Type
-		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '' and RecordType.Developername = 'Agency_Involved']) {
+		for (AMS_Process_Detail__c pd : [SELECT Id, Account__c, OSCAR__c, Account__r.Sector__c, Account__r.Category__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscars AND Account__c != '' and RecordType.Developername = 'Agency_Involved']) {
 
 			accountsInvolved.get(pd.OSCAR__c).add(pd.Account__c);
 		}
@@ -2953,7 +2958,7 @@ public class AMS_OSCARTriggerHandler {
 					ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, 
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
-					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,
+					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -3412,7 +3417,7 @@ public class AMS_OSCARTriggerHandler {
 		Set<Id> accountsToMigrateOwners = new Set<Id>();
 		List<Account> accountsToMigrateOwnersAux = new List<Account>();
 
-		accountsToMigrateOwnersAux = [SELECT Id, Status__c FROM Account WHERE Id IN :accountsList];
+		accountsToMigrateOwnersAux = [SELECT Id, Status__c, Sector__c, Category__c FROM Account WHERE Id IN :accountsList];
 
 		if(typeOfChange != null && (typeOfChange.containsIgnoreCase(AMS_Utils.MAJ_SHAREHOLDING) || typeOfChange.containsIgnoreCase(AMS_Utils.MIN_SHAREHOLDING) || typeOfChange.containsIgnoreCase(AMS_Utils.VFMR))){
 
@@ -4011,8 +4016,7 @@ public class AMS_OSCARTriggerHandler {
 				changeCode.status  = n.Account_status_change__c;
 				changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
-				AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
-			}
+				AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode},new List<AMS_OSCAR__c> {updatedOscar},(List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : "' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + '", "Sector__c" : "' + accounts.get(updatedOscar.Account__c).Sector__c +'", "Category__c" : "' + accounts.get(updatedOscar.Account__c).Category__c +'" }]', List<Account>.class), true);            }
 		// Management of CORRECTION OSCARs
 		}else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CORRECTION){
 			if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
@@ -4042,7 +4046,7 @@ public class AMS_OSCARTriggerHandler {
 						}
 					}
 
-					Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c, Top_Parent__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
+					Map<Id,Account> mapAccountsToCheck = new Map<Id,Account>([SELECT Id, Status__c, Reason__c, Location_Type__c, Top_Parent__c, Sector__c, Category__c FROM Account WHERE Id IN :allHierarchyAccountIds]);
 					List<Account> accountsToCheck = mapAccountsToCheck.values();
 
 					//Remove TERMINATED and NOT ACCREDITED Accounts from list
@@ -4154,7 +4158,7 @@ public class AMS_OSCARTriggerHandler {
 						Boolean isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(updatedOscar.Account__c), accounts);
 
 						//AMSU-151 & AMSU-153 (AMSU-1) - Begin
-						Account accountCheckVAT = [SELECT Id, Is_Branch_Abroad__c, VAT_Number__c, VAT_Number_2__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Location_Class__c
+						Account accountCheckVAT = [SELECT Id, Is_Branch_Abroad__c, VAT_Number__c, VAT_Number_2__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Sector__c, Category__c
 													 FROM Account
 													 WHERE Id = :updatedOscar.Account__c];
 
@@ -4698,7 +4702,7 @@ public class AMS_OSCARTriggerHandler {
 
 				String changeCodeName = oscar.Is_PCI_compliant__c == 'No' ? 'CCA' : 'CCR';
 
-				ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c, CNS_Agency__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
+				ANG_OscarProcessHelper.EntityUpdater updater = ANG_OscarProcessHelper.createChangeCodeForFOP(null, oscar, [Select Id, Status__c, CNS_Agency__c, Sector__c, Category__c from Account where id in:oscarAccountsMap.get(oscar.Id)], changeCodeName);
 				ANG_OscarProcessHelper.updateUpdater(updater);
 
 			}
