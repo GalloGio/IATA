@@ -499,7 +499,7 @@ public class ANG_RHCAlertTriggerHandler{
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-		List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c from Account where Id in :accountIds];
+		List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c, ANG_IsNewGenAgency__c, Location_Class__c, Sector__c, Category__c from Account where Id in :accountIds];
 
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
 		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
@@ -597,6 +597,7 @@ public class ANG_RHCAlertTriggerHandler{
 								Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Location_Type__c,
 								Remittance_frequency__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c,
 								Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
+								Status__c, Sector__c , Category__c,
 								(SELECT ID, Name, RecordTypeId, ANG_Account__c, CurrencyIsoCode, ANG_Sidra_Lite__c, ANG_Agent_Sales__c,
 									 ANG_Is_Case_Created__c, ANG_Direction__c, ANG_email_sent__c, ANG_EventId__c, ANG_RHC_Information__c,
 									 ANG_RME_Last_Update__c, ANG_Severity__c, ANG_Threshold_Level__c, ANG_Agent_current_standing__c,
