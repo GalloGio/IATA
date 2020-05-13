@@ -300,16 +300,6 @@
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>ANG_Forecasted_RHC_Effective_date__c</fullName>
-        <description>Forecasted RHC Effective date based on the next 1st day of the Billing Period</description>
-        <externalId>false</externalId>
-        <label>Forecasted RHC Effective date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>ANG_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_AccountId__r.IATACode__c</formula>

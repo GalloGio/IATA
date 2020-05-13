@@ -813,8 +813,7 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
