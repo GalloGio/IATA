@@ -7,12 +7,62 @@ private class ANG_AccreditationAreaViewerTest {
 
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-		Account acct = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='The Agency CIA',Short_Name__c='The Agency CIA', Sector__c = 'Travel Agent', Type ='IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 
-		insert acct;
+		Account account = new Account();
+		account.Name = 'Main HE Account H1';
+		account.Sector__c = 'Travel Agent';
+		account.IATACode__c = '12345678';
+		account.Category__c = 'IATA Passenger Sales Agent';
+		account.Location_Class__c = 'P';
+		account.Location_Type__c = 'HE';
+		account.ANG_Accreditation_Model__c = 'Cashless';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.ANG_IEP_HE_AccntNum__c = '1232132323';
+		account.ANG_IEP_Status__c = 'Suspended' ;
+		account.ANG_HE_CashCondition__c = true;
+		account.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+		account.ANG_HE_RiskStatus__c = 'Not Applicable';
+		account.RecordTypeId = accountAgencyRT;
+		account.Status__c = 'Approved';
+       	account.Accreditation_date__c = system.today().addMonths(-9); 
+       
+		insert account;
 
-		Contact co1 = new Contact(AccountId = acct.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
+		Contact co1 = new Contact(AccountId = account.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
 		insert co1;
+
+		List<Account> accountList = new List<Account>();
+		Account a1 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a2 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345672',Name='Account AE2 H1',Short_Name__c='Account AE2 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a3 = new Account(Status__c = 'Approved', Accreditation_date__c = system.today().addMonths(-9), IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345673',Name='Account AE3 H1',Short_Name__c='Account AE3 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+
+		accountList.add(a1);
+		accountList.add(a2);
+		accountList.add(a3);
+
+		insert accountList;
+
+		AMS_Agencies_Hierarchy__c h = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy (old)');
+		insert h;
+
+		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a1.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
+		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a2.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
+		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a3.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
+
+		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
+
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
+
+		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
+		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
+													 TCA_Sanity_check__c = 'CHN', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+		insert customsettings;
 
 	}
 
@@ -122,105 +172,6 @@ private class ANG_AccreditationAreaViewerTest {
 
 		Test.stopTest();
 
-	}
-
-	@isTest static void createOscarFromBatchTest() {
-
-		Test.startTest();
-
-		ANG_AnualRevalCaseCreationBatch anualRevalCaseCreationBatch = new ANG_AnualRevalCaseCreationBatch(new Set<Id>{[Select Id from Account].Id});
-		Id anualRevalCaseCreationBatchId = Database.executeBatch(anualRevalCaseCreationBatch,1);
-
-		Test.stopTest();
-	}
-
-	@isTest static void createAnualRevalCaseCreationController(){
-
-		Test.startTest();
-
-		List<String> fieldListAcct = new List<String>();
-
-		Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
-
-		for (String field : schemaFieldMapAccounts.keySet()){
-			fieldListAcct.add(field);
-		}
-
-		List<String> fieldListContact = new List<String>();
-
-		Map<String, Schema.SObjectField> schemaFieldMapContacts = Contact.sObjectType.getDescribe().fields.getMap();
-
-		for (String field : schemaFieldMapContacts.keySet()){
-			fieldListContact.add(field);
-		}
-
-		List<Account> accts = Database.query('SELECT '+ String.join(fieldListAcct, ', ') + ' , ( SELECT ' +String.join(fieldListContact, ', ') + ' FROM Contacts) FROM Account');
-
-		Account acct = accts.get(0);
-
-		ANG_OscarProcessHelper.createRevalidationOscar(acct, acct.Contacts, true);
-
-		ANG_AnualRevalCaseCreationController annualRevalCaseCtrl = new ANG_AnualRevalCaseCreationController();
-
-		annualRevalCaseCtrl.setmode('Country');
-		annualRevalCaseCtrl.setregion('Europe');
-		annualRevalCaseCtrl.setcountry([select Id, Name, Region__c from IATA_ISO_Country__c].Id);
-		annualRevalCaseCtrl.searchAgencies();
-
-		annualRevalCaseCtrl.getregionobj();
-		annualRevalCaseCtrl.getmodeObj();
-		annualRevalCaseCtrl.getyearobj();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.getshouldDisableButton();
-		annualRevalCaseCtrl.launchCampaign();
-
-		annualRevalCaseCtrl.refreshPageSize();
-
-		Boolean hasNext = annualRevalCaseCtrl.hasNext;
-		Boolean hasPrevious = annualRevalCaseCtrl.hasPrevious;
-		Integer pageNumber = annualRevalCaseCtrl.pageNumber;
-		annualRevalCaseCtrl.next();
-		annualRevalCaseCtrl.last();
-		annualRevalCaseCtrl.first();
-
-		Test.stopTest();
-
-	}
-
-	@isTest static void createAnualRevalCaseCreationController2(){
-
-		Test.startTest();
-
-		ANG_AnualRevalCaseCreationController annualRevalCaseCtrl = new ANG_AnualRevalCaseCreationController();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.setyear('January');
-
-		annualRevalCaseCtrl.setmode('Country');
-		annualRevalCaseCtrl.setregion('Europe');
-		annualRevalCaseCtrl.setcountry([select Id from IATA_ISO_Country__c].Id);
-		annualRevalCaseCtrl.searchAgencies();
-
-		annualRevalCaseCtrl.getregionobj();
-		annualRevalCaseCtrl.getmodeObj();
-		annualRevalCaseCtrl.getyearobj();
-		annualRevalCaseCtrl.getcountryobj();
-		annualRevalCaseCtrl.getshouldDisableButton();
-
-		annualRevalCaseCtrl.launchCampaign();
-
-		annualRevalCaseCtrl.refreshPageSize();
-
-		Boolean hasNext = annualRevalCaseCtrl.hasNext;
-		Boolean hasPrevious = annualRevalCaseCtrl.hasPrevious;
-		Integer pageNumber = annualRevalCaseCtrl.pageNumber;
-		annualRevalCaseCtrl.next();
-		annualRevalCaseCtrl.last();
-		annualRevalCaseCtrl.first();
-		annualRevalCaseCtrl.previous();
-
-		Test.stopTest();
-
-		annualRevalCaseCtrl.getBatchStatus();
 	}
 
 	@isTest static void createStagingAreaAndOscarChangesTest() {

@@ -53,9 +53,13 @@
 
 
 		function bindCheckboxes() {
+			$('[data-group="select"]').on("change", function () {
+				rerenderNotes();
+			});
+
 			$('[data-group="main"]').on("change", function () {
 				var $clicked = $(this);
-
+				rerenderNotes();
 				if($clicked.prop("checked")){
 					$('[data-group="main"]').not($clicked).each(function () {
 						if($(this).prop("checked")){
@@ -107,6 +111,7 @@
 	
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
+		<apex:actionFunction name="rerenderNotes" rerender="notes" />
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
@@ -134,7 +139,7 @@
                 <apex:outputPanel id="buttonPanel">
                     <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
                     <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
-                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
                     <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
                     <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
                 </apex:outputPanel>
@@ -200,7 +205,7 @@
                 <apex:outputPanel id="buttonPanel">
                     <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
                     <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
-                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
                     <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
                     <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
                 </apex:outputPanel>
