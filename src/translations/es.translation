@@ -2816,6 +2816,13 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
+        <label>Añadir a mis marcadores</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Eliminar de mis marcadores</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>

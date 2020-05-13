@@ -2818,6 +2818,13 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
+        <label>Zu meinen Lesezeichen hinzufügen</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Aus meinen Lesezeichen entfernen</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>

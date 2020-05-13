@@ -2813,6 +2813,13 @@
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
+        <label>Yer İşaretlerime ekle</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Yer İşaretlerimden çıkar</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>

@@ -40,9 +40,6 @@
     width: 24px;
 }
 .bkmicon{
-    background-image: url(./CSPortal/Images/Icons/bookmark_checkedHover.svg);
-    background-image: url(./CSPortal/Images/Icons/bookmark_checked.svg);
-    background-image: url(./CSPortal/Images/Icons/bookmark_uncheckedHover.svg);
     background-image: url(./CSPortal/Images/Icons/bookmark_unchecked.svg);
     background-repeat: no-repeat;
     background-size: contain;    

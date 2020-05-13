@@ -11,7 +11,7 @@ import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults
 import ISSP_View from '@salesforce/label/c.ISSP_View';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
-import CSP_DocumentType from '@salesforce/label/c.CSP_DocumentType';
+import CSP_Search_Case_Type from '@salesforce/label/c.CSP_Search_Case_Type';
 import CSP_DocumentBookmarkAdded from '@salesforce/label/c.CSP_DocumentBookmarkAdded';
 import CSP_DocumentBookmarkRemoved from '@salesforce/label/c.CSP_DocumentBookmarkRemoved';
 import CSP_Success from '@salesforce/label/c.CSP_Success';
@@ -30,7 +30,7 @@ export default class PortalDocumentsCategory extends LightningElement {
         CSP_Search_NoResults_text2,
         CSP_Search_NoResults_text3,
         CSP_LastUpdate,
-        CSP_DocumentType,
+        CSP_Search_Case_Type,
         CSP_DocumentBookmarkAdded,
         CSP_DocumentBookmarkRemoved,
         CSP_BookmarkDocAddToolTip,

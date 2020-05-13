@@ -2814,6 +2814,13 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_BookmarksTabLabel</name>
     </customLabels>    
     <customLabels>
+        <label>เพิ่มในบุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>ลบออกจากที่คั่นหนังสือของฉัน</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
