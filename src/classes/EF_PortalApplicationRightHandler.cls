@@ -1,37 +1,46 @@
 public class EF_PortalApplicationRightHandler {
 
 	public List<Portal_Application_Right__c> triggerNew = (List<Portal_Application_Right__c>) Trigger.new;
+	public List<Portal_Application_Right__c> triggerOld = (List<Portal_Application_Right__c>) Trigger.old;
 	public Map<Id, Portal_Application_Right__c> oldMap = (Map<Id,Portal_Application_Right__c>) Trigger.oldMap;
 
 	private final String APP_NAME = 'E&F APPS';
-	private final String CONNAPP_NAME = 'E_F_APPS';
-	private final String PERMISSIONSET_NAME = 'APPS_SSO';
 
 	private List<Portal_Application_Right__c> grantedPARs = new List<Portal_Application_Right__c>();
 	private List<Portal_Application_Right__c> removedPARs = new List<Portal_Application_Right__c>();
 
-	private ConnectedApplication connApp;
+	private String connAppId;
+	private String connAppName;
+	private String permissionSetName;
 
 	public EF_PortalApplicationRightHandler(){
 		filterAccess();
 	}
 
 	public void onAfterInsert(){
+		if(grantedPARs.isEmpty()) return;
+		getConnAppInfo();
 		insertUserProvAccount();
 		setConnectedAppsSSOPermission();
 	}
 	public void onAfterUpdate(){
+		if(grantedPARs.isEmpty() && removedPARs.isEmpty()) return;
+		getConnAppInfo();
+		if(!grantedPARs.isEmpty()) insertUserProvAccount();
 		setConnectedAppsSSOPermission();
 	}
 	public void onAfterDelete() {
+		if(removedPARs.isEmpty()) return;
+		getConnAppInfo();
 		setConnectedAppsSSOPermission();
 	}
 
-	private ConnectedApplication getConnApp(){
-		if(connApp == null)
-			connApp = [SELECT Id, Name FROM ConnectedApplication WHERE Name =: CONNAPP_NAME][0];
-
-		return connApp;
+	private void getConnAppInfo(){
+		Connected_App_Roles__c cAR= Connected_App_Roles__c.getValues(APP_NAME);
+		if(cAR == null) return;
+		connAppId = cAR.Provisioning_Id__c;
+		connAppName = cAR.Connected_App_Provisioning_Name__c;
+		permissionSetName = cAR.PermissionSet_Provisioning__c;
 	}
 	
 	private void insertUserProvAccount() {
@@ -50,11 +59,11 @@ public class EF_PortalApplicationRightHandler {
 			setUserId.add(u.Id);
 		}
 
-		if(getConnApp() != null) return;
+		//if(getConnApp() != null) return;
 
-		String sConnId = String.valueOf(getConnApp().Id).left(15); //to be sure is same length;
+		String sConnId = String.valueOf(connAppId).left(15); //to be sure is same length;
 
-		List<UserProvAccount> existingUPA = [SELECT ExternalUserId, ConnectedAppId FROM UserProvAccount WHERE SalesforceUserId IN: setUserId AND ConnectedAppId =: sConnId];
+		List<UserProvAccount> existingUPA = [SELECT ExternalUserId, ConnectedAppId FROM UserProvAccount WHERE SalesforceUserId IN: setUserId AND ConnectedAppId =: connAppId];
 
 		if(!existingUPA.isEmpty()) return;
 
@@ -65,7 +74,7 @@ public class EF_PortalApplicationRightHandler {
 			UserProvAccount upa = new UserProvAccount (
 				ExternalUserId = sExtUserId,
 				SalesforceUserId = mapUser.get(access.Contact__c).Id,
-				ConnectedAppId = getConnApp().Id,
+				ConnectedAppId = connAppId,
 				LinkState = 'Linked',
 				Status = 'Active'
 			);
@@ -106,18 +115,17 @@ public class EF_PortalApplicationRightHandler {
 
 		for(Portal_Application_Right__c access : grantedPARs){
 			System.debug(loggingLevel.FINEST, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] requested access - ' + access);
-			System.debug(loggingLevel.FINEST, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] connApp - ' + connApp);
+			System.debug(loggingLevel.FINEST, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] connAppId - ' + connAppId);
 
-			helper.addPermission(PERMISSIONSET_NAME, access.Contact__c);
-			helper.setProvisioning(PERMISSIONSET_NAME, getConnApp().Name, getConnApp().Id);
+			helper.addPermission(permissionSetName, access.Contact__c);
+			helper.setProvisioning(permissionSetName, connAppName, connAppId);
 		}
 
 		for(Portal_Application_Right__c access : removedPARs){
-			Connected_App_Roles__c role = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c);
 			System.debug(loggingLevel.ERROR, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] removed access - ' + access);
-			System.debug(loggingLevel.ERROR, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] connApp - ' + connApp);
+			System.debug(loggingLevel.ERROR, '____ [cls EF_PortalApplicationRightHandler - setConnectedAppsSSOPermission] connAppId - ' + connAppId);
 
-			helper.removePermission(PERMISSIONSET_NAME, access.Contact__c, getConnApp().Name, getConnApp().Id);
+			helper.removePermission(permissionSetName, access.Contact__c, connAppName, String.valueOf(connAppId));
 		}
 
 		//assign/remove users to the permission sets (must be future to prevent MIXED DML errors)
