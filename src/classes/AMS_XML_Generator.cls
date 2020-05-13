@@ -260,7 +260,7 @@ public with sharing class AMS_XML_Generator {
 
 		}
 
-		system.debug('--------- doc: ' + doc.toXmlString());
+		System.debug(LoggingLevel.DEBUG, '--------- doc: ' + doc.toXmlString());
 		return doc.toXmlString();
 
 	}
