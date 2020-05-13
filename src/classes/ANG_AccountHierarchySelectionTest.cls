@@ -762,8 +762,8 @@ private class ANG_AccountHierarchySelectionTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1, r2, r3, r4, r6, r7};
 
+		
 		Test.startTest();
-
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = GE2.id,
 		 New_parent__c = GE1.id,
 		 recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),

@@ -190,6 +190,10 @@
                 <behavior>Edit</behavior>
                 <field>BSP_FOC_Valid__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Participant_formula__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

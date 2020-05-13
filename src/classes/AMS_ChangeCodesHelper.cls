@@ -285,6 +285,10 @@ public class AMS_ChangeCodesHelper {
 		if (oscar != null)
 			oscarId = oscar.Id;
 
+		if(oscarAgency.Sector__c==AMS_Utils.SECTOR_PASS && oscarAgency.Category__c==AMS_Utils.categoryPass){
+			changeCode.publishedOnEBulletin=false;
+		}
+
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
 		Boolean isNewGen = isNewGen(oscar, oscarAgency);
@@ -384,7 +388,10 @@ public class AMS_ChangeCodesHelper {
 			oscarAgency.Annual_Renewal_Certificates__c = true;
 			oscarAgency.Certificate_Generated_Current_Year__c = true;
 		}
-
+		//PASS
+		if(aacNew.Change_Code__c == 'FIN' && oscarAgency.Sector__c == AMS_Utils.SECTOR_PASS && oscarAgency.Category__c == AMS_Utils.categoryPass) {
+			System.enqueueJob(new AMS_OSCAR_Automation.PortalRightsForPortalAdmins(oscar));
+		}
 		if( aacNEW.Change_Code__c == 'FIN'){
 
 			oscarAgency.Is_AIMS_Account__c = true;
