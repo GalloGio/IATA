@@ -16094,10 +16094,6 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>Banka hesabı bilgilerinizin değiştiğini IATA’ya bildirmek için lütfen bizimle iletişime geçin</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Branch Office --></label>
         <name>ISSP_ANG_BRANCH_OFFICE</name>
     </customLabels>
@@ -26133,6 +26129,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>issp_apppicker_select_role</name>
     </customLabels>
     <customLabels>
+        <label><!-- issue with iata help text --></label>
+        <name>issue_with_iata</name>
+    </customLabels>
+    <customLabels>
         <label><!-- label custom price --></label>
         <name>label_custom_price</name>
     </customLabels>
@@ -32213,6 +32213,27 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agencies (AMS) --></description>
         <label><!-- Agencies (AMS) --></label>
         <name>Agencies_AMS</name>
@@ -32783,6 +32804,19 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <sections>
             <label><!-- Case Milestones --></label>
             <name>Case Milestones</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with WW HQ Agents Accounts --></description>
+        <label><!-- Cases with WW HQ Agents Accounts --></label>
+        <name>Cases_with_WW_HQ_Agents_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Cases --></label>

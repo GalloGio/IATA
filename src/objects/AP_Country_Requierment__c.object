@@ -863,10 +863,15 @@
                     <default>false</default>
                     <label>CASS</label>
                 </value>
-                <value>
+				<value>
                     <fullName>ICH</fullName>
                     <default>false</default>
                     <label>ICH</label>
+                </value>
+                <value>
+                    <fullName>PASS</fullName>
+                    <default>false</default>
+                    <label>PASS</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
