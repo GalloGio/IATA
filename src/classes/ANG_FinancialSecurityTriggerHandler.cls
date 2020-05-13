@@ -176,7 +176,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private static void addFsToUpdateConvertedAmount(List<Financial_Security__c> fsLst){
 
 		for(Financial_Security__c fs : fsLst){
-			if(!Trigger.newMap.containsKey(fs.Id) && FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
+			if(!Trigger.newMap.containsKey(fs.Id) && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
 				fsToUpdateConvertedAmountSet.add(new Financial_Security__c(
 					Id = fs.Id,
 					ANG_ConvertedAmount__c = fs.ANG_ConvertedAmount__c
@@ -435,7 +435,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		}
 		//Perform the update of all the Active Financial Securities with the new Converted Amounts
 		if(!fsToUpdateConvertedAmountSet.isEmpty()){
-			convertedAmountUpdateFlag = true;
+			FinancialSecurityUtil.convertedAmountUpdateFlag = true;
 			update new List<Financial_Security__c>(fsToUpdateConvertedAmountSet);
 		}
 	}
