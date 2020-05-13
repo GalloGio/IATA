@@ -10,7 +10,7 @@ import IDCard_Description from '@salesforce/label/c.IDCard_Description';
 import CSP_Documents_PubliCountry from '@salesforce/label/c.CSP_Documents_PubliCountry';
 import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
-import CSP_DocumentType from '@salesforce/label/c.CSP_DocumentType';
+import CSP_Search_Case_Type from '@salesforce/label/c.CSP_Search_Case_Type';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Documents from '@salesforce/label/c.CSP_Documents';
 import CSP_Track from '@salesforce/label/c.CSP_Track';
@@ -36,7 +36,7 @@ export default class PortalDocumentsBookmarkList extends LightningElement {
         CSP_Documents_PubliCountry,
         CSP_Search_NoResults_text1,
         CSP_Search_NoResults_text2,
-        CSP_DocumentType,
+        CSP_Search_Case_Type,
         CSP_LastUpdate,
         CSP_Documents,
         CSP_Track,
