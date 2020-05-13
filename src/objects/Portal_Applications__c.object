@@ -976,7 +976,9 @@ null)</formula>
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;ID Card Online Platform&quot;,$Label.IDCard_NoUSServiceDescription ,
 &quot;IATAN WebStar Online Services&quot;,$Label.IDCard_USServiceDescription,
-&quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,null)</formula>
+&quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
+&quot;IATA Postal Accounts Settlement System&quot;,$Label.ISSP_PASS_PS_Description,
+&quot;PASSlink Single Sign-On&quot;,$Label.ISSP_PASSLink_PS_Description,null)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List B</label>
         <required>false</required>

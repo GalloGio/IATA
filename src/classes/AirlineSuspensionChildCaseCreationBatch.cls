@@ -18,7 +18,8 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 							'CASS Export Direct Participation' => 'CASS',
 							'CASS Export via GSSA' => 'CASS',
 							'BSP Participation' => 'BSP',
-							'BSP via IBCS' => 'BSP'
+							'BSP via IBCS' => 'BSP',
+							'PASS Participation' => 'PASS'
 							};
 	public static final map<String,list<String>> MAP_PARTICIPATION_TYPE_PER_NAME = new map<String,list<String>>{
 							'CASS' => new list<String>{
@@ -31,6 +32,9 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 							'BSP' => new list<String>{
 									'BSP Participation',
 									'BSP via IBCS'
+								},
+							'PASS' => new List<String>{
+									'PASS Participation'
 								}
 							};
 	public static final set<String> SET_VALID_PARITICIPATIONS = MAP_PARTICIPATION_NAME_PER_TYPE.keyset();
@@ -203,6 +207,8 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 					CSchildCase.Business_Justification__c = mapASDocumentNamePerCountryName.get(country_service);
 				} else if (CSchildCase.Subject.contains('CASS')) {
 				 	CSchildCase.Business_Justification__c = mapASDocumentNamePerCountryName.get('CASS Default Settle to ' + ASrecord.Settle_Directly_To__c);
+				} else if (CSchildCase.Subject.contains('PASS')) {
+					CSchildCase.Business_Justification__c = mapASDocumentNamePerCountryName.get('PASS Default Settle to ' + ASrecord.Settle_Directly_To__c);
 				} else {
 					CSchildCase.Business_Justification__c = mapASDocumentNamePerCountryName.get('BSP Default Settle to ' + ASrecord.Settle_Directly_To__c);
 				}
