@@ -40,14 +40,8 @@ public class IDCard_ChecklistControllerTest{
 		Test.setCurrentPage (controllerPage);
 		// Testing New Application 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isViewPopUpDisplayed = false; 
 		nextPage = iDCard_ChecklistController.next();
 		// Testing New Application 
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isViewPopUpDisplayed = true;
-		nextPage = iDCard_ChecklistController.next();
-
-
 
 		// Set Page parameters and call Next function
 		controllerPage.setCookies(new Cookie[]{languageCookies});
@@ -58,15 +52,10 @@ public class IDCard_ChecklistControllerTest{
 		Test.setCurrentPage (controllerPage);
 		// Testing Replacement 
 		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isViewPopUpDisplayed = false; 
 		nextPage = iDCard_ChecklistController.next();
 		nextPage = iDCard_ChecklistController.back();
 		// Testing Replacement 
-		iDCard_ChecklistController = new IDCard_ChecklistController();
-		iDCard_ChecklistController.isViewPopUpDisplayed = true;
-		nextPage = iDCard_ChecklistController.next();
-		nextPage = iDCard_ChecklistController.back();
-		
+
 		//Test LangItems, HasError and getErrMsg
 		iDCard_ChecklistController.getLangItems();
 

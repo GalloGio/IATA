@@ -5,7 +5,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Boolean isProofNameOptionActive {get; private set;}
 	public Boolean isCreditCardOptionActive {get; private set;}
 	public Boolean isCreditCardAndChequeOptionActive {get; private set;}
-	public Boolean isViewPopUpDisplayed {get; set;}
 	//public Boolean isCreditCardAndChequeOptionChecked {get;set;}
 
 	private Contact selected {get; set;}
@@ -63,7 +62,6 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 		accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
 		IATA_ISO_Country__c contactCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
 
-		isViewPopUpDisplayed = false;
 		isPictureOptionActive = true;
 		isProofEmploymentOptionActive  = !keyAccount;//true;
 		isCreditCardOptionActive  = true;
@@ -153,11 +151,7 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 	public Pagereference next() {
 
 		try {
-			if (!isViewPopUpDisplayed) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IDCard_CheckList_ErrorMessage));
-				return null;
-			}
-
+			
 			Pagereference prApplicationForm = null;
 
 			// New Application
@@ -204,12 +198,4 @@ public with sharing class IDCard_ChecklistController  extends IdCardAbstractCont
 		return confPage;
 
 	}
-
-	public void closePopup() {
-		isViewPopUpDisplayed = false;
-	}
-	public void openPopup() {
-		isViewPopUpDisplayed = true;
-	}
-
 }

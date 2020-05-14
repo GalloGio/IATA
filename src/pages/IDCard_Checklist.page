@@ -51,7 +51,15 @@
 	      {           
 	           next(type);        
           }
-	
+
+          function hidePopup(){
+                $('[id$=popup]').css('display', 'none');
+                      }
+          function showPopup(){
+                $('[id$=popup]').css('display', 'block');
+          }
+
+
 	    $(document).ready(function () {     
 	       if (!({!isProofEmploymentOptionActive})  && $('#proofEmploymentOption'))
 	            $('div').remove('#proofEmploymentOption');        
@@ -225,20 +233,20 @@
                                          <!--<apex:commandButton id="btnBack1"   value="{!$Label.IDCard_Back}" action="{!back}" style="width:100px; position:relative; top:15px;" />-->
                                      </td>
                                      <td >
-                                        <apex:commandLink action="{!openPopup}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popup" status="status">
+                                         <!-- Show and hide popup is made by css because commandLink was not supporting language change with the popup open-->
+                                         <apex:commandLink  onclick="showPopup(); return false;" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;">
                                             <span>{!$Label.ID_Card_Next_button}</span>
-                                        </apex:commandLink>
-                                        <!--<apex:commandButton id="btnNext2" style="width:100px; position:relative; top:15px;" value="{!$Label.ID_Card_Next_button}" action="{!next}"  rerender="ErrorMsgs" />-->
-                                    </td>
+                                        </apex:commandLink> 
+                                     </td>
                                 </tr>
                             </table>
                         </div>
-                        <apex:outputPanel id="popup">
-                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!isViewPopUpDisplayed}">
-                                <apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup"/>
+                        <apex:outputPanel id="popup" style="display:none">
+                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block">
+                                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="closeButton" />
                                 <div class="checkBoxStyle">{!$Label.IDCard_CheckBox}</div>             
-                                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" rerender="popup"/>                               
-                            </apex:outputPanel>
+                                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" />                             
+                            </apex:outputPanel> 
                         </apex:outputPanel>
                     </div>                   
                 </div>              
