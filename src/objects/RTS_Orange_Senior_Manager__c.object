@@ -22,6 +22,16 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>80</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>User_Id__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>false</externalId>

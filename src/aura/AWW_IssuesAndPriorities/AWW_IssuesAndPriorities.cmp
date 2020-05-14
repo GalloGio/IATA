@@ -67,7 +67,7 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col">
+                        <th scope="col"  class="narrowColumn">
                             <!-- <span class="slds-truncate">Name</span> -->
 
                                 <ui:outputText value="Division" title="Division__c" click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
@@ -174,9 +174,12 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col">
-                            <!-- <span class="slds-truncate">Issue with IATA</span> -->
-                                <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c"  click="{!c.sortList}" class="slds-truncate" />
+                        <th scope="col" class="medColumn">
+                                <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c" click="{!c.sortList}" class="slds-th__action slds-text-link--reset issuewiata noUpperCase slds-truncate" />
+                                <span class="custom-help-text slds-icon_container slds-icon-action-description" title="{!$Label.c.issue_with_iata}">
+                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/action-sprite/svg/symbols.svg#question_post_action'}" class="slds-icon slds-icon--x-small slds-icon-text-default" />
+                                    <span class="slds-assistive-text">{!$Label.c.issue_with_iata}</span>
+                                </span>
                                 <span class="slds-assistive-text">Sort Column</span>
                                 <div class="slds-icon_container" title="Sort Column">
                                     <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__c'}">

@@ -69,7 +69,9 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
             
             var addedApiName;
             var addedApiValue;
-            
+
+            let additionalServiceRequest = undefined;
+
             var elem;
             for (i = 0; i < inputDivs.length; i++) {
             
@@ -181,24 +183,52 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
   
                 //NEWGEN-5544 - Confirmation message for BSP with Remittance Frequency per State
                 //Steps Sanity Check - STEP6__c = Passed || RPM_Approval__c Step = Authorize Approval & oscar.ANG_Type_Of_Change__c = Location & Account.RF != Pax_Accreditation.RF
-                var rfAccount = '{!oscar.Account__r.Remittance_frequency__c}';
-                var rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
-                var rfPerState = '{!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c}';
-                var typeChange = '{!oscar.ANG_Type_Of_Change__c}';
+                const rfAccount = '{!oscar.Account__r.Remittance_frequency__c}';
+                const rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
+                const rfPerState = {!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c};
+                const typeChange = '{!oscar.ANG_Type_Of_Change__c}';
 
-                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState && showConfirmationRFChange){
-
-                    var r = confirm("Remittance Frequency has changed. Do you want to proceed?");
-                    if (r != true){
+                if(typeChange === 'Location' && rfAccount !== rfStagingArea && rfPerState === true && showConfirmationRFChange === true){
+                    if (!confirm("Remittance Frequency has changed. Do you want to proceed?")){
                         return 'false';
                     }
                 }
 
-                if ({!oscar.Process__c == 'ANG.CONVERT.ST.TO.MC'} && arrayContains(fieldValueToServer, "Passed")
-                    && arrayContains(fieldsApiName, "STEP45__c"))
-                {
-                    if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
+				let showHierarchyConfirmationMessage = undefined;
+                if ({!oscar.Process__c == NGCONVERSIONTOMULTICOUNTRY} && arrayContains(fieldValueToServer, "Passed")
+                    && arrayContains(fieldsApiName, "STEP45__c")) {
+					showHierarchyConfirmationMessage = "step to Confirm the hierarchy structure";
+				} else if ({!oscar.Process__c == NGVR} && {!oscar.Account__r.ANG_Accreditation_Model__c == MULTICOUNTRY}
+					&& arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP6__c")) {
+					showHierarchyConfirmationMessage = 'agency locations on "Edit accounts involved page"';
+				}
+				
+				if (showHierarchyConfirmationMessage !== undefined) {
+                    if ({!oscar.MC_Hierarchy_Confirmation_Datetime__c == null}) {
+                        alert('Please make sure that you review and Save the ' + showHierarchyConfirmationMessage + ' to ensure validations are enforced');
                         return 'false';
+                    }
+				}
+
+                if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD}) {
+                    if (arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP51__c")) {
+                        additionalServiceRequest = "executeMcToStSplitBatch";
+                        const message = '{!cannotProceedConversionToStandardMessage}';
+
+                        if(message){
+                            alert(message);
+                            return 'false';
+                        }
+
+                        if (! confirm("{!CONFIRM_MC_CONVERSION_MSG}")){
+                            return 'false';
+                        }
+                    }
+                    
+                    if ({!oscar.STEP51__c != 'Passed'} && {!isParentOscar} && arrayContains(fieldValueToServer,"Authorize Approval")) {
+                        alert('The OSCAR can\'t be Approved if Confirm Conversion step is not Passed.');
+                        return 'false';
+                    }
                 }
 
                 sforce.connection.header = null;
@@ -207,8 +237,12 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                                             fieldsToUpdateValue:fieldValueToServer,
                                             recordId:idToUpdate});
                 if (result.length > 0) {
-                
                     alert(result);
+                }
+                else if (additionalServiceRequest !== undefined) { // no errors
+                    result = "" + sforce.apex.execute("AMS_OSCAR_Webservice", additionalServiceRequest, { oscarId:idToUpdate });
+                    if (result.length > 0)
+                        alert(result);
                 }
             }
         }
@@ -618,7 +652,7 @@ function buildFunctionCall(func, argList){
                                 <p>{!$Label.AMS_Due_Diligence_Lock}</p>
                             </apex:outputPanel>
                              <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && OR(isNewGE, isNewGEConversion )}">
-                                <p>{!IF(oscar.step45__c == 'Passed',$Label.AMS_Due_Diligence_Lock, $Label.ANG_NEW_GE_lock)}</p>
+                                <p>{!IF(oscar.STEP45__c == 'Passed',$Label.AMS_Due_Diligence_Lock, $Label.ANG_NEW_GE_lock)}</p>
                             </apex:outputPanel>
                             <apex:pageBlockSection columns="3">
                                 <apex:repeat value="{!flow.steps}" var="step">
@@ -702,7 +736,7 @@ function buildFunctionCall(func, argList){
                         <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
                                 <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                                <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                <apex:selectList disabled="{!OR(NOT(isValidationCompleted) && step.name == 'STEP2', NOT(isParentOscar) && step.name == 'STEP51')}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                     <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                                 </apex:selectList>
                             </apex:outputPanel>
@@ -731,7 +765,7 @@ function buildFunctionCall(func, argList){
                     </apex:repeat>
                     
                     <br/>
-                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();"/>
+                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();" disabled="{!NOT(step.saveActionEnabled)}"/>
                     <apex:commandButton value="Cancel" onClick="lightcase.lightcaseClose();"/>
                     <div class="modal"><br/><br/><br/><br/><br/><br/>Please Wait!<!-- Place at bottom of page --></div>
                 </div>

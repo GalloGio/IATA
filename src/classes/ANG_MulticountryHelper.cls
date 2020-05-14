@@ -66,13 +66,57 @@ public class ANG_MulticountryHelper {
 		public Id hierarchyId;
 	}
 
+	public class AccountOpenIFAPPerReviewTypeWrapper {
+		public Id accountId;
+		public integer nbrOfMulticountryAnnualCases = 0;
+		public integer nbrOfMulticountryAdhocCases = 0;
+
+		public AccountOpenIFAPPerReviewTypeWrapper(Id accountId){
+			this.accountId = accountId;
+		}
+		
+		public void increment(Case cse) {
+			if (AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)) {
+				return;
+			}
+
+			if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL) {
+				this.nbrOfMulticountryAnnualCases++;
+			} else if (cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC) {
+				this.nbrOfMulticountryAdhocCases++;
+			}
+		}
+
+		/*	
+		* For multicountry agents make sure that the following criteria is fulfilled:
+		* 	- No more that one Multicountry Annual open case is allowed at the same time
+		* 	- No more than one Multicountry Adhoc open case is allowed at the same time
+		* 	- There can be as many Multicountry Quarterly open cases as the user creates
+		* 	- There can be one annual and one adhoc IFAP cases open at the same time
+		*/
+		public boolean hasAlreadyOpenIFAPCases(String financialReviewType) {
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL)
+				return nbrOfMulticountryAnnualCases > 1;
+			if (financialReviewType == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC)
+				return nbrOfMulticountryAdhocCases > 1;
+			return false;
+		}
+
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
-	public static Set<String> locationTypesSet = new Set<String>{
-		AMS_Utils.HE,
-		AMS_Utils.AE,
-		AMS_Utils.GE
+	private static final Set<String> MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES = new Set<String>{
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL,
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_QUARTERLY
 	};
+
+	public static final String MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS = 'The selected account already has open IFAP cases.';
+	private static final String NON_COMPLIANCE_TASK_SUBJECT = 'Multiple IFAP non compliance';
+	@TestVisible
+	private static final String NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE = 'The non compliance was started on the IFAP {{caseNumber}}, therefore this action is not allowed.';
+	@TestVisible
+	private static final String NON_COMPLIANCE_ON_DIFFERENT_IFAP_CONFIRMATION_TOKEN = 'By clicking ok, you will be redirected to the previous IFAP and you agree to continue processing the non compliance from there.';
 
 	/**
 	* Verifies if the immediate parent
@@ -111,9 +155,9 @@ public class ANG_MulticountryHelper {
 	*/
 	public static Boolean allowIATACodeGeneration(AMS_OSCAR__c oscar){
 		return
-			(parentHasChangeCode(oscar.Account__c, 'NEW') &&
+			((oscar.Account__r.Parent.Accreditation_date__c != null || parentHasChangeCode(oscar.Account__c, AMS_Utils.NEW_CHANGE_CODE)) &&
 			 (AMS_Utils.ACTIVEAGENCYSTATUS.contains(oscar.Account__r.Parent.Status__c) ||
-				oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
+			  oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 			);
 	}
 
@@ -125,7 +169,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean allowApprovalStep(AMS_OSCAR__c oscar){
-		return parentHasChangeCode(oscar.Account__c, 'FIN');
+		return (oscar.Account__r.Parent.Accreditation_date__c != null || parentHasChangeCode(oscar.Account__c, AMS_Utils.FIN_CHANGE_CODE));
 	}
 
 	/**
@@ -156,7 +200,7 @@ public class ANG_MulticountryHelper {
 
 		if(account.Location_Type__c == AMS_Utils.AE){
 
-			 	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+			if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
 				vw.valid = false;
 				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
 				return vw;
@@ -176,7 +220,7 @@ public class ANG_MulticountryHelper {
 				return vw;
 			}
 
-			if(accountIds != NULL && accountIds.size() > 1){
+			if(accountIds != null && accountIds.size() > 1){
 				vw.valid = false;
 				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error;
 				return vw;
@@ -241,9 +285,9 @@ public class ANG_MulticountryHelper {
 
 			if(acct.Location_Type__c == AMS_Utils.HE){
 
-				String bspId     = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
-				String topParent = acct.Top_Parent__c;
-				String aggrKey   = bspId+topParent;
+				String bspId		= acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
+				String topParent 	= acct.Top_Parent__c;
+				String aggrKey		= bspId+topParent;
 
 				if(accountsHePerBspMap.containsKey(aggrKey)){
 					accountsHePerBspMap.get(aggrKey).add(acct.Id);
@@ -294,27 +338,6 @@ public class ANG_MulticountryHelper {
 
 	}
 
-	 /**
-	* Gets the Remittance frequency from the current AMS Online Accreditation
-	*
-	* @param accreditationID: ID
-	* @return String
-	*
-	*/
-	private static String getPaxRemittanceFrequencyByID(Id accreditationID){
-
-		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c
-															FROM AMS_Pax_Accreditation_Form__c
-															WHERE id = :accreditationID];
-
-		String rf;
-
-		if(!onlineAccred.isEmpty()) rf = onlineAccred[0].Remittance_frequency__c;
-
-		return rf;
-	}
-
-
 	/**
 	 * Checks if an Multicountry account (GE or HE)
 	 * has an empty Remittance_frequency__c
@@ -323,8 +346,8 @@ public class ANG_MulticountryHelper {
 	 * @param oscar: AMS_OSCAR__c
 	 * @return Boolean
 	 */
-	public static Boolean multicountryAccountHasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
-		return ( String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c))
+	public static Boolean multicountryAccountHasRemittanceFrequencyEmpty(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationForm){
+		return ( accreditationForm != null && String.isEmpty(accreditationForm.Remittance_Frequency__c)
 			&& ((oscar.Location_Type__c == AMS_Utils.HE && oscar.Process__c == AMS_Utils.MCAE)
 				|| oscar.Location_Type__c == AMS_Utils.GE));
 	}
@@ -567,7 +590,7 @@ public class ANG_MulticountryHelper {
 		while(i < listSize){
 			AMS_Agencies_relationhip__c relation = targetHierarchyLst.get(i);
 
-			if(thw.hierarchyId == NULL){
+			if(thw.hierarchyId == null){
 				thw.hierarchyId = relation.Hierarchy__c;
 			}
 
@@ -608,7 +631,7 @@ public class ANG_MulticountryHelper {
 			processAcquiredAgency(agency, newParentId, currentBspId, currentRelation, thw, toReturn);
 		}
 
-		if(agency.Location_Risk_Events__r != NULL){
+		if(agency.Location_Risk_Events__r != null){
 			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r, newParentId);
 		}
 
@@ -640,7 +663,7 @@ public class ANG_MulticountryHelper {
 
 			toReturn.addAccountToCreateRHC(splitAgency);
 
-			if(currentRelation != NULL){
+			if(currentRelation != null){
 				toReturn.addRelationToDelete(currentRelation);
 			}
 
@@ -649,7 +672,7 @@ public class ANG_MulticountryHelper {
 
 		updateAgencyRelationships(splitAgency, oscarAccountId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
 
-		if(currentRelation != NULL){
+		if(currentRelation != null){
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			currentRelation.Parent_Account__c = splitAgency.ParentId;
 			toReturn.addRelation(currentRelation);
@@ -658,7 +681,7 @@ public class ANG_MulticountryHelper {
 	}
 
 	/**
-	 * Processes a given acquired agency by another multicountry hierarchy:
+	 * Processes a given acquired agency by a multicountry hierarchy:
 	 * 	- If the agency location is GE we need to create a new relationship record pointing to the target GE
 	 *  and we need to clean and delete a couple of fields/related records (RHC e.g.)
 	 *  - Inactivate risk events associated with the current account
@@ -674,10 +697,15 @@ public class ANG_MulticountryHelper {
 	public static void processAcquiredAgency(Account acquiredAgency, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn){
 
 		Account headEntityIdInBSP = thw.hierarchyBspMap.get(currentBspId);
-
-		if(acquiredAgency.Location_Type__c == AMS_Utils.GE){
+		
+		Boolean handleTopLocation = 
+			acquiredAgency.Location_Type__c == AMS_Utils.GE || 
+			//In case a standard hierarchy is acquired by a multicountry one we need to handle the Cash HE as the top location
+			(acquiredAgency.Location_Type__c == AMS_Utils.HE && acquiredAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH);
+		
+		if(handleTopLocation){
 			AMS_Agencies_relationhip__c newRel = new AMS_Agencies_relationhip__c();
-			newRel.Parent_Account__c = headEntityIdInBSP != NULL ? headEntityIdInBSP.Id : newParentId;
+			newRel.Parent_Account__c = headEntityIdInBSP != null ? headEntityIdInBSP.Id : newParentId;
 			newRel.Child_Account__c = acquiredAgency.Id;
 			newRel.Is_Newgen_Relation__c = true;
 			newRel.Hierarchy__c = thw.hierarchyId;
@@ -691,28 +719,31 @@ public class ANG_MulticountryHelper {
 			acquiredAgency.Financial_Assessment_Points__c = null;
 			acquiredAgency.Identify_as_Multicountry_Key_Hierarchy__c = false;
 
-			if(acquiredAgency.RHC_Informations__r != NULL){
+			if(acquiredAgency.RHC_Informations__r != null){
 				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
 			}
 
-			if(acquiredAgency.Main_Accounts__r != NULL){
+			if(acquiredAgency.Main_Accounts__r != null){
 				toReturn.addHierarchyToDelete(acquiredAgency.Main_Accounts__r[0]);
 			}
-
 		}
 
 		acquiredAgency.ANG_FA_Opt_out__c = thw.targetGE.ANG_FA_Opt_out__c;
 
-		if(headEntityIdInBSP != NULL){
+		if (!acquiredAgency.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && headEntityIdInBSP != null) {
 			acquiredAgency.Remittance_frequency__c = headEntityIdInBSP.Remittance_frequency__c;
 		}
 
 		updateAgencyRelationships(acquiredAgency, newParentId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
 
-		if(currentRelation != NULL){
+		if(currentRelation != null){
 			currentRelation.Parent_Account__c = acquiredAgency.ParentId;
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			toReturn.addRelation(currentRelation);
+		}
+		
+		if(acquiredAgency.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+			acquiredAgency.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		}
 
 	}
@@ -731,7 +762,7 @@ public class ANG_MulticountryHelper {
 	 */
 	private static void updateAgencyRelationships(Account acct, Id newParentId, Id currentBspId, Account headEntityIdInBSP, Map<Id, Account> targetHierarchyBspMap){
 
-		if(headEntityIdInBSP != NULL){
+		if(headEntityIdInBSP != null){
 			acct.Location_Type__c = AMS_Utils.AE;
 			acct.ParentId = headEntityIdInBSP.Id;
 			acct.Top_Parent__c = newParentId;
@@ -757,7 +788,7 @@ public class ANG_MulticountryHelper {
 		for(Account acct : accountLst){
 			List<Agency_Authorization__c> agencyAuthorizationLst = acct.Agency_Authorizations__r;
 
-			if(agencyAuthorizationLst != NULL){
+			if(agencyAuthorizationLst != null){
 				for(Agency_Authorization__c aa : agencyAuthorizationLst){
 					if(AMS_Utils.assignFormOfPaymentStatus(aa, acct.Is_PCI_compliant__c)){
 						toReturn.addAgencyAuthorizationToUpdate(aa);
@@ -878,6 +909,129 @@ public class ANG_MulticountryHelper {
 						)
 					)
 				 ]);
+	}
+
+	public static Case fetchIFAPWithOnGoingNonCompliance(Case cse){
+
+		Case onGoingIFAP = null;
+
+		if(MULTICOUNTRY_COLLECT_NON_COMPLIANCES_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+			List<Case> ifapLst = [SELECT Id, CaseNumber, Status, 
+										IFAP_Financial_Year__c, Financial_Review_Type__c,
+									(SELECT Id
+									FROM Tasks
+									WHERE Subject = :NON_COMPLIANCE_TASK_SUBJECT
+										AND Status = :AMS_Utils.COMPLETED)
+								  FROM Case
+								  WHERE RecordType.DeveloperName = 'IATA_Financial_Review'
+									AND Id != :cse.Id
+									AND AccountId = :cse.AccountId
+									AND Status != :AMS_Utils.CASE_STATUS_CLOSED
+									AND Financial_Review_Result__c = null
+									AND Financial_Review_Type__c IN :AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES
+									AND CreatedDate < :cse.CreatedDate
+								  ORDER BY CreatedDate ASC];
+		
+			String lastFinancialYear = String.valueOf(Integer.valueOf(cse.IFAP_Financial_Year__c) - 1);
+			boolean isMulticountryAnnual = cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+
+			for (Case ifap : ifapLst) {
+				//If we are in the scope of a multicountry annual IFAP (isMulticountryAnnual) 
+				//and the multicountry annual IFAP from the previous financial year is in status "Closed Non Compliance"
+				//it means that we need to allow the user to create a new SIDRA Lite to be able to generate the notice of termination (NOT)
+				if (isMulticountryAnnual && ifap.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL
+					&& ifap.IFAP_Financial_Year__c == lastFinancialYear && ifap.Status == AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE) {
+					return null;
+				}
+				//If the assessment result is blank and there is not a non compliance task created
+				//it means that the ongoing non compliance for that IFAP was not yet processed
+				if (onGoingIFAP == null && ifap.Tasks.isEmpty()) {
+					onGoingIFAP = ifap;
+				}
+			}
+		}
+
+		return onGoingIFAP;
+
+	}
+
+	@TestVisible
+	private static List<Task> fetchCaseNonComplianceTasks(Id caseId) {
+		return [SELECT Id
+					FROM Task
+					WHERE Status = :AMS_Utils.COMPLETED
+						AND Subject = :NON_COMPLIANCE_TASK_SUBJECT
+						AND WhatId = :caseId];
+	}
+
+	public static IFAP_WebService.IFAPActionWrapper assessOnGoingNonCompliance(Case cse){
+
+		Case onGoingNonComplianceIFAP = fetchIFAPWithOnGoingNonCompliance(cse);
+
+		if(onGoingNonComplianceIFAP != null){ 
+			IFAP_WebService.IFAPActionWrapper ifapAction = new IFAP_WebService.IFAPActionWrapper();
+
+			String nonComplianceMessage = NON_COMPLIANCE_ON_DIFFERENT_IFAP_MESSAGE.replace('{{caseNumber}}', onGoingNonComplianceIFAP.CaseNumber);
+
+			if(String.isBlank(cse.Financial_Review_Result__c)){
+				//Action not allowed, non compliance should continue on the on going IFAP
+				ifapAction.ifapId = onGoingNonComplianceIFAP.Id;
+				ifapAction.message = nonComplianceMessage;
+				return ifapAction;
+			} else {
+				//Redirect user to the on going IFAP 
+				ifapAction.redirectUserToIFAP = true;
+				ifapAction.ifapId = onGoingNonComplianceIFAP.Id;
+				ifapAction.message = nonComplianceMessage + ' ' + NON_COMPLIANCE_ON_DIFFERENT_IFAP_CONFIRMATION_TOKEN;
+				return ifapAction;
+			}
+		}
+		return null;
+	}
+
+	public static String processNonComplianceOnDifferentIfap(Id ifapId){
+		try {	
+			List<Task> taskLst = [SELECT Id
+								  FROM Task
+								  WHERE Status = :AMS_Utils.COMPLETED
+									  AND Subject = :NON_COMPLIANCE_TASK_SUBJECT
+									  AND WhatId = :ifapId];
+			if (taskLst.isEmpty()) {
+				Task newtask = new Task();
+				newtask.Subject = NON_COMPLIANCE_TASK_SUBJECT;
+				newtask.Status = AMS_Utils.COMPLETED;
+				newTask.WhatId = ifapId;
+				insert newtask;
+			}
+		} catch (Exception e){
+			System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, e.getMessage());
+			return AMS_Utils.beautifyErrorMessage(e.getMessage());
+		}
+		return AMS_Utils.SUCCESS;
+	}
+
+	public static Boolean proceedWithoutFinancialAssessmentResult(Case cse){
+		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+			return !fetchCaseNonComplianceTasks(cse.Id).isEmpty();
+		}
+		return false;
+	}
+
+	public static void addMulticountryOpenIFAPCase(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap){
+		if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(currentCase.Financial_Review_Type__c)){
+			AccountOpenIFAPPerReviewTypeWrapper wrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+			if(wrapper == null){
+				wrapper = new ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper(currentCase.AccountId);
+			}
+			wrapper.increment(currentCase);
+			nbrOfOpenCasesPerReviewTypeMap.put(currentCase.AccountId, wrapper);
+		}
+	}
+
+	public static boolean hasMulticountryOpenIFAPCases(Case currentCase, Map<Id, AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap) {
+		AccountOpenIFAPPerReviewTypeWrapper openCasesWrapper = nbrOfOpenCasesPerReviewTypeMap.get(currentCase.AccountId);
+		return openCasesWrapper != null && openCasesWrapper.hasAlreadyOpenIFAPCases(currentCase.Financial_Review_Type__c);
 	}
 
 }
