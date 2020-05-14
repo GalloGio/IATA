@@ -366,6 +366,7 @@ private class ANG_StandardConversionsTest {
 				Top_Parent__c,
 				ANG_Accreditation_Model__c,
 				(SELECT Id FROM ChildAccounts),
+				(SELECT Id FROM RHC_Informations__r),
 				(SELECT Id, Process__c, STEP6__c FROM OSCARs__r WHERE Process__c = :AMS_Utils.NGCONVERSIONMCTOST)
 			 FROM Account
 			 WHERE Name = 'Multicountry GE PT'
@@ -417,13 +418,15 @@ private class ANG_StandardConversionsTest {
 
 		assertChangeCodes(oscar.Id, 'CNV', accountsInvolvedSet);
 
+		ANG_RHC_Information__c prevRhc = acct.RHC_Informations__r[0];
+
 		acct = [SELECT Id,
-					(SELECT Id, ANG_RHC_Amount__c FROM RHC_Informations__r)
+					(SELECT Id FROM RHC_Informations__r)
 				FROM Account
 				WHERE Id = :acct.Id
 				LIMIT 1];
 
-		System.assert(acct.RHC_Informations__r[0].ANG_RHC_Amount__c == null, 'RHC information must be reseted');
+		System.assertNotEquals(acct.RHC_Informations__r[0].Id, prevRhc.Id, 'RHC information must be reseted');
 
 	}
 
@@ -490,6 +493,7 @@ private class ANG_StandardConversionsTest {
 				Top_Parent__c,
 				ANG_Accreditation_Model__c,
 				(SELECT Id FROM ChildAccounts),
+				(SELECT Id FROM RHC_Informations__r),
 				(SELECT Id, Process__c, STEP6__c, Oscar_Communication_Case_Id__c FROM OSCARs__r WHERE Process__c = :AMS_Utils.NGCONVERSIONMCTOST)
 			 FROM Account
 			 WHERE Name = 'Multicountry HE UK'
@@ -521,6 +525,8 @@ private class ANG_StandardConversionsTest {
 
 		assertChangeCodes(oscar.Id, 'CNV', accountsInvolvedSet);
 
+		System.assert(acct.RHC_Informations__r.isEmpty(), 'RHC information must NOT exist');
+
 		acct = 
 			[SELECT
 				Id,
@@ -530,7 +536,7 @@ private class ANG_StandardConversionsTest {
 				Assessment_Performed_Date__c,
 				Financial_Assessment_Points__c,
 				ANG_HE_RiskHistoryAssessment__c,
-				(SELECT Id, ANG_RHC_Amount__c FROM RHC_Informations__r),
+				(SELECT Id FROM RHC_Informations__r),
 				(SELECT 
 					Id,
 					ANG_HE_RiskStatus__c,
@@ -552,7 +558,7 @@ private class ANG_StandardConversionsTest {
 		System.assert(acct.ANG_HE_RiskStatus__c == AMS_Utils.NOT_APPLICABLE, 'Risk Status must be reseted');
 		System.assert(acct.ANG_HE_RiskHistoryAssessment__c == AMS_Utils.NOT_APPLICABLE, 'Risk History Assessment must be reseted');
 
-		System.assert(acct.RHC_Informations__r[0].ANG_RHC_Amount__c == null, 'RHC information must be reseted');
+		System.assertEquals(1, acct.RHC_Informations__r.size(), 'RHC information must be initialized');
 
 		for(Account childAcct : acct.ChildAccounts){
 			System.assert(!childAcct.ANG_HE_CashCondition__c, 'Cash condition must be false');
