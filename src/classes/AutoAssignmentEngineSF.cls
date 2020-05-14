@@ -126,7 +126,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 				List<Auto_Queue__c> aq = [Select a.Name, a.Region__c, a.Queue_ID__c, a.Id From Auto_Queue__c a where Queue_ID__c = :caseToAssign.OwnerId limit 1];
 				if (aq.isEmpty()){
 					// The case was manually assigned
-					return;
+					return null;
 				}
 
 				caseRegion = aq[0].Region__c;
