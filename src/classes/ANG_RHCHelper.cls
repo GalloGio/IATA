@@ -58,7 +58,7 @@ public class ANG_RHCHelper {
 											   IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c,
 											   (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c
 												FROM Financial_Securities__r),
-											   (SELECT Id, ANG_Financial_Security__c
+											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c
 												FROM RHC_Informations__r
 												WHERE RecordTypeId = :RECTYPE_STDRHCINFO)
 										   FROM Account
@@ -421,6 +421,7 @@ public class ANG_RHCHelper {
 				Id,
 				CurrencyIsoCode,
 				ANG_AccountId__c,
+				ANG_RHC_Amount__c,
 				ANG_RHC_Amount_Forecasted__c,
 				ANG_RHC_Effective_Date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
