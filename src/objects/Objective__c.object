@@ -296,9 +296,8 @@ Object used to store objectives that can be independent, related to other object
     <fields>
         <fullName>AM_Public__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Checkbox to be used for Account Issues and Priorities RT, to mark the items that are of public interest and that will be visible to all internal users.</description>
+        <description>Check box originally created for Account Managers to manage the confidentiality of Issues / Priorities entered. The functionality was removed in May 2020 (i.e. the column is now hidden) and the check box is automatically checked for every new Issue/Priority created.</description>
         <externalId>false</externalId>
-        <inlineHelpText>By checking this box, you make this record visible to all internal IATA users.</inlineHelpText>
         <label>Public</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
