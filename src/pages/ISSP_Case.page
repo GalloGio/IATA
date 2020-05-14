@@ -776,7 +776,7 @@
                                             <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZH76&oid=00D2000000008TF" width="40" height="35" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management'))}"/>
                                             </apex:outputPanel>
                                             <apex:outputText >
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&step=2" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!IF(isCNSAgency, $Label.ISSP_AMS_Click_here_CNS, $Label.ISSP_AMS_Click_here)}</apex:outputLink>
+                                            <apex:outputLink value="{!IF(isCNSAgency, '/ISSP_AMS_Accreditation?caseId='+newCase.Id+'&step=2&CommunityName=CNS', '/ISSP_AMS_Accreditation?caseId='+newCase.Id+'&step=2')}" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!IF(isCNSAgency, $Label.ISSP_AMS_Click_here_CNS, $Label.ISSP_AMS_Click_here)}</apex:outputLink>
 
                                             <apex:outputLink value="/ISSP_ANG_PCI?caseId={!newCase.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!newCase.Reason1__c=='FoP Management'}">{!$Label.ISSP_ANG_Click_Here_PCI}</apex:outputLink>
 
