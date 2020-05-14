@@ -61,12 +61,16 @@ public class PortalServicesCtrlTest {
 			Name = 'Financial Securities',
 			Requestable__c = false
 		);
-	Portal_Applications__c serviceTest7 = new Portal_Applications__c (
-		Name = 'Treasury Dashboard - Premium',
-		Requestable__c = false
+		Portal_Applications__c serviceTest7 = new Portal_Applications__c (
+			Name = 'Treasury Dashboard - Premium',
+			Requestable__c = false
+		);
+		Portal_Applications__c serviceTest8 = new Portal_Applications__c (
+			Name = 'E&F APPS',
+			Requestable__c = true
 		);
 
-	insert new List<Portal_Applications__c> {easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4,serviceTest5,serviceTest6,serviceTest7};
+	insert new List<Portal_Applications__c> {easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4,serviceTest5,serviceTest6,serviceTest7,serviceTest8};
 
 	IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
 		Name = 'Portugal_test',
@@ -222,8 +226,13 @@ public class PortalServicesCtrlTest {
 		Right__c = 'Access Granted',
 		Contact__c = c4.Id
 		);
+	Portal_Application_Right__c appRight8 = new Portal_Application_Right__c(
+		Portal_Application__c = serviceTest8.id,
+		Right__c = 'Access Granted',
+		Contact__c = c4.Id
+		);
 
-	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
+	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7,appRight8};
 
 
 	ISSP_CS__c cs= new ISSP_CS__c(
@@ -829,5 +838,15 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		}
 	}
 	//WMO-736 - ACAMBAS: End
-}
 
+	@isTest
+	public static void getPortalServiceDetailsEFTest() {
+		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+		System.runAs(portalUser) {
+			PortalServicesCtrl.getPortalServiceDetails('E&F APPS');
+		}
+	}
+}
