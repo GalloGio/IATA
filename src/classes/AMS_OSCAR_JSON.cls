@@ -34,6 +34,14 @@ public class AMS_OSCAR_JSON {
 
 		public boolean isDependent{get;set;}
 
+		public Boolean saveActionEnabled {
+			get {
+				if (saveActionEnabled == null)
+					saveActionEnabled = true;
+				return saveActionEnabled;
+			}
+			set;
+		}
 	}
 
 	public class Automation{

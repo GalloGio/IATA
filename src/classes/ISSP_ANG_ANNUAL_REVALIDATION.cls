@@ -36,6 +36,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	};
 
 	private static Set<String> locationTypeSet = new Set<String> {
+		AMS_Utils.GE,
 		AMS_Utils.HE,
 		AMS_Utils.AE
 	};
@@ -824,6 +825,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			oscar.IATA_Codes_NOK__c = submitHelper.strListUpdateCompleted.replaceAll(' ', '');
 
 			oscar.OwnerId = AMS_Utils.getRegionalQueue(newCase);
+
+			if (String.isBlank(oscar.IATA_Codes_NOK__c)){
+				oscar.STEP6__c = AMS_Utils.PASSED;
+				oscar.Status__c = AMS_Utils.OSCAR_CLOSED;
+			}
 
 			upsert oscar;
 

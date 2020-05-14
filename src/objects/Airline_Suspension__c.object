@@ -1126,6 +1126,15 @@ GDS_5_Confirmation_time__c &gt; 3),0,1)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>PASS_Participations_locked__c</fullName>
+        <externalId>false</externalId>
+        <label>PASS Participations</label>
+        <length>4096</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Participates_in_IATA_Governance_Groups__c</fullName>
         <externalId>false</externalId>
         <label>Participates in IATA Governance Groups</label>

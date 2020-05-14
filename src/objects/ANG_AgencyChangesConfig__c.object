@@ -58,11 +58,11 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>TC_Conversion_Multicountry__c</fullName>
+        <fullName>TC_Conversion__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Identifies a conversion from standard to multicountry</description>
+        <description>Identifies a conversion from GoStandard to GoGlobal or from GoGlobal to GoStandard</description>
         <externalId>false</externalId>
-        <label>Conversion Multicountry</label>
+        <label>Conversion</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
