@@ -4081,6 +4081,16 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                     <label>ANG.MAJOR.CHANGES.CHINA.1.0</label>
                 </value>
                 <value>
+                    <fullName>NEW.PASS.HO.1.0</fullName>
+                    <default>false</default>
+                    <label>NEW.PASS.HO.1.0</label>
+                </value>
+                <value>
+                    <fullName>NEW.PASS.BR.1.0</fullName>
+                    <default>false</default>
+                    <label>NEW.PASS.BR.1.0</label>
+                </value>
+                <value>
                     <fullName>ANG.NEW.GE.STANDARD.1.0</fullName>
                     <default>false</default>
                     <label>ANG.NEW.GE.STANDARD.1.0</label>
@@ -8423,7 +8433,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>Update_BSPLink_CASSLink__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Update BSPLink / CASSLink</label>
+        <label>Update BSPLink / CASSLink / PASS</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -9966,6 +9976,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -9973,6 +10006,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12323,6 +12379,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -13408,6 +13483,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Disapproval_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -13582,6 +13680,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15731,6 +15844,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -16745,6 +16877,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -16752,6 +16907,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19094,6 +19272,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -20149,6 +20346,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>PCI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23683,6 +23903,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -23690,6 +23933,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26182,6 +26448,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -27311,6 +27596,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -27318,6 +27626,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29672,6 +30003,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -30735,6 +31085,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -30742,6 +31115,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33088,6 +33484,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -34131,6 +34546,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -34138,6 +34576,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36592,6 +37053,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -37671,6 +38151,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -37678,6 +38181,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40136,6 +40662,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -41215,6 +41760,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -41222,6 +41790,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43658,6 +44249,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -44783,6 +45393,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -44790,6 +45423,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47282,6 +47938,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -48407,6 +49082,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -48414,6 +49112,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50760,6 +51481,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -51831,6 +52571,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -51838,6 +52601,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54348,6 +55134,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -55408,6 +56213,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -55415,6 +56243,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57765,6 +58616,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -58808,6 +59678,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -58815,6 +59708,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61269,6 +62185,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -62301,6 +63236,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -62308,6 +63266,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63440,6 +64421,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -64475,6 +65475,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -64482,6 +65505,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65610,6 +66656,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -66689,6 +67754,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -66696,6 +67784,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66960,6 +68071,14 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EPASS%2EBR%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EPASS%2EHO%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67737,6 +68856,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -68773,6 +69911,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -68780,6 +69941,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -69794,6 +70978,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -70832,6 +72035,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -70839,6 +72065,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71861,6 +73110,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -72926,6 +74194,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -72933,6 +74224,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75245,6 +76559,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -76320,6 +77653,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_Hierarchy_Scenario__c</picklist>
+            <values>
+                <fullName>GE_LEFT_ALONE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_BSP_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC_LOCATIONS_ACQUIRED_BY_ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST_ACQUIRED_BY_MC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_of_location_type_behavior__c</picklist>
             <values>
                 <fullName>Don%27t change the parent</fullName>
@@ -76327,6 +77683,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -78685,6 +80064,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP51__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -79698,6 +81096,29 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Child_OSCAR_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Disapproval_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -80705,6 +82126,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP50__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP51__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>

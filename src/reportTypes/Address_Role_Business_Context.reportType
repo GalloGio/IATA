@@ -71,31 +71,37 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Date of last clearance</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.Date_of_last_clearance__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Clearance level</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.Clearance_level__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>VAT Number 1</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.VAT_Number__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Sold_To_Completed</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.Sold_To_Completed__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Legal Name</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.Legal_name__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>SIS 3-Digit Code</displayNameOverride>
             <field>Address_Role__c.Address__c.Account__c.EF_SIS_Code__c</field>
             <table>Address_Role_Business_Context__c</table>
         </columns>
