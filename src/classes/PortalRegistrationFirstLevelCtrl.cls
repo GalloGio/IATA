@@ -103,6 +103,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
 		public String emailConfirmationTemplate{get;set;}
+		public String existingContactURL{get;set;}
 	}
 
 	public class UserInformation {
@@ -458,6 +459,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		if(params.existingContactName != null && params.existingContactName != '' && params.hasExistingContactPersonalEmail){
+			String prefix = '';
+			if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
+			String existingContactURL = '';
+			String sufix = 'email=' + params.existingContactEmail + '&startURL=%2Fcsportal%2Fs%2F%3Flms%3Dyas%26RelayState%3D' + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
+			if(params.existingContactUsername != null && params.existingContactUsername != ''){
+				existingContactURL = prefix + '/login?' + sufix;
+			}else{
+				existingContactURL = prefix + '/login/SelfRegister?' + sufix;
+			}
+			emailMap.put('{!ExistingContactUrl}',existingContactURL);
 			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
 		}else{
 			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);

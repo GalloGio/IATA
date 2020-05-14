@@ -10,8 +10,10 @@ public with sharing class CSP_Email_ControllerTest {
 		controller.getCommunityUrl();
 		controller.getExistingContactName();
 		controller.getExistingContactEmail();
+		controller.getExistingContactAdditionalEmail();
 		controller.getExistingContactAccount();
 		controller.getExistingContactUsername();
+		controller.getExistingContactUrl();
 	}
 
 }

@@ -33,7 +33,7 @@
                             <i>{!$Label.CSP_Email_Confirmation_Body_Part_1c}: {!ExistingContactEmail}</i><br/>
                             <i>{!$Label.CSP_Email_Confirmation_Body_Part_1d}: {!ExistingContactAdditionalEmail}</i><br/>
                             
-                            <p>{!$Label.CSP_Email_Confirmation_Body_Part_1e}</p>
+                            <p>{!$Label.CSP_Email_Confirmation_Body_Part_1e} <b><a href="{!ExistingContactUrl}">{!$Label.CSP_Email_Confirmation_Body_Part_1h}</a></b></p>
                             <p>{!$Label.CSP_Email_Confirmation_Body_Part_1f} <b><a href="{!CommunityUrl}">{!$Label.CSP_Email_Here}</a></b> {!$Label.CSP_Email_Confirmation_Body_Part_1g}</p>
                             
                             <p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>

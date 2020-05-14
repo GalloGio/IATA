@@ -17,19 +17,6 @@
 				<div class="slds-spinner__dot-b"></div>
 			</div>
 		</template>
-		<!-- <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
-			<div class="slds-spinner slds-spinner_medium" role="status">
-				<span class="slds-assistive-text">Loading</span>
-				<div class="slds-spinner__dot-a"></div>
-				<div class="slds-spinner__dot-b"></div>
-			</div>
-		</div>
-		<template if:true={isLoading}>
-			<div class="slds-m-around_medium slds-is-relative">
-				<lightning-spinner alternative-text="Loading" size="medium">
-				</lightning-spinner>
-			</div>
-		</template> -->
 
 		<lightning-layout multiple-rows vertical-align="stretch" horizontal-align="stretch">
 			
@@ -61,7 +48,6 @@
 				
 			</lightning-layout-item>
 			
-<!-- ------------------------------------------------ -->
 			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
 			<template if:true={existingUsernameVisibility}>
 
@@ -118,8 +104,6 @@
 				</div>
 			</div>
 
-
-
 <!-- ---------------------------------------------------- -->
 
 			<lightning-layout-item padding="around-small" size="12">
@@ -128,7 +112,6 @@
 			<!------------------------------------------      Address Form      -------------------------------------------->
 			<lightning-layout-item size="12">
 				<div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
-				<!-- <div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div> -->
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12">
@@ -149,10 +132,6 @@
 
 			<lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
 			</lightning-layout-item>
-
-			<!--<lightning-layout-item size="4">
-				<span class="link_normal -Title slds-float_left" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Company_Information}</span>
-			</lightning-layout-item>-->
 
 			<lightning-layout-item size="6">
 				<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">

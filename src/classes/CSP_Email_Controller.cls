@@ -13,6 +13,7 @@ public with sharing class CSP_Email_Controller {
 	public string ExistingContactAdditionalEmail;
 	public string ExistingContactAccount;
 	public string ExistingContactUsername;
+	public string ExistingContactUrl;
 
 	public String getHeaderUrl(){
 	   return '{!HeaderUrl}';
@@ -48,6 +49,10 @@ public with sharing class CSP_Email_Controller {
 
 	public String getExistingContactUsername(){
 		return '{!ExistingContactUsername}';
+	}
+
+	public String getExistingContactUrl(){
+		return '{!ExistingContactUrl}';
 	}
 
 }
