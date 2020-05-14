@@ -4105,7 +4105,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Confirmation Body Part 1e</shortDescription>
-        <value>If you still have access to the Login email above, please login to the portal using this Login email.</value>
+        <value>If you still have access to the Login email above, please login to the portal using this Login email</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_1f</fullName>
@@ -4120,7 +4120,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Confirmation Body Part 1g</shortDescription>
         <value>to finalize your registration with the Personal email above. Your previous user above will be deactivated and your training record will be transferred to your new user.</value>
-    </labels>
+	</labels>
+	<labels>
+		<fullName>CSP_Email_Confirmation_Body_Part_1h</fullName>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Email Confirmation Body Part 1h</shortDescription>
+		<value>by clicking here.</value>
+	</labels>
     <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
         <categories>CS Portal</categories>
@@ -46811,6 +46818,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP_Verification_L3_Email_PE_2_LMS</shortDescription>
         <value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt; in order to complete the merging of your previous Training profile (login email [ExistingEmail]) to your current one.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
     </labels>
+	<labels>
+		<fullName>CSP_Verification_L3_Email_PE_2_F5_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP_Verification_L3_Email_PE_2_F5_LMS</shortDescription>
+		<value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
         <categories>CS Portal</categories>
@@ -46857,7 +46872,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
 		<language>en_US</language>
 		<protected>false</protected>
 		<shortDescription>CSP Registration Existing work Message</shortDescription>
-		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above work email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
+		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
 	</labels>
     <labels>
 		<fullName>CSP_Registration_Existing_Work_Message_LMS_Profile</fullName>

@@ -257,8 +257,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -617,7 +617,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					regRes.message = 'Regitration Completed!';
 				}else{
 					regRes.isSuccess = false;
-					regRes.message = 'An Error Occured! Regitration Not Completed!';
+					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
 					Database.rollback(sp);
 				}
 				return regRes;
@@ -626,8 +626,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -781,8 +781,13 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
 
 					if(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail)){
-						sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
+						if(flow == 'flow5'){
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
+													Label.CSP_Verification_L3_Email_PE_2_F5_LMS;
+						}else{
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
 													Label.CSP_Verification_L3_Email_PE_2_LMS;
+						}
 					}else{
 						if(flow == 'flow4'){
 							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_F4_LMS +
@@ -870,8 +875,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
@@ -962,7 +967,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences
 			Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullName, roundThreshold);
 
 			if(compareResult < 0 && compareResultReverse < 0){
 				sRes = 'not_matching';

@@ -374,6 +374,10 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
 
+			//Since user may come back and retried another email we clean the values
+			// this.localContactInfo.Username = '';
+			// this.localContactInfo.UserId = '';
+
 			if(this.flow === 'flow1'){
 				if(this.isReverseEmail === 'yes'){
 					this.flow = 'flow0';
@@ -485,7 +489,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 														})
 														.catch((error) => {
 															this.stopLoading();
-															console.log('Error: ', JSON.parse(JSON.stringify(error)));
+															// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 														});
 
 													this.stopLoading();
@@ -536,7 +540,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 														})
 														.catch((error) => {
 															this.stopLoading();
-															console.log('Error: ', JSON.parse(JSON.stringify(error)));
+															// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 														});
 														this.stopLoading();
 													// }
@@ -554,7 +558,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 											this.validated = true;
 										})
 										.catch(error => {
-											console.log('Error: ', JSON.parse(JSON.stringify(error)));
+											// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 											this.stopLoading();
 											
 										});

@@ -137,7 +137,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
 		this.localAdditionalEmail = this.additionalEmail;
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
-	
+		
 		// Retrieve Contact information
 		getContactInfo()
 			.then(result => {
@@ -155,8 +155,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.log('Error1: ', error);
-			console.log('Error2: ', JSON.parse(JSON.stringify(error)));
+			// console.log('Error1: ', error);
+			// console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
 		
 	}
@@ -199,7 +199,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@api
 	getAddressInformation(){
 		let resAddressInformation = this.template.querySelector('c-portal-address-form-l-m-s').getAddressInformation();
-		console.log('resAddressInformation:', resAddressInformation);
 		this.localAddress = JSON.parse(JSON.stringify(resAddressInformation));
 		return this.localAddress;
 	}
@@ -242,13 +241,11 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		addressSubmit.PO_Box_Address__c = this.localAddress.isPoBox === true ? this.localAddress.PO_Box_Address__c : '';
 		
 		this.template.querySelector('lightning-record-edit-form').submit(addressSubmit);
-		
 	}
 	
 	handleSucess(event) {
 		this.isSaving = false;
 
-		
 		if(this.isMailChanged && (this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7') ){
 
 			this.localContactInfo.flow = this.flow;
@@ -271,6 +268,9 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			this.localContactInfo.street2 = this.localAddress.street2;
 			this.localContactInfo.zip = this.localAddress.zip;
 
+			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+			
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
 			let notificationEmail = this.localAdditionalEmail;
@@ -296,7 +296,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 				this.stopLoading();
 			})
 			.catch(error => {
-				console.log('Error: ', JSON.parse(JSON.stringify(error)));
+				// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 				this.openErrorModal = true;
 				this.errorModalMessage = JSON.parse(JSON.stringify(error));
 				this.stopLoading();
@@ -304,11 +304,12 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		}else{
 			this.closeModal();
 		}
-
     }
 
     handleError(event) {
 		this.isSaving = false;
+		// console.log('handleError - event: ', event);
+		// console.log('handleError - event: ', JSON.parse(JSON.stringify(event )));
     }
 
     onRecordSubmit(event) {
@@ -339,6 +340,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	next(){
 
 		if(this.validated === true){
+
 			//this.dispatchEvent(new CustomEvent('Submit'));
 			this.handleSubmit();
 		}else{
@@ -376,13 +378,12 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 									var userInfo = JSON.parse(JSON.stringify(result3));
 									this.userInfo = userInfo;
-												
+
 									if(userInfo.hasExistingContact == true){
 											if(this.flow === 'flow5'){
 												this.flow = 'flow6';
 											}
 
-											console.log('Going to validate Full Name');
 											//validate the 60% on the name comparison
 											validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
 												.then(result4 => {
@@ -410,8 +411,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												})
 												.catch((error) => {
 													this.stopLoading();
-													console.log('Error: ', JSON.parse(JSON.stringify(error)));
-													console.log('Error: ', error);
+													// console.log('Error: ', JSON.parse(JSON.stringify(error)));
+													// console.log('Error: ', error);
 												});
 
 											this.stopLoading();
@@ -452,7 +453,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												})
 												.catch((error) => {
 													this.stopLoading();
-													console.log('Error: ', JSON.parse(JSON.stringify(error)));
+													// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 												});
 												this.stopLoading();
 											// }
@@ -471,8 +472,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 									this.validated = true;
 								})
 								.catch(error => {
-									console.log('Error: ', JSON.parse(JSON.stringify(error)));
-									console.log('Error: ', error);
+									// console.log('Error: ', JSON.parse(JSON.stringify(error)));
+									// console.log('Error: ', error);
 									this.stopLoading();
 									
 								});

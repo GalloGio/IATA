@@ -130,40 +130,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // l2 registration
     level2RegistrationTrigger = 'homepage';
-    level3LMSRegistrationTrigger = 'homepage';
-    isTriggeredByRequest = false;
-
-    @track registrationlevel = ''; //FOR LMS L3
-    @track thirdLoginLMS = false; //FOR LMS L3
-    @track serviceid = ''; //FOR LMS L3
+	level3LMSRegistrationTrigger = 'homepage';
     
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
-    WiregetUserRecord(result) {
-        if (result.data) {
-            let user = JSON.parse(JSON.stringify(result.data));
-            let acceptTerms = user.fields.ToU_accepted__c.value;
-            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
-            let currentURL = window.location.href;
-            if (currentURL.includes(this.labels.PortalName)) {
-                this.displayAcceptTerms = acceptTerms;
-            }
-
-            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
-            console.log('firstLogin: ', this.firstLogin);
-            console.log('registrationRequired: ', registrationRequired);
-
-            if(acceptTerms == true){
-                if(registrationRequired == true){
-                    this.displayRegistrationConfirmation = true;
-                }else{
-                    if(this.firstLogin == true){
-                        this.displayFirstLogin = true;
-                    }
-                }
-            }
-
-        }
-    }
+	@track registrationlevel = ''; //FOR LMS L3
+	@track thirdLoginLMS = false; //FOR LMS L3
+	@track serviceid = ''; //FOR LMS L3
+	@wire(CurrentPageReference) pageRef;
 
     // company tab on profile
     @track displayCompanyTab = false;
@@ -354,6 +326,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if(pageParams !== undefined && pageParams.firstLogin !== undefined){
             if(pageParams.firstLogin == "true"){
                 this.firstLogin = true;
+				this.displayFirstLogin = true;
             }
         }
 
@@ -383,7 +356,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 							if(result !== 'not_complete'){
 								if(pageParams.RelayState !== ''){
 									let sURL = result.split('RelayState');
-									result = sURL[0] + '&RelayState=' + pageParams.RelayState;
+										result = sURL[0] + '&RelayState=' + pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26');
 								}
 									window.open(result);
 							}
