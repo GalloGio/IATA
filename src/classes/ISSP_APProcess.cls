@@ -2308,25 +2308,20 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public void retrieveHQAccountDetails (Id hqId){
-		try {
-			
-			hqAccount = [
-				SELECT Id, Name, Name_on_AOC__c, BillingStreet, BillingCity, BillingState, BillingPostalCode,
-				BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
-				Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
-				Top_Parent__r.SIS_Status__c,Top_Parent__r.SIS_Sub_Status__c,
-				Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
-				BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
-				ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
-				SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,VAT_Number__c,
-				(SELECT Id FROM Authorized_Signatories_Packages__r)
-				FROM Account
-				WHERE Id = :hqId
-				LIMIT 1
-				];
-		} catch (Exception e) {
-			System.assert(false, 'hqId ' + hqId);
-		}
+		hqAccount = [
+			SELECT Id, Name, Name_on_AOC__c, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+			BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
+			Top_Parent__r.BillingCountry, Top_Parent__r.Membership_status__c, Top_Parent__r.Name, Top_Parent__r.Airline_designator__c, Top_Parent__r.IATACode__c, Top_Parent__r.TradeName__c,
+			Top_Parent__r.SIS_Status__c,Top_Parent__r.SIS_Sub_Status__c,
+			Sector__c, Category__c, Due_Diligence_Status__c, Due_Diligence_Remarks__c, Level_of_risk__c, Airline_Prefix__c, ICCS_Membership_Status__c,
+			BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
+			ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
+			SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,VAT_Number__c,
+			(SELECT Id FROM Authorized_Signatories_Packages__r)
+			FROM Account
+			WHERE Id = :hqId
+			LIMIT 1
+		];
 
 		//Only want to display AL HQ details on the joining form, so need to get them if the user applying is from a Branch office
 		strParentMembershipStatus = hqAccount.Membership_status__c;
@@ -2354,8 +2349,8 @@ global without sharing class ISSP_APProcess {
 		//airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
 
 		airlinesite_BR = (IATACode == null && hq.Airline_Prefix__c != null)?
-+                            DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode :
-+                            DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+			+ DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode :
+			+ DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
 
 		System.debug('AL BR Site: ' + airlinesite_BR);
 
