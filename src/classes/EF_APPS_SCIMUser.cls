@@ -19,7 +19,7 @@ public with sharing class EF_APPS_SCIMUser extends SCIMUser {
 		String conId;
 		if(u != null && u.ContactId != null){
 			conId = String.valueOf(u.ContactId).left(15); //to be sure that it as the same length as the formula field
-			efcrdList = PortalInvitationHelper.getEFContactRoleDetails(conId, null);
+			efcrdList = EF_Helper.getEFContactRoleDetails(conId, null);
 			if(!efcrdList.isEmpty()) efcrd = efcrdList.get(0);
 		}
 
@@ -78,10 +78,10 @@ public with sharing class EF_APPS_SCIMUser extends SCIMUser {
 					entitlementsList.add(e2);
 				}
 				//globalId
-				if(efcrd.E_F_Account_Role_Detail__r.Account_Role__c != null && efcrd.E_F_Account_Role_Detail__r.Account_Role__r.Global_ID__c != null){
+				if(efcrd.E_F_Account_Role_Detail__r.Account_Role__c != null && efcrd.E_F_Account_Role_Detail__r.Account_Role__r.Account__c != null){
 					SCIMUser.Entitlements e3 = new SCIMUser.Entitlements();
 					e3.type = 'globalId';
-					e3.value = efcrd.E_F_Account_Role_Detail__r.Account_Role__r.Global_ID__c;
+					e3.value = efcrd.E_F_Account_Role_Detail__r.Account_Role__r.Account__c;
 					entitlementsList.add(e3);
 				}
 			}
@@ -90,9 +90,8 @@ public with sharing class EF_APPS_SCIMUser extends SCIMUser {
 			e4.type = 'externalSystems';
 			e4.value = 'E&F APPS';
 			entitlementsList.add(e4);
-			
 			//administrator - do a query to all the contact's E&F Contact Role Details to know if it is an administrator or not
-			List<E_and_F_Contact_Role_Detail__c> adminList = PortalInvitationHelper.getEFContactRoleDetails(conId, 'Service_Admin');
+			List<E_and_F_Contact_Role_Detail__c> adminList = EF_Helper.getEFContactRoleDetails(conId, 'Service_Admin');
 			SCIMUser.Entitlements e5 = new SCIMUser.Entitlements();
 			e5.type = 'administrator';
 			e5.value = adminList.isEmpty() ? 'false' : 'true';
@@ -104,7 +103,7 @@ public with sharing class EF_APPS_SCIMUser extends SCIMUser {
 		//schemas
 		schemas.add('urn:scim:schemas:extension:enterprise:1.0');
 
-		//Mulesoft uses PUT instead of Patch 
+		//Mulesoft uses PUT instead of Patch
 		HttpCall.HTTP_METHOD_PATCH = 'PUT';
 	}
 

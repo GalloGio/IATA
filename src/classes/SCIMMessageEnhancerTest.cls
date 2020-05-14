@@ -102,4 +102,70 @@ private class SCIMMessageEnhancerTest {
 		message.enhanceMessage(request);
 		Test.stopTest();
 	}
+
+	@isTest
+	static void test_EF_APPS_SCIMMessageEnhancer() {
+
+		Account acc = new Account();
+		acc.Name = 'test_EF_APPS_SCIMMessageEnhancer';
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		insert acc;
+
+		Account_Role__c accRole = new Account_Role__c();
+		accRole.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+		accRole.Functional_Role__c = 'E&F';
+		accRole.Account__c = acc.Id;
+		insert accRole;
+
+		E_and_F_Account_Role_Detail__c efAccRoleDet = new E_and_F_Account_Role_Detail__c();
+		efAccRoleDet.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Account_Role_Detail__c', 'Client');
+		efAccRoleDet.Account_Role__c = accRole.Id;
+		insert efAccRoleDet;
+
+		Contact con = new Contact();
+		con.FirstName = 'efapps';
+		con.LastName = 'scim';
+		con.Email = 'efappsscim@message.enhancer';
+		con.Salutation = 'Ms.';
+		con.AccountId = acc.Id;
+		insert con;
+
+		User usr = TestDataGenerator.generatePortalUser('ISS Portal Airline Delegated Admin User', con.Id, false);
+		usr.Email = 'efappsscim@message.enhancer';
+		usr.Phone = '9999999999';
+		usr.MobilePhone = '8888888888';
+		insert usr;
+
+		Account_Contact_Role__c accConRole = new Account_Contact_Role__c();
+		accConRole.Account_Role__c = accRole.Id;
+		accConRole.Contact__c = con.Id;
+		accConRole.Functional_Role__c = 'E&F';
+		accConRole.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+		insert accConRole;
+
+		E_and_F_Contact_Role_Detail__c efConRoleDet = new E_and_F_Contact_Role_Detail__c();
+		efConRoleDet.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Standard_User');
+		efConRoleDet.Contact_Role__c = accConRole.Id;
+		efConRoleDet.E_F_Account_Role_Detail__c = efAccRoleDet.Id;
+		insert efConRoleDet;
+
+		Map<String,Object> inputParams = new Map<String,Object>();
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'efapps');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'scim');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_DISPLAYNAME, 'efapps scim');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalId');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'efappsscim@message.enhancer');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_PREFERREDLANGUAGE, 'EN');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_TITLE, 'Manager');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_ACTIVE, true);
+
+		Process.PluginRequest request = new Process.PluginRequest(inputParams);
+
+		EF_APPS_SCIMMessageEnhancer message = new EF_APPS_SCIMMessageEnhancer('EF_APPS_SCIMMessageEnhancer');
+		EF_APPS_SCIMMessageEnhancer message_noConstructor = new EF_APPS_SCIMMessageEnhancer();
+
+		Test.startTest();
+		message.enhanceMessage(request);
+		Test.stopTest();
+	}
 }
