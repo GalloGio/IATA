@@ -99,7 +99,6 @@ import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountry
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 
-
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
@@ -229,6 +228,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track grantingAccess = false;
     @track canAddUsers = false;
 	@track showInviteModal = false;
+    @track isEFAdmin = false;
 
     //IEP Rolelist
     @track roleList;
@@ -313,7 +313,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.selectedStatus = "Access Requested";
                 }
             }
-
         }
 
         getLoggedUser().then(userResult => {

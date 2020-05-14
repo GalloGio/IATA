@@ -33,7 +33,7 @@ public without sharing class PortalServicesCtrl {
 						' AND Requestable__c = false' +
 						' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
 						' AND ANG_Accre_Tp__c = true';
-		
+
 		if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
 			//if contact is of type Agency we check the restriction by sector and category
 			query += ' AND (ANG_Restrict_by_Agency_Sector__c = \'' + con.account.Sector__c + '\' OR ANG_Restrict_by_Agency_Sector__c = null)' +
@@ -96,7 +96,7 @@ public without sharing class PortalServicesCtrl {
 							'   (Right__c = \'' +  PORTAL_ACCESS_GRANTED + '\' OR Portal_Application__r.Requestable__c = false) AND ' +
 							'   Portal_Application__r.Hide_on_Homepage__c = false)' +
 							' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
-	
+
 		finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
 
 		List<Portal_Application_Right__c> appsGrantedList = Database.query(finalQuery);
@@ -147,9 +147,9 @@ public without sharing class PortalServicesCtrl {
 
 	@AuraEnabled(cacheable=true)
 	public static String paymentLinkRedirect(){
-	
+
 		User userAux = [SELECT Id, Contact.Credit_Card_Payment_Link__c FROM User WHERE Id = :UserInfo.getUserId()];
-	
+
 		if(userAux.Contact != null && userAux.Contact.Credit_Card_Payment_Link__c != null) {
 			return userAux.Contact.Credit_Card_Payment_Link__c;
 		}else{
@@ -164,7 +164,7 @@ public without sharing class PortalServicesCtrl {
 		ISSP_PermissionFilterFactory.PermissionSetFilter thePermissionSetFilter = ISSP_PermissionFilterFactory.createPermissionSetFilter(csServiceListViews, 'Permission_set__c');
 		ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfilePermissionFilter = ISSP_PermissionFilterFactory.createProfilePermissionFilter();
 
-	
+
 		Map<String,ISSPServiceListView__c> mapFilteredListViews = new Map<String,ISSPServiceListView__c>();
 		for(ISSPServiceListView__c serviceListViewItem : csServiceListViews) {
 
@@ -474,7 +474,7 @@ public without sharing class PortalServicesCtrl {
 
 		if(!serviceToUpdate.isEmpty()) {
 			serviceToUpdate[0].Last_Visit_Date__c = Datetime.now();
-	
+
 			update serviceToUpdate;
 		}
 	}
@@ -858,7 +858,7 @@ public without sharing class PortalServicesCtrl {
 		User userAux = [SELECT ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Id = :UserInfo.getUserId()];
 
 		if(applicationName.equals(EFAPPS)){
-			PortalInvitationHelper.requestAccessEF(applicationId, applicationName, userAux);
+			EF_Helper.requestAccessEF(applicationId, applicationName, userAux);
 		} else {
 			//invokes request method, ignoring visibility
 			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
@@ -919,7 +919,7 @@ public without sharing class PortalServicesCtrl {
 
 	@AuraEnabled(cacheable=true)
 	public static Map<String, String> getUserOptions(String portalUser){
-	
+
 		return DAL_WithoutSharing.getUserOptions(portalUser);
 	}
 
@@ -1026,11 +1026,11 @@ public without sharing class PortalServicesCtrl {
 					&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
 				)
 				return new List<AccountTeamMember>();
-	
+
 			try {
 				String currentUserProfile = '';
 				List<AccountTeamMember> teamMembers = ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new Id[] { currentUserContact.AccountId, currentUserContact.Account.ParentId });
-	
+
 				for (AccountTeamMember teamMember : teamMembers) {
 					if(currentUserContact.Id == teamMember.User.ContactId) {
 						if(currentUserProfile == '') {
@@ -1090,7 +1090,7 @@ public without sharing class PortalServicesCtrl {
 		for(Portal_Application_Right__c psa : psaList) {
 			psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
 			psa.Access_Status_Reason__c = reason;
-	
+
 			psaToUpdate.add(psa);
 		}
 
@@ -1110,7 +1110,7 @@ public without sharing class PortalServicesCtrl {
 	// Denys Acccess to a portal service from the manage service page by an portal administrator
 	@AuraEnabled(cacheable=false)
 	public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
-	
+
 		List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
 													 FROM Portal_Application_Right__c
 													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
@@ -1120,7 +1120,7 @@ public without sharing class PortalServicesCtrl {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 		Portal_Application_Right__c psa = psaList.get(0);
-	
+
 		if(isFromContactTable){
 			psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
 			psa.Access_Status_Reason__c = reason;
