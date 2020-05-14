@@ -143,6 +143,22 @@ public class ANG_RiskEventGenerator {
 				}
 			}
 
+			switch on objectName {
+				when 'Case' {
+					fields.add('Account.ANG_Accreditation_Model__c');
+					fields.add('ParentId');
+					fields.add('Parent.RecordTypeId');
+					fields.add('Parent.IFAP_Financial_Year__c');
+					fields.add('Parent.Financial_Review_Type__c');
+					reQuery = true;
+				}
+				when 'AMS_OSCAR__c' {
+					fields.add('New_Parent__c');
+					fields.add('ANG_Type_Of_Change__c');
+					fields.add('(SELECT ID, Account__c FROM AMS_Process_Detail__r)');
+				}
+			}
+
 			//INC-484721
 			if(!reQuery && o.getSObjectType() == Schema.AMS_Oscar__c.getSObjectType() && o.get('ANG_Type_Of_Change__c') == AMS_Utils.ANG_HIERARCHY)	reQuery = true;
 
@@ -153,8 +169,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				if(objectName == 'AMS_OSCAR__c') fields.add('ANG_Type_Of_Change__c');
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordTypeId, ':'')+ String.join(new List<String>(fields), ', ') + (objectName == 'AMS_OSCAR__c' ? ', New_Parent__c, (SELECT ID, Account__c FROM AMS_Process_Detail__r)' :'') + ' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, ' + String.join(new List<String>(fields), ', ') + ' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e;
 				else {
@@ -180,10 +195,13 @@ public class ANG_RiskEventGenerator {
 			}
 
 			if(!accsIds.isEmpty()){
-				for(Case c: [SELECT Id, AccountId, Status, CreatedDate FROM Case
-					WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP
-					AND AccountId IN :accsIds AND Id NOT IN :ifapIds ORDER BY CreatedDate DESC]){
-
+				for (Case c : [SELECT Id, AccountId, Status, CreatedDate, 
+									IFAP_Financial_Year__c, Financial_Review_Type__c
+							   FROM Case
+							   WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP
+								   AND AccountId IN :accsIds
+								   AND Id NOT IN :ifapIds
+							   ORDER BY CreatedDate DESC]) {
 					if(previousIFAPsByAccount.containsKey(c.AccountId))
 						previousIFAPsByAccount.get(c.AccountId).add(c);
 					else
@@ -222,13 +240,12 @@ public class ANG_RiskEventGenerator {
 
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
-						//NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance"
-						if((config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId')))
-							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance') )
-							&& allowToGenerateRiskEventForChangeOfHierarchy(o)){
+						// NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance"
+						if (!skipFailFinancialStatementsReGeneration(o, config.ANG_Risk_Event_Type__r.Name, objectName, previousIFAPsByAccount)
+								&& allowToGenerateRiskEventForChangeOfHierarchy(o)) {
 							riskEvents.add(risk);
 						}else{
-							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
+							System.debug(LoggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] NOT creating "Fail Financial Statement" risk event');
 							notifications.add(new Technical_Logs__c(Record__c = o.Id, Log__c = 'Risk Event'));
 							break;
 						}
@@ -489,4 +506,15 @@ public class ANG_RiskEventGenerator {
 		}
 		else return obj.get(fieldName);
 	}
+
+	private Boolean skipFailFinancialStatementsReGeneration(SObject obj, String riskEvent, String objectName, Map<Id, List<Case>> previousIFAPsByAccount) {
+		if (riskEvent == ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS && objectName == 'Case') {
+			Case cse = (Case) obj;
+			return !previousIFAPsByAccount.isEmpty() && previousIFAPsByAccount.containsKey(cse.AccountId)
+				&& IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(cse.AccountId), AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE,
+					cse.Account.ANG_Accreditation_Model__c, cse.Parent.IFAP_Financial_Year__c, cse.Parent.Financial_Review_Type__c);
+		}
+		return false;
+	}
+
 }
