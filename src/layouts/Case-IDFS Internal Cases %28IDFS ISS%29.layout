@@ -5,6 +5,9 @@
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>New_Case_Comment</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -390,9 +393,19 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Escalate_within_IATA</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>

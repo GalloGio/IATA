@@ -3,6 +3,7 @@
     <customButtons>Accept_Case</customButtons>
     <customButtons>New_Case_Comment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>IDFS_Request_Operational_Improvement</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
@@ -456,9 +457,19 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>E2CP__New_Comment_Lightning</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>
