@@ -7,14 +7,13 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var result = response.getReturnValue();
-
                 var rt_names = [];
                 if(result.developerNames) {
                     for(var i=0; i < result.developerNames.length; i++) {
                         rt_names.push(result.developerNames[i].Record_Type__c);
                     }
                 }
-                if(result.CaseDetail.Account.Identify_as_Key_Customer__c && rt_names.indexOf(result.CaseDetail.RecordType.Name) >= 0) {
+                if(result.CaseDetail.Account.Identify_as_Key_Customer__c && rt_names.indexOf(result.CaseDetail.RecordType__c) >= 0) {
                     component.set('v.showLoading', false);
                 }else{
                     var a = component.get('c.gotoURL');

@@ -3,7 +3,7 @@ public with sharing class KeyCustomerAlertCtrl {
 
 	@AuraEnabled
 	public static KeyCustomerAlertInfo getKeyCustomerAlertInfo(Id caseId) {
-		Case CaseDetail =  [SELECT id, Account.Identify_as_Key_Customer__c, RecordType.DeveloperName
+		Case CaseDetail =  [SELECT id, Account.Identify_as_Key_Customer__c, RecordType__c
 							FROM Case 
 							WHERE id = :caseId];      
 
