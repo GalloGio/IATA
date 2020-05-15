@@ -45,13 +45,25 @@ public class ANG_RHCHelper {
 
 	public static Set<Id> updateNotificationAlreadySent = new Set<Id>();
 
+	private static final String YES = 'Yes';
+	private static final String NO = 'No';
+
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c , ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c FROM RHC_Informations__r WHERE RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+											   IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c,
+											   (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c
+												FROM Financial_Securities__r),
+											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c
+												FROM RHC_Informations__r
+												WHERE RecordTypeId = :RECTYPE_STDRHCINFO)
+										   FROM Account
+										   WHERE Id IN :accountIds];
+
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -105,10 +117,6 @@ public class ANG_RHCHelper {
 		if(!rhcinfos.isEmpty()) update rhcInfos;
 	}
 
-	/*public static void calculateRHCAmount(List<Account> accounts) {
-		calculateRHCAmount([SELECT Id, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
-	}*/
-
 	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		Set<Id> accountsIds = new Set<Id>();
@@ -121,9 +129,12 @@ public class ANG_RHCHelper {
 		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
 
 		if(!accountsIds.isEmpty()){
-			for(Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Financial_Assessment_Points__c, ANG_RiskStatus__c,
-								Remittance_frequency__c, ANG_Accreditation_Model__c, (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
-							FROM Account WHERE Id IN :accountsIds]) {
+
+			for (Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
+								  Financial_Assessment_Points__c, ANG_RiskStatus__c, Remittance_frequency__c, ANG_Accreditation_Model__c,
+								  (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
+							  FROM Account
+							  WHERE Id IN :accountsIds]) {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
 
@@ -152,13 +163,14 @@ public class ANG_RHCHelper {
 
 			Boolean isMulticountry = (acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
-			Decimal fsAmount = (rhc.ANG_Financial_Security__c == NULL) ? 0 : rhc.ANG_Financial_Security__c;
-			Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == NULL) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
+			Decimal fsAmount = (rhc.ANG_Financial_Security__c == null) ? 0 : rhc.ANG_Financial_Security__c;
+			Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == null) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
 
-			//If RHC equal FS % condition is applied on the agent
-			//retrieve % of FS from the RHC information (rhcAmountFsPercent)
-			//and calculate RHC amount
-			if(rhc.ANG_RHC_Amount_Equals_FS__c && !isMulticountry){
+			Boolean shouldApplyRhcPercentage = ! isMulticountry || rhcAmountFsPercent != 0;
+
+			// If RHC equal FS % condition is applied on the agent
+			// retrieve % of FS from the RHC information (rhcAmountFsPercent) and calculate RHC amount
+			if (rhc.ANG_RHC_Amount_Equals_FS__c && shouldApplyRhcPercentage) {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
 				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent);
 				continue;
@@ -219,7 +231,7 @@ public class ANG_RHCHelper {
 				//considers the point interval from the configuration on BSP Attribute record.
 				//Otherwise assessment points interval are not considered
 				if(currentBspAttrKey == bspAttrKey &&
-					(acct.Financial_Assessment_Points__c == NULL ||
+					(acct.Financial_Assessment_Points__c == null ||
 					 (bspAttr.Max_FA_Points__c >= acct.Financial_Assessment_Points__c &&
 						bspAttr.Min_FA_Points__c <= acct.Financial_Assessment_Points__c)
 					)
@@ -235,7 +247,7 @@ public class ANG_RHCHelper {
 			//If the field "RHC Amount Calculation Type" is "Fixed Percentage",
 			//then apply RHC amount and forecasted = % of FS from the BSP Attributes record
 			Boolean fixedPercentageCalc =
-				bspAttrRhc != NULL &&
+				bspAttrRhc != null &&
 				bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC;
 
 			//If the current BSP is Hong Kong or Macau and
@@ -243,7 +255,7 @@ public class ANG_RHCHelper {
 			//skips the fixed percentage calculation
 			Boolean skipFixedPercentageCalc =
 				fixedPercentageCalc &&
-				(acct.Financial_Assessment_Points__c == NULL) &&
+				(acct.Financial_Assessment_Points__c == null) &&
 				skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
 
 			if(fixedPercentageCalc && !skipFixedPercentageCalc){
@@ -328,6 +340,7 @@ public class ANG_RHCHelper {
 	private static void applyRhcAmountFsPercentage(ANG_RHC_Information__c rhc, Decimal fsAmount, Decimal fsPercentage){
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Amount: ' + fsAmount);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Percentage to apply: ' + fsPercentage);
+
 		Decimal rhcAmount = (fsAmount * fsPercentage/100);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - rhcAmount] RHC Amount: ' + rhcAmount);
 
@@ -365,8 +378,7 @@ public class ANG_RHCHelper {
 				RHC_Amnt_Calc_Type__c,
 				Limit_Cash_Condition__c
 			 FROM ANG_BSP_Attributes__c
-			 WHERE
-			 	BSP__c IN :bspIdSet
+			 WHERE BSP__c IN :bspIdSet
 			]
 		);
 
@@ -400,8 +412,7 @@ public class ANG_RHCHelper {
 				IsEmailBounced,
 				Email
 			 FROM Contact
-			 WHERE
-			 	Id IN :contactIdSet
+			 WHERE Id IN :contactIdSet
 			]
 		);
 
@@ -410,13 +421,13 @@ public class ANG_RHCHelper {
 				Id,
 				CurrencyIsoCode,
 				ANG_AccountId__c,
+				ANG_RHC_Amount__c,
 				ANG_RHC_Amount_Forecasted__c,
 				ANG_RHC_Effective_Date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
 				ANG_AccountId__r.ANG_HE_CashCondition__c
 			 FROM ANG_RHC_Information__c
-			 WHERE
-				ANG_AccountId__c IN :accountIdSet
+			 WHERE ANG_AccountId__c IN :accountIdSet
 			]
 		);
 
@@ -436,7 +447,7 @@ public class ANG_RHCHelper {
 
 			ANG_RHC_Information__c rhc = rhcMap.get(accountId);
 
-			if(rhc != NULL){
+			if(rhc != null){
 
 				for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
 					RiskInformationUpdateWrapper riuw = new RiskInformationUpdateWrapper();
@@ -445,11 +456,11 @@ public class ANG_RHCHelper {
 
 					riuw.riskStatus = '';
 
-					if(rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c != NULL){
+					if(rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c != null){
 						riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
 					}
 
-					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
+					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? YES : NO;
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
 
 					riuw.rhcAmount = '';
@@ -491,11 +502,9 @@ public class ANG_RHCHelper {
 				Subject,
 				HtmlValue,
 				DeveloperName
-			 FROM
-			 	EmailTemplate
-			 WHERE
-			 	 DeveloperName LIKE :RISK_RHC_UPDATE_TEMPLATE + '%'
-			 AND IsActive = TRUE
+			 FROM EmailTemplate
+			 WHERE DeveloperName LIKE :RISK_RHC_UPDATE_TEMPLATE + '%'
+			 	AND IsActive = TRUE
 			]
 		);
 
@@ -508,10 +517,8 @@ public class ANG_RHCHelper {
 				Id,
 				Name,
 				Identifier__c
-			 FROM
-			 	Notification_Template__c
-				WHERE
-					Identifier__c = :RISK_RHC_UPDATE_TEMPLATE
+			 FROM Notification_Template__c
+			 WHERE Identifier__c = :RISK_RHC_UPDATE_TEMPLATE
 			]
 		);
 
@@ -525,7 +532,7 @@ public class ANG_RHCHelper {
 
 			EmailTemplate template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE + '_' + wrap.templateLanguage);
 
-			if(template == NULL) template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE);
+			if(template == null) template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE);
 
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);

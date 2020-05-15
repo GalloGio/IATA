@@ -95,7 +95,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 			if (oscarLst != null && oscarLst.size() > 0) {
 
 				AMS_OSCAR__c oscar = oscarLst[0];
@@ -137,17 +137,18 @@ global class AMS_OSCAR_Webservice {
 
 				Date currentDate = Date.today();
 				Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar.Account__c,
-										 Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = 'Agent to be Notified',
+										 Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED,
 										 Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar.Id, Financial_Assessment_requested__c = currentDate);
 
 				if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					ifapCase.Subject = ifapCase.Subject.replace(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY, AMS_Utils.NEW_HE_GOGLOBAL);
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
-					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
 				}
 
 				insert ifapCase;
 
-				oscar.STEP11__c = 'In Progress';
+				oscar.STEP11__c = AMS_Utils.IN_PROGRESS;
 				update oscar;
 
 				//OSCAR Name will be equal to the CaseNumber, so instead of querying the ifap Case for its CaseNumber
@@ -189,7 +190,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
-			List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation')) limit 1];
+			List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name, OSCAR__r.Account__r.Sector__c, OSCAR__r.Account__r.Category__c from Case where OSCAR__c = : oscar.Id AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation')) limit 1];
 
 			if (cases == null || cases.isEmpty()) {
 				result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -243,7 +244,7 @@ global class AMS_OSCAR_Webservice {
 	WebService static String createChangeCodeNEW(String oscarId) {
 
 		try {
-			List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 
 			AMS_OSCAR__c theOSCAR = oscar[0];
 
@@ -260,7 +261,7 @@ global class AMS_OSCAR_Webservice {
 			changeCode.status  = n.Account_status_change__c;
 			changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
-			Account acct = new Account(Id = theOSCAR.Account__c);
+			Account acct = new Account(Id = theOSCAR.Account__c, Sector__c = theOSCAR.Account__r.Sector__c, Category__c = theOSCAR.Account__r.Category__c);
 			AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, true);
 
 			return 'OK';
@@ -274,7 +275,7 @@ global class AMS_OSCAR_Webservice {
 	**/
 	private static Case findOscarParentCase(Id oscarId) {
 		List<Case> cases = [
-			SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+			SELECT Id, AccountId, Account.Type, Account.Sector__c, Account.Category__c, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
 			SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
 			oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
 			oscar__r.RPM_Approval__c, oscar__r.Step44__c, oscar__r.Process__c
@@ -320,7 +321,7 @@ global class AMS_OSCAR_Webservice {
 		}
 		if (step=='44') {
 			if(oscar.Process__c == AMS_Utils.NGANNUALREVAL) {
-				if (oscar.Step44__c == 'Passed') return;
+				if (oscar.Step44__c == AMS_Utils.PASSED) return;
 				message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
 				throw new OSCARException(message);
 			} else {
@@ -389,7 +390,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID commisionerCaseRecType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
-			List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 			if (oscar != null && oscar.size() > 0) {
 
 				/*Not applicable, comissioner case can be created to passenger agencies on some situations
@@ -437,7 +438,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID fsReleaseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
-			List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 			if (oscar != null && oscar.size() > 0) {
 
 				List<Case> cases = [select Id, ContactId from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
@@ -505,7 +506,7 @@ global class AMS_OSCAR_Webservice {
 			//creates change code
 			//Account acct = new Account(Id = agencyId);
 			//TD 2080607: CNS
-			Account acct = [Select id, CNS_Agency__c, Status__c from account where id = :AgencyId];
+			Account acct = [Select id, CNS_Agency__c, Status__c, Sector__c, Category__c from account where id = :AgencyId];
 			AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
 			List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];
@@ -530,105 +531,86 @@ global class AMS_OSCAR_Webservice {
 	}
 
 	WebService static String createRiskEvent(String oscarId){
-
 		try{
-
 			List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c, Is_NewGen__c, ANG_Change_Entity_Location__c, Change_of_Entity_Location_within_EU__c, Account__r.ANG_Accreditation_Model__c, Account__r.Location_type__c, AMS_Online_Accreditation__r.Location_Type__c, Account__c from AMS_OSCAR__c where Id =: oscarId];
-
+	
 			if(oscar!=null && oscar.size()>0){
-
 				AMS_OSCAR__c currentOscar = oscar[0];
-
-				if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+	
+				Set<String> processesThatNeedApproval = new Set<String>{
+					AMS_Utils.NEWHESTANDARD,
+					AMS_Utils.NEWGESTANDARD,
+					AMS_Utils.NGCONVERSIONTOMULTICOUNTRY,
+					AMS_Utils.NGCONVERSIONMCTOST
+				};
+	
+				if((processesThatNeedApproval.contains(currentOscar.Process__c) || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL) {
 					return 'Error - In order to generate a risk event you need to have the Manager Approval.';
-
+				}
+	
 				currentOscar.Risk_event_creation_date__c = System.today();
-				currentOscar.STEP36__c = 'Passed';
-
-				boolean isNGNewAccreditation =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NEWHESTANDARD;
-
-				boolean isNGNewChangeAccreditationTypeCash =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCHANGES &&
-						currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE &&
-						currentOscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH;
-
-				boolean isNGChangeOfHierarchyWithNewRHC =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCHANGES &&
-						currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
-						currentOscar.Account__r.Location_type__c == AMS_Utils.HE &&
-						currentOscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
-
-				Boolean isNewGEAccreditation =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGE &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NEWGESTANDARD;
-
-				Boolean isConversionToMulticountry =
-						currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY &&
-						currentOscar.Is_NewGen__c &&
-						currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-						currentOscar.Risk_event_creation_date__c == System.Today() &&
-						currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
-
-				if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC || isNewGEAccreditation || isConversionToMulticountry){
+				currentOscar.STEP36__c = AMS_Utils.PASSED;
+	
+				Boolean isProcessEligibleForREGeneration = isEligibleForRiskEventGeneration(currentOscar); 
+	
+				//In this scenario, we need to force the RHC update
+				Boolean isNGChangeOfHierarchyWithNewRHC =
+					currentOscar.Process__c == AMS_Utils.NGCHANGES &&
+					currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
+					currentOscar.Account__r.Location_type__c == AMS_Utils.HE &&
+					currentOscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
+	
+				if (isNGChangeOfHierarchyWithNewRHC || isProcessEligibleForREGeneration) {
 					AMS_OscarTriggerHandler.applyRHCForecast = true;
 				}
-
+	
 				update currentOscar;
-
-				if(isNGChangeOfHierarchyWithNewRHC){
-
+	
+				if(isNGChangeOfHierarchyWithNewRHC){ 
 					ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
-
-					if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c)
+	
+					if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c) {
 						update rhcInfo;
+					}
 				}
-
+	
 				AMS_OscarTriggerHandler.applyRHCForecast = false;
-
+	
 				List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
-
+	
 				if(rskEventLst.isEmpty()){
-
-					if(isNGNewAccreditation || isNewGEAccreditation || isConversionToMulticountry){
-
+					if(isProcessEligibleForREGeneration){
 						ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
-
+	
 						if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
 							AMS_OscarTriggerHandler.applyRHCForecast = true;
 							update rhcInfo;
 							AMS_OscarTriggerHandler.applyRHCForecast = false;
 						}
 					}
-
+	
 					return 'No risk event is needed for this OSCAR.';
-
+	
 				}
-				else
+				else {
 					return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
-
+				}
 			}
-
+	
 			return 'ERROR: OSCAR not found.';
-
+	
 		}catch(Exception ex){
 			return AMS_Utils.errorMessageBeautifyer(ex);
 		}
+	}
+	
+	private static Boolean isEligibleForRiskEventGeneration(AMS_OSCAR__c currentOscar) {
+		return (currentOscar.Is_NewGen__c &&
+			((currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE && currentOscar.Process__c == AMS_Utils.NEWHESTANDARD) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGE && currentOscar.Process__c == AMS_Utils.NEWGESTANDARD) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY && currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) ||
+			(currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD && currentOscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST) ||
+			(currentOscar.Process__c == AMS_Utils.NGCHANGES && currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE && currentOscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH)));
 	}
 
 	WebService static String createIfapPortalServiceRight(String oscarId) {
@@ -671,4 +653,17 @@ global class AMS_OSCAR_Webservice {
 			return 'New Accredited Agent';
 	}
 
+
+	webservice static String executeMcToStSplitBatch(String oscarId) {
+		try {
+			update new AMS_OSCAR__c(Id = oscarId, Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_IN_PROGRESS);
+			Id accountGE = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = :oscarId].Account__c;
+			ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch((Id) oscarId, accountGE, false);
+			Database.executeBatch(myBatchObject, 1);
+		} catch (Exception ex) {
+			return AMS_Utils.errorMessageBeautifyer(ex);
+		}
+		
+		return '';
+	}
 }
