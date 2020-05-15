@@ -27463,6 +27463,30 @@ This service is free of charge.</value>
         <value>Account Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Add_Proof_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statement_Add_Proof_Payment</shortDescription>
+        <value>Add proof of payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Add_Proof_Payment_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Add proof payment description</shortDescription>
+        <value>You can upload proof of payment for this period here</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Done</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statement_Done</shortDescription>
+        <value>Done</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statement_Location</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -27479,12 +27503,20 @@ This service is free of charge.</value>
         <value>Remittance Date Reminders</value>
     </labels>
     <labels>
-        <fullName>ISSP_Account_Statements</fullName>
+        <fullName>ISSP_Account_Statement_Settlement_Info</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Account Statements</shortDescription>
-        <value>ICE - IATA Customer E-Statement</value>
+        <shortDescription>ISSP Account Statement Settlement Info</shortDescription>
+        <value>In case of negative billing, IATA settles the amount back to the agents. Settlement date for this period is: {0,date,dd MMM yyyy}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Billing</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Billing</shortDescription>
+        <value>Billing</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer</fullName>
@@ -27502,6 +27534,54 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
         <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the Non- BOP Total (BALANCE PAYABLE) to your DD account.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Item</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Item</shortDescription>
+        <value>Item</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_No_Results</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_No_Results</shortDescription>
+        <value>No results found</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Per_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Per_Location</shortDescription>
+        <value>Per Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Search</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Search</shortDescription>
+        <value>Type to search specific details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Summary</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Summary</shortDescription>
+        <value>Summary</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -27597,14 +27677,6 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Administrator</shortDescription>
         <value>Administrator</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Agency_Head_Office_code</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Agency Head Office code</shortDescription>
-        <value>Agency Head Office code</value>
     </labels>
     <labels>
         <fullName>ISSP_Agency_name</fullName>
@@ -33289,14 +33361,6 @@ I, undersigned, hereby represents and declare that I am duty authorized to submi
         <value>Passwords must match.</value>
     </labels>
     <labels>
-        <fullName>ISSP_Past_Periods</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Past Periods</shortDescription>
-        <value>Past Periods</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Payment_Link_Description</fullName>
         <categories>ISSP_Homepage, s10</categories>
         <language>en_US</language>
@@ -33785,6 +33849,134 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_Date</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_DragAndDropInf</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_DragAndDropInf</shortDescription>
+        <value>Or drop them here</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_DragAndDropSize</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_DragAndDropSize</shortDescription>
+        <value>Only PDF, JPG, PNG, DOCX, PPT files smaller than 20 MB</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_Exception</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_Exception</shortDescription>
+        <value>Exception</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeleted</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeleted</shortDescription>
+        <value>File deleted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeletedExc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeletedExc</shortDescription>
+        <value>There was a problem when trying to delete the file. Please try again or contact support.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeletedSucc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeletedSucc</shortDescription>
+        <value>File deleted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileExist</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileExist</shortDescription>
+        <value>This file already exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FilePDFOnly</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FilePDFOnly</shortDescription>
+        <value>PDF files only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileUploaded</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileUploaded</shortDescription>
+        <value>File succesfuly uploaded</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_File_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_File_Name</shortDescription>
+        <value>File Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_File_Size</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_File_Size</shortDescription>
+        <value>File Size</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_OK_Action</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_OK_Action</shortDescription>
+        <value>OK</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_UploadFile</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_UploadFile</shortDescription>
+        <value>Upload File</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_UploadingSucc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_UploadingSucc</shortDescription>
+        <value>{0} is uploading</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_View</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_View</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>ISSP_RHC_HUB</fullName>
@@ -43176,6 +43368,38 @@ Through this service, you can directly access TIP Reports.</value>
         <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more. 
 
 Upscale your skills by signing up for one of our training programs, directly online!</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Payment_Received</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Payment_Received</shortDescription>
+        <value>Payment Received</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Billing_Adjustment</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Billing_Adjustment</shortDescription>
+        <value>Billing Adjustment</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Clawback</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Clawback</shortDescription>
+        <value>Clawback</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Compensation</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Compensation</shortDescription>
+        <value>Compensation</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>

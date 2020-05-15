@@ -1,0 +1,358 @@
+<!--
+    It is necessary to create a closeModal function in the component parent page to deal with the end of the add acttachemnts action
+    It is necessary to add a <c:ISSP_AlertModal /> to the parent to open modal information to the user
+-->
+
+<apex:component controller="ISSP_DragAndDrop" allowDML="true">
+
+    <apex:includeScript value="/soap/ajax/48.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/48.0/apex.js"/>
+
+    <apex:attribute name="sobjectId" type="String" description="Parent record" assignTo="{!parentId}"/>
+    <apex:attribute name="amazonFileName" type="String" description="Amazon File Name" assignTo="{!amazonFName}" default=""/>
+
+    <style>
+
+        #drop-area {
+            background: #FFFFFF;
+            border: 1px dashed #999999;
+            box-sizing: border-box;
+            border-radius: 1px;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 38px;
+        }
+
+        #drop-area .RD-AttchModalSubTitle {
+            font-size: 16px;
+        }
+
+        #drop-area .RD-DropAreaAction{
+            color: #1E32FA;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 26px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .highlight {
+            border-color: #1E32FA;
+        }
+        #drop-area p {
+            margin-top: 0;
+        }
+        #drop-area #fileElem {
+            display: none;
+        }
+        #drop-area table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #drop-area .RD-DropAreaTextInfo{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            color: #999999;
+        }
+
+
+        #file-Area .RD-hide-fileRow{
+            display: none;
+        }
+
+        #file-Area table {
+            font-style: normal;
+            font-weight: normal;
+            color: #525252;
+        }
+        #file-Area table th {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        #file-Area table td {
+            font-size: 16px;
+            line-height: 26px;
+            vertical-align: middle;
+        }
+        #file-Area table a {
+            color: #1E32FA;
+        }
+        #file-Area .RD-deleteIcon{
+            background: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/delete.png')}") no-repeat center;
+            color: transparent;
+            width: 24px;
+            height: 24px;
+            box-sizing: border-box;
+            display: inline-block;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        #file-Area progress{
+            height: 0.5em;
+            width: 100%;
+        }
+    </style>
+
+
+    <div id="drop-area" class="slds-scope">
+        <form>
+            <div class="RD-form-text row">
+                <div class="RD-AttchModalSubTitle">
+                    <div>
+                        <label for="fileElem" class="RD-DropAreaAction">{!$Label.ISSP_RD_UploadFile}</label>
+                        <span>&nbsp;{!$Label.ISSP_RD_DragAndDropInf}</span>
+                    </div>
+                    <span class="RD-DropAreaTextInfo">{!$Label.ISSP_RD_DragAndDropSize}</span>
+                </div>
+            </div>
+            <input type="file" id="fileElem" accept="*/*" onchange="handleFiles(this.files)" multiple="true" ></input>
+        </form>
+    </div>
+
+    <div id="file-Area">
+        <apex:actionFunction name="refreshFileArea" action="{!null}" rerender="fileAreaPanel"/>
+        <apex:outputPanel id="fileAreaPanel">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{!$Label.ISSP_RD_File_Name}</th>
+                        <th>{!$Label.ISSP_RD_File_Size}</th>
+                        <th>{!$Label.ISSP_RD_Date}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!amazFileList}" var="amFile">
+                        <tr>
+                            <td>
+                                <a id="linkTo+{!amFile.fileName}" href="{!amFile.linkToFile}" target="_blank">{!$Label.ISSP_RD_View}</a>
+                            </td>
+                            <td>
+                                <apex:outputText value="{!amFile.fileName}"/>
+                            </td>
+                            <td>
+                                <apex:outputText value="{0, number, ###,###,##0.##} Mb">
+                                    <apex:param value="{!amFile.fileSize}"/>
+                                </apex:outputText>
+                            </td>
+                            <td>
+                                <apex:outputText value="{0,date,dd MMM yyyy}">
+                                    <apex:param value="{!amFile.afile.CreatedDate}"/>
+                                </apex:outputText>
+                            </td>
+                            <td class="RD-TableBody">
+                                <span class="RD-DropAreaAction RD-DropAreaActionIcon RD-deleteIcon" onclick="deleteFile('{!amFile.fileName}'); return null;"/>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+        </apex:outputPanel>
+    </div>
+
+    <script type = "text/javascript">
+        let filesList =[]
+
+        // reference to the drop area so to attach some events to it
+        let dropArea = document.getElementById('drop-area')
+
+        // handlers to all the events to prevent default behaviors
+        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+          dropArea.addEventListener(eventName, preventDefaults, false)
+        })
+
+        // Prevent defaults values
+        function preventDefaults (e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+
+        ;['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false)
+        })
+
+        ;['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false)
+        })
+
+        function highlight(e) {
+            dropArea.classList.add('highlight')
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('highlight')
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false)
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer
+            let files = dt.files
+            handleFiles(files)
+        }
+
+        // take care of files droped in the drop zone
+        function handleFiles(files) {
+            files = [...files]
+            files.forEach(uploadFileAndSetBarprogress)
+        }
+
+        // for each file upload the file and start the progress bar
+        function uploadFileAndSetBarprogress(file) {
+            startLoading();
+            let checkifExists = checkFile(file.name);
+            let sparentId = "{!parentId}";
+            let amazonCredName = "{!credentialName}";
+
+            if(checkifExists){
+                uploadFile(file, sparentId, amazonCredName);
+            }
+        }
+
+        // uploads a single file to Amazon
+        function uploadFile(file, sobjectId, amazonCredentialName) {
+            startLoading();
+            ISSP_DragAndDrop.createUploadFile(sobjectId,file.name,file.type,file.size, function(result, event){
+                if(event.type == "exception") {
+                    showThings('errorMsg','{!$Label.ISSP_RD_Exception}','','');
+                    return false;
+                }
+                if(!event.status) {
+                    showThings('errorMsg','Bad status',event.status,'');
+                    return false;
+                }
+                if( ! result["isSuccess"]){
+                    showThings('errorMsg',result["errorMessage"].replace("&#39;","'").replace("&amp", "&").replace(";",""),'','');
+                    return false;
+                }
+                var wrapperFileUpload = result;
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = function(e) {
+                    var arrayBuffer = reader.result;
+                    remoteFunctionPut(wrapperFileUpload, file, reader.result);
+                };
+            }, {buffer: true, escape: true, timeout: 120000} );
+        }
+
+        // actual call to PUT, where the file is being uploaded
+        function remoteFunctionPut(wrapperFileUpload, file, fileBody) {
+            sforce.connection.sessionId = "{!$Api.Session_ID}";
+            sforce.connection.init("{!$Api.Session_ID}", wrapperFileUpload.amazonFilePath);
+            var xhr = new XMLHttpRequest();
+            // salesforce overrides original XMLHttpRequest in IE
+            if (!xhr.upload && window.Sarissa && window.Sarissa.originalXMLHttpRequest) {
+                xhr = new Sarissa.originalXMLHttpRequest();
+            }
+
+            xhr.onload = function () {
+            }
+
+            xhr.upload.onprogress = function (event) {
+            }
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    var status = this.status;
+                    if (status == 200) {
+                    } else {
+                        if (this.responseText) {
+                            alertResponse(this.responseText);
+
+                        } else {
+                            var message = '';
+                            if (this.statusText) {
+                                message = 'Status: '+this.status+'. Error: '+this.statusText;
+                            }
+                            else if (this.responseText) {
+                                message = 'Status: '+this.status+'. Error: '+this.responseText;
+                            }
+                            else {
+                                message = 'Status:'+this.status+'. Error: Unknown error.';
+                            }
+                        }
+                    }
+                }
+            };
+
+            xhr.open("PUT", wrapperFileUpload.amazonFilePath);
+            xhr.setRequestHeader("Cache-Control", "no-cache");
+            xhr.setRequestHeader("Authorization",wrapperFileUpload.authorization);
+            xhr.setRequestHeader("X-Amz-Date",wrapperFileUpload.timestamp);
+            xhr.setRequestHeader("Content-Type",file.type+';charset=UTF-8');
+            xhr.send(fileBody);
+
+            callToCreateAmazonFileObject(file, wrapperFileUpload.sobjectId, wrapperFileUpload.fullFileName);
+        }
+
+        // check if the file already exists
+        function checkFile(fileName){
+
+            var allowedExtensions = /\.(pdf||jpg||jpeg||png||doc||docx||ppt||pptx)$/i;
+            if(!allowedExtensions.exec(fileName)){
+                showThings('errorMsg','{!$Label.ISSP_RD_FilePDFOnly}','','');
+                return false;
+            }
+
+            let fileExist = false;
+            let filesListLenght = filesList.length;
+            for (let i = 0; i<filesListLenght; i++){
+                if(filesList[i] == fileName){
+                    fileExist = true;
+                }
+            }
+            if(fileExist){
+                showThings('errorMsg','{!$Label.ISSP_RD_FileExist}','','');
+                return false;
+            }else{
+                filesList.push(fileName);
+                return true;
+            }
+        }
+
+        // After the file upload, call controller to create an amazonfile record
+        function callToCreateAmazonFileObject(file, sobjectId, path) {
+            let _amazonFileModel = {
+                Name: "{!amazonFName}"
+            };
+
+            ISSP_DragAndDrop.createAmazonFileObject(
+                path,
+                file.size,
+                sobjectId,
+                _amazonFileModel,
+                function(result, event){
+                    showThings('successMsg','{!$Label.ISSP_RD_FileUploaded}','','{!$Label.ISSP_RD_UploadingSucc}'.replace('{0}',file.name));
+                }
+            );
+        }
+
+        // call ISSP_AlertModal component to alert the user
+        function showThings(msgType, msgTitle, msgHeader, msgBody){
+            refreshFileArea();
+            showAlertModal(msgType, msgTitle, msgHeader, msgBody);
+            stopLoading();
+        }
+
+        function deleteFile(filenamedelete){
+            startLoading();
+            var recId = "{!parentId}";
+            ISSP_DragAndDrop.deleteFile( recId, filenamedelete, function(result, event){
+                if(event.type == "exception") {
+                    showThings('errorMsg','{!$Label.ISSP_RD_Exception}','','');
+                }
+                if(result){
+                    showThings('successMsg','{!$Label.ISSP_RD_FileDeleted}','','{!$Label.ISSP_RD_FileDeletedSucc}');
+                } else {
+                    showThings('errorMsg','{!$Label.ISSP_RD_Exception}','{!$Label.ISSP_RD_FileDeleted}','{!$Label.ISSP_RD_FileDeletedExc}');
+                }
+            });
+        }
+    </script>
+
+</apex:component>

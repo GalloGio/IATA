@@ -176,6 +176,43 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Internal_Type__c</fullName>
+        <description>Converts the Transaction type to a user friendly type using labels</description>
+        <externalId>false</externalId>
+        <formula>CASE(TEXT(Transaction_Type__c),
+	&apos;Automatic Match&apos;,$Label.Transaction_Type_Payment_Received,
+	&apos;Billing Adjustement&apos;,$Label.Transaction_Type_Billing_Adjustment,
+	&apos;Clawback&apos;,$Label.Transaction_Type_Clawback,
+	&apos;Compensation&apos;,$Label.Transaction_Type_Compensation,
+	&apos;Expected Remittance&apos;,&apos;Expected Remittance&apos;,
+	&apos;Expected Settlement&apos;,&apos;Expected Settlement&apos;,
+	&apos;Manual Match&apos;,$Label.Transaction_Type_Payment_Received,
+	&apos;Post Billing Dispute&apos;,$Label.Transaction_Type_Billing_Adjustment,
+	TEXT(Transaction_Type__c)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Internal Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Payment__c</fullName>
+        <description>True is the transaction type is one of the defined types as Payment</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  ISPICKVAL(Transaction_Type__c, &quot;Automatic Match&quot;),
+  ISPICKVAL(Transaction_Type__c, &quot;Manual Match&quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Payment Types are: &quot;Automatic Match&quot; and &quot;Manual Match&quot;.
+Otherwise this transaction is considered as Billing.</inlineHelpText>
+        <label>Is Payment</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Parent_Key__c</fullName>
         <description>This will be used to find the parent id when a record is inserted, so will only be mandatory when you don&apos;t provide a parent Id</description>
         <externalId>false</externalId>
@@ -267,7 +304,7 @@
     <fields>
         <fullName>Value_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Value Date</label>
+        <label>Date</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>

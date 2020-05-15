@@ -1,0 +1,213 @@
+<apex:component >
+
+    <apex:attribute name="showCloseOption" type="Boolean" description="ShowPop up" />
+    <apex:attribute name="DragDropHeight" type="String" default="640px" description="Height in Pixel for Drag and Drop Section"/>
+
+    <style>
+        .customAlertModalBox .AlertModal{
+            height:{!DragDropHeight};
+        }
+
+        .customAlertModalBox .modal {
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .customAlertModalBox .modalBackgound{
+            background-color: rgba(196,196,196,0.75);
+            mix-blend-mode: normal;
+        }
+
+        .customAlertModalBox .hidden{
+            display: none;
+         }
+
+        /* Modal Content/Box */
+        .customAlertModalBox .modal-contentAB {
+            background-color: #FFFFFF;
+            margin: 10% auto;
+            padding: 0px;
+            border: 0px;
+            width: 35%;
+            border-radius: 0px;
+            text-align: center;
+        }
+
+        .customAlertModalBox .modalTitle {
+            color: white;
+            font-weight: bold;
+        }
+
+        .customAlertModalBox .showModal{
+            display: block;
+        }
+
+        .customAlertModalBox .IATA-AlertModalTitle{
+            font-size: 22px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.45;
+            letter-spacing: normal;
+            text-align: center;
+            color: #000000;
+            padding-top: 5%;
+         }
+
+        .customAlertModalBox .IATA-Page-SubTitle {
+            font-size: 18px;
+            font-weight: 300;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.44;
+            letter-spacing: normal;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.8);
+            padding-top: 3%;
+        }
+
+        .customAlertModalBox .IATA-form-textAB{
+            font-size: 14px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.14;
+            letter-spacing: normal;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        .customAlertModalBox .IATA-Image{
+            padding-top: 5%;
+        }
+
+        .customAlertModalBox .IATA-PopupLarge{
+            width: 55% !Important;
+        }
+
+        .customAlertModalBox .IATA-buttonInPopupModalAB{
+            margin-top: 7% !important;
+            border-width: 0px !important;
+            border-radius: 3px !important;
+            background-color: #1e32fa !important;
+            color: #ffffff !important;
+            width: 35% !important;
+            max-width: 35% !important;
+            min-width: 25% !important;
+            height: 40px !important;
+            background-image: none !important;
+        }
+    </style>
+
+    <apex:outputPanel id="customAlertModalBox" styleclass="customAlertModalBox hidden" >
+        <apex:outputPanel >
+            <apex:form >
+                <apex:actionFunction name="closeModal" action="{!closeAlertModal}"  rerender="myModal" />
+                <div class="modal showModal modalBackgound">
+                    <div id="AlertModalBox" class="modal-contentAB" >
+                        <div class="modal-header" style=" border-bottom: 0px; padding: 0px;">
+                            <div id="iceServiceHeader" class="jumbotron main-title hidden" style="text-align:left; background:#1e32fa !important; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
+                                <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/AccStatementsIcon.png')}" />
+                            </div>
+                        </div>
+
+                        <div class="modal-body" style="padding: 35px;">
+                            <div id="MsgImage" class="IATA-Image row hidden">
+                                <span id="successMsg" class="img hidden"><apex:image url="{!URLFOR($Resource.ISSP_RightIcon)}"/></span>
+                                <span id="errorMsg" class="img hidden"><apex:image url="{!URLFOR($Resource.ISSP_ErrorIcon)}"/></span>
+                            </div>
+                            <div class="IATA-AlertModalTitle row" >
+                                <span id="AlertModal-title-01"></span>
+                            </div>
+                            <div class="IATA-Page-SubTitle row">
+                                <span id="AlertModal-heading-01"></span>
+                            </div>
+                            <div class="IATA-form-textAB row">
+                                <span id="AlertModal-body"></span>
+                            </div>
+                            <div class="row">
+                                <apex:commandbutton id="closeAlertModalButton"
+                                                    onclick="closeAlertModal(); return false;"
+                                                    styleClass="IATA-buttonInPopupModalAB"
+                                                    rerender="myModal"
+                                                    value="{!$Label.ISSP_RD_OK_Action}">
+                                </apex:commandbutton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <script>
+
+        let msgImageToShow;
+        let msgSizeToShow ='';
+
+        if (typeof window.onStart === 'undefined') {
+            window.onStart = function() {
+                showModal();
+            }
+        }
+        if (typeof window.onStop === 'undefined') {
+            window.onStop = function() {}
+        }
+
+        function closeAlertModal(){
+            let showPopUpAlert = document.getElementById('{!$Component.customAlertModalBox}');
+            showPopUpAlert.classList.add("hidden");
+
+            let typ = document.getElementById(msgImageToShow);
+            if(typ != null){
+                typ.classList.add("hidden");
+                let typDiv = document.getElementById('MsgImage');
+                typDiv.classList.add("hidden");
+            }
+
+            if(msgSizeToShow === 'large'){
+                let sz = document.getElementById('AlertModalBox');
+                sz.classList.remove("IATA-PopupLarge");
+            }
+        }
+
+        function showAlertModal(msgType, msgTitle, msgHeader, msgBody, msgSize){
+            msgImageToShow = msgType;
+            let typ = document.getElementById(msgImageToShow);
+            if(typ != null){
+                typ.classList.remove("hidden");
+            }
+            if(msgType === 'successMsg' || msgType === 'errorMsg'){
+                let typDiv = document.getElementById('MsgImage');
+                typDiv.classList.remove("hidden");
+            }
+
+            let ttl = document.getElementById("AlertModal-title-01");
+            ttl.innerHTML = msgTitle;
+
+            let hdr = document.getElementById("AlertModal-heading-01");
+            hdr.innerHTML = msgHeader;
+
+            let bdy = document.getElementById("AlertModal-body");
+            bdy.innerHTML = msgBody;
+
+            if(msgSize === 'large'){
+                msgSizeToShow = msgSize;
+                let sz = document.getElementById('AlertModalBox');
+                sz.classList.add("IATA-PopupLarge");
+
+            }
+
+            let showPopup = document.getElementById('{!$Component.customAlertModalBox}');
+            showPopup.classList.remove("hidden");
+
+        }
+
+    </script>
+
+</apex:component>
