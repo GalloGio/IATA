@@ -471,6 +471,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Cargo Agent</label>
                 </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -676,6 +681,19 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GDPR_PrivacyStatement__c</fullName>
@@ -930,8 +948,8 @@ Name
 &quot;Management Information Report&quot;, $Label.ISSP_MIR_Description, 
 &quot;Resource Center&quot;, $Label.ISSP_Resource_Center_Description, 
 &quot;Treasury Dashboard&quot;, $Label.ISSP_TD_Description, 
+&quot;Treasury Dashboard - Premium&quot;, $Label.ISSP_TD_Description,
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
-&quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
 &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
 &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
@@ -940,10 +958,8 @@ Name
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
-&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
-&quot;&quot;
-       )</formula>
+null)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List A</label>
         <required>false</required>
@@ -961,10 +977,13 @@ Name
 &quot;MSO Management&quot;,$Label.ISSP_AMS_MSO_GSA_MSO_Service_Description,
 &quot;Join SIS e-Invoicing&quot;,$Label.ISSP_SIS_Membership_Description,
 &quot;ICCS&quot;,$Label.ICCS_Service_Description,
+&quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;ID Card Online Platform&quot;,$Label.IDCard_NoUSServiceDescription ,
 &quot;IATAN WebStar Online Services&quot;,$Label.IDCard_USServiceDescription,
 &quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
-&quot;&quot;)</formula>
+&quot;IATA Postal Accounts Settlement System&quot;,$Label.ISSP_PASS_PS_Description,
+&quot;PASSlink Single Sign-On&quot;,$Label.ISSP_PASSLink_PS_Description,null)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List B</label>
         <required>false</required>
@@ -1403,6 +1422,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Postal Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
@@ -1442,6 +1465,17 @@ IF(OR(
             </values>
             <values>
                 <fullName>SHOW_ALL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

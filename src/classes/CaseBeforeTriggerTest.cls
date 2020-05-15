@@ -2504,4 +2504,224 @@ private class CaseBeforeTriggerTest {
 
 		Test.stopTest();
 	}
+	
+	@isTest
+	static void testSidraBankErrorValidation_IRR_nok() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today(), IRR_Withdrawal_Reason__c = 'Bank Error',
+			IRR_Withdrawal_Approval_Rejection_Date__c = System.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (DmlException e) {
+			System.assert(e.getDmlMessage(0).contains(SIDRACaseHelper.BANK_ERROR_MESSAGE), 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (Exception e) {
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		}
+		
+		Test.stopTest();
+	}
+	
+	@isTest
+	static void testSidraBankErrorValidation_IRR_ok() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today(), IRR_Withdrawal_Reason__c = 'Bank Error',
+			IRR_Withdrawal_Approval_Rejection_Date__c = System.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 3 cases with bank error in the last 365 days
+		cases.get(0).IRR_Withdrawal_Approval_Rejection_Date__c = System.today().addDays(-366);
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+		} catch (Exception e) {
+			System.assert(false, 'Unexpected exception with "' + e.getMessage() + '"');
+		}
+		
+		Test.stopTest();
+	}
+	
+	@isTest
+	static void testSidraBankErrorValidation_DEF_nok() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today(), DEF_Withdrawal_Reason__c = 'Bank Error',
+			DEF_Withdrawal_Approval_Rejection_Date__c = System.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (DmlException e) {
+			System.assert(e.getDmlMessage(0).contains(SIDRACaseHelper.BANK_ERROR_MESSAGE), 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (Exception e) {
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		}
+		
+		Test.stopTest();
+	}
+	
+	@isTest
+	static void testSidraBankErrorValidation_DEF_ok() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today(), DEF_Withdrawal_Reason__c = 'Bank Error',
+			DEF_Withdrawal_Approval_Rejection_Date__c = System.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 3 cases with bank error in the last 365 days
+		cases.get(0).DEF_Withdrawal_Approval_Rejection_Date__c = System.today().addDays(-366);
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+		} catch (Exception e) {
+			System.assert(false, 'Unexpected exception with "' + e.getMessage() + '"');
+		}
+		
+		Test.stopTest();
+	}
+	
+	@isTest
+	static void testSidraBankErrorValidation_update_nok() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+		} catch (Exception e) {
+			System.assert(false, 'Unexpected exception with "' + e.getMessage() + '"');
+		}
+
+		cases = [SELECT Id FROM Case];
+		for (Case c : Cases) {
+			c.DEF_Withdrawal_Reason__c = 'Bank Error';
+			c.DEF_Withdrawal_Approval_Rejection_Date__c = System.today();
+		}
+
+		try {
+			update cases;
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (DmlException e) {
+			System.assert(e.getDmlMessage(0).contains(SIDRACaseHelper.BANK_ERROR_MESSAGE), 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		} catch (Exception e) {
+			System.assert(false, 'Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		}
+		
+		Test.stopTest();
+	}
+
+	private static Contact setDataForBankError() {
+		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(Name = 'BSP-SG', RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			Settlement_Model__c = 'Funds Received');
+		
+		insert bspSG;
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', IATA_COUNTRY_EN__c = 'testEN',
+			IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH', IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP',
+			ISO_Code__c = 'tq', IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test',
+			Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG.id, Local_language_Agency_details_required__c = true);
+		insert country;
+		
+		Account account1 = new Account(IATACode__c = '1234567'); // 7 digits
+		account1.Name = 'Test account';
+		account1.BillingCity = 'Montreal';
+		account1.BillingCountry = 'Canada';
+		account1.BillingStreet = 'some street';
+		account1.Type = 'IATA Passenger Sales Agent';
+		account1.Location_Type__c = 'HO';
+		account1.IATA_ISO_Country__c = country.id;
+		insert account1;
+		
+		AMS_Settlement_System__c bspSG2 = new AMS_Settlement_System__c(Name = 'BSP-SG', RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			Settlement_Model__c = 'Reported Sales');
+		
+		insert bspSG2;
+		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', IATA_Contry_KR__c = 'test2', IATA_COUNTRY_EN__c = 'testEN2',
+			IATA_Country_FR__c = 'testFR2', IATA_Country_ZH__c = 'testZH2', IATA_Country_IT__c = 'testIT2', IATA_Country_JP__c = 'testJP2',
+			ISO_Code__c = '89', IATA_Country_PT__c = 'testPT2', IATA_Country_SP__c = 'testSP2', Case_BSP_Country__c = 'test2',
+			Enable_Minor_Changes_from_Portal__c = true, AMS_Settlement_System__c = bspSG2.id, Local_language_Agency_details_required__c = true);
+		insert country2;
+		
+		Account account2 = new Account(IATACode__c = '12345678');
+		account2.Name = 'Test account2';
+		account2.BillingCity = 'Montreal';
+		account2.BillingCountry = 'Canada';
+		account2.BillingStreet = 'some street';
+		account2.Type = 'IATA Passenger Sales Agent';
+		account2.Location_Type__c = 'HO';
+		account2.IATA_ISO_Country__c = country2.id;
+		insert account2;
+		
+		Contact con = new Contact();
+		con.FirstName = 'Dummy';
+		con.LastName = 'Contact';
+		con.Type_of_Contact__c = 'IFAP Contact';
+		con.AccountId = account2.Id;
+		con.Email = 'some@email.org';
+		con.Financial_Assessment_Contact__c = true;
+		insert con;
+
+		return con;
+	}
 }

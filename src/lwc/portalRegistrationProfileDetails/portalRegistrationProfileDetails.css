@@ -197,3 +197,13 @@
     right: 0;
     margin: 15px;
 }
+.buttonsContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.backButtonWrapper{
+    display: flex;
+    align-items: center;
+}

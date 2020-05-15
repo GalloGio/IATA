@@ -516,6 +516,11 @@
                     <default>false</default>
                     <label>Travel Service Intermediaries-TSI (USA Only)</label>
                 </value>
+                <value>
+                    <fullName>General Public</fullName>
+                    <default>false</default>
+                    <label>General Public</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -530,28 +535,33 @@
                 <valueName>Inter-Governmental Body</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <controllingFieldValue>Holding Company</controllingFieldValue>
+                <controllingFieldValue>Media</controllingFieldValue>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <controllingFieldValue>Recreational</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <controllingFieldValue>Accommodation</controllingFieldValue>
+                <controllingFieldValue>Airline</controllingFieldValue>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Association</controllingFieldValue>
+                <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
+                <controllingFieldValue>Financial Institution</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>General Public</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Agency Holding Company</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Airline Holding Company</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Authority</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Concessionaire</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>Airport Operator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Infrastructure Partner</controllingFieldValue>
-                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Media</controllingFieldValue>
@@ -644,6 +654,22 @@
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>Travel Service Intermediaries-TSI (USA Only)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Authority</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Concessionaire</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>Airport Operator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airport</controllingFieldValue>
+                <valueName>ANSP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
@@ -887,9 +913,9 @@
                     <label>Holding Company</label>
                 </value>
                 <value>
-                    <fullName>Infrastructure Partner</fullName>
+                    <fullName>Airport</fullName>
                     <default>false</default>
-                    <label>Infrastructure Partner</label>
+                    <label>Airport</label>
                 </value>
                 <value>
                     <fullName>Media</fullName>
@@ -915,6 +941,12 @@
                     <fullName>Travel Agent</fullName>
                     <default>false</default>
                     <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure Partner</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Infrastructure Partner</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

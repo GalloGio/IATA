@@ -132,6 +132,7 @@ export default class PortalHomeCalendar extends LightningElement {
             this.caseDetails = results;
 
             if(this.caseDetails.CreatedBy === undefined){
+                this.caseDetails.CreatedBy = {};
                 this.caseDetails.CreatedBy.Name = 'IATA Internal User';
             }
 

@@ -229,24 +229,9 @@ export default class PortalDocumentsCategory extends LightningElement {
 
     categorySelected(event) {
         let categoryName = event.target.dataset.item;
-        let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-        
-        if(__documentObject.categorySelected !== categoryName) {
-            
-            __documentObject.categorySelected = categoryName;
-            __documentObject.topResults = false;
-            /*for(let i = 0; i < __documentObject.categories.length; i++) {
-                if(__documentObject.categories[i].apiName === categoryName) {
-                    __documentObject.categories[i].topResults = false;
-                    __documentObject.categories[i].productCategory = '';
-                    __documentObject.categories[i].countryOfPublication = '';
-                }
-            }*/
-
-    
-            const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
-            this.dispatchEvent(selectedEvent);
-    
-        }
+        const selectedEvent = new CustomEvent('showcategory', { detail: {category:categoryName} });
+        this.dispatchEvent(selectedEvent);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
 }

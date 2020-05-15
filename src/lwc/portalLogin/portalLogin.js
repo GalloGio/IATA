@@ -23,7 +23,7 @@ import CSP_Forgot_Password                  from '@salesforce/label/c.CSP_Forgot
 import CSP_Troubleshooting_Info             from '@salesforce/label/c.CSP_Troubleshooting_Info';
 import CSP_Troubleshooting                  from '@salesforce/label/c.CSP_Troubleshooting';
 import CSP_Create_New_Account_Info          from '@salesforce/label/c.CSP_Create_New_Account_Info';
-import CSP_Create_New_Account_Label         from '@salesforce/label/c.CSP_Create_New_Account_Label';
+import CSP_Create_New_User_Label            from '@salesforce/label/c.CSP_Create_New_User_Label';
 import CSP_Frozen_User_Message              from '@salesforce/label/c.CSP_Frozen_User_Message';
 import CSP_Portal_Login_Disabled_Message    from '@salesforce/label/c.CSP_Portal_Login_Disabled_Message';
 import CSP_Invalid_Email                    from '@salesforce/label/c.CSP_Invalid_Email';
@@ -82,7 +82,7 @@ export default class PortalLogin extends LightningElement {
         CSP_Troubleshooting_Info,
         CSP_Troubleshooting,
         CSP_Create_New_Account_Info,
-        CSP_Create_New_Account_Label,
+        CSP_Create_New_User_Label,
         CSP_Frozen_User_Message,
         CSP_Portal_Login_Disabled_Message,
         CSP_Invalid_Email,
