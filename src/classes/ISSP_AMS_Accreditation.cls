@@ -6459,6 +6459,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
 
 		if(isCNSAgency){
+			if (newForm.Branch_Office_Email__c == null) {
+				newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+				formUpdated = false;
+			}
+
 			Boolean haveOneFinancialAssessmentContact = false;
 			for(AMS_Accreditation_Contact__c aac: List_AgencyContacts){
 				if(aac.Financial_Assessment_Contact__c){
