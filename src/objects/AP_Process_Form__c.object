@@ -13743,7 +13743,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
+                <fullName>Master Table</fullName>
                 <default>false</default>
             </values>
             <values>
