@@ -1180,7 +1180,7 @@ public without sharing class AMS_Utils {
 
 		System.debug('Copying Data from Staging to Account');
 
-		List<Account> accountsToUpdate = new List<Account>();
+		Map<ID, Account> accountsToUpdate = new Map<ID, Account>();
 		List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
 		Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
 		List<AMS_OSCAR__c> oscarsToCopy = new List<AMS_OSCAR__c>();
@@ -1321,8 +1321,7 @@ public without sharing class AMS_Utils {
 						acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
 				}
 
-				if(accountHasChanges)
-					accountsToUpdate.add(acc);
+				if(accountHasChanges) accountsToUpdate.put(acc.ID, acc);
 
 				stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 				oscarsToCopy.add(oscar);
@@ -1349,19 +1348,22 @@ public without sharing class AMS_Utils {
 				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
 			}
 
-			if(!AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.isEmpty()) {
-
-				for(Account accToUpdate : accountsToUpdate) {
-
-					if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.id))
-						accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.id);
-					else if(accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c))
-						accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c);
+			for(Id accountID : AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.keySet()){
+				Account account = accountsToUpdate.containsKey(accountID) ? accountsToUpdate.get(accountID) : accounts.get(accountID);
+				if(account != null){
+					if(account.Covered_Ownership__c != AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accountID)){
+						account.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accountID);
+						accountsToUpdate.put(account.ID, account);
+					}else if(account.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(account.Top_Parent__c) && account.Covered_Ownership__c != AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(account.Top_Parent__c)){
+						account.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(account.Top_Parent__c);
+						accountsToUpdate.put(account.ID, account);
+					}
 				}
 			}
 
-			if (!accountsToUpdate.isEmpty())
-				update accountsToUpdate;
+			System.debug(LoggingLevel.FINE, '__ [AMS_Utils - copyDataToAccount] Account to be updated: ' + accountsToUpdate);
+
+			if(!accountsToUpdate.isEmpty()) update accountsToUpdate.values();
 
 			if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
