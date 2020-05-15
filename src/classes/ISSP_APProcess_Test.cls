@@ -1364,13 +1364,13 @@ private class ISSP_APProcess_Test
 
 		Case testCase = [SELECT Id,Subject,ContactId,Contact.IsEmailBounced,Contact.Email FROM Case WHERE Subject='testecase'];
 
-		Test.startTest();
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('caseId', testCase.Id);
 			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
+			Test.startTest();
 			ctrl.isBSP = true;
 			testCase.BSPCountry__c = 'Spain';
 			ctrl.sendConfirmationEmail(testCase);
@@ -1394,8 +1394,8 @@ private class ISSP_APProcess_Test
 			testCase.Region__c = 'Port';
 			testCase.BSPCountry__c = 'Port';
 			ctrl.sendConfirmationEmail(testCase);
+			Test.stopTest();
 		}
-		Test.stopTest();
 
 	}
 
@@ -1427,13 +1427,13 @@ private class ISSP_APProcess_Test
 		insert newCase;
 
 		Case testCase = [SELECT Id,Subject,ContactId,Region__c,Contact.IsEmailBounced,Contact.Email FROM Case WHERE Subject='testecase'];
-		Test.startTest();
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APCases;
 			pr.getParameters().put('caseId', testCase.Id);
 			Test.setCurrentPage(pr);
 			ISSP_APProcess ctrl = new ISSP_APProcess();
-
+			
+			Test.startTest();
 			testCase.BSPCountry__c = 'Brazil';
 			ctrl.sendConfirmationEmail(testCase);
 			testCase.BSPCountry__c = '';
@@ -1450,8 +1450,8 @@ private class ISSP_APProcess_Test
 			ctrl.isBSP = false;
 			ctrl.isICH = true;
 			ctrl.sendConfirmationEmail(testCase);
+			Test.stopTest();
 		}
-		Test.stopTest();
 
 	}
 
