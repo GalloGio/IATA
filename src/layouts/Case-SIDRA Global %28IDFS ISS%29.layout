@@ -124,6 +124,10 @@
                 <behavior>Edit</behavior>
                 <field>SIDRA_exchange_rate_updated__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

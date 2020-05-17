@@ -110,9 +110,9 @@ global class AMS_2_MDM_Webservice {
 					ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
 					IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c, //AMSU-158
 					Expiry_Date__c //AMSU-207
+					,IMPC_Code__c //PASS
 					FROM Account where id in :ids
 					ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
-
 
  /* EOF NEWGEN-801 */
 			AMS_XML_Generator xmlGen = new AMS_XML_Generator();
