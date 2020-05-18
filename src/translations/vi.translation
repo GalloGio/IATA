@@ -2824,6 +2824,17 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>đánh dấu trang của tôi</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Thêm vào Dấu trang của tôi</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Xóa khỏi Dấu trang của tôi</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3078,6 +3089,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Từ chối Truy cập</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tài liệu được thêm vào Dấu trang của tôi</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Tài liệu #doc đã bị xóa khỏi Dấu trang của tôi</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
     </customLabels>
     <customLabels>
         <label>Các tài liệu</label>
@@ -3816,6 +3835,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Những hạng mục chính</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3866,6 +3889,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiện tại không có gì trong dấu trang của bạn</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhưng khi bạn có, bạn sẽ xem được những trang gần đây nhất với thông tin cơ bản ở phần này.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Bây giờ bạn không có trường hợp nào.</label>
@@ -4390,6 +4421,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Chức vụ</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Theo dõi</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Xin quý khách vui lòng nhấn vào đây để truy cập trực tiếp trang Cấp giấy phép IATA và Dịch vụ thay đổi &lt;/a&gt;</label>

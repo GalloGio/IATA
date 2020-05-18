@@ -2824,6 +2824,17 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Mis marcadores</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Añadir a mis marcadores</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Eliminar de mis marcadores</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3078,6 +3089,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Denegar acceso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento añadido a mis marcadores</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>El documento #doc se ha eliminado de mis marcadores</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
     </customLabels>
     <customLabels>
         <label>Documentos</label>
@@ -3816,6 +3835,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Categorías principales</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Puede gestionar los usuarios de la siguiente lista.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3866,6 +3889,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>No hay cuenta relacionada que mostrar.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay nada en tus marcadores por ahora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Pero cuando los tengas, verás aquí los más recientes junto con sus detalles básicos.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>No tiene ningún caso por ahora.</label>
@@ -4387,6 +4418,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>¡Gracias por sus comentarios!</label>
         <name>CSP_ThanksFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label>Seguimiento</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>Título</label>
