@@ -35,7 +35,7 @@ public class PortalDocumentsCtrlTest {
 				Name = 'Group Test Portal Documents',
 				Sector_of_Account__c = 'Airline',
 				Record_Type_of_Account__c = 'Airline Headquarters',
-				Library_visibility__c = 'Airline Test Portal Documents',
+				Library_visibility__c = 'Library Test Portal Documents',
 				Category_of_Account__c = 'Passenger and Cargo'
 			);
 
@@ -43,13 +43,30 @@ public class PortalDocumentsCtrlTest {
 			workspaceToInsert.Name = 'Library Test Portal Documents';
 			insert workspaceToInsert;
 
+
+			ContentWorkspacePermission cwp= new ContentWorkspacePermission(
+				name='perm1',
+				PermissionsManageWorkspace=true,
+				PermissionsDeliverContent=true,
+				PermissionsAddContent=true
+				);
+			
+			insert cwp;
+			ContentWorkspaceMember cwm= new ContentWorkspaceMember(
+				ContentWorkspaceId=workspaceToInsert.id,
+				ContentWorkspacePermissionId=cwp.id,
+				MemberId=usr.id
+			);
+			insert cwm;
+
 			ContentVersion content = new ContentVersion();
-			content.ContentURL = 'http://www.salesforce.com/';
 			content.Title = 'ContentVersion Test Portal Documents';
-			content.Country_of_publication__c = 'All - Globally';
+			content.Country_of_publication__c = 'Belgium';
 			content.Country_visibilty__c = 'All - Globally';
 			content.Document_Category__c = 'Calendars';
 			content.User_status_access__c = 'Approved User;Approved Admin';
+			content.PathOnClient ='test';
+			content.versiondata=EncodingUtil.base64Decode('Unit Test Attachment Body');
 
 			ContentVersion content2 = new ContentVersion();
 			content2.ContentURL = 'http://www.salesforce.com/';
@@ -60,6 +77,33 @@ public class PortalDocumentsCtrlTest {
 			content2.User_status_access__c = 'Approved User;Approved Admin';
 
 			insert new List<ContentVersion>{content, content2};
+
+			
+			contentVersion cv2=[select id,contentDocumentId from contentversion where id=:content.id];
+
+			ContentWorkspaceDoc cwd= new ContentWorkspaceDoc(
+				ContentWorkspaceId=workspaceToInsert.id,
+				ContentDocumentId=cv2.contentDocumentId
+			);
+			insert cwd;
+
+
+			insert new Notification_template__c (
+				Subject__c = 'Some subject',
+				Message__c = 'Some message',
+				Type__c = 'Information',
+				Notification_color__c = '#FF5E4D',
+				Admins_Users__c = 'User',
+				Expire_in_days__c = 3,
+				Identifier__c = 'New_Doc_Version_Available',
+				language__c='English'
+			);		
+			
+			insert new SalesforceSupportEmails__c(
+				Support_Email__c='test@test.com',
+				Support_User_Id__c=Userinfo.getUserId(),
+				name='TemplaName'
+			);
 		}
 	}
 
@@ -99,5 +143,146 @@ public class PortalDocumentsCtrlTest {
 			test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Documents');
 		}
 		Test.stopTest();
+	}
+
+	@IsTest static void testDocumentswithBookmarkInfo() {
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT Id, Title, Document_Category__c, Country_of_publication__c FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents'];
+		
+		Test.startTest();
+		System.runAs(testUser) {
+				CSP_Utils.PagedResult resultWrapper = PortalDocumentsController.getSearchDocumentsWithBookmarks(testContent[0].Title, testContent[0].Document_Category__c, '', testContent[0].Country_of_publication__c, 0, testContent[0].Id);
+				 list<PortalDocumentsController.docWrapper> resultList =  (list<PortalDocumentsController.docWrapper>)JSON.deSerialize(resultWrapper.recordsString,list<PortalDocumentsController.docWrapper>.class);
+				
+				System.assertEquals(1, resultList.size());
+				System.assertEquals(false, resultList[0].isBookmarked);
+
+
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(((contentVersion)resultList[0].record).contentDocumentId);
+
+
+				resultWrapper = PortalDocumentsController.getSearchDocumentsWithBookmarks(testContent[0].Title, testContent[0].Document_Category__c, '', testContent[0].Country_of_publication__c, 0, testContent[0].Id);
+				resultList =  (list<PortalDocumentsController.docWrapper>)JSON.deSerialize(resultWrapper.recordsString,list<PortalDocumentsController.docWrapper>.class);
+					
+				System.assertEquals(1, resultList.size());
+				System.assertEquals(true, resultList[0].isBookmarked);
+			
+		}
+		Test.stopTest();
+	}
+
+	@IsTest static void testGetBookmarksList() {
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents'];
+		
+		Test.startTest();
+		System.runAs(testUser) {
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);
+				
+				CSP_Utils.PagedResult resultwrapper= PortalDocumentsController.getBookmarkedDocuments('ContentVersion',1);
+				list<contentVersion> resultList =  (list<contentVersion>)JSON.deSerialize(resultwrapper.recordsString,list<contentVersion>.class);
+				
+				System.assertEquals(1, resultList.size());
+				System.assertEquals(testContent[0].title, resultList[0].title);
+
+				//remove bookmark from document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);
+				
+				resultwrapper= PortalDocumentsController.getBookmarkedDocuments('ContentVersion',1);
+				resultList =  (list<contentVersion>)JSON.deSerialize(resultwrapper.recordsString,list<contentVersion>.class);
+				
+				System.assertEquals(0, resultList.size());
+				
+				try{
+
+					PortalDocumentsController.toggleBookmarkDocument(null);
+				}catch(Exception e){
+					System.assertEquals(e.getMessage(),Label.ISSP_ANG_GenericError);
+				}
+				
+			}
+		Test.stopTest();
+	}
+
+
+	@IsTest
+	static void testNotifyUsersOfNewVersionInsert(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents'];
+		
+		Test.startTest();
+		System.runAs(testUser) {
+			
+			//Bookmark document
+			PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);	
+		
+		}
+
+		ContentVersion cvNew = new ContentVersion();		
+			cvNew.Title = 'ContentVersion Test3 Portal Documents';			
+			cvNew.PathOnClient ='test';
+			cvNew.versiondata=EncodingUtil.base64Decode('Unit Test Attachment Body2');
+			cvNew.notify_users_date__c=System.Now()+(2/24);
+			cvNew.contentDocumentId=testContent[0].contentDocumentId;
+
+		insert cvNew;
+
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
+	}
+
+
+	@IsTest
+	static void testNotifyUsersOfNewVersionUpdate(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents' and isLatest=true];
+		
+		Test.startTest();
+			System.runAs(testUser) {				
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);	
+			
+			}
+			contentVersion cv=testContent[0];
+			cv.notify_users_date__c=system.NOW()+(2/24);//adds 2h to datetime
+
+			update cv;
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
+	}
+
+	@IsTest
+	static void testTriggerNotificationManually(){
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		List<ContentVersion> testContent = [SELECT contentDocumentId,title FROM ContentVersion WHERE Title = 'ContentVersion Test Portal Documents' and isLatest=true];
+		
+		Test.startTest();
+			System.runAs(testUser) {				
+				//Bookmark document
+				PortalDocumentsController.toggleBookmarkDocument(testContent[0].contentDocumentId);			
+			}
+			
+			//Validation test
+			CSP_Utils.triggerUserNotification(null);
+
+			//Validation test invalid Id
+			try{
+
+				CSP_Utils.triggerUserNotification('testInvalidId');
+			}catch(Exception e){
+				System.assertEquals(Label.ISSP_ANG_GenericError,e.getMessage());
+			}
+			
+			CSP_Utils.triggerUserNotification(testContent[0].id);
+		Test.stopTest();
+
+		system.assertEquals(1,[Select count() from notification__c]);
+
 	}
 }

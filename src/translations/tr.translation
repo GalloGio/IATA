@@ -2821,6 +2821,17 @@
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Yer işaretlerim</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Yer İşaretlerime ekle</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>Yer İşaretlerimden çıkar</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3075,6 +3086,14 @@
     <customLabels>
         <label>Erişimi Reddedin</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Belge, Yer İşaretlerime eklendi</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Belge #doc Yer İşaretlerimden kaldırıldı</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
     </customLabels>
     <customLabels>
         <label>Evraklar</label>
@@ -3813,6 +3832,10 @@
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Ana kategoriler</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3863,6 +3886,14 @@
     <customLabels>
         <label>Gösterilecek ilgili hesap yok.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Şimdilik yer işaretlerinizde hiçbir şey yok</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Ancak, sahip olduğunuzda, en güncel versiyonlarını burada temel ayrıntılarıyla görüntüleyebilirsiniz.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Şimdilik hiçbir sorgunuz yok.</label>
@@ -4387,6 +4418,10 @@
     <customLabels>
         <label>Başlık</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Takip</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt; a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot; &gt;IATA akreditasyonu ve Değişiklikler&apos;e doğrudan erişim için buraya tıklayın&lt;/a&gt;</label>
