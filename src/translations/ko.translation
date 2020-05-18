@@ -2825,15 +2825,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>내 즐겨찾기</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>내 북마크에 추가</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>내 책갈피에서 제거</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>내 즐겨찾기</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3098,6 +3099,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>내 즐겨찾기에서 문서번호가 제거되었습니다.</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>서류</label>

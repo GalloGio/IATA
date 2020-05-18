@@ -2822,15 +2822,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>บุ๊คมาร์คของฉัน</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>    
-    <customLabels>
         <label>เพิ่มในบุ๊คมาร์คของฉัน</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>ลบออกจากที่คั่นหนังสือของฉัน</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>บุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label>สำนักงานสาขา</label>
@@ -3095,6 +3096,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>เอกสาร #doc ถูกนำออกจากที่คั่นหนังสือของฉัน</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>เอกสาร</label>
@@ -3891,7 +3896,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ไม่มีบุ๊คมาร์คของคุณในตอนนี้</label>
         <name>CSP_NoBookmarksText1</name>
-    </customLabels>"
+    </customLabels>
     <customLabels>
         <label>แต่เมื่อคุณมีคุณจะดูคนล่าสุดพร้อมรายละเอียดพื้นฐานของพวกเขาในพื้นที่นี้</label>
         <name>CSP_NoBookmarksText2</name>
@@ -35143,7 +35148,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>รายงาน</label>
             <name>Products</name>
         </sections>
     </reportTypes>

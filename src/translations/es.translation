@@ -2824,15 +2824,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>Mis marcadores</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Añadir a mis marcadores</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Eliminar de mis marcadores</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Mis marcadores</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3097,6 +3098,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>El documento #doc se ha eliminado de mis marcadores</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Documentos</label>
@@ -4420,12 +4425,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_ThanksFeedback</name>
     </customLabels>
     <customLabels>
-        <label>Seguimiento</label>
-        <name>CSP_Track</name>
-    </customLabels>
-    <customLabels>
         <label>Título</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Seguimiento</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Haga clic aquí para acceder de forma directa a la Acreditación y Cambios de IATA&lt;/a&gt;</label>
@@ -35172,7 +35177,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Informes</label>
             <name>Products</name>
         </sections>
     </reportTypes>

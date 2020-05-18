@@ -2826,15 +2826,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>I miei segnalibri</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Aggiungi ai miei segnalibri</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Rimuovi dai miei segnalibri</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>I miei segnalibri</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3099,6 +3100,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Documento #doc rimosso dai miei segnalibri</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Documenti</label>
@@ -3869,14 +3874,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
-        <label>Non c'è niente nei tuoi segnalibri per ora</label>
-        <name>CSP_NoBookmarksText1</name>
-    </customLabels>
-    <customLabels>
-        <label>Ma quando l'avrete fatto, potrete vedere i più recenti e i loro dettagli principali in quest'area.</label>
-        <name>CSP_NoBookmarksText2</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
         <name>CSP_NewContactProfile</name>
     </customLabels>
@@ -3899,6 +3896,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Nessun account correlato da visualizzare.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Non c&apos;è niente nei tuoi segnalibri per ora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Ma quando l&apos;avrete fatto, potrete vedere i più recenti e i loro dettagli principali in quest&apos;area.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Al momento non ci sono casi.</label>

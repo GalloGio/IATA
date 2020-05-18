@@ -2826,15 +2826,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>Meine Lesezeichen</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Zu meinen Lesezeichen hinzufügen</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Aus meinen Lesezeichen entfernen</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Meine Lesezeichen</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3099,6 +3100,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Dokument #doc aus meinen Lesezeichen entfernt</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Dokumente</label>
@@ -3891,7 +3896,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Kein zugehöriges Konto zur Anzeige.</label>
         <name>CSP_NoAccount</name>
-    </customLabels>"
+    </customLabels>
     <customLabels>
         <label>Ihre Lesezeichen sind vorerst leer.</label>
         <name>CSP_NoBookmarksText1</name>
@@ -35146,7 +35151,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Berichte</label>
             <name>Products</name>
         </sections>
     </reportTypes>

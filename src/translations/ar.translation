@@ -2822,15 +2822,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>متجر كتبي</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>إضافة إلى إشاراتي المرجعية</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>إزالة من إشاراتي المرجعية</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>متجر كتبي</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3095,6 +3096,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>تمت إزالة المستند #doc من إشاراتي المرجعية</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>المستندات</label>
@@ -34138,7 +34143,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- IEC Location --></label>
         <name>IEC_Location</name>
         <sections>
-            <label><!-- Locations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Locations</name>
         </sections>
     </reportTypes>
@@ -34957,7 +34962,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -35126,7 +35131,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>التقارير</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -35234,7 +35239,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Rate Plan Details --></label>
         <name>Rate_Plan_Details</name>
         <sections>
-            <label><!-- Product RatePlan Charge Tiers --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Product RatePlan Charge Tiers</name>
         </sections>
     </reportTypes>

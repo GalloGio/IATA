@@ -2821,15 +2821,16 @@
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>Yer işaretlerim</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Yer İşaretlerime ekle</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Yer İşaretlerimden çıkar</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Yer işaretlerim</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3094,6 +3095,10 @@
     <customLabels>
         <label>Belge #doc Yer İşaretlerimden kaldırıldı</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Evraklar</label>
@@ -34951,7 +34956,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with Contracts --></label>
         <name>Opportunities_with_Contracts</name>
         <sections>
-            <label><!-- Contracts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Contracts</name>
         </sections>
         <sections>

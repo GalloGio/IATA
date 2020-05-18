@@ -2822,15 +2822,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>我的书签</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>添加到我的书签</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
-        <label>从 ""我的书签 ""中删除</label>
+    </customLabels>
+    <customLabels>
+        <label>从 &quot;&quot;我的书签 &quot;&quot;中删除</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>我的书签</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3095,6 +3096,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>文档#doc从我的书签中删除</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>文件</label>
@@ -35133,7 +35138,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>报告/报表</label>
             <name>Products</name>
         </sections>
     </reportTypes>
