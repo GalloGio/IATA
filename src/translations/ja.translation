@@ -2825,15 +2825,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>マイブックマーク</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>ブックマークに追加</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>マイブックマークから削除</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>マイブックマーク</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3098,6 +3099,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ドキュメント #doc をブックマークから削除</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>文書</label>
@@ -3890,6 +3895,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>表示する関連のあるアカウントはありません。</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>現在ブックマークはありません。</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>最新のものと詳細をこのエリアで見ることができます。</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>現在お客様の案件はございません。</label>
@@ -25588,14 +25601,6 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label><!-- Profile section label --></label>
         <name>csp_Basics_Section_label</name>
-    </customLabels>
-    <customLabels>
-        <label>現在ブックマークはありません。</label>
-        <name>CSP_NoBookmarksText1</name>
-    </customLabels>
-    <customLabels>
-        <label>最新のものと詳細をこのエリアで見ることができます。</label>
-        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>お電話ください</label>

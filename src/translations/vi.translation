@@ -2824,15 +2824,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>đánh dấu trang của tôi</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Thêm vào Dấu trang của tôi</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Xóa khỏi Dấu trang của tôi</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>đánh dấu trang của tôi</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3097,6 +3098,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Tài liệu #doc đã bị xóa khỏi Dấu trang của tôi</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Các tài liệu</label>
@@ -35139,7 +35144,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Các báo cáo</label>
             <name>Products</name>
         </sections>
     </reportTypes>

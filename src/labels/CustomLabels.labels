@@ -3520,14 +3520,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Assign New Service</shortDescription>
         <value>Assign New Service</value>
-    </labels>    
-    <labels>
-        <fullName>CSP_BookmarksTabLabel</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
-        <value>My Bookmarks</value>
     </labels>
     <labels>
         <fullName>CSP_BookmarkDocAddToolTip</fullName>
@@ -3544,6 +3536,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_BookmarksTabLabel</shortDescription>
         <value>Remove from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
     </labels>
     <labels>
         <fullName>CSP_Branch_Offices</fullName>
@@ -4055,6 +4055,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Document #doc Removed from My Bookmarks</value>
     </labels>
     <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4093,14 +4101,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
-    </labels>
-    <labels>
-        <fullName>CSP_DocumentType</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_DocumentType</shortDescription>
-        <value>Document Type</value>
     </labels>
     <labels>
         <fullName>CSP_EF_Invoices</fullName>
@@ -5644,7 +5644,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_NoBookmarksText1</shortDescription>
-        <value> There is nothing in your bookmarks for now</value>
+        <value>There is nothing in your bookmarks for now</value>
     </labels>
     <labels>
         <fullName>CSP_NoBookmarksText2</fullName>

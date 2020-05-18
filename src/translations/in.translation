@@ -2825,15 +2825,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
-        <label>Penanda Halaman Saya</label>
-        <name>CSP_BookmarksTabLabel</name>
-    </customLabels>
-    <customLabels>
         <label>Tambahkan ke Bookmark Saya</label>
         <name>CSP_BookmarkDocAddToolTip</name>
-    </customLabels><customLabels>
+    </customLabels>
+    <customLabels>
         <label>Hapus dari Bookmark Saya</label>
         <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Penanda Halaman Saya</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -3098,6 +3099,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Dokumen #doc Dihapus dari Bookmark Saya</label>
         <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Dokumen</label>
