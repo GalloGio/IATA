@@ -11,7 +11,7 @@ public class ANG_UserTriggerHandler {
 			if(doNotRun == null) doNotRun = false;
 			return doNotRun;
 		}
-		private set;
+		set;
 	}
 
 	// ************************************************************
