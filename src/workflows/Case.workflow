@@ -4093,8 +4093,23 @@
     </alerts>
     <alerts>
         <fullName>Send_email_notification_for_a_new_comment_on_a_case</fullName>
-        <description>Send email notification for a new comment on a case</description>
+        <description>Send email notification for a new comment on a case (No Inter DPCs)</description>
         <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_email_notification_for_a_new_comment_on_a_intern_dpc_case</fullName>
+        <description>Send email notification for a new comment on a Inter DPCs case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner User Role</recipient>
+            <type>caseTeam</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
@@ -19031,7 +19046,41 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <operation>equals</operation>
             <value>Partner</value>
         </criteriaItems>
-        <description>Send email notification on all Cases when is added a new comment by a portal user</description>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Inter DPCs</value>
+        </criteriaItems>
+        <description>Send email notification on all Cases (NOT Inter DPCs) when is added a new comment by a portal user</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send email notification for all Inter DPCs Cases when is added a new comment by a portal user (Inter DPCs)</fullName>
+        <actions>
+            <name>Send_email_notification_for_a_new_comment_on_a_intern_dpc_case</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>New_Comment_From_Connection_User_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.New_Comment_From_Connection_User__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.UserType</field>
+            <operation>equals</operation>
+            <value>Partner</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Inter DPCs</value>
+        </criteriaItems>
+        <description>Send email notification on Inter DPCs Cases when is added a new comment by a portal user</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
