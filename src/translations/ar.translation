@@ -2822,6 +2822,17 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>متجر كتبي</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>إضافة إلى إشاراتي المرجعية</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels><customLabels>
+        <label>إزالة من إشاراتي المرجعية</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3076,6 +3087,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>منع الدخول</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>تمت إضافة المستند إلى إشاراتي المرجعية</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>تمت إزالة المستند #doc من إشاراتي المرجعية</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
     </customLabels>
     <customLabels>
         <label>المستندات</label>
@@ -3814,6 +3833,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>الفئات الرئيسية</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>يمكنكم إدارة المستخدمين من القائمة أدناه.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3864,6 +3887,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>لا يوجد حساب مرتبط لعرضه.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>لا يوجد شيء في إشاراتك المرجعية في الوقت الحالي</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>ولكن عندما تفعل ذلك ، ستشاهد أحدثها بتفاصيلها الأساسية في هذا المجال.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>ليس لديك أي قضايا في الوقت الحالي.</label>
@@ -4388,6 +4419,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>العنوان</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>المسار</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; الرجاء الضغط هنا للوصول بشكل مباشر إلى اعتماد IATA والتغييرات &lt;/a&gt;</label>

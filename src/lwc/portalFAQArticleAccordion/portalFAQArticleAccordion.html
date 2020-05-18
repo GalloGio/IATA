@@ -1,13 +1,7 @@
 <template>
-    <div class="slds-m-bottom_x-small slds-p-horizontal_small aroundLightGrayBorder inputFilter borderlessInput searchInputContainer  text-xsmall inputFilter ">
-        <img src={searchIconUrl}>
-        <lightning-input name="newRecipientTextInput" placeholder={label.CSP_SearchFAQ}
-            class="hideInputLabel grayInputPlaceholder titleTruncation"
-            value={searchText} onchange={onInputChange}>
-        </lightning-input>
-        <div if:true={showCross}  class="searchBarIcon slds-m-right--large">
-            <lightning-icon class="cursorPointer rotateIcon45Deg" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
-        </div>
+    <div if:false={hideSearchbar} class="slds-m-bottom_x-small">
+        <c-portal-search-box onsearchword={onInputChange}></c-portal-search-box>
+        
     </div>
     <!-- ARTICLES -->
     <div if:true={loading} class="spinnerContainer">

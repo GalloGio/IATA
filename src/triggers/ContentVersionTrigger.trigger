@@ -1,9 +1,14 @@
-trigger ContentVersionTrigger on ContentVersion (after insert, before insert) {
-
-	/* After Insert */
-	if(trigger.isInsert && trigger.isAfter) {
-		ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler();
+trigger ContentVersionTrigger on ContentVersion (after insert, before insert,after update, before update) {
+	if(trigger.isAfter) {
+		ContentVersionTriggerHandler handler= new ContentVersionTriggerHandler();
+		if(trigger.isInsert) {
+			handler.afterInsertContentVersionTriggerHandler();			
+		}
+		if(trigger.isUpdate) {
+			handler.afterUpdateContentVersionTriggerHandler();
+		}
 	}
+ 
 
 	if(trigger.isInsert && trigger.isBefore) {
 		// Salesforce is facing the issue with not populated default RT for Content Version object
