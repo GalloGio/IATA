@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
