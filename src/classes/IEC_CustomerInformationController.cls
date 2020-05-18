@@ -195,6 +195,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 	{
 		Boolean isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{vfOrder.billToAddress.countryCode,vfOrder.shipToAddress.countryCode});
 		if(!isCountryCompliant){
+			Map<String, String> labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
 			addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 		}
 	}

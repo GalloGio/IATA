@@ -39,7 +39,7 @@ public without sharing class Contact_Sel extends Selector {
 		return (contacts != null && contacts.size() > 0)  ? contacts[0]  : null; */
 
 		String query = String.format(
-			'SELECT {0}, Account.Name, Account.CurrencyIsoCode ' +
+			'SELECT {0}, Account.Name, Account.CurrencyIsoCode, Account.SoldTo_Location__c ' +
 			'   ,BillTo_Location__r.Address__c, BillTo_Location__r.Street__c, BillTo_Location__r.City__c, BillTo_Location__r.ZipCode__c' +
 			'   ,BillTo_Location__r.ISO_Country_Name__c, BillTo_Location__r.ISO_Country_Code__c' +
 			'   ,BillTo_Location__r.ISO_State_Name__c, BillTo_Location__r.ISO_State_Code_SAP__c' +
