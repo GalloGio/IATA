@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { loadStyle } from 'lightning/platformResourceLoader';
+import RegistrationUtils from 'c/registrationUtils';
 
 import customStyle from '@salesforce/resourceUrl/CSP_Stylesheet';
 
@@ -24,7 +25,9 @@ import Select from '@salesforce/label/c.EF_Select';
 
 import Success from '@salesforce/label/c.CSP_Success';
 import Error from '@salesforce/label/c.ISSP_Error';
+import ErrorInvalidEmail from '@salesforce/label/c.LAQ_EmailValidation';
 import ErrorSendingEmail from '@salesforce/label/c.Send_FS_Request_Letter_Error';
+import ErrorBlankFields from '@salesforce/label/c.ICCS_Mandatory_Fields';
 import InvitationEmailSent from '@salesforce/label/c.EF_Invitation_Sent';
 
 export default class EF_Invitation extends LightningElement {
@@ -37,6 +40,8 @@ export default class EF_Invitation extends LightningElement {
 		Invite,
 		InvitationEmailSent,
 		ErrorSendingEmail,
+		ErrorBlankFields,
+		ErrorInvalidEmail,
 		Success,
 		Error,
 		SelectAccount: Select.replace('{0}', Account),
@@ -103,38 +108,64 @@ export default class EF_Invitation extends LightningElement {
 		this.dispatchEvent(new CustomEvent('cancel'));
 	}
 
+	validateEmail(event) {
+		let input = this.template.querySelector('.textInput');
+		const RegistrationUtilsJs = new RegistrationUtils();
+		RegistrationUtilsJs.checkEmailIsValid(`${input.value}`).then(
+			resolve => {
+				if(!resolve) {
+					input.setCustomValidity(this.label.ErrorInvalidEmail);
+				} else {
+					input.setCustomValidity("");
+				}
+				input.reportValidity();
+			}
+		);
+	}
+
 	createInvite() {
-		let fields = {};
-		fields[EMAIL_FIELD.fieldApiName] = this.email;
-		fields[ACCOUNTROLEID_FIELD.fieldApiName] = this.accountRoleId;
-		fields[ROLE_FIELD.fieldApiName] = this.roleId;
-		fields[ACCOUNTID_FIELD.fieldApiName] = this.accountId;
-		fields[SERVICEID_FIELD.fieldApiName] = this.serviceId;
+		let inputs = [...this.template.querySelectorAll('lightning-combobox')];
+		inputs.push(this.template.querySelector('.textInput'));
+		let allValid = inputs.reduce((validSoFar, inputCmp) => {
+			inputCmp.reportValidity();
+			return validSoFar && inputCmp.checkValidity();
+		}, true);
+		
+		if(allValid) {
+			let fields = {};
+			fields[EMAIL_FIELD.fieldApiName] = this.email;
+			fields[ACCOUNTROLEID_FIELD.fieldApiName] = this.accountRoleId;
+			fields[ROLE_FIELD.fieldApiName] = this.roleId;
+			fields[ACCOUNTID_FIELD.fieldApiName] = this.accountId;
+			fields[SERVICEID_FIELD.fieldApiName] = this.serviceId;
 
-		console.log(`email: ${this.email}`);
-		console.log(`accountRoleId: ${this.accountRoleId}`);
-		console.log(`roleId: ${this.roleId}`);
-		console.log(`accountId: ${this.accountId}`);
-		console.log(`serviceId: ${this.serviceId}`);
-
-		createRecord({ fields })
-		.then(
+			createRecord({ fields })
+			.then(
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: this.label.Success,
+						message: this.label.InvitationEmailSent,
+						variant: 'success'
+					})
+				)
+			).catch(error => {
+				console.error(`error: ${error.body.message}`);
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: this.label.Error,
+						message: this.label.ErrorSendingEmail,
+						variant: 'error'
+					})
+				)}
+			);
+		} else {
 			this.dispatchEvent(
 				new ShowToastEvent({
-					title: this.label.Success,
-					message: this.label.InvitationEmailSent,
-					variant: 'success'
-				})
-			)
-		).catch(error => {
-			console.log(`error: ${error.body.message}`);
-			this.dispatchEvent(
-				new ShowToastEvent({
-					title: this.label.Error,
-					message: this.label.ErrorSendingEmail,
+					title: this.label.error,
+					message: this.label.ErrorBlankFields,
 					variant: 'error'
 				})
-			)}
-		);
+			)
+		}
 	};
 }

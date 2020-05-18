@@ -24,7 +24,6 @@ public with sharing class EF_InvitationCtrl {
 	}
 
 	private static void sendEmail(String emailAddress, String serviceId) {
-
 		List<User> userList = [SELECT Id, ContactId FROM User WHERE Email =: emailAddress];
 
 		Id toWhom = UserInfo.getUserId();
