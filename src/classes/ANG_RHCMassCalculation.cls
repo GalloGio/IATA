@@ -155,7 +155,7 @@ public class ANG_RHCMassCalculation {
 			String query = '' // 
 				+ ' SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, ' // 
 				+ '	ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c,' // 
-				+ '	ANG_Forecasted_RHC_Effective_date__c, ANG_ConsumedRHC__c ' // 
+				+ '	ANG_ConsumedRHC__c ' // 
 				+ ' FROM ANG_RHC_Information__c' // 
 				+ ' WHERE ANG_CashCondition__c = false' // 
 				+ ' 	AND ANG_RHC_Amount_Equals_FS__c = false ' // 

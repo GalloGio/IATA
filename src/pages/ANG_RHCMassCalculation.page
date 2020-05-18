@@ -120,7 +120,6 @@
 					<apex:column value="{!a.rhcInfo.ANG_RHC_Effective_Date__c}"/>
 					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Provisional__c}" rendered="{!a.hasResult}"/>
 					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Forecasted__c}" rendered="{!a.hasResult}"/>
-					<apex:column value="{!a.rhcInfo.ANG_Forecasted_RHC_Effective_date__c}" rendered="{!a.hasResult}"/>
 					<apex:column value="{!a.rhcInfo.ANG_ConsumedRHC__c}" rendered="{!a.hasResult}"/>
 					<apex:column headerValue="Calculated new Consumed RHC %" rendered="{!a.hasResult}">
 						<apex:outputText value="{!a.calculatedConsumedRHC}">
