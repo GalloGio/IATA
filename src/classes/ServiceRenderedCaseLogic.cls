@@ -214,26 +214,39 @@ public class ServiceRenderedCaseLogic {
 	private static void ReassignProvider(List<Case> Cases){
 
 		Map<Id,list<Case>> CasesPerConsumer = new Map<Id,list<Case>>();
+		List<Id> contactList = new List<Id>();
 
 		for(Case c: cases){
 			if( CasesPerConsumer.get(c.AccountId) == null)
 				CasesPerConsumer.put(c.AccountId,new list<Case>());
 			CasesPerConsumer.get(c.AccountId).add(c);
+			if(c.ContactId != null){
+				contactList.add(c.ContactId);
+			}
 		}
+
+		String gssaRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
+		Map<Id,Contact> caseList = new Map<Id,Contact>([SELECT Id,Account.RecordtypeId FROM Contact WHERE Id IN:contactList]);
 
 		set<Id> accIDs = CasesPerConsumer.keySet();
 
 		for(Account a :[SELECT ParentID,RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
 
 			if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){
-				for(Id accID:CasesPerConsumer.keyset())
-					for(case c:CasesPerConsumer.get(accID))
-						c.provider__c = a.id;
+				for(Id accID:CasesPerConsumer.keyset()){
+					for(case c:CasesPerConsumer.get(accID)){
+						if(caseList.KeySet().size() > 0 && (!(caseList.get(c.ContactId).Account.RecordtypeId == gssaRecordTypeId && c.Reason1__c==AMS_Utils.passAirlineCaseReason))){
+							c.provider__c = a.id;
+						}
+					}
+				}
 				 /* modified cause of the possibility that the consumer can be a standard account as well*/
 			}else{
 				for(Id accID:CasesPerConsumer.keyset()){
 					for(case c:CasesPerConsumer.get(accID)){
-						c.provider__c = a.ParentID;
+						if(caseList.KeySet().size() > 0 && (!(caseList.get(c.ContactId).Account.RecordtypeId == gssaRecordTypeId && c.Reason1__c==AMS_Utils.passAirlineCaseReason))){
+							c.provider__c = a.ParentID;
+						}
 					}
 				}
 			}
