@@ -6464,17 +6464,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				formUpdated = false;
 			}
 
-			Boolean haveOneFinancialAssessmentContact = false;
-			for(AMS_Accreditation_Contact__c aac: List_AgencyContacts){
-				if(aac.Financial_Assessment_Contact__c){
-					haveOneFinancialAssessmentContact = true;
-				}
-			}
-			if(!haveOneFinancialAssessmentContact && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO){
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Required_Financial_Assessment_Contact));
-				errorFound = true;
-			}
-
 			Integer numberOfOffices = 0;
 			Integer numberOfWarehouse = 0;
 			Id rtIdOff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office');
@@ -7476,16 +7465,15 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 				
 			}
-			if(!haveSecurityContact){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Contact_Required));
-				errorFound = true;
+			Boolean haveOneFinancialAssessmentContact = false;
+			for(AMS_Accreditation_Contact__c aac: List_AgencyContacts){
+				if(aac.Financial_Assessment_Contact__c){
+					haveOneFinancialAssessmentContact = true;
+				}
 			}
-			if(!havePortalAdministrator){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.SSP_AMS_CNS_Portal_Admin_Required));
-				errorFound = true;
-			}
-			if(!haveInvoicingContact){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_CNS_Invoicing_Contact_Required));
+
+			if((!haveOneFinancialAssessmentContact && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) || !haveInvoicingContact || !haveSecurityContact || !havePortalAdministrator){
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_Contact_Required));
 				errorFound = true;
 			}
 		}else{

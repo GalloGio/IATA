@@ -18750,7 +18750,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS CNS Contact Required</shortDescription>
-        <value>Please make sure at least one of the contacts in the form has the following role: Security Contact</value>
+        <value>Please make sure at least one of the contacts in the form has one or more of the following roles: Security Contact, Financial Assessment, Portal Admin, Invoicing Contact</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert</fullName>
@@ -18791,14 +18791,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS CNS FIN Contact Help</shortDescription>
         <value>The Financial Assessment Contact will be contacted by CNS when Financial Assessment information is required</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_CNS_Invoicing_Contact_Required</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS CNS Invoicing Contact Required</shortDescription>
-        <value>Please make sure at least one of the contacts in the form has the following role: Invoicing Contact</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CNS_Office_Alert</fullName>
@@ -22998,14 +22990,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Rejected_File</shortDescription>
         <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with an &lt;span style=&quot;color:red;font-weight:bold;font-size:110%&quot;&gt;X&lt;/span&gt;). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Required_Financial_Assessment_Contact</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Required Financial Assessment Contact</shortDescription>
-        <value>You need to select one Financial Assessment contact!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Roles_and_Responsibilities</fullName>
@@ -41929,14 +41913,6 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS Operations</shortDescription>
         <value>SIS Operations</value>
-    </labels>
-    <labels>
-        <fullName>SSP_AMS_CNS_Portal_Admin_Required</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SSP AMS CNS Portal Admin Required</shortDescription>
-        <value>Please make sure at least one of the contacts in the form has the following role: Portal Admin</value>
     </labels>
     <labels>
         <fullName>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</fullName>

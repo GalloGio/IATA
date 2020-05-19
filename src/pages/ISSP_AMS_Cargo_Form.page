@@ -1854,7 +1854,7 @@
                         <apex:pageBlockTable value="{!facilityList}" var="facility"  id="facilityListPBT" styleClass="table-hover table table-condensed table-responsive">
                             <apex:column headerValue="{!$Label.ISSP_AMS_Facility_Name}" value="{!facility.Name}"/> 
                             <apex:column headerValue="{!$Label.ISSP_AMS_Office_Full_Address}" value="{!facility.Office_Full_Address__c}"/>
-                            <apex:column headerValue="{!$Label.ISSP_AMS_Type_of_Premises}" value="{!facility.Type_of_Premises__c}"/>
+                            <apex:column headerValue="{!$Label.ISSP_AMS_Type_of_Premises}">{!IF(isCNSAgency, SUBSTITUTE(facility.Type_of_Premises__c, 'Investigated', 'Inspected'), facility.Type_of_Premises__c)}</apex:column>
                             <apex:column headerValue="{!$Label.ISSP_AMS_Facility_Type}" value="{!facility.recordType.Name}"/>
 
                             <apex:column >
@@ -1959,7 +1959,7 @@
                         <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
                     </apex:actionfunction>
                     <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                        <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, 'VAT number', isocountry.Tax_Number_label__c))}"/>
+                        <apex:outputlabel value="{!IF(isCNSAgency, '* '+$Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, 'VAT number', isocountry.Tax_Number_label__c))}"/>
                         <apex:outputpanel id="VATNumberInput">
                             <span style="margin-left:6px;padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                             <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" />
