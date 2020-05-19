@@ -322,4 +322,44 @@ public class AmazonFile {
 		return accountlistFiles;
 
 	}
+
+	public static List<AmazonFile__c> getRelatedAmazonFiles(Id sobjectId) {
+		if (sobjectId.getSobjectType()==Schema.Case.SObjectType) {
+			return getCaseRelatedAmazonFiles(sobjectId);
+		}
+		if (sobjectId.getSobjectType()==Schema.Account.SObjectType) {
+			return getAccountRelatedAmazonFiles(sobjectId);
+		}
+		return new List<AmazonFile__c>();
+	}
+
+	public static List<AmazonFile__c> getCaseRelatedAmazonFiles(Id sobjectId) {
+		return [
+			SELECT Id, Name, Full_Name_Unique__c, Account__c, Account__r.Name, CreatedDate,
+			CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+			File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
+			Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
+			Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c, Size_MB__c
+			FROM AmazonFile__c
+			WHERE Case__c = :sobjectId];
+	}
+
+	public static List<AmazonFile__c> getAccountRelatedAmazonFiles(Id sobjectId) {
+		return [
+			SELECT Id, Name, Full_Name_Unique__c, Account__c, Account__r.Name, CreatedDate,
+			CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+			File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
+			Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
+			Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c, Size_MB__c
+			FROM AmazonFile__c
+			WHERE Account__c = :sobjectId];
+	}
+
+	public static List<AmazonFile__c> getAmazonFileByUniqueName(string folderAndFile) {
+		return [
+			SELECT Id, Name, Full_Name_Unique__c, Account__c, Additional_Information__c, EF_Private__c, AMS_Updated_By__c
+			FROM AmazonFile__c
+			WHERE Full_Name_Unique__c = :folderAndFile];
+	}
+
 }

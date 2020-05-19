@@ -28,15 +28,7 @@ global with sharing class ISSP_DragAndDrop {
 	// Get all files already uploaded
 	public List<WrapperAmazonFile> amazFileList{
 		get{
-			List<AmazonFile__c> listAttachments = new List<AmazonFile__c>();
-
-			if (String.ValueOf(this.parentId).startsWith('001')){
-				// This only return records with a file name - ICE service works this way
-				listAttachments = AmazonFile.getAccountRelatedAmazonFiles(parentId, amazonFName);
-			} else {
-				//records that not related with Accounts or Cases
-				listAttachments = AmazonFile.getCaseRelatedAmazonFiles(parentId);
-			}
+			List<AmazonFile__c> listAttachments = AmazonFile.getRelatedAmazonFiles(parentId);
 
 			// create list to return
 			List<WrapperAmazonFile> amazFileList = new List<WrapperAmazonFile>();

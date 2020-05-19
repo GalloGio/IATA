@@ -110,12 +110,6 @@
                 <apex:actionFunction name="closeModal" action="{!closeAlertModal}"  rerender="myModal" />
                 <div class="modal showModal modalBackgound">
                     <div id="AlertModalBox" class="modal-contentAB" >
-                        <div class="modal-header" style=" border-bottom: 0px; padding: 0px;">
-                            <div id="iceServiceHeader" class="jumbotron main-title hidden" style="text-align:left; background:#1e32fa !important; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
-                                <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/AccStatementsIcon.png')}" />
-                            </div>
-                        </div>
-
                         <div class="modal-body" style="padding: 35px;">
                             <div id="MsgImage" class="IATA-Image row hidden">
                                 <span id="successMsg" class="img hidden"><apex:image url="{!URLFOR($Resource.ISSP_RightIcon)}"/></span>
