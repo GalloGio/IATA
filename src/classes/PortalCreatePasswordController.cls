@@ -1,7 +1,3 @@
-/**
- * Created by bkaya01 on 27/08/2019.
- */
-
 public without sharing class PortalCreatePasswordController {
 
 	public class returnWrapper{
@@ -15,20 +11,19 @@ public without sharing class PortalCreatePasswordController {
 	}
 
 	@AuraEnabled
-	public static returnWrapper getParameters(String urlExtension){
+	public static returnWrapper getParameters(String encoded){
 		returnWrapper result  = new returnWrapper();
-		result.isExpired      = false;
-		PageReference pageRef = new PageReference(urlExtension);
-		String parameters     = pageRef.getParameters().get('c');
-		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
-		parameters 			  = parameters.replace(PortalPasswordHandler.plusReplacer,'+');
-		//get registration information
-		PortalRegistrationFirstLevelCtrl.RegistrationParameters registrationParameters = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(parameters, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-		//registrationParameters.email  = registrationParameters.email.replace(PortalPasswordHandler.plusReplacer,'+');
-		result.isUserExist            = isUserExist(registrationParameters.email, registrationParameters.contactId);
-		result.registrationParameters = JSON.serialize(registrationParameters);
+		result.isExpired = false;
 
-		if(system.now() > datetime.valueOf(registrationParameters.registrationTime).addHours(8)) result.isExpired = true;
+		encoded = PortalPasswordHandler.DecryptString(Encodingutil.urlDecode(encoded, 'UTF-8')).replace(PortalPasswordHandler.plusReplacer,'+');
+
+		//get registration information
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(encoded, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
+
+		result.isUserExist = isUserExist(params.email, params.contactId);
+		result.registrationParameters = JSON.serialize(params);
+
+		result.isExpired = system.now() > datetime.valueOf(params.registrationTime).addHours(8);
 
 		return result;
 	}
@@ -47,15 +42,23 @@ public without sharing class PortalCreatePasswordController {
 	}
 
 	@AuraEnabled
-	public static PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword(String paramStr, String password){
-		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result     = PortalRegistrationFirstLevelCtrl.register(params, password);
+	public static PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword(String paramStr, String password, String landingPage, Map<String,String> urlParams){
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(paramStr, password);
 
-		String startUrl = Label.CSP_PortalPath;
 		if(result.isSuccess == true){
-			try{
-				if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
+			if(urlParams == null) urlParams = new Map<String,String>();
+			urlParams.put('firstLogin', ''+result.isGeneralPublicAccount);
 
+			String startUrl = Label.CSP_PortalPath;
+			if(String.isNotBlank(landingPage)){
+				startUrl = EncodingUtil.urlDecode(landingPage, 'UTF-8');
+			}
+
+			//check if the start URL already has parameters
+			String s = startUrl.contains('?') ? '&' : '?';
+			startUrl += s + CSP_Utils.assembleParams(urlParams);
+
+			try{
 				System.PageReference pageRef = Site.login(result.username, password, startUrl);
 				result.message = pageRef.getUrl();
 			}
@@ -67,10 +70,10 @@ public without sharing class PortalCreatePasswordController {
 	}
 
 	@AuraEnabled
-	public static boolean resendEmail(String paramStr) {
+	public static boolean resendEmail(String paramStr, Map<String, String> urlParams) {
 		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
 		params.registrationTime = string.valueOf(system.now());
-		boolean success = PortalRegistrationFirstLevelCtrl.sendRegistrationEmailVF(params,'');
+		boolean success = PortalRegistrationFirstLevelCtrl.sendConfirmationEmailVF(params, params.language,urlParams);
 		return success;
 	}
 

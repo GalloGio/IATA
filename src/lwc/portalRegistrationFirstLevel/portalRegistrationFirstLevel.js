@@ -10,7 +10,6 @@ import { LightningElement, track, wire}         from 'lwc';
 import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
-import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
@@ -25,8 +24,6 @@ import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndCon
 /* External Resources
 /* ==============================================================================================================*/
 import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
-import PhoneFormatter                           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
-import PhoneFormatterS                          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
 
 /* ==============================================================================================================*/
 /* Custom Labels
@@ -77,20 +74,21 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track isLoading = true;
 	@track config = {};
 	@track userInfo = {}
-	@track registrationForm = { "email" : "",
-								"salutation" : "",
-								"firstName" : "",
-								"lastName" : "",
-								"country" : "",
-								"phone" : "",
-								"sector" : "",
-								"category" : "",
-								"extraChoice" : "",
-								"language" : "",
-								"selectedCustomerType" : "",
-								"termsAndUsage" : false,
-								"termsAndUsageIds" : ""
-							  };
+	@track registrationForm = {
+		"email" : "",
+		"salutation" : "",
+		"firstName" : "",
+		"lastName" : "",
+		"country" : "",
+		"phone" : "",
+		"sector" : "",
+		"category" : "",
+		"extraChoice" : "",
+		"language" : "",
+		"selectedCustomerType" : "",
+		"termsAndUsage" : false,
+		"termsAndUsageIds" : ""
+	};
 	@track errorMessage = "";
 	@track displayError = false;
 	@track displaySubmitError = false;
@@ -98,7 +96,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track isFrozen = false;
 	@track countryOptions = [];
 	@track languageOptions = [];
-	//@track phoneInitialized = false;
 	@track isSelfRegistrationDisabled = false;
 	@track salutation = { label : "", options : [], display : false };
 	@track sector = { label : "", options : [], display : false };
@@ -227,12 +224,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	connectedCallback() {
 
+		this._pageParams = getParamsFromPage();
+
 		const RegistrationUtilsJs = new RegistrationUtils();
 
 		RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
-			if(result == false && isGuest == false){
-				navigateToPage(CSP_PortalPath,{});
-				return;
+			if(!result && !isGuest){
+				let startUrl = this._pageParams.startURL;
+				delete this._pageParams.startURL;
+				navigateToPage(startUrl ? startUrl : CSP_PortalPath,this._pageParams);
 			}
 		});
 
@@ -271,16 +271,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						if(this.isSelfRegistrationEnabled == false){
 							this.isSelfRegistrationDisabled = true;
 							this.isLoading = false;
-							return;
 						}else{
 							//check localStorage
 							if (localStorage.length > 0) {
 								this._restoreState();
 							}else{
 
-								let pageParams = getParamsFromPage();
-								if(pageParams !== undefined){
-									if(pageParams.language !== undefined){
+								if(this._pageParams()){
+									if(pageParams.language){
 										this.registrationForm.language = pageParams.language.toLowerCase();;
 									}
 
@@ -317,7 +315,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 					})
 					.catch(error => {
-                        console.info('Error: ', JSON.parse(JSON.stringify(error)));
+                        console.error('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
@@ -344,22 +342,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleNavigateToLogin() {
 
-		if(this.userInfo.hasExistingUser){
-			if(this.userInfo.hasExistingUser == true && this.registrationForm.email.length > 0){
-				let params = {};
-				params.email = this.registrationForm.email;
-				params.redirect = 1;
-				navigateToPage(CSP_PortalPath + 'login',params);
-			}else{
-				navigateToPage(CSP_PortalPath + 'login');
-			}
-		}else{
-			navigateToPage(CSP_PortalPath + 'login');
+		if(this.userInfo.hasExistingUser && this.registrationForm.email){
+			this._pageParams.email = this.registrationForm.email;
+			this._pageParams.redirect = 1;
 		}
 
+		navigateToPage(CSP_PortalPath + 'login', this._pageParams);
 	}
 
-	handleChangeEmail(event){
+	handleChangeEmail(){
 		this.isEmailFieldReadOnly = false;
 		this.displayContactForm = false;
 		this.displayTermsAndUsage = false;
@@ -389,7 +380,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	}
 
 
-	handleNext(event){
+	handleNext(){
 
 		this.isLoading = true;
 		const RegistrationUtilsJs = new RegistrationUtils();
@@ -463,7 +454,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		});
 	}
 
-	handleSubmit(event){
+	handleSubmit(){
 
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
@@ -473,11 +464,13 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
-		register({ registrationForm : JSON.stringify(this.registrationForm),
-				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
-				   contactId : contactId,
-				   accountId : accountId
-				 }).then(result => {
+		register({
+			registrationForm : JSON.stringify(this.registrationForm),
+			customerType : JSON.stringify(this.selectedMetadataCustomerType),
+			contactId : contactId,
+			accountId : accountId,
+			urlParams : this._pageParams
+		}).then(result => {
 			var dataAux = JSON.parse(JSON.stringify(result));
 
 			if(dataAux.isSuccess == true){
