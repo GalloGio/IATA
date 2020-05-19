@@ -64,6 +64,7 @@ import CSP_L2_SucessUpdate_LMS from '@salesforce/label/c.CSP_L2_SucessUpdate_LMS
 import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
 import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_VerificationToP3_LMS';
+import CSP_L2_SucessUpdate_Title_LMS from '@salesforce/label/c.CSP_L2_SucessUpdate_Title_LMS';
 
 
 
@@ -166,7 +167,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L2_SucessUpdate_LMS,
 		CSP_L3_VerificationMailTitle_LMS,
 		CSP_LogOut,
-		CSP_L2_VerificationToP3_LMS
+		CSP_L2_VerificationToP3_LMS,
+		CSP_L2_SucessUpdate_Title_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -292,12 +294,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 							this.successModalTitle = CSP_L2_Details_Saved;
 							this.successModalMessage = CSP_L2_Details_Saved_Message_LMS;
 							if(this.flow === 'flow0'){
-								let msg = CSP_L2_SucessUpdate_LMS;
-								msg = msg.replace('</b>','');
-								let aMsg = msg.split('<br/><b>');
-								this.successModalTitle = aMsg[0];
-								this.successModalMessage = aMsg[1].replace('[Email]',this.contactInfo.Email);
-								
+								this.successModalTitle = CSP_L2_SucessUpdate_Title_LMS;
+								this.successModalMessage = CSP_L2_SucessUpdate_LMS.replace('[Email]',this.contactInfo.Email);
 							}
 						}
 						else{
@@ -344,7 +342,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 				if(result.isSuccess == true){
 
 						//Check if is Flow 3 or 4 to show the log out button
-						if(this.flow === 'flow3' || this.flow === 'flow4'){
+						if(this.flow === 'flow4'){
 							this.openVerificationMailSuccessModalLogOut = true;
 							this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Email + CSP_L2_VerificationToP2_LMS + ' ' + CSP_L2_VerificationToP3_LMS + '';
 						}else{

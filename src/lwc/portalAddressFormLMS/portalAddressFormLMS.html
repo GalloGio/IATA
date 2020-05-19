@@ -24,7 +24,8 @@
 			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
 				<div class="formLabelContainer">
 					<div class="text-xxsmall">
-						{labels.CSP_L2_Country}<abbr class="slds-required" title="required">*</abbr>
+						<abbr class="slds-required" title="required">*</abbr>
+						{labels.CSP_L2_Country}
 					</div>
 				</div>
 
@@ -39,6 +40,13 @@
 							dropdown-alignment="auto"
 							onchange={handleFieldChange}>
 						</lightning-combobox>
+						<div class="slds-align_absolute-center slds-p-top_medium" if:true={isCountryLoading}>
+							<div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+								<span class="slds-assistive-text">Loading</span>
+								<div class="slds-spinner__dot-a"></div>
+								<div class="slds-spinner__dot-b"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</lightning-layout-item>
@@ -47,10 +55,10 @@
 			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
 				<div class="formLabelContainer">
 					<div class="text-xxsmall">
-						{labels.CSP_L2_State}
 						<template if:true={isStateRequired}>
 							<abbr class="slds-required" title="required">*</abbr>
 						</template>
+						{labels.CSP_L2_State}
 					</div>
 				</div>
 
@@ -66,6 +74,13 @@
 								dropdown-alignment="auto"
 								onchange={handleFieldChange}>
 							</lightning-combobox>
+							<div class="slds-align_absolute-center slds-p-top_medium" if:true={isStateLoading}>
+								<div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+									<span class="slds-assistive-text">Loading</span>
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</template>
@@ -92,7 +107,8 @@
 			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
 				<div class="formLabelContainer">
 					<div class="text-xxsmall">
-						{labels.CSP_L2_City}<abbr class="slds-required" title="required">*</abbr>
+						<abbr class="slds-required" title="required">*</abbr>
+						{labels.CSP_L2_City}
 					</div>
 				</div>
 
@@ -147,8 +163,9 @@
 			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
 				<div class="formLabelContainer">
 					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
 						{labels.CSP_L2_Postal_Code}
-						<abbr class="slds-required" title="required">* - {labels.CSP_L3_Zip_Mandatory_LMS}</abbr>
+						
 					</div>
 				</div>
 
@@ -165,6 +182,9 @@
 							onkeyup={handleFieldChange}
 							maxlength="10"/>
 					</div>
+					<div class="text-xxsmall">
+						{labels.CSP_L3_Zip_Mandatory_LMS}
+					</div>
 				</div>
 				
 			</lightning-layout-item>
@@ -173,13 +193,13 @@
 			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
 				<div class="formLabelContainer">
 					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
 						<template if:true={localAddress.isPoBox}>
 							{labels.CSP_L2_PO_Box_Number}
 						</template>
 						<template if:false={localAddress.isPoBox}>
                             {labels.CSP_L2_Street} 1
 						</template>
-						<abbr class="slds-required" title="required">*</abbr>
 					</div>
 				</div>
 
