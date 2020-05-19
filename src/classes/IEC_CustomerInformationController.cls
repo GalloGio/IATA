@@ -148,7 +148,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 						{
 							List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{quoteNumberToConvert});
 							if(lstOrders.size() > 0)
-					 			IECOrder_Svc.changePenddingOrder(lstOrders[0]);
+								 IECOrder_Svc.changePenddingOrder(lstOrders[0]);
 						}
 		}
 

@@ -357,9 +357,13 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 	public void validateCountryCompliance()
 	{
-		isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{vfOrder.billToAddress.countryCode,vfOrder.shipToAddress.countryCode});
-		if(!isCountryCompliant){
-			addErrorMessage(labels.get('msgWarnProductNotCompliant'));
+		isCountryCompliant = true;
+		if(loggedCustomer != null)
+		{
+			isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c,loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c});
+			if(!isCountryCompliant){
+				addErrorMessage(labels.get('msgWarnProductNotCompliant'));
+			}
 		}
 	}
 
