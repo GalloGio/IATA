@@ -189,7 +189,7 @@ public  class ISSP_TC_Accept {
 
 	public PageReference pageLoad(){
 		String strUrl = ApexPages.currentPage().getUrl();
-		return null;
+
 		if (!strUrl.contains('ISSP_TC_Accept')){
 			system.debug('DOES NOT CONTAIN ISSP_CHANGEPASSWORD');
 			List <User> userList = [SELECT Id, ToU_Accepted__c, UID__c
