@@ -23,10 +23,20 @@ export default class PortalDocumentsFilters extends LightningElement {
 
         if(this._documentObject !== undefined) {
             let __documentObjectOld = JSON.parse(JSON.stringify(this._documentObject));
-
+            
             this._documentObject = _value;
-            if(_value.topResults !== __documentObjectOld.topResults || _value.categorySelected !== __documentObjectOld.categorySelected) {
-                this.renderFilters(_value.categorySelected);
+            if(_value.topResults !== __documentObjectOld.topResults || _value.categorySelected !== __documentObjectOld.categorySelected || _value.refreshFilter===true) {
+                
+                let selCateg;
+                for(let j = 0; j < _value.categories.length; j++) {
+                    if(_value.categories[j].apiName === _value.categorySelected) {
+                        selCateg=_value.categories[j];
+                        break;
+                    }
+                }
+
+                
+                this.renderFilters(selCateg);
             }
 
             let modifiedCategories = [];
@@ -160,13 +170,15 @@ export default class PortalDocumentsFilters extends LightningElement {
         let topicVals = JSON.parse(JSON.stringify(this.lstTiles));
 
         Object.keys(topicVals).forEach(function (el) {
-            if(category !== undefined && category === topicVals[el].categoryApiName) {
+            if(category !== undefined && category.apiName === topicVals[el].categoryApiName) {
                 topicVals[el].open = true;
+                topicVals[el].prodCatVal = category.productCategory;
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox customBorderlessCardWhite';
             } else {
                 topicVals[el].open = false;
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer cardStyle';
             }
+            topicVals[el].countrypub = '';
         });
 
         this.lstTiles = topicVals;        

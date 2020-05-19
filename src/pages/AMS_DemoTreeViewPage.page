@@ -58,7 +58,7 @@
         .tree li::after {
             border-top: 1px solid #999;
             height: 20px;
-            top: 25px;
+            top: 30px;
             width: 25px;
         }
 

@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -441,6 +445,10 @@
         <name>AMS_OSCAR_CODEASSIGNMENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_CONFIRM_CONVERSION --></label>
+        <name>AMS_OSCAR_CONFIRM_CONVERSION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_CORRECTION_ALL_HIERARCHY --></label>
         <name>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</name>
     </customLabels>
@@ -707,6 +715,10 @@
     <customLabels>
         <label><!-- AMS OSCAR STEP50 --></label>
         <name>AMS_OSCAR_STEP50</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP51 --></label>
+        <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -2812,6 +2824,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Añadir a mis marcadores</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Eliminar de mis marcadores</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Mis marcadores</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3066,6 +3090,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Denegar acceso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento añadido a mis marcadores</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>El documento #doc se ha eliminado de mis marcadores</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Documentos</label>
@@ -3804,6 +3840,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Categorías principales</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Puede gestionar los usuarios de la siguiente lista.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3854,6 +3894,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>No hay cuenta relacionada que mostrar.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay nada en tus marcadores por ahora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Pero cuando los tengas, verás aquí los más recientes junto con sus detalles básicos.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>No tiene ningún caso por ahora.</label>
@@ -4379,6 +4427,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Título</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Seguimiento</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Haga clic aquí para acceder de forma directa a la Acreditación y Cambios de IATA&lt;/a&gt;</label>
@@ -7379,6 +7431,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- IATA GDPR White Logo --></label>
         <name>IATA_GDPR_White_Logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA_Global_Delivery_Center_Address --></label>
+        <name>IATA_Global_Delivery_Center_Address</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Store Service Description --></label>
@@ -12910,6 +12966,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Domestic</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PASS_PDF_Copy --></label>
+        <name>ISSP_AMS_Download_PASS_PDF_Copy</name>
+    </customLabels>
+    <customLabels>
         <label>Descarga solicitud de acreditación</label>
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
@@ -12922,12 +12982,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Email_Branch_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_Branch_PASS_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Borrador de solicitud de acreditación para oficina de sucursal de agencia</label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
     </customLabels>
     <customLabels>
         <label>Cambio de datos de la agencia: Borrador solicitado</label>
         <name>ISSP_AMS_Email_Change_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Email_HO_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_HO_PASS_Subject</name>
     </customLabels>
     <customLabels>
         <label>Borrador de solicitud de acreditación para sede central de agencia</label>
@@ -13206,6 +13274,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_First_Page_Summary_Header_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS First Page Summary Header PASS --></label>
+        <name>ISSP_AMS_First_Page_Summary_Header_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Formulario de acreditación:</label>
         <name>ISSP_AMS_Form</name>
     </customLabels>
@@ -13426,6 +13498,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_LeftNav_Section2_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav Section2 PASS --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section2_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS_Branch</name>
+    </customLabels>
+    <customLabels>
         <label>3. Información Financiera</label>
         <name>ISSP_AMS_LeftNav_Section3</name>
     </customLabels>
@@ -13448,6 +13528,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3_Cargo_Intermediary --></label>
         <name>ISSP_AMS_LeftNav_Section3_Cargo_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section3_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section3_PASS_Branch</name>
     </customLabels>
     <customLabels>
         <label>4. Contactos en la Agencia</label>
@@ -13586,8 +13670,16 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Local_Details_Please_Enter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Please_Enter_PASS --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Datos de la agencia en el idioma local</label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_Local_Details_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Aggregator --></label>
@@ -14186,6 +14278,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_No_Company_Owners_PASS --></label>
+        <name>ISSP_AMS_NoC_No_Company_Owners_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Especifique un importe bruto estimado de las ventas de Transporte Aéreo Internacional de los transportistas de la IATA:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
@@ -14438,6 +14534,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_No_Pending_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_No_Pending_PASS --></label>
+        <name>ISSP_AMS_No_Pending_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -14538,6 +14638,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS BRANCH --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS HO --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX SA --></label>
         <name>ISSP_AMS_OPTION_PAX_SA</name>
     </customLabels>
@@ -14552,6 +14660,90 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS Ownership Update --></label>
         <name>ISSP_AMS_Ownership_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Admin --></label>
+        <name>ISSP_AMS_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Application --></label>
+        <name>ISSP_AMS_PASS_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Government_Owned_Company --></label>
+        <name>ISSP_AMS_PASS_Branch_Government_Owned_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Contact --></label>
+        <name>ISSP_AMS_PASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Email_Description --></label>
+        <name>ISSP_AMS_PASS_Email_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION1 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION2 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 1 text 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2_1_text_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_User --></label>
+        <name>ISSP_AMS_PASS_User</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_PAX_Company --></label>
@@ -14686,12 +14878,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_STEP_3_1_Identi_Appro_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Title PASS BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_1_Title_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
         <label>SECCIÓN 2 - Identificación de la ubicación de la agencia para la que se solicita la aprobación</label>
         <name>ISSP_AMS_STEP_3_2_Title</name>
     </customLabels>
     <customLabels>
         <label>SECCIÓN 2: Identificación de la ubicación de la empresa para la que se solicita la aprobación</label>
         <name>ISSP_AMS_STEP_3_2_Title_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_2_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label>Introduzca el importe, en moneda local, de sus ventas con cada aerolínea miembro de IATA en el periodo indicado.</label>
@@ -14798,12 +14998,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_Intro_Accred_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_Accred_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
         <name>ISSP_AMS_Step0_Intro_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_PASS</name>
     </customLabels>
     <customLabels>
         <label>Los cambios menores relativos a los datos de su Agencia, p. ej., número de teléfono, dirección de correo electrónico, etc., puede realizarlos directamente desde su página de &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Información de la Empresa&lt;/a&gt;.</label>
@@ -14856,6 +15064,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS Step0 SAA New --></label>
         <name>ISSP_AMS_Step0_SAA_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_SAA_PASS --></label>
+        <name>ISSP_AMS_Step0_SAA_PASS</name>
     </customLabels>
     <customLabels>
         <label>Actividad Específica de Ventas</label>
@@ -14924,6 +15136,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step1_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;strong&gt;NOTA:&lt;/strong&gt; Se requiere una solicitud en línea diferente para cada ubicación de agencia para la que se busca la aprobación.</label>
         <name>ISSP_AMS_Step1_Separate_Application</name>
     </customLabels>
@@ -14940,12 +15156,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title PASS --></label>
+        <name>ISSP_AMS_Step1_Title_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Las solicitudes provisionales deberán presentarse en 2 semanas; de lo contrario, deberá comenzar de nuevo el proceso de acreditación.</label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
         <label>Lista de comprobación para</label>
         <name>ISSP_AMS_Step2_Check_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 Check List PASS --></label>
+        <name>ISSP_AMS_Step2_Check_List_PASS</name>
     </customLabels>
     <customLabels>
         <label>Para completar su solicitud, tendrá que proporcionar los siguientes documentos (requeridos al final de la solicitud). Asegúrese de que los tiene a su disposición.</label>
@@ -14958,6 +15182,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>B: Requisitos del país</label>
         <name>ISSP_AMS_Step2_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step2_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_3_1_Title --></label>
@@ -15038,6 +15266,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Si su compañía pertenece parcial o totalmente a una o más empresas, introduzca los datos aquí (salvo si su organización es una entidad jurídica cuyas acciones cotizan en una bolsa de valores o se negocian habitualmente en un mercado extrabursátil).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Companies_PASS --></label>
+        <name>ISSP_AMS_Step3_4_Companies_PASS</name>
     </customLabels>
     <customLabels>
         <label>4.2 EMPRESAS</label>
@@ -15408,6 +15640,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step3 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step3_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>Puede guardar su solicitud en línea en todo momento y volver a ella para completarla.</label>
         <name>ISSP_AMS_Step3_Save_Anytime</name>
     </customLabels>
@@ -15418,6 +15654,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>D: Documentos</label>
         <name>ISSP_AMS_Step4_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step4 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step4_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label>Cargar Documento Seleccionado</label>
@@ -15528,6 +15768,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_StepsAll_Import_Agent_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll PASS Participant Title --></label>
+        <name>ISSP_AMS_StepsAll_PASS_Participant_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Passenger_Title --></label>
         <name>ISSP_AMS_StepsAll_Passenger_Title</name>
     </customLabels>
@@ -15550,6 +15794,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Enviar a la IATA</label>
         <name>ISSP_AMS_Submit_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS TC PASS --></label>
+        <name>ISSP_AMS_TC_PASS</name>
     </customLabels>
     <customLabels>
         <label>&lt;p&gt;Por el presente documento certifico que las manifestaciones que anteceden (incluidas las hechas en cualquier anexo al presente), son ciertas y correctas según mi leal saber y entender y que estoy autorizado por la Organización identificada en la respuesta a la Sección 1 anterior, para hacer dichas manifestaciones y presentar este documento. &lt;br/&gt;&lt;br/&gt;Por el presente se conviene que esta solicitud formará parte de todo Contrato de Agencia de Venta firmado con Miembros de IATA para la venta de transporte de pasaje aéreo internacional y, como tal, toda la información aquí contenida será tratada como confidencial (excluida la información incluida en la Sección 2). Sin perjuicio de lo anterior, el solicitante autoriza a IATA para usar y procesar la información contenida en los Secciónes 1 y 4, con el fin de producir y distribuir bases de datos entre los participantes en la industria de las líneas aéreas.&lt;/p&gt;</label>
@@ -15576,6 +15824,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Trade Reg Number PASS --></label>
+        <name>ISSP_AMS_Trade_Reg_Number_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Trained_Staff_Name --></label>
         <name>ISSP_AMS_Trained_Staff_Name</name>
     </customLabels>
@@ -15594,6 +15846,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Actualizar datos de la empresa</label>
         <name>ISSP_AMS_Update_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Update Agency PASS --></label>
+        <name>ISSP_AMS_Update_Agency_PASS</name>
     </customLabels>
     <customLabels>
         <label>Actualizar datos de la oficina central de la agencia</label>
@@ -15640,6 +15896,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_Admin --></label>
+        <name>ISSP_AMS_Validation_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_User --></label>
+        <name>ISSP_AMS_Validation_PASS_User</name>
+    </customLabels>
+    <customLabels>
         <label>Sección 4.1 Personas - Asegúrese de que el % de Propiedad Total equivale al 100%</label>
         <name>ISSP_AMS_Validation_Percent_Ownership</name>
     </customLabels>
@@ -15658,6 +15922,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Seleccione el administrador del portal en su agencia.</label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation Portal Admin --></label>
+        <name>ISSP_AMS_Validation_Portal_Admin_PASS</name>
     </customLabels>
     <customLabels>
         <label>Ver/Actualizar detalles de sucursal</label>
@@ -16126,10 +16394,6 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Solo los Signatarios Autorizados legales pueden notificar a la IATA sobre los cierres de oficinas. Puede nombrar al Signatario Autorizado de su Agencia en la página: «Company Administration -&gt; Contacts section» (Administración de empresa -&gt; Sección de contactos).</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
-    </customLabels>
-    <customLabels>
-        <label>Para notificar a IATA que ha cambiado de cuenta bancaria, póngase en contacto con nosotros.</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Office --></label>
@@ -16630,6 +16894,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AP_New_Joining_App --></label>
         <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_Withdraw --></label>
+        <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
@@ -17819,12 +18087,20 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Draft_PASS_Process --></label>
+        <name>ISSP_Email_Draft_PASS_Process</name>
+    </customLabels>
+    <customLabels>
         <label>Gracias por crear el borrador de su solicitud para la aprobación como:</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
         <label>Puede acceder a cualquier solicitud de acreditación en curso haciendo clic en el enlace de abajo e iniciando sesión en el portal con su dirección de correo electrónico:</label>
         <name>ISSP_Email_Draft_Process2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Draft_Process_PASS --></label>
+        <name>ISSP_Email_Draft_Process_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_GiveUsFeedback --></label>
@@ -18868,6 +19144,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Loading PASS Details --></label>
+        <name>ISSP_Loading_PASS_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Cargando detalles de la Agencia de Viajes…</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
@@ -19442,6 +19722,98 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label><!-- ISSP Owner Name --></label>
         <name>ISSP_Owner_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS --></label>
+        <name>ISSP_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASSLink_PS_Description --></label>
+        <name>ISSP_PASSLink_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Administrators --></label>
+        <name>ISSP_PASS_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Administrators Rec --></label>
+        <name>ISSP_PASS_Administrators_Rec</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agent --></label>
+        <name>ISSP_PASS_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agreement --></label>
+        <name>ISSP_PASS_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Airline_Checklist --></label>
+        <name>ISSP_PASS_Airline_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS BankMandate --></label>
+        <name>ISSP_PASS_BankMandate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Checklist --></label>
+        <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Download_Documents --></label>
+        <name>ISSP_PASS_Download_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help Admin --></label>
+        <name>ISSP_PASS_Help_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help User --></label>
+        <name>ISSP_PASS_Help_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS NewUsers --></label>
+        <name>ISSP_PASS_NewUsers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS New Admins --></label>
+        <name>ISSP_PASS_New_Admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_PS_Description --></label>
+        <name>ISSP_PASS_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Agreement --></label>
+        <name>ISSP_PASS_Participation_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_AgreementTerms --></label>
+        <name>ISSP_PASS_Participation_AgreementTerms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Checklist --></label>
+        <name>ISSP_PASS_Participation_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_And_Conditions --></label>
+        <name>ISSP_PASS_Terms_And_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Conditions --></label>
+        <name>ISSP_PASS_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Use --></label>
+        <name>ISSP_PASS_Terms_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS TextAreas --></label>
+        <name>ISSP_PASS_TextAreas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Users --></label>
+        <name>ISSP_PASS_Users</name>
     </customLabels>
     <customLabels>
         <label>Comprobando número…</label>
@@ -20199,6 +20571,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label>Requisitos</label>
         <name>ISSP_Requirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Requirements PASS --></label>
+        <name>ISSP_Requirements_PASS</name>
     </customLabels>
     <customLabels>
         <label>Restablecer contraseña</label>
@@ -30931,6 +31307,23 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account Contacts Role - Contacts --></description>
+        <label><!-- Account Contacts Role - Contacts --></label>
+        <name>Account_Contacts_Role_Contacts</name>
+        <sections>
+            <label><!-- Account Contacts Role --></label>
+            <name>Account Contacts Role</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account Participants --></description>
         <label><!-- Account Participants --></label>
         <name>Account_Participants</name>
@@ -32240,6 +32633,51 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Activities --></label>
             <name>Activities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <columns>
+                <label><!-- Clearance level --></label>
+                <name>Clearance level</name>
+            </columns>
+            <columns>
+                <label><!-- Date of last clearance --></label>
+                <name>Date of last clearance</name>
+            </columns>
+            <columns>
+                <label><!-- Legal Name --></label>
+                <name>Legal Name</name>
+            </columns>
+            <columns>
+                <label><!-- SIS 3-Digit Code --></label>
+                <name>SIS 3-Digit Code</name>
+            </columns>
+            <columns>
+                <label><!-- Sold_To_Completed --></label>
+                <name>Sold_To_Completed</name>
+            </columns>
+            <columns>
+                <label><!-- VAT Number 1 --></label>
+                <name>VAT Number 1</name>
+            </columns>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34739,7 +35177,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Informes</label>
             <name>Products</name>
         </sections>
     </reportTypes>
@@ -34778,7 +35216,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>E&amp;amp;F Airline Billing Agreement</name>
         </sections>
         <sections>
-            <label><!-- Products --></label>
+            <label>Informes</label>
             <name>Products</name>
         </sections>
     </reportTypes>
