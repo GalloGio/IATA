@@ -1149,6 +1149,9 @@ global without sharing class ISSP_APProcess {
 						newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
 																				hqAccount.Airline_Prefix__c,
 																				apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+						if(isPassAirline){
+							newCase.AccountId = newCase.Account_Concerned__c;
+						}
 					}
 				}
 			} else {
