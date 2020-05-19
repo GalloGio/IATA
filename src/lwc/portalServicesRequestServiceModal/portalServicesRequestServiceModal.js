@@ -9,6 +9,7 @@ import newServiceRequestlb from '@salesforce/label/c.ISSP_New_Service_Request';
 import newServiceAccessConfirmMsglb from '@salesforce/label/c.csp_ServiceAccessConfirm';
 import newServiceRequestConfirmMsglb from '@salesforce/label/c.csp_ServiceRequestConfirm';
 import confirmedRequestMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_Message';
+import confirmedRequestEFAppsMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_EFApps_Message';
 import goToServiceslb from '@salesforce/label/c.CSP_Services_GoToServices';
 import ANG_ISSP_ConfirmRequestIEP_1 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_1';
 import ANG_ISSP_ConfirmRequestIEP_2 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_2';
@@ -85,6 +86,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         newServiceAccessConfirmMsglb,
         newServiceRequestConfirmMsglb,
         confirmedRequestMsglb,
+        confirmedRequestEFAppsMsglb,
         goToServiceslb,
         csp_RequestService_ContactPortalAdmin_LegalAuth,
         csp_RequestService_ContactPortalAdmin_Alt,
@@ -158,7 +160,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
-            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+            if(this.serviceName == 'E&F APPS'){
+                this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+            } else {
+                this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+            }
             this.popUpHandler();
         }
     }
@@ -727,12 +733,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showPopUp = true;
         this.showSpinner = true;
         let serviceNameaux = this.serviceName;
-        this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+        if(this.serviceName == 'E&F APPS'){
+            this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+        } else {
+            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+        }
 
         requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
             .then(() => {
                 //Show toas with confirmation            
                 if(this.serviceName == 'E&F APPS'){
+                    this.showSpinner = false;
                     this.showPopUp = true; // for e&f success box
                     this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {

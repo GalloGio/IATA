@@ -3875,6 +3875,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
     </labels>
     <labels>
+        <fullName>CSP_Confirmed_Requested_Service_EFApps_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Confirmed_Requested_Service_EFApps_Message</shortDescription>
+        <value>Your E&amp;F APPS access has been successfully Granted.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
