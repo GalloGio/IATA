@@ -10902,7 +10902,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>People&apos;s Republic of China,&quot;Hong Kong (SAR), China&quot;,China (People&apos;s Republic of)</value>
+                <value>People&apos;s Republic of China,China (People&apos;s Republic of)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
