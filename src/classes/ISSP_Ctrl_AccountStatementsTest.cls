@@ -120,9 +120,6 @@ private class ISSP_Ctrl_AccountStatementsTest {
 		account.Status__c = 'Inactive';
 		update account;
 
-		Portal_Applications__c app = ISSP_Ctrl_AccountStatements_AcceptTest.createAccountStatementApp(testUser);
-		Portal_Application_Right__c appRight = [Select Id from Portal_Application_Right__c where Portal_Application__c = :app.Id];
-
 		Test.startTest();
 		System.runAs(testUser) {
 			ISSP_Ctrl_AccountStatements controller = new ISSP_Ctrl_AccountStatements();
