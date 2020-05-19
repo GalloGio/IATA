@@ -24,8 +24,6 @@ private class EF_HelperTest {
 		cntc.Email = 'standarduser2@testorg.com.efappreg';
 		insert cntc;
 
-		system.debug('TESTDEBUG: '+JSON.serializePretty(cntc));
-
 		User usr = New User();
 		usr.Alias = 'standt2';
 		usr.Email='standarduser2@testorg.com.efappreg';
@@ -133,6 +131,8 @@ private class EF_HelperTest {
 		System.assertEquals(2, [SELECT Id FROM E_and_F_Contact_Role_Detail__c].size());
 		//Portal_Application_Right__c
 		System.assertEquals(1, [SELECT Id FROM Portal_Applications__c].size());
+
+		System.assertEquals('Contact Test', EF_Helper.getContacts(usr.ContactId, null, null, null, null, '0')[0].contactName);
 	}
 
 	@IsTest
@@ -153,15 +153,5 @@ private class EF_HelperTest {
 		Test.stopTest();
 
 		System.assertEquals(2, [SELECT Id FROM Invitation__c].size());
-	}
-
-	@IsTest
-	static void getContacts(){
-
-		Id contactId = [SELECT Id from Contact][0].Id;
-
-		Test.startTest();
-		System.assertEquals('Contact Test', EF_Helper.getContacts(contactId, 'Contact', null, null, null, '0')[0].contactName);
-		Test.stopTest();
 	}
 }
