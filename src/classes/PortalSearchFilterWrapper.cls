@@ -11,6 +11,8 @@ public class PortalSearchFilterWrapper {
 	@AuraEnabled
 	public String language {get; set;}
 	@AuraEnabled
+	public String urlName {get; set;}
+	@AuraEnabled
 	public Boolean guestUser {get; set;}
 
 	@AuraEnabled

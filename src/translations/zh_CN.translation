@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2818,6 +2822,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>添加到我的书签</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>从 &quot;&quot;我的书签 &quot;&quot;中删除</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>我的书签</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3072,6 +3088,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>拒绝访问权限</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>文档添加到我的书签</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>文档#doc从我的书签中删除</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>文件</label>
@@ -3810,6 +3838,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>主要类别</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>您可以从下面的列表中管理用户。</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3860,6 +3892,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>没有要显示的相关帐户。</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>您的书签当前无内容</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>若有之后，您便可在此查看最近访问过的，以及他们的基本信息。</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>您现在没有任何案例。</label>
@@ -4384,6 +4424,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>标题</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>追踪</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;点击这里直接访问 IATA 认证和更改&lt;/a&gt;</label>
@@ -35094,7 +35138,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>报告/报表</label>
             <name>Products</name>
         </sections>
     </reportTypes>
