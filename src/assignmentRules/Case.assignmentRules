@@ -898,7 +898,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Name</field>
                 <operation>equals</operation>
-                <value>Emirates,Singapore Airlines</value>
+                <value>Emirates,Singapore Airlines,China Eastern,China Southern Airlines,Qatar Airways,Ethiopian Airlines</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Sector__c</field>
@@ -923,7 +923,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618,LH 020,LH 220,EK 176</value>
+                <value>CA 999,SQ 618,LH 020,LH 220,EK 176,MU 781,CZ 784,QR 157,ET 071</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
@@ -933,7 +933,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.IATAcode__c</field>
                 <operation>equals</operation>
-                <value>999,618,020,220,176</value>
+                <value>999,618,020,220,176,781,784,157,071</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -10902,7 +10902,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>People&apos;s Republic of China,&quot;Hong Kong (SAR), China&quot;,China (People&apos;s Republic of)</value>
+                <value>People&apos;s Republic of China,China (People&apos;s Republic of)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
