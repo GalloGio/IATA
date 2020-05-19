@@ -853,11 +853,22 @@ public with sharing class PortalServicesCtrl {
 
 
 	@AuraEnabled
-	public static void requestAccess(string applicationId){
-		User userAux = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-	
-		//invokes request method, ignoring visibility
-		ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
+	public static void requestAccess(String applicationId, String applicationName){
+		User userAux = [SELECT ContactId, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
+
+		if(applicationName.equals('E&F APPS')){
+			List<Invitation__c> listInvitation = [SELECT Id FROM Invitation__c WHERE Email__c =: userAux.Contact.Email];
+			if(listInvitation.isEmpty()){
+				throw new portalServiceException('The user has no invitation for this service.');
+			} else {
+				//create service access right Access Granted
+				//create Account Role Detail
+				//create E&F Contact Role Detail
+			}
+		} else {
+			//invokes request method, ignoring visibility
+			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
+		}
 	}
 
 	private static void alignStatus(ServiceWrapper sw,string newStatus){
