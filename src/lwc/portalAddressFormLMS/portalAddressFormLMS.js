@@ -59,6 +59,8 @@ export default class PortalAddressFormLMS extends LightningElement {
 	@track countryOptions;
 	@track stateOptions;
 	@track cityOptions;
+	@track isCountryLoading;
+	@track isStateLoading;
 
 	// city suggestions
 	@track citySuggestions = [];
@@ -157,6 +159,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 			this.localAddress.countryId = this.countryId;
 		}
 
+		this.isCountryLoading = true;
 		getISOCountries().then(result=>{
 			let countryList = JSON.parse(JSON.stringify(result.countryList));
 			let optionList = this.buildOptions(countryList,true);
@@ -171,6 +174,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 				this.localAddress.inputModified = address.inputModified;
 				this.setValidationStatus(this.localAddress.validationStatus);
 			}
+			this.isCountryLoading = false;
 		});
 	}
 
@@ -275,6 +279,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 
 		this.provinceAndCitiesEnabled = true;
 		
+		this.isStateLoading = true;
 		getCountryStates({"country":country.Name}).then(result =>{
 			let states = JSON.parse(JSON.stringify(result.states));
 
@@ -294,6 +299,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 			}
 
 			this.handleStateChange(state,clearInputs);
+			this.isStateLoading = false;
 		});
 	}
 

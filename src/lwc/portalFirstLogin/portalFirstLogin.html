@@ -20,15 +20,11 @@
                 <div class="customWhiteBackground">
 
                     <div class="slds-p-right_large slds-p-top_medium headerTitle">
-                        <span class="slds-p-left_large">
-                            <div if:false={isIEBrowser}>
-                                <span><img src={successIcon} height="55" width="55" class=""></span>
-                            </div>
-                            <div if:true={isIEBrowser}>
-                                <div if:false={isL3Registration}>
-                                    <span><img src={successIcon} height="55" width="55" class=""></span>
-                                </div>
-                            </div>
+                        <span class="slds-p-left_large" if:false={isIEBrowser}>
+                            <span><img src={successIcon} height="55" width="55" class=""></span>
+                        </span>
+                        <span class="slds-p-left_large" if:true={isIEBrowser}>
+                            <span if:false={isL3Registration}><img src={successIcon} height="55" width="55" class=""></span>
                         </span>
                         <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                             <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"

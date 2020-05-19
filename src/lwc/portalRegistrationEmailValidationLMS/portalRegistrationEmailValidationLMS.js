@@ -53,6 +53,9 @@ import CSP_Registration_Existing_User_Message_Not_Matching_F4 from '@salesforce/
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
 import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS';
 import CSP_L3_Have_Work_Email from '@salesforce/label/c.CSP_L3_Have_Work_Email';
+import CSP_Registration_Existing_User_Message_Not_Matching_F4_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F4_2';
+import CSP_Registration_Existing_User_Message_Not_Matching_F6_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_2';
+
 
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
@@ -200,7 +203,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_Registration_Existing_User_Message_Not_Matching_F4,
 		CSP_Registration_Existing_User_Message_Not_Matching_F6,
 		CSP_Registration_Existing_Work_Message_LMS,
-		CSP_L3_Have_Work_Email
+		CSP_L3_Have_Work_Email,
+		CSP_Registration_Existing_User_Message_Not_Matching_F4_2,
+		CSP_Registration_Existing_User_Message_Not_Matching_F6_2
 	}
 	get labels() {
 		return this._labels;

@@ -3522,6 +3522,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Assign New Service</value>
     </labels>
     <labels>
+        <fullName>CSP_BookmarkDocAddToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Add to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarkDocRemToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Remove from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4013,6 +4037,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
         <value>Deny Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkAdded</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkAdded</shortDescription>
+        <value>Document Added to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkRemoved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkRemoved</shortDescription>
+        <value>Document #doc Removed from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -5573,6 +5621,13 @@ You can easily create a company account in two steps</value>
         <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
+        <fullName>CSP_MainCategories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MainCategories</shortDescription>
+        <value>Main Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5672,6 +5727,22 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSPISSP_IATA_NOT_Found_NoAccount</shortDescription>
         <value>No related Account to display.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText1</shortDescription>
+        <value>There is nothing in your bookmarks for now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText2</shortDescription>
+        <value>But when you have, you’ll view the most recent ones with their basic details in this area.</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -6017,6 +6088,14 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>The Work email you have provided is already associated with an existing user. Please use your own work email address and not a shared email.</value>
     </labels>
+	<labels>
+		<fullName>CSP_Registration_Existing_User_Message_Not_Matching_F4_2</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Registration Existing User Message</shortDescription>
+		<value>If this is your own work email address please send us a scanned copy of your passport via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and quote the work email address above in your support message so we can assist. In the meantime if you'd like to proceed without a work email address, change your above answer to 'No' to continue. (Please note, without a work email address, we won't be able to bill your organization, and you may miss out on a discount)</value>
+	</labels>    
     <labels>
         <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6</fullName>
         <categories>CS Portal</categories>
@@ -6025,6 +6104,14 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>The Personal email you have provided is already associated with an existing user whose name is different from yours. Please use your own Personal email address and not a shared email.</value>
     </labels>
+	<labels>
+		<fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Registration Existing User Message</shortDescription>
+		<value>If this is your own Personal email address please send us a scanned copy of your passport via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and quote the Personal email address above in your support message so we can assist. In the meantime if you'd like to proceed, change your above answer to 'Yes' to continue. You may update your personal email later on from your customer portal profile.</value>
+	</labels>
     <labels>
         <fullName>CSP_Registration_Retry_Message</fullName>
         <categories>CS Portal</categories>
@@ -6729,6 +6816,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Treasury Dashboard Report</shortDescription>
         <value>Treasury Dashboard Report</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Track</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Track</shortDescription>
+        <value>Track</value>
     </labels>
     <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
@@ -46083,8 +46178,16 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
-        <value>Successfully updated your profile information.&lt;br/&gt;&lt;b&gt; From now, please only use your current Work Email [Email] to login to the IATA Customer Portal&lt;/b&gt;.</value>
+        <value>From now, please &lt;b&gt;only use your current Work Email [Email]&lt;/b&gt; to login to the IATA Customer Portal.</value>
     </labels>
+	<labels>
+		<fullName>CSP_L2_SucessUpdate_Title_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
+		<value>Successfully updated your profile information.</value>
+	</labels>
 	<labels>
 		<fullName>CSP_L2_SucessUpdateOnly_LMS</fullName>
 		<categories>CS Portal</categories>
@@ -46187,7 +46290,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_IsReversedEmail_LMS</shortDescription>
-        <value>Are personal and work email reversed?</value>
+        <value>Your Login email below ought to be your work email, while your personal email should show in the field underneath. Is it the case? If not we will switch them for you.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_LoginEmail_LMS</fullName>
