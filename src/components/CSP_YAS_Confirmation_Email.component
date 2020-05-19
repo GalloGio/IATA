@@ -29,7 +29,6 @@
                             <p>{!$Label.CSP_Dear} {!FirstName},</p>
                             <p>{!$Label.CSP_Email_Confirmation_Body_Part_1_LMS}</p>
                             <p>{!$Label.CSP_Email_Confirmation_Body_Part_1a}</p>
-                            <i>{!$Label.Contact_Name}: {!ExistingContactName}</i><br/>
                             <i>{!$Label.CSP_Email_Confirmation_Body_Part_1c}: {!ExistingContactEmail}</i><br/>
                             <i>{!$Label.CSP_Email_Confirmation_Body_Part_1d}: {!ExistingContactAdditionalEmail}</i><br/>
                             
