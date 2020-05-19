@@ -1,5 +1,5 @@
 public with sharing class PortalApplicationRight_Sel extends Selector {
-	private static final integer CONTACTSBATCH =50; // returns batches of 50 contacts in the
+	public static final integer CONTACTSBATCH =50; // returns batches of 50 contacts in the
 
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {

@@ -80,6 +80,7 @@ import Id from '@salesforce/user/Id';
 //import apex methods
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
+import getEFContacts from '@salesforce/apex/EF_Helper.getContacts';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
@@ -242,7 +243,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track serviceIEPStatus;
 
     //user id from import
-    userID = Id;
+	userID = Id;
+	contactId;
 
     serviceDetailsResult; // wire result holder
 
@@ -278,7 +280,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 })
             )];
             this.showMassApprove = !uniqueGrant.includes(false);
-            
+
             const uniqueDeny = [...new Set(this.selectedRecords.map((rec) => {
                 return rec.showDeny;
                 })
@@ -319,13 +321,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             let loggedUser = JSON.parse(JSON.stringify(userResult));
 
             if (loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+				this.contactId = loggedUser.ContactId;
                 let account = loggedUser.Contact.Account;
                 if (account.RecordType.DeveloperName === 'IATA_Agency' &&
                     account.Status__c !== undefined && account.Status__c !== 'New application pending') {
                     this.isAgency = true;
                 }
 
-                
+
                 isAirlineUser().then(result => {
                     this.airlineUser = result;
 
@@ -396,7 +399,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.currentContactPage = []; //page being displayed
         this.pageList = [];         // list of pages for the pagination cmp
         this.totalNrPagesOg = 0;
-        this.totalNrPages = 0; // total nr pages 
+        this.totalNrPages = 0; // total nr pages
         this.totalNrRecords = 0;
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
@@ -452,8 +455,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.canAddUsers = result;
             });
 	}
-	
-	populateIataCodeDropdown(contactList){		
+
+	populateIataCodeDropdown(contactList){
 		if(contactList==undefined)return;
 
 		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));
@@ -472,26 +475,35 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	}
 
     getContactsForPage() {
-        getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
-            .then(result => {
-                let resultData = JSON.parse(JSON.stringify(result));
-                resultData = this.sortResults(resultData);
-                this.globalResults = resultData;
-                this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
-                if (this.pageParams && this.pageParams.status !== null && this.pageParams.status === 'Access_Requested') {
-                    resultData = resultData.filter(item => { return item.serviceRight === 'Access Requested' });
-                    this.searchKey = this.pageParams.status.replace('_', ' ');
-                }
-                if (this.selectedStatus == "Access Requested") {
-                    this.applyFiltersModal();
-                }
-                //this.showSpinner = false;
-                this.componentLoading = false;
-				this.checkMassActionButtons();
-				this.populateIataCodeDropdown(resultData);
 
-            });
-    }
+		if(this.serviceName.includes('E&F APPS')){
+			getEFContacts({ contactId: this.contactId, offset: this.nrLoadedRecs })
+			.then(r => this.handleContactResult(r));
+		}else{
+			getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
+			.then(r => this.handleContactResult(r));
+		}
+	}
+
+	handleContactResult(r){
+		let resultData = JSON.parse(JSON.stringify(r));
+		resultData = this.sortResults(resultData);
+		this.globalResults = resultData;
+		this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
+		if (this.pageParams && this.pageParams.status !== null && this.pageParams.status === 'Access_Requested') {
+			resultData = resultData.filter(item => { return item.serviceRight === 'Access Requested' });
+			this.searchKey = this.pageParams.status.replace('_', ' ');
+		}
+		if (this.selectedStatus == "Access Requested") {
+			this.applyFiltersModal();
+		}
+		//this.showSpinner = false;
+		console.log('componentLoading false 492');
+		this.componentLoading = false;
+		this.checkMassActionButtons();
+		this.populateIataCodeDropdown(resultData);
+
+	}
 
     sortResults(results) {
         let tempList = [];
@@ -609,7 +621,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         this.currentPageNumber = currentPage;
         let newPage = this.contactList[this.currentPageNumber - 1];
-        //if page not loaded yet        
+        //if page not loaded yet
         if (!newPage) {
             this.loadingContacts = true;
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
@@ -631,13 +643,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let searchKey = event.target.value.toLowerCase().trim();
         this.showCross=searchKey.length>0;
         this.searchText = event.target.value;
-        this.searchKey = searchKey;      
+        this.searchKey = searchKey;
         if (this.searchKey.length == 0 ||this.searchKey.length >= 3) {
             this.queryContacts();
         } else{
             this.searchKey = '';
         }
-    }  
+    }
     removeTextSearch(){
         this.searchText='';
         this.searchKey = '';
@@ -645,7 +657,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.queryContacts();
     }
 
-    queryContacts(){ 
+    queryContacts(){
             this.showSpinner = true;
             let filter1 = '';
             let filter1_2 = '';
@@ -659,7 +671,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             }
             else{
                 filter1 = this.selectedCountry;
-            } 
+            }
 
             if(filter1 == this.allLabel)
                 filter1 = 'All';
@@ -667,18 +679,25 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             if(filter2 == this.allLabel)
                 filter2 = 'All';
 
-            //searchs from db - invokes server to retrieve search result
-            searchContacts({ serviceId: this.serviceId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 }).then(result => {
-                let tempSearchResult = JSON.parse(JSON.stringify(result)); 
-                tempSearchResult = this.sortResults(tempSearchResult);
-                this.contactList = [];
-                this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
-                this.processContacList(tempSearchResult, 1);
-                this.generatePageList();
-            });
+			//searchs from db - invokes server to retrieve search result
+			if(this.serviceName.includes('E&F APPS')){
+				getEFContacts({ contactId: this.contactId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 })
+				.then(r => this.handleSearchResult(r));
+			}else{
+				searchContacts({ serviceId: this.serviceId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 })
+				.then(r => this.handleSearchResult(r));
+			}
 
             this.showSpinner = false;
-    }
+	}
+	handleSearchResult(result){
+		let tempSearchResult = JSON.parse(JSON.stringify(result));
+		tempSearchResult = this.sortResults(tempSearchResult);
+		this.contactList = [];
+		this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
+		this.processContacList(tempSearchResult, 1);
+		this.generatePageList();
+	}
 
     //toggles dropdown when access requested
     togglebuttongroup() {
@@ -717,7 +736,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     onRowSelection(event) {
         const selectedRows = event.detail.selectedRows;
         this.selectedRecords = selectedRows;
-        
+
         this.checkMassActionButtons();
     }
 
@@ -728,7 +747,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }).join("; ");
 
         this.popupTitle = this.label.grantAccessTitle;
-        
+
         this.popupMsg = this.label.confirmGrantAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
         this.mode = 'mass_grant';
         this.showConfirmPopup = true;
@@ -742,7 +761,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         let title = this.label.denyAccessTitle;
         let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
-        
+
         this.popupTitle = title;
         this.popupMsg = msg;
 

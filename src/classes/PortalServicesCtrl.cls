@@ -238,7 +238,6 @@ public without sharing class PortalServicesCtrl {
 									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
-		System.debug('getPortalApplications finalQuery : ' + finalQuery);
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
 
 		// Second search based in Custom Metadata for all those remaining apps
@@ -391,15 +390,12 @@ public without sharing class PortalServicesCtrl {
 																where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
 
 
-		System.debug('get Users '+contactToUserIds.values());
 		Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId,Contact.Preferred_Language__c from User WHERE Id in: contactToUserIds.values()]);
 
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		for(Portal_Application_Right__c accessRight : usersGrantedList) {
 
 			String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
-			System.debug('get User '+accessRight.Contact__c);
-			System.debug('get User2 '+userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
 
 			Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
 
@@ -828,8 +824,8 @@ public without sharing class PortalServicesCtrl {
 
 			description = translatedString == null ? '' : translatedString;
 
-		}catch(Exception err) {
-			System.debug(err);
+		}catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - getServiceDescription] e - ' + e);
 		}
 
 		return description;
@@ -980,7 +976,6 @@ public without sharing class PortalServicesCtrl {
 	public static Integer userProvisioningRequests(){
 		Id userId = UserInfo.getUserId();
 		List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-		System.debug(userProvList);
 		return userProvList.size();
 	}
 
@@ -1099,6 +1094,7 @@ public without sharing class PortalServicesCtrl {
 			try {
 				update psaToUpdate;
 			} catch(Exception e) {
+				System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - massDenyAccess] e - ' + e);
 				throw new portalServiceException(Label.ISSP_ANG_GenericError);
 			}
 		}
@@ -1115,7 +1111,6 @@ public without sharing class PortalServicesCtrl {
 													 FROM Portal_Application_Right__c
 													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
-		System.debug('psaList: ' + psaList);
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
@@ -1150,7 +1145,6 @@ public without sharing class PortalServicesCtrl {
 													WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
 		if(psal.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1159,7 +1153,6 @@ public without sharing class PortalServicesCtrl {
 			contactsMap.put(con.Id, con);
 		}
 		if(contactsMap.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1189,14 +1182,9 @@ public without sharing class PortalServicesCtrl {
 		}
 
 			if(!contactsToUpdateMap.keySet().isEmpty()){
-				try {
-						update contactsToUpdateMap.values();
+				update contactsToUpdateMap.values();
 
-						ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
-				} catch(exception e) {
-						throw e;
-						//throw new portalServiceException(Label.ISSP_ANG_GenericError);
-				}
+				ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
 			}
 		if(contactsToStatusChangeList != null && !contactsToStatusChangeList.isEmpty()) {
 			ISSP_ContactList ctrl = new ISSP_ContactList();
@@ -1226,7 +1214,6 @@ public without sharing class PortalServicesCtrl {
 													WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 		if(psal.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1237,7 +1224,6 @@ public without sharing class PortalServicesCtrl {
 
 
 		if(contactList.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 		Contact contact = contactList.get(0);
@@ -1518,9 +1504,6 @@ public without sharing class PortalServicesCtrl {
 
 	@AuraEnabled
 	public static Boolean changeIsFavoriteStatus(String portalApplicationId, String portalApplicationRightId, Boolean isFavorite){
-		System.debug('portalApplicationId ' + portalApplicationId);
-		System.debug('portalApplicationRightId ' + portalApplicationRightId);
-		System.debug('isFavorite ' + isFavorite);
 		try{
 			if(portalApplicationRightId != null){
 				Portal_Application_Right__c par = new Portal_Application_Right__c(
@@ -1543,8 +1526,8 @@ public without sharing class PortalServicesCtrl {
 			return false;
 
 		}
-		catch(Exception ex){
-			System.debug('ERROR ' + ex.getMessage());
+		catch(Exception e){
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - changeIsFavoriteStatus] e - ' + e);
 			return false;
 		}
 	}
@@ -1561,8 +1544,8 @@ public without sharing class PortalServicesCtrl {
 			insert par;
 			return true;
 		}
-		catch(Exception ex){
-			System.debug('ERROR ' + ex.getMessage());
+		catch(Exception e){
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - createPortalApplicationRight] e - ' + e);
 			return false;
 		}
 	}
