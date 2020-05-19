@@ -118,6 +118,18 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 		return Database.query(query);
 	}
 
+	public List<Portal_Application_Right__c> getPortalApplicationRightsByContactIdAndServiceId(String contactId, String serviceId) {
+		String query = String.format(
+			'SELECT {0} , Portal_Application__r.Name ' +
+			'FROM {1} ' +
+			'WHERE Contact__c = :contactId AND Portal_Application__c = :serviceId ' ,
+			new List<String>{
+				String.join(getDefaultFields(), ', '),
+				getSObjectType().getDescribe().getName()
+			}
+		);
 
+		return Database.query(query);
+	}
 
 }

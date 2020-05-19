@@ -209,6 +209,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track allLabel = "";
 
     @track isAdmin = false;
+    @track isServiceAdmin = false;
     @track serviceName = false;
     @track isAgency = false;
 
@@ -417,16 +418,22 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 .then(result => {
 
                     this.serviceRecord = JSON.parse(JSON.stringify(result));
-                    this.isAdmin = this.serviceRecord.isAdmin;
                     this.loadReady = true;
                     this.serviceName = this.serviceRecord.recordService.ServiceName__c;
                     this.serviceFullName = this.serviceRecord.recordService.Name;
                     this.isIFG_Service = this.serviceRecord.isIFGPending;
 
+
+                    //in E&F service it doesn't matter if the user is admin or not
+                    if(this.serviceName.includes('E&F APPS')) {
+                        this.isAdmin = this.isServiceAdmin = this.serviceRecord.isServiceAdmin;
+                    } else {
+                        this.isAdmin = this.serviceRecord.isAdmin;
+                    }
+
                     if (this.serviceName.includes('IATA EasyPay')) {
                         this.serviceIEPStatus = this.serviceRecord.accessGranted;
                     }
-
 
                     if (this.isAdmin) {
                         this.getContactsForPage();
