@@ -3,14 +3,18 @@
     <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <fullName>EF_Account</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ACCEPTED_PAYMENT_METHODS_MANDATORY</shortDescription>
         <value>The accepted payment methods is mandatory, please select one or more values.</value>
+        <shortDescription>EF Account</shortDescription>
+        <value>Account</value>
     </labels>
     <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <fullName>EF_Invitation_Sent</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</shortDescription>

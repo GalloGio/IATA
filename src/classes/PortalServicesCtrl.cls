@@ -1,13 +1,13 @@
-public with sharing class PortalServicesCtrl {
+public without sharing class PortalServicesCtrl {
 
-
-	Public static final String PORTAL_ACCESS_GRANTED='Access Granted';
-	Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
-	Public static final String PORTAL_ACCESS_DENIED='Access Denied';
-	Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
-	Public static final String PORTAL_USER_APPROVED='Approved User';
-	Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
-	Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
+	public static final String EFAPPS='E&F APPS';
+	public static final String PORTAL_ACCESS_GRANTED='Access Granted';
+	public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
+	public static final String PORTAL_ACCESS_DENIED='Access Denied';
+	public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
+	public static final String PORTAL_USER_APPROVED='Approved User';
+	public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
+	public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
 	public static final String SERVICE_ADMIN_EF_ID = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Service_Admin');
 
 	public class portalServiceException extends Exception {}
@@ -33,7 +33,7 @@ public with sharing class PortalServicesCtrl {
 						' AND Requestable__c = false' +
 						' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
 						' AND ANG_Accre_Tp__c = true';
-		
+
 		if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
 			//if contact is of type Agency we check the restriction by sector and category
 			query += ' AND (ANG_Restrict_by_Agency_Sector__c = \'' + con.account.Sector__c + '\' OR ANG_Restrict_by_Agency_Sector__c = null)' +
@@ -96,7 +96,7 @@ public with sharing class PortalServicesCtrl {
 							'   (Right__c = \'' +  PORTAL_ACCESS_GRANTED + '\' OR Portal_Application__r.Requestable__c = false) AND ' +
 							'   Portal_Application__r.Hide_on_Homepage__c = false)' +
 							' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
-	
+
 		finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
 
 		List<Portal_Application_Right__c> appsGrantedList = Database.query(finalQuery);
@@ -147,9 +147,9 @@ public with sharing class PortalServicesCtrl {
 
 	@AuraEnabled(cacheable=true)
 	public static String paymentLinkRedirect(){
-	
+
 		User userAux = [SELECT Id, Contact.Credit_Card_Payment_Link__c FROM User WHERE Id = :UserInfo.getUserId()];
-	
+
 		if(userAux.Contact != null && userAux.Contact.Credit_Card_Payment_Link__c != null) {
 			return userAux.Contact.Credit_Card_Payment_Link__c;
 		}else{
@@ -164,7 +164,7 @@ public with sharing class PortalServicesCtrl {
 		ISSP_PermissionFilterFactory.PermissionSetFilter thePermissionSetFilter = ISSP_PermissionFilterFactory.createPermissionSetFilter(csServiceListViews, 'Permission_set__c');
 		ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfilePermissionFilter = ISSP_PermissionFilterFactory.createProfilePermissionFilter();
 
-	
+
 		Map<String,ISSPServiceListView__c> mapFilteredListViews = new Map<String,ISSPServiceListView__c>();
 		for(ISSPServiceListView__c serviceListViewItem : csServiceListViews) {
 
@@ -238,7 +238,6 @@ public with sharing class PortalServicesCtrl {
 									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
-		System.debug('getPortalApplications finalQuery : ' + finalQuery);
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
 
 		// Second search based in Custom Metadata for all those remaining apps
@@ -391,15 +390,12 @@ public with sharing class PortalServicesCtrl {
 																where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
 
 
-		System.debug('get Users '+contactToUserIds.values());
 		Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId,Contact.Preferred_Language__c from User WHERE Id in: contactToUserIds.values()]);
 
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		for(Portal_Application_Right__c accessRight : usersGrantedList) {
 
 			String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
-			System.debug('get User '+accessRight.Contact__c);
-			System.debug('get User2 '+userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
 
 			Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
 
@@ -474,7 +470,7 @@ public with sharing class PortalServicesCtrl {
 
 		if(!serviceToUpdate.isEmpty()) {
 			serviceToUpdate[0].Last_Visit_Date__c = Datetime.now();
-	
+
 			update serviceToUpdate;
 		}
 	}
@@ -831,8 +827,8 @@ public with sharing class PortalServicesCtrl {
 
 			description = translatedString == null ? '' : translatedString;
 
-		}catch(Exception err) {
-			System.debug(err);
+		}catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - getServiceDescription] e - ' + e);
 		}
 
 		return description;
@@ -858,17 +854,10 @@ public with sharing class PortalServicesCtrl {
 
 	@AuraEnabled
 	public static void requestAccess(String applicationId, String applicationName){
-		User userAux = [SELECT ContactId, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
+		User userAux = [SELECT ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Id = :UserInfo.getUserId()];
 
-		if(applicationName.equals('E&F APPS')){
-			List<Invitation__c> listInvitation = [SELECT Id FROM Invitation__c WHERE Email__c =: userAux.Contact.Email];
-			if(listInvitation.isEmpty()){
-				throw new portalServiceException('The user has no invitation for this service.');
-			} else {
-				//create service access right Access Granted
-				//create Account Role Detail
-				//create E&F Contact Role Detail
-			}
+		if(applicationName.equals(EFAPPS)){
+			EF_Helper.requestAccessEF(applicationId, applicationName, userAux);
 		} else {
 			//invokes request method, ignoring visibility
 			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
@@ -929,7 +918,7 @@ public with sharing class PortalServicesCtrl {
 
 	@AuraEnabled(cacheable=true)
 	public static Map<String, String> getUserOptions(String portalUser){
-	
+
 		return DAL_WithoutSharing.getUserOptions(portalUser);
 	}
 
@@ -990,7 +979,6 @@ public with sharing class PortalServicesCtrl {
 	public static Integer userProvisioningRequests(){
 		Id userId = UserInfo.getUserId();
 		List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-		System.debug(userProvList);
 		return userProvList.size();
 	}
 
@@ -1036,11 +1024,11 @@ public with sharing class PortalServicesCtrl {
 					&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
 				)
 				return new List<AccountTeamMember>();
-	
+
 			try {
 				String currentUserProfile = '';
 				List<AccountTeamMember> teamMembers = ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new Id[] { currentUserContact.AccountId, currentUserContact.Account.ParentId });
-	
+
 				for (AccountTeamMember teamMember : teamMembers) {
 					if(currentUserContact.Id == teamMember.User.ContactId) {
 						if(currentUserProfile == '') {
@@ -1100,7 +1088,7 @@ public with sharing class PortalServicesCtrl {
 		for(Portal_Application_Right__c psa : psaList) {
 			psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
 			psa.Access_Status_Reason__c = reason;
-	
+
 			psaToUpdate.add(psa);
 		}
 
@@ -1109,6 +1097,7 @@ public with sharing class PortalServicesCtrl {
 			try {
 				update psaToUpdate;
 			} catch(Exception e) {
+				System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - massDenyAccess] e - ' + e);
 				throw new portalServiceException(Label.ISSP_ANG_GenericError);
 			}
 		}
@@ -1120,17 +1109,16 @@ public with sharing class PortalServicesCtrl {
 	// Denys Acccess to a portal service from the manage service page by an portal administrator
 	@AuraEnabled(cacheable=false)
 	public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
-	
+
 		List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
 													 FROM Portal_Application_Right__c
 													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
-		System.debug('psaList: ' + psaList);
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 		Portal_Application_Right__c psa = psaList.get(0);
-	
+
 		if(isFromContactTable){
 			psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
 			psa.Access_Status_Reason__c = reason;
@@ -1160,7 +1148,6 @@ public with sharing class PortalServicesCtrl {
 													WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
 		if(psal.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1169,7 +1156,6 @@ public with sharing class PortalServicesCtrl {
 			contactsMap.put(con.Id, con);
 		}
 		if(contactsMap.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1199,14 +1185,9 @@ public with sharing class PortalServicesCtrl {
 		}
 
 			if(!contactsToUpdateMap.keySet().isEmpty()){
-				try {
-						update contactsToUpdateMap.values();
+				update contactsToUpdateMap.values();
 
-						ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
-				} catch(exception e) {
-						throw e;
-						//throw new portalServiceException(Label.ISSP_ANG_GenericError);
-				}
+				ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
 			}
 		if(contactsToStatusChangeList != null && !contactsToStatusChangeList.isEmpty()) {
 			ISSP_ContactList ctrl = new ISSP_ContactList();
@@ -1236,7 +1217,6 @@ public with sharing class PortalServicesCtrl {
 													WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 		if(psal.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
@@ -1247,7 +1227,6 @@ public with sharing class PortalServicesCtrl {
 
 
 		if(contactList.isEmpty()) {
-			System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 		Contact contact = contactList.get(0);
@@ -1530,9 +1509,6 @@ public with sharing class PortalServicesCtrl {
 
 	@AuraEnabled
 	public static Boolean changeIsFavoriteStatus(String portalApplicationId, String portalApplicationRightId, Boolean isFavorite){
-		System.debug('portalApplicationId ' + portalApplicationId);
-		System.debug('portalApplicationRightId ' + portalApplicationRightId);
-		System.debug('isFavorite ' + isFavorite);
 		try{
 			if(portalApplicationRightId != null){
 				Portal_Application_Right__c par = new Portal_Application_Right__c(
@@ -1555,8 +1531,8 @@ public with sharing class PortalServicesCtrl {
 			return false;
 
 		}
-		catch(Exception ex){
-			System.debug('ERROR ' + ex.getMessage());
+		catch(Exception e){
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - changeIsFavoriteStatus] e - ' + e);
 			return false;
 		}
 	}
@@ -1573,8 +1549,8 @@ public with sharing class PortalServicesCtrl {
 			insert par;
 			return true;
 		}
-		catch(Exception ex){
-			System.debug('ERROR ' + ex.getMessage());
+		catch(Exception e){
+			System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - createPortalApplicationRight] e - ' + e);
 			return false;
 		}
 	}

@@ -770,7 +770,7 @@ public with sharing class ISSP_AvailableServices{
 		String res = 'ok';
 
 		String appRight = 'Access Requested';
-		if(applicationName=='Standards Setting Workspace')
+		if(applicationName=='Standards Setting Workspace' || applicationName == 'E&F APPS')
 			appRight = 'Access Granted';
 
 
