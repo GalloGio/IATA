@@ -310,16 +310,17 @@ public class ANG_FinancialSecurityTriggerHandler{
 				Id accId = acct.Top_Parent__c != NULL ? acct.Top_Parent__c : acct.Id;
 				String rhcKey = accId + ANG_RHCHelper.RHC_INFO_STD_RT;
 				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmountAggregatedByParent.get(accId));
-			}	
-			for(Financial_Security__c accountFS : acct.Financial_Securities__r){
-				if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(accountFS.Security_Status__c) && accountFS.ANG_Minimum_Financial_Security__c !=null && accountFS.ANG_Financial_Security_Currency__c != null) {
-					String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
-					decimal minFsAmount = ANG_Risk_Helper.currencyConverter(accountFS.ANG_Financial_Security_Currency__c, accountFS.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):accountFS.ANG_Financial_Security_Currency__c);
-					setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
-					break; //only considers the last created FS with Status - Active / Closed To Expire Date
+			}
+			else{
+				for(Financial_Security__c accountFS : acct.Financial_Securities__r){
+					if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(accountFS.Security_Status__c) && accountFS.ANG_Minimum_Financial_Security__c !=null && accountFS.ANG_Financial_Security_Currency__c != null) {
+						String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
+						decimal minFsAmount = ANG_Risk_Helper.currencyConverter(accountFS.ANG_Financial_Security_Currency__c, accountFS.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):accountFS.ANG_Financial_Security_Currency__c);
+						setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
+						break; //only considers the last created FS with Status - Active / Closed To Expire Date
+					}
 				}
 			}
-
 		}
 
 	}

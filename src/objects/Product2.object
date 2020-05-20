@@ -2590,6 +2590,11 @@ SIS Charge Code Type.</description>
                     <label>IATA Consolidated Exchange Rates</label>
                 </value>
                 <value>
+                    <fullName>IATA COVID-19 Passenger Survey</fullName>
+                    <default>false</default>
+                    <label>IATA COVID-19 Passenger Survey</label>
+                </value>
+                <value>
                     <fullName>IATA Exchange Rates</fullName>
                     <default>false</default>
                     <label>IATA Exchange Rates</label>
@@ -14585,6 +14590,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA COVID-19 Passenger Survey</fullName>
                 <default>false</default>
             </values>
             <values>

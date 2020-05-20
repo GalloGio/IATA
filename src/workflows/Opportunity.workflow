@@ -19,7 +19,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
+        <template>MarketingPAX/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
@@ -234,7 +234,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
+        <template>MarketingPAX/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
