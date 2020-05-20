@@ -546,12 +546,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>LET,NEW,CER,CCN,CHC,CHI,CHL,CHM,CHN,CHO,CHS,CIJ,CNM,COS,CSC,CTB,REI</value>
-        </filters>
-        <filters>
-            <field>Billable__c</field>
-            <operation>equals</operation>
-            <value>1</value>
+            <value>CHO,CHN,CCN,CHL,CLM</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
