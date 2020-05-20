@@ -230,7 +230,7 @@
 	   </apex:pageBlockSection>
 	    </div>
 
-	        <apex:pageBlockSection columns="1" collapsible="false" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary')}">
+	        <apex:pageBlockSection columns="1" collapsible="false" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary', AND(isCNSAgency, newCase.Reason1__c = 'New BR / IP'))}">
 	        <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5}
