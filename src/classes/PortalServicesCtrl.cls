@@ -1,4 +1,4 @@
-public without sharing class PortalServicesCtrl {
+public with sharing class PortalServicesCtrl {
 
 	public static final String EFAPPS='E&F APPS';
 	public static final String PORTAL_ACCESS_GRANTED='Access Granted';
@@ -1395,7 +1395,7 @@ public without sharing class PortalServicesCtrl {
 			Boolean isEAndF = portalServices[0].Name.equals('E&F APPS');
 
 			Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == false || isEasyPay || isEAndF;
-		
+
 
 			return isAdmin && canManage;
 		}

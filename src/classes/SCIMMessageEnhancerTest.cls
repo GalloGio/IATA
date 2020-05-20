@@ -165,7 +165,14 @@ private class SCIMMessageEnhancerTest {
 		EF_APPS_SCIMMessageEnhancer message_noConstructor = new EF_APPS_SCIMMessageEnhancer();
 
 		Test.startTest();
-		message.enhanceMessage(request);
+		SCIMUser u = message.enhanceMessage(request);
 		Test.stopTest();
+
+		System.assertEquals('efapps scim', u.displayName);
+		System.assertEquals('externalId', u.externalId);
+		for(SCIMUser.Entitlements e : u.entitlements){
+			if(e.type == 'administrator') System.assertEquals('false', e.value);
+		}
+
 	}
 }

@@ -398,7 +398,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.registrationTime = string.valueOf(DateTime.now());
 		params.termsAndUsageIds = tcs[0].Id;
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(JSON.serialize(params), 'Admin1234!');
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		System.assert(result.isSuccess);
 
 		Test.stopTest();
@@ -429,7 +429,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.registrationTime = string.valueOf(DateTime.now());
 		params.termsAndUsageIds = tcs[0].Id;
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(JSON.serialize(params), 'Admin1234!');
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		System.assert(result.isSuccess);
 
 		Test.stopTest();
@@ -462,11 +462,11 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.registrationTime = string.valueOf(DateTime.now());
 		params.termsAndUsageIds = tcs[0].Id;
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(JSON.serialize(params), 'Admin1234!');
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		System.assert(result.isSuccess);
 
 		params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
-		result = PortalRegistrationFirstLevelCtrl.register(JSON.serialize(params), 'Admin1234!');
+		result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
 		System.assert(!result.isSuccess);
 
 		Test.stopTest();

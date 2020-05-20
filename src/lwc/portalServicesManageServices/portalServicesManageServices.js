@@ -32,7 +32,7 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
-import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered'; 
+import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered';
 
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
@@ -188,11 +188,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track currentContactPage = []; //page being displayed
     @track pageList = [];         // list of pages for the pagination cmp
     @track totalNrPagesOg = 0;
-    @track totalNrPages = 0; // total nr pages 
+    @track totalNrPages = 0; // total nr pages
     @track totalNrRecords = 0;
     @track nrLoadedRecs = 0;     //nr of loaded records
     @track currentPageNumber = 1;
-    
+
     @track showCross = false;
     searchMode = false;
     @track searchText='';
@@ -228,7 +228,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track availableContacts = [];
     @track contactsToAdd = [];
     @track grantingAccess = false;
-    @track canAddUsers = false;
+	@track canAddUsers = false;
 	@track showInviteModal = false;
     @track isEFAdmin = false;
 
@@ -297,17 +297,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //Level 2 registration variables
     @track isFirstLevelUser = false;
     level2RegistrationTrigger = 'service';
-    
+
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;
 
     connectedCallback() {
-        
+
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
-            
+
             if (this.pageParams.openRequestService) {
                 this.showConfirm = true;
             }
@@ -443,7 +443,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         this.getContactsForAssignment();
                         this.getCanAddUsers();
                     } else {
-                        //this.showSpinner = false;
                         this.componentLoading = false;
                     }
                 })
@@ -505,7 +504,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 			this.applyFiltersModal();
 		}
 		//this.showSpinner = false;
-		console.log('componentLoading false 492');
 		this.componentLoading = false;
 		this.checkMassActionButtons();
 		this.populateIataCodeDropdown(resultData);
@@ -748,7 +746,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleMassApproveAccess(event) {
-        console.log('MASS Approve', event.detail, this.selectedRecords);
         let contactNames = this.selectedRecords.map(function(elem){
             return elem.contactName;
         }).join("; ");
@@ -761,7 +758,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleMassDenyAccess(event) {
-        console.log('MASS DENY', event.detail, this.selectedRecords);
         let contactNames = this.selectedRecords.map(function(elem){
             return elem.contactName;
         }).join("; ");
@@ -804,6 +800,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //only display contact list for portal admins with access granted
     get displayAdminView() {
+
         return this.isAdmin;
     }
 
@@ -951,7 +948,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showConfirmPopup = true;
     }
 
-    //================== Popup Methods =======================// 
+    //================== Popup Methods =======================//
     handleChangeReason(event) {
         this.appRejReason = event.target.value;
     }
@@ -1008,7 +1005,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     confirmMassGrantAction(recordsList) {
         let contactIds = recordsList.map((rec) => { return rec.contactId });
 
-        let methodParam = { 
+        let methodParam = {
             contactIds: contactIds,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
@@ -1027,7 +1024,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.showSpinner = false;
             this.componentLoading = false;
             this.checkMassActionButtons();
-            
+
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
@@ -1037,11 +1034,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             );
         });
     }
-    
+
     confirmMassDenyAction(recordsList) {
         let contactIds = recordsList.map((rec) => { return rec.contactId });
 
-        let methodParam = { 
+        let methodParam = {
             contactIds: contactIds,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
@@ -1052,7 +1049,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.componentLoading = true;
             this.showSpinner = false;
             this.showConfirmPopup = false;
-            
+
             this.resetComponent();
             this.checkMassActionButtons();
         }).catch( error => {
@@ -1169,7 +1166,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                     }).catch(error => {
                         this.showSpinner = false;
-                        console.log(error);
                         this.componentLoading = false;
                         this.dispatchEvent(
                             new ShowToastEvent({
@@ -1183,7 +1179,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 }).catch(error => {
                     this.showSpinner = false;
                     this.componentLoading = false;
-                    console.log(error);
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Error',
@@ -1376,7 +1371,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedIataCode = '';
         this.filtered = false;
         this.applyFiltersModal();
-        
+
     }
 
     handleChangeCountryFilter(event) {
@@ -1387,7 +1382,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.selectedCountry = el.label;
             }
         });
-        
+
     }
 
     handleChangeIataCodeFilter(event) {
@@ -1426,7 +1421,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	cancelInvite() {
 		this.showInviteModal = false;
 	}
-	
+
     cancelSecondLevelRegistration(){
         this.displaySecondLevelRegistrationPopup = false;
         this.displaySecondLevelRegistration = false;

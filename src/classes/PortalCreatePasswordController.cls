@@ -43,7 +43,8 @@ public without sharing class PortalCreatePasswordController {
 
 	@AuraEnabled
 	public static PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword(String paramStr, String password, String landingPage, Map<String,String> urlParams){
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(paramStr, password);
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, password);
 
 		if(result.isSuccess == true){
 			if(urlParams == null) urlParams = new Map<String,String>();
