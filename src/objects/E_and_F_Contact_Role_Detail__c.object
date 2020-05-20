@@ -300,25 +300,6 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Contact_name__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ContactFunctionalRole__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Account_name__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>AccountFunctionalRole__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>Account_name__c</searchFilterFields>
-        <searchFilterFields>AccountFunctionalRole__c</searchFilterFields>
-        <searchFilterFields>Contact_name__c</searchFilterFields>
-        <searchFilterFields>ContactFunctionalRole__c</searchFilterFields>
-        <searchResultsAdditionalFields>Display_Contact_Detailed_contact_role__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Contact_name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ContactFunctionalRole__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Detailed_contact_role__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
     <recordTypes>
         <fullName>Service_Admin</fullName>
         <active>true</active>
@@ -361,4 +342,23 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ContactFunctionalRole__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>AccountFunctionalRole__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Display_Contact_Detailed_contact_role__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Account_name__c</searchFilterFields>
+        <searchFilterFields>AccountFunctionalRole__c</searchFilterFields>
+        <searchFilterFields>Contact_name__c</searchFilterFields>
+        <searchFilterFields>ContactFunctionalRole__c</searchFilterFields>
+        <searchResultsAdditionalFields>Display_Contact_Detailed_contact_role__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ContactFunctionalRole__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Detailed_contact_role__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
