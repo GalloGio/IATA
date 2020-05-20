@@ -222,7 +222,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'General Public'){
 				return customerType.metadataCustomerType.DeveloperName;
 			}
-			
+
 			if((customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category)
 					|| (customerType.metadataCustomerType.Filter_on_Sector__c == sector && customerType.metadataCustomerType.Filter_on_Category__c == category)){
 				return customerType.metadataCustomerType.DeveloperName;
@@ -416,7 +416,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			//Create User
 			NewUserDetail usr = createNewUser(con, OneIdUtils.MODE.CSP.name(), con.Preferred_Language__c, null, false, true);
-			System.debug('usr: ' + usr);
 			if(usr.userId!= null) {
 				Database.rollback(sp);
 				result.isSuccess = true;
@@ -445,9 +444,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static RegistrationResult register(String paramStr, String password){
-		RegistrationParameters params = (RegistrationParameters) JSON.deserialize(paramStr, RegistrationParameters.class);
-
+	public static RegistrationResult register(RegistrationParameters params, String password){
 		RegistrationResult result = new RegistrationResult();
 		Savepoint sp = Database.setSavepoint();
 
@@ -832,7 +829,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				u.localesidkey = 'en_US';
 				u.emailencodingkey = 'UTF-8';
 				DataBase.SaveResult sr = DataBase.insert(u);
-				System.debug('sr: ' + sr);
 				usr.userId = u.Id;
 			}
 			usr.userName = u.username;
@@ -993,7 +989,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
 		oPermissionSetAssignment.AssigneeId = userId;
 		oPermissionSetAssignment.PermissionSetId = permissionSetId;
-		System.debug('oPermissionSetAssignment: ' + oPermissionSetAssignment);
 		insert oPermissionSetAssignment;
 	}
 
