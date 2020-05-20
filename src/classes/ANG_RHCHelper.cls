@@ -320,10 +320,10 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
 
 
-		Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+		//Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
 
-		Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
-		rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
+		//Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
+		//rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newRHCForecastedValue);
 	}
@@ -345,7 +345,7 @@ public class ANG_RHCHelper {
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - rhcAmount] RHC Amount: ' + rhcAmount);
 
 		/*NEWGEN-4881 - comment logic to set ANG_RHC_Amount*/
-		rhc.ANG_RHC_Amount__c = rhcAmount;
+		//rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
 	}
