@@ -24,8 +24,6 @@ private class EF_HelperTest {
 		cntc.Email = 'standarduser2@testorg.com.efappreg';
 		insert cntc;
 
-		system.debug('TESTDEBUG: '+JSON.serializePretty(cntc));
-
 		User usr = New User();
 		usr.Alias = 'standt2';
 		usr.Email='standarduser2@testorg.com.efappreg';
@@ -223,7 +221,7 @@ private class EF_HelperTest {
 			Id = null
 		);
 
-		Invitation__c actual = [SELECT Email__c, AccountRoleId__c, Role__c, AccountId__c, ServiceId__c FROM Invitation__c ORDER BY CreatedDate DESC][0];
+		Invitation__c actual = [SELECT Email__c, AccountRoleId__c, Role__c, AccountId__c, ServiceId__c FROM Invitation__c WHERE Email__c =: fields.get('Email__c') ORDER BY CreatedDate DESC][0];
 		actual.Id = null;
 
 		System.assertEquals(expected, actual);
@@ -252,7 +250,6 @@ private class EF_HelperTest {
 
 		query += ' AND (contact__r.name LIKE {0} OR contact__r.email LIKE {0} OR contact__r.account.IATACode__c LIKE {0} OR contact__r.account.BillingCity LIKE {0} OR contact__r.account.IATA_ISO_Country__r.Name LIKE {0} )'.replace('{0}', '\'%Contact%\'');
 
-		system.debug(query);
 		app = Database.query(query);
 
 		List<PortalServicesCtrl.ContactWrapper> expected = new List<PortalServicesCtrl.ContactWrapper>();
