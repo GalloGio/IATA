@@ -19389,7 +19389,7 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>オプション</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
