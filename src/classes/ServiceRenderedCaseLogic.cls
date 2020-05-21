@@ -162,7 +162,7 @@ public class ServiceRenderedCaseLogic {
 
 			if(service == null){
 				 c.addError('The reason you are entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting' );
-			}else if(!service.Provider_Required__c){
+			}else if(!service.Provider_Required__c&& c.Reason1__c!=AMS_Utils.passAirlineCaseReason){
 					casesWithoutProvider.add(c);
 			}
 		}
@@ -215,6 +215,7 @@ public class ServiceRenderedCaseLogic {
 
 		Map<Id,list<Case>> CasesPerConsumer = new Map<Id,list<Case>>();
 		List<Id> contactList = new List<Id>();
+		String gssaRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
 
 		for(Case c: cases){
 			if( CasesPerConsumer.get(c.AccountId) == null)
@@ -225,7 +226,6 @@ public class ServiceRenderedCaseLogic {
 			}
 		}
 
-		String gssaRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
 		Map<Id,Contact> caseList = new Map<Id,Contact>([SELECT Id,Account.RecordtypeId FROM Contact WHERE Id IN:contactList]);
 
 		set<Id> accIDs = CasesPerConsumer.keySet();
