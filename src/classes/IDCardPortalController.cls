@@ -121,17 +121,15 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 		}
 		IDCardAgencyDetailsController.ShippingAddress address = new IDCardAgencyDetailsController.ShippingAddress(theAccount);
 		shippingAddress = address.theAddress;
-	   
 	}
 
 	public void openPopup(){
 		this.showPopup = true;
-		selectedAction = apexpages.currentpage().getparameters().get('typeForPopup');
-		System.debug('selectedAction' + selectedAction);
 	}
 
 	public void closePopup(){
 		this.showPopup = false;
+		this.selectedAction = '';
 	}
 
 	public Pagereference next() {
