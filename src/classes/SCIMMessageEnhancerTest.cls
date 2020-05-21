@@ -127,6 +127,7 @@ private class SCIMMessageEnhancerTest {
 		con.LastName = 'scim';
 		con.Email = 'efappsscim@message.enhancer';
 		con.Salutation = 'Ms.';
+		con.Title = 'Manager';
 		con.AccountId = acc.Id;
 		insert con;
 
@@ -150,13 +151,13 @@ private class SCIMMessageEnhancerTest {
 		insert efConRoleDet;
 
 		Map<String,Object> inputParams = new Map<String,Object>();
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'efapps');
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'scim');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, con.FirstName);
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, con.LastName);
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_DISPLAYNAME, 'efapps scim');
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalId');
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'efappsscim@message.enhancer');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, con.Id);
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, con.Email);
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_PREFERREDLANGUAGE, 'EN');
-		inputParams.put(SCIMUserAttributeGenerator.PARAM_TITLE, 'Manager');
+		inputParams.put(SCIMUserAttributeGenerator.PARAM_TITLE, con.Title);
 		inputParams.put(SCIMUserAttributeGenerator.PARAM_ACTIVE, true);
 
 		Process.PluginRequest request = new Process.PluginRequest(inputParams);
@@ -165,7 +166,14 @@ private class SCIMMessageEnhancerTest {
 		EF_APPS_SCIMMessageEnhancer message_noConstructor = new EF_APPS_SCIMMessageEnhancer();
 
 		Test.startTest();
-		message.enhanceMessage(request);
+		SCIMUser u = message.enhanceMessage(request);
 		Test.stopTest();
+
+		System.assertEquals('efapps scim', u.displayName);
+		System.assertEquals(con.Id, u.externalId);
+		for(SCIMUser.Entitlements e : u.entitlements){
+			if(e.type == 'administrator') System.assertEquals('false', e.value);
+		}
+
 	}
 }
