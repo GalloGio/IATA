@@ -162,7 +162,7 @@ public class ServiceRenderedCaseLogic {
 
 			if(service == null){
 				 c.addError('The reason you are entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting' );
-			}else if(!service.Provider_Required__c&& c.Reason1__c!=AMS_Utils.passAirlineCaseReason){
+			}else if(!service.Provider_Required__c){
 					casesWithoutProvider.add(c);
 			}
 		}
