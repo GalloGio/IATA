@@ -83,6 +83,23 @@ private class EF_HelperTest {
 		invite.Role__c = 'Service Admin';
 		invite.ServiceId__c = pa.Id;
 		insert invite;
+
+		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]){
+
+			ConnectedApplication conApp = UserProvisioning.ConnectorTestUtil.createConnectedApp('E&F App Test');
+
+			PermissionSet pS = new PermissionSet();
+			pS.Name = 'APPS_SSO_Test';
+			pS.Label = 'APPS_SSO_Test';
+			insert pS;
+
+			Connected_App_Roles__c cAR = new Connected_App_Roles__c();
+			cAR.Name = 'E&F APPS';
+			cAR.PermissionSet_Provisioning__c = 'APPS_SSO_Test';
+			cAR.Provisioning_Id__c = conApp.Id;
+			cAR.Connected_App_Provisioning_Name__c = conApp.Name;
+			insert cAR;
+		}
 	}
 
 	@IsTest
