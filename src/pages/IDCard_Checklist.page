@@ -12,13 +12,14 @@
         border-style: solid;
         border-width: 2px;
         top: 50%;
-        left: 40%;
+        left: 50%;
+        margin-left: -154px;
         font-size: 11pt;
         padding-left: 3px;
         padding-right: 3px;
         position: absolute;
         z-index: 9999;
-        width: 305px;
+        width: 300px;
         height: 150px;
         color: #000;
     } 
@@ -101,6 +102,14 @@
           
          <div class="background">
      <!---- BREAD CRUMB ---->   
+
+        <apex:outputPanel id="popup" style="display:none">
+            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block">
+                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="closeButton" />
+                <div class="checkBoxStyle">{!$Label.IDCard_CheckBox}</div>             
+                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" />                             
+            </apex:outputPanel> 
+        </apex:outputPanel>
      <br/>
           <div>
             <ul class="crumbsbkgd">
@@ -241,13 +250,6 @@
                                 </tr>
                             </table>
                         </div>
-                        <apex:outputPanel id="popup" style="display:none">
-                            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block">
-                                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="closeButton" />
-                                <div class="checkBoxStyle">{!$Label.IDCard_CheckBox}</div>             
-                                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" />                             
-                            </apex:outputPanel> 
-                        </apex:outputPanel>
                     </div>                   
                 </div>              
             </apex:form>
