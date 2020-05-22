@@ -1837,7 +1837,9 @@ global without sharing class ISSP_APProcess {
 		if(category <> 'IBCS consolidator'){
 			setTypes.add('CASS Export');
 			setTypes.add('CASS Import');
-			setTypes.add(AMS_Utils.passParticipation);
+			if(strAreaType == 'Airline Joining' || APprocess == 'chg'){
+				setTypes.add(AMS_Utils.passParticipation);
+			}
 		}
 
 		if (!getICHSubtypes().isEmpty()) {
