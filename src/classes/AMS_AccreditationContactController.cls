@@ -564,32 +564,22 @@ public with sharing class AMS_AccreditationContactController {
 	public List<String> validateOwnership() {
 		List<String> errors = new List<String>();
 		Decimal totalOwnership = 0;
-		Boolean validRange = true;
 
 		for(AccreditationContactWrapper wrapped : acWrapper) {
             if(wrapped.ac.Financial_interest__c <> null) {
 				totalOwnership += wrapped.ac.Financial_interest__c;
-				validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
 			}
 		}
 
 		for(AccountWrapper aWrapped : accountWrapper) {
 			if(aWrapped.financialInterest <> null) {
 				totalOwnership += aWrapped.financialInterest;
-				validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
 			}
 		}
 
-		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {
-            if(totalOwnership < 99.99 || totalOwnership > 100) {
+		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (totalOwnership < 99.99 || totalOwnership > 100)) {
 				errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
 			}
-
-			if(!validRange) {
-				errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
-			}
-		}
-
 		return errors;
 	}
 
@@ -622,29 +612,6 @@ public with sharing class AMS_AccreditationContactController {
 			System.debug(loggingLevel.ERROR, '____ [cls AMS_AccreditationContactController - save] error - ' + e.getMessage());
 		}
 		return null;
-	}
-
-
-	public boolean calculateTotalOwnership()
-	{
-		ownership = 0;
-		for(AccreditationContactWrapper wrapped : acWrapper)
-		{
-			if(wrapped.ac.Financial_interest__c != null)
-				ownership = ownership + wrapped.ac.Financial_interest__c;
-		}
-		for(AccountWrapper aWrapped : accountWrapper)
-		{
-			ownership = ownership + aWrapped.financialInterest;
-		}
-
-		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (ownership < 99.99 || ownership > 100)) //AMSU-180//WMO-492
-		{
-			return false;
-		} else
-		{
-			return true;
-		}
 	}
 
 	public String validateMandatoryExpiryDate(){
