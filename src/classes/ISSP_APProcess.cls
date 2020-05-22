@@ -3526,6 +3526,36 @@ global without sharing class ISSP_APProcess {
 		return null;
 	}
 
+	public boolean getHOTSelected() {
+		return this.newForm.Type_of_Report_Options__c=='HOT';
+	}
+	public boolean getReceiveHOTFiles() {
+		return getHOTselected() && newForm.Receive_HOT_files__c !=null &&
+			(newForm.Receive_HOT_files__c.containsignorecase('yes – billing period hot') ||
+			newForm.Receive_HOT_files__c.containsignorecase('yes – remittance period hot'));
+	}
+	public boolean getPDFSelected() {
+		return this.newForm.Type_of_Report_Options__c=='PDF';
+	}
+	public boolean getHOTFilesNotRequired() {
+		return getReceiveHOTFiles() && this.newForm.Hot_files_delivery_format__c!=null &&
+			this.newForm.Hot_files_delivery_format__c.containsignorecase('not required');
+	}
+	public boolean getPDFFilesNotRequired() {
+		return getPDFSelected() && this.newForm.Hot_files_delivery_format__c!=null &&
+			this.newForm.Hot_files_delivery_format__c.containsignorecase('not required');
+	}
+	public boolean getHOTandPDFFilesEmails() {
+		return (getPDFSelected() || getReceiveHOTFiles()) && newForm.Hot_files_delivery_format__c!=null &&
+			this.newForm.Hot_files_delivery_format__c.containsignorecase('e-mail and download');
+	}
+	public boolean getExcelSelected() {
+		return this.newForm.Type_of_Report_Options__c=='Excel';
+	}
+	public boolean getExcelSelectedYes() {
+		return getExcelSelected() && newForm.Receive_XLS_Reports__c.containsignorecase('yes');
+	}
+
 	/**
 	 * New method to be used in the Step3
 	 * It will return the pagereference to be used in the apex:include in order to save space

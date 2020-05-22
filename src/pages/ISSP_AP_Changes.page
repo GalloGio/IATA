@@ -422,7 +422,6 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="HOTselected" value="{!LOWER(newForm.Type_of_Report_Options__c)='hot'}"/>
                         <apex:pageBlockSectionItem rendered="{!HOTselected}">
                             <apex:outputLabel value="Does your airline wish to receive HOT files?" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Receive_HOT_files__c}" size="1">
@@ -434,7 +433,6 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="receiveHOTFiles" value="{!HOTselected && OR(LOWER(newForm.Receive_HOT_files__c)='yes – billing period hot',LOWER(newForm.Receive_HOT_files__c)='yes – remittance period hot')}" />
                         <apex:pageBlockSectionItem rendered="{! receiveHOTFiles}">
                             <apex:outputLabel value="HOT file receipt preference" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
@@ -446,7 +444,6 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="PDFSelected" value="{!LOWER(newForm.Type_of_Report_Options__c)='pdf'}" />
                         <apex:pageBlockSectionItem rendered="{! PDFSelected}">
                             <apex:outputLabel value="PDF file receipt preference" styleclass="ap-required"/>
                             <apex:selectList value="{!newForm.Hot_files_delivery_format__c}" size="1">
@@ -458,15 +455,12 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="HOTFilesNotRequired" value="{!receiveHOTFiles && LOWER(newForm.Hot_files_delivery_format__c)='not required'}" />
                         <apex:outputText value="Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base."
                             rendered="{!HOTFilesNotRequired}"/>
 
-                        <apex:variable var="PDFFilesNotRequired" value="{!PDFSelected && LOWER(newForm.Hot_files_delivery_format__c)='not required'}" />
                         <apex:outputText value="Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base."
                             rendered="{!PDFFilesNotRequired}"/>
 
-                        <apex:variable var="HOTandPDFFilesEmails" value="{! OR(PDFSelected,receiveHOTFiles) && LOWER(newForm.Hot_files_delivery_format__c)='e-mail and download'}" />
                         <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change."
                             rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:pageBlockSectionItem rendered="{!HOTandPDFFilesEmails}">
@@ -484,7 +478,6 @@
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_3__c}" label="Email To Remove 3" rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_4__c}" label="Email To Remove 4" rendered="{!HOTandPDFFilesEmails}"/>
 
-                        <apex:variable var="ExcelSelected" value="{!LOWER(newForm.Type_of_Report_Options__c)='excel'}"/>
                         <apex:pageBlockSectionItem rendered="{!ExcelSelected}">
                             <apex:outputLabel value="Does your Airline wish to receive XLS reports?" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Receive_XLS_Reports__c}">
@@ -492,7 +485,6 @@
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
 
-                        <apex:variable var="ExcelSelectedYes" value="{!ExcelSelected && LOWER(newForm.Receive_XLS_Reports__c)='yes'}" />
                         <apex:outputText value="Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library."
                             rendered="{!ExcelSelectedYes}"/>
 

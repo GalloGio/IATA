@@ -2086,6 +2086,15 @@ private class ISSP_APProcess_Test
 			ctrl.showHideHotFilesPreferenceMethod();
 			ctrl.showHidePdfReportsPreferenceMethod();
 
+			ctrl.getHOTSelected();
+			ctrl.getReceiveHOTFiles();
+			ctrl.getPDFSelected();
+			ctrl.getHOTFilesNotRequired();
+			ctrl.getPDFFilesNotRequired();
+			ctrl.getHOTandPDFFilesEmails();
+			ctrl.getExcelSelected();
+			ctrl.getExcelSelectedYes();
+
 			System.assertEquals('&airline=PASS',ctrl.passParam);
 		}
 
