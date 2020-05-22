@@ -355,6 +355,12 @@ public with sharing class AMS_AccountRoleCreator
 			listClonesRoles.addAll(assignOwners(brAcc, accRolesList == null ? new List<AMS_Account_Role__c>() : accRolesList));
 		}
 
+		//Calculate the Coverage Ownership for the Cloned Account Roles - INC526933
+		for(AMS_Account_Role__c accountRole : listClonesRoles){
+			Double totalCovered = totalCoveredOwnershipByAccount.containsKey(accountRole.Account__c) ? (totalCoveredOwnershipByAccount.get(accountRole.Account__c) + accountRole.Percentage__c) : accountRole.Percentage__c;
+			totalCoveredOwnershipByAccount.put(accountRole.Account__c, totalCovered);
+		}
+
 		//add a termination date to the previous roles
 		rolesToUpsert.putAll(updateRolesTerminationDate(rolesToUpsert, oldRolesPerAccount, accountsToChangeOwners, accountToCheckOwners, rolesToCorrect));
 

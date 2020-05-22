@@ -54,7 +54,9 @@ New TIDS
 New MSO
 New HE lite
 New HE standard
+New HE Multicountry
 New AE
+New AE Multicountry
 GSA / MSO / Handling Agent
 FoP Management
 Accreditation Type
@@ -65,7 +67,8 @@ Annual revalidation
 PCI DSS Compliant
 Onboarding IEP Model A
 IEP Bank account setup
-Major Changes</value>
+Major Changes
+Major Change</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>

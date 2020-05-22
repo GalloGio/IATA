@@ -1,0 +1,27 @@
+<template>     
+    <lightning-card title="Notify Portal users for new version"  variant="Narrow">
+        <lightning-spinner if:true={loading} alternative-text="Loading" size="medium" class="slds-is-relative slds-align_absolute-center cardHeight"></lightning-spinner>
+        <div if:false={loading} class="slds-grid slds-p-horizontal--large slds-p-vertical--medium slds-size_full">
+
+            <div if:true={notified} class="slds-grid slds-align_absolute-center" onclick={click}>
+                <div class="slds-col slds-grid slds-grid_vertical-align-center">
+
+                    <lightning-icon icon-name="utility:success" alternative-text="Success!" variant="success"  title="success variant"></lightning-icon>
+                    <h1 class="slds-m-left--x-small"> Users have already been notified about this version.</h1>
+                </div>
+            </div>
+            <div if:false={notified} class="slds-grid slds-size_full slds-wrap">
+                <div class="slds-col slds-grid slds-size_full slds-wrap ">
+                     <lightning-checkbox-group name="confirmcheckgroup"
+                     options={options}
+                     value={checkFile}
+                     onchange={handleChange} ></lightning-checkbox-group>
+                
+                    </div>
+               <div class="slds-col slds-m-vertical_medium slds-size_full slds-grid slds-grid_align-center ">
+                <lightning-button if:false={loading} label="Notify Users" variant="brand" title="Notify Users" icon-name="utility:automate" class="slds-m-left_x-small" onclick={click} disabled></lightning-button>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

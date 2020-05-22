@@ -307,8 +307,12 @@
 
 						<apex:column headerValue="Account Name">
 							<apex:inputField id="bspAccountName" html-data-id="{!hi.bspId}" value="{!hi.p.parentid}" onclick="setBSP('{!hi.bspId}');">
-								<apex:actionSupport event="onchange" reRender="bspErrors"/>
+								<apex:actionSupport event="onchange" reRender="bspErrors, bspIataCode"/>
 							</apex:inputField>
+						</apex:column>
+
+						<apex:column headerValue="Account IATA Code">
+							<apex:outputText id="bspIataCode" value="{!hi.iataCode}"/>
 						</apex:column>
 
 					</apex:pageBlockTable>
