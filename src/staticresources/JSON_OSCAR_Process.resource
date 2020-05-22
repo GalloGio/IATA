@@ -7364,8 +7364,6 @@
                   }
                 ],
                 "DisplayFields": [
-          "Is_PCI_compliant__c",
-          "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -7687,8 +7685,6 @@
                   }
                 ],
                 "DisplayFields": [
-          "Is_PCI_compliant__c",
-          "ANG_PCI_compliance_expiry_date__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false
