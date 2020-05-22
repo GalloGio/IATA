@@ -578,7 +578,7 @@ public with sharing class AMS_AccreditationContactController {
 		Decimal totalOwnership = 0;
 
 		for(AccreditationContactWrapper wrapped : acWrapper) {
-			if(wrapped.ac.Financial_interest__c <> null) {
+            if(wrapped.ac.Financial_interest__c <> null) {
 				totalOwnership += wrapped.ac.Financial_interest__c;
 			}
 		}
@@ -587,11 +587,11 @@ public with sharing class AMS_AccreditationContactController {
 			if(aWrapped.financialInterest <> null) {
 				totalOwnership += aWrapped.financialInterest;
 			}
- 		}
-
-		if(totalOwnership < 99.99 || totalOwnership > 100) {
-			errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
 		}
+
+		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (totalOwnership < 99.99 || totalOwnership > 100)) {
+				errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
+			}
 		return errors;
 	}
 
@@ -624,29 +624,6 @@ public with sharing class AMS_AccreditationContactController {
 			System.debug(loggingLevel.ERROR, '____ [cls AMS_AccreditationContactController - save] error - ' + e.getMessage());
 		}
 		return null;
-	}
-
-
-	public boolean calculateTotalOwnership()
-	{
-		ownership = 0;
-		for(AccreditationContactWrapper wrapped : acWrapper)
-		{
-			if(wrapped.ac.Financial_interest__c != null)
-				ownership = ownership + wrapped.ac.Financial_interest__c;
-		}
-		for(AccountWrapper aWrapped : accountWrapper)
-		{
-			ownership = ownership + aWrapped.financialInterest;
-		}
-
-		if(aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (ownership < 99.99 || ownership > 100)) //AMSU-180//WMO-492
-		{
-			return false;
-		} else
-		{
-			return true;
-		}
 	}
 
 	public String validateMandatoryExpiryDate(){
