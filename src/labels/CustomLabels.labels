@@ -38667,7 +38667,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
