@@ -129,6 +129,45 @@ public with sharing class PortalFAQsCtrl {
 
 	/*
 		This method is used for CS Portal searchbar.
+		@param urlName - URL Name of the article to be fetch
+		@param lang -User/ selected language to return the article, defaults to the english version
+		@param datacategories - Categories that the user has access to
+	*/
+	public static CSP_Utils.PagedResult getFAQbyURLName(String urlName,string lang,string datacategories){
+
+		//Get the articles being referenced
+		set<id> articleIdSet=new set<id>();
+		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language FROM faq__kav WHERE publishstatus =\'Online\' ';
+		String soqlTransl=' AND KnowledgeArticleid=:articleIdSet AND language=:lang';
+		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
+		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
+		
+		Map<id,faq__kav> articleMap= new map<id,faq__kav>(); // fetch the english version of the article(s) 
+		
+		//in case of more than one article in english with the same URLName, all articles will be returned
+		list<faq__kav> enArticles=Database.query(soqlGen+soqlEng+soqlDat);
+		for(FAQ__kav ar:enArticles){
+			articleIdSet.add(ar.KnowledgeArticleid);
+			articleMap.put(ar.KnowledgeArticleid,ar);
+		}
+
+		//Iterate over the translations based on the users language
+		list<faq__kav> translatedArticles=Database.query(soqlGen+soqlTransl);
+		for(faq__kav faq:translatedArticles){
+			if(articleMap.containsKey(faq.KnowledgeArticleid)){ // if version available in the user language, replace for that one
+				articleMap.put(faq.KnowledgeArticleid,faq);
+			}
+		}
+
+		CSP_Utils.PagedResult result= new CSP_Utils.PagedResult();
+		result.records=articleMap.values();
+		result.totalItemCount=articleMap.values().size();
+		return result;
+	
+	}
+
+	/*
+		This method is used for CS Portal searchbar.
 		@refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering
 	*/
 	@AuraEnabled (cacheable=true)
@@ -142,7 +181,7 @@ public with sharing class PortalFAQsCtrl {
 		result.records = lstToReturn;
 		result.totalItemCount = 0;
 
-		if(filtersWrapper != null && filtersWrapper.searchText != null && filtersWrapper.searchText != '') {
+		if(filtersWrapper != null && ((filtersWrapper.searchText != null && filtersWrapper.searchText != '') || !String.isEmpty(filtersWrapper.urlName))) {
 
 			List<String> subtopics = new List<String>();
 			if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
@@ -164,6 +203,7 @@ public with sharing class PortalFAQsCtrl {
 					}
 				}
 			}
+		
 			else{
 				for(String subtopicAux : filtersWrapper.faqsComponent.faqSubtopicsList){
 					subtopics.add(subtopicAux + '__c');
@@ -172,10 +212,22 @@ public with sharing class PortalFAQsCtrl {
 
 			String levels = '';
 			if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
+
+
+			String selectedLang =filtersWrapper.guestUser != null && filtersWrapper.guestUser && String.isNotBlank(filtersWrapper.language)? filtersWrapper.language :  UserInfo.getLanguage();
 			
+			//IF searching for URLName, invoke specific method to fetch the article(s)
+			if(!String.isEmpty(filtersWrapper.urlName)){
+
+				result = getFAQbyURLName(filtersWrapper.urlName,selectedLang,levels);
+				return result;
+			
+			}
+			 
 			String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
 						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
-			String selectedLang =filtersWrapper.guestUser != null && filtersWrapper.guestUser && String.isNotBlank(filtersWrapper.language)? filtersWrapper.language :  UserInfo.getLanguage();
+			
+			
 			
 			String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
