@@ -87,7 +87,7 @@ public with sharing class EF_APPS_SCIMUser extends SCIMUser {
 		//externalSystems
 		SCIMUser.Entitlements e4 = new SCIMUser.Entitlements();
 		e4.type = 'externalSystems';
-		e4.value = 'E&F APPS';
+		e4.value = 'EFAPPS';
 		entitlementsList.add(e4);
 
 		//administrator - do a query to all the contact's E&F Contact Role Details to know if it is an administrator or not
