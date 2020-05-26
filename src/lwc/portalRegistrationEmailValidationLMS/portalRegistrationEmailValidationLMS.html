@@ -236,9 +236,18 @@
 								<div class="sectionDescription">
 									<lightning-formatted-rich-text  value={messageFlow7}></lightning-formatted-rich-text>
 								</div>
-								</br>
+							</div>
+						</lightning-layout-item>
+					</div>
+				</template>
+
+				<template if:true={existingUsernameNotMatchingF8Visibility}>
+
+					<div class="infoItemLine">
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<lightning-formatted-rich-text value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6_2}></lightning-formatted-rich-text>
+									<lightning-formatted-rich-text  value={messageFlow8}></lightning-formatted-rich-text>
 								</div>
 							</div>
 						</lightning-layout-item>
