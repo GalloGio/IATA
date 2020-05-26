@@ -39,7 +39,7 @@ import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_Verification
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_Close from '@salesforce/label/c.CSP_Close';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
-import CSP_Registration_Existing_User_Message_Not_Matching_F6_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_2';
+import CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof';
 
 
 
@@ -114,7 +114,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_Close,
 		CSP_LogOut,
-		CSP_Registration_Existing_User_Message_Not_Matching_F6_2
+		CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof
 	}
 
 
