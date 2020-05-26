@@ -3522,6 +3522,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Assign New Service</value>
     </labels>
     <labels>
+        <fullName>CSP_BookmarkDocAddToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Add to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarkDocRemToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Remove from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4013,6 +4037,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
         <value>Deny Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkAdded</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkAdded</shortDescription>
+        <value>Document Added to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkRemoved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkRemoved</shortDescription>
+        <value>Document #doc Removed from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -5573,6 +5621,13 @@ You can easily create a company account in two steps</value>
         <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
+        <fullName>CSP_MainCategories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MainCategories</shortDescription>
+        <value>Main Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5672,6 +5727,22 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSPISSP_IATA_NOT_Found_NoAccount</shortDescription>
         <value>No related Account to display.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText1</shortDescription>
+        <value>There is nothing in your bookmarks for now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText2</shortDescription>
+        <value>But when you have, you’ll view the most recent ones with their basic details in this area.</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -6745,6 +6816,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Treasury Dashboard Report</shortDescription>
         <value>Treasury Dashboard Report</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Track</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Track</shortDescription>
+        <value>Track</value>
     </labels>
     <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
@@ -38588,7 +38667,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)

@@ -84,7 +84,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 
 		for (String field : fieldsToQuery){
 			if(rhc.get(field) != null && fieldsMap.get(field).getDescribe().getType().name() == 'CURRENCY' && !fieldsMap.get(field).getDescribe().isCalculated()){
-				Decimal value = (Decimal)rhc.put(field, CurrencySingleton.getInstance().convertCurrency((Decimal)rhc.get(field), oldCurrency, rhc.CurrencyIsoCode));
+				Decimal value = (Decimal)rhc.put(field, ANG_Risk_Helper.currencyConverter(oldCurrency,(Decimal)rhc.get(field), rhc.CurrencyIsoCode));
 			}
 		}
 

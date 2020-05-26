@@ -1,7 +1,10 @@
 .folder {
-  width: 54px;
-  height: 54px;
+  width: 54px; 
   object-fit: contain;
+}
+
+.cardHeight{
+  height: 70px;
 }
 
 .subtitleHeight{

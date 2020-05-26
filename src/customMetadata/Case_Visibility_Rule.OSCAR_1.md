@@ -67,7 +67,9 @@ Annual revalidation
 PCI DSS Compliant
 Onboarding IEP Model A
 IEP Bank account setup
-Major Changes</value>
+Major Changes
+Major Change
+MCH – Minor Change of Shareholding</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>
