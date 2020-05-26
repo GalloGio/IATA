@@ -360,13 +360,8 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 			//nc.c.UIR__c = IDCardUtil.generateTMPUIR(myAcc);
 		}
 
-
-system.debug(LoggingLevel.ERROR,'------- FINE STEP 2');
-
 		if(!success)
 			return null;
- system.debug(LoggingLevel.ERROR,'------- FINE STEP 3');
-
 
 		// ############ STEP 4: ###############
 		// Now I can finally save the application!

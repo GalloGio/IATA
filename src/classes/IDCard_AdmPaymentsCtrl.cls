@@ -84,9 +84,15 @@ public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
 				app.Mass_order_Application__c = null;
 				app.Application_Status__c = 'Pending';
 				if(String.isNotBlank(app.Promotion_Code__c)){
-					if(app.ID_Card_Fee_Discount__c != null) app.ID_Card_Fee_Discount__c = app.ID_Card_Fee_Discount__c * 100 / (100+listPromotion[0].Promotion_Value__c);
-					if(app.ID_Card_Fee__c != null) app.ID_Card_Fee__c = app.ID_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
-					if(app.Physical_Card_Fee__c != null) app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
+					if(app.ID_Card_Fee_Discount__c != null){
+						app.ID_Card_Fee_Discount__c = app.ID_Card_Fee_Discount__c * 100 / (100+listPromotion[0].Promotion_Value__c);
+					}
+					if(app.ID_Card_Fee__c != null){
+						app.ID_Card_Fee__c = app.ID_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
+					}
+					if(app.Physical_Card_Fee__c != null){
+						app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * 100 / (100-listPromotion[0].Promotion_Value__c);
+					}
 					app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;
 					app.Promotion_Code__c = '';
 				}

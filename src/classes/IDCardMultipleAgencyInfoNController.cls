@@ -121,24 +121,20 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		string Id = apexpages.currentpage().getparameters().get('selected');
 		string action = apexpages.currentpage().getparameters().get('myaction');
 
-		//if((id == null || id == '') && action != IDCardUtil.APPLICATIONTYPE_NEW && myContacts.size() > 1)
 		if ((inputValue == null || inputValue == '') && action != IDCardUtil.APPLICATIONTYPE_NEW && myContacts.size() > 1) {
 			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.IDCard_PleaseSelectContact ));
-			//return null;
-		} else {
 
+		} else {
 			String features = theAccount.ID_Card_KeyAccount_features__c;
-			if ( features == null)features = '';
+			if (String.isBlank(features)) features = '';
 			if (!isKeyContactForIATAode(IATACodeLocation) && features.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
 				List <Managed_Agency__c> ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false LIMIT 1];
 				if (ma.size() == 0) {
 					errMsg = 'Your account has specific rule for ID card purchase. However no key contact assigned...';
 				}
-
 				else {
 					errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
 				}
-
 
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, errMsg ));
 				hasError = true;

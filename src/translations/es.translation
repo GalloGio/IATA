@@ -7500,7 +7500,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <label><!-- ICCS All Forms Zip File --></label>
         <name>ICCS_All_Forms_Zip_File</name>
     </customLabels>
-        <customLabels>
+    <customLabels>
         <label>He leído la lista de documentos requeridos.</label>
         <name>IDCard_CheckBox</name>
     </customLabels>

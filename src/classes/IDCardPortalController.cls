@@ -33,29 +33,25 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 	public String[] shippingAddress {get; set;}
 
 	public IDCardPortalController() {
-		system.debug('**** PORTAL CONTROLLER ***** ');
 		initialize(true);
 		limited = false;
 		accountStatusTerminated = false;
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
 		replacement = IDCardUtil.APPLICATIONTYPE_REPLACEMENT;
 		newApp = IDCardUtil.APPLICATIONTYPE_NEW;
 		renewal = IDCardUtil.APPLICATIONTYPE_RENEWAL;
 		reissue = IDCardUtil.APPLICATIONTYPE_REISSUE;
 		reissue_renewal = IDCardUtil.APPlICATIONTYPE_REISSUE_RENEWAL;
-		system.debug('**** PORTAL CONTROLLER 2 ***** ');
 		//get selected contact
 		string verNumber = IDCardUtil.DecodeDecryptParameter(apexpages.currentpage().getparameters().get(IDCardUtil.PARAM_VER));
-		system.debug('**** PORTAL CONTROLLER 3 ***** ' + verNumber);
 		verNumber = verNumber.trim();
-		system.debug('**** PORTAL CONTROLLER 4***** ' + Decimal.valueof(verNumber.replaceAll(',', '')));
 
-		if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE))
+		if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE)){
 		IATACodeLocation = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_IATACODE));
+		}
 
-		system.debug('Select  c.Id,c.Middle_Initial__c, c.VER_Number__c ,c.LastName, c.FirstName, c.Email, c.Gender__c, c.UIR__c, c.Date_of_Birth__c,c.Account.TradeName__c,  c.Account.IATACode__c, c.Account.BillingStreet, c.Account.BillingState, c.Account.BillingPostalCode, c.Account.BillingCountry,  c.Account.BillingCity From Contact c where c.VER_Number__c =\'' + verNumber + '\' limit 1');
 		Contact[] tempContact = [Select  c.Id, c.Middle_Initial__c, c.VER_Number__c , c.LastName, c.FirstName, c.Email, c.Gender__c, c.UIR__c, c.Date_of_Birth__c, c.Account.TradeName__c, c.Account.IATACode__c, c.Account.BillingStreet, c.Account.BillingState, c.Account.BillingPostalCode, c.Account.BillingCountry, c.Account.BillingCity From Contact c where c.VER_Number__c = : Decimal.valueof(verNumber.replaceAll(',', '')) limit 1];
-		system.debug('**** PORTAL CONTROLLER 5***** ' + verNumber);
-		system.debug('**** PORTAL CONTROLLER 5.1***** ' + tempContact.size());
 		if (tempContact.size() != 0) {
 
 			selected = tempContact[0];
@@ -63,7 +59,6 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			ID_Card__c[] last_IdCard = [Select Id, Valid_To_Date__c, createdDate, Card_Status__c , Agency_IATA_Code__c From ID_Card__c c WHERE c.Related_Contact__r.Id = :selected.Id AND (c.Card_Status__c = : IDCardUtil.CARDSTATUS_VALID or c.Card_Status__c = : IDCardUtil.CARDSTATUS_CANCELED or c.Card_Status__c = : IDCardUtil.CARDSTATUS_Expired or c.Card_Status__c = : IDCardUtil.CARDSTATUS_APPROVED)
 										order by c.Valid_To_Date__c desc ];
 
-			system.debug('**** PORTAL CONTROLLER 5.2***** ' + last_IdCard.size());
 			if (last_IdCard.size() != 0) {
 				Date tempDate = last_IdCard[0].valid_To_Date__c.addDays(-days);
 				renewalDate = String.valueOf(tempDate);
@@ -83,7 +78,6 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 							limited = false;
 					}
 				}
-				system.debug('**** PORTAL CONTROLLER 5.3 ***** ' + last_IdCard[0].Agency_IATA_Code__c + '  compare to ' + tempContact[0].Account.IATACode__c);
 			}
 
 			List<ID_Card__c> cReplacementAvailableIdCards = [SELECT ID, Related_Contact__c, Is_Active_Card__c FROM ID_Card__c WHERE Related_Contact__c = : selected.Id AND Is_Active_Card__c = true];
@@ -113,7 +107,7 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 								BillingCity, ShippingStreet, ShippingState, ShippingPostalCode, ShippingCountry,
 								ShippingCity, IDCard_Key_Account__c
 								FROM Account 
-								WHERE (RecordType.Name = 'Agency' OR RecordType.Name = 'Domestic Agency') 
+								WHERE (RecordTypeId = :rtAgency) 
 								AND IATACode__c = :IATACodeLocation AND (Status__c = : IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Status__c = 'Terminated')];
 		theAccount = null;
 		if (accounts.size() > 0) {
