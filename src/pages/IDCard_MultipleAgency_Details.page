@@ -119,6 +119,16 @@ body a:hover {
 .btn {
     float: right;
 }
+td.MultipleAgentsLabels{
+    width: 100px;
+}
+.titleIdCards{
+    text-align: left !important; 
+    color: #028FD7; 
+    font-size: .9em; 
+    font-weight: bold; 
+    padding: 5px 2px 4px 5px; 
+}
 
 </style>
 <script>
@@ -280,8 +290,10 @@ body a:hover {
                         </apex:column>
 
                         <apex:column style="vertical-align: top" width="35%">
-                            <apex:facet name="header">{!$Label.IDCard_AgentDetails}</apex:facet>
-                            
+
+                            <div class="titleIdCards">
+                                    {!$Label.IDCard_AgentDetails}
+                            </div>
                             <table class="MultibleAgencyContacts">
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_LastName}:</td>
@@ -295,25 +307,11 @@ body a:hover {
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_MiddleInitial}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Middle_Initial__c}</td>
                                 </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_Email}:</td>
-                                    <td class="MultipleAgentsValues">{!c.con.Email__c}</td>
-                                </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_DOB}:</td>
-                                    <td class="MultipleAgentsValues">
-                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                            <apex:param value="{!c.con.Date_of_Birth__c}" /> 
-                                        </apex:outputText>
-                                    </td>
-                                </tr>
                             </table>
-
-                        </apex:column>
-
-                        <apex:column style="vertical-align: top" width="35%">
-                            <apex:facet name="header">{!$Label.IDCard_CompanyDetails} </apex:facet>
                             
+                            <div class="titleIdCards" style="margin-top:20px;">
+                                    {!$Label.IDCard_CompanyDetails}
+                            </div>
                             <table class="MultibleAgencyAccounts">
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_AgencyName}:</td>
@@ -326,11 +324,7 @@ body a:hover {
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
                                     <td class="MultipleAgentsValues">{!c.acc.IATACode__c}</td>
-                                </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_Address}:</td>
-                                    <td class="MultipleAgentsValues"><div style="height: 40px; max-height: 40px; vertical-align: top; overflow-y: scroll;">{!c.theAddress[0]}<br />{!c.theAddress[4]}, {!c.theAddress[1]} {!c.theAddress[2]}<br />{!c.theAddress[3]}</div></td>
-                                </tr>                 
+                                </tr>       
                                 <script>
                                     var legalName  = '{!c.acc.Legal_name__c}';                                                        
                                     if (legalName == '' || legalName == '0' || legalName == '0.0' || legalName == '0.00'|| legalName == null)
@@ -340,17 +334,27 @@ body a:hover {
                                     }                                                   
                                 </script> 
                             </table>
-
-
                         </apex:column>
-                        
+                            
                         <apex:column >
                             <apex:facet name="header"></apex:facet>
                             <table id="reportAgencyIncorrectInfoTable_{!c.con.Id}" style="margin-top:1em; width: 100%; visibility:hidden;">                                
                                 <tr>                                
                                     <td><apex:outputLabel style="color:blue" value="{!$Label.IDCard_ReportAgencyIncorrectInfo}" escape="false"/></td>                                   
                                 </tr>
-                            </table>                            
+                            </table>     
+
+                        </apex:column>
+
+                        <apex:column style="vertical-align: top" width="35%">
+                            <div class="titleIdCards">
+                                {!$Label.ID_Card_Photo}
+                            </div>     
+                            <table class="MultibleAgencyAccounts">
+                                <tr>
+                                    <td><apex:image id="theImage" value="{!c.photo}" width="123" height="150"/></td>
+                                </tr>
+                            </table>                  
                         </apex:column>
 
 

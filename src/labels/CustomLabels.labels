@@ -14494,6 +14494,13 @@ Your ID Card application manager has been informed of your request.</value>
         <value>&lt;br&gt; Please select your courses here:</value>
     </labels>
     <labels>
+        <fullName>ID_Card_Photo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Photo</shortDescription>
+        <value>ID Card Photo</value>
+    </labels>
+    <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
         <language>en_US</language>
         <protected>false</protected>
