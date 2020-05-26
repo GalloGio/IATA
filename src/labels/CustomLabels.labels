@@ -14431,6 +14431,13 @@ Your ID Card application manager has been informed of your request.</value>
         <value>The Promotion Code {0} is not valid for this type of ID Card application.</value>
     </labels>
     <labels>
+        <fullName>ID_Card_Invalid_Promotion_Code_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card Invalid Promotion Code 3</shortDescription>
+        <value>The Promotion Code {0} is not valid for all types of ID Card applications.</value>
+    </labels>
+    <labels>
         <fullName>ID_Card_Invalid_VER</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -42514,6 +42521,13 @@ Through this service, you can directly access TIP Reports.</value>
         <protected>false</protected>
         <shortDescription>Total_Cost</shortDescription>
         <value>Total cost</value>
+    </labels>
+    <labels>
+        <fullName>Total_Discount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total_Discount</shortDescription>
+        <value>Total discount</value>
     </labels>
     <labels>
         <fullName>Total_Price</fullName>
