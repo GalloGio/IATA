@@ -148,8 +148,17 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
-				Contact toDeleteContact = new Contact(Id = regParam.existingTrainingId);
-				delete toDeleteContact;
+				Contact conToInactivate = new Contact(Id = regParam.existingTrainingId);
+				
+				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
+				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
+				conToInactivate.Email = conToInactivate.Email + '.inactive';
+				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+					conToInactivate.Additional_Email__c = '';
+				}
+
+				conToInactivate.status__c = 'Inactive';
+				update conToInactivate;
 			}
 
 			//Create Yardstick Contact Role Detail
