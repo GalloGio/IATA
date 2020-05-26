@@ -136,13 +136,17 @@ public class IDCardPortalControllerTest {
 		controllerPage_NoCookies.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
 		Test.setCurrentPage(controllerPage_NoCookies);
 
-
-
 		IDCardPortalController iDCardPortalController_NoCookies = new IDCardPortalController();
+
+		iDCardPortalController_NoCookies.openPopup();
+		iDCardPortalController_NoCookies.closePopup();
+
 		//controllerPage_NoCookies.getParameters().put('myaction', IDCardUtil.APPLICATIONTYPE_REPLACEMENT);
+		iDCardPortalController_NoCookies.openPopup();
 		nextPage = iDCardPortalController_NoCookies.next();
 
 		controllerPage_NoCookies.getParameters().put('myaction', IDCardUtil.APPLICATIONTYPE_REPLACEMENT);
+		iDCardPortalController_NoCookies.openPopup();
 		nextPage = iDCardPortalController_NoCookies.next();
 
 

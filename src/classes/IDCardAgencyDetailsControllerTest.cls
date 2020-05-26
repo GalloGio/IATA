@@ -119,15 +119,11 @@ public class IDCardAgencyDetailsControllerTest{
 		insert ma;
 
 		iDCardAgencyDetailsController.theAccount = acc;
-		iDCardAgencyDetailsController.showPopup();
-		iDCardAgencyDetailsController.closePopup();
 		nextPage = iDCardAgencyDetailsController.next();
 	}
 
 	public static TestMethod void TestAccountAddress(){
 		 InitIDCardAgencyDetailsControllerTest();
-
-		iDCardAgencyDetailsController.showPopup();
 
 		 Account acc = new Account(name ='testAccount');
 		 iDCardAgencyDetailsController.ShippingAddress sAddr = new iDCardAgencyDetailsController.ShippingAddress(acc);

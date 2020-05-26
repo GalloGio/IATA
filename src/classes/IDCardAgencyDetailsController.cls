@@ -19,8 +19,6 @@ public with sharing class IDCardAgencyDetailsController extends IDCardAbstractCo
 
 	public String ver {get; set;}
 
-	public Boolean displayPopup {get; set;}
-
 
 	/**
 	 * Constructor
@@ -186,31 +184,7 @@ public with sharing class IDCardAgencyDetailsController extends IDCardAbstractCo
 
 	public Pagereference refresh() {
 		initialize();
-		displayPopup = false;
 		return null;
-	}
-
-	public void showPopup() {
-		system.debug('COOL!!!');
-		if (theAccount.ID_Card_KeyAccount_features__c != null && theAccount.ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
-			List <Managed_Agency__c> ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :iatacode AND Delegate__c = false LIMIT 1];
-			if (ma.size() == 0) {
-				errMsg = 'Your account has specific rule for ID card purchase. However no key contact assigned...';
-			}
-
-			else {
-				errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
-			}
-			hasError = true;
-			return;
-			system.debug('UPS!!!!');
-		}
-		displayPopup = true;
-		system.debug('displayPopup: ' + displayPopup);
-	}
-
-	public void closePopup() {
-		displayPopup = false;
 	}
 
 	public class ShippingAddress {
