@@ -4525,14 +4525,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>CSP First Login Desc</shortDescription>
         <value>Your account has been created successfully. You can now discover the standard features within the Portal. Some other features require further details, please complete your Profile for full access.</value>
     </labels>
-	<labels>
-		<fullName>CSP_First_Login_Desc_LMS_IE</fullName>
-		<categories>CS Portal</categories>
-		<language>en_US</language>
-		<protected>false</protected>
-		<shortDescription>CSP First Login Desc LMS</shortDescription>
-		<value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
-	</labels>    
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
         <categories>CS Portal</categories>
