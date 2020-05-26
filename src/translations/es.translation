@@ -7500,6 +7500,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <label><!-- ICCS All Forms Zip File --></label>
         <name>ICCS_All_Forms_Zip_File</name>
     </customLabels>
+        <customLabels>
+        <label>He leído la lista de documentos requeridos.</label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
+        <label>Es posible que necesite los siguientes documentos para completar la solicitud de la tarjeta ID Card. Con fines de verificación, IATA podrá pedir documentos o información adicionales al solicitante. Una declaración falsa dará lugar a la cancelación y bloqueo futuro de la solicitud de la tarjeta ID Card.</label>
+        <name>IDCard_CheckList_ErrorMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label>Siguiente</label>
+        <name>IDCard_Continue</name>
+    </customLabels>
     <customLabels>
         <label><!-- ICCS Applied Label --></label>
         <name>ICCS_Applied_Label</name>
