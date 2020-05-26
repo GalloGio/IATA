@@ -345,8 +345,7 @@
 
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div class="container">
-            <div>
-                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!AND(communityName!='CNS',NOT(isPassAccreditation))}"/>
+			<div>
                 <apex:image value="{!URLFOR($Resource.PASS_Logo_Large)}" height="112" style="float:left" rendered="{!AND(communityName!='CNS',isPassAccreditation)}" />
             </div>
 
