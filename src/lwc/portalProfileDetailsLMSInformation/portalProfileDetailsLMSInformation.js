@@ -39,6 +39,8 @@ import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_Verification
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_Close from '@salesforce/label/c.CSP_Close';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
+import CSP_Registration_Existing_User_Message_Not_Matching_F6_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_2';
+
 
 
 export default class PortalRegistrationAddressInformationLMS extends LightningElement {
@@ -111,7 +113,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_L2_VerificationToP3_LMS,
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_Close,
-		CSP_LogOut
+		CSP_LogOut,
+		CSP_Registration_Existing_User_Message_Not_Matching_F6_2
 	}
 
 
@@ -128,14 +131,14 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 		//Set the initial mail to test if after changing the email to check if the change is equal to the initial email
 		this.initialMail = this.additionalEmail;
+		this.localAdditionalEmail = '';
 
 		if(this.additionalEmail !== null && this.additionalEmail !== '' && this.additionalEmail != undefined){
 			this.validated = true;
+			this.localAdditionalEmail = this.additionalEmail;
 		}
-		
 
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
-		this.localAdditionalEmail = this.additionalEmail;
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 		
 		// Retrieve Contact information
@@ -155,8 +158,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			// console.log('Error1: ', error);
-			// console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
 		
 	}
@@ -187,12 +188,10 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	}
 
 	startLoading(){
-		// this.dispatchEvent(new CustomEvent('startloading'));
 		this.isLoading = true;
 	}
 
 	stopLoading(){
-		// this.dispatchEvent(new CustomEvent('stoploading'));
 		this.isLoading = false;
 	}
 
@@ -206,6 +205,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	closeModal() { 
 		this.dispatchEvent(new CustomEvent('closemodal'));
 	}
+
 
 	handleSubmit(event) {
 		this.isSaving = true;
@@ -296,7 +296,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 				this.stopLoading();
 			})
 			.catch(error => {
-				// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 				this.openErrorModal = true;
 				this.errorModalMessage = JSON.parse(JSON.stringify(error));
 				this.stopLoading();
@@ -308,8 +307,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
     handleError(event) {
 		this.isSaving = false;
-		// console.log('handleError - event: ', event);
-		// console.log('handleError - event: ', JSON.parse(JSON.stringify(event )));
     }
 
     onRecordSubmit(event) {
@@ -362,18 +359,14 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 						let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
 						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
 							if(result2 === 'true'){
-							//todo:disposable email alert!
 								//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 								this.stopLoading();
 							}else{
-								//todo:check if the email address is associated to a contact and/or a user
 								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
 								//but the "E-Mail" field is pre-populated and, by default, not editable.
 								//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 								//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 								//button is displayed on the form.
-								// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
-
 								getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
 
 									var userInfo = JSON.parse(JSON.stringify(result3));
@@ -411,8 +404,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												})
 												.catch((error) => {
 													this.stopLoading();
-													// console.log('Error: ', JSON.parse(JSON.stringify(error)));
-													// console.log('Error: ', error);
 												});
 
 											this.stopLoading();
@@ -453,7 +444,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												})
 												.catch((error) => {
 													this.stopLoading();
-													// console.log('Error: ', JSON.parse(JSON.stringify(error)));
 												});
 												this.stopLoading();
 											// }
@@ -465,15 +455,12 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 											this.stopLoading();
 											this.localContactInfo.flow = this.flow;
 
-											// this.dispatchEvent(new CustomEvent('Submit'));
 											this.handleSubmit();
 										}
 									}
 									this.validated = true;
 								})
 								.catch(error => {
-									// console.log('Error: ', JSON.parse(JSON.stringify(error)));
-									// console.log('Error: ', error);
 									this.stopLoading();
 									
 								});
@@ -483,7 +470,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 				});
 			}else{
 				this.localContactInfo.flow = this.flow;
-				// this.dispatchEvent(new CustomEvent('Submit'));
 				this.handleSubmit();
 			}
 			

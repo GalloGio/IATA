@@ -47,7 +47,7 @@
 				</div>
 				
 			</lightning-layout-item>
-			
+
 			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
 			<template if:true={existingUsernameVisibility}>
 
@@ -72,6 +72,10 @@
 						<div class="formLabelContainer">
 							<div class="sectionDescription">
 								<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6}></lightning-formatted-rich-text>
+							</div>
+							</br>
+							<div class="sectionDescription">
+								<lightning-formatted-rich-text value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6_2}></lightning-formatted-rich-text>
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -104,7 +108,7 @@
 				</div>
 			</div>
 
-<!-- ---------------------------------------------------- -->
+			<!-- ---------------------------------------------------- -->
 
 			<lightning-layout-item padding="around-small" size="12">
 			</lightning-layout-item>

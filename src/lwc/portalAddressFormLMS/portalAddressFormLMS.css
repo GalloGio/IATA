@@ -2,7 +2,7 @@
  * Created by pvavruska on 8/8/2019.
  */
 
-.page{
+ .page{
 	margin: 10px;
 }
 
@@ -257,15 +257,10 @@
 }
 
 .addressItem{
-	margin-bottom: 40px;
-}
-
-.addressItem:nth-child(odd){
-	padding-right: 7px;
-}
-
-.addressItem:nth-child(even){
-	padding-left: 7px;
+	margin-bottom: 30px;
+	vertical-align: top;
+	width: 50%;
+    padding: 7px;
 }
 
 .searchContainer{

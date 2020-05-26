@@ -46242,7 +46242,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
 		<language>en_US</language>
 		<protected>false</protected>
 		<shortDescription>CSP Existing Contact</shortDescription>
-		<value>The personal email you have provided is already used with this login email [Existing_email]. In order to ensure the data integrity of your training record, personal and work emails must be unique. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If the above personal email address is correct and [Email] is your current work email, please click save (once) to merge your training account. Your merged login will be [Email]. &lt;/li&gt;</value>
+		<value>The personal email you have provided is already used with this login email [Existing_email]. In order to ensure the data integrity of your training record, personal and work emails must be unique. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If the above personal email address is correct and [Email] is your current work email, please click save/next (once) to merge your training account. Your merged login will be [Email]. &lt;/li&gt;</value>
 	</labels>
     <labels>
 		<fullName>CSP_L3_ExistingContact_LMS2</fullName>
@@ -46441,7 +46441,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_Phone_LMS</shortDescription>
-        <value>Phone</value>
+        <value>Business Phone</value>
     </labels>
     <labels>
         <fullName>CSP_L_TrainingEmail_LMS</fullName>
@@ -46784,6 +46784,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
 		<shortDescription>CSP Registration Existing work Message</shortDescription>
 		<value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
 	</labels>
+	<labels>
+		<fullName>CSP_Registration_Existing_Work_Message_LMS_F8</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP Registration Existing work Message</shortDescription>
+		<value>The individual work email above is already in use as personal email with user [Existing_email]. Please logout and update the personal email associated with this other user prior to adding the above work email to this user. If you’d like to proceed anyway, change your second answer above to ‘No’ to continue. (Please note, without a work email address, we won’t be able to bill your organization, and you may miss out on a discount)</value>
+	</labels>
     <labels>
 		<fullName>CSP_Registration_Existing_Work_Message_LMS_Profile</fullName>
 		<categories>CS Portal</categories>
@@ -46873,14 +46881,22 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>Profile Training section</shortDescription>
         <value>Another active user is already using the userID. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
     </labels>
-    <labels>
-        <fullName>CSP_First_Login_Desc_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP First Login Desc LMS</shortDescription>
-        <value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.</value>
-    </labels>
+	<labels>
+		<fullName>CSP_First_Login_Desc_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP First Login Desc LMS</shortDescription>
+		<value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.&lt;br&gt;&lt;b&gt;(make sure pop-ups are enabled)&lt;/b&gt;</value>
+	</labels>
+	<labels>
+		<fullName>CSP_First_Login_Desc_LMS_IE</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP First Login Desc LMS</shortDescription>
+		<value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
+	</labels>
     <labels>
         <fullName>CSP_Complete_Profile_LMS</fullName>
         <categories>CS Portal</categories>
