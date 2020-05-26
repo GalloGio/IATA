@@ -55,7 +55,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				DateTime databirth = DateTime.newInstance(DOB.year(), DOB.month(), DOB.day());
 
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 + '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -75,7 +75,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 					}
 				}
 			} else {
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 //+ '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -263,9 +263,11 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		public String[] theAddress {get; set;}
 		//RA: Valid is used to only display contacts with valid Agency
 		public Boolean valid {get; set;}
+		public String photo {get; set;}
 
 		public cContact(ID_Card__c c) {
 			con = c;
+			photo = String.isNotBlank(con.Photo__c) ? PortalProfileCtrl.getPhotoFromAPI(con.Photo__c) : '';
 			selected = '';
 			Account[] temp = [Select Name, Legal_name__c, RecordType.Name, Short_Name__c, IATACode__c,
 							  BillingStreet, BillingState, BillingPostalCode, BillingCountry, BillingCity,

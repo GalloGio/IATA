@@ -4531,6 +4531,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Active AL Withholding</fullName>
+                    <default>false</default>
+                    <label>Active AL Withholding</label>
+                </value>
+                <value>
                     <fullName>AG &gt; 6 mths</fullName>
                     <default>false</default>
                     <label>AG &gt; 6 mths</label>
@@ -4671,19 +4676,24 @@
                     <label>Irregularity /Default</label>
                 </value>
                 <value>
-                    <fullName>Issue &lt; $1k</fullName>
+                    <fullName>Late AL settlement (External) &lt; $1k</fullName>
                     <default>false</default>
-                    <label>Issue &lt; $1k</label>
+                    <label>Late AL settlement (External) &lt; $1k</label>
                 </value>
                 <value>
                     <fullName>Late AL settlement (External )</fullName>
                     <default>false</default>
-                    <label>Late AL settlement (External )</label>
+                    <label>Late AL Settlement (External) &gt; $1k</label>
+                </value>
+                <value>
+                    <fullName>Late AL settlement (Internal) &lt; $1k</fullName>
+                    <default>false</default>
+                    <label>Late AL settlement (Internal) &lt; $1k</label>
                 </value>
                 <value>
                     <fullName>Late AL settlement (Internal)</fullName>
                     <default>false</default>
-                    <label>Late AL settlement (Internal)</label>
+                    <label>Late AL Settlement (Internal) &gt; $1k</label>
                 </value>
                 <value>
                     <fullName>Manual billing upload</fullName>
@@ -4804,6 +4814,10 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Board Target Exclusion</controllingFieldValue>
+                <valueName>Active AL Withholding</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Board Target Exclusion</controllingFieldValue>
                 <valueName>AL instruction</valueName>
             </valueSettings>
             <valueSettings>
@@ -4918,7 +4932,11 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other</controllingFieldValue>
-                <valueName>Issue &lt; $1k</valueName>
+                <valueName>Late AL settlement (External) &lt; $1k</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Other</controllingFieldValue>
+                <valueName>Late AL settlement (Internal) &lt; $1k</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other</controllingFieldValue>
@@ -5558,6 +5576,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Zambia</controllingFieldValue>
                 <controllingFieldValue>Zimbabwe</controllingFieldValue>
                 <controllingFieldValue>India</controllingFieldValue>
+                <controllingFieldValue>Cote d&apos;Ivoire</controllingFieldValue>
                 <controllingFieldValue>Samoa</controllingFieldValue>
                 <controllingFieldValue>Gabon</controllingFieldValue>
                 <controllingFieldValue>Georgia</controllingFieldValue>
@@ -5868,6 +5887,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <controllingFieldValue>Zambia</controllingFieldValue>
                 <controllingFieldValue>Zimbabwe</controllingFieldValue>
                 <controllingFieldValue>India</controllingFieldValue>
+                <controllingFieldValue>Cote d&apos;Ivoire</controllingFieldValue>
                 <controllingFieldValue>Samoa</controllingFieldValue>
                 <controllingFieldValue>Gabon</controllingFieldValue>
                 <controllingFieldValue>Georgia</controllingFieldValue>
@@ -13308,6 +13328,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Active AL Withholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Agent Adjustment</fullName>
                 <default>false</default>
             </values>
@@ -13388,15 +13412,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Issue %3C %241k</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Late AL settlement %28External %29</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Late AL settlement %28External%29 %3C %241k</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Late AL settlement %28Internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Late AL settlement %28Internal%29 %3C %241k</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17953,10 +17981,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Issue %3C %241k</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Late AL settlement %28External %29</fullName>
                 <default>false</default>
             </values>
@@ -22237,10 +22261,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Irregularity %2FDefault</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Issue %3C %241k</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -74,7 +74,7 @@ public class GCS_RegistrationControllerTest {
 		Account airline = new Account(name = 'TEST AIRLINE', Category__c='Passenger only',Sector__c='Airline',IATACode__c = '057', IATA_ISO_Country__c = portugal.Id, recordTypeId = airlineRT);
 		accs.add(airline);
 
-		Account airline2 = new Account(name = 'TEST DEACTIVATED AIRLINE', Category__c='Passenger only',Sector__c='Airline',IATACode__c = '058', IATA_ISO_Country__c = portugal.Id, ACLI_Status__c = 'Inactive Company', recordTypeId = airlineRT);
+		Account airline2 = new Account(name = 'TEST OUT OF BUSINESS AIRLINE', Category__c='Passenger only',Sector__c='Airline',IATACode__c = '058', IATA_ISO_Country__c = portugal.Id, AccountStatus__c = 'Out of Business', recordTypeId = airlineRT);
 		accs.add(airline2);
 
 		insert accs;

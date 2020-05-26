@@ -1,5 +1,5 @@
 public abstract class IDCardAbstractController {
-
+	
 	protected String selectedLanguage;
 
 	public String Language {get; set;}
@@ -66,7 +66,6 @@ public abstract class IDCardAbstractController {
 
 	public void initialize(){
 		//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'VER = '+IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_VER))));
-
 
 		mustRedirect = false;
 		pagesurl = new  map<string,string>();

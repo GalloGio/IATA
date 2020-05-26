@@ -192,7 +192,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track totalNrRecords = 0;
     @track nrLoadedRecs = 0;     //nr of loaded records
     @track currentPageNumber = 1;
-
+    
+    @track showCross = false;
     searchMode = false;
     @track searchText='';
 
@@ -292,7 +293,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //Level 2 registration variables
     @track isFirstLevelUser = false;
     level2RegistrationTrigger = 'service';
-    isTriggeredByRequest = true;
     
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;
@@ -629,6 +629,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //search Records
     searchRecord(event) {
         let searchKey = event.target.value.toLowerCase().trim();
+        this.showCross=searchKey.length>0;
         this.searchText = event.target.value;
         this.searchKey = searchKey;      
         if (this.searchKey.length == 0 ||this.searchKey.length >= 3) {
@@ -637,6 +638,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.searchKey = '';
         }
     }  
+    removeTextSearch(){
+        this.searchText='';
+        this.searchKey = '';
+        this.showCross=false;
+        this.queryContacts();
+    }
 
     queryContacts(){ 
             this.showSpinner = true;
