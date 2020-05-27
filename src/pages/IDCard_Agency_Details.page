@@ -1,132 +1,180 @@
 <apex:page cache="true" expires="600" docType="html-4.01-strict" title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" language="{!Language}" controller="IDCardAgencyDetailsController" >
-        <html xmlns="http://www.w3.org/1999/xhtml">
-        <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-           <title>IATA/IATAN ID Card Online Platform</title>
-            <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
-            
-            <style type="text/css">
-            <!--.links {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 10pt;
-            }
-            .labels {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 10pt;
-            }-->
-            body a:hover {
-                color: white;
-                text-decoration:none !important; 
-            }
+		<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		   <title>IATA/IATAN ID Card Online Platform</title>
+			<apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
+			
+			<style type="text/css">
+			<!--.links {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 10pt;
+			}
+			.labels {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 10pt;
+			}-->
+			body a:hover {
+				color: white;
+				text-decoration:none !important; 
+			}
+			
+			.customPopup {
+				background-color: white;
+				border-style: solid;
+				border-width: 2px;
+				left: 50%;
+				top: 30%;
+				font-size: 11pt;
+				padding: 10px;
+				position: absolute;
+				z-index: 9999;
+				width: 810px;
+				margin-left: -405px;
+			}
 
-            .closeButton {
-                float: right;
-            }
+			.closeButton {
+				float: right;
+			}
 
-            </style>
-            <script type="text/javascript">
-                  function refreshLanguageAgencyDetails() {
-                    $("[id*='Loading']").show();
-                        setCookie('apex__idcard_portal_lang', document.getElementById('{!$Component.formSf.langSelect}').value, 365);
-                        //window.location.reload();
-                        callRefresh();
-                    }
-            </script>
-        </head>
-        
-        <body>
-            <c:IDCard_HeaderComponent />
-            <c:Loading />
-            <div id="page_wrapper">
-                <apex:form forceSSL="true" id="formSf">
-                  <!-- Header -->
-                    <div class="HeaderIMG"> 
-                        <table width="100%">
-                            <tr>
-                                <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
-                                <td><!--{!$Label.Language_Selection_Label}:-->
-                                    <div class="select-style">
-                                      <apex:actionRegion >
-                                         <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
-                                         <apex:selectOptions value="{!LangItems}" />
-                                         <apex:actionSupport event="onchange" onsubmit="refreshLanguageAgencyDetails()" reRender=""></apex:actionSupport>
-                                         </apex:selectList>
-                                      </apex:actionRegion>
-                                    </div>
-                                </td>
-                             </tr>
-                        </table>
-                        <h1>{!$Label.IDCard_Landing_Title}</h1>
-                    </div>
-                    <apex:actionFunction name="callRefresh"  action="{!refresh}" />
-                 </apex:form>
-                 <apex:form forceSSL="true" id="idcardForm">
-            <div class="background">
-                    <br />
-                   
-                    <br />
-                    <div style="width:900px; margin:0 auto;">
-                        <apex:pageBlock >
-                            <!--<apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false"/><br/><br/>-->
+			</style>
+			<script type="text/javascript">
+				  function refreshLanguageAgencyDetails() {
+					$("[id*='Loading']").show();
+						setCookie('apex__idcard_portal_lang', document.getElementById('{!$Component.formSf.langSelect}').value, 365);
+						//window.location.reload();
+						callRefresh();
+					}
+			</script>
+		</head>
+		
+		<body>
+			<c:IDCard_HeaderComponent />
+			<c:Loading />
+			<div id="page_wrapper">
+				<apex:form forceSSL="true" id="formSf">
+				  <!-- Header -->
+					<div class="HeaderIMG"> 
+						<table width="100%">
+							<tr>
+								<td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+								<td><!--{!$Label.Language_Selection_Label}:-->
+									<div class="select-style">
+									  <apex:actionRegion >
+										 <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+										 <apex:selectOptions value="{!LangItems}" />
+										 <apex:actionSupport event="onchange" onsubmit="refreshLanguageAgencyDetails()" reRender=""></apex:actionSupport>
+										 </apex:selectList>
+									  </apex:actionRegion>
+									</div>
+								</td>
+							 </tr>
+						</table>
+						<h1>{!$Label.IDCard_Landing_Title}</h1>
+					</div>
+					<apex:actionFunction name="callRefresh"  action="{!refresh}" />
+				 </apex:form>
+				 <apex:form forceSSL="true" id="idcardForm">
+			<div class="background">
+					<br />
+				   
+					<br />
+					<div style="width:900px; margin:0 auto;">
+						<apex:pageBlock >
+							<!--<apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false"/><br/><br/>-->
 
-                            <h1>{!$Label.IDCard_AgencyDetails}</h1>
-                             <apex:pageMessage summary="{!ErrMsg}" rendered="{!HasError}" severity="error" strength="2" escape="false" />                      
-                                                          
-                                <table> 
-                                    <tr>
-                                        <td colspan="2"><br /><apex:outputText value="{!$Label.IDCard_ContactNotFound}" label="" escape="false" /></td>                                    
-                                    </tr>
-                               
-                                    <tr>
-                                        <td style="width:25%;vertical-align:top;"><b>{!$Label.IDCard_AgencyName}</b>:</td>
-                                        <td class="outputText"><apex:outputText value="{!theAccount.Short_Name__c}" label="" /></td>
-                                    </tr>                               
-                                    <tr>
-                                        <td style="vertical-align:top;"><b>{!$Label.IDCard_Address}</b>:</td>
-                                        <td class="outputText"><apex:outputText value="{!shippingAddress[0]}" label="" /> <br />
-                                            <apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[1]} {!shippingAddress[2]}" label="" /> <br />
-                                            <apex:outputText value="{!shippingAddress[3]}" label="" /> <br />
-                                            <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo}" escape="false"/>
-                                        </td>
-                                    </tr>                                                 
-                                    
-                                </table>                            
-                            <br />
-                            <!--<apex:pageBlockSection columns="1">
-                                <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false"/>
-                            </apex:pageBlockSection>-->
-                            <apex:pageBlockButtons location="bottom">                       
-                                <center>
-                                    <table style="cellspacing: 15px">
-                                        <tr>
-                                            <td>
-                                                <apex:commandLink action="{!previous}" id="btnPrevious" styleClass="btn-BlueButtonWAL" rendered="true">
-                                                <span>{!$Label.IDCard_GoBackLoginPage}</span>
-                                                </apex:commandLink>
-                                                <!--<apex:commandButton action="{!previous}" value="{!$Label.IDCard_GoBackLoginPage}" id="btnPrevious" rendered="true">
-                                                </apex:commandButton>-->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <apex:commandLink action="{!next}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true">
-                                                <span>{!$Label.IDCard_ApplyingFirstIDCard}</span>
-                                                </apex:commandLink>
-                                                <!--<apex:commandButton action="{!next}" value="{!$Label.IDCard_ApplyingFirstIDCard}" id="btnNext" rendered="true">
-                                                </apex:commandButton>-->
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </center>
-                            </apex:pageBlockButtons>
+							<apex:outputPanel id="popup">
 
-                        </apex:pageBlock>
-                    </div>
-                    </div>
-                </apex:form>
-            </div>
-            <c:IDCard_footerComponent />
-            
-        </body>
-        </html>
-    </apex:page>
+								<apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
+									<apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="popup" >
+									</apex:commandButton>
+									<apex:pageblockSection columns="1">
+										<apex:pageBlockSectionItem dataStyle="display:block;width:800px;">                         
+											<apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="display:block;width:770px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!theAccount.Short_Name__c}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[0]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[1]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[2]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center;display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[3]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem >
+										<apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="display:block;width:770px;"/>
+										</apex:pageblockSectionItem>
+									</apex:pageblockSection>
+									<apex:commandButton value="Continue..." action="{!next}" styleClass="closeButton" rerender="popup">
+									</apex:commandButton>
+								</apex:outputPanel>
+							</apex:outputPanel>
+
+							<h1>{!$Label.IDCard_AgencyDetails}</h1>
+							 <apex:pageMessage summary="{!ErrMsg}" rendered="{!HasError}" severity="error" strength="2" escape="false" />                      
+														  
+								<table> 
+									<tr>
+										<td colspan="2"><br /><apex:outputText value="{!$Label.IDCard_ContactNotFound}" label="" escape="false" /></td>                                    
+									</tr>
+							   
+									<tr>
+										<td style="width:25%;vertical-align:top;"><b>{!$Label.IDCard_AgencyName}</b>:</td>
+										<td class="outputText"><apex:outputText value="{!theAccount.Short_Name__c}" label="" /></td>
+									</tr>                               
+									<tr>
+										<td style="vertical-align:top;"><b>{!$Label.IDCard_Address}</b>:</td>
+										<td class="outputText"><apex:outputText value="{!shippingAddress[0]}" label="" /> <br />
+											<apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[1]} {!shippingAddress[2]}" label="" /> <br />
+											<apex:outputText value="{!shippingAddress[3]}" label="" /> <br />
+											<apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo}" escape="false"/>
+										</td>
+									</tr>                                                 
+									
+								</table>                            
+							<br />
+							<!--<apex:pageBlockSection columns="1">
+								<apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false"/>
+							</apex:pageBlockSection>-->
+							<apex:pageBlockButtons location="bottom">                       
+								<center>
+									<table style="cellspacing: 15px">
+										<tr>
+											<td>
+												<apex:commandLink action="{!previous}" id="btnPrevious" styleClass="btn-BlueButtonWAL" rendered="true">
+												<span>{!$Label.IDCard_GoBackLoginPage}</span>
+												</apex:commandLink>
+												<!--<apex:commandButton action="{!previous}" value="{!$Label.IDCard_GoBackLoginPage}" id="btnPrevious" rendered="true">
+												</apex:commandButton>-->
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<!--<apex:commandLink action="{!next}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true">-->
+												<apex:commandLink action="{!showPopup}" id="btnNext" styleClass="btn-BlueButtonWAR" rendered="true" rerender="">
+												<span>{!$Label.IDCard_ApplyingFirstIDCard}</span>
+												</apex:commandLink>
+												<!--<apex:commandButton action="{!next}" value="{!$Label.IDCard_ApplyingFirstIDCard}" id="btnNext" rendered="true">
+												</apex:commandButton>-->
+											</td>
+										</tr>
+									</table>
+								</center>
+							</apex:pageBlockButtons>
+
+						</apex:pageBlock>
+					</div>
+					</div>
+				</apex:form>
+			</div>
+			<c:IDCard_footerComponent />
+			
+		</body>
+		</html>
+	</apex:page>
