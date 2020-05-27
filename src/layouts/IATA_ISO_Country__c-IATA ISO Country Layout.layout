@@ -63,6 +63,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>GxA_Enable__c</field>
             </layoutItems>
         </layoutColumns>
