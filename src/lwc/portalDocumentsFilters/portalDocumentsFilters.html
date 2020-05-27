@@ -20,10 +20,10 @@
             </div>        
             <div if:true={tile.open} key={tile.categoryApiName} data-item={tile.categoryApiName}>
                 <div class="slds-m-around_medium slds-align_absolute-center">
-                    <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value="Product Type" options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
+                    <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value={tile.prodCatVal} options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
                 </div>
                 <div class="slds-m-around_medium slds-align_absolute-center">
-                    <lightning-combobox class="fullWidth" name="documentsPublishedCountry" label="Published Country" value="Published Country" options={countryPicklistValues} onchange={handleCountryPicklist}></lightning-combobox>
+                    <lightning-combobox class="fullWidth" name="documentsPublishedCountry" label="Published Country" value={tile.countrypub} options={countryPicklistValues} onchange={handleCountryPicklist}></lightning-combobox>
                 </div>
             </div>
         </template>        

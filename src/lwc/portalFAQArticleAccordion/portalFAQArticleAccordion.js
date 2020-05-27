@@ -85,6 +85,10 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         return this.articles !== undefined && this.articles.length > 0;
     }
 
+    get hideSearchbar(){
+        return  this._articleView !== undefined &&this._articleView.UrlName != undefined;
+    }
+
     // GET COOKIE SESSION AND INITIALIZE LIST OF ARTICLES
     connectedCallback() {
         // Used on portalFAQRelatedArticle
@@ -128,10 +132,11 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
         } else if(this._articleView !== undefined) {
 
-            if(this._articleView.q !== undefined) {
+            if(this._articleView.q !== undefined || this._articleView.UrlName !== undefined) {
                 let filteringObject = {};
                 filteringObject.searchText = this._articleView.q;
                 filteringObject.language = this.language;
+                filteringObject.urlName = this._articleView.UrlName;
                 filteringObject.guestUser = this.language !== undefined && this.language !== '' ? true : false;
                 
                 /* SAME METHOD USED IN SEARCH FUNCTIONALITY
@@ -139,7 +144,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                 getFilteredFAQsResultsPage({ searchKey : JSON.stringify(filteringObject), requestedPage : '0'})
                 .then(results => {
                     this.articles = [];
-                    if(results.records.length) {
+                    if(results.records && results.records.length>=0) {
                         this.handleCallback(results.records);
                     }
                 });            
@@ -216,7 +221,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         tempArticleIds = '(';
 
         Object.keys(res).forEach(function (el) {
-            if(relatedArticleId !== undefined && relatedArticleId === res[el].Id) { // OPENS THE ARTICLE PREVIOUSLY CLICKED THAT CAME FROM RELATED ARTICLES LIST OR SEARCH LIST
+            if((relatedArticleId !== undefined && relatedArticleId === res[el].Id)||res.length==1 ) { // OPENS THE ARTICLE PREVIOUSLY CLICKED THAT CAME FROM RELATED ARTICLES LIST OR SEARCH LIST
                 tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: true, feedback: false });
                 articleSelected = {
                     title : res[el].Title,
@@ -324,24 +329,16 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.articles = articleVals;
     }
 
-    onInputChange(event) {
-        this.showCross=event.target.value.length>0;
-        if(event.target.value !== '') {
-            this.searchText = event.target.value;
+    onInputChange(event) {    
+        if(event.detail.key !== '') {
+            this.searchText = event.detail.key;
+            let filteringObject = {};
+            filteringObject.searchText = this.searchText;
+            filteringObject.language = this.language;
+            filteringObject.guestUser = this.language !== undefined && this.language !== '' ? true : false;
 
-            clearTimeout(this.timeout);
-
-            this.timeout = setTimeout(() => {
-                if(this.searchText.length > 3) {
-                    let filteringObject = {};
-                    filteringObject.searchText = this.searchText;
-                    filteringObject.language = this.language;
-                    filteringObject.guestUser = this.language !== undefined && this.language !== '' ? true : false;
-
-                    this.renderSearchArticles(JSON.stringify(filteringObject));
-                }
-            }, 1300, this);
-        } else {
+            this.renderSearchArticles(JSON.stringify(filteringObject));
+        }else{
             this.redirectionTo();
         }
     }

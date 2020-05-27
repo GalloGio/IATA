@@ -2822,6 +2822,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>เพิ่มในบุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>ลบออกจากที่คั่นหนังสือของฉัน</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>บุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3076,6 +3088,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มเอกสารในบุ๊คมาร์คของฉันแล้ว</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>เอกสาร #doc ถูกนำออกจากที่คั่นหนังสือของฉัน</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>เอกสาร</label>
@@ -3814,6 +3838,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>หมวดหมู่หลัก</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3864,6 +3892,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่มีบุ๊คมาร์คของคุณในตอนนี้</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>แต่เมื่อคุณมีคุณจะดูคนล่าสุดพร้อมรายละเอียดพื้นฐานของพวกเขาในพื้นที่นี้</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>คุณไม่มีคำร้องใด ๆ ในขณะนี้</label>
@@ -4388,6 +4424,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>หัวข้อ</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ลู่</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; คลิกที่นี่เพื่อเข้าถึง &quot;การรับรองคุณภาพของ IATA และการเปลี่ยนแปลง&quot; โดยตรง &lt;/a&gt;</label>
@@ -35108,7 +35148,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>รายงาน</label>
             <name>Products</name>
         </sections>
     </reportTypes>

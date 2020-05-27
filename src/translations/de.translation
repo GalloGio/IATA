@@ -2826,6 +2826,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Zu meinen Lesezeichen hinzufügen</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Aus meinen Lesezeichen entfernen</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Meine Lesezeichen</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3080,6 +3092,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Zugriff verweigern</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dokument zu meinen Lesezeichen hinzugefügt</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Dokument #doc aus meinen Lesezeichen entfernt</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Dokumente</label>
@@ -3818,6 +3842,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Haupt-Kategorien</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Sie können die Benutzer über die folgende Liste verwalten.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3868,6 +3896,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Kein zugehöriges Konto zur Anzeige.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Ihre Lesezeichen sind vorerst leer.</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Aber wenn Sie das getan haben, werden Sie sich die neuesten mit ihren grundlegenden Details in diesem Bereich ansehen.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Sie haben noch keine Fälle.</label>
@@ -4394,6 +4430,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Titel</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Verfolgen Sie</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Klicken Sie hier, um direkt zu IATA-Akkreditierung und Änderungen zu gelangen. &lt;/a&gt;</label>
@@ -35111,7 +35151,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Berichte</label>
             <name>Products</name>
         </sections>
     </reportTypes>
