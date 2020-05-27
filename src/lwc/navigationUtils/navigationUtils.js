@@ -3,12 +3,14 @@
  *
  */
 
+
+
 /**
- * Fires an event to listeners.
- * @param {object} baseUrl - Pagereference object
+ * Generates a URL with set of params
+ * @param {object} baseUrl - landing page
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
-const navigateToPage = (baseURl, paramsObject) => {
+const assembleUrl = (baseURl, paramsObject) => {
 	let ret = [];
 	for (let d in paramsObject) {
 		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d].replace(new RegExp('\\+', 'g'),' ')));
@@ -19,7 +21,16 @@ const navigateToPage = (baseURl, paramsObject) => {
 		url = url + (url.indexOf('?') > 0 ? '&' : '?') + ret.join('&');
 	}
 
-	window.location.href = url;
+	return url;
+}
+
+/**
+ * Redirects to a URL and set of params
+ * @param {object} baseUrl - landing page
+ * @param {object} paramsObject - Object containing the parameters to be incapsulated
+ */
+const navigateToPage = (baseURl, paramsObject) => {
+	window.location.href = assembleUrl(baseURl, paramsObject);
 };
 
 const getParamsFromPage = () => {

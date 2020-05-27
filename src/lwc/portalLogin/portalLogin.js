@@ -235,7 +235,7 @@ export default class PortalLogin extends LightningElement {
 				if(!startURL) startURL = "";
 				delete this._pageParams.startURL;
 
-				login({username: this.email, password: this.password, landingPage: startURL, params: this._pageParams}).then(r => {
+                login({username: this.email, password: this.password, landingPage: encodeURIComponent(startURL), params: this._pageParams}).then(r => {
 					var response = JSON.parse(JSON.stringify(r));
 					if(response.isSuccess){
 						navigateToPage(response.sessionUrl, this._pageParams);

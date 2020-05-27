@@ -445,9 +445,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static RegistrationResult register(String paramStr, String password){
-		RegistrationParameters params = (RegistrationParameters) JSON.deserialize(paramStr, RegistrationParameters.class);
-
+	public static RegistrationResult register(RegistrationParameters params, String password){
 		RegistrationResult result = new RegistrationResult();
 		Savepoint sp = Database.setSavepoint();
 
