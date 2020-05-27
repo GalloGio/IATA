@@ -2,9 +2,11 @@
  * Created by pvavruska on 5/28/2019.
  */
 .modalSpinnerContainer {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
+  left: 0;
+  top: 0;
 }
 
 .maxWidth {
@@ -177,7 +179,7 @@ input[type="checkbox"] {
   padding-bottom: 1%;
   padding-top: 1%;
 }
-orangeIcon {
+.orangeIcon {
   line-height: 1;
   vertical-align: text-top;
 }
