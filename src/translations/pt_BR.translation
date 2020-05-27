@@ -3933,7 +3933,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Outstanding_Invoices --></label>
+        <label>Faturas IATA</label>
         <name>CSP_Outstanding_Invoices</name>
     </customLabels>
     <customLabels>
