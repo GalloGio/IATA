@@ -117,7 +117,11 @@ public class ANG_RHCHelper {
 		if(!rhcinfos.isEmpty()) update rhcInfos;
 	}
 
-	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
+	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo ){
+		calculateRHCAmount(rhcInfo, true);
+	}
+
+	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo, boolean ApplyRHC) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		Set<Id> accountsIds = new Set<Id>();
 
@@ -205,7 +209,7 @@ public class ANG_RHCHelper {
 			//jump into the formula calculation
 			if(isMulticountry){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes);
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
 				continue;
 			}
 
@@ -265,7 +269,7 @@ public class ANG_RHCHelper {
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes);
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
 			}
 
 		}
@@ -280,7 +284,7 @@ public class ANG_RHCHelper {
 	 * @param  isoCountries               maps the Id with the ISO Country Code
 	 * @param  attributes                 country specific attributes of type 'Minimum RHC Amount'
 	 */
-	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes)
+	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC)
 	{
 		Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
 		Decimal provisional = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
@@ -319,11 +323,12 @@ public class ANG_RHCHelper {
 		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
 
+		if(ApplyRHC){
+			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
 
-		Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
-
-		Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
-		rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
+			Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
+			rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
+		}
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newRHCForecastedValue);
 	}
