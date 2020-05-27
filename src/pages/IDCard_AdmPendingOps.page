@@ -136,7 +136,7 @@
 		                    <div  style="padding: 10px;border-left:solid 1px  gray;float:right;width:15%;">
 		                        <apex:outputPanel id="pageHeader">
 									 <p><b>{!$Label.IDCard_PromotionCode}: </b>  <apex:inputField id="txtPromotionCode" value="{!promotion.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
-										<apex:actionSupport event="onblur" action="{!calculateAllPrices}" reRender="appDiscount, pageHeader, Msgs3"  status="saveStatus"/>
+										<apex:actionSupport event="onblur" action="{!calculateAllPrices}" reRender="appDiscount, pageHeader"  status="saveStatus"/>
 									 </apex:inputField></p>								
 									 <p><b>{!$Label.IDCard_Fee}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
 																						<apex:param value="{!IF(OR(ISNULL(idCardFee),ISBLANK(idCardFee)), 0, idCardFee)}" />

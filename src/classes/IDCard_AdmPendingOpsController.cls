@@ -584,9 +584,11 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			Map<String, decimal> detailledFees = new Map<String, decimal>();
 			Decimal discountPercentage = discountPerKeyAccount.get(app.IATA_Code__c);
 
-			validPromotion = validatePromotion(app);
-			
-			if(validatedApplication.keyset().contains(app.Id)){
+			if(validatedApplication.isEmpty()){
+				validPromotion = validatePromotion(app);
+			}			
+			else if(validatedApplication.keyset().contains(app.Id)){
+				validPromotion = validatePromotion(app);
 				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, validPromotion, null, isToPrint);
 				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
 				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
@@ -611,6 +613,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				if (app.CurrencyIsoCode != null)
 					appsCurrency = app.CurrencyIsoCode;
 
+			
 			}
 		}
 		tPrice += massAppDeliveryFee;
@@ -715,7 +718,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 			Promotion__c[] listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c where Promotion_Code__c = :promotion.Promotion_Code__c];
 			if (listPromotion == null || listPromotion.size() == 0) {
-				promotion.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c}));
+		//		promotion.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c}));
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
 
@@ -729,14 +733,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				}
 
 			if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
-				promotion.Promotion_Code__c.addError(Label.ID_Card_Promotion_Code_No_Longer_Valid);
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_No_Longer_Valid));
 				return null;
 			} else if (listPromotion[0].Promotion_Duration_Valid_From__c > Date.today()) {
-				promotion.Promotion_Code__c.addError(Label.ID_Card_Promotion_Code_Not_Yet_Valid);
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_Not_Yet_Valid));
 				return null;
 			}
 			if (isError) {
-				promotion.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code_3, new String[] {promotion.Promotion_Code__c}));
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, String.Format(Label.ID_Card_Invalid_Promotion_Code_3, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
 			return listPromotion[0];
