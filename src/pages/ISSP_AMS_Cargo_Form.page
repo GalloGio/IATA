@@ -1993,34 +1993,34 @@
                         <apex:pageblocksectionitem labelStyle="width:35%" id="actualcharges">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F1}" />
                             <apex:outputPanel >
-                                <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.Total_Freight_Charges_monetary_value__c}" onkeypress="return onlyNumbers(event);"/>
+                                <apex:inputfield value="{!newForm.Total_Freight_Charges_monetary_value__c}" onkeypress="return onlyNumbers(event);"/>
                                 <apex:outputText id="freightChargesActuals" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>
                         </apex:pageblocksectionitem>
                         <apex:pageblocksectionitem labelStyle="width:35%">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F2}" />
-                            <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.Total_Freight_weight_Kgs__c}" />
+                            <apex:inputfield value="{!newForm.Total_Freight_weight_Kgs__c}" />
                         </apex:pageblocksectionitem>
                         <apex:pageblocksectionitem labelStyle="width:35%">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F3}" />
-                            <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.No_Consignments_Last_Year__c}" />
+                            <apex:inputfield value="{!newForm.No_Consignments_Last_Year__c}" />
                         </apex:pageblocksectionitem>
 
                         <tr><td colspan="2"><strong>{!$Label.ISSP_AMS_Step3_8_H2}</strong></td></tr>
                         <apex:pageblocksectionitem labelStyle="width:35%" id="forecastcharges">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F1}" />
                             <apex:outputPanel >
-                                <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.Total_Projected_Value_Freight__c}" onkeypress="return onlyNumbers(event);"/>
+                                <apex:inputfield value="{!newForm.Total_Projected_Value_Freight__c}" onkeypress="return onlyNumbers(event);"/>
                                 <apex:outputText id="freightChargesForecasted" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>
                         </apex:pageblocksectionitem>
                         <apex:pageblocksectionitem labelStyle="width:35%">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F2}" />
-                            <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.Total_Projected_Weight_Kilos__c}" />
+                            <apex:inputfield value="{!newForm.Total_Projected_Weight_Kilos__c}" />
                         </apex:pageblocksectionitem>
                         <apex:pageblocksectionitem labelStyle="width:35%">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_8_F3}" />
-                            <apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.Total_Projected_Number_Consignments__c}" />
+                            <apex:inputfield value="{!newForm.Total_Projected_Number_Consignments__c}" />
                         </apex:pageblocksectionitem>
                         
                     <apex:pageblocksectionitem labelStyle="width:35%">
@@ -2675,8 +2675,8 @@
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem labelStyleClass="modallabel" labelStyle="width:19%">
-                    <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_Trade_Name_DBA, $ObjectType.Account.fields.TradeName__c.Label)}"/> 
-                    <apex:inputField required="{!IF(isCNSAgency, true, false)}" styleClass="modalinput" value="{!hqAccount.TradeName__c}"/>  
+                    <apex:outputLabel value="{!IF(isCNSAgency, SUBSTITUTE($Label.ISSP_Trade_Name_DBA, '*', ''), $ObjectType.Account.fields.TradeName__c.Label)}"/> 
+                    <apex:inputField styleClass="modalinput" value="{!hqAccount.TradeName__c}"/>  
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem id="companyItemPhone" labelStyleClass="modallabel" labelStyle="width:23%">

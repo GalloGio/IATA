@@ -4460,7 +4460,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void fetchCase(String vCaseId) {
 		List<Case> newCases = [SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-									 Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
+									 Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c, Type_of_customer__c
 								FROM Case
 								WHERE Id = :vCaseId];
 		if (!newCases.isEmpty()) {
@@ -4691,7 +4691,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, IATA_ISO_Country__r.Name,
 						VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
 						IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
-						(SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
+						(SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId, Type_of_customer__c
 						 FROM Cases
 						 WHERE AccountId = :vHQAccountId
 							AND Reason1__c LIKE '%multicountry%'
@@ -5566,7 +5566,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	// Ask Adrian why cases are being switched here
 	public boolean draftHQCaseExists {
 		get {
-			List<Case> dupeDrafts = [SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c
+			List<Case> dupeDrafts = [SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c, Type_of_customer__c
 									FROM Case
 									WHERE RecordTypeId = :RECORD_TYPE_ID
 										AND Status IN ('Draft') AND AccountId = :vHQAccountId
@@ -5585,7 +5585,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public boolean isDupeSAAMCase {
 		get {
-			List<Case> dupeCases = [SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c
+			List<Case> dupeCases = [SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c, Type_of_customer__c
 									FROM Case
 									WHERE RecordTypeId = :RECORD_TYPE_ID AND Id = :vSAAMCaseId];
 
@@ -5864,12 +5864,21 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		} else if (stepNumber == '5' && isFromValidation) {
 			//and display Signed Contract to upload in Step E
-			auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
-						FROM AMS_Accreditation_Requirement__c
-						WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
-							AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c NOT IN: excludeIdentifierSet And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
-							AND RecordTypeId = :CargoReqRecTypeId
-						ORDER BY Sort_Order__c ASC];
+			if(isCNSAgency){
+				auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
+							FROM AMS_Accreditation_Requirement__c
+							WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
+								AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c NOT IN: excludeIdentifierSet And Type_Of_Agent__c INCLUDES (:newCase.Type_of_customer__c)
+								AND RecordTypeId = :CargoReqRecTypeId
+							ORDER BY Sort_Order__c ASC];
+			}else{
+				auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
+							FROM AMS_Accreditation_Requirement__c
+							WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
+								AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c NOT IN: excludeIdentifierSet And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
+								AND RecordTypeId = :CargoReqRecTypeId
+							ORDER BY Sort_Order__c ASC];
+			}
 
 			this.List_CountryReqments = filterRequirementList(selectedLang, auxReqsList);
 			if (this.List_CountryReqments.isEmpty()) {
@@ -6628,12 +6637,20 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 
 				if (!newform.Confirm_Location_Details_are_correct__c && !newForm.Notify_Change_Location__c) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
+					if(isCNSAgency){
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2_CNS));
+					}else{
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
+					}
 					errorFound = true;
 				}
 
 				if (!newform.Confirm_Ownership_Details_are_correct__c && !newForm.Notify_Change_Ownership__c) {
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
+					if(isCNSAgency){
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3_CNS));
+					}else{
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
+					}
 					errorFound = true;
 				}
 			}
@@ -7016,7 +7033,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					errorFound = true;
 				}
 			} else {
-				if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null) {
+				if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null && !isCNSAgency) {
 					newForm.ISSP_AMS_Number_of_Years_Traded__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
@@ -7447,6 +7464,33 @@ public without sharing class ISSP_AMS_Accreditation {
 		if(isCNSAgency && newForm.Has_your_firm_ever_held_a_Cargo_Agency__c =='Yes' && (newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null)){
 			newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
 			errorFound = true;
+		}
+
+		if(isCNSAgency){
+			if(newForm.Total_Freight_Charges_monetary_value__c == null){
+				newForm.Total_Freight_Charges_monetary_value__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if(newForm.Total_Freight_weight_Kgs__c == null){
+				newForm.Total_Freight_weight_Kgs__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if(newForm.No_Consignments_Last_Year__c == null){
+				newForm.No_Consignments_Last_Year__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if(newForm.Total_Projected_Value_Freight__c == null){
+				newForm.Total_Projected_Value_Freight__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if(newForm.Total_Projected_Weight_Kilos__c == null){
+				newForm.Total_Projected_Weight_Kilos__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if(newForm.Total_Projected_Number_Consignments__c == null){
+				newForm.Total_Projected_Number_Consignments__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
 		}
 
 		if(isCNSAgency && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO)){

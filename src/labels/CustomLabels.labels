@@ -22398,12 +22398,28 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>Please either confirm that the Agency Location details are correct or notify IATA of any changes.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_message2_CNS</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message2_CNS</shortDescription>
+        <value>Please either confirm that the Agency Location details are correct or notify CNS of any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message3</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_error_message3</shortDescription>
         <value>Please either confirm that the Agency Ownership details are correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message3_CNS</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message3_CNS</shortDescription>
+        <value>Please either confirm that the Agency Ownership details are correct or notify CNS of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message4</fullName>
