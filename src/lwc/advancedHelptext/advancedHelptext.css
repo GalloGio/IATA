@@ -19,3 +19,7 @@
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 }
+
+.tooltiptext.tooltip-visible {
+	visibility: visible !important;
+}

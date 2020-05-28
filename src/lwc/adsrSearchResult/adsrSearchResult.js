@@ -1,8 +1,8 @@
 import { LightningElement, track, wire } from 'lwc';
 import{ CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
-import { TABLE_TYPE_GROUP, TABLE_TYPE_DETAIL,TABLE_GROUP_COLUMNS,
-			TABLE_DETAIL_COLUMNS } from './adsrSearchResultConstants.js';
+import { SEARCH_TYPE_OPERATION, SEARCH_TYPE_AGENT, TABLE_TYPE_GROUP, TABLE_TYPE_DETAIL,
+		TABLE_GROUP_COLUMNS, TABLE_DETAIL_COLUMNS } from './adsrSearchResultConstants.js';
 import getMarkets from '@salesforce/apex/ADSRController.getMarkets';
 import getReport from '@salesforce/apex/ADSRController.getReport';
 
@@ -88,6 +88,7 @@ export default class AdsrSearchResult extends LightningElement {
 					options: [],
 					padding: "around-small",
 					class: "slds-text-body_regular text-small",
+					scrollTopOnOpen: true
 				}
 			]
 		}
@@ -137,7 +138,8 @@ export default class AdsrSearchResult extends LightningElement {
 	}
 
 	set tableType(t) {
-		this._tableType = (t === "agent"  || t === TABLE_TYPE_DETAIL ? "detail" : "group");
+		this._tableType = (t === SEARCH_TYPE_AGENT  || t === TABLE_TYPE_DETAIL ?
+							TABLE_TYPE_DETAIL : TABLE_TYPE_GROUP);
 	}
 
 	get detailTable() {
@@ -151,13 +153,13 @@ export default class AdsrSearchResult extends LightningElement {
 	}
 
 	get welcomeAreaTitle() {
-		return this.searchParams.type === "agent" ?
+		return this.searchParams.type === SEARCH_TYPE_AGENT ?
 			"Search for an IATA Code" :
 			"Select for an Operation";
 	}
 
 	get welcomeAreaSubtitle() {
-		return this.searchParams.type === "agent" ?
+		return this.searchParams.type === SEARCH_TYPE_AGENT ?
 			"Please search for an IATA Code to see agent details" :
 			"Please select a Region to see assotiated operations";
 	}
@@ -170,7 +172,7 @@ export default class AdsrSearchResult extends LightningElement {
 	}
 
 	get searchTypeLabel() {
-		return this.searchParams.type === "market" ?
+		return this.searchParams.type === SEARCH_TYPE_OPERATION ?
 			(this.detailTable ?
 				"Operation" :
 				"Operation") :
@@ -251,7 +253,7 @@ export default class AdsrSearchResult extends LightningElement {
 	}
 
 	get displayIATACodeQuickFilter() {
-		return this.hasResults && this.detailTable && this.searchParams.type !== "agent";
+		return this.hasResults && this.detailTable && this.searchParams.type !== SEARCH_TYPE_AGENT;
 	}
 
 	get welcomeAreaClass() {
@@ -310,12 +312,12 @@ export default class AdsrSearchResult extends LightningElement {
 		
 		this.tableType = filters.type;
 		this.selectedOperation = 0;
-		if(this.searchParams.type === "market" && filters.region !== null && filters.region.length > 0) {
+		if(this.searchParams.type === SEARCH_TYPE_OPERATION && filters.region !== null && filters.region.length > 0) {
 			this.searchParams.region = filters.region;
 			this.loadMarkets();
 			this.loadReport(filters);
 		}
-		if(this.searchParams.type === "agent" && filters.agent !== null && filters.agent.length > 0) {
+		if(this.searchParams.type === SEARCH_TYPE_AGENT && filters.agent !== null && filters.agent.length > 0) {
 			this.searchParams.agent = filters.agent;
 			this.loadReport(filters);
 		}
@@ -363,7 +365,7 @@ export default class AdsrSearchResult extends LightningElement {
 		let params = Object.assign(
 			{
 				detailTable: this.detailTable,
-				selectedOperation: this.detailTable && this.searchParams.type !== "agent",
+				selectedOperation: this.detailTable && this.searchParams.type !== SEARCH_TYPE_AGENT,
 				operation: this.operation
 			},
 			this.searchParams
@@ -454,7 +456,7 @@ export default class AdsrSearchResult extends LightningElement {
 	}
 
 	get displayBackButton() {
-		return this.hasResults && this._displayBackButton && this.detailTable && this.searchParams.type !== "agent";
+		return this.hasResults && this._displayBackButton && this.detailTable && this.searchParams.type !== SEARCH_TYPE_AGENT;
 	}
 
 }

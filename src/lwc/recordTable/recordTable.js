@@ -123,6 +123,16 @@ export default class RecordTable extends RecordCollection {
 			}));
 	}
 
+	handleTooltipOver(e) {
+		let targetTable = this.template.querySelectorAll("table")[1];
+		targetTable.querySelector("th[data-field='"+e.detail.name+"'] c-advanced-helptext").show();
+	}
+
+	handleTooltipOut(e) {
+		let targetTable = this.template.querySelectorAll("table")[1];
+		targetTable.querySelector("th[data-field='"+e.detail.name+"'] c-advanced-helptext").hide();
+	}
+
 	/** Handling table sorting */
 	handleclickcolumn(e) {
 		let columnHeader = e.target;
@@ -327,10 +337,6 @@ export default class RecordTable extends RecordCollection {
 					ret[elem.recordIndex] = record;
 				}
 				record[elem.properties.targetField] = elem.value;
-				//let o= {};
-				//o.targetField = elem.properties.targetField;//elem.variant === 'table-column-total' ? 'total' : elem.properties.targetField;
-				//o.value = elem.value;
-				//record.push( o );
 			}
 		);
 		if(ret.length > 0) {

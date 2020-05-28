@@ -31,8 +31,10 @@
 							placeholder="Find Operation"
 							icon={searchIcon}
 							icon-styling="top: 1.4rem;"
+							clear-button
 							hide-label
-							onkeyup={handleSearchTable}></c-iata-input>
+							onkeyup={handleSearchTable}
+							onempty={handleSearchTable}></c-iata-input>
 						<c-iata-input
 							if:true={displayIATACodeQuickFilter}
 							name="iataCode"
@@ -41,8 +43,10 @@
 							placeholder="Find IATA Code"
 							icon={searchIcon}
 							icon-styling="top: 1.4rem;"
+							clear-button
 							hide-label
-							onkeyup={handleSearchTable}></c-iata-input>
+							onkeyup={handleSearchTable}
+							onempty={handleSearchTable}></c-iata-input>
 					</div>
 					<div class="slds-col slds-size_8-of-12 slds-align-bottom slds-text-align_right">
 						<form action="" method="POST" target="_blank">

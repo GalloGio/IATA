@@ -23,10 +23,12 @@
 				required={required}
 				disabled={disabled}
 				readonly={readonly}
+				step={step}
 				onchange={handleChange}
 				onkeydown={handleKeyDown}
 				onkeyup={handleKeyUp}
-				onkeypress={handleKeyPress}/>
+				onkeypress={handleKeyPress}
+				onblur={checkValidity}/>
 			<button
 				if:true={clearButton}
 				class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"

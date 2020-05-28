@@ -13,7 +13,7 @@
 									<span class="slds-assistive-text">Sort by: </span>
 									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
 										<span if:false={field.helptext} class={field._headerLabelClass} title={field.label}>{field.label}</span>
-										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext}>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext} ontooltipover={handleTooltipOver} ontooltipout={handleTooltipOut} name={field.targetField}>
 											{field.label}
 										</c-advanced-helptext>
 										<span class="slds-icon_container slds-icon-utility-arrowdown" if:true={sortable}>
@@ -47,7 +47,11 @@
 						<template for:each={fields} for:item="field" for:index="fieldIndex">
 							<th class={field._headerClass} scope="col" style={fixedWidth} aria-label={field.label} key={field.targetField} data-field={field.targetField}>
 								<a if:false={field._isFirstCol} class="slds-th__action slds-text-link_reset" role="button" tabindex="-1">
-									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>&nbsp;</div>
+									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext} name={field.targetField}>
+											{field.label}
+										</c-advanced-helptext>
+									</div>
 								</a>
 								<a if:true={field._isFirstCol} class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1" onclick={handleclickcolumn}>
 									<span class="slds-assistive-text">Sort by: </span>

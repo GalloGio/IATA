@@ -1,4 +1,7 @@
 public without sharing class ADSRService {
+
+	public static final String REPORT_TYPE_AGENT = 'agent';
+	public static final String REPORT_TYPE_OPERATIONS = 'operations';
 	
 	private Account airline;
 	private String region;
@@ -46,6 +49,11 @@ public without sharing class ADSRService {
 	private List<Account> loadAgents(List<String> agentCodes) {
 		return [SELECT Id, Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.Region__c, IRIS_Code__c,
 					Holds_FS_first_call_letter__c, RecordType.DeveloperName, Location_Type__c, Status__c,
+					(SELECT Id, First_Call_Letter__c, Update_AIMS_DEF__c
+					FROM Cases
+					WHERE RecordType.DeveloperName LIKE 'SIDRA%'
+					ORDER BY CreatedDate DESC
+					LIMIT 1),
 					(SELECT Id, Name, Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.First_Call_Letter__c, SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c
 					 FROM Agencies_Applied_Change_codes__r
 					 WHERE Active__c = true
@@ -82,6 +90,13 @@ public without sharing class ADSRService {
 	public String getAgentCode() {
 		return this.agent.IRIS_Code__c;
 	}
+
+	public String getReprotType() {
+		if(this.agent == null) {
+			return REPORT_TYPE_OPERATIONS;
+		}
+		return REPORT_TYPE_AGENT;
+	}
 	
 	private List<ADSRExternalAPI.SummaryReportData> getReportData() {
 		ADSRExternalAPI api = new ADSRExternalAPI(this);
@@ -89,7 +104,7 @@ public without sharing class ADSRService {
 	}
 	
 	public SummaryReport getSummaryReport() {
-		SummaryReport report = new SummaryReport(this.getAirlineCode(), this.getAirlineName());
+		SummaryReport report = new SummaryReport(this.getReprotType(), this.getAirlineCode(), this.getAirlineName());
 		List<ADSRExternalAPI.SummaryReportData> data = getReportData();
 		
 		List<String> agentCodes = new List<String>();
@@ -119,35 +134,43 @@ public without sharing class ADSRService {
 		@AuraEnabled
 		public String airlineName;
 		@AuraEnabled
-		public List<SummaryReportGroup> groups;
-		
-		public SummaryReport(String airlineCode, String airlineName) {
+		public List<SummaryReportOperation> groups;
+		private Map<String, SummaryReportOperation> indexedGroups;
+		private String type;
+
+		public SummaryReport(String reportType, String airlineCode, String airlineName) {
+			this.type = reportType;
 			this.airlineCode = airlineCode;
 			this.airlineName = airlineName;
-			this.groups = new List<SummaryReportGroup>();
+			
+			this.groups = new List<SummaryReportOperation>();
+			this.indexedGroups = new Map<String, SummaryReportOperation>();
 		}
 		
 		public void addSummaryReportData(ADSRExternalAPI.SummaryReportDataDetail data, ADSRExternalAPI.SummaryReportData sourceReportData,
 			Account agentInfo) {
-			SummaryReportGroup reportGroup = null;
 			
-			for (SummaryReportGroup currentGroup : this.groups) {
-				if (data.operation == currentGroup.operation) {
-					reportGroup = currentGroup;
-					break;
-				}
+			String groupingKey;
+			if(REPORT_TYPE_OPERATIONS == this.type) {
+				groupingKey = data.operation;
 			}
+			else {
+				groupingKey = data.agentCode;
+			}
+
+			SummaryReportOperation reportGroup = indexedGroups.get(groupingKey);
 			
 			if (reportGroup == null) {
-				reportGroup = new SummaryReportGroup();
+				reportGroup = new SummaryReportOperation();
 				this.groups.add(reportGroup);
+				this.indexedGroups.put(groupingKey, reportGroup);
 			}
 			
 			reportGroup.addSummaryReportDetail(data, sourceReportData, agentInfo);
 		}
 	}
 	
-	public class SummaryReportGroup {
+	public class SummaryReportOperation {
 		@AuraEnabled
 		public String operation;
 		@AuraEnabled
@@ -173,10 +196,12 @@ public without sharing class ADSRService {
 		public Date maxDate;
 		
 		@AuraEnabled
-		public List<SummaryReportDetail> details;
+		public List<SummaryReportAgency> details;
+		private Map<String, SummaryReportAgency> indexedAgencies;
 		
-		public SummaryReportGroup() {
-			this.details = new List<SummaryReportDetail>();
+		public SummaryReportOperation() {
+			this.details = new List<SummaryReportAgency>();
+			this.indexedAgencies = new Map<String, SummaryReportAgency>();
 			this.totalCharged = 0;
 			this.totalRecovered = 0;
 			this.totalOutstanding = 0;
@@ -188,23 +213,32 @@ public without sharing class ADSRService {
 		
 		public void addSummaryReportDetail(ADSRExternalAPI.SummaryReportDataDetail reportLine, ADSRExternalAPI.SummaryReportData report,
 			Account agentInfo) {
-			SummaryReportDetail detail = new SummaryReportDetail(reportLine, report, agentInfo);
-			this.details.add(detail);
 			
+			String agencyKey =  reportLine.agentCode + '_' + reportLine.currencyCode;
+			SummaryReportAgency agency = this.indexedAgencies.get(agencyKey);
+			if(agency == null) {
+				agency = new SummaryReportAgency(reportLine, report, agentInfo);
+				this.details.add(agency);
+				this.indexedAgencies.put(agencyKey, agency);
+			}
+			else {
+				agency.addDetail(reportLine);
+			}
+
 			this.operation = reportLine.operation;
-			this.totalCharged += detail.charged;
-			this.totalRecovered += detail.refunded;
-			this.totalOutstanding += detail.outstanding;
+			this.totalCharged += reportLine.charged;
+			this.totalRecovered += reportLine.refunded;
+			this.totalOutstanding += agency.outstandingIncrement;
 			this.currencyCode = reportLine.currencyCode;
 			this.exchangeRate = reportLine.exchangeRate;
-			this.totalChargedUSD += detail.charged * detail.exchangeRate;
-			this.totalRecoveredUSD = this.totalRecovered * detail.exchangeRate;
-			this.totalOutstandingUSD += detail.outstandingUSD;
+			this.totalChargedUSD += reportLine.charged * reportLine.exchangeRate;
+			this.totalRecoveredUSD = this.totalRecovered * reportLine.exchangeRate;
+			this.totalOutstandingUSD += agency.outstandingUSDIncrement;
 			this.recoveredRate = this.totalCharged != 0 ? this.totalRecovered / this.totalCharged : this.recoveredRate;
 		}
 	}
 	
-	public class SummaryReportDetail {
+	public class SummaryReportAgency {
 		@AuraEnabled
 		public String agentCode;
 		@AuraEnabled
@@ -233,27 +267,42 @@ public without sharing class ADSRService {
 		public String financialSecurityStatus;
 		@AuraEnabled
 		public String agentStatus;
+		public Decimal outstandingIncrement;
+		public Decimal outstandingUSDIncrement;
 		
-		public SummaryReportDetail() {
-			
+		public SummaryReportAgency() {
+			this.charged = 0;
+			this.refunded = 0;
+			this.outstanding = 0;
+			this.outstandingUSD = 0;
+			this.outstandingIncrement = 0;
+			this.outstandingUSDIncrement = 0;
 		}
 		
-		public SummaryReportDetail(ADSRExternalAPI.SummaryReportDataDetail detail, ADSRExternalAPI.SummaryReportData parent,
+		public SummaryReportAgency(ADSRExternalAPI.SummaryReportDataDetail detail, ADSRExternalAPI.SummaryReportData parent,
 			Account agentInfo) {
+			this();
 			this.agentCode = detail.agentCode;
 			this.agentName = detail.agentName;
 			this.defaultDate = this.parseDate(detail.defaultDate);
-			this.charged = detail.charged;
 			this.shareRate = parent.aLShareVStotalIndustry;
-			this.refunded = detail.refunded;
-			this.refundedRate = detail.charged == 0 ? 0 : detail.refunded / detail.charged;
-			this.outstanding = detail.charged - detail.refunded;
 			this.currencyCode = detail.currencyCode;
 			this.exchangeRate = detail.exchangeRate;
-			this.outstandingUSD = detail.totalUSD;
 			this.totalIndustry = parent.totalIndustry;
 			this.financialSecurityStatus = calculateFinancialSecurityStatus(agentInfo);
 			this.agentStatus = calculateAgentStatus(agentInfo);
+
+			this.addDetail(detail);
+		}
+
+		public void addDetail(ADSRExternalAPI.SummaryReportDataDetail detail) {
+			this.charged += detail.charged;
+			this.refunded += detail.refunded;
+			this.outstandingUSDIncrement = detail.totalUSD;
+			this.outstandingUSD += detail.totalUSD;
+			this.refundedRate = this.charged == 0 ? 0 : this.refunded / this.charged;
+			this.outstandingIncrement = this.charged + this.refunded - this.outstanding;
+			this.outstanding = this.charged + this.refunded;
 		}
 		
 		public String parseDate(String inputDate) {
@@ -269,45 +318,31 @@ public without sharing class ADSRService {
 		}
 		
 		private String calculateFinancialSecurityStatus(Account info) {
+			String financialSecurityStatus = 'Not Applicable/Claim Process not started';
 			if (info != null) {
-				if (isValidLocationType(info.Location_Type__c) && holdsFirstCallLetter(info)) {
-					return 'Not Applicable';
-				} else if (isFirstCallLetterSent(info.Agencies_Applied_Change_codes__r)) {
-					return 'First Call Letter Sent';
+				if (isFirstCallLetterSent(info.Cases)) {
+					financialSecurityStatus = 'First Call Letter Sent';
 				} else if (isValidLocationType(info.Location_Type__c) && info.Status__c == 'Terminated'
 					&& isEnchashmentInProgress(info.Financial_Securities__r)) {
-					return 'First Claim Sent';
+						financialSecurityStatus = 'First Claim Sent';
 				} else if (isValidLocationType(info.Location_Type__c) && info.Status__c == 'Terminated'
 					&& isEnchashed(info.Financial_Securities__r)) {
-					return 'Financial Security Encashed';
+						financialSecurityStatus = 'Financial Security Encashed';
 				}
 			}
-			return '';
-		}
-		
-		private Boolean holdsFirstCallLetter(Account info) {
-			if (Test.isRunningTest()) {
-				List<Financial_Security__c> fs = [SELECT Id FROM Financial_Security__c WHERE Account__c = :info.Id];
-				return fs == null || fs.size() == 0;
-			} else {
-				return info.Holds_FS_first_call_letter__c == 0;
-			}
+			return financialSecurityStatus;
 		}
 		
 		private Boolean isValidLocationType(String locationType) {
 			return new List<String> { 'HO', 'HE', 'GE' } .contains(locationType);
 		}
 		
-		private Boolean isFirstCallLetterSent(List<Agency_Applied_Change_code__c> changeCodes) {
-			if (changeCodes == null) {
+		private Boolean isFirstCallLetterSent(List<Case> sidraCases) {
+			if (sidraCases == null || sidraCases.isEmpty()) {
 				return false;
 			}
-			for (Agency_Applied_Change_code__c changeCode : changeCodes) {
-				if (changeCode.SIDRA_Case__r.First_Call_Letter__c == 'Sent') {
-					return true;
-				}
-			}
-			return false;
+			Case sidraCase = sidraCases[0];
+			return sidraCase.Update_AIMS_DEF__c != null && sidraCase.First_Call_Letter__c == 'Sent';
 		}
 		
 		private Boolean isEnchashmentInProgress(List<Financial_Security__c> securityStatus) {

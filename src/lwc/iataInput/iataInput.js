@@ -8,6 +8,7 @@ export default class IataInput extends LightningElement {
 	@api type;
 	@api placeholder;
 	@api value;
+	@api step;
 	@api hideLabel = false;
 	@api required = false;
 	@api disabled = false;
@@ -53,12 +54,14 @@ export default class IataInput extends LightningElement {
 	clear() {
 		this.value = null;
 		this.notifyChanges("change", {target: {value: null}});
+		this.notifyChanges("empty", {target: {value: null}});
 	} 
 
 	@api
 	checkValidity() {
 		return !this.required || 
-				(this.required && this.value !== null && this.value.length > 0);
+				(this.required && this.value !== null && this.value.length > 0) ||
+				this.template.querySelector('input').checkValidity();;
 	}
 
 	@api

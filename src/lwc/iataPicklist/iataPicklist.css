@@ -19,7 +19,7 @@
 .picklist-icon {
 	position: absolute;
     top: 1.25rem;
-	right: 1rem;
+	right: 2rem;
 }
 
 .picklist-icon:before, .picklist-icon:after {
@@ -73,12 +73,22 @@ input[disabled] {
 	border-color: rgb(196, 198, 202);
 }
 
-input[readonly][disabled] + .picklist-icon_arrow-up:before {
+/*input[readonly][disabled] + .picklist-icon_arrow-up:before {
 	border-bottom-color: inherit;
 }
 
 input[readonly][disabled] + .picklist-icon_arrow-down:before {
 	border-top-color: inherit;
+}*/
+
+input[readonly][disabled] + .picklist-icon_arrow-up:after,
+input[readonly][disabled] + .picklist-icon_arrow-down:after {
+	border-top-color: #e9eaec;
+}
+
+input[readonly][disabled] + .picklist-icon_arrow-up:before,
+input[readonly][disabled] + .picklist-icon_arrow-down:before {
+	border-top-color: #000000;
 }
 
 /* width */

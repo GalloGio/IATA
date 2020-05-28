@@ -146,9 +146,10 @@ export default class AdsrSearchFilter extends LightningElement {
 			{
 				dependency: "visibility",
 				masterValue: "agent",
-				type: "text",
+				type: "number",
 				name: "agent",
 				label: "Agent Code",
+				step: 1,
 				hideLabel: true,
 				placeholder: "Find IATA Code",
 				icon: this.searchIcon,

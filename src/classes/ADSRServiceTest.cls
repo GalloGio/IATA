@@ -138,12 +138,12 @@ public class ADSRServiceTest {
 			ADSRService.SummaryReport report = ADSRController.getReport('Americas', '', '', '');
 			
 			Boolean hasCassColombia = false;
-			for (ADSRService.SummaryReportGroup reportGroup : report.groups) {
+			for (ADSRService.SummaryReportOperation reportGroup : report.groups) {
 				if (reportGroup.operation.toLowerCase().contains('colombia')
 					&& reportGroup.operation.toLowerCase().contains('cass')) {
 					hasCassColombia = true;
 					Decimal charged = 0;
-					for (ADSRService.SummaryReportDetail detail : reportGroup.details) {
+					for (ADSRService.SummaryReportAgency detail : reportGroup.details) {
 						charged += detail.charged;
 					}
 					System.assertEquals(charged, reportGroup.totalCharged);
