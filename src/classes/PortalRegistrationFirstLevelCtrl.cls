@@ -1408,9 +1408,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		public void execute(QueueableContext context) {
-			List<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:IdsToDeactivate];
-			for(User user : userList){
-				user.IsActive = false;
+			List<Contact> userList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
+			for(Contact user : userList){
+				user.status__c = 'Inactive';
 			}
 			if(!userList.isEmpty())
 				update userList;

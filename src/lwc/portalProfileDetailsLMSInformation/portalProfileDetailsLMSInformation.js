@@ -3,6 +3,7 @@ import { LightningElement,track,api } from 'lwc';
 import RegistrationUtils                        from 'c/registrationUtils';
 
 import getContactInfo               	from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+import getLMSContactInfo               	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
 import validateFullName							from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateFullName';
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
@@ -142,19 +143,30 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 		
 		// Retrieve Contact information
+		console.log('connectedCallback - going to call getContactInfo!');
 		getContactInfo()
 			.then(result => {
 				this.localContactInfo = JSON.parse(JSON.stringify(result));
-				this.contactFound = this.contactInfo != null;
-
-				if(!this.contactFound){
-					return;
-				}
-
 				this.localContactInfo.lms = 'yas';
 				
 				this.localContactInfo.serviceid = this.serviceid;
-		})
+				getLMSContactInfo({lms:'yas'})
+					.then(result2 => {
+						if(result2 !== undefined && result2 !== null){
+							this.contactInfoLMS = JSON.parse(JSON.stringify(result2));
+							this.localContactInfo.Username = this.contactInfoLMS.Username__c !== undefined && this.contactInfoLMS.Username__c !== null ? this.contactInfoLMS.Username__c : '';
+							this.localContactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined && this.contactInfoLMS.UserId__c !== null ? this.contactInfoLMS.UserId__c : '';
+						}else{
+							this.localContactInfo.Username = '';
+							this.localContactInfo.UserId = '';
+						}
+					})
+				.catch((error2) => {
+					this.localContactInfo.Username = '';
+					this.localContactInfo.UserId = '';
+				});
+				
+			})
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
@@ -245,9 +257,16 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	
 	handleSucess(event) {
 		this.isSaving = false;
+		let toSave = false;
 
 		if(this.isMailChanged && (this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7') ){
+			toSave = true;
+			if((this.flow === 'flow6' || this.flow === 'flow7') && this.isFullNameMatching === false){
+				toSave = false;
+			}
+		}
 
+		if(toSave){
 			this.localContactInfo.flow = this.flow;
 			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
 			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
@@ -268,13 +287,12 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			this.localContactInfo.street2 = this.localAddress.street2;
 			this.localContactInfo.zip = this.localAddress.zip;
 
-			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
-			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined && this.userInfo.existingContactTrainingUsername !== '' ? this.userInfo.existingContactTrainingUsername : this.localContactInfo.Username;
+			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined && this.userInfo.existingContactTrainingUserId !== '' ? this.userInfo.existingContactTrainingUserId : this.localContactInfo.UserId;
 			
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
 			let notificationEmail = this.localAdditionalEmail;
-
 			sendSingleEmail({contactName: contactName,
 								emailAddr: notificationEmail,
 								flow:this.flow,
