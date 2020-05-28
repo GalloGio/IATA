@@ -5848,7 +5848,7 @@ You can easily create a company account in two steps</value>
         <value>I agree with IATA&apos;s
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
  and
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
@@ -36513,7 +36513,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TOULink</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULinkText</fullName>
@@ -39240,7 +39240,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_CSP_Troubleshooting</fullName>
@@ -39897,7 +39897,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_64</shortDescription>
-        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/Pages/terms.aspx), the terms contained in this Agreement will govern.</value>
+        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/en/terms), the terms contained in this Agreement will govern.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_7</fullName>
@@ -39929,7 +39929,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
@@ -40089,7 +40089,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_ISSP_Troubleshooting</fullName>
@@ -40541,7 +40541,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Terms of Use Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_Thank_you_Fred_Access_Request</fullName>
@@ -43451,7 +43451,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Treasury Dashboard Terms of Use URL</shortDescription>
-        <value>https://www.iata.org/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>Treasury_Dashboard_User_Guide</fullName>
@@ -44132,7 +44132,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>csp_Footer_Legal_URL</shortDescription>
-        <value>https://www.iata.org/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>csp_Footer_Linkedin_URL</fullName>
