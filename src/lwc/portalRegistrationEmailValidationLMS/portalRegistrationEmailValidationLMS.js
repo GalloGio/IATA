@@ -106,7 +106,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	get blockConfirmation(){
 		let res = true;
-
+		
 		if(this.reverseEmailVisibility){
 			if(this.isReverseEmail !== undefined && this.isReverseEmail !== ''){
 				res = false;
@@ -388,7 +388,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		}else{
 
 			if(this.flow === 'flow1'){
-				if(this.isReverseEmail === 'yes'){
+				if(this.isReverseEmail === 'no'){
 					this.flow = 'flow0';
 					this.localContactInfo.Email = this.personalEmailInput;
 					this.localContactInfo.Additional_Email__c = this.workEmailInput;
@@ -441,21 +441,17 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 										this.stopLoading();
 									}else{
-										//todo:check if the email address is associated to a contact and/or a user
 										//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
 										//but the "E-Mail" field is pre-populated and, by default, not editable.
 										//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 										//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 										//button is displayed on the form.
-										// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
-
 										getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
 
 											var userInfo = JSON.parse(JSON.stringify(result3));
 											this.userInfo = userInfo;
 														
 											if(userInfo.hasExistingContact == true){
-							
 													if(this.flow === 'flow3'){
 														this.flow = 'flow4';
 
@@ -500,12 +496,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 														});
 
 													this.stopLoading();
-								
 											}else{
 												
 												if(userInfo.hasExistingContactPersonalEmail == true){
-													// if(userInfo.hasExistingUserPersonalEmail == true){
-
 														if(this.flow === 'flow3'){
 															this.isFullNameMatching = false;
 															this.messageFlow8 = CSP_Registration_Existing_Work_Message_LMS_F8;
@@ -550,7 +543,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 															});
 														}
 														this.stopLoading();
-													// }
 													//Send Verification email
 													this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 													this.stopLoading();

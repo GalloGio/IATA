@@ -293,7 +293,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			extraValues.add(contactInfo.Username);
 			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow4' || contactInfo.flow == 'flow5'){
 				extraValues.add(contactInfo.UserId);
-			}else if(contactInfo.flow == 'flow7' || contactInfo.flow == 'flow7'){
+			}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 				extraValues.add('');
 			}
 			extraValues.add(contactInfo.lmsCourse);
@@ -724,7 +724,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						}else{
 							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
 													Label.CSP_Verification_L3_Email_UE_2_LMS;
-													// + Label.CSP_Verification_L3_Email_UE_3_LMS;
 						}
 					}
 				}else{
@@ -804,8 +803,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
