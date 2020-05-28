@@ -11,6 +11,11 @@ public with sharing class FinancialSecurityUtil {
 	public static Boolean acknowledgeRunning = false;
 
 	/*
+	 * Avoid recursive Financial Security trigger due to update of the Converted Amounts of all active FS 
+	 */
+	public static Boolean convertedAmountUpdateFlag = false;
+
+	/*
 	 *  Handles the actions of the Before Update trigger for Financial Security records
 	 */
 	public static void HandleFSBeforeUpdate (Map<Id, Financial_Security__c> mapTriggerNew, Map<Id, Financial_Security__c> mapTriggerOld) {

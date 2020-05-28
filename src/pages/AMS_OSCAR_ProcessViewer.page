@@ -212,7 +212,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 
                 if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD}) {
                     if (arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP51__c")) {
-                        additionalServiceRequest = "executeMcToStSplitBatch";
+                        additionalServiceRequest = {!shouldFinishCase} ? "executeMcToStSplitBatchOnIncompleteCase" : "executeMcToStSplitBatch";
                         const message = '{!cannotProceedConversionToStandardMessage}';
 
                         if(message){
@@ -736,7 +736,7 @@ function buildFunctionCall(func, argList){
                         <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
                                 <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                                <apex:selectList disabled="{!OR(NOT(isValidationCompleted) && step.name == 'STEP2', NOT(isParentOscar) && step.name == 'STEP51')}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                <apex:selectList disabled="{!OR(NOT(isValidationCompleted) && step.name == 'STEP2', isChildOscar && step.name == 'STEP51')}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                     <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                                 </apex:selectList>
                             </apex:outputPanel>
