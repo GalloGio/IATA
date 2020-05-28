@@ -91,7 +91,6 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		
 		return (this.localContactInfo.Salutation === '' || this.localContactInfo.Salutation === null || this.localContactInfo.Salutation === undefined)
 				|| (this.localContactInfo.Birthdate === '' || this.localContactInfo.Birthdate === null || this.localContactInfo.Birthdate === undefined)
-				|| (this.localContactInfo.Phone === '' || this.localContactInfo.Phone === null || this.localContactInfo.Phone === undefined)
 				|| (this.localContactInfo.OtherPhone === '' || this.localContactInfo.OtherPhone === null || this.localContactInfo.OtherPhone === undefined)
 				|| (this.isBirthdateValid === false);
 	}
