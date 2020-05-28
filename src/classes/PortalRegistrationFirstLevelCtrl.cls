@@ -1408,12 +1408,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		public void execute(QueueableContext context) {
-			List<Contact> userList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
-			for(Contact user : userList){
-				user.status__c = 'Inactive';
+			List<Contact> contactList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
+			for(Contact cont : contactList){
+				cont.status__c = 'Inactive';
 			}
-			if(!userList.isEmpty())
-				update userList;
+			if(!contactList.isEmpty())
+				update contactList;
 		}
 	}
 	
