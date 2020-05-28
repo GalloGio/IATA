@@ -1069,7 +1069,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			};
 
 		for (String accountApiName : mapAccountToAccrFormFields.keyset()) {
-			newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+			if(accountApiName == 'GDS__c'){
+				newForm.put(mapAccountToAccrFormFields.get(accountApiName), AMS_AgencyHelper.transformGDS(String.valueOf(sourceAccount.get(accountApiName))));
+			}
+			else{
+				newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+			}
 		}
 	}
 
