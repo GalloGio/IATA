@@ -697,9 +697,12 @@ global with sharing class IDCardUtil {
 					update idCardApp;
 
 					// update ID Card
-					ID_Card__c idCard = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c = : idCardApp.Id limit 1];
-					idCard.Photo__c = newFilename;
-					update idCard;
+					List<ID_Card__c> idCards = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c = : idCardApp.Id];
+					if(!idCards.isEmpty()){
+						ID_Card__c idCard = idCards[0];
+						idCard.Photo__c = newFilename;
+						update idCard;
+					}
 				} else {
 					throw new IDCardApplicationException('Error renaming the photo file on Amazon S3');
 				}
