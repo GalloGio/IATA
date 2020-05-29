@@ -1,250 +1,210 @@
-<apex:component controller="IDCARD_VFEmailTemplateController" access="global"  allowDML="true" rendered="true">
-    <apex:attribute name="CID" type="String"  description="Related Case ID" assignTo="{!myID}" />
-    <apex:attribute name="CName" type="String"  description="Related Contact Name" />
-    <apex:attribute name="isRenew" type="Boolean"  description="Check if its a renewal email reminder" assignTo="{!isRenewal}" />    
-    
+<apex:component controller="IDCARD_VFEmailTemplateController" access="global" allowDML="true" rendered="true">
+    <apex:attribute name="CID" type="String" description="Related Case ID" assignTo="{!myID}" />
+    <apex:attribute name="isRenew" type="Boolean" description="Check if its a renewal email reminder" assignTo="{!isRenewal}"
+    />
+    <apex:attribute name="isApprovalConfirm" type="Boolean" description="Used for approval confirmation template" assignTo="{!isApprovalConfirm}"
+        default="false" />
+
     <style>
-        table{
+        table {
             width: 698px;
         }
     </style>
 
-    <apex:componentBody rendered="{!isRenewal==false}" >
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!greeting}  {!c.Related_ID_Card_Application__r.First_Name__c}  {!c.Related_ID_Card_Application__r.Last_Name__c}," ></apex:outputText>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody1}"></apex:outputText> 
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text1} {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}. ">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.Applicable_Fee__c}" />
-                </apex:outputText>
-                
-                
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text2}  <strong>{!c.CaseNumber}</strong>."></apex:outputText> 
-            </td> 
-        </tr>
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{!emailBody2}"></apex:outputText> 
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value=" {!c.Related_ID_Card_Application__r.First_Name__c}  {!c.Related_ID_Card_Application__r.Middle_Initial__c}  {!c.Related_ID_Card_Application__r.Last_Name__c}"></apex:outputText> 
-            </td> 
-        </tr>
-        <tr style="display: {!IF(isMassApplication, 'none', 'table-row')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text3} </b>"></apex:outputText> 
-                <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!c.Account.TradeName__c}"></apex:outputText><br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!shippingAddress[0]}"></apex:outputText><br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!shippingAddress[1]}"></apex:outputText><br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!shippingAddress[2]}"></apex:outputText> <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!shippingAddress[3]}"></apex:outputText> <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!shippingAddress[4]}"></apex:outputText> <br/>
-            </td> 
-        </tr>
-        <tr style="display: {!IF(isMassApplication, 'none', 'table-row')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt"  escape="false" value="<b>{!text4}</b> {!c.Related_ID_Card_Application__r.IATA_Code__c}"></apex:outputText> 
-            </td> 
-        </tr>
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt"  escape="false" value="<b>{!text5} </b>{!thisDay}"></apex:outputText> 
-            </td> 
-        </tr>
-        <tr style="display: {!IF(isMassApplication, 'none', 'table-row')};">
-            <td>
-                <apex:outputText rendered="{!isITDIPurchased}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_Course1}</b> {!c.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_1__c}" />
-            </td>
-        </tr>
-        <tr style="display: {!IF(isMassApplication, 'none', 'table-row')};">
-            <td>
-                <apex:outputText rendered="{!isITDIPurchased}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_Course2}</b> {!c.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_2__c}" />
-            </td>
-        </tr>                       
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.ID_Card_Fees}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.ID_Card_Fee__c}" />
-                </apex:outputText> 
-            </td>               
-        </tr>
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$ObjectType.ID_Card_Application__c.fields.Physical_Card_Fee__c.Label}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.Physical_Card_Fee__c}" />
-                </apex:outputText> 
-            </td>               
-        </tr>
-        <tr style="display: {!IF(isExpedite, 'table-row', 'none')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_ExpediteFee}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.IDCard_Expedite_Delivery_Fee__c}" />
-                </apex:outputText>
-            </td>     
-        </tr>
-        <tr style="display: {!IF(isITDIPurchased, 'table-row', 'none')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_ITDIFee}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.ITDI_Courses_Fee__c}" />
-                </apex:outputText>  
-            </td>
-        </tr>
-        <!-- ONLY SHOW IF NOT CHEQUE PAYMENT -->              
-        <tr style="display: {!IF(isPaymentbyCard, 'table-row', 'none')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_CreditCrdNum}</b> {!c.Related_ID_Card_Application__r.Payment_Credit_Card_Number__c}" />
-            </td>
-        </tr>
-        <tr style="display: {!IF(isPaymentbyCard, 'table-row', 'none')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_TrxNum}</b> {!c.Related_ID_Card_Application__r.Payment_Transaction_Number__c}" />
-            </td>
-        </tr>
-        <tr style="display: {!IF(isPaymentbyCard, 'table-row', 'none')};">
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$Label.IDCard_TrxDate}</b> {!c.Related_ID_Card_Application__r.Payment_Date__c}" />
-            </td>
-        </tr>
+    <apex:componentBody rendered="{!isRenewal==false}">
 
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!$ObjectType.ID_Card_Application__c.fields.ID_Card_Fee_Discount__c.Label}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c}" />
-                </apex:outputText> 
-            </td>               
-        </tr>
-        
-        <!---------------Taxes ----------------------------- -->
-        <tr style="display: {!IF(c.Related_ID_Card_Application__r.Tax_1_Value__c != '0', 'table-row', 'none')};">
-            <td>
-                <apex:outputText rendered="{!c.Related_ID_Card_Application__r.Tax_1_Value__c != '0'}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!c.Related_ID_Card_Application__r.Tax_1_Name__c}</b> 
-                {!c.Related_ID_Card_Application__r.Tax_1_Value__c}" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <apex:outputText rendered="{!c.Related_ID_Card_Application__r.Tax_2_Value__c != '0'}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!c.Related_ID_Card_Application__r.Tax_2_Name__c}</b> 
-                {!c.Related_ID_Card_Application__r.Tax_2_Value__c}" />
-            </td>
-        </tr>
-        <!-------------------------------------------------- --> 
-        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text6}</b> {0, number, 0.00} {!c.Related_ID_Card_Application__r.CurrencyIsoCode}">
-                    <apex:param value="{!c.Related_ID_Card_Application__r.Applicable_Fee__c}" />
-                </apex:outputText> 
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                <br/>
-            </td>
-        </tr>   
-         
-        <apex:outputText rendered="{!isMassApplication}"><b>List of single applications:</b></apex:outputText>
-        &nbsp;
-        <apex:dataTable value="{!singleApps}" var="item" rendered="{!isMassApplication}" border="1" align="left" cellpadding="10">
-        <apex:column >
-            <apex:facet name="header">Name</apex:facet>
-            <apex:outputText value="{!item.Displayed_Name__c}"/>
-        </apex:column>
-        <apex:column >
-            <apex:facet name="header">IATA Code</apex:facet>
-            <apex:outputText value="{!item.IATA_Code__c}"/><br/>
-        </apex:column>
-        </apex:dataTable>
+        <apex:outputPanel rendered="{!isApprovalConfirm}">
+            <table>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt;text-align:right" escape="false" value="{!greeting}"></apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody1}"></apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody2}"></apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}"></apex:outputText>
+                    </td>
+                </tr>
+            </table>
 
-        &nbsp;
+        </apex:outputPanel>
 
-        <tr></tr><tr></tr>
-        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  rendered="{!isExpedite}"  value="{!expediteMsg}"></apex:outputText>      
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody3}" ></apex:outputText>
-            </td>
-        </tr>
-        
-        <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
-        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}" ></apex:outputText>
-            </td>
-        </tr>        
-    </apex:componentBody>   
-    
-    <!-- ----------------------------------------------------------------------------------------------------- -->
-    <!-- ----------------------------------------------------------------------------------------------------- -->
-    <!-- ----------------------------------------------------------------------------------------------------- -->
-    
-    
-    
-    
-    <apex:componentBody rendered="{!isRenewal}">
-      <table>
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt;text-align:right" escape="false" value="{!greeting} {!CName}," ></apex:outputText>  
-                <br/>
-                <br/>             
-            </td>            
-        </tr>        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{!emailBody1}:"></apex:outputText>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{0,date, yyyy-MM-dd}"><apex:param value="{!expDate}" /></apex:outputText>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text1}"></apex:outputText>           
-            </td> 
-        </tr>
-        <tr>
-            <td>      
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody2}"></apex:outputText>    
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text2}"></apex:outputText> 
-            </td> 
-        </tr>
-        <tr>
-            <td>
-                <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text3}</b> {!cc.Account.IATACode__c}"></apex:outputText>                 
-                <br/>
-                <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text4}</b> {!cc.Account.Short_Name__c}"></apex:outputText>
-                <br/>
-                <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text5}</b> {!cc.Name}"></apex:outputText> 
-                <br/>
-                <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>{!text6}</b> {!cc.Date_of_Birth__c}"></apex:outputText>
-                <br/>
-                <br/>
-                <!-- <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>VER#:</b> {!cc.VER_Number__c}"></apex:outputText> --> 
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>VER#:</b> {0, number, 0000000000}">
-                    <apex:param value="{!cc.VER_Number__c}" />
-                </apex:outputText> 
-                <br/>
-                <br/>
-                <apex:outputText rendered="{!hiderenewal != true}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>Renewal Fee:</b> {!fee}"></apex:outputText> 
-                <br/>             
-                
-            </td> 
-        </tr>
 
-        <tr></tr>
-        <!-- <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr> -->
-        
-        <tr>
-            <td>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}" ></apex:outputText>
-            </td>
-        </tr>
-      </table> 
+        <apex:outputPanel rendered="{!isApprovalConfirm == false}">
+            <table>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt;text-align:right" escape="false" value="{!greeting}"></apex:outputText>
+                        <apex:outputPanel rendered="{!greeting != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody1}"></apex:outputText>
+                        <apex:outputPanel rendered="{!emailBody1 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text1}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text1 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text2}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text2 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody2}"></apex:outputText>
+                        <apex:outputPanel rendered="{!emailBody2 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text3}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text3 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text4}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text4 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text5}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text5 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text6}"></apex:outputText>
+                        <apex:outputPanel rendered="{!text6 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:dataTable value="{!singleApps}" var="item" rendered="{!isMassApplication}" border="1" align="left" cellpadding="10">
+                            <apex:column >
+                                <apex:facet name="header">Name</apex:facet>
+                                <apex:outputText value="{!item.Displayed_Name__c}" />
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">IATA Code</apex:facet>
+                                <apex:outputText value="{!item.IATA_Code__c}" />
+                                <br/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Card Type</apex:facet>
+                                <apex:outputText value="{!item.Card_Type__c}" />
+                                <br/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputPanel rendered="{!isMassApplication}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody3}"></apex:outputText>
+                        <apex:outputPanel rendered="{!emailBody3 != ''}">
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}"></apex:outputText>
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </apex:outputPanel>
     </apex:componentBody>
-    
+
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------------------------------------- -->
+
+
+
+
+    <apex:componentBody rendered="{!isRenewal}">
+        <table>
+            <tr>
+                <td>
+                    <apex:outputText style="font-family:'Times New Roman';font-size:12pt;text-align:right" escape="false" value="{!greeting}"></apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody1}"></apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody2}"></apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody3}"></apex:outputText>
+                    <apex:outputText rendered="{!hiderenewal != true}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text6}"></apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}"></apex:outputText>
+                </td>
+            </tr>
+        </table>
+    </apex:componentBody>
+
 </apex:component>
