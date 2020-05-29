@@ -192,9 +192,12 @@ export default class PortalCreatePassword extends LightningElement {
 	handleSavePassword(){
 		this.changeIsLoading();
 		if(this.buttonDisabled == false){
+			this._startUrl = '';
+			if(this.pageParams.startURL){
 			this._startUrl = this.pageParams.startURL;
 			//delete the param because, in case of sucess we redirect without this param.
 			delete this.pageParams.startURL;
+			}
 			createUser({
 				paramStr : JSON.stringify(this.registrationParams),
 				password : this.password,
