@@ -1,0 +1,31 @@
+<apex:component controller="IDCARD_VFEmailTemplateKeyAccController" access="global"  allowDML="true" rendered="true">
+    <apex:attribute name="CID" type="String"  description="Related Case ID" assignTo="{!myID}" />
+    <apex:attribute name="lang" type="String"  description="Template language" assignTo="{!language}"/>
+
+    <apex:componentBody >
+    <table>
+        <tr>
+            <td>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt;text-align:right" escape="false" value="{!greeting}" ></apex:outputText>           
+            </td>            
+        </tr>        
+        <tr>
+            <td>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false"  value="{!emailBody1}"></apex:outputText>
+            </td> 
+        </tr>
+        <tr>
+            <td>      
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody2}"></apex:outputText>
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!Signature}" ></apex:outputText>
+            </td>
+        </tr>
+    </table>
+    </apex:componentBody>
+
+
+</apex:component>
