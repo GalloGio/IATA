@@ -246,7 +246,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>59273480</value>
+            <value>8190002,8150000,42200572</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -270,6 +270,11 @@
             <field>Operation__c</field>
             <operation>equals</operation>
             <value>AMS 2 MDM - AgencyDetails</value>
+        </filters>
+        <filters>
+            <field>Record__c</field>
+            <operation>contains</operation>
+            <value>8190002</value>
         </filters>
         <label>AMS - Error</label>
         <language>en_US</language>
@@ -371,7 +376,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>3/25/2020 12:00 AM</value>
+            <value>5/4/2020 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

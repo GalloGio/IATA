@@ -4,6 +4,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	@TestSetup
 	static void makeData(){
 
+		Test.startTest();
+
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -71,15 +73,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		ccode.Account__c = msoAccount.Id;
 		insert ccode;
 
-		Test.startTest();
+		ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
 
-			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+		AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 
-			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
-
-			ctrl.setNotificationMessage();
-
-		Test.stopTest();
+		ctrl.setNotificationMessage();
 
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
@@ -137,7 +135,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		);
 		insert azFile;
 
-
+		Test.stopTest();
 	}
 
 

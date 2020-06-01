@@ -50,7 +50,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 		return Database.getQueryLocator(query);
 	}
 
-	 	global void execute(Database.BatchableContext BC, List<sObject> scope) {
+	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 
 		System.SavePoint sp = Database.setSavepoint();
 
@@ -59,9 +59,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 		AMS_Pax_Accreditation_Form__c stagingArea = null;
 
 		try{
-
 			acct = (Account) scope.get(0);
-			Case c = [Select id, Subject, Origin, CaseNumber, RecordTypeId, CaseArea__c, Reason, Reason1__c, Visible_on_ISS_Portal__c, Region__c, BSPCountry__c, AccountId, ContactId from Case where accountid =: acct.Top_Parent__c AND reason1__c = 'New HE Multicountry'];
+			Case c = [Select id, Subject, Origin, CaseNumber, RecordTypeId, CaseArea__c, Reason, Reason1__c, Visible_on_ISS_Portal__c, Region__c, BSPCountry__c, AccountId, ContactId from Case where Id = :mainCaseId];
 			System.debug('[ANG_MulticountryOscarCreatorBatch]Parent Case recordType = ' +c.recordTypeId);
 			Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
@@ -128,8 +127,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 			createdCasesLst.add(newCaseMC);
 
-		}catch(Exception e){
-
+		} catch(Exception e){
 			System.debug('[ANG_MulticountryOscarCreatorBatch] Exception processing account ' + acct.Id + ':' + e.getStackTraceString());
 
 			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(new ANG_ConversionHelper.HierarchyStructure(acct), 1, BC.getJobId(), true, e.getMessage());
@@ -137,7 +135,6 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			System.debug(item);
 			resultItems.add(item);
 			Database.rollback(sp);
-
 		}
 	}
 
@@ -180,14 +177,14 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 					afWrapLst.add(MoveAmazonFilesActionBatch.moveAmazonFile(wa, newCaseId));
 					scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, newCaseId);
 				}
-					}
-				}
+			}
+		}
 
 		Savepoint sp = Database.setSavepoint();
 
 		try {
 			MoveAmazonFilesActionBatch.commitActions(afWrapLst);
-			}
+		}
 		catch(Exception e){
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception: ' + e.getMessage());
 			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception Stacktrace: ' + e.getStackTraceString());

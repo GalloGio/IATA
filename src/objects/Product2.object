@@ -2585,9 +2585,19 @@ SIS Charge Code Type.</description>
                     <label>IATA Cargo Handling Manual</label>
                 </value>
                 <value>
+                    <fullName>IATA Clearing Services Exchange Rates</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing Services Exchange Rates</label>
+                </value>
+                <value>
                     <fullName>IATA Consolidated Exchange Rates</fullName>
                     <default>false</default>
                     <label>IATA Consolidated Exchange Rates</label>
+                </value>
+                <value>
+                    <fullName>IATA COVID-19 Passenger Survey</fullName>
+                    <default>false</default>
+                    <label>IATA COVID-19 Passenger Survey</label>
                 </value>
                 <value>
                     <fullName>IATA Exchange Rates</fullName>
@@ -8253,6 +8263,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14588,7 +14602,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA COVID-19 Passenger Survey</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
