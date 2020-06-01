@@ -392,8 +392,12 @@
             <field>Error_Code__c</field>
             <operation>notEqual</operation>
         </filters>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>equals</operation>
+            <value>ProcessBSPLinkFromCase</value>
+        </filters>
         <label>BSPlink</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Debug_View</fullName>
@@ -505,7 +509,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>2/13/2020 12:00 AM,TODAY</value>
+            <value>YESTERDAY</value>
         </filters>
         <label>. mgo - KAVI</label>
         <language>en_US</language>
