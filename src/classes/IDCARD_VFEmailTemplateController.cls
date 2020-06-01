@@ -433,10 +433,14 @@ public with sharing class IDCARD_VFEmailTemplateController {
 	*/
 	private String processLogicTextTagWithoutTag(String text, String tag){
 
+		if(text == null) return '';
+
 		String initTag = '[!' + tag + ']';
 		String finalTag = '[' + tag + ']';
 		Integer initPos =  text.indexOf(initTag);
 		Integer finalPos =  text.indexOf(finalTag);
+
+		if(initPos < 0 || finalPos < 0) return '';
 
 		return text.substring(initPos + initTag.length(), finalPos);
 	}
@@ -446,10 +450,14 @@ public with sharing class IDCARD_VFEmailTemplateController {
 	*/
 	private String processLogicTextTagWithTag(String text, String tag){
 
+		if(text == null) return '';
+
 		String initTag = '[!' + tag + ']';
 		String finalTag = '[' + tag + ']';
 		Integer initPos =  text.indexOf(initTag);
 		Integer finalPos =  text.indexOf(finalTag);
+
+		if(initPos < 0 || finalPos < 0) return '';
 
 		return text.substring(initPos, finalPos + finalTag.length());
 	}
