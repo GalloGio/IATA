@@ -132,6 +132,9 @@
 				type="hidden"
 				onchange={handleChange}
 				disabled></input>
-        </template>
-    </div>
+		</template>
+		<template if:true={infotext}>
+			<c-advanced-helptext content={infotext} icon activator></c-advanced-helptext>
+		</template>
+	</div>
 </template>

@@ -95,6 +95,7 @@ export default class RecordTable extends RecordCollection {
 			field['_isShowTotalLabel'] = field._isFirstCol && this.showTotalLabel;
 			field['_headerClass'] = this.headerClass + (this.sortingField === field.targetField ? ' slds-is-sorted slds-is-sorted_' + this.sortingDirection : '');
 			field['_headerLabelClass'] = !this.wrapHeader ? 'slds-truncate' : '';
+			field['info'] = super.fields[index].info ? super.fields[index].info : null; 
 		});
 
 		return fieldsCopy;
@@ -124,13 +125,21 @@ export default class RecordTable extends RecordCollection {
 	}
 
 	handleTooltipOver(e) {
-		let targetTable = this.template.querySelectorAll("table")[1];
-		targetTable.querySelector("th[data-field='"+e.detail.name+"'] c-advanced-helptext").show();
+		let left = e.target.offsetLeft - e.target.scrollLeft;
+		let top = e.target.offsetTop + e.target.offsetHeight;
+		let currentElement = e.target;
+		while(currentElement.parentElement !== undefined && currentElement.parentElement !== null) {
+			currentElement = currentElement.parentElement;
+			left += currentElement.offsetLeft  - currentElement.scrollLeft;
+			top += currentElement.offsetTop;
+		}
+		e.detail.top = top;
+		e.detail.left = left;
+		this.template.querySelector("c-advanced-helptext[role=display]").show(e);
 	}
 
 	handleTooltipOut(e) {
-		let targetTable = this.template.querySelectorAll("table")[1];
-		targetTable.querySelector("th[data-field='"+e.detail.name+"'] c-advanced-helptext").hide();
+		this.template.querySelector("c-advanced-helptext[role=display]").hide();
 	}
 
 	/** Handling table sorting */

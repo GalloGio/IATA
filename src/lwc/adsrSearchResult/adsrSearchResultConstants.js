@@ -196,7 +196,16 @@ const TABLE_DETAIL_COLUMNS = [
 					+"Termination - Notice of removing the agent from the Agency List and terminating the Passenger Sales Agency Agreement<br>"
 					+"Repayment Agreement- Defaulted Agency has signed an alternative repayment schedule with IATA<br>"
 					+"Reinstated - Agency is not in default status anymore and rejoined agency program after complying with reinstated requirements<br>"
-					+"Legal Action- Ongoing court case or other any legal formalities are linked to the agency<br>"
+					+"Legal Action- Ongoing court case or other any legal formalities are linked to the agency<br>",
+		"info": (record, index, records) => {
+			if(record.agentStatus === "Repayment Agreement" && record.dueDate !== undefined && record.dueDate !== null){
+				return "AGREEMENT ON REPAYMENT SCHEDULE PLAN HAS BEEN REACHED.<br>"
+					+ "AGENT WILL BE REACTIVATED AFTER THE COMPLETION OF THE REPAYMENT PLAN AND SATISFYING THE CONDITIONS OF THE RESOLUTIONS.<br>"
+					+ "FAILURE TO HONOR THE REPAYMENT AGREEMENT WILL RESULT IN REMOVAL OF THE AGENT FROM THE AGENCY LIST.<br>"
+					+ "LAST INSTALLMENT WILL BE ON " + record.dueDate + ".";
+			}
+			return false;
+		}
 	}
 ];
 

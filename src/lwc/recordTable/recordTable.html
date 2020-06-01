@@ -1,4 +1,6 @@
 <template>
+	<c-advanced-helptext display role="display">
+	</c-advanced-helptext>
 	<div id="containerDiv" onmousemove={handlemousemove} onmouseup={handlemouseup}
 		ondblclick={handledblclickresizable}
 		class={mainContainerClass}
@@ -13,7 +15,7 @@
 									<span class="slds-assistive-text">Sort by: </span>
 									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
 										<span if:false={field.helptext} class={field._headerLabelClass} title={field.label}>{field.label}</span>
-										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext} ontooltipover={handleTooltipOver} ontooltipout={handleTooltipOut} name={field.targetField}>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext} name={field.targetField} ontooltipover={handleTooltipOver} ontooltipout={handleTooltipOut} activator>
 											{field.label}
 										</c-advanced-helptext>
 										<span class="slds-icon_container slds-icon-utility-arrowdown" if:true={sortable}>
@@ -57,7 +59,7 @@
 									<span class="slds-assistive-text">Sort by: </span>
 									<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate" style={fixedWidth}>
 										<span if:false={field.helptext} class={field._headerLabelClass} title={field.label}>{field.label}</span>
-										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext}>
+										<c-advanced-helptext if:true={field.helptext} class={field._headerLabelClass} content={field.helptext} name={field.targetField} ontooltipover={handleTooltipOver} ontooltipout={handleTooltipOut} activator>
 											{field.label}
 										</c-advanced-helptext>
 										<span class="slds-icon_container slds-icon-utility-arrowdown" if:true={sortable}>
@@ -90,7 +92,9 @@
 											record={record}
 											records={records}
 											onrecordfieldupdate={onRecordFieldUpdate}
-											variant="table">
+											variant="table"
+											ontooltipover={handleTooltipOver}
+											ontooltipout={handleTooltipOut}>
 										</c-record-field>
 									</div>
 								</th>
@@ -103,7 +107,9 @@
 											record={record}
 											records={records}
 											onrecordfieldupdate={onRecordFieldUpdate}
-											variant="table">
+											variant="table"
+											ontooltipover={handleTooltipOver}
+											ontooltipout={handleTooltipOut}>
 										</c-record-field>
 									</div>
 								</td>
@@ -126,7 +132,9 @@
 										properties={field}
 										records={records}
 										onrecordfieldupdate={onRecordFieldUpdate}
-										variant="table-column-total">
+										variant="table-column-total"
+										ontooltipover={handleTooltipOver}
+										ontooltipout={handleTooltipOut}>
 									</c-record-field>
 								</div>
 							</td>

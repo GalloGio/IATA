@@ -1,16 +1,26 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class AdvancedHelptext extends LightningElement {
+	@api icon = false;
 	@api name = "";
 	@api content = "";
+	@api activator = false;
+	@api display = false;
 	@track _visible = false;
+	@track _offsetLeft = null;
+	@track _offsetTop = null;
 
-	@api show() {
-		this._visible = true;
+	get displayLabel() {
+		return !this.display && !this.icon;
 	}
 
-	@api hide() {
-		this._visible = false;
+	get displayIcon() {
+		return !this.display && this.icon;
+	}
+
+	get tooltipContainerClass() {
+		return "tooltip"
+			+ (this.icon ? " tooltip-with-icon" : "");
 	}
 
 	get tooltipClass() {
@@ -18,13 +28,61 @@ export default class AdvancedHelptext extends LightningElement {
 			+ (this._visible ? ' tooltip-visible' : '');
 	}
 
+	get tooltipStyle() {
+		return this.display ? this._tooltipStyle : "";
+	}
+
+	get _tooltipStyle() {
+		return `left: ${this._offsetLeft}px; `
+				+`top: ${this._offsetTop}px;`;
+	}
+
+	@api show(event) {
+		this.content = event.detail.content;
+		this._visible = true;
+		this._offsetLeft = event.detail.left;
+		this._offsetTop = event.detail.top;
+	}
+
+	@api hide() {
+		this.content = null;
+		this._visible = false;
+	}
+
 	handleMouseOver(e) {
-		console.log('tooltip mouse over', this.name);
-		this.dispatchEvent(new CustomEvent("tooltipover", {bubbles: true, composed: true, detail: {name: this.name}}));
+		if(!this.activator)
+			return;
+		this.dispatchEvent(
+			new CustomEvent(
+				"tooltipover",
+				{
+					bubbles: true,
+					composed: true,
+					detail: {
+						name: this.name,
+						content: this.content,
+						left: this.offsetLeft,
+						top: this.offsetTop
+					}
+				}
+			)
+		);
 	}
 
 	handleMouseOut(e) {
-		console.log('tooltip mouse over', this.name);
-		this.dispatchEvent(new CustomEvent("tooltipout", {bubbles: true, composed: true, detail: {name: this.name}}));
+		if(!this.activator)
+			return;
+		this.dispatchEvent(
+			new CustomEvent(
+				"tooltipout",
+				{
+					bubbles: true,
+					composed: true,
+					detail: {
+						name: this.name
+					}
+				}
+			)
+		);
 	}
 }

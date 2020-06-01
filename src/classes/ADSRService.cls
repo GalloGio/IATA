@@ -8,8 +8,10 @@ public without sharing class ADSRService {
 	private List<String> countryIds;
 	private List<String> operationCodes;
 	private Account agent;
+	private Map<String, Map<String, List<Case_Detail__c>>> caseDetailsByCaseByAgency;
 	
 	public ADSRService(Account airline, String region, List<String> countries, String operation, String agent) {
+		this.caseDetailsByCaseByAgency = new Map<String, Map<String, List<Case_Detail__c>>>();
 		this.airline = airline;
 		this.region = region;
 		this.loadAgent(agent);
@@ -47,11 +49,11 @@ public without sharing class ADSRService {
 	}
 	
 	private List<Account> loadAgents(List<String> agentCodes) {
-		return [SELECT Id, Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.Region__c, IRIS_Code__c,
+		List<Account> agents =  [SELECT Id, Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.Region__c, IRIS_Code__c,
 					Holds_FS_first_call_letter__c, RecordType.DeveloperName, Location_Type__c, Status__c,
 					(SELECT Id, First_Call_Letter__c, Update_AIMS_DEF__c
 					FROM Cases
-					WHERE RecordType.DeveloperName LIKE 'SIDRA%'
+					 WHERE RecordType.DeveloperName LIKE 'SIDRA%' AND Update_AIMS_DEF__c != null
 					ORDER BY CreatedDate DESC
 					LIMIT 1),
 					(SELECT Id, Name, Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.First_Call_Letter__c, SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c
@@ -65,6 +67,32 @@ public without sharing class ADSRService {
 				FROM Account
 				WHERE Recordtype.DeveloperName = 'IATA_Agency'
 					AND IRIS_Code__c IN :agentCodes];
+
+		Set<Id> caseIds = new Set<Id>();
+		for(Account currentAgent : agents) {
+			this.caseDetailsByCaseByAgency.put(currentAgent.Id, new Map<String, List<Case_Detail__c>>());
+			for(Case currentCase : currentAgent.Cases) {
+				caseIds.add(currentCase.Id);
+				this.caseDetailsByCaseByAgency.get(currentAgent.Id).put(currentCase.Id, new List<Case_Detail__c>());
+			}
+		}
+
+		List<Case> cases = [SELECT Id, AccountId,
+								(SELECT Id, Amount_Expected__c, Amount_Received__c, Case__c, Due_date__c
+								 FROM Case_Details__r
+								 WHERE RecordType.DeveloperName = 'Repayment_Instalment'
+								 ORDER BY CreatedDate DESC
+								 LIMIT 1)
+							FROM Case
+							WHERE Id IN :caseIds
+							ORDER BY CreatedDate DESC];
+		for(Case currentCase : cases) {
+			for(Case_Detail__c detail : currentCase.Case_Details__r) {
+				this.caseDetailsByCaseByAgency.get(currentCase.AccountId).get(currentCase.Id).add(detail);
+			}
+		}
+		
+		return agents;
 	}
 	
 	public String getAirlineName() {
@@ -114,20 +142,41 @@ public without sharing class ADSRService {
 			}
 		}
 		
-		Map<String, Account> agents = new Map<String, Account>();
+		Map<String, AgencyInfo> agents = new Map<String, AgencyInfo>();
 		for (Account agent : loadAgents(agentCodes)) {
-			agents.put(agent.IRIS_Code__c, agent);
+			Map<String, List<Case_Detail__c>> caseDetails = this.caseDetailsByCaseByAgency.get(agent.Id);
+			agents.put(agent.IRIS_Code__c, new AgencyInfo(agent, caseDetails));
 		}
 		
 		for (ADSRExternalAPI.SummaryReportData item : data) {
 			for (ADSRExternalAPI.SummaryReportDataDetail detail : item.Summary) {
-				report.addSummaryReportData(detail, item, agents.get(detail.agentCode));
+				AgencyInfo info = agents.get(detail.agentCode) == null ? new AgencyInfo() : agents.get(detail.agentCode);
+				report.addSummaryReportData(detail, item, info);
 			}
 		}
 		
 		return report;
 	}
 	
+	private class AgencyInfo {
+		private Account agency;
+		private Map<String, List<Case_Detail__c>> caseDetailsByCase;
+
+		private AgencyInfo() {
+			this.caseDetailsByCase = new Map<String, List<Case_Detail__c>>();
+		}
+
+		private AgencyInfo(Account agency) {
+			this();
+			this.agency = agency;
+		}
+
+		private AgencyInfo(Account agency, Map<String, List<Case_Detail__c>> caseDetails) {
+			this(agency);
+			this.caseDetailsByCase = caseDetails;
+		}
+	}
+
 	public class SummaryReport {
 		@AuraEnabled
 		public String airlineCode;
@@ -148,7 +197,7 @@ public without sharing class ADSRService {
 		}
 		
 		public void addSummaryReportData(ADSRExternalAPI.SummaryReportDataDetail data, ADSRExternalAPI.SummaryReportData sourceReportData,
-			Account agentInfo) {
+			AgencyInfo agentInfo) {
 			
 			String groupingKey;
 			if(REPORT_TYPE_OPERATIONS == this.type) {
@@ -212,7 +261,7 @@ public without sharing class ADSRService {
 		}
 		
 		public void addSummaryReportDetail(ADSRExternalAPI.SummaryReportDataDetail reportLine, ADSRExternalAPI.SummaryReportData report,
-			Account agentInfo) {
+			AgencyInfo agentInfo) {
 			
 			String agencyKey =  reportLine.agentCode + '_' + reportLine.currencyCode;
 			SummaryReportAgency agency = this.indexedAgencies.get(agencyKey);
@@ -267,6 +316,8 @@ public without sharing class ADSRService {
 		public String financialSecurityStatus;
 		@AuraEnabled
 		public String agentStatus;
+		@AuraEnabled
+		public String dueDate;
 		public Decimal outstandingIncrement;
 		public Decimal outstandingUSDIncrement;
 		
@@ -280,7 +331,7 @@ public without sharing class ADSRService {
 		}
 		
 		public SummaryReportAgency(ADSRExternalAPI.SummaryReportDataDetail detail, ADSRExternalAPI.SummaryReportData parent,
-			Account agentInfo) {
+			AgencyInfo agentInfo) {
 			this();
 			this.agentCode = detail.agentCode;
 			this.agentName = detail.agentName;
@@ -317,17 +368,17 @@ public without sharing class ADSRService {
 			return parsedDate.format('dd MMM YYYY');
 		}
 		
-		private String calculateFinancialSecurityStatus(Account info) {
+		private String calculateFinancialSecurityStatus(AgencyInfo info) {
 			String financialSecurityStatus = 'Not Applicable/Claim Process not started';
-			if (info != null) {
-				if (isFirstCallLetterSent(info.Cases)) {
-					financialSecurityStatus = 'First Call Letter Sent';
-				} else if (isValidLocationType(info.Location_Type__c) && info.Status__c == 'Terminated'
-					&& isEnchashmentInProgress(info.Financial_Securities__r)) {
-						financialSecurityStatus = 'First Claim Sent';
-				} else if (isValidLocationType(info.Location_Type__c) && info.Status__c == 'Terminated'
-					&& isEnchashed(info.Financial_Securities__r)) {
+			if (info.agency != null) {
+				if (isValidLocationType(info.agency.Location_Type__c) && info.agency.Status__c == 'Terminated'
+					&& isEnchashed(info.agency.Financial_Securities__r)) {
 						financialSecurityStatus = 'Financial Security Encashed';
+				} else if (isValidLocationType(info.agency.Location_Type__c) && info.agency.Status__c == 'Terminated'
+					&& isEnchashmentInProgress(info.agency.Financial_Securities__r)) {
+						financialSecurityStatus = 'First Claim Sent';
+				} else if (isFirstCallLetterSent(info.agency.Cases)) {
+					financialSecurityStatus = 'First Call Letter Sent';
 				}
 			}
 			return financialSecurityStatus;
@@ -342,7 +393,7 @@ public without sharing class ADSRService {
 				return false;
 			}
 			Case sidraCase = sidraCases[0];
-			return sidraCase.Update_AIMS_DEF__c != null && sidraCase.First_Call_Letter__c == 'Sent';
+			return sidraCase.First_Call_Letter__c == 'Sent';
 		}
 		
 		private Boolean isEnchashmentInProgress(List<Financial_Security__c> securityStatus) {
@@ -365,24 +416,38 @@ public without sharing class ADSRService {
 			return false;
 		}
 		
-		private String calculateAgentStatus(Account info) {
-			if (info != null) {
-				for (Agency_Applied_Change_code__c changeCode : info.Agencies_Applied_Change_codes__r) {
-					if (changeCode.Change_Code__c == 'DFE' || changeCode.Change_Code__c == 'DEF') {
+		private String calculateAgentStatus(AgencyInfo info) {
+			if (info.agency != null) {
+				for (Agency_Applied_Change_code__c changeCode : info.agency.Agencies_Applied_Change_codes__r) {
+					if ((changeCode.Change_Code__c == 'DFE' || changeCode.Change_Code__c == 'DEF'
+						|| changeCode.Change_Code__c == 'RRQ' || changeCode.Change_Code__c == 'RPY'
+						|| changeCode.Change_Code__c == 'TER') && changeCode.SIDRA_Case__r != null
+						&& changeCode.SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c != null) {
+						return 'Legal action';
+					} else if (changeCode.Change_Code__c == 'DFE' || changeCode.Change_Code__c == 'DEF'
+						|| changeCode.Change_Code__c == 'RRQ') {
 						return 'Defaulted';
 					} else if (changeCode.Change_Code__c == 'RPY') {
+						this.setDueDate(info);
 						return 'Repayment Agreement';
 					} else if (changeCode.Change_Code__c == 'TER') {
 						return 'Terminated';
-					} else if (changeCode.Change_Code__c == 'REI') {
+					} else if (changeCode.Change_Code__c == 'REI' || changeCode.Change_Code__c == 'RCR') {
 						return 'Reinstated';
-					} else if (changeCode.SIDRA_Case__r != null
-						&& changeCode.SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c != null) {
-						return 'Legal action';
 					}
 				}
 			}
 			return '';
+		}
+
+		private void setDueDate(AgencyInfo info) {
+			if(info.agency.Cases != null && !info.agency.Cases.isEmpty() && info.caseDetailsByCase != null) {
+				List<Case_Detail__c> detailsList = info.caseDetailsByCase.get(info.agency.Cases[0].Id);
+				if(detailsList != null && !detailsList.isEmpty() && detailsList[0].Due_date__c != null) {
+					Datetime dTime = Datetime.newInstance(detailsList[0].Due_date__c.year(), detailsList[0].Due_date__c.month(), detailsList[0].Due_date__c.day());
+					this.dueDate = dTime.format('dd MMM YYYY');
+				}
+			}
 		}
 	}
 	

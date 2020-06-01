@@ -145,6 +145,16 @@ export default class RecordField extends LightningElement {
 		return this.variant.indexOf("table") > -1;
 	}
 
+	get infotext() {
+		if(this.properties.info === undefined){
+            return false;
+        }
+        else if(typeof this.properties.info === "function"){
+            return this.properties.info(this.record, this.recordIndex, this.records);
+		}
+        return this.properties.info;
+	}
+
     connectedCallback(){
         //console.log(JSON.parse(JSON.stringify(this.properties)));
     }
