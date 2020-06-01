@@ -23,7 +23,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
 		Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
 
-		Set<String> accountStatusToDiscard = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+		Set<String> accountStatusToDiscard = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, ''};
 
 		for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
 		{

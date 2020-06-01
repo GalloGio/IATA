@@ -16,6 +16,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
 	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
 
+	private Id currentCountryId;
+
 	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)){ ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; } else {ca.fw.newForm.Geoname_Billing_City__c = null;} }}
 
 	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)){ ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId;} else {ca.fw.newForm.Geoname_Shipping_City__c = null;} }}
@@ -90,22 +92,25 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
 	public List<SelectOption> billingStateList {
 		get {
-			if (billingStateList == null) {
+			if (this.currentCountryId != ca.account.IATA_ISO_Country__c){
 				billingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
-				for (IATA_ISO_State__c state: [SELECT Id, Name
-											FROM IATA_ISO_State__c
-											WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
-											ORDER BY Name]) {
-					billingStateList.add(new SelectOption(state.Name, state.Name));					
-				}
+				List<IATA_ISO_Country__c> iataIsoCountryLst = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{ca.account.IATA_ISO_Country__c});
+
+				if(!iataIsoCountryLst.isEmpty()){
+					IATA_ISO_Country__c country = iataIsoCountryLst.get(0);
+					this.currentCountryId = country.Id;
+					for (IATA_ISO_State__c state : country.IATA_ISO_States__r) {
+						billingStateList.add(new SelectOption(state.Name, state.Name));
+					}
+				}	
 			}
+
 			for(SelectOption state : billingStateList){
 				if(!String.isBlank(state.getValue()) && !String.isBlank(ca.fw.newform.State_Province__c))
 					ca.fw.newform.State_Province__c = state.getValue().toUpperCase() == ca.fw.newform.State_Province__c.toUpperCase()?state.getValue():ca.fw.newform.State_Province__c;
 			}
-			
-			
+
 			return billingStateList;
 		}
 		set;

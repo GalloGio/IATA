@@ -1,19 +1,62 @@
 <apex:page controller="ANG_RHCMassCalculation" tabStyle="ANG_RHC_Information__c" docType="html-5.0" title="RHC Mass Recalculation">
 
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 	<script>
 		function toggleAll(source) {
 			var checkboxes = document.querySelectorAll('input.itemCheck');
 			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
 		}
+		function showSpinner() {
+			$('[id$=searching]').removeClass("img-hidden");
+		}
+		function hideSpinner() {
+			$('[id$=searching]').addClass("img-hidden");
+		}
+		function hideShowTableColumns() {
+			let hideAfter = 999; // hides the columns after the first column with an empty label
+			$('[id$=resultTable] > thead > tr > th > div').each((i, ele) => {
+				if ($(ele).text() === "")
+					hideAfter = i < hideAfter ? i : hideAfter;
+			});
+			$('[id$=resultTable] > thead > tr > th').each((i, ele) => {
+				if (i >= hideAfter)
+					$(ele).css("display", "none");
+			});
+		}
 	</script>
+	<style>
+		.img-hidden {
+			display: none;
+		}
+	</style>
 
 	<apex:sectionHeader title="RHC Mass Recalculation"/>
 
 	<apex:form >
-		<apex:outputPanel id="tables">            
-			<apex:pageBlock title="Search">
+
+		<apex:outputPanel id="tables">
+
+			<apex:pageBlock title="Notes">
+				<apex:pageBlockSection id="notes" columns="1">
+					<ul>
+						<li>For GoGlobal account, please request the recalculation on the RHC of the GE.</li>
+						<li>Please note that the system will look for agencies with:</li>
+						<ul>
+							<li>Accreditation type Cash</li>
+							<li>Cash condition false</li>
+							<li>No conditions RHC=%FS applied at IATA code or BSP level</li>
+						</ul>
+						<li>Select agencies from one page at a time, then click Submit.</li>
+						<li>Move to the next page only after the processing on the current page is completed.</li>
+					</ul>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock title="Search" id="searchForm">
 				<apex:pageBlockButtons location="bottom">
-					<apex:commandButton action="{!search}" reRender="tables" value="Search" disabled="{!running}"/>
+					<apex:commandButton action="{!search}" reRender="tables" value="Search" 
+						disabled="{!running || (!validDays && !validCountry)}" onclick="showSpinner()"/>
+					<apex:image id="searching" alt="searching" value="/img/loading.gif" styleClass="img-hidden" />
 				</apex:pageBlockButtons>
 
 				<apex:pageBlockSection collapsible="false" columns="2">
@@ -21,14 +64,30 @@
 					<apex:pageBlockSectionItem >
 						<apex:outputLabel >Region</apex:outputLabel>
 						<apex:selectList value="{!userRegion}" size="1" multiselect="false" disabled="{!running}">
+							<apex:actionSupport event="onchange" action="{!regionSelected}" reRender="searchForm"/>
 							<apex:selectOptions value="{!regions}"/>
+						</apex:selectList> 
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem>
+						<!-- empty for spacing -->
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel>Country</apex:outputLabel>
+						<apex:selectList value="{!country}" size="1" multiselect="false" disabled="{!running || !validRegion || validDays}">
+							<apex:actionSupport event="onchange" reRender="searchForm"/>
+							<apex:selectOptions value="{!countries}"/>
 						</apex:selectList> 
 					</apex:pageBlockSectionItem>
 
 					<apex:pageBlockSectionItem >
-						<apex:outputLabel >Agents with IFAP closed whitin X days</apex:outputLabel>
-						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!running}"/>
+						<apex:outputLabel>Agents with IFAP closed whitin X days</apex:outputLabel>
+						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!running || !validRegion || validCountry}">
+							<apex:actionSupport event="onblur" reRender="searchForm"/>
+						</apex:input>
 					</apex:pageBlockSectionItem>
+
 				</apex:pageBlockSection>
 			</apex:pageBlock>
 		
@@ -37,7 +96,7 @@
 				<apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!agents.size == 0}">
 					No records to display
 				</apex:outputPanel>
-				<apex:pageBlockTable value="{!agents}" var="a" rendered="{!agents.size > 0}">
+				<apex:pageBlockTable value="{!agents}" var="a" rendered="{!agents.size > 0}" id="resultTable">
 
 					<apex:column >
 						<apex:facet name="header">
@@ -58,11 +117,26 @@
 							<apex:param value="{!a.currentAmount}"/>
 						</apex:outputText>
 					</apex:column>
+					<apex:column value="{!a.rhcInfo.ANG_RHC_Effective_Date__c}"/>
 					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Provisional__c}" rendered="{!a.hasResult}"/>
 					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Forecasted__c}" rendered="{!a.hasResult}"/>
-					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount__c}" rendered="{!a.hasResult}"/>
+					<apex:column value="{!a.rhcInfo.ANG_Forecasted_RHC_Effective_date__c}" rendered="{!a.hasResult}"/>
+					<apex:column value="{!a.rhcInfo.ANG_ConsumedRHC__c}" rendered="{!a.hasResult}"/>
+					<apex:column headerValue="Calculated new Consumed RHC %" rendered="{!a.hasResult}">
+						<apex:outputText value="{!a.calculatedConsumedRHC}">
+						</apex:outputText>
+					</apex:column>
 
 				</apex:pageBlockTable>
+					
+				<script>
+					// the "headerValue" on a "apex:column" is always shown (no matter the "rendered" value),
+					//	so this is a hack to hide it -> also to hide the full columns
+					(function() {
+						hideShowTableColumns();
+						hideSpinner();
+					})();
+				</script>
 
 
 				<!-- Add pagination toolbar to bottom of table if pageSize is defined -->
@@ -134,7 +208,7 @@
 				<apex:pageBlockButtons id="spinner">
 					
 					<apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>
-					<apex:image  alt="running" value="/img/loading.gif" rendered="{!running}"/>
+					<apex:image alt="running" value="/img/loading.gif" rendered="{!running}"/>
 					<!-- <apex:commandButton value="Check" action="{!fetchResults}" reRender="tables" rendered="{!running}"/> -->
 				</apex:pageBlockButtons>
 			</apex:pageBlock>

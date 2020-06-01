@@ -207,6 +207,11 @@
                     <default>false</default>
                     <label>Travel Agent - Domestic</label>
                 </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
