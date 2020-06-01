@@ -184,7 +184,7 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			idCardApp.Renewal_From_Replace__c = reissueRenewableClicked;
 			insert idCardApp;
 
-
+			
 			system.debug('idCardApp.Id ' + idCardApp.Id);
 			system.debug('selected.Account.IATACode__c ' + selected.Account.IATACode__c);
 			system.debug('action ' + action);
@@ -229,5 +229,11 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 		nextPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(verNumber));
 		nextPage.setRedirect(true);
 		return nextPage;
+	}
+	
+	public Pagereference refresh() {
+		initialize();
+		showPopup = false;
+		return null;
 	}
 }

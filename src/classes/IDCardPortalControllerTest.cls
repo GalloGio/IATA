@@ -102,7 +102,7 @@ public class IDCardPortalControllerTest {
 		testData = new IDCardTestData();
 
 		Test.startTest();
-
+		
 		List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
 		ID_Card_Application__c idCardApplicationClone = testData.IDCards_IDCardApplications[1].clone();
 		idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
@@ -140,6 +140,7 @@ public class IDCardPortalControllerTest {
 
 		iDCardPortalController_NoCookies.openPopup();
 		iDCardPortalController_NoCookies.closePopup();
+		iDCardPortalController_NoCookies.refresh();
 
 		//controllerPage_NoCookies.getParameters().put('myaction', IDCardUtil.APPLICATIONTYPE_REPLACEMENT);
 		iDCardPortalController_NoCookies.openPopup();
