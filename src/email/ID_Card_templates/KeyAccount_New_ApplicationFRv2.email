@@ -1,0 +1,31 @@
+<messaging:emailTemplate subject="ID Card Application for Your Approval" recipientType="Contact"  relatedToType="ID_Card_Application__c">
+<messaging:htmlEmailBody >
+
+
+<html>
+<body>
+<font face="arial">
+<table>
+<tr align ="center"><td align="center"><apex:image url="https://c.eu0.content.force.com/servlet/servlet.ImageServer?id=0152000000111UE&oid=00D3N0000008aNS"/></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+
+<tr><td><c:IDCARD_VFEmailTemplateKeyAccount CID="{!relatedTo.Id}" lang="French"/></td></tr>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+</table>
+</font>
+</body>
+</html>
+
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -89,9 +89,9 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 		String language = getSelectedLanguage();
 		List<EmailTemplate> ets = new List<EmailTemplate>();
 
-		if (language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFR'];
-		if (language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationES'];
-		if (language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Application'];
+		if (language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFRv2'];
+		if (language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationESv2'];
+		if (language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Applicationv2'];
 
 		if ( ets.size() > 0 && toRecipients.size() > 0) {
 			EmailTemplate et = ets.get(0);
