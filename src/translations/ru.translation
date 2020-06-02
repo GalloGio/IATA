@@ -16941,7 +16941,9 @@
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <label>Баланс на клиентском портале обновляется на следующий рабочий день после зачисления средств на счет IATA. День зачисления средств на счет IATA зависит от выбранной формы оплаты. Данные выставленного счета, показанные в ICE, предоставляются IATA третьими сторонами с интервалом в 24 часа, при этом возможны задержки, не зависящие от IATA. 
+
+В случае корректировки суммы оплаты в результате приостановки работы с авиакомпанией агенты могут ориентироваться на суммы, указанные в ICE. При наличии расхождений эти суммы могут быть скорректированы путем последующего перерасчета с агентом.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31711,6 +31713,10 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
         </sections>
     </reportTypes>
     <reportTypes>
