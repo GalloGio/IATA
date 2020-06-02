@@ -16938,7 +16938,9 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <label>Müşteri portalındaki bakiyeler, IATA hesabına alacak kaydedildikten bir sonraki iş gününde güncellenir. IATA hesabına alacak kaydının yapılacağı gün, tercih ettiğiniz ödeme yöntemine bağlı olarak değişebilir. ICE’de gösterilen fatura verileri üçüncü taraflarca 24 saatlik aralıklarla IATA’ya gönderilir, bu nedenle IATA’nın kontrolü dışında bazı gecikmeler söz konusu olabilir. 
+
+Bir havayolunun faaliyetlerini geçici olarak durdurması sonucunda fatura tutarının düzeltilmesi durumunda, acenteler ICE’de yer alan tutarlara göre işlem yapabilir. Tutarlarda herhangi bir fark oluşması durumunda, bu farklar ilerleyen tarihlerde acente tarafından veya acenteye ödeme yapılarak giderilebilir.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31705,6 +31707,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
         </sections>
     </reportTypes>
     <reportTypes>
