@@ -37,7 +37,7 @@ public with sharing class PortalProfileCtrl {
 	PRIVATE STATIC FINAL STRING LABEL_EN_ACCESSIBILITY = 'Portal Accessibility';
 	PRIVATE STATIC FINAL STRING LABEL_EN_PROFESSIONAL = 'Professional';
 	PRIVATE STATIC FINAL STRING LABEL_EN_PRIVACYMANAGEMENTTITLE = 'Subscriptions & Privacy';
-	PRIVATE STATIC FINAL STRING LABEL_EN_BASICS_TRAINING = 'Training'; //ADDED NEEDS TO BE REVIEWED BY FERNANDO MOUZINHO
+	PRIVATE STATIC FINAL STRING LABEL_EN_BASICS_TRAINING = 'Training';
 	
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
@@ -481,7 +481,6 @@ public static Contact contactInfo = new Contact();
 		//PERSONAL CARD
 		List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
 		lstfw2.add(new FieldWrapper('Email',false,true));
-		//lstfw2.add(new FieldWrapper('Additional_Email__c',true,true));
 		FieldWrapper fw;
 		fw = new FieldWrapper('Phone',true,true);
 		fw.isRequired = true;
@@ -504,7 +503,6 @@ public static Contact contactInfo = new Contact();
 		//we are only expecting to have a unique account contact role with contact role name equal to trainee
 		if(!trainingList.isEmpty()){
 			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
-			//lstfw3_1.add(new FieldWrapper('Additional_Email__c',true,true,'','Personal Email'));
 			fw = new FieldWrapper('TRAINING',true,true,true);
 			fw.isTrainingInfo = true;
 			lstfw3_1.add(fw);
@@ -636,6 +634,11 @@ public static Contact contactInfo = new Contact();
 	}
 
 	@AuraEnabled
+	public static Boolean isTerminated(){
+		return myContact.Account.Status__c == 'Terminated';
+	}
+
+	@AuraEnabled
 	public static boolean hasRevCases(){
 
 		if(myContact.AccountId != null){
@@ -713,7 +716,7 @@ public static Contact contactInfo = new Contact();
 				editable = false;
 			}
 
-			if(hasAnnualRevalidation() && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
+			if((hasAnnualRevalidation() || isTerminated()) && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
 				editable = false;
 			}
 

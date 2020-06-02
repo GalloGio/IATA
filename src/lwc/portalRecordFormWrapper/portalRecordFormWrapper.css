@@ -1,10 +1,9 @@
-/**
- * Created by pvavruska on 5/28/2019.
- */
 .modalSpinnerContainer {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
+  left: 0;
+  top: 0;
 }
 
 .maxWidth {
@@ -128,4 +127,75 @@ input[type="checkbox"] {
   pointer-events: none;
   cursor: default;
   text-decoration: none;
+  float: right;
+}
+
+.removeLink{
+    color:blue;
+    height:40px;
+    display:table-cell;
+    vertical-align:middle;
+}
+.errorOnCheckBox {
+  border-color: #c23934;
+}
+
+.workingAreasError {
+  text-decoration: underline;
+  text-decoration-color: #c23934;
+}
+
+.errorBox {
+  color: #fff;
+  border-radius: 4px;
+  background: #c23934;
+  padding: 10px;
+  margin-left: 38px;
+  width: 89%;
+  white-space: normal;
+}
+
+.el-centered {
+  text-align: center;
+}
+
+.leftIconPosition {
+  margin-left: -30px;
+  float: left;
+}
+@media screen and (max-width: 400px){
+  .footer-btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cancel-btn{
+    margin-right: 0;
+    margin-top: 15px;
+  }
+}
+
+.grayBackgroundSection {
+    background-color: #f7f8fc;
+}
+
+.underLinded {
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 1%;
+  padding-top: 1%;
+}
+
+.customPopupInteriorHalfScreenCenteredShippingAddress {
+  background-color: #F7F8FA;
+  width: 40%;
+  margin: auto;
+  box-shadow: 5px 5px 20px #808080;
+  border-radius: 1px;
+  border: solid 1px #e2e2e2;
+}
+
+.orangeIcon {
+  line-height: 1;
+  vertical-align: text-top;
 }

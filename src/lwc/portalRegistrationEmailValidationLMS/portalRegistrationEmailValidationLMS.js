@@ -19,7 +19,6 @@ import CSP_L2_Account_Information_Message from '@salesforce/label/c.CSP_L2_Accou
 import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
 import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
 import CSP_L2_IATA_Codes from '@salesforce/label/c.CSP_L2_IATA_Codes';
-import CSP_L2_Company_Location from '@salesforce/label/c.CSP_L2_Company_Location';
 import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
 import CSP_L2_Search from '@salesforce/label/c.CSP_L2_Search';
 import CSP_L2_Search_Results from '@salesforce/label/c.CSP_L2_Search_Results';
@@ -175,7 +174,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		ISSP_MyProfile_CATEGORY,
 		CSP_L2_Company_Name,
 		CSP_L2_IATA_Codes,
-		CSP_L2_Company_Location,
 		CSP_L2_Back_to_Profile_Details,
 		CSP_L2_Search,
 		CSP_L2_Search_Results,

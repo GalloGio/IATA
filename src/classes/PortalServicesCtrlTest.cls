@@ -371,17 +371,17 @@ public class PortalServicesCtrlTest {
 		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest3'];
 
         User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-        
+
         System.runAs(portalUser) {
             Test.StartTest();
-            
+
             List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
             System.assertEquals(lstResults.size() >= 0, true);
-            
+
             Test.StopTest();
         }
     }
-    
+
     @isTest
     public static void PortalServicesCtrlTest_getServiceInformation() {
         Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
@@ -499,8 +499,6 @@ public class PortalServicesCtrlTest {
 	@isTest
 	public static void PortalServicesCtrlTest_grantAccessToContactWithoutUser() {
 
-		Test.StartTest();
-		
 		Account  acc =[select id from account where name='AccountTest'];
 
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -865,7 +863,7 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			Test.StartTest();
 			String result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
 
-			String id = PortalServicesCtrl.getPortalServiceId('serviceTest3');
+			String id = ServiceTermsAndConditionsUtils.getPortalServiceId('serviceTest3');
 			system.assert(portalServicelist.get(0).id == id);
 			Test.StopTest();
 		}
@@ -899,7 +897,7 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			Test.StartTest();
 			String result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
 
-			String id = PortalServicesCtrl.getPortalServiceId('serviceTest3');
+			String id = ServiceTermsAndConditionsUtils.getPortalServiceId('serviceTest3');
 			system.assert(portalServicelist.get(0).id == id);
 			Test.StopTest();
 		}

@@ -1,7 +1,3 @@
-/**
- * Created by pvavruska on 5/28/2019.
- */
-
 import { LightningElement, api, track } from 'lwc';
 
 
@@ -21,7 +17,6 @@ import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
 import hasAccessToSIS from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; //WMO-736 - ACAMBAS
 import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails'; //WMO-736 - ACAMBAS
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService'; //WMO-736 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -71,7 +66,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	@api sectionClass;
 	@api headerClass;
 	@api sectionTitle;
-	@api showEdit;
+    @api sectionName;
 	@api editBasics;
 	@api editIdcard;
 	@api idCardRedirectionUrl;
@@ -82,7 +77,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	@api objectName;
 	@api showEditModal = false;
 	@api isLoading;
-	// @api staticFields;
 	@api showarea;
 	@api services;
 	@api showfunction;
@@ -103,19 +97,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	@track fieldsLocal;
 	@track staticFieldsLocal;
 	@track jobFunctions;
+    @track showEditTrack;
 	@track removeContact = false;
 	@track idCardErrorPopup = false;
 	@track photoURL;
 	@track photoPopUp = false;
 	@track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
 	@track paymentLinkURL; //WMO-699 - ACAMBAS
-	@track hasAccessToSISPortal; //WMO-736 - ACAMBAS
+    @track hasAccessToSISPortal = false; //WMO-736 - ACAMBAS
 	@track SISPortalLink; //WMO-736 - ACAMBAS
-	@track additionalEmail; 
-
+    @track firstEntry = false;
+    @track initialList = [];
+    @track isSuccess = false;
 	@track iconUrl;
 	@track sisPage;
-
+	@track additionalEmail; 
 
 	timeout = null;
 
@@ -180,7 +176,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		CSP_L3_PersonalEmail_LMS
 	};
 
-	@api tabName = '';
+    @api tabName;
 	@track isAdminUser = false;
 	@track isAirline=false;
 	@track linkToDoChanges='';
@@ -209,6 +205,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
 	get labels() { return this._labels; }
 	set labels(value) { this._labels = value; }
+
+	@api
+    get showEdit(){
+        return this.showEditTrack;
+    }
+    set showEdit(val){
+        this.showEditTrack=val;
+    }
 
 	emptyStaticServices = 'emptyStaticServices';
 	emptyServices = 'emptyServices';
@@ -245,13 +249,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
 				if (contact2.Membership_Function__c != null) {
 
-					let values = contact2.Membership_Function__c.split(";");
-					values.forEach(function (value) {
-						functions.push(value);
-						options.forEach(function (option) {
-							if (option.label == value) { option.checked = true; selectedV.push(option.value); }
-						});
-					});
+                    let userMemFunct = contact2.Membership_Function__c;
+                    for(let i=0;i<options.length;i++){
+                        if (userMemFunct.indexOf(options[i].value)!=-1){ 
+                            options[i].checked = true; 
+                            selectedV.push(options[i].value);
+                            functions.push(options[i].label);
+                        }
+                    }
 
 					this.selectedValuesFunction = selectedV;
 				}
@@ -269,7 +274,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 				if(this.staticFieldsLocal !== undefined){
 					this.isTrainingPageLoaded = true;
 					let contact3 = JSON.parse(JSON.stringify(this.staticFieldsLocal));
-					console.log('this.staticFieldsLocal: ',contact3);
 					this.trainingId = contact3.trainingId;
 					this.selectedCountryId = contact3.shippingCountryRef;
 					this.address.countryId = contact3.shippingCountryRef;
@@ -313,10 +317,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		}
 
 		isAdmin().then(result => {
-			this.showEdit = result && this.showEdit;
-			if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
+            this.showEditTrack = result && this.showEditTrack;
+            if (this.tabName && this._labels.CompanyInformation.trim() === this.tabName.trim()){	
 				this.isAdminUser = result;
-				this.showEdit = true;
+                this.showEditTrack = true;
 				this.editBasics = true;
 			}
 		});
@@ -358,43 +362,41 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		});
 		//WMO-699 - ACAMBAS: End
 
-		//WMO-736 - ACAMBAS: Begin
-		let SISPortalService = 'SIS';
+        if(this.isCustomerInvoice){
+			//WMO-736 - ACAMBAS: Begin
+			let SISPortalService = 'SIS';
 
-		hasAccessToSIS({ str: SISPortalService }).then(result => {
-			this.hasAccessToSISPortal = result;
+			hasAccessToSIS({ str: SISPortalService }).then(result => {
+				this.hasAccessToSISPortal = result;
 
-			if(this.hasAccessToSISPortal) {
-				getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
-					let portalService = JSON.parse(JSON.stringify(result));
-
-					if (portalService !== undefined && portalService !== '') {
-						//let SISIconHTML = portalService.recordService.Application_icon__c;
-						let SISPortalURL = portalService.recordService.Application_URL__c;
-						this.iconUrl = portalService.recordService.Application_icon_URL__c;
-						goToOldPortalService({ myurl: SISPortalURL }).then(result => {
-							//this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
-							//this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
-							this.sisPage = result;
-						})
-					}
-				});
-			}
-		});
-		//WMO-736 - ACAMBAS: End
+				if(this.hasAccessToSISPortal) {
+					getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
+						let portalService = JSON.parse(JSON.stringify(result));
+							if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
+							this.iconUrl = portalService.recordService.Application_icon_URL__c;
+								this.sisPage = portalService.recordService.Application_URL__c;
+						}
+					});
+				}
+			});
+			//WMO-736 - ACAMBAS: End
+        }
 
 		this.getAccountEmailDomains();
 	}
-	// get showHelpText(){
-	// 	return this.isAdminUser;
-	// }
+	get showHelpText(){
+		return this.isAdminUser;
+	}
 
 	get accessibilityGetter() {
-
-		let accessibilityTextLocal = '';
 		let contactTypeStatus = [];
 		let contactType = [];
 		let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
+
+		if(!this.firstEntry){
+            this.initialList = fieldsToIterate;
+            this.firstEntry = true;
+        }
 
 		if (fieldsToIterate) {
 		fieldsToIterate.forEach(function (item) {
@@ -409,21 +411,23 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		});
 		}
 
-		accessibilityTextLocal = contactTypeStatus.join(', ');
+        this.accessibilityText = contactTypeStatus.join(', ');
 		this.contactTypeStatus = contactType;
 		this.listSelected = contactTypeStatus;
 
-		// isAdmin().then(result => {
-		// 	console.log('accessibilityGetter - isAdmin');
-		// 	this.showEdit = (result ? true : false);
-		// });
-		this.showEdit = true;
+        return this.accessibilityText;
+    }
 
-		return this.accessibilityText
+    openModal() { this.showEditModal = true; }
+
+    closeModal() { 
+        if(this.sectionName === 'Portal Accessibility' && !this.isSuccess){
+            this.fields = this.initialList;
+        }
+        this.isSuccess = false;
+        this.showEditModal = false; 
 	}
 
-	openModal() { this.showEditModal = true; }
-	closeModal() { this.showEditModal = false; }
 
 	closeModalAddress() {
 		
@@ -447,12 +451,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	handleSucess(event) {
 		this.isSaving = false;
 
+		if(this.sectionName === 'Portal Accessibility'){
+            this.isSuccess = true;
+            this.initialList = JSON.parse(JSON.stringify(this.fields));
+        }
+		
+		this.dispatchEvent(new CustomEvent('refreshview'));
 		this.closeModal();
 
 		this.updateMembershipFunctions(event.detail);
 	}
 
 	handleError(event) {
+		if(this.sectionName === 'Portal Accessibility'){
+            this.isSuccess = false;       
+        }
 		this.isSaving = false;
 	}
 
@@ -505,9 +518,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		if(eventDetail.fields.hasOwnProperty('Membership_Function__c')) {
 			let functions = [];
 			if(eventDetail.fields.Membership_Function__c) {
-				const values = eventDetail.fields.Membership_Function__c.value.split(";");
-				values.forEach( (value) => { functions.push(value); });
-			}
+                const userMemFunct = eventDetail.fields.Membership_Function__c.value;
+                let options=this.functionOptions;
+
+                for(let i=0;i<options.length;i++){
+                    if (userMemFunct.indexOf(options[i].value)!=-1){                         
+                        functions.push(options[i].label);
+                    }
+				}
+            }
+            functions.sort();            
 			this.jobFunctions = functions;
 		}
 	}
@@ -659,12 +679,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 			let selectedF = '';
 			selectedFunction.forEach(function (item) { selectedF += item + ';'; });
 
-			let fields = event.detail.fields;
-
+            let fields = JSON.parse(JSON.stringify(event.detail.fields));
 			fields.accountId = this.accountId;
 
-			let contact = JSON.parse(JSON.stringify(this.staticFieldsLocal));
-			if(contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
+            let contact = JSON.parse(JSON.stringify(this.staticFields));
+            if(this.sectionName=='Basics' && contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
 				this.isSaving = false;
 				this.closeModal();
 				this.idCardErrorPopup = true;
@@ -707,7 +726,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 			}
 
 			let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-			if (listSelected.length > 0) {
 				let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
 
 				contactTypeStatusLocal.forEach(function (item) {
@@ -726,7 +744,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 						item.accessibilityList = contactTypeStatusLocal;
 					}
 				});
-			}
 
 			if (canSave) {
 				this.template.querySelector('lightning-record-edit-form').submit(fields);
@@ -747,16 +764,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
 		if (!selectedV.includes(selected)) {
 			selectedV.push(selected);
-			options.forEach(function (option) {
-				if (option.value == selected) { option.checked = true; }
-			});
+			for (let i = 0; i < options.length; i++) {
+				if (options[i].value == selected) {
+					options[i].checked = true; 
+				}
+			}
+			
 		} else {
 			let index = selectedV.indexOf(selected);
 			if (index > -1) {
 				selectedV.splice(index, 1);
-				options.forEach(function (option) {
-					if (option.value === selected) { option.checked = false; }
-				});
+				for (let i = 0; i < options.length; i++) {
+					if (options[i].value == selected) {
+						options[i].checked = false; 
+					}
+				}
 			}
 		}
 
@@ -790,21 +812,40 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	getValueSelectedTypeStatus(event) {
 
 		let selected = event.target.dataset.item;
-		// let type = event.target.dataset.type;
 
 		let fieldValue = JSON.parse(JSON.stringify(this.listSelected));
+        let fieldsToIterate = JSON.parse(JSON.stringify(this.fields)); 
+        let contactStatus = [];
+
+        contactStatus = fieldValue;
 
 		if (!fieldValue.includes(selected)) {
-			fieldValue.push(selected)
+            fieldValue.push(selected);
+            fieldsToIterate[1].accessibilityList.forEach(function (option) {
+                if (option.label == selected) {      
+                    option.checked = true;
+
+                }
+            });
 		} else {
 			for (let i = fieldValue.length - 1; i >= 0; i--) {
 				if (fieldValue[i] === selected) {
 					fieldValue.splice(i, 1);
+                        fieldsToIterate[1].accessibilityList.forEach(function (option) {
+                            if (option.label == selected) { 
+                                option.checked = false;
+
+                            }
+                        });
 				}
 			}
 		}
 
+        this.contactTypeStatus = fieldsToIterate[1].accessibilityList;
 		this.listSelected = fieldValue;
+        this.contactStatus = fieldValue;
+        this.accessibilityText = contactStatus.join(', ');
+        this.fields = fieldsToIterate;
 
 	}
 
@@ -834,8 +875,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	}
 
 	get canEditBasics() {
-		let isRestrictedSection = this.sectionTitle == 'Basics' || this.sectionTitle == 'Branch Contact';
-		return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
+        let isRestrictedSection = this.sectionName == 'Basics' || this.sectionName == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEditTrack) || (!isRestrictedSection && this.showEditTrack);
 	}
 
 	get hasIdCard() {

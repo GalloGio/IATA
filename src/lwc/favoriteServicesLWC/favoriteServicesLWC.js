@@ -5,7 +5,7 @@ import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLink
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
-import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 
 import { updateRecord } from 'lightning/uiRecordApi';
 
@@ -348,9 +348,7 @@ export default class FavoriteServicesLWC extends LightningElement {
 											window.open(result);
 										}
 										else{
-											//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-
 										}
 										this.toggleSpinner();
 									})
