@@ -693,7 +693,7 @@ public static Contact contactInfo = new Contact();
 				continue;
 			}
 
-			if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
+			if(((newGen || isTerminated()) && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
 				editable = false;
 			}
 
