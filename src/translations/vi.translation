@@ -16944,7 +16944,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>Lưu ý: Số tiền cân đối thanh toán được cập nhật trên cổng thông tin ít nhất một ngày làm việc sau khi tài khoản của IATA được ghi có. Thông tin trên ICE được cung cấp cho IATA bởi đối tác trung gian cứ mỗi 24 giờ và do đó có thể chưa phản ánh thông tin mới nhất, chuẩn xác và hoàn chỉnh.</label>
+        <label>Số dư trên cổng thông tin khách hàng được cập nhật vào ngày làm việc tiếp theo sau khi tài khoản IATA được ghi có. Ngày tài khoản IATA được ghi có tùy thuộc vào hình thức thanh toán bạn chọn. Dữ liệu thanh toán hiển thị trong ICE được các bên thứ ba cung cấp cho IATA trong khoảng thời gian 24 giờ và có thể xảy ra sự chậm trễ ngoài tầm kiểm soát của IATA. 
+
+Trong trường hợp hãng hàng không tạm dừng hoạt động dẫn đến việc số tiền thanh toán được điều chỉnh, thì các đại lý có thể dựa vào số tiền có trong ICE và trong trường hợp có bất kỳ sự chênh lệch nào, thì khoản chênh lệch này có thể được xử lý bằng cách bù trừ thanh toán sau với đại lý.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31698,6 +31700,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
         </sections>
     </reportTypes>
     <reportTypes>

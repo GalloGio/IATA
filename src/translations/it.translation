@@ -16950,7 +16950,9 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: prego considerare che il saldo sará aggiornato nel portale almeno un giorno dopo l&apos;accredito dei pagamenti nel conto Iata.  Tenere in conto che i dati contenuti in ICE sono trasmessi a IATA da terzi a intervalli di 24 ore e per questo possono non essere aggiornati, accurati o completi.</label>
+        <label>I saldi nel Portale clienti vengono aggiornati il giorno lavorativo successivo a quello dell&apos;accredito sul conto di IATA. Il giorno dell&apos;accredito sul conto di IATA dipende dalla forma di pagamento da lei scelta. I dati di fatturazione mostrati in ICE vengono forniti a IATA da terze parti con intervalli di 24 ore. Pertanto potrebbero verificarsi ritardi al di fuori del controllo di IATA. 
+
+Qualora la sospensione di una compagnia aerea dovesse determinare una rettifica dell&apos;importo di fatturazione, gli agenti potranno basarsi sugli importi contenuti in ICE e, in caso di discrepanze, queste potranno essere risolte con un pagamento successivo a carico o a favore dell&apos;agente.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31707,6 +31709,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
         </sections>
     </reportTypes>
     <reportTypes>
