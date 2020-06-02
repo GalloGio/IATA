@@ -863,7 +863,7 @@
                     <default>false</default>
                     <label>CASS</label>
                 </value>
-				<value>
+                <value>
                     <fullName>ICH</fullName>
                     <default>false</default>
                     <label>ICH</label>

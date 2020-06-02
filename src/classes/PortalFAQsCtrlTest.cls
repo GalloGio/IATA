@@ -34,14 +34,15 @@ public class PortalFAQsCtrlTest {
 			kavObj.Title = 'Sample Article Portal Test';
 			kavObj.UrlName = 'Sample-Article-Portal-Test';
 			kavObj.Summary = 'Summary';
-			insert kavObj;
-
+			kavObj.language = 'en_US';
+			
 			FAQ__kav kavObj2 = new FAQ__kav();
 			kavObj2.Title = 'Sample Article Portal Test';
 			kavObj2.UrlName = 'Sample-Article-Portal-Test';
 			kavObj2.Summary = 'Summary';
 			kavObj2.language = 'pt_BR';
-			insert kavObj2;
+			
+			insert new list<FAQ__kav>{kavObj,kavObj2};
 			
 			System.runAs(usr) { 
 				PortalKnowledge__c faqCategory = new PortalKnowledge__c();
@@ -222,6 +223,30 @@ public class PortalFAQsCtrlTest {
 			filtersWrapper.language = 'en_US';
 
 			test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+		}
+		Test.stopTest();
+	}
+
+	@isTest static void testGetArticleByURLName() {
+
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Test.startTest();
+		System.runAs(testUser) {
+			CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+
+			PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+			filtersWrapper.UrlName = 'Sample-Article-Portal-TESSST';
+			filtersWrapper.language = 'en_US';
+			filtersWrapper.guestUser = true;
+			
+			test = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+			
+			system.assertEquals(0,test.records.size());
+			
+			filtersWrapper.UrlName = 'Sample-Article-Portal-Test3';
+			test = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+			system.assertEquals(0,test.records.size());
 		}
 		Test.stopTest();
 	}

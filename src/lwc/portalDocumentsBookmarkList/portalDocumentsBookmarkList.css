@@ -1,0 +1,75 @@
+.underLined{
+    border-bottom: 1px solid #F7F8FA;;
+    
+}
+
+.cellDefault, .cell{
+    height :52px;
+}
+
+.noPadding {
+    padding: 0;
+}
+.docBreadCrumb:hover{
+    color: #3333ff;
+}
+.recordDetail {
+    background-color:#F7F8FA;
+}
+
+.tableStyle {
+    table-layout: fixed;
+}
+
+.imgSize{
+    width:48px;
+    height: 48px;
+}
+
+.titleTruncation {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dnicon{
+    background-image: url(./CSPortal/Images/Icons/download.svg);
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+.bkmicon{
+    background-image: url(./CSPortal/Images/Icons/bookmark_unchecked.svg);
+    background-repeat: no-repeat;
+    background-size: contain;    
+    cursor: pointer;
+    display: block;
+    height: 28px;
+    width: 29px;
+
+    -webkit-transition-duration: 0.3s; /* Safari */
+  	transition-duration: 0.3s;
+}
+
+
+
+.bkmicon:hover{
+    background-image: url(./CSPortal/Images/Icons/bookmark_checkedHover.svg);
+}
+
+.bookmarked{
+    background-image: url(./CSPortal/Images/Icons/bookmark_checked.svg);
+}
+
+.bookmarked:hover{
+    background-image: url(./CSPortal/Images/Icons/bookmark_uncheckedHover.svg);
+}
+
+
+.circle{
+    height: 128px;
+    width: 128px;
+    background-color: rgba(30, 50, 250, 0.05);
+    border-radius: 50%;
+}
