@@ -9,7 +9,7 @@
         <p>{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}{!$Label.ISSP_Email_Dear_Post}</p>
         <p>
             <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected1,'.','.<BR/>')}" escape="false"/>
-            {!relatedTo.Portal_Application__r.Name}
+            {!relatedTo.Portal_Application__r.Name}&nbsp;
             <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected3,'.','.<BR/>')}" escape="false"/>
             {!$User.FirstName} {!$User.LastName}
             <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected3_1,'.','.<BR/>')}" escape="false"/>
