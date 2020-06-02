@@ -31658,6 +31658,10 @@
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
