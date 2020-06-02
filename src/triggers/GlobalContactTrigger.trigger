@@ -660,11 +660,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 			}
 
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-                System.enqueueJob(new AccountRolesAlignBatch(trigger.isDelete?trigger.OldMap:Trigger.newMap));
-            }else{
-                AccountRolesAlignBatch.switchAccountRoles(trigger.isDelete?trigger.OldMap:Trigger.newMap);
-            }
-	
+				System.enqueueJob(new AccountRolesAlignBatch(trigger.isDelete?trigger.OldMap:Trigger.newMap));
+			}else{
+				AccountRolesAlignBatch.switchAccountRoles(trigger.isDelete?trigger.OldMap:Trigger.newMap);
+			}
+
 			ContactTriggerHandler contactTriggerHandler = new ContactTriggerHandler();
 			contactTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
 		}
