@@ -395,7 +395,7 @@
                             <div class="row" style="padding-bottom: 20px">
                                 <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
                                     <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="iatabtn" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
-                                    <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
+                                    <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="iatabtn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
                                 </div>
 
                             <div class="col-md-5" >
