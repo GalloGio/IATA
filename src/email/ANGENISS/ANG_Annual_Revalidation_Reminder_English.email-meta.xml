@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ANG Annual Revalidation Reminder Template (15, 21 and 27 days)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG Annual Revalidation Reminder</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Annual Revalidation</subject>
+    <textOnly>Dear Sir/Madam,
+
+Our records indicate that your agency has still not validated agency details stored by IATA through the Annual Revalidation process in accordance to Resolution 812 Section 3.2.4.1
+
+This is a kind reminder that you are requested to validate your agency details through IATA&apos;s Portal within 30 days from the initial request of notification.
+
+Failure to do so by first deadline and in accordance with the provision of the IATA Passenger Sales Agency Rules and Resolution 812 Section 3.3.2.1, an Administrative Non-Compliance will be registered to your agency and an administrative fee will be charged to your agency, according to Resolution 812, Attachment H.
+
+Furthermore, failure to complete the Annual Revalidation process by final deadline will result in immediate removal of Electronic Ticketing Authority and a Notice of Termination of your Passenger Sales Agency Agreement.
+
+We trust that you will give this matter your immediate attention.
+
+Please do not hesitate to contact us if you have any queries on this matter via our Customer Service Portal at http://www.iata.org/cs.
+
+
+
+Yours faithfully,
+
+
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

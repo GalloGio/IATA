@@ -196,6 +196,13 @@
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <height>200</height>
+                <page>CaseTrackingHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

@@ -10,10 +10,6 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>gilj@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>mulai@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
@@ -23,6 +19,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>rajputf@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>rodriguezja@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>

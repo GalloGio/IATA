@@ -16,19 +16,20 @@ global class AmazonFinancialCtrl {
 	public string AMAZONURL {get; private set;}
 
 	private Set<String> caseStatusUploadAllowed = new Set<String>{
-		'Agent Notified (Mail)',
-		'Agent Notified (Email)',
-		'Action Needed',
-		'Sanity Check Failure',
-		'Closed_Non compliance'
+		AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_MAIL,
+		AMS_Utils.CASE_STATUS_AGENT_NOTIFIED_EMAIL,
+		AMS_Utils.CASE_STATUS_ACTION_NEEDED,
+		AMS_Utils.CASE_STATUS_SANITY_CHECK_FAILURE,
+		AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE
 	};
 
+	@TestVisible
 	private static Boolean isInternalSfdcRequest = false;
 
 	public boolean canUploadAndDelete {
 		get {
 			if(cse == null || cse.id == null) return true;
-			if(!isInternalSfdcRequest && cse.Financial_Review_type__c == 'Multicountry Annual') return false;
+			if(!isInternalSfdcRequest && AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(cse.Financial_Review_type__c)) return false;
 			return caseStatusUploadAllowed.contains(cse.Status);
 		}
 		set;

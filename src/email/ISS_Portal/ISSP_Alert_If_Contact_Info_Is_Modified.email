@@ -8,7 +8,7 @@ Please note that {! IF(contains(User.Profile_Name__c, 'ISS Portal'), 'your ', ''
 <br>
 Your classification as a contact has been changed to:
 <br><br><b>
-BSP/CASS Payment contact: {! IF(Contact.BSP_CASS_Payment_contact__c,'Yes', 'No') }
+BSP/CASS/PASS Payment contact: {! IF(Contact.BSP_CASS_Payment_contact__c,'Yes', 'No') }
 <br>
 Invoicing Contact: {! IF(Contact.Invoicing_Contact__c,'Yes', 'No') }</b></font>
 <br>

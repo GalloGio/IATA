@@ -21,6 +21,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					, 'Step45__c'
 					, 'AMS_Online_Accreditation__c'
 					, 'Oscar_Communication_Case_Id__c'
+					, 'MC_Hierarchy_Confirmation_Datetime__c'
 				};
 			}
 			return oscarFields;
@@ -40,6 +41,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				accountFields.add('IATA_ISO_Country__r.ISO_Code__c');
 				accountFields.add('IATA_ISO_Country__r.Region__c');
 				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c');
 			}
 			return accountFields;
 		}
@@ -540,7 +542,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accreditationForm.Remittance_Frequency__c = account.Remittance_Frequency__c;
 					accreditationForm.ANG_Accreditation_type__c = account.ANG_Accreditation_Model__c;
 
-					update oscar;
 					update caseToUpdate;
 					update accreditationForm;
 				}
@@ -548,6 +549,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accreditationForm.Location_Type__c = account.Location_type__c;
 					update accreditationForm; //enforce the new location type
 				}
+
+				// Fill confirmation datetime
+				oscar.MC_Hierarchy_Confirmation_Datetime__c = Datetime.now();
+				update oscar;
 
 				List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
 
@@ -766,7 +771,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		for(BSPAttributes bspAtt: bspMap.values()){
 
 			if(isConversionProcess){
-				if(!bspAtt.rfIsAlignInBSP){
+				if (!bspAtt.rfIsAlignInBSP && !bspAtt.rfPerState) {
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
 					toReturn = false;
 				}
@@ -799,6 +804,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		public Integer numberOfAE;
 		public String remittanceFrequency;
 		public Boolean rfIsAlignInBSP;
+		public Boolean rfPerState;
 		public Boolean isGE;
 
 		public BSPAttributes(Account a){
@@ -806,6 +812,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			numberOfHE = 0;
 			numberOfAE = 0;
 			rfIsAlignInBSP = true;
+			rfPerState = a.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
 			remittanceFrequency = a.Remittance_Frequency__c;
 			isGE = false;
 

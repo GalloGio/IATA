@@ -6,6 +6,9 @@
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Web_App_View</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -611,6 +614,14 @@
                 <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Participant_formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Airline_PASS_Participations__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -1182,6 +1193,22 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Portal_Service_Account_Preference__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Services_Rendered_Type__c</fields>
+        <fields>Services_Rendered_to_Airline__c</fields>
+        <fields>Services_Rendered_Status__c</fields>
+        <fields>ISO_Country_formula__c</fields>
+        <relatedList>Services_Rendered__c.Services_Rendered_By__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Services_Rendered_Type__c</fields>
+        <fields>Services_Rendered_By__c</fields>
+        <fields>Services_Rendered_Status__c</fields>
+        <fields>ISO_Country_formula__c</fields>
+        <relatedList>Services_Rendered__c.Services_Rendered_to_Airline__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -31,6 +31,7 @@
         <members>Solution</members>
         <members>Task</members>
         <members>User</members>
+        <members>ContentVersion</members>
         <name>CustomObject</name>
     </types>
     <types>
