@@ -148,8 +148,17 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
-				Contact toDeleteContact = new Contact(Id = regParam.existingTrainingId);
-				delete toDeleteContact;
+				Contact conToInactivate = new Contact(Id = regParam.existingTrainingId);
+				
+				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
+				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
+				conToInactivate.Email = conToInactivate.Email + '.inactive';
+				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+					conToInactivate.Additional_Email__c = '';
+				}
+
+				conToInactivate.status__c = 'Inactive';
+				update conToInactivate;
 			}
 
 			//Create Yardstick Contact Role Detail
@@ -256,9 +265,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}
 		catch(Exception e){
 			result.isSuccess = false;
-			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			result.message = 'An Error Occurred - '+ e.getMessage() +' - '+ e.getStackTraceString() ;
 			Database.rollback(sp);
 			return result;
 		}
@@ -282,108 +289,72 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
-			if(contactInfo.flow == 'flow3'){
-
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate FROM Contact WHERE Id = :contactInfo.Id];
-				con.Email = contactInfo.Email;
-				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Phone = contactInfo.Phone;
-				con.OtherPhone = contactInfo.OtherPhone;
-				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
-
-				List<String> extraValues = new List<String>();
-				extraValues.add(contactInfo.Username);
+			List<String> extraValues = new List<String>();
+			extraValues.add(contactInfo.Username);
+			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow4' || contactInfo.flow == 'flow5'){
 				extraValues.add(contactInfo.UserId);
-				extraValues.add(contactInfo.lmsCourse);
-				extraValues.add(contactInfo.street);
-				extraValues.add(contactInfo.zip);
-				extraValues.add(contactInfo.countryId);
-				extraValues.add(contactInfo.stateId);
-				extraValues.add(contactInfo.stateName);
-				extraValues.add(contactInfo.cityId);
-				extraValues.add(contactInfo.cityName);
-				extraValues.add(contactInfo.isPoBox);
-				extraValues.add(contactInfo.serviceid);
-				extraValues.add(contactInfo.street2);
-				extraValues.add(contactInfo.existingTrainingId);
-
-				return registration(con, extraValues);
+			}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				extraValues.add('');
 			}
+			extraValues.add(contactInfo.lmsCourse);
+			extraValues.add(contactInfo.street);
+			extraValues.add(contactInfo.zip);
+			extraValues.add(contactInfo.countryId);
+			extraValues.add(contactInfo.stateId);
+			extraValues.add(contactInfo.stateName);
+			extraValues.add(contactInfo.cityId);
+			extraValues.add(contactInfo.cityName);
+			extraValues.add(contactInfo.isPoBox);
+			extraValues.add(contactInfo.serviceid);
+			extraValues.add(contactInfo.street2);
+			extraValues.add(contactInfo.existingTrainingId);
 
-			if(contactInfo.flow == 'flow5'){
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate FROM Contact WHERE Id = :contactInfo.Id];
-				con.Email = contactInfo.Email;
-				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Phone = contactInfo.Phone;
-				con.OtherPhone = contactInfo.OtherPhone;
-				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
-
-
-				List<String> extraValues = new List<String>();
-				extraValues.add(contactInfo.Username);
-				extraValues.add(contactInfo.UserId);
-				extraValues.add(contactInfo.lmsCourse);
-				extraValues.add(contactInfo.street);
-				extraValues.add(contactInfo.zip);
-				extraValues.add(contactInfo.countryId);
-				extraValues.add(contactInfo.stateId);
-				extraValues.add(contactInfo.stateName);
-				extraValues.add(contactInfo.cityId);
-				extraValues.add(contactInfo.cityName);
-				extraValues.add(contactInfo.isPoBox);
-				extraValues.add(contactInfo.serviceid);
-				extraValues.add(contactInfo.street2);
-				extraValues.add(contactInfo.existingTrainingId);
-
-				return registration(con, extraValues);
-			}
-			if(contactInfo.flow == 'flow4'){
-
-				//Inactivate the registering Contact
-				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
+			//Inactivate the registering Contact
+			//Need to liberate the additional email 1st to empty in order not to give duplicate error
+			Contact conToInactivate = new Contact();
+			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				Id contIdToInactivate;
+				if(contactInfo.flow == 'flow4'){
+					contIdToInactivate = contactInfo.Id;
+				}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+					contIdToInactivate = contactInfo.existingContactId;
+				}
+				conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 													AccountId,Email,Additional_Email__c,Phone,
 													OtherPhone,Salutation,Birthdate
-											FROM Contact WHERE Id = :contactInfo.Id];
-
+											FROM Contact WHERE Id = :contIdToInactivate];
+				
 				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
 					conToInactivate.Additional_Email__c = '';
 				}
-
-				conToInactivate.status__c = 'Inactive';
 				update conToInactivate;
+			}
 
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate
-								FROM Contact WHERE Id = :contactInfo.existingContactId];
-				con.Email = contactInfo.Email;
-				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Phone = contactInfo.Phone;
-				con.OtherPhone = contactInfo.OtherPhone;
-				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
+			Id contIdToSearch = contactInfo.Id;
+			if(contactInfo.flow == 'flow4'){
+				contIdToSearch = contactInfo.existingContactId;
+			}
+			
+			Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate 
+							FROM Contact WHERE Id = :contIdToSearch];
+							con.Email = contactInfo.Email;
+							con.Additional_Email__c = contactInfo.Additional_Email;
+							con.Phone = contactInfo.Phone;
+							con.OtherPhone = contactInfo.OtherPhone;
+							con.Salutation = contactInfo.Salutation;
+							con.Birthdate = Date.valueOf(contactInfo.Birthdate);
 
+			RegistrationResult regRes = new RegistrationResult();
+			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow5'){
+				return registration(con, extraValues);
+			}else if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				regRes = registration(con, extraValues);
+			}
 
-				List<String> extraValues = new List<String>();
-				extraValues.add(contactInfo.Username);
-				extraValues.add(contactInfo.UserId);
-				extraValues.add(contactInfo.lmsCourse);
-				extraValues.add(contactInfo.street);
-				extraValues.add(contactInfo.zip);
-				extraValues.add(contactInfo.countryId);
-				extraValues.add(contactInfo.stateId);
-				extraValues.add(contactInfo.stateName);
-				extraValues.add(contactInfo.cityId);
-				extraValues.add(contactInfo.cityName);
-				extraValues.add(contactInfo.isPoBox);
-				extraValues.add(contactInfo.serviceid);
-				extraValues.add(contactInfo.street2);
-				extraValues.add(contactInfo.existingTrainingId);
-
-				RegistrationResult regRes = registration(con, extraValues);
+			if(contactInfo.flow == 'flow4'){
 
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.Id);
@@ -483,54 +454,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
+				}else{
+					regRes.isSuccess = false;
+					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
+					Database.rollback(sp);
 				}
 				return regRes;
 			}
 			if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
-
-				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate
-								FROM Contact WHERE Id = :contactInfo.Id];
-				con.Email = contactInfo.Email;
-				con.Additional_Email__c = contactInfo.Additional_Email;
-				con.Phone = contactInfo.Phone;
-				con.OtherPhone = contactInfo.OtherPhone;
-				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
-
-
-				List<String> extraValues = new List<String>();
-				extraValues.add(contactInfo.Username);
-				extraValues.add('');
-				extraValues.add(contactInfo.lmsCourse);
-				extraValues.add(contactInfo.street);
-				extraValues.add(contactInfo.zip);
-				extraValues.add(contactInfo.countryId);
-				extraValues.add(contactInfo.stateId);
-				extraValues.add(contactInfo.stateName);
-				extraValues.add(contactInfo.cityId);
-				extraValues.add(contactInfo.cityName);
-				extraValues.add(contactInfo.isPoBox);
-				extraValues.add(contactInfo.serviceid);
-				extraValues.add(contactInfo.street2);
-				extraValues.add(contactInfo.existingTrainingId);
-
-				//Need to liberate the additional email 1st to empty in order not to give duplicate error
-				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-														AccountId,Email,Additional_Email__c,Phone,
-														OtherPhone,Salutation,Birthdate
-												FROM Contact WHERE Id = :contactInfo.existingContactId];
-
-				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
-				conToInactivate.Email = conToInactivate.Email + '.inactive';
-				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = '';
-				}
-
-				conToInactivate.status__c = 'Inactive';
-				update conToInactivate;
-
-				RegistrationResult regRes = registration(con, extraValues);
 
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.existingContactId);
@@ -625,9 +556,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}
 		catch(Exception e){
 			result.isSuccess = false;
-			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
+			result.message = 'An Error Occurred - '+ e.getMessage() +' - '+ e.getStackTraceString() ;
 			Database.rollback(sp);
 			return result;
 		}
@@ -637,10 +566,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled
 	public static UserInformationWrapper getDataToMail(string registrationForm){
-
-
 		try{
-
 			Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
 
 			UserInformationWrapper params = new UserInformationWrapper();
@@ -697,8 +623,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			return params;
 
 		}catch(Exception e){
-
-
 			return null;
 		}
 
@@ -730,13 +654,18 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
-			string sURL = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
-			sURL = sURL + '?lmsflow='+flow;
-
+			string sURLpath = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
+			string sURL = '';
+			sURL = sURLpath + '?lmsflow='+flow;
+			
 			UserInformationWrapper wUserInfo = getDataToMail(params);
 			String encodedData = generateEncoded(wUserInfo);
 			if(encodedData != ''){
 				sURL = sURL + '&'+encodedData;
+			}
+
+			if(flow == 'flow4'){
+				sURL = sURLpath + '/login?email=' + address + '&startURL='+ EncodingUtil.urlEncode(sURL, 'UTF-8');
 			}
 
 			String sEmailTemplateName = 'CSP_Verification_L3_Email_LMS_VF';
@@ -795,7 +724,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						}else{
 							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
 													Label.CSP_Verification_L3_Email_UE_2_LMS;
-													// + Label.CSP_Verification_L3_Email_UE_3_LMS;
 						}
 					}
 				}else{
@@ -875,8 +803,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			// System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;

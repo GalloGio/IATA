@@ -7,7 +7,7 @@ import registration                         from '@salesforce/apex/PortalRegistr
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
 import getLMSTermAndConditionAcceptance		from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance';
 import verifyCompleteL3DataWithCourse		from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
-import getPortalServiceId 					from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import getPortalServiceId 					from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 
 import { navigateToPage } from'c/navigationUtils';
 
@@ -52,8 +52,8 @@ import CSP_L3_LoginEmail_LMS from '@salesforce/label/c.CSP_L3_LoginEmail_LMS';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
 import CSP_L3_Username_LMS from '@salesforce/label/c.CSP_L3_Username_LMS';
 import CSP_L3_UserId_LMS from '@salesforce/label/c.CSP_L3_UserId_LMS';
-import CSP_L3_Phone_LMS from '@salesforce/label/c.CSP_L3_Phone_LMS';
-import CSP_L3_WorkPhone_LMS from '@salesforce/label/c.CSP_L3_WorkPhone_LMS';
+import CSP_L_Phone_LMS from '@salesforce/label/c.CSP_L_Phone_LMS';
+import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
 import CSP_L2_Registration_Failed_LMS from '@salesforce/label/c.CSP_L2_Registration_Failed_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
@@ -156,8 +156,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L3_PersonalEmail_LMS,
 		CSP_L3_Username_LMS,
 		CSP_L3_UserId_LMS,
-		CSP_L3_Phone_LMS,
-		CSP_L3_WorkPhone_LMS,
+		CSP_L_Phone_LMS,
+		CSP_L_WorkPhone_LMS,
 		CSP_L2_Registration_Failed_LMS,
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_L2_VerificationToP1_LMS,
@@ -341,8 +341,10 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			.then(result => {
 				if(result.isSuccess == true){
 
-						//Check if is Flow 3 or 4 to show the log out button
-						if(this.flow === 'flow4'){
+						if(this.flow === 'flow3'){
+							this.openVerificationMailSuccessModal = true;
+							this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Email + CSP_L2_VerificationToP2_LMS;
+						}else if(this.flow === 'flow4'){
 							this.openVerificationMailSuccessModalLogOut = true;
 							this.verificationModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Email + CSP_L2_VerificationToP2_LMS + ' ' + CSP_L2_VerificationToP3_LMS + '';
 						}else{

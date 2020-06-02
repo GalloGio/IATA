@@ -9,8 +9,6 @@
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
 const navigateToPage = (baseURl, paramsObject) => {
-	console.log('paramsObject', paramsObject);
-
 	let ret = [];
 	for (let d in paramsObject) {
 		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
@@ -30,8 +28,6 @@ const navigateToPage = (baseURl, paramsObject) => {
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
 const navigateToNewPage = (baseURl, paramsObject) => {
-	console.log('paramsObject', paramsObject);
-
 	let ret = [];
 	for (let d in paramsObject) {
 		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
@@ -63,10 +59,7 @@ const getParamsFromPage = () => {
 
 const getPageName = () => {
 	return location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
-
-	}
-
-
+}
 
 export {
 	navigateToPage,

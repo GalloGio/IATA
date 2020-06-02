@@ -1,0 +1,575 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/accountCreation": [
+                "../../../lwc/accountCreation/accountCreation.js"
+            ],
+            "c/attachmentListCmp": [
+                "../../../lwc/attachmentListCmp/attachmentListCmp.js"
+            ],
+            "c/changeUserPortalStatus": [
+                "../../../lwc/changeUserPortalStatus/changeUserPortalStatus.js"
+            ],
+            "c/errorPanel": [
+                "../../../lwc/errorPanel/errorPanel.js"
+            ],
+            "c/externalSharing": [
+                "../../../lwc/externalSharing/externalSharing.js"
+            ],
+            "c/favoriteServicesLWC": [
+                "../../../lwc/favoriteServicesLWC/favoriteServicesLWC.js"
+            ],
+            "c/israelDisputesCreateNewCase": [
+                "../../../lwc/israelDisputesCreateNewCase/israelDisputesCreateNewCase.js"
+            ],
+            "c/jsonDatatable": [
+                "../../../lwc/jsonDatatable/jsonDatatable.js"
+            ],
+            "c/ldsUtils": [
+                "../../../lwc/ldsUtils/ldsUtils.js"
+            ],
+            "c/lwcFileUpload": [
+                "../../../lwc/lwcFileUpload/lwcFileUpload.js"
+            ],
+            "c/navigationUtils": [
+                "../../../lwc/navigationUtils/navigationUtils.js"
+            ],
+            "c/notificationCenter": [
+                "../../../lwc/notificationCenter/notificationCenter.js"
+            ],
+            "c/paginator": [
+                "../../../lwc/paginator/paginator.js"
+            ],
+            "c/portalAcceptTerms": [
+                "../../../lwc/portalAcceptTerms/portalAcceptTerms.js"
+            ],
+            "c/portalAddressForm": [
+                "../../../lwc/portalAddressForm/portalAddressForm.js"
+            ],
+            "c/portalAddressFormLMS": [
+                "../../../lwc/portalAddressFormLMS/portalAddressFormLMS.js"
+            ],
+            "c/portalAdvancedSearchPage": [
+                "../../../lwc/portalAdvancedSearchPage/portalAdvancedSearchPage.js"
+            ],
+            "c/portalBreadcrumbs": [
+                "../../../lwc/portalBreadcrumbs/portalBreadcrumbs.js"
+            ],
+            "c/portalBreadcrumbsPage": [
+                "../../../lwc/portalBreadcrumbsPage/portalBreadcrumbsPage.js"
+            ],
+            "c/portalCaseDetailsDetails": [
+                "../../../lwc/portalCaseDetailsDetails/portalCaseDetailsDetails.js"
+            ],
+            "c/portalCaseDetailsHeader": [
+                "../../../lwc/portalCaseDetailsHeader/portalCaseDetailsHeader.js"
+            ],
+            "c/portalCaseDetailsMessaging": [
+                "../../../lwc/portalCaseDetailsMessaging/portalCaseDetailsMessaging.js"
+            ],
+            "c/portalCaseDetailsPage": [
+                "../../../lwc/portalCaseDetailsPage/portalCaseDetailsPage.js"
+            ],
+            "c/portalCasesList": [
+                "../../../lwc/portalCasesList/portalCasesList.js"
+            ],
+            "c/portalCasesListPage": [
+                "../../../lwc/portalCasesListPage/portalCasesListPage.js"
+            ],
+            "c/portalCasesListPageHeader": [
+                "../../../lwc/portalCasesListPageHeader/portalCasesListPageHeader.js"
+            ],
+            "c/portalChangePassword": [
+                "../../../lwc/portalChangePassword/portalChangePassword.js"
+            ],
+            "c/portalChangePasswordSuccess": [
+                "../../../lwc/portalChangePasswordSuccess/portalChangePasswordSuccess.js"
+            ],
+            "c/portalChangeUserStatus": [
+                "../../../lwc/portalChangeUserStatus/portalChangeUserStatus.js"
+            ],
+            "c/portalCommunity360Util": [
+                "../../../lwc/portalCommunity360Util/portalCommunity360Util.js"
+            ],
+            "c/portalCompanyProfileBranchesList": [
+                "../../../lwc/portalCompanyProfileBranchesList/portalCompanyProfileBranchesList.js"
+            ],
+            "c/portalCompanyProfileContactInfo": [
+                "../../../lwc/portalCompanyProfileContactInfo/portalCompanyProfileContactInfo.js"
+            ],
+            "c/portalCompanyProfileContactsList": [
+                "../../../lwc/portalCompanyProfileContactsList/portalCompanyProfileContactsList.js"
+            ],
+            "c/portalCompanyProfileInfoNav": [
+                "../../../lwc/portalCompanyProfileInfoNav/portalCompanyProfileInfoNav.js"
+            ],
+            "c/portalCompanyProfileInformation": [
+                "../../../lwc/portalCompanyProfileInformation/portalCompanyProfileInformation.js"
+            ],
+            "c/portalCompanyProfilePage": [
+                "../../../lwc/portalCompanyProfilePage/portalCompanyProfilePage.js"
+            ],
+            "c/portalContactIdCardErrorModal": [
+                "../../../lwc/portalContactIdCardErrorModal/portalContactIdCardErrorModal.js"
+            ],
+            "c/portalContactList": [
+                "../../../lwc/portalContactList/portalContactList.js"
+            ],
+            "c/portalContainerWithoutPanel": [
+                "../../../lwc/portalContainerWithoutPanel/portalContainerWithoutPanel.js"
+            ],
+            "c/portalCreatePassword": [
+                "../../../lwc/portalCreatePassword/portalCreatePassword.js"
+            ],
+            "c/portalCreatePasswordError": [
+                "../../../lwc/portalCreatePasswordError/portalCreatePasswordError.js"
+            ],
+            "c/portalCustomCardContainer": [
+                "../../../lwc/portalCustomCardContainer/portalCustomCardContainer.js"
+            ],
+            "c/portalDocumentsCategory": [
+                "../../../lwc/portalDocumentsCategory/portalDocumentsCategory.js"
+            ],
+            "c/portalDocumentsFilters": [
+                "../../../lwc/portalDocumentsFilters/portalDocumentsFilters.js"
+            ],
+            "c/portalDocumentsPageHeader": [
+                "../../../lwc/portalDocumentsPageHeader/portalDocumentsPageHeader.js"
+            ],
+            "c/portalDocumentsSearchPage": [
+                "../../../lwc/portalDocumentsSearchPage/portalDocumentsSearchPage.js"
+            ],
+            "c/portalDocumentsTiles": [
+                "../../../lwc/portalDocumentsTiles/portalDocumentsTiles.js"
+            ],
+            "c/portalEmailDomain": [
+                "../../../lwc/portalEmailDomain/portalEmailDomain.js"
+            ],
+            "c/portalEmailDomainModal": [
+                "../../../lwc/portalEmailDomainModal/portalEmailDomainModal.js"
+            ],
+            "c/portalFAQArticleAccordion": [
+                "../../../lwc/portalFAQArticleAccordion/portalFAQArticleAccordion.js"
+            ],
+            "c/portalFAQCategoryTiles": [
+                "../../../lwc/portalFAQCategoryTiles/portalFAQCategoryTiles.js"
+            ],
+            "c/portalFAQPage": [
+                "../../../lwc/portalFAQPage/portalFAQPage.js"
+            ],
+            "c/portalFAQPageHeader": [
+                "../../../lwc/portalFAQPageHeader/portalFAQPageHeader.js"
+            ],
+            "c/portalFAQReachUsBanner": [
+                "../../../lwc/portalFAQReachUsBanner/portalFAQReachUsBanner.js"
+            ],
+            "c/portalFAQRelatedArticle": [
+                "../../../lwc/portalFAQRelatedArticle/portalFAQRelatedArticle.js"
+            ],
+            "c/portalFAQSearchPage": [
+                "../../../lwc/portalFAQSearchPage/portalFAQSearchPage.js"
+            ],
+            "c/portalFAQSearchPageHeader": [
+                "../../../lwc/portalFAQSearchPageHeader/portalFAQSearchPageHeader.js"
+            ],
+            "c/portalFAQSubtopicTiles": [
+                "../../../lwc/portalFAQSubtopicTiles/portalFAQSubtopicTiles.js"
+            ],
+            "c/portalFAQTilesHome": [
+                "../../../lwc/portalFAQTilesHome/portalFAQTilesHome.js"
+            ],
+            "c/portalFirstLogin": [
+                "../../../lwc/portalFirstLogin/portalFirstLogin.js"
+            ],
+            "c/portalFooter": [
+                "../../../lwc/portalFooter/portalFooter.js"
+            ],
+            "c/portalForgotPassword": [
+                "../../../lwc/portalForgotPassword/portalForgotPassword.js"
+            ],
+            "c/portalForgotPasswordCard": [
+                "../../../lwc/portalForgotPasswordCard/portalForgotPasswordCard.js"
+            ],
+            "c/portalForgotPasswordError": [
+                "../../../lwc/portalForgotPasswordError/portalForgotPasswordError.js"
+            ],
+            "c/portalForgotPasswordSuccess": [
+                "../../../lwc/portalForgotPasswordSuccess/portalForgotPasswordSuccess.js"
+            ],
+            "c/portalHeader": [
+                "../../../lwc/portalHeader/portalHeader.js"
+            ],
+            "c/portalHighlightCard": [
+                "../../../lwc/portalHighlightCard/portalHighlightCard.js"
+            ],
+            "c/portalHighlightCards": [
+                "../../../lwc/portalHighlightCards/portalHighlightCards.js"
+            ],
+            "c/portalHomeCalendar": [
+                "../../../lwc/portalHomeCalendar/portalHomeCalendar.js"
+            ],
+            "c/portalHomePage": [
+                "../../../lwc/portalHomePage/portalHomePage.js"
+            ],
+            "c/portalHomePageBottom": [
+                "../../../lwc/portalHomePageBottom/portalHomePageBottom.js"
+            ],
+            "c/portalHomePageHeader": [
+                "../../../lwc/portalHomePageHeader/portalHomePageHeader.js"
+            ],
+            "c/portalIdCardPhotoModal": [
+                "../../../lwc/portalIdCardPhotoModal/portalIdCardPhotoModal.js"
+            ],
+            "c/portalIftpEmployeeRecordTransfer": [
+                "../../../lwc/portalIftpEmployeeRecordTransfer/portalIftpEmployeeRecordTransfer.js"
+            ],
+            "c/portalIftpExportData": [
+                "../../../lwc/portalIftpExportData/portalIftpExportData.js"
+            ],
+            "c/portalIftpImportEmployees": [
+                "../../../lwc/portalIftpImportEmployees/portalIftpImportEmployees.js"
+            ],
+            "c/portalIftpImportStations": [
+                "../../../lwc/portalIftpImportStations/portalIftpImportStations.js"
+            ],
+            "c/portalIftpManageEmployees": [
+                "../../../lwc/portalIftpManageEmployees/portalIftpManageEmployees.js"
+            ],
+            "c/portalIftpManageStations": [
+                "../../../lwc/portalIftpManageStations/portalIftpManageStations.js"
+            ],
+            "c/portalIftpMonitorTrainings": [
+                "../../../lwc/portalIftpMonitorTrainings/portalIftpMonitorTrainings.js"
+            ],
+            "c/portalIftpProficiencyManagement": [
+                "../../../lwc/portalIftpProficiencyManagement/portalIftpProficiencyManagement.js"
+            ],
+            "c/portalIftpProficiencyReports": [
+                "../../../lwc/portalIftpProficiencyReports/portalIftpProficiencyReports.js"
+            ],
+            "c/portalIftpRemoveProficiency": [
+                "../../../lwc/portalIftpRemoveProficiency/portalIftpRemoveProficiency.js"
+            ],
+            "c/portalIftpTabs": [
+                "../../../lwc/portalIftpTabs/portalIftpTabs.js"
+            ],
+            "c/portalIftpTrainingRecordsDetail": [
+                "../../../lwc/portalIftpTrainingRecordsDetail/portalIftpTrainingRecordsDetail.js"
+            ],
+            "c/portalIftpTrainingRecordsSummary": [
+                "../../../lwc/portalIftpTrainingRecordsSummary/portalIftpTrainingRecordsSummary.js"
+            ],
+            "c/portalIftpUploadOJT": [
+                "../../../lwc/portalIftpUploadOJT/portalIftpUploadOJT.js"
+            ],
+            "c/portalIftpUtils": [
+                "../../../lwc/portalIftpUtils/portalIftpUtils.js"
+            ],
+            "c/portalIftpUtilsJS": [
+                "../../../lwc/portalIftpUtilsJS/portalIftpUtilsJS.js"
+            ],
+            "c/portalInformativeMessageBox": [
+                "../../../lwc/portalInformativeMessageBox/portalInformativeMessageBox.js"
+            ],
+            "c/portalInvoiceList": [
+                "../../../lwc/portalInvoiceList/portalInvoiceList.js"
+            ],
+            "c/portalLogin": [
+                "../../../lwc/portalLogin/portalLogin.js"
+            ],
+            "c/portalLoginContainer": [
+                "../../../lwc/portalLoginContainer/portalLoginContainer.js"
+            ],
+            "c/portalLoginHeader": [
+                "../../../lwc/portalLoginHeader/portalLoginHeader.js"
+            ],
+            "c/portalMyProfilePage": [
+                "../../../lwc/portalMyProfilePage/portalMyProfilePage.js"
+            ],
+            "c/portalMyProfilePageHeader": [
+                "../../../lwc/portalMyProfilePageHeader/portalMyProfilePageHeader.js"
+            ],
+            "c/portalNeedMoreHelp": [
+                "../../../lwc/portalNeedMoreHelp/portalNeedMoreHelp.js"
+            ],
+            "c/portalNewsInfo": [
+                "../../../lwc/portalNewsInfo/portalNewsInfo.js"
+            ],
+            "c/portalNoCasesBanner": [
+                "../../../lwc/portalNoCasesBanner/portalNoCasesBanner.js"
+            ],
+            "c/portalOscarProgressBar": [
+                "../../../lwc/portalOscarProgressBar/portalOscarProgressBar.js"
+            ],
+            "c/portalPageContainer": [
+                "../../../lwc/portalPageContainer/portalPageContainer.js"
+            ],
+            "c/portalPaginator": [
+                "../../../lwc/portalPaginator/portalPaginator.js"
+            ],
+            "c/portalPopupContainer": [
+                "../../../lwc/portalPopupContainer/portalPopupContainer.js"
+            ],
+            "c/portalProfileCustomBox": [
+                "../../../lwc/portalProfileCustomBox/portalProfileCustomBox.js"
+            ],
+            "c/portalProfileDetailsLMSInformation": [
+                "../../../lwc/portalProfileDetailsLMSInformation/portalProfileDetailsLMSInformation.js"
+            ],
+            "c/portalProfilePageHeader": [
+                "../../../lwc/portalProfilePageHeader/portalProfilePageHeader.js"
+            ],
+            "c/portalProfileSection": [
+                "../../../lwc/portalProfileSection/portalProfileSection.js"
+            ],
+            "c/portalPublicFooter": [
+                "../../../lwc/portalPublicFooter/portalPublicFooter.js"
+            ],
+            "c/portalPublicKBArticlePage": [
+                "../../../lwc/portalPublicKBArticlePage/portalPublicKBArticlePage.js"
+            ],
+            "c/portalPublicKBCategoryPage": [
+                "../../../lwc/portalPublicKBCategoryPage/portalPublicKBCategoryPage.js"
+            ],
+            "c/portalPublicKBInfo": [
+                "../../../lwc/portalPublicKBInfo/portalPublicKBInfo.js"
+            ],
+            "c/portalPublicKBPage": [
+                "../../../lwc/portalPublicKBPage/portalPublicKBPage.js"
+            ],
+            "c/portalRecordFormWrapper": [
+                "../../../lwc/portalRecordFormWrapper/portalRecordFormWrapper.js"
+            ],
+            "c/portalRegistrationAccountSelection": [
+                "../../../lwc/portalRegistrationAccountSelection/portalRegistrationAccountSelection.js"
+            ],
+            "c/portalRegistrationAddressInformation": [
+                "../../../lwc/portalRegistrationAddressInformation/portalRegistrationAddressInformation.js"
+            ],
+            "c/portalRegistrationAddressInformationLMS": [
+                "../../../lwc/portalRegistrationAddressInformationLMS/portalRegistrationAddressInformationLMS.js"
+            ],
+            "c/portalRegistrationCompanyInformation": [
+                "../../../lwc/portalRegistrationCompanyInformation/portalRegistrationCompanyInformation.js"
+            ],
+            "c/portalRegistrationConfirmation": [
+                "../../../lwc/portalRegistrationConfirmation/portalRegistrationConfirmation.js"
+            ],
+            "c/portalRegistrationConfirmationLMS": [
+                "../../../lwc/portalRegistrationConfirmationLMS/portalRegistrationConfirmationLMS.js"
+            ],
+            "c/portalRegistrationEmailValidationLMS": [
+                "../../../lwc/portalRegistrationEmailValidationLMS/portalRegistrationEmailValidationLMS.js"
+            ],
+            "c/portalRegistrationFirstLevel": [
+                "../../../lwc/portalRegistrationFirstLevel/portalRegistrationFirstLevel.js"
+            ],
+            "c/portalRegistrationFirstLevelConfirmation": [
+                "../../../lwc/portalRegistrationFirstLevelConfirmation/portalRegistrationFirstLevelConfirmation.js"
+            ],
+            "c/portalRegistrationGenericModal": [
+                "../../../lwc/portalRegistrationGenericModal/portalRegistrationGenericModal.js"
+            ],
+            "c/portalRegistrationIATANAccountPopup": [
+                "../../../lwc/portalRegistrationIATANAccountPopup/portalRegistrationIATANAccountPopup.js"
+            ],
+            "c/portalRegistrationProfileDetails": [
+                "../../../lwc/portalRegistrationProfileDetails/portalRegistrationProfileDetails.js"
+            ],
+            "c/portalRegistrationProfileDetailsLMS": [
+                "../../../lwc/portalRegistrationProfileDetailsLMS/portalRegistrationProfileDetailsLMS.js"
+            ],
+            "c/portalRegistrationSecondLevel": [
+                "../../../lwc/portalRegistrationSecondLevel/portalRegistrationSecondLevel.js"
+            ],
+            "c/portalRegistrationThirdLevelLMS": [
+                "../../../lwc/portalRegistrationThirdLevelLMS/portalRegistrationThirdLevelLMS.js"
+            ],
+            "c/portalRegistrationTrainingValidationLMS": [
+                "../../../lwc/portalRegistrationTrainingValidationLMS/portalRegistrationTrainingValidationLMS.js"
+            ],
+            "c/portalRelocateAccount": [
+                "../../../lwc/portalRelocateAccount/portalRelocateAccount.js"
+            ],
+            "c/portalResetPassword": [
+                "../../../lwc/portalResetPassword/portalResetPassword.js"
+            ],
+            "c/portalResetPasswordError": [
+                "../../../lwc/portalResetPasswordError/portalResetPasswordError.js"
+            ],
+            "c/portalResetPasswordSuccess": [
+                "../../../lwc/portalResetPasswordSuccess/portalResetPasswordSuccess.js"
+            ],
+            "c/portalSanctionedCountry": [
+                "../../../lwc/portalSanctionedCountry/portalSanctionedCountry.js"
+            ],
+            "c/portalSearchBar": [
+                "../../../lwc/portalSearchBar/portalSearchBar.js"
+            ],
+            "c/portalSearchBarGlobalComponent": [
+                "../../../lwc/portalSearchBarGlobalComponent/portalSearchBarGlobalComponent.js"
+            ],
+            "c/portalSearchCasesList": [
+                "../../../lwc/portalSearchCasesList/portalSearchCasesList.js"
+            ],
+            "c/portalSearchDocumentsList": [
+                "../../../lwc/portalSearchDocumentsList/portalSearchDocumentsList.js"
+            ],
+            "c/portalSearchFAQList": [
+                "../../../lwc/portalSearchFAQList/portalSearchFAQList.js"
+            ],
+            "c/portalSearchFeaturesList": [
+                "../../../lwc/portalSearchFeaturesList/portalSearchFeaturesList.js"
+            ],
+            "c/portalSearchFilters": [
+                "../../../lwc/portalSearchFilters/portalSearchFilters.js"
+            ],
+            "c/portalSearchLookupComponent": [
+                "../../../lwc/portalSearchLookupComponent/portalSearchLookupComponent.js"
+            ],
+            "c/portalSearchProfileList": [
+                "../../../lwc/portalSearchProfileList/portalSearchProfileList.js"
+            ],
+            "c/portalSearchResultsList": [
+                "../../../lwc/portalSearchResultsList/portalSearchResultsList.js"
+            ],
+            "c/portalSearchServicesList": [
+                "../../../lwc/portalSearchServicesList/portalSearchServicesList.js"
+            ],
+            "c/portalSearchTopMenu": [
+                "../../../lwc/portalSearchTopMenu/portalSearchTopMenu.js"
+            ],
+            "c/portalServicesAccessGranted": [
+                "../../../lwc/portalServicesAccessGranted/portalServicesAccessGranted.js"
+            ],
+            "c/portalServicesAccessGrantedCard": [
+                "../../../lwc/portalServicesAccessGrantedCard/portalServicesAccessGrantedCard.js"
+            ],
+            "c/portalServicesAccessRequested": [
+                "../../../lwc/portalServicesAccessRequested/portalServicesAccessRequested.js"
+            ],
+            "c/portalServicesAccessRequestedCard": [
+                "../../../lwc/portalServicesAccessRequestedCard/portalServicesAccessRequestedCard.js"
+            ],
+            "c/portalServicesAddUsersLookup": [
+                "../../../lwc/portalServicesAddUsersLookup/portalServicesAddUsersLookup.js"
+            ],
+            "c/portalServicesAvailableServices": [
+                "../../../lwc/portalServicesAvailableServices/portalServicesAvailableServices.js"
+            ],
+            "c/portalServicesAvailableServicesList": [
+                "../../../lwc/portalServicesAvailableServicesList/portalServicesAvailableServicesList.js"
+            ],
+            "c/portalServicesAvailableServicesListCard": [
+                "../../../lwc/portalServicesAvailableServicesListCard/portalServicesAvailableServicesListCard.js"
+            ],
+            "c/portalServicesCardContainer": [
+                "../../../lwc/portalServicesCardContainer/portalServicesCardContainer.js"
+            ],
+            "c/portalServicesManageServices": [
+                "../../../lwc/portalServicesManageServices/portalServicesManageServices.js"
+            ],
+            "c/portalServicesMyServices": [
+                "../../../lwc/portalServicesMyServices/portalServicesMyServices.js"
+            ],
+            "c/portalServicesPage": [
+                "../../../lwc/portalServicesPage/portalServicesPage.js"
+            ],
+            "c/portalServicesPageHeader": [
+                "../../../lwc/portalServicesPageHeader/portalServicesPageHeader.js"
+            ],
+            "c/portalServicesRequestBanner": [
+                "../../../lwc/portalServicesRequestBanner/portalServicesRequestBanner.js"
+            ],
+            "c/portalServicesRequestServiceModal": [
+                "../../../lwc/portalServicesRequestServiceModal/portalServicesRequestServiceModal.js"
+            ],
+            "c/portalServicesTIPReportsPage": [
+                "../../../lwc/portalServicesTIPReportsPage/portalServicesTIPReportsPage.js"
+            ],
+            "c/portalServicesTIPReportsPageHeader": [
+                "../../../lwc/portalServicesTIPReportsPageHeader/portalServicesTIPReportsPageHeader.js"
+            ],
+            "c/portalServicesTermsAndConditions": [
+                "../../../lwc/portalServicesTermsAndConditions/portalServicesTermsAndConditions.js"
+            ],
+            "c/portalServicesTermsAndConditionsModal": [
+                "../../../lwc/portalServicesTermsAndConditionsModal/portalServicesTermsAndConditionsModal.js"
+            ],
+            "c/portalSupportPage": [
+                "../../../lwc/portalSupportPage/portalSupportPage.js"
+            ],
+            "c/portalSupportPageHeader": [
+                "../../../lwc/portalSupportPageHeader/portalSupportPageHeader.js"
+            ],
+            "c/portalSupportReachUs": [
+                "../../../lwc/portalSupportReachUs/portalSupportReachUs.js"
+            ],
+            "c/portalSupportReachUsCreateNewCase": [
+                "../../../lwc/portalSupportReachUsCreateNewCase/portalSupportReachUsCreateNewCase.js"
+            ],
+            "c/portalSupportTopArticles": [
+                "../../../lwc/portalSupportTopArticles/portalSupportTopArticles.js"
+            ],
+            "c/portalTipReports": [
+                "../../../lwc/portalTipReports/portalTipReports.js"
+            ],
+            "c/portalTreasuryDashboardContactUs": [
+                "../../../lwc/portalTreasuryDashboardContactUs/portalTreasuryDashboardContactUs.js"
+            ],
+            "c/portalTreasuryDashboardContainer": [
+                "../../../lwc/portalTreasuryDashboardContainer/portalTreasuryDashboardContainer.js"
+            ],
+            "c/portalTreasuryDashboardFooter": [
+                "../../../lwc/portalTreasuryDashboardFooter/portalTreasuryDashboardFooter.js"
+            ],
+            "c/portalTreasuryDashboardHeader": [
+                "../../../lwc/portalTreasuryDashboardHeader/portalTreasuryDashboardHeader.js"
+            ],
+            "c/portalTreasuryDashboardIframe": [
+                "../../../lwc/portalTreasuryDashboardIframe/portalTreasuryDashboardIframe.js"
+            ],
+            "c/portalTreasuryDashboardIframesContainer": [
+                "../../../lwc/portalTreasuryDashboardIframesContainer/portalTreasuryDashboardIframesContainer.js"
+            ],
+            "c/portalTreasuryDashboardLinkTiles": [
+                "../../../lwc/portalTreasuryDashboardLinkTiles/portalTreasuryDashboardLinkTiles.js"
+            ],
+            "c/portalWelcomePanel": [
+                "../../../lwc/portalWelcomePanel/portalWelcomePanel.js"
+            ],
+            "c/pubsub": [
+                "../../../lwc/pubsub/pubsub.js"
+            ],
+            "c/recentCases": [
+                "../../../lwc/recentCases/recentCases.js"
+            ],
+            "c/redirector": [
+                "../../../lwc/redirector/redirector.js"
+            ],
+            "c/registrationUtils": [
+                "../../../lwc/registrationUtils/registrationUtils.js"
+            ],
+            "c/resetPassword": [
+                "../../../lwc/resetPassword/resetPassword.js"
+            ],
+            "c/sendToRecicleBinCase": [
+                "../../../lwc/sendToRecicleBinCase/sendToRecicleBinCase.js"
+            ],
+            "c/unregisteredUsers": [
+                "../../../lwc/unregisteredUsers/unregisteredUsers.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}
