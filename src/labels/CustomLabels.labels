@@ -27959,8 +27959,9 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
-Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+        <value>The balances on the customer portal are updated the next business day after IATA’s account has been credited. The day IATA’s account is credited depends on the form of payment of your choice. The billing data shown in ICE is provided to IATA by third parties with 24 hour intervals and delays outside of IATA’s control might occur. 
+
+In case of an airline suspension resulting in an adjusted billing amount, the agents may rely on the amounts contained in ICE and in case of any discrepancies, those can be resolved through a later payment by or to the agent.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
@@ -39479,7 +39480,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_CSP_Troubleshooting</fullName>
@@ -40168,7 +40169,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
@@ -40780,7 +40781,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Terms of Use Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_Thank_you_Fred_Access_Request</fullName>

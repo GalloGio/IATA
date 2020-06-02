@@ -636,6 +636,11 @@ public static Contact contactInfo = new Contact();
 	}
 
 	@AuraEnabled
+	public static Boolean isTerminated(){
+		return myContact.Account.Status__c == 'Terminated';
+	}
+
+	@AuraEnabled
 	public static boolean hasRevCases(){
 
 		if(myContact.AccountId != null){
@@ -690,7 +695,7 @@ public static Contact contactInfo = new Contact();
 				continue;
 			}
 
-			if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
+			if(((newGen || isTerminated()) && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
 				editable = false;
 			}
 
@@ -713,7 +718,7 @@ public static Contact contactInfo = new Contact();
 				editable = false;
 			}
 
-			if(hasAnnualRevalidation() && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
+			if((hasAnnualRevalidation() || isTerminated()) && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
 				editable = false;
 			}
 
