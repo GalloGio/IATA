@@ -41,17 +41,9 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	@isTest
 	static void testCompleteRegistrationFlow3(){
 
-		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact];
-		Contact c;
-		Contact c2;
-		for(Contact con: contacts){
-			if(con.Name == 'Doe')
-				c = con;
-			else if(con.Name == 'Don'){
-				c2 = con;
-			}
-
-		}
+		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact ORDER BY Name];
+		Contact c = contacts[0];
+		Contact c2 = contacts[1];
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
 
@@ -75,17 +67,9 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	@isTest
 	static void testCompleteRegistrationFlow4(){
 
-		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact];
-		Contact c;
-		Contact c2;
-		for(Contact con: contacts){
-			if(con.Name == 'Doe')
-				c = con;
-			else if(con.Name == 'Don'){
-				c2 = con;
-			}
-
-		}
+		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact ORDER BY Name];
+		Contact c = contacts[0];
+		Contact c2 = contacts[1];
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
 
@@ -103,17 +87,9 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	@isTest
 	static void testCompleteRegistrationFlow5(){
 
-		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact];
-		Contact c;
-		Contact c2;
-		for(Contact con: contacts){
-			if(con.Name == 'Doe')
-				c = con;
-			else if(con.Name == 'Don'){
-				c2 = con;
-			}
-
-		}
+		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact ORDER BY Name];
+		Contact c = contacts[0];
+		Contact c2 = contacts[1];
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
 
@@ -131,17 +107,9 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	@isTest
 	static void testCompleteRegistrationFlow6(){
 
-		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact];
-		Contact c;
-		Contact c2;
-		for(Contact con: contacts){
-			if(con.Name == 'Doe')
-				c = con;
-			else if(con.Name == 'Don'){
-				c2 = con;
-			}
-
-		}
+		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact ORDER BY Name];
+		Contact c = contacts[0];
+		Contact c2 = contacts[1];
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
 
@@ -186,7 +154,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	static void testAuraMethods(){
 
 		Contact existingContact = [SELECT Id, Name, Email FROM Contact where Email = 'dontest@test.com'];
-		String serviceId = PortalServicesCtrl.getPortalServiceId('Training Platform (LMS)');
+		String serviceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Training Platform (LMS)');
 
 		Test.startTest();
 

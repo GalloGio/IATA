@@ -192,22 +192,16 @@
                                                         </template>
 
                                                         <template if:true={field.changeUserStatus}>
-                                                            <div class="changeUserStatus">
-
-                                                                <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
-                                                                </lightning-output-field>
                                                                 <template if:false={isForEdit}>
-                                                                    <span class="changeUserStatusButton">
                                                                         <lightning-icon icon-name="utility:custom_apps"
                                                                             size="x-small"
-                                                                            class="darkBlueIcon cursorPointer"
+                                                                    class="darkBlueIcon cursorPointer leftIconPosition slds-m-top_large"
                                                                             onclick={openChangeUserPortalStatus}>
                                                                         </lightning-icon>
-                                                                    </span>
                                                                 </template>
-                                                            </div>
-
+                                                            <lightning-output-field class="labelValue textValue removeLinks"
+                                                                    field-name={field.fieldName}>
+                                                            </lightning-output-field>
                                                         </template>
                                                     </div>
                                                 </template>

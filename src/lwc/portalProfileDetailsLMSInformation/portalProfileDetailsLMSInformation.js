@@ -143,7 +143,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 		
 		// Retrieve Contact information
-		console.log('connectedCallback - going to call getContactInfo!');
 		getContactInfo()
 			.then(result => {
 				this.localContactInfo = JSON.parse(JSON.stringify(result));
@@ -355,8 +354,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	next(){
 
 		if(this.validated === true){
-
-			//this.dispatchEvent(new CustomEvent('Submit'));
 			this.handleSubmit();
 		}else{
 
@@ -371,13 +368,11 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 				this.startLoading();
 				RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
 					if(result == false){
-						//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 						this.isLoading = false;
 					}else{
 						let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
 						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
 							if(result2 === 'true'){
-								//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 								this.stopLoading();
 							}else{
 								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
@@ -425,7 +420,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												});
 
 											this.stopLoading();
-										// }
 									}else{
 										if(userInfo.hasExistingContactPersonalEmail == true){
 											
@@ -464,9 +458,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 													this.stopLoading();
 												});
 												this.stopLoading();
-											// }
-											//Send Verification email
-											//this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 											this.stopLoading();
 										}else{
 

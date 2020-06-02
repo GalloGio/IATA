@@ -83,6 +83,22 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <assignments>
+        <name>myVariable_waitStartTimeAssignment</name>
+        <label>myVariable_waitStartTimeAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myDecision</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <processMetadataValues>
             <name>index</name>
@@ -766,7 +782,7 @@
         </rules>
     </decisions>
     <description>Portal Service Access is rejected by internal or portal admin, ISS or CNS</description>
-    <interviewLabel>Notify_contact_of_access_rejected-4_InterviewLabel</interviewLabel>
+    <interviewLabel>Notify_contact_of_access_rejected-3_InterviewLabel</interviewLabel>
     <label>Notify contact of access rejected</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -867,7 +883,7 @@
         </inputAssignments>
         <object>Portal_Application_Right__c</object>
     </recordUpdates>
-    <startElementReference>myDecision</startElementReference>
+    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>
@@ -884,5 +900,15 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Portal_Application_Right__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_waitStartTimeVariable</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDateTime</elementReference>
+        </value>
     </variables>
 </Flow>

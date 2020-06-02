@@ -71,7 +71,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE GB'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -87,7 +87,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 HE FR'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -103,7 +103,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -119,7 +119,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 AE GB'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -135,7 +135,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = [SELECT Id FROM Account WHERE Name = 'MC Account 1 AE PT'].Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -155,7 +155,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 1 GE PT'].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountAE.Id;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, false);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -218,7 +218,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		
 		Test.stopTest();
 		
-		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
+		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.GeLeftAlone); // the GE account left standalone
 	}
 
 	@isTest
@@ -257,7 +257,50 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		
 		Test.stopTest();
 		
-		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, true); // the GE account left standalone
+		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase); // the GE account left standalone
+	}
+
+	@isTest
+	public static void testBatch_onGeLeftAlone_VoluntaryRelinquishment_End()
+	{
+		// flags
+		ANG_AgencyChangesHelper.isMigrationRunning = true; // don't validate the backup process
+
+		// entitites
+		Account accountHE = [SELECT Id, Name, IATA_ISO_Country__c, Iso_State__c, Location_Class__c, Location_Type__c
+							 FROM Account
+							 WHERE Name = 'MC Account 2 HE FR']; // the account being terminated
+		Id accountGE = [SELECT Id FROM Account WHERE Name = 'MC Account 2 GE PT'].Id;
+		
+		Contact cont = ANG_TestDataHelper.insertContact(accountHE.Id);
+		ANG_TestDataHelper.ResultObjects objs = ANG_TestDataHelper.insertOscarAndRelatedEntities(accountHE, cont.Id, AMS_Utils.VOLRELINQUISH, AMS_Utils.RECTYPE_VOLUNTARYRELINQUISHMENT);
+		ANG_TestDataHelper.insertGenericAttachmentToOscar(objs.oscarCase.Id);
+		
+		Test.startTest();
+
+		// update oscar's Sanity Check
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarSanityCheckPassed_Step6(oscar);
+		ANG_TestDataHelper.appendOscarHierarchyScenario(oscar, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE);
+		update oscar;
+
+		// update oscar's Process Sustension
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessSuspensionPassed_Step30(oscar);
+		update oscar;
+
+		// update oscar's Process Termination to trigger the batch execution
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
+		oscar = new AMS_OSCAR__c(Id = objs.oscar.Id);
+		ANG_TestDataHelper.setOscarProcessTerminationPassed_Step31(oscar);
+		update oscar;
+
+		Test.stopTest();
+		
+		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
+		simulateBatchRun(objs.oscar.Id, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.FinishExecution);
+		
+		verifyChangesOnSplit('MC Account 2 GE PT', AMS_Utils.GE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.FinishExecution); // the GE account left standalone
 	}
 
 	@isTest
@@ -272,7 +315,7 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		
 		Id oscarId = [SELECT Id FROM AMS_OSCAR__c].Id;
 		ANG_SplitMcHierarchyIntoStandardBatch.forceAccountForTesting = accountGE;
-		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, true);
+		ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.GeLeftAlone);
 		Database.executeBatch(myBatchObject, 1);
 		
 		Test.stopTest();
@@ -284,18 +327,19 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		System.assertEquals(AMS_Utils.CONTACT_TYPE_ADMIN, c.Contact.User_Portal_Status__c);
 	}
 
-	private static void simulateBatchRun(Id oscarId, Id accountGE, Boolean processSingleBsp) {
-		ANG_SplitMcHierarchyIntoStandardBatch batch = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, processSingleBsp);
+	private static void simulateBatchRun(Id oscarId, Id accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType executionType) {
+		ANG_SplitMcHierarchyIntoStandardBatch batch = new ANG_SplitMcHierarchyIntoStandardBatch(oscarId, accountGE, executionType);
 		Database.QueryLocator q = batch.start(null);
 		batch.execute(null, new List<SObject> { q.iterator().next() });
 		batch.finish(null);
 	}
 
 	private static void verifyChangesOnSplit(String accountName, String locationType) {
-		verifyChangesOnSplit(accountName, locationType, false);
+		verifyChangesOnSplit(accountName, locationType, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
 	}
 
-	private static void verifyChangesOnSplit(String accountName, String locationType, Boolean justBsp) {
+	private static void verifyChangesOnSplit(String accountName, String locationType, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType execType) {
+		boolean justBsp = execType != ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal;
 		boolean isGe = locationType == AMS_Utils.GE && ! justBsp; // GE behaves as HE when "justBsp"
 		boolean isHe = isGe || locationType == AMS_Utils.HE || justBsp;
 
@@ -312,12 +356,18 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 		System.assertEquals(1, accts.size());
 		Account acct = accts.get(0);
 
-		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, acct.ANG_Accreditation_Model__c);
+		if (execType == ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase)
+			System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, acct.ANG_Accreditation_Model__c);
+		else
+			System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_CASH, acct.ANG_Accreditation_Model__c);
 		
 		if (isHe) {
 			System.assertEquals(null, acct.ParentId);
 			System.assertEquals(null, acct.Top_Parent__c);
-			System.assertEquals(AMS_Utils.HE, acct.Location_Type__c);
+			if (execType == ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase)
+				System.assertEquals(AMS_Utils.GE, acct.Location_Type__c);
+			else
+				System.assertEquals(AMS_Utils.HE, acct.Location_Type__c);
 		} else {
 			System.assertNotEquals(null, acct.ParentId);
 			System.assertNotEquals(null, acct.Top_Parent__c);
@@ -370,10 +420,20 @@ public class ANG_SplitMcHierarchyIntoStandardTest {
 			if (!isGe && !justBsp) { // when "justBsp", a GE is marked as HE except in this case
 				System.assertNotEquals(null, oscars.get(0).Parent_OSCAR__c);
 				System.assertEquals(AMS_Utils.NOT_APPLICABLE, oscars.get(0).Step51__c);
+				System.assertEquals('N/A', oscars.get(0).Child_OSCAR_Status__c);
 			} else {
 				System.assertEquals(null, oscars.get(0).Parent_OSCAR__c);
-				System.assertEquals(justBsp ? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE : AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED,
-					oscars.get(0).Child_OSCAR_Status__c);
+				System.assertEquals(isGe || execType == ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase
+					|| execType == ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.FinishExecution
+						? 'Not Started'
+						: 'Not Applicable', oscars.get(0).Step51__c);
+				if (execType == ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase)
+					System.assertEquals(AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE, oscars.get(0).Child_OSCAR_Status__c);
+				else
+					System.assertEquals(justBsp
+						&& execType != ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.FinishExecution
+							? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE
+							: AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED, oscars.get(0).Child_OSCAR_Status__c);
 			}
 		} else {
 			System.assertEquals(0, oscars.size());

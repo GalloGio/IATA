@@ -3953,12 +3953,12 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>New to the IATA Customer Portal?</value>
     </labels>
     <labels>
-        <fullName>CSP_Create_New_User_Label</fullName>
+        <fullName>CSP_Create_New_Account_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP Create New User Label</shortDescription>
-        <value>Create New User</value>
+        <shortDescription>CSP Create New Account Label</shortDescription>
+        <value>Create New Account</value>
     </labels>
     <labels>
         <fullName>CSP_Create_New_User_Label</fullName>
@@ -4940,6 +4940,14 @@ Please click Next Step button to confirm that your address is correct</value>
         <shortDescription>CSP_L2_Company_Information_Message</shortDescription>
         <value>Please fill out your company information to access customized services.
 You can easily create a company account in two steps</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Location</shortDescription>
+        <value>Company Location</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Company_Name</fullName>
@@ -6819,13 +6827,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Title</value>
     </labels>
 	<labels>
-        <fullName>CSP_Treasury_Dashboard_Report</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Treasury Dashboard Report</shortDescription>
-        <value>Treasury Dashboard Report</value>
-    </labels>
-    <labels>
         <fullName>CSP_Track</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -9502,20 +9503,6 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <value>Go to IATA corporate site</value>
     </labels>
     <labels>
-        <fullName>GxA_Link</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GxA Link</shortDescription>
-        <value>https://myassessor2-stage.pwc.ch/Iata/InitiateSingleSignOn</value>
-    </labels>
-    <labels>
-        <fullName>GxA_Link_Label</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GxA Link Label</shortDescription>
-        <value>GxA Website</value>
-    </labels>
-    <labels>
         <fullName>Handling</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9572,17 +9559,6 @@ As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry par
 Through this IATA Accreditation &amp; Changes service you can directly apply to become an IATA Accredited Agency
 
 If you are already IATA Accredited, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
-    </labels>
-    <labels>
-        <fullName>IATA_Acr_Changes_Service_Description_CNS</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Acr Changes Service Description CNS</shortDescription>
-        <value>Through this CNS Accreditation &amp; Changes service you can directly apply to become a CNS Endorsed Agency. 
-
-If you are already CNS Endorsed, you can use this service to update information on a change of address, name and ownership. 
-
-You can also use this service to add additional branches or voluntarily terminate your CNS Code.</value>
     </labels>
     <labels>
         <fullName>IATA_Airl_Location_Codes_Service_Description</fullName>
@@ -10392,7 +10368,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Password</shortDescription>
-        <value>plad6repmjo3kon1d1hbnc7i5a147hm7ulo927jpe8143g9sbsl</value>
+        <value>11i2p12gadlffdnvjjrp98hlfo5is1g8plmcgve96s1vd657r7jl</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Password_PROD</fullName>
@@ -10408,7 +10384,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Services URL</shortDescription>
-        <value>https://iccspprod-api.iata.org/api/v1</value>
+        <value>https://iccsqa-api.iata.org/api/v1</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Services_URL_PROD</fullName>
@@ -10424,7 +10400,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Token URL</shortDescription>
-        <value>https://iata-iccs-api-pprod.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
+        <value>https://iata-iccs-api-devqa.auth.eu-west-1.amazoncognito.com/oauth2/token</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Token_URL_PROD</fullName>
@@ -10440,7 +10416,7 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username</shortDescription>
-        <value>6t8qea6oeu7t9kbrjlmchocopd</value>
+        <value>70fk4cegoaj7bm78fmmj2cutfe</value>
     </labels>
     <labels>
         <fullName>ICCS_Endpoint_Username_PROD</fullName>
@@ -18634,14 +18610,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Yes</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMSCNS_Endorsement_HO</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS CNS endorsement HO</shortDescription>
-        <value>CNS endorsement</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_ACCR_Alert1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18685,14 +18653,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Please accept the Terms and Conditions before submitting your Agency Accreditation application to IATA.</value>
     </labels>
 	<labels>
-        <fullName>ISSP_AMS_Accept_TOS_PASS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Accept TOS PASS</shortDescription>
-        <value>Please accept the Terms and Conditions before submitting your PASS Accreditation application to IATA.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -18907,14 +18867,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Business_Activities_Field_Label</shortDescription>
         <value>* Give details of the parent business activities of your firm (customs house broker, ocean freight forwarder, travel agent, etc.)</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_CASS_Commercial_Account_HO</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS CASS Commercial Account HO</shortDescription>
-        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CASS_Contact</fullName>
@@ -19482,22 +19434,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_T_Cs_Title1</shortDescription>
         <value>STATEMENT / UNDERTAKING</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_CNS_Contact_Required</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS CNS Contact Required</shortDescription>
-        <value>You need to choose a contact for Authorized Signatory or Invoicing Contact or Portal Admin or Security Contact!</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_CNS_ENDORSEMENT</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_CNS_ENDORSEMENT</shortDescription>
-        <value>CNS Endorsement</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
@@ -20069,14 +20005,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Download PDF Copy</shortDescription>
         <value>Download Accreditation Application</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Download_PDF_Copy_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Download_PDF_Copy_CNS</shortDescription>
-        <value>Download Endorsement Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Download_PDF_NOC</fullName>
@@ -21222,14 +21150,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>6. Trained Staff</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_LeftNav_Section6_Financial_Cargo</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_LeftNav_Section6_Financial_Cargo</shortDescription>
-        <value>6. Financial</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -21966,30 +21886,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Submit GoGlobal Application to IATA</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NEW_BR</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NEW_BR</shortDescription>
-        <value>New Branch Office</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NEW_HO</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NEW_HO</shortDescription>
-        <value>New Head Office</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NEW_INDEPENDENT_BR</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NEW_INDEPENDENT_BR</shortDescription>
-        <value>New Independent Branch Office</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NOC_All_Countries</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22038,23 +21934,6 @@ For each section below either:&lt;br/&gt;
 &lt;/div&gt;</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NOC_Instructions_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NOC Instructions CNS</shortDescription>
-        <value>&lt;div&gt;
-For each section below either:&lt;br/&gt;
-&lt;ul&gt;
-&lt;li&gt;Confirm that the Agency Details are correct&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;Notify CNS of the Change and update your Agency Details&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NOC_Instructions_New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22084,7 +21963,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC StepD ProgressBar CNS</shortDescription>
-        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to CNS</value>
+        <value>D. Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Updated_Companies</fullName>
@@ -22129,14 +22008,6 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS Name of employer</shortDescription>
         <value>Name of employer:</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_New_Commercial_Account_BR</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS CASS Commercial Account BR</shortDescription>
-        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_New_HO_details</fullName>
@@ -22926,16 +22797,6 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_TC_CNS_Only</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_TC_CNS_Only</shortDescription>
-        <value>I understand that by signing this agreement the endorsed agent and authorized intermediary as identified by the above listed CNS/IATA no. has authorized the addition of a branch office located at the address shown above. Responsibilities for payment of international air waybills other financial and operational compliance’s to the CNS Cargo agency and authorized intermediary agreement and any governmental regulations (DOT,FAA) regarding the handling of International Air Cargo remains the responsibility of the principle office of the endorsed agent and authorized intermediary.
-&lt;br/&gt;&lt;hr&gt;
-I certify that the preceding statements are true and correct to the best of my knowledge and believe and that I am authorized by the firm identified in the foregoing to make these statements and to file this application.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_CASS</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22990,22 +22851,6 @@ I certify that the preceding statements are true and correct to the best of my k
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC TC Change CGO New</shortDescription>
         <value>The transferor has informed the Transferee of the need to comply the IFACP Rules if the Transferee wishes to be entered on the IFACP List as a Registered Forwarder.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_TC_Change_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS</shortDescription>
-        <value>The Agent (Transferor-Seller) has informed the Transferee-Buyer of the need to comply with the standards of the corporation in order to enable the corporation to appoint the Transferee-Buyer on behalf of those airlines which have so authorized the corporation.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_TC_Change_CNS2</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS2</shortDescription>
-        <value>The undersigned Agent (Transferor-Seller) and Transferee-Buyer hereby agree that they are jointly and severally liable for any obligation to a CNS Member arising from the Agent’s (Transferor’s-Seller’s) Cargo Agency Agreement prior to the termination thereof or the date of receipt by the Corporation of this Notice, whichever is later.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_EACP</fullName>
@@ -23780,14 +23625,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with an &lt;span style=&quot;color:red;font-weight:bold;font-size:110%&quot;&gt;X&lt;/span&gt;). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Required_Financial_Assessment_Contact</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Required Financial Assessment Contact</shortDescription>
-        <value>You need to select one Financial Assessment contact!</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Roles_and_Responsibilities</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23809,14 +23646,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_1 Branch Title</shortDescription>
         <value>SECTION 1 - IATA Accredited Head Office Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS STEP 3_1 Branch Title CNS</shortDescription>
-        <value>SECTION 1 - CNS Endorsed Head Office Details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title_New</fullName>
@@ -23909,22 +23738,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Section 2 SubSection 2</shortDescription>
         <value>Section 2.2</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Security_Contact</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Security Contact</shortDescription>
-        <value>Security Contact</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Security_Contact_Message_Popup</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Security Contact Message Popup</shortDescription>
-        <value>Example message for Security Contact</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Select_AEs</fullName>
@@ -24022,14 +23835,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Not sure which type of agency to apply for?&lt;br/&gt;Then please consult this</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_CNS_NEW_HO_BR</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Step0 CNS NEW HO BR</shortDescription>
-        <value>CNS Online Agency Accreditation &amp; Changes</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step0_Change_Bank_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24115,14 +23920,6 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
         <value>Welcome to the online CNS Agency Endorsement application.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</shortDescription>
-        <value>Welcome to the online CNS Agency Accreditation application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_New</fullName>
@@ -24599,14 +24396,6 @@ You can update your Ownership details at any time by following the &lt;i&gt;IATA
 You can update you Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step3_4_CNS_Agency_Title</fullName>
-        <categories>ISSP, AMs</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step3_4_CNS_Agency_Title</shortDescription>
-        <value>SECTION 4 - Additional CNS - New Head Office Application Info</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step3_4_Cargo_Agent_Title</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -24825,14 +24614,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA rules and regulations?</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step3_4_Q19_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step3_4_Q19_CNS</shortDescription>
-        <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the former IATA resolutions or a CNS subscribing carrier?</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step3_4_Q19_New</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -24869,14 +24650,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_Q1_Agency New</shortDescription>
         <value>* Has your firm ever previously held an IFACP Forwarder or an IATA Cargo Agency Agreement?</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step3_4_Q1_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>+        &lt;fullName&gt;ISSP_AMS_Step3_4_Q1_CNS&lt;/fullName&gt;</shortDescription>
-        <value>* Has your firm ever held an air freight agency appointment issued by IATA or Cargo Network Services or ever been issued a CASS-USA account number?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Q1_Intermediary</fullName>
@@ -25011,22 +24784,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 5 Premises Title</shortDescription>
         <value>SECTION 5 - Premises of Agency Location for which approval requested</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step3_5_Warehouse</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step3_5_Warehouse</shortDescription>
-        <value>SECTION 5 - Warehouse</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Step3_6_Financial</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step3_6_Financial</shortDescription>
-        <value>SECTION 6 - Financial</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_6_Other_Info</fullName>
@@ -25475,7 +25232,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
-        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Submit to CNS</value>
+        <value>E. Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
@@ -25599,13 +25356,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS StepsAll Cargo CASS Associate Title</shortDescription>
         <value>Application for approval as a CASS Associate</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS StepsAll Cargo CNS Agency Title</shortDescription>
-        <value>Application for approval as a CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title</fullName>
@@ -25901,21 +25651,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Please select who should be the Financial Administrator for your Agency.</value>
     </labels>
 	<labels>
-        <fullName>ISSP_AMS_Validation_PASS_Admin</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Validation_PASS_Admin</shortDescription>
-        <value>Please designate at least one PASS Admin.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Validation_PASS_User</fullName>
-        <categories>ISSP,AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Validation_PASS_User</shortDescription>
-        <value>Please verify any Person who may have PASS Admin and PASS User checked, a Person can be only one of them.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Validation_MC_Conversion_Countries</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27819,6 +27554,13 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
+        <value>Are you sure you want to withdraw the selected countries?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
         <categories>ISSP AP</categories>
         <language>en_US</language>
@@ -27967,8 +27709,9 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
-Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+        <value>The balances on the customer portal are updated the next business day after IATA’s account has been credited. The day IATA’s account is credited depends on the form of payment of your choice. The billing data shown in ICE is provided to IATA by third parties with 24 hour intervals and delays outside of IATA’s control might occur. 
+
+In case of an airline suspension resulting in an adjusted billing amount, the agents may rely on the amounts contained in ICE and in case of any discrepancies, those can be resolved through a later payment by or to the agent.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
@@ -33364,6 +33107,176 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Owner Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASSLink_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASSLink_PS_Description</shortDescription>
+        <value>If your registration has been approved,  please click here to access the PASS Platform.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Administrators</shortDescription>
+        <value>If more than 2 new PASS administrators need to be created, please provide details.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Administrators_Rec</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Administrators Rec</shortDescription>
+        <value>Recommendation: Each Airline/GSSA should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Agent</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Agent</shortDescription>
+        <value>PASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Agreement</shortDescription>
+        <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
+Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+&lt;br/&gt;
+&lt;br/&gt;
+Please download, complete and upload the PASS agreement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Airline_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Airline_Checklist</shortDescription>
+        <value>Link of Airline Joining Checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_BankMandate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS BankMandate</shortDescription>
+        <value>The participant needs to provide a Bank Account Mandate to IATA, so that the PASS proceedings can be settled. Please upload Bank Account Mandate of the local bank account and in the ISS country and currency of settlement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Checklist</shortDescription>
+        <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Download_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Download_Documents</shortDescription>
+        <value>Please download the documents using the links below:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help Admin</shortDescription>
+        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&apos;s other PASS users.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help User</shortDescription>
+        <value>With access to different functions and permissions, as granted and authorized by the company&apos;s PASS Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_NewUsers</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS NewUsers</shortDescription>
+        <value>New PASS Users</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_New_Admins</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS New Admins</shortDescription>
+        <value>Extra new PASS administrators</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_PS_Description</shortDescription>
+        <value>Please click here to complete the PASS registration process. PASS is a global digital platform to simplify billing and settlement between airlines and postal operators. For further information, visit www.iata.org/pass.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
+        <value>Link of Participation Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_AgreementTerms</shortDescription>
+        <value>Participation Agreement and Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
+        <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_And_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_And_Conditions</shortDescription>
+        <value>By submitting the present Application and pressing &quot;Accept terms and conditions&quot; below, the undersigned hereby confirms on behalf o the PASS Participant that all the information provided herein is correct and complete, that I have read and hereby acknowledge the terms and conditions contained in the Participation Agreement and the Terms of Use, and that I have enquired and am aware of the local laws and regulations as may apply to the operations of the PASS Participant in the applicable jurisdictions in regard to mail and postal activities.
+&lt;/br&gt;
+&lt;/br&gt;
+I, undersigned, hereby represents and declare that I am duty authorized to submit this application on behalfand in the name of the PASS Participant, and that I am duly authorized to submit this Application on behalf and in the name of the PASS Participant, and that I am duly authorized to bind the PASS Participant and enter on its behalf into the Participation Agreement and abide by the Terms of Use.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Conditions</shortDescription>
+        <value>By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
+        <value>Link of Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_TextAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS TextAreas</shortDescription>
+        <value>First Name, Last Name, Email;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Users</shortDescription>
+        <value>If it&apos;s necessary to create PASS Users, please provide details.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -36897,13 +36810,6 @@ CNS Customer Services</value>
         <value>UA-4245951-8</value>
     </labels>
     <labels>
-        <fullName>ISSP_Trade_Name_DBA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Trade Name (D/B/A)</shortDescription>
-        <value>Trade Name (D/B/A)</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Trade_name_of_Company</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -37748,20 +37654,6 @@ Using the Join BSP/CASS service, you can directly manage the joining process onl
         <protected>false</protected>
         <shortDescription>KALE_SUPPORT_EMAIL</shortDescription>
         <value>sis.servicedesk@accelya.com</value>
-    </labels>
-    <labels>
-        <fullName>KEY_CUSTOMER_ALERT</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Key Customer alert message</shortDescription>
-        <value>&lt;p&gt;KEY CUSTOMER!&lt;/p&gt;&lt;p&gt;This is a reminder that this case is related to a KEY CUSTOMER.&lt;/p&gt;</value>
-    </labels>
-    <labels>
-        <fullName>KEY_CUSTOMER_ALERT_TITLE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Key Customer alert title</shortDescription>
-        <value>KEY CUSTOMER!</value>
     </labels>
     <labels>
         <fullName>KPI1RT</fullName>
@@ -39487,7 +39379,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_CSP_Troubleshooting</fullName>
@@ -40176,7 +40068,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
@@ -40788,7 +40680,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Terms of Use Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_Thank_you_Fred_Access_Request</fullName>
@@ -43673,20 +43565,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Premium</value>
     </labels>
     <labels>
-        <fullName>Treasury_Dashboard_Report_Access_Denied</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Treasury Dashboard Report Access Denied</shortDescription>
-        <value>&lt;/br&gt;You do not have access to &lt;b&gt; {name} &lt;/b&gt; report!&lt;/br&gt;&lt;/br&gt; If you would like to get access to this report, you need to subscribe to &lt;b&gt;Treasury Dashboard &lt;font color=&quot;red&quot;&gt;Premium&lt;/font&gt;&lt;/b&gt;:</value>
-    </labels>
-    <labels>
-        <fullName>Treasury_Dashboard_Report_Access_Denied_Link</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Treasury Dashboard Report Access Denied Link</shortDescription>
-        <value>Click here.</value>
-    </labels>
-    <labels>
         <fullName>Treasury_Dashboard_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -43764,13 +43642,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Upload_Financial_Documents</shortDescription>
         <value>Upload Financial Documents</value>
-    </labels>
-    <labels>
-        <fullName>Upload_GxA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Upload GxA</shortDescription>
-        <value>To upload the financial documents please use the link below.</value>
     </labels>
     <labels>
         <fullName>UserRequestPortalAccess</fullName>
@@ -45056,614 +44927,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>##</value>
     </labels>
     <labels>
-        <fullName>icg_IATA_Validation_Programs</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg IATA Validation Programs</shortDescription>
-        <value>IATA Validation Programs</value>
-    </labels>
-    <labels>
-        <fullName>icg_about_IATA</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg about IATA</shortDescription>
-        <value>About IATA</value>
-    </labels>
-    <labels>
-        <fullName>icg_about_IATA_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg about IATA text1</shortDescription>
-        <value>The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues.</value>
-    </labels>
-    <labels>
-        <fullName>icg_advanced_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg advanced search</shortDescription>
-        <value>Advanced Search</value>
-    </labels>
-    <labels>
-        <fullName>icg_air_cargo_and_ecommerce</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg air cargo and ecommerce</shortDescription>
-        <value>Air cargo and e-commerce, enabling global trade</value>
-    </labels>
-    <labels>
-        <fullName>icg_air_cargo_and_ecommerce_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg air cargo and ecommerce	text1</shortDescription>
-        <value>The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability.</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_add_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn add location</shortDescription>
-        <value>ADD LOCATION</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_go_to_station_profile</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn go to station profile</shortDescription>
-        <value>GO TO STATION PROFILE</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_learn_more</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn learn more</shortDescription>
-        <value>LEARN MORE</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_more_info</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn more info</shortDescription>
-        <value>WATCH VIDEO</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_register_now</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn register now</shortDescription>
-        <value>PRE-REGISTER NOW</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_show_certified_entities</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn show certified entities</shortDescription>
-        <value>SHOW CERTIFIED ENTITIES</value>
-    </labels>
-    <labels>
-        <fullName>icg_cargo_handling_id</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg cargo handling id for demo</shortDescription>
-        <value>aDA9E00000000efWAA</value>
-    </labels>
-    <labels>
-        <fullName>icg_certification_of_excellence</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification of excellence</shortDescription>
-        <value>Certification of Excellence</value>
-    </labels>
-    <labels>
-        <fullName>icg_certification_of_excellence_description</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification of excellence description</shortDescription>
-        <value>Validate excellence beyond adherence to IATA standards. These certifications improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the &#39;best in class&#39; industry stakeholders</value>
-    </labels>
-    <labels>
-        <fullName>icg_certification_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification search</shortDescription>
-        <value>certification</value>
-    </labels>
-    <labels>
-        <fullName>icg_certifications_of_compliance</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certifications of compliance</shortDescription>
-        <value>Certifications of Compliance</value>
-    </labels>
-    <labels>
-        <fullName>icg_certifications_of_compliance_description</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certifications of compliance description</shortDescription>
-        <value>Validate companies&#39; compliance with IATA standards, guidelines and recommended practices for handling operations and environmental management.</value>
-    </labels>
-    <labels>
-        <fullName>icg_comming_soon</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg comming soon</shortDescription>
-        <value>Coming Soon</value>
-    </labels>
-    <labels>
-        <fullName>icg_company_name_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg company name search</shortDescription>
-        <value>company name</value>
-    </labels>
-    <labels>
-        <fullName>icg_compare</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg compare</shortDescription>
-        <value>COMPARE</value>
-    </labels>
-    <labels>
-        <fullName>icg_do_you_manage_a_Cargo_Station</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg do you manage a Cargo Station</shortDescription>
-        <value>Do you want to be listed?</value>
-    </labels>
-    <labels>
-        <fullName>icg_do_you_manage_a_Cargo_Station_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg do you manage a Cargo Station text1</shortDescription>
-        <value>Attract new customers by creating a free profile on the IATA One Source. Stand out from your competitiors and highlight your facility&#39;s capacities and IATA certifications and accreditations.</value>
-    </labels>
-    <labels>
-        <fullName>icg_ecommerce_video</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg ecommerce video</shortDescription>
-        <value>https://www.youtube.com/embed/oimgyps8nEI</value>
-    </labels>
-    <labels>
-        <fullName>icg_find_your_aviation_business_partner</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg find your aviation business partner</shortDescription>
-        <value>Find your aviation business partner</value>
-    </labels>
-    <labels>
-        <fullName>icg_in_validation</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg in validation</shortDescription>
-        <value>in</value>
-    </labels>
-    <labels>
-        <fullName>icg_latest</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest</shortDescription>
-        <value>LATEST</value>
-    </labels>
-    <labels>
-        <fullName>icg_latest_news</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest news</shortDescription>
-        <value>LATEST NEWS</value>
-    </labels>
-    <labels>
-        <fullName>icg_latest_validation_updates</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest validation updates</shortDescription>
-        <value>Latest Validation Updates</value>
-    </labels>
-    <labels>
-        <fullName>icg_location_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg location search</shortDescription>
-        <value>location</value>
-    </labels>
-    <labels>
-        <fullName>icg_login</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg login</shortDescription>
-        <value>Login</value>
-    </labels>
-    <labels>
-        <fullName>icg_main_one_source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg main one source</shortDescription>
-        <value>ONE SOURCE</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines</shortDescription>
-        <value>Why</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines2</shortDescription>
-        <value>should you be listed?</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines_modal</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines modal</shortDescription>
-        <value>ONE Source lists aviation service stations for all company types along the transportation chain from Shippers, Freight Forwarders, Truckers, Cargo Handling Facilities, Ground Handlers to Airlines. Currently, you find all stations with existing CEIV, SFOC, IEnvA and United for Wildlife certifications.</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines_modal2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines modal2</shortDescription>
-        <value>Soon the registration will be opened to all stations regardless of whether they already have an IATA Certification. Ensure to pre-register now to be the first in line to list your stations on ONE Source.</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_about_IATA</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu about IATA</shortDescription>
-        <value>ABOUT IATA</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_about_one_source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu about one source</shortDescription>
-        <value>ABOUT ONE SOURCE</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_home</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu home</shortDescription>
-        <value>HOME</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_latest_news</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu latest news</shortDescription>
-        <value>LATEST NEWS</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_remote_validations</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu remote validations</shortDescription>
-        <value>REMOTE VALIDATIONS</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_validation_programs</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu validation programs</shortDescription>
-        <value>VALIDATION PROGRAMS</value>
-    </labels>
-    <labels>
-        <fullName>icg_news</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg news</shortDescription>
-        <value>NEWS</value>
-    </labels>
-    <labels>
-        <fullName>icg_pre_register</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg pre-register</shortDescription>
-        <value>PRE-REGISTER</value>
-    </labels>
-    <labels>
-        <fullName>icg_received</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg received</shortDescription>
-        <value>received</value>
-    </labels>
-    <labels>
-        <fullName>icg_register</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg register</shortDescription>
-        <value>REGISTER</value>
-    </labels>
-    <labels>
-        <fullName>icg_registration_url</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg registration url</shortDescription>
-        <value>https://go.updates.iata.org/onesource</value>
-    </labels>
-     <labels>
-        <fullName>icg_resultpage_banner_text</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg resultpage banner text</shortDescription>
-        <value>Would you like to appear here?</value>
-    </labels>
-    <labels>
-        <fullName>icg_resultpage_banner_button</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg resultpage banner button</shortDescription>
-        <value>PRE-REGISTER TODAY</value>
-    </labels>
-    <labels>
-        <fullName>icg_resultpage_register_company</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg_resultpage_register_company</shortDescription>
-        <value>Not finding what you&#39;re looking for?</value>
-    </labels>
-    <labels>
-        <fullName>icg_resultpage_register_company2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg_resultpage_register_company2</shortDescription>
-        <value>PRE-REGISTER YOUR COMPANY</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_assistant</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search assistant</shortDescription>
-        <value>Search Assistant</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by</shortDescription>
-        <value>Search by</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_certification</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by certification</shortDescription>
-        <value>Search by certification</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_company_name</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by company name</shortDescription>
-        <value>Search by company name</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by location</shortDescription>
-        <value>Search by location</value>
-    </labels>
-    <labels>
-        <fullName>icg_see_listed_companies</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg see listed companies</shortDescription>
-        <value>SEE LISTED COMPANIES</value>
-    </labels>
-    <labels>
-        <fullName>icg_service_home1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg service home1</shortDescription>
-        <value>IATA Smart&amp;lt;br/&amp;gt;Facility&amp;lt;br/&amp;gt;Program</value>
-    </labels>
-    <labels>
-        <fullName>icg_service_home2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg service home2</shortDescription>
-        <value>IATA&amp;lt;br/&amp;gt;Consulting:&amp;lt;br/&amp;gt;Unbiased&amp;lt;br/&amp;gt;and Neutral&amp;lt;br/&amp;gt;Assessments</value>
-    </labels>
-    <labels>
-        <fullName>icg_service_home3</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg service home3</shortDescription>
-        <value>IATA&amp;lt;br/&amp;gt;Training:&amp;lt;br/&amp;gt;Developing&amp;lt;br/&amp;gt;professionals&amp;lt;br/&amp;gt;for&amp;lt;br/&amp;gt;tomorrow&#39;s&amp;lt;br/&amp;gt;air transport&amp;lt;br/&amp;gt;industry</value>
-    </labels>
-    <labels>
-        <fullName>icg_service_home4</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg service home4</shortDescription>
-        <value>Access the&amp;lt;br/&amp;gt;full TACT&amp;lt;br/&amp;gt;rates&amp;lt;br/&amp;gt;database&amp;lt;br/&amp;gt;online</value>
-    </labels>
-    <labels>
-        <fullName>icg_smart_facility_remote_validation</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg smart facility remote validation</shortDescription>
-        <value>Smart Facility Remote Validation</value>
-    </labels>
-    <labels>
-        <fullName>icg_smart_facility_remote_validation_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg smart facility remote validation text1</shortDescription>
-        <value>The Smart Facility Remote Validation assesses the equipment and infrastructure of a facility in a fast and easy way. You only need to fill an online questionnaire and upload the documents to confirm that the information is accurate.</value>
-    </labels>
-    <labels>
-        <fullName>icg_smart_facility_remote_validation_text2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg smart facility remote validation text2</shortDescription>
-        <value>The Remote Validation makes it easier for cargo handling facilities to improve or update their ICG profile quickly. It is an excellent way to bridge the gap towards an upcoming IATA audit.</value>
-    </labels>
-    <labels>
-        <fullName>icg_smart_facility_remote_validation_text3</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg smart facility remote validation text3</shortDescription>
-        <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
-    </labels>
-    <labels>
-        <fullName>icg_station_to_compare</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg station to compare</shortDescription>
-        <value>STATIONS TO COMPARE</value>
-    </labels>
-    <labels>
-        <fullName>icg_strategic_partners</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg strategic partners</shortDescription>
-        <value>Who</value>
-    </labels>
-    <labels>
-        <fullName>icg_strategic_partners2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg strategic partners2</shortDescription>
-        <value>is already in ONE Source?</value>
-    </labels>
-    <labels>
-        <fullName>icg_strategic_partners_modal</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg strategic partners modal</shortDescription>
-        <value>ONE Source is the Industry Platform for validated aviation capability and infrastructure information. It makes it easier for your customers to find you by bringing the modern search platform experience into aviation services.</value>
-    </labels>
-    <labels>
-        <fullName>icg_strategic_partners_modal2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg strategic partners modal 2</shortDescription>
-        <value>ONE Source your one-stop-shop for IATA accreditation programs like CEIVs, SF Operational Capacity, IEnvA, United for Wildlife... ONE Source makes it easier for you to manage your IATA accreditations, including booking, maintenance of data, and renewals.</value>
-    </labels>
-    <labels>
-        <fullName>icg_type_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg type search</shortDescription>
-        <value>Type</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what_is_the_IATA_One_Source</shortDescription>
-        <value>What is ONE Source?</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source text1</shortDescription>
-        <value>IATA ONE Source is the industry platform for validated aviation capability and infrastructure information. Find the right business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications. The platform makes it easier for you to find the right services where you need them.</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_text2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source text2</shortDescription>
-        <value>ONE Source only lists information verified through the different IATA validation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business.</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_videoUrl</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
-        <value>https://www.youtube.com/embed/bufLeBGwRJA</value>
-    </labels>
-    <labels>
-        <fullName>icg_wizard_title_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg wizard title location</shortDescription>
-        <value>Are you looking for a specific</value>
-    </labels>
-    <labels>
         <fullName>idcard_replacementHeadText</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -45700,7 +44963,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>issue with iata help text</shortDescription>
-        <value>Tick this box if the issue described by the account is related to an interaction with IATA</value>
+        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
     </labels>
     <labels>
         <fullName>label_custom_price</fullName>

@@ -310,9 +310,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		userInfo.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
 
 		/*LMS YAS check for existing contact/user based on additional email field*/
-		//if(!userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
 		if(!userInfo.hasExistingContact){
-			List<Contact> contactPersonalEmailList = returnExistingContactAdditionalEmail(email);//TODOMAC: get the contact having training records
+			List<Contact> contactPersonalEmailList = returnExistingContactAdditionalEmail(email);
 			userInfo.hasExistingContactPersonalEmail = contactPersonalEmailList.size() > 0 ? true : false;
 			if(!contactPersonalEmailList.isEmpty()){
 				userInfo.existingContactId = contactPersonalEmailList.get(0).Id;
@@ -329,7 +328,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				}
 			}
 
-		// }else if(userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
 		}else if(userInfo.hasExistingContact){
 			userInfo.existingContactId = conList.get(0).Id;
 			userInfo.existingContactName = conList.get(0).Name;
@@ -342,7 +340,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		// if(userInfo.existingContactId != null && LMSRedirectFrom == 'yas'){
 		if(userInfo.existingContactId != null){
 			List<Training_Contact_Role_Details__c> contactTrainingInfo = returnExistingContactTrainingInfo(userInfo.existingContactId);
 			if(!contactTrainingInfo.isEmpty()){
@@ -350,8 +347,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
 			}
 		}
-		/******************END*******************/
-
+		
 		return userInfo;
 	}
 
@@ -1029,9 +1025,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 
 		} catch (exception e) {
-			system.debug('Portal Level 1 registration - createNewUser: ' + e.getMessage());
-			system.debug('Portal Level 1 registration - createNewUser: ' + e.getstackTraceString());
-			//transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
 			return usr;
 		}
 
@@ -1408,12 +1401,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		public void execute(QueueableContext context) {
-			List<Contact> userList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
-			for(Contact user : userList){
-				user.status__c = 'Inactive';
+			List<Contact> contactList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
+			for(Contact cont : contactList){
+				cont.status__c = 'Inactive';
 			}
-			if(!userList.isEmpty())
-				update userList;
+			if(!contactList.isEmpty())
+				update contactList;
 		}
 	}
 	
