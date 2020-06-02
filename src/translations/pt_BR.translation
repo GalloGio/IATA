@@ -16945,7 +16945,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: Favor notar que os saldos são atualizados no Portal somente um dia útil depois do valor ser creditado na conta da IATA, pelo menos. Note também que os dados contidos no ICE são fornecidos à IATA por terceiros em um intervalo de 24 horas e pode não ser o atual, exato ou completo</label>
+        <label>Os saldos no portal do cliente são atualizados no dia útil subsequente à data em que a conta da IATA tiver sido creditada. O dia em que a conta da IATA é creditada depende da forma de pagamento que escolheu. A data de faturação indicada na ICE é fornecida à IATA por terceiros com intervalos de 24 horas e podem ocorrer atrasos que estão fora do controlo da IATA. 
+
+Em caso de suspensão de uma companhia aérea, que resulte na regularização de um montante de faturação, as agências podem basear-se nos montantes apresentados na ICE e, caso existam discrepâncias, as mesmas poderão ser resolvidas através de um pagamento posterior pela ou à agência.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31700,6 +31702,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -35111,7 +35117,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Relatorios / Reportes</label>
             <name>Contacts</name>
         </sections>
         <sections>
