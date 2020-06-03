@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
@@ -2245,6 +2265,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Notify_Users_Date__c</fullName>
+        <defaultValue>NOW()-100</defaultValue>
+        <description>Field used to trigger notification for users who have the document bookmarked in CS Portal. To trigger notification, This fields needs to be large than record&apos;s created Date</description>
+        <externalId>false</externalId>
+        <label>Notify Users Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>OwnerId</fullName>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
@@ -2277,6 +2307,11 @@
                     <label>Airsat</label>
                 </value>
                 <value>
+                    <fullName>BIS</fullName>
+                    <default>false</default>
+                    <label>BIS</label>
+                </value>
+                <value>
                     <fullName>CargoIS</fullName>
                     <default>false</default>
                     <label>CargoIS</label>
@@ -2300,6 +2335,11 @@
                     <fullName>IATAN</fullName>
                     <default>false</default>
                     <label>IATAN</label>
+                </value>
+                <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
                 </value>
                 <value>
                     <fullName>ICH - IATA Clearing House</fullName>
@@ -2363,20 +2403,15 @@
                     <label>TRAINING</label>
                 </value>
                 <value>
+                    <fullName>Treasury Dashboard</fullName>
+                    <default>false</default>
+                    <label>Treasury Dashboard</label>
+                </value>
+                <value>
                     <fullName>Weblink</fullName>
                     <default>false</default>
                     <label>Weblink</label>
                 </value>
-                <value>
-                    <fullName>BIS</fullName>
-                    <default>false</default>
-                    <label>BIS</label>
-                </value>
-                <value>
-                    <fullName>Treasury Dashboard</fullName>
-                    <default>false</default>
-                    <label>Treasury Dashboard</label>
-                </value>				
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -2412,16 +2447,6 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>Notify_Users_Date__c</fullName>             
-        <description>Field used to trigger notification for users who have the document bookmarked in CS Portal. To trigger notification, This fields needs to be large than record's created Date</description>
-        <defaultValue>NOW()-100</defaultValue>
-        <externalId>false</externalId>
-        <label>Notify Users Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>SharingOption</fullName>
@@ -6165,7 +6190,7 @@
             <values>
                 <fullName>SIS - Simplified Invoicing %26 Settlement</fullName>
                 <default>false</default>
-            </values>            
+            </values>
             <values>
                 <fullName>iiNet</fullName>
                 <default>false</default>
