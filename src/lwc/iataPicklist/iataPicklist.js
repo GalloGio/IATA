@@ -88,6 +88,11 @@ export default class IataPicklist extends LightningElement {
 		this.handleBlurSelect(e, true);
 	}
 
+	@api
+	close() {
+		this.handleBlurSelect(null, true);
+	}
+
 	handleClickOption(e) {
 		let optionElement = this.getOptionElement(e.target);
 		let currentValue = optionElement.dataset.value;

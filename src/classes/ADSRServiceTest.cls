@@ -52,21 +52,35 @@ public class ADSRServiceTest {
 		Account agency4 = new Account(name = 'INTERCONTINENTAL VIAGENS E  TURISMO LTDA.', IATA_ISO_Country__c = brazil.Id,
 			Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT, ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
 			Location_type__c = 'HO', OwnerId = UserInfo.getUserId(), Location_Class__c = 'P', recordtypeId = rtId, Site = '57528860');
-		insert new List<Account> { agency1, agency2, agency3, agency4 };
+		Account agency5 = new Account(name = 'TNT EXPRESS CHILE LTDA.', IATA_ISO_Country__c = chile.Id,
+			Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT, ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+			Location_type__c = 'HO', OwnerId = UserInfo.getUserId(), Location_Class__c = 'P', recordtypeId = rtId, Site = '75101000000');
+		insert new List<Account> { agency1, agency2, agency3, agency4, agency5 };
 		
 		Financial_Institution__c fi1 = new Financial_Institution__c(Name = 'FI1', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
 			Country__c = 'Canada');
 		Financial_Institution__c fi2 = new Financial_Institution__c(Name = 'FI2', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
 			Country__c = 'Brazil');
-		insert new List<Financial_Institution__c> { fi1, fi2 };
+		Financial_Institution__c fi3 = new Financial_Institution__c(Name = 'FI3', Institution_Type__c = 'IATA Agent', Region__c = 'Americas',
+			Country__c = 'Chile');
+		insert new List<Financial_Institution__c> { fi1, fi2, fi3 };
 		
 		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		Case receptionCase = new Case(Subject = 'Case Test', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation');
-		case sidraCase = new Case(Subject = 'SIDRA Case Agency 4', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation',
+		case sidraCaseAgency3 = new Case(Subject = 'SIDRA Case Agency 2', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation',
+			BSP_CASS__c = 'BSP', E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive', IATAcode__c = '60193020010',
+			RecordTypeId = caseRT_FDS_ICCS_Email_to_Case, Visible_on_ISS_Portal__c = true, ContactId = newCon.Id,
+			AccountId = agency3.Id, Update_AIMS_DEF__c = Datetime.now());
+		Case sidraCaseAgency4 = new Case(Subject = 'SIDRA Case Agency 4', Region__c = 'Americas', Origin = 'Portal', CaseArea__c = 'Accreditation',
 			BSP_CASS__c = 'BSP', E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive', IATAcode__c = '57528860',
 			RecordTypeId = caseRT_FDS_ICCS_Email_to_Case, Visible_on_ISS_Portal__c = true, ContactId = newCon.Id, Handover_Bankruptcy_Lawyer__c = Date.today(),
-			First_Call_Letter__c = 'Sent');
-		insert new List<Case> { receptionCase, sidraCase };
+			First_Call_Letter__c = 'Sent', AccountId = agency4.Id, Update_AIMS_DEF__c = Datetime.now());
+		insert new List<Case> { receptionCase, sidraCaseAgency3, sidraCaseAgency4 };
+
+		Id caseDetailsRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment');
+		Case_Detail__c cd = new Case_Detail__c (Case__c = sidraCaseAgency3.Id, RecordtypeId = caseDetailsRT, Due_date__c = Date.today().addDays(5),
+			Amount_Expected__c = 50, Amount_Received__c = 15);
+		insert cd;
 		
 		// Agency 1
 		Financial_Security__c fs1a = new Financial_Security__c(Account__c = agency1.Id, Reception_Date__c = Date.today().addDays(-1),
@@ -91,14 +105,20 @@ public class ADSRServiceTest {
 		Financial_Security__c fs4a = new Financial_Security__c(Account__c = agency4.Id, Reception_Date__c = Date.today(), Reception_Case__c = receptionCase.Id,
 			Reasonforrequest__c = 'Default', Financial_Institution__c = fi1.Id, Security_Type__c = 'Financial Guarantee', Amount__c = 1,
 			Expiry_Date__c = Date.today().addDays(+5), Region__c = 'Americas', Security_Status__c = 'Active', First_Call_Letter_required1__c = 'Yes');
-		insert new List<Financial_Security__c> { fs1a, fs1b, fs2a, fs2b, fs4a };
+		// Agency 5
+		Financial_Security__c fs5a = new Financial_Security__c(Account__c = agency5.Id, Reception_Date__c = Date.today(), Reception_Case__c = receptionCase.Id,
+			Reasonforrequest__c = 'Default', Financial_Institution__c = fi3.Id, Security_Type__c = 'Financial Guarantee', Amount__c = 1,
+			Expiry_Date__c = Date.today().addDays(+5), Region__c = 'Americas', Security_Status__c = 'Active', First_Call_Letter_required1__c = 'Yes');
+		insert new List<Financial_Security__c> { fs1a, fs1b, fs2a, fs2b, fs4a, fs5a };
 		
 		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(Account__c = agency1.Id, Change_Code__c = 'DEF');
-		Agency_Applied_Change_code__c ch2 = new Agency_Applied_Change_code__c(Account__c = agency2.Id, Change_Code__c = 'RPY');
-		Agency_Applied_Change_code__c ch3 = new Agency_Applied_Change_code__c(Account__c = agency3.Id, Change_Code__c = 'REI');
-		Agency_Applied_Change_code__c ch4 = new Agency_Applied_Change_code__c(Account__c = agency4.Id, Change_Code__c = 'NEW',
-			SIDRA_Case__c = sidraCase.Id);
-		insert new List<Agency_Applied_Change_Code__c> { ch1, ch2, ch3, ch4 };
+		Agency_Applied_Change_code__c ch2 = new Agency_Applied_Change_code__c(Account__c = agency2.Id, Change_Code__c = 'REI');
+		Agency_Applied_Change_code__c ch3 = new Agency_Applied_Change_code__c(Account__c = agency3.Id, Change_Code__c = 'RPY',
+			SIDRA_Case__c = sidraCaseAgency3.Id);
+		Agency_Applied_Change_code__c ch4 = new Agency_Applied_Change_code__c(Account__c = agency4.Id, Change_Code__c = 'TER',
+			SIDRA_Case__c = sidraCaseAgency4.Id);
+		Agency_Applied_Change_code__c ch5 = new Agency_Applied_Change_code__c(Account__c = agency5.Id, Change_Code__c = 'TER');
+		insert new List<Agency_Applied_Change_Code__c> { ch1, ch2, ch3, ch4, ch5 };
 	}
 	
 	@isTest

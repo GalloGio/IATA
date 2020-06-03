@@ -71,12 +71,14 @@ export default class IataMultiselectPopup extends LightningElement {
 	}
 	
 	apply(event) {
+		this.template.querySelector('c-iata-dependent-picklist').closeAllOpenPicklists();
 		this._value = this._tempValue;
 		this.dispatchEvent(new CustomEvent("change", {target: {name: this.name, value: this.value}}));
         this.template.querySelector("c-iata-modal").closeModal();
 	}
 
 	clear(event) {
+		this.template.querySelector('c-iata-dependent-picklist').closeAllOpenPicklists();
 		let valueClone = JSON.parse(JSON.stringify(this._value));
 		for(let field in valueClone) {
 			if(Array.isArray(valueClone[field])){

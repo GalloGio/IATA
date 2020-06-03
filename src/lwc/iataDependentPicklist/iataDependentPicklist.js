@@ -203,6 +203,13 @@ export default class IataDependentPicklist extends LightningElement {
 		);
 	}
 
+	@api
+	closeAllOpenPicklists() {
+		this.template.querySelectorAll('c-iata-picklist').forEach(picklist => {
+			picklist.close();
+		});
+	}
+
 	get displayInCols() {
 		return 'cols' === this.variant;
 	}

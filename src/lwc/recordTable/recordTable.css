@@ -3,6 +3,10 @@
 	height: 3rem;
 }
 
+.slds-resizable__divider:before {
+	border: 0;
+}
+
 .slds-table_bordered {
 	border: 0;
 }
