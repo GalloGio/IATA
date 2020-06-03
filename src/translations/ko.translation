@@ -33710,6 +33710,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
