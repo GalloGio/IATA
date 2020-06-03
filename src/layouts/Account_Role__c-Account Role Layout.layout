@@ -19,6 +19,10 @@
                 <field>Account_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Roles__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Functional_Role__c</field>
             </layoutItems>

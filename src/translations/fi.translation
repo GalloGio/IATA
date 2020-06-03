@@ -10693,6 +10693,10 @@
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IFAP Portal URL default value --></label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
