@@ -68,7 +68,9 @@ PCI DSS Compliant
 Onboarding IEP Model A
 IEP Bank account setup
 Major Changes
-Major Change</value>
+Major Change
+MCH – Minor Change of Shareholding
+Bank Detail Update</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>

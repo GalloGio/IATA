@@ -16947,7 +16947,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>注意: 残高情報はIATAの口座へ着金された1営業日後にポータルサイト上に反映されます。ICEの情報はサードパーティからIATAへ24時間の間隔をあけて提供されるため、現時点の正確な情報でないことをご注意ください。</label>
+        <label>カスタマーポータルの残高は、IATAのアカウントに入金が行われた後の翌営業日に更新されます。IATAのアカウントへの入金日は、 選択された支払い方法によって異なります。ICEに表示される請求データは、第三機関が24時間ごとにIATAに提供するため、IATAのコントロールできない遅延が発生する可能性があります。
+
+航空会社の運航停止により請求額が調整されるような場合も、エージェントはICEに表示された額を信用でき、不一致が生じる場合でも、今後のエージェントからの支払い/エージェントへの支払いで差額を調整することができます。</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31704,6 +31706,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33704,6 +33710,15 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

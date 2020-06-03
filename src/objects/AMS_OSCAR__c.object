@@ -2064,6 +2064,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>Finished - GE left Alone</label>
                 </value>
+                <value>
+                    <fullName>Finished - Just Case</fullName>
+                    <default>false</default>
+                    <label>Finished - Just Case</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -20440,6 +20445,10 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Finished - GE left Alone</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finished - Just Case</fullName>
                 <default>false</default>
             </values>
             <values>

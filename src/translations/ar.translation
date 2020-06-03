@@ -16942,8 +16942,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>&quot;الرجاء العلم أنه يتم تحديث الأرصدة الظاهرة على بوابة العميل بعد يوم عمل واحد على الأقل من الدفع لحساب أياتا
-و أيضا يرجى الملاحظة أن المعلومات الموجودة على أيس قد تم تزويدها من قبل طرف ثالث خلال 24 ساعة و قد لا تكون دقيقة, كاملة أو تعكس التوقيت الزمني الصحيح.&quot;</label>
+        <label>يجري تحديث الأرصدة الموجودة في بوابة العميل في يوم العمل التالي بعد قيد الرصيد لحساب اتحاد النقل الجوي الدولي «إياتا». ويتوقف اليوم الذي يُقيّد فيه الرصيد لحساب اتحاد النقل الجوي الدولي «إياتا» على طريقة الدفع التي تختارونها. تتولّى أطراف ثالثة توفير بيانات الفوترة الموضحة في كشف الحساب الإلكتروني للعميل (ICE) إلى اتحاد النقل الجوي الدولي «إياتا» بفواصل زمنية تبلغ 24 ساعة، وقد تحدث تأخيرات خارجة عن سيطرة اتحاد النقل الجوي الدولي «إياتا». 
+
+إذا كان تعليق أي شركة طيران يؤدي إلى تعديل في قيمة الفوترة، يجوز للوكلاء الاعتماد على المبالغ الواردة في كشف الحساب الإلكتروني للعميل (ICE)، وفي حالة وجود أي اختلافات فإنه يمكن حلها من خلال عملية دفع لاحقة من قبل الوكيل أو إليه.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31686,6 +31687,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33686,6 +33691,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

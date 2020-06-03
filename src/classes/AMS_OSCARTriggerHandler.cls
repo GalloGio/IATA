@@ -2887,7 +2887,7 @@ public class AMS_OSCARTriggerHandler {
 
 				if (AMS_Utils.pickListContains(updatedOSCAR.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)) {
 					Id parentAccountLeftAlone = getAccounts(accountsInvolved.get(updatedOSCAR.Id)).get(0).Top_Parent__c;
-					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(updatedOSCAR.Id, parentAccountLeftAlone, true));
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(updatedOSCAR.Id, parentAccountLeftAlone, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase));
 				}
 			}
 

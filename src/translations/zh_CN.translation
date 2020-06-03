@@ -16942,7 +16942,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>请注意：代理人所汇款项进入IATA中转账户后，至少一个工作日之后才会显示在Portal上。另，由于ICE上显示的数据是由第三方提供给IATA，有24小时间隔，所以该数据可能不是最及时、准确和完整的。</label>
+        <label>客户门户网站上的余额将在存入 IATA 账户后一个工作日更新。存入 IATA 的日期取决于您选择的付款方式。ICE 中显示的账单数据由第三方每隔 24 小时提供给 IATA，并且可能会出现不受 IATA 控制的延迟。
+
+如果航空公司停飞导致账单金额调整，代理商可以依赖 ICE 中包含的金额，如存在任何差额，代理商可以通过多退少补来解决。</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31693,6 +31695,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33693,6 +33699,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>
