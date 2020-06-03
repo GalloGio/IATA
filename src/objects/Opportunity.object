@@ -4558,6 +4558,27 @@
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>MRO_SmartHub_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>MRO Smarthub</value>
+        </filters>
+        <label>MRO SmartHub Opportunities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MRO_SmartHub_External_Users</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>MyOpportunities_Won</fullName>
         <columns>OPPORTUNITY.WON</columns>
         <columns>OPPORTUNITY.NAME</columns>
