@@ -339,4 +339,41 @@ private class AMS_OSCARTriggerHandlerTest {
 		
 		Test.stopTest();
 	}
+
+
+	@isTest static void testSetPromotion() {
+
+		Account account = new Account(
+			Name= 'Test Ag2',
+			RecordTypeId= AMS_utils.RECTYPE_IATAAGENCY,
+			Sector__c= 'Travel Agent',
+			Category__c= 'IATA Passenger Sales Agent',
+			IATACode__c= '145362',
+			Location_Class__c= 'T'
+		);
+		insert account;
+		account = [SELECT Id, Location_Class__c FROM Account WHERE Id=:account.Id];
+		System.assertEquals('T',account.Location_Class__c);
+
+		// adding fake metadata for testing
+		Oscar_Promotion__mdt promotion = new Oscar_Promotion__mdt(
+			DeveloperName = 'TIDS_to_GoLite',
+			Oscar_Process__c = 'PROCESS',
+			Start_Date__c = Date.today(),
+			End_Date__c = Date.today()
+		);
+		
+		Test.startTest();
+		AMS_OSCARTriggerHandler.getMapActivePromotions();
+		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Process__c = 'PROCESS',
+			Account__c = account.Id
+		);
+		insert oscar;
+		Test.stopTest();
+
+		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
+		System.assertEquals(promotion.DeveloperName, result.Promotions__c);
+	}
 }

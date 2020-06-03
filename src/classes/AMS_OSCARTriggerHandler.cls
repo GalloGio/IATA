@@ -231,6 +231,7 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
 		performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
+		setPromotions((List<AMS_OSCAR__c>)Trigger.New);
 	}
 
 	public static void handleAfterInsert() {
@@ -2958,7 +2959,7 @@ public class AMS_OSCARTriggerHandler {
 					ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, 
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
-					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c,
+					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -5030,6 +5031,49 @@ public class AMS_OSCARTriggerHandler {
 			return (acctLst.get(0).Status__c == targetStatus);
 		}
 		return false;
+	}
+
+	/**
+	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt
+	 */
+	public static map<String,Oscar_Promotion__mdt> MAP_PROMOTIONS = null;
+	public static map<String,Oscar_Promotion__mdt> getMapActivePromotions() {
+		if (MAP_PROMOTIONS==null) {
+			MAP_PROMOTIONS = new map<String,Oscar_Promotion__mdt>();
+			list<Oscar_Promotion__mdt> listPromotion = [
+				SELECT DeveloperName, Oscar_Process__c
+				FROM Oscar_Promotion__mdt
+				WHERE Start_Date__c <= TODAY
+				AND End_Date__c >= TODAY
+			];
+			for (Oscar_Promotion__mdt promotion: listPromotion) {
+				MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+			}
+		}
+		return MAP_PROMOTIONS;
+	}
+
+	/**
+	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
+	 */
+	private static void setPromotions(list<AMS_Oscar__c> triggerNew) {
+		// get all account Ids
+		set<Id> setAccountId = new set<Id>();
+		for(AMS_Oscar__c oscar: triggerNew){
+			if ( oscar.Account__c!=null ) {
+				addAccountId(oscar.Account__c);
+			}
+		}
+		// assign promotions, if applicable, for the incoming oscar records
+		for(AMS_Oscar__c oscar: triggerNew){
+			Account acc = accounts.get(oscar.Account__c);
+			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
+				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
+				if (promotion != null) {
+					oscar.Promotions__c = promotion.DeveloperName;
+				}
+			}
+		}
 	}
 
 }
