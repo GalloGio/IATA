@@ -4570,7 +4570,12 @@
         <filters>
             <field>OPPORTUNITY.NAME</field>
             <operation>contains</operation>
-            <value>MRO Smarthub</value>
+            <value>MRO</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>Smarthub</value>
         </filters>
         <label>MRO SmartHub Opportunities</label>
         <language>en_US</language>
