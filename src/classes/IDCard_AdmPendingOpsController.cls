@@ -566,7 +566,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		Promotion__c validPromotion = null;
 		
 		for (ID_Card_Application__c app : pendingApplications) {
-
+			
+			app.ID_Card_Fee_Discount__c = 0;
 			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
 			Boolean isITDIPackage = false;
 				if(app.Package_of_Travel_Professionals_Course_1__c != null){
