@@ -15736,6 +15736,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Please contact &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;IATA Customer Support&lt;/a&gt;.</value>
     </labels>
     <labels>
+        <fullName>IFAP_PortalCase_Service_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFAP PortalCase Service Description</shortDescription>
+        <value>Please upload your financial review documents</value>
+    </labels>
+    <labels>
         <fullName>IFAP_Portal_URL_default_value</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29392,7 +29400,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected1</shortDescription>
-        <value>We regret to inform you that your request to access</value>
+        <value>This is an important message affecting your access to services in the IATA Customer Portal. Your request to access</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected2</fullName>
@@ -29400,14 +29408,21 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected2</shortDescription>
-        <value>Service has been rejected by your company administrator,</value>
+        <value>has been deactivated. For additional information, you can refer to your main user or raise a query to the IATA Customer Service team,</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected3</shortDescription>
-        <value>Please, refer to your administrator for any further inquiries on this matter.</value>
+        <value>has been rejected by your company administrator,</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected3_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected3.1</shortDescription>
+        <value>.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected4</fullName>
@@ -29424,6 +29439,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected4_CNS</shortDescription>
         <value>Service has been rejected by your CNS Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected5</shortDescription>
+        <value>For additional information, you can refer to your company administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected_subject1</fullName>
@@ -30127,7 +30149,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>This is a system generated message. Please do not reply.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -39983,7 +40005,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId GADM Terms of Use Link</shortDescription>
-        <value>https://www.iata.org/en/terms/</value>
+        <value>https://iata.my.salesforce.com/sfc/p/2000000008TF/a/5J000000Pod4/CvLQa0iBGUytIDj8yLmqm5aayxO6rFacAwytZRQvY5s</value>
     </labels>
     <labels>
         <fullName>OneId_GADM_Troubleshooting</fullName>
