@@ -1453,12 +1453,10 @@ global without sharing class ISSP_APProcess {
 		List<Attachment> attch = getAttachList();
 		try{
 			if (isBSP || isCASS) {
-				if (!getShowJoinICCSQuestion()) {
+				if (newForm.Type_of_Settlement__c == 'ICCS bank account') {
+					this.newForm.Airline_wish_to_join_ICCS__c = 'Yes';
+				} else {
 					this.newForm.Airline_wish_to_join_ICCS__c = 'No';
-				}
-				if (this.newForm.Airline_wish_to_join_ICCS__c==null) {
-					this.newForm.Airline_wish_to_join_ICCS__c.addError('Select an option');
-					return null;
 				}
 			}
 
@@ -2742,14 +2740,6 @@ global without sharing class ISSP_APProcess {
 	}
 
 	/**
-		Returns true if the account meets the conditions to show the field Airline_wish_to_join_ICCS__c
-	**/
-	public Boolean getShowJoinICCSQuestion() {
-		return (getShowBankMandateSection() && ICCSProductCountry!=null 
-			&& (newForm.Type_of_Settlement__c == 'Local Bank' || newForm.Type_of_Settlement__c == 'ICCS bank account'));
-	}
-
-	/**
 		Returns true if the Type of Settlement is 'Settlement a la carte'
 	**/
 	public Boolean getShowSettlementALaCarte() {
@@ -2767,14 +2757,14 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show "Information required to join ICCS in this market" section
 	**/
 	public Boolean getShowICCSJoinMarket() {
-		return getShowJoinICCSQuestion() && newForm.Airline_wish_to_join_ICCS__c=='Yes';
+		return getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'ICCS bank account';
 	}
 
 	/**
 		Returns true if the account meets the conditions to show ICCS Joining section
 	**/
 	public Boolean getShowJoinICCS() {
-		return (this.newForm.Airline_wish_to_join_ICCS__c=='Yes' || getShowSettlementALaCarte())
+		return (getShowICCSJoinMarket() || getShowSettlementALaCarte())
 			&& !getAccountIsICCSMember();
 	}
 
@@ -2782,7 +2772,7 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show Upload Bank Mandate section
 	**/
 	public Boolean getShowUploadBankMandate() {
-		return getShowBankMandateSection() && (!getShowJoinICCSQuestion() || this.newForm.Airline_wish_to_join_ICCS__c == 'No');
+		return getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'Local Bank';
 	}
 	/**
 		Returns true if the account meets the conditions to show CounterIndemnity section

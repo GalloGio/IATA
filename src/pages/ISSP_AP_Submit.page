@@ -77,14 +77,6 @@
                                 <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
-
-                        <!-- for local bank an ICCS bank accounts -->
-                        <apex:pageBlockSectionItem rendered="{!showJoinICCSQuestion && !isPassAirline}">
-                            <apex:outputLabel value="Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market" styleclass="ap-required"/>
-                            <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" >
-                                <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
-                            </apex:inputField>
-                        </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
 
                     <!-- Upload Bank Mandate section (Without ICCS) -->
@@ -211,7 +203,7 @@
                         </apex:outputpanel>
                     </apex:pageBlockSection>
                     <!-- Attachment List -->
-                    <apex:pageBlockSection id="AttachmentTable" title="Attachments" columns="1"  rendered="{!isPassAirline && newForm.Airline_wish_to_join_ICCS__c == 'No'}">
+                    <apex:pageBlockSection id="AttachmentTable" title="Attachments" columns="1"  rendered="{!isPassAirline && newForm.Type_of_Settlement__c == 'Local Bank'}">
                         <apex:pageBlockTable value="{!attachList}" var="attach" style="width:100%">
                             <apex:column style="width:100%" value="{!attach.Name}"/>
                         </apex:pageBlockTable>
