@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2821,6 +2825,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>내 북마크에 추가</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>내 책갈피에서 제거</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>내 즐겨찾기</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3075,6 +3091,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>나의 즐겨찾기에 문서가 추가 되었습니다.</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>내 즐겨찾기에서 문서번호가 제거되었습니다.</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>서류</label>
@@ -3813,6 +3841,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>주요 카테고리</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3863,6 +3895,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>표시할 관련 계정이 없습니다.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기에 현재 아무것도 없습니다.</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>그러나 필요한 경우, 이 영역에서 가장 최근 기본 정보를 확인하실 수 있습니다.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>귀하는 지금 어떤 사례도 가지고 계시지 않습니다.</label>
@@ -4387,6 +4427,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>제목</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>과정</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;여기를 클릭하여 국제항공운송협회 (IATA) 인증 및 변경에 직접 액세스하세요.&lt;/a&gt;</label>
@@ -10667,6 +10711,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16903,8 +16951,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>비고 : 본 페이지의 &apos;잔액&apos; 필드는 IATA 계좌에 입금 후 최소 1영업일 뒤 업데이트됩니다. 
-ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두고 제공됨으로, 실시간으로 업데이트되지 않거나 정확 또는 완벽하지 않을수 있음을 양지하시길  바랍니다.</label>
+        <label>IATA 계정에 입금된 후 다음 영업일에 고객 포털의 잔액이 업데이트됩니다. IATA 계정에 입금되는 날은 선택하신 결제 형식에 따라 다릅니다. ICE에 표시된 청구 데이터는 제3자를 통해 24시간 이내에 IATA에 제공되며 IATA가 통제할 수 없는 지연이 발생할 수 있습니다. 
+
+항공사 직무 정지로 청구 금액이 조정된 경우, 대행사는 ICE에 등재된 금액에 의존할 수 있으며, 여기에 차액이 발생하면, 대행사의 차후 결제 또는 대행사에 대한 차후 지급을 통해 해결될 수 있습니다.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31658,6 +31707,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33658,6 +33711,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

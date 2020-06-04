@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2817,6 +2821,18 @@
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Yer İşaretlerime ekle</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Yer İşaretlerimden çıkar</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Yer işaretlerim</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3071,6 +3087,18 @@
     <customLabels>
         <label>Erişimi Reddedin</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Belge, Yer İşaretlerime eklendi</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Belge #doc Yer İşaretlerimden kaldırıldı</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Evraklar</label>
@@ -3809,6 +3837,10 @@
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Ana kategoriler</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3859,6 +3891,14 @@
     <customLabels>
         <label>Gösterilecek ilgili hesap yok.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Şimdilik yer işaretlerinizde hiçbir şey yok</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Ancak, sahip olduğunuzda, en güncel versiyonlarını burada temel ayrıntılarıyla görüntüleyebilirsiniz.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Şimdilik hiçbir sorgunuz yok.</label>
@@ -4383,6 +4423,10 @@
     <customLabels>
         <label>Başlık</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Takip</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt; a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot; &gt;IATA akreditasyonu ve Değişiklikler&apos;e doğrudan erişim için buraya tıklayın&lt;/a&gt;</label>
@@ -10658,6 +10702,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16894,7 +16942,9 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <label>Müşteri portalındaki bakiyeler, IATA hesabına alacak kaydedildikten bir sonraki iş gününde güncellenir. IATA hesabına alacak kaydının yapılacağı gün, tercih ettiğiniz ödeme yöntemine bağlı olarak değişebilir. ICE’de gösterilen fatura verileri üçüncü taraflarca 24 saatlik aralıklarla IATA’ya gönderilir, bu nedenle IATA’nın kontrolü dışında bazı gecikmeler söz konusu olabilir. 
+
+Bir havayolunun faaliyetlerini geçici olarak durdurması sonucunda fatura tutarının düzeltilmesi durumunda, acenteler ICE’de yer alan tutarlara göre işlem yapabilir. Tutarlarda herhangi bir fark oluşması durumunda, bu farklar ilerleyen tarihlerde acente tarafından veya acenteye ödeme yapılarak giderilebilir.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31662,6 +31712,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33665,6 +33719,15 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -34912,7 +34975,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with Contracts --></label>
         <name>Opportunities_with_Contracts</name>
         <sections>
-            <label><!-- Contracts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Contracts</name>
         </sections>
         <sections>

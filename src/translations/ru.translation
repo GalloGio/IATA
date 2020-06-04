@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2817,6 +2821,18 @@
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Добавить в Мои закладки</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Удалить из моих закладок</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Мои закладки</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3071,6 +3087,18 @@
     <customLabels>
         <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Документ добавлен в мои закладки</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Документ #doc Удален из моих закладок</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Документы</label>
@@ -3809,6 +3837,10 @@
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Основные категории</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Вы можете управлять пользователями из списка ниже.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3859,6 +3891,14 @@
     <customLabels>
         <label>Нет связанной учетной записи для отображения.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Пока в закладках ничего нет.</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Но когда будет, здесь вы увидите самые свежие закладки и их основные детали.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>На данный момент у вас нет никаких случаев.</label>
@@ -4385,6 +4425,10 @@
     <customLabels>
         <label>Название</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Отслеживание</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Нажмите здесь, чтобы получить быстрый доступ к &quot;Аккредитация ИАТА и изменения&quot; &lt;/a&gt;</label>
@@ -10661,6 +10705,10 @@
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16897,7 +16945,9 @@
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <label>Баланс на клиентском портале обновляется на следующий рабочий день после зачисления средств на счет IATA. День зачисления средств на счет IATA зависит от выбранной формы оплаты. Данные выставленного счета, показанные в ICE, предоставляются IATA третьими сторонами с интервалом в 24 часа, при этом возможны задержки, не зависящие от IATA. 
+
+В случае корректировки суммы оплаты в результате приостановки работы с авиакомпанией агенты могут ориентироваться на суммы, указанные в ICE. При наличии расхождений эти суммы могут быть скорректированы путем последующего перерасчета с агентом.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31668,6 +31718,10 @@ GSA - 3 буквы.
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33668,6 +33722,15 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

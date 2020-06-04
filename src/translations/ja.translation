@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2821,6 +2825,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>ブックマークに追加</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>マイブックマークから削除</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>マイブックマーク</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3075,6 +3091,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>アクセスを拒否する</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ブックマークに追加されたドキュメント</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>ドキュメント #doc をブックマークから削除</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>文書</label>
@@ -3813,6 +3841,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>メインのカテゴリー</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>以下のリストからユーザーを管理することができます。</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3863,6 +3895,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>表示する関連のあるアカウントはありません。</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>現在ブックマークはありません。</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>最新のものと詳細をこのエリアで見ることができます。</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>現在お客様の案件はございません。</label>
@@ -4388,6 +4428,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>タイトル</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>トラック</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;こちらをクリックして、「IATA認定と変更」に直接アクセスしてください&lt;/a&gt;</label>
@@ -10667,6 +10711,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16903,7 +16951,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>注意: 残高情報はIATAの口座へ着金された1営業日後にポータルサイト上に反映されます。ICEの情報はサードパーティからIATAへ24時間の間隔をあけて提供されるため、現時点の正確な情報でないことをご注意ください。</label>
+        <label>カスタマーポータルの残高は、IATAのアカウントに入金が行われた後の翌営業日に更新されます。IATAのアカウントへの入金日は、 選択された支払い方法によって異なります。ICEに表示される請求データは、第三機関が24時間ごとにIATAに提供するため、IATAのコントロールできない遅延が発生する可能性があります。
+
+航空会社の運航停止により請求額が調整されるような場合も、エージェントはICEに表示された額を信用でき、不一致が生じる場合でも、今後のエージェントからの支払い/エージェントへの支払いで差額を調整することができます。</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31660,6 +31710,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33660,6 +33714,15 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

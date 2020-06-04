@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2820,6 +2824,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Añadir a mis marcadores</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Eliminar de mis marcadores</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Mis marcadores</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3074,6 +3090,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Denegar acceso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento añadido a mis marcadores</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>El documento #doc se ha eliminado de mis marcadores</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Documentos</label>
@@ -3812,6 +3840,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Categorías principales</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Puede gestionar los usuarios de la siguiente lista.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3862,6 +3894,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>No hay cuenta relacionada que mostrar.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay nada en tus marcadores por ahora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Pero cuando los tengas, verás aquí los más recientes junto con sus detalles básicos.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>No tiene ningún caso por ahora.</label>
@@ -4387,6 +4427,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Título</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Seguimiento</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Haga clic aquí para acceder de forma directa a la Acreditación y Cambios de IATA&lt;/a&gt;</label>
@@ -10690,6 +10734,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16928,7 +16976,9 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: Tengan en cuenta que los saldos son actualizados en el portal al menos un día laborable tras el ingreso en la cuenta de IATA. También es importante que tengan en cuenta que la información de ICE es facilitada a IATA por terceras partes en intervalos de 24 horas, lo cual implica que puede no estar actualizada, correcta o completa.</label>
+        <label>Los balances del portal de clientes se actualizan el siguiente día hábil tras la recepción del abono en la cuenta de IATA. La fecha de abono en la cuenta de IATA dependerá del método de pago que elija. IATA recibe los datos de facturación mostrados en ICE de terceros en intervalos de 24 horas, y podrían producirse retrasos que escapen al control de IATA. 
+
+Si se produce un ajuste del importe de facturación como consecuencia de la suspensión de una compañía aérea, los agentes pueden servirse de las cantidades incluidas en el ICE y, en caso de discrepancia, estas se resolverán mediante un pago o cobro posterior por parte del agente.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31688,6 +31738,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33691,6 +33745,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -35133,7 +35196,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Informes</label>
             <name>Products</name>
         </sections>
     </reportTypes>

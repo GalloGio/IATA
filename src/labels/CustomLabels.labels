@@ -38,6 +38,13 @@
         <value>Active</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Invoiced</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Invoiced</shortDescription>
+        <value>Invoiced</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3515,6 +3522,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Assign New Service</value>
     </labels>
     <labels>
+        <fullName>CSP_BookmarkDocAddToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Add to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarkDocRemToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Remove from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4006,6 +4037,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
         <value>Deny Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkAdded</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkAdded</shortDescription>
+        <value>Document Added to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkRemoved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkRemoved</shortDescription>
+        <value>Document #doc Removed from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -5476,6 +5531,13 @@ You can easily create a company account in two steps</value>
         <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
+        <fullName>CSP_MainCategories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MainCategories</shortDescription>
+        <value>Main Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5575,6 +5637,22 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSPISSP_IATA_NOT_Found_NoAccount</shortDescription>
         <value>No related Account to display.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText1</shortDescription>
+        <value>There is nothing in your bookmarks for now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText2</shortDescription>
+        <value>But when you have, you’ll view the most recent ones with their basic details in this area.</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -6609,6 +6687,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Track</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Track</shortDescription>
+        <value>Track</value>
     </labels>
     <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
@@ -15648,6 +15734,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>IFAP Please Contact CS</shortDescription>
         <value>Please contact &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;IATA Customer Support&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>IFAP_PortalCase_Service_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFAP PortalCase Service Description</shortDescription>
+        <value>Please upload your financial review documents</value>
     </labels>
     <labels>
         <fullName>IFAP_Portal_URL_default_value</fullName>
@@ -27485,8 +27579,9 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
-Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+        <value>The balances on the customer portal are updated the next business day after IATA’s account has been credited. The day IATA’s account is credited depends on the form of payment of your choice. The billing data shown in ICE is provided to IATA by third parties with 24 hour intervals and delays outside of IATA’s control might occur. 
+
+In case of an airline suspension resulting in an adjusted billing amount, the agents may rely on the amounts contained in ICE and in case of any discrepancies, those can be resolved through a later payment by or to the agent.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
@@ -38342,7 +38437,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -39154,7 +39249,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_CSP_Troubleshooting</fullName>
@@ -39843,7 +39938,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
@@ -39896,7 +39991,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId GADM Terms of Use Link</shortDescription>
-        <value>https://www.iata.org/en/terms/</value>
+        <value>https://iata.my.salesforce.com/sfc/p/2000000008TF/a/5J000000Pod4/CvLQa0iBGUytIDj8yLmqm5aayxO6rFacAwytZRQvY5s</value>
     </labels>
     <labels>
         <fullName>OneId_GADM_Troubleshooting</fullName>
@@ -40455,7 +40550,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Terms of Use Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_Thank_you_Fred_Access_Request</fullName>

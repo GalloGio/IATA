@@ -530,7 +530,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     <listViews>
         <fullName>AMS_debug</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>Change_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Billable__c</columns>
         <columns>Billable_Location_Class__c</columns>
@@ -538,7 +540,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Integration_RecId__c</columns>
         <columns>Account_status_change__c</columns>
         <columns>Reason_Code__c</columns>
-        <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
@@ -546,12 +547,12 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>LET,NEW,CER,CCN,CHC,CHI,CHL,CHM,CHN,CHO,CHS,CIJ,CNM,COS,CSC,CTB,REI</value>
+            <value>CCN,CHC,CHN,CLI,CHM,CHL,CNM,CIJ,COS,CSC,CHS,CHO</value>
         </filters>
         <filters>
-            <field>Billable__c</field>
+            <field>Used_By_CNS__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>0</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2820,6 +2824,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Thêm vào Dấu trang của tôi</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Xóa khỏi Dấu trang của tôi</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>đánh dấu trang của tôi</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3074,6 +3090,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Từ chối Truy cập</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tài liệu được thêm vào Dấu trang của tôi</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Tài liệu #doc đã bị xóa khỏi Dấu trang của tôi</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Các tài liệu</label>
@@ -3812,6 +3840,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Những hạng mục chính</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3862,6 +3894,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiện tại không có gì trong dấu trang của bạn</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhưng khi bạn có, bạn sẽ xem được những trang gần đây nhất với thông tin cơ bản ở phần này.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Bây giờ bạn không có trường hợp nào.</label>
@@ -4386,6 +4426,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Chức vụ</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Theo dõi</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Xin quý khách vui lòng nhấn vào đây để truy cập trực tiếp trang Cấp giấy phép IATA và Dịch vụ thay đổi &lt;/a&gt;</label>
@@ -10664,6 +10708,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16900,7 +16948,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>Lưu ý: Số tiền cân đối thanh toán được cập nhật trên cổng thông tin ít nhất một ngày làm việc sau khi tài khoản của IATA được ghi có. Thông tin trên ICE được cung cấp cho IATA bởi đối tác trung gian cứ mỗi 24 giờ và do đó có thể chưa phản ánh thông tin mới nhất, chuẩn xác và hoàn chỉnh.</label>
+        <label>Số dư trên cổng thông tin khách hàng được cập nhật vào ngày làm việc tiếp theo sau khi tài khoản IATA được ghi có. Ngày tài khoản IATA được ghi có tùy thuộc vào hình thức thanh toán bạn chọn. Dữ liệu thanh toán hiển thị trong ICE được các bên thứ ba cung cấp cho IATA trong khoảng thời gian 24 giờ và có thể xảy ra sự chậm trễ ngoài tầm kiểm soát của IATA. 
+
+Trong trường hợp hãng hàng không tạm dừng hoạt động dẫn đến việc số tiền thanh toán được điều chỉnh, thì các đại lý có thể dựa vào số tiền có trong ICE và trong trường hợp có bất kỳ sự chênh lệch nào, thì khoản chênh lệch này có thể được xử lý bằng cách bù trừ thanh toán sau với đại lý.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31655,6 +31705,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33658,6 +33712,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -35100,7 +35163,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Các báo cáo</label>
             <name>Products</name>
         </sections>
     </reportTypes>

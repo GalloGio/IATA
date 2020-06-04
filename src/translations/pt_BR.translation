@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2821,6 +2825,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Adicionar aos Meus Favoritos</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Remover dos Meus Favoritos</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Meus Favoritos</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3077,6 +3093,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>Documento adicionado aos Meus Favoritos</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento #doc Removido dos Meus Favoritos</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
+    </customLabels>
+    <customLabels>
         <label>Documentos</label>
         <name>CSP_Documents</name>
     </customLabels>
@@ -3317,7 +3345,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Have_Read_Terms</name>
     </customLabels>
     <customLabels>
-        <label>Alô [username]</label>
+        <label>Olá [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
@@ -3329,7 +3357,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Invoices --></label>
+        <label>Faturas IATA</label>
         <name>CSP_IATA_Invoices</name>
     </customLabels>
     <customLabels>
@@ -3813,6 +3841,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Principais Categorias</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Você pode gerenciar os usuários da lista abaixo.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3865,6 +3897,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_NoAccount</name>
     </customLabels>
     <customLabels>
+        <label>Não há nada em seus favoritos por enquanto</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Mas quando tiver, você verá os mais recentes, com seus espectivos detalhes básicos, nesta área.</label>
+        <name>CSP_NoBookmarksText2</name>
+    </customLabels>
+    <customLabels>
         <label>Você não tem nenhum caso por enquanto.</label>
         <name>CSP_NoCases1</name>
     </customLabels>
@@ -3893,7 +3933,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Outstanding_Invoices --></label>
+        <label>Faturas IATA</label>
         <name>CSP_Outstanding_Invoices</name>
     </customLabels>
     <customLabels>
@@ -4387,6 +4427,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Título</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Sequência</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Clique aqui para acessar diretamente a seção de Validação e Alterações da IATA&lt;/a&gt;</label>
@@ -10665,6 +10709,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16901,7 +16949,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: Favor notar que os saldos são atualizados no Portal somente um dia útil depois do valor ser creditado na conta da IATA, pelo menos. Note também que os dados contidos no ICE são fornecidos à IATA por terceiros em um intervalo de 24 horas e pode não ser o atual, exato ou completo</label>
+        <label>Os saldos no portal do cliente são atualizados no dia útil subsequente à data em que a conta da IATA tiver sido creditada. O dia em que a conta da IATA é creditada depende da forma de pagamento que escolheu. A data de faturação indicada na ICE é fornecida à IATA por terceiros com intervalos de 24 horas e podem ocorrer atrasos que estão fora do controlo da IATA. 
+
+Em caso de suspensão de uma companhia aérea, que resulte na regularização de um montante de faturação, as agências podem basear-se nos montantes apresentados na ICE e, caso existam discrepâncias, as mesmas poderão ser resolvidas através de um pagamento posterior pela ou à agência.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31656,6 +31706,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33659,6 +33713,15 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -35067,7 +35130,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Relatorios / Reportes</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -35101,7 +35164,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>Relatorios / Reportes</label>
             <name>Products</name>
         </sections>
     </reportTypes>

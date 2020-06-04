@@ -11,8 +11,8 @@ public without sharing class IsraelDisputesCreateNewCaseCtrl {
 		Integer offset = tz.getOffset(now);
 		Datetime israelTime = now.addSeconds(offset/1000);
 		//the time is 01:00:01 and not 00:00:01 since the Datetime.valueOf method seems to detract an hour
-		String fifteenthString = israelTime.year() + '-' + israelTime.month() + '-16 01:00:01';
-		Datetime fifteenth = Datetime.valueOf(fifteenthString);
+		String fifteenthString = israelTime.year() + '-' + israelTime.month() + '-16 00:00:01';
+		Datetime fifteenth = Datetime.valueOfGmt(fifteenthString);
 		return fifteenth > israelTime ? true : false;
 	}
 
@@ -49,7 +49,7 @@ public without sharing class IsraelDisputesCreateNewCaseCtrl {
 							+ 'WHERE RecordTypeId = \'' + recordTypeId + '\' '
 							+ 'AND Sector__c = \'Airline\' '
 							+ 'AND (Category__c = \'Passenger and Cargo\' OR Category__c = \'Passenger only\') '
-							+ 'AND Membership_status__c = \'IATA Member\' '
+							+ 'AND (Membership_status__c = \'IATA Member\' OR Membership_status__c = \'Non-IATA member\') '
 							+ 'AND ACLI_Status__c = \'Active Company\'';
 
 		if(searchTerm != null) {

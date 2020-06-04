@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2818,6 +2822,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>เพิ่มในบุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>ลบออกจากที่คั่นหนังสือของฉัน</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>บุ๊คมาร์คของฉัน</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3072,6 +3088,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มเอกสารในบุ๊คมาร์คของฉันแล้ว</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>เอกสาร #doc ถูกนำออกจากที่คั่นหนังสือของฉัน</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>เอกสาร</label>
@@ -3810,6 +3838,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>หมวดหมู่หลัก</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3860,6 +3892,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่มีบุ๊คมาร์คของคุณในตอนนี้</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>แต่เมื่อคุณมีคุณจะดูคนล่าสุดพร้อมรายละเอียดพื้นฐานของพวกเขาในพื้นที่นี้</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>คุณไม่มีคำร้องใด ๆ ในขณะนี้</label>
@@ -4384,6 +4424,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>หัวข้อ</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ลู่</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; คลิกที่นี่เพื่อเข้าถึง &quot;การรับรองคุณภาพของ IATA และการเปลี่ยนแปลง&quot; โดยตรง &lt;/a&gt;</label>
@@ -10662,6 +10706,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16898,8 +16946,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>หมายเหตุ : ขอเรียนให้ทราบว่ายอดคงเหลือจะถูกปรับในพอร์ทัล อย่างน้อยหนึ่งวันทำการ หลังจากบัญชีของ IATA ได้รับเงินเรียบร้อยแล้ว 
-นอกจากนี้ขอเรียนให้ทราบว่าข้อมูลที่มีอยู่ใน ICE นั้นได้ถูกจัดเตรียมโดยหน่วยงานภายนอกในช่วงเวลา 24 ชั่วโมง ข้อมูลอาจไม่ทันปัจจุบัน หรือถูกต้องสมบูรณ์</label>
+        <label>ยอดคงเหลือในพอร์ทัลลูกค้ามีการปรับปรุงข้อมูลในวันทำการถัดไป หลังจากที่บัญชีของ IATA ได้รับเครดิต วันที่บัญชีของ IATA ได้รับเครดิตจะขึ้นอยู่กับช่องทางการชำระเงินที่คุณเลือก ข้อมูลการเรียกเก็บเงินที่แสดงใน ICE ได้รับการจัดหาให้ IATA โดยบุคคลภายนอกในระยะเวลา 24 ชั่วโมง และความล่าช้านอกเหนือการควบคุมของ IATA อาจเกิดขึ้นได้ 
+
+ในกรณีที่การหยุดชะงักของสายการบินส่งผลต่อจำนวนการเรียกเก็บเงินที่ปรับแล้ว ตัวแทนสามารถใช้จำนวนที่มีอยู่ใน ICE และในกรณีที่มีความคลาดเคลื่อนใด ๆ สามารถแก้ไขผ่านการชำระเงินในภายหลังโดยหรือกับตัวแทนดังกล่าว</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31659,6 +31708,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33662,6 +33715,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -35104,7 +35166,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Product Catalog eCommerce --></label>
         <name>Product_Catalog_eCommerce</name>
         <sections>
-            <label><!-- Products --></label>
+            <label>รายงาน</label>
             <name>Products</name>
         </sections>
     </reportTypes>

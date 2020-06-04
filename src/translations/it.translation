@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -2822,6 +2826,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Assign_New_Service</name>
     </customLabels>
     <customLabels>
+        <label>Aggiungi ai miei segnalibri</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>Rimuovi dai miei segnalibri</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>I miei segnalibri</label>
+        <name>CSP_BookmarksTabLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -3076,6 +3092,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Negare l&apos;accesso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento aggiunto ai miei segnalibri</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>Documento #doc rimosso dai miei segnalibri</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
     </customLabels>
     <customLabels>
         <label>Documenti</label>
@@ -3814,6 +3842,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>Categorie principali</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>Gli utenti possono essere gestiti dalla lista qui sotto.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3864,6 +3896,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Nessun account correlato da visualizzare.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>Non c&apos;è niente nei tuoi segnalibri per ora</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>Ma quando l&apos;avrete fatto, potrete vedere i più recenti e i loro dettagli principali in quest&apos;area.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>Al momento non ci sono casi.</label>
@@ -4389,6 +4429,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Titolo</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Traccia</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Vada qui per accedere direttamente alla sezione Modifiche e accreditamento IATA&lt;/a&gt;</label>
@@ -10670,6 +10714,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16906,7 +16954,9 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: prego considerare che il saldo sará aggiornato nel portale almeno un giorno dopo l&apos;accredito dei pagamenti nel conto Iata.  Tenere in conto che i dati contenuti in ICE sono trasmessi a IATA da terzi a intervalli di 24 ore e per questo possono non essere aggiornati, accurati o completi.</label>
+        <label>I saldi nel Portale clienti vengono aggiornati il giorno lavorativo successivo a quello dell&apos;accredito sul conto di IATA. Il giorno dell&apos;accredito sul conto di IATA dipende dalla forma di pagamento da lei scelta. I dati di fatturazione mostrati in ICE vengono forniti a IATA da terze parti con intervalli di 24 ore. Pertanto potrebbero verificarsi ritardi al di fuori del controllo di IATA. 
+
+Qualora la sospensione di una compagnia aerea dovesse determinare una rettifica dell&apos;importo di fatturazione, gli agenti potranno basarsi sugli importi contenuti in ICE e, in caso di discrepanze, queste potranno essere risolte con un pagamento successivo a carico o a favore dell&apos;agente.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31664,6 +31714,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33664,6 +33718,15 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>
