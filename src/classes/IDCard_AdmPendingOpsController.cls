@@ -566,7 +566,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		Promotion__c validPromotion = null;
 		
 		for (ID_Card_Application__c app : pendingApplications) {
-
+			
+			app.ID_Card_Fee_Discount__c = 0;
 			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
 			Boolean isITDIPackage = false;
 				if(app.Package_of_Travel_Professionals_Course_1__c != null){
@@ -593,14 +594,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
 				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
 				app.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
-				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, validPromotion, isToPrint);
+		//		app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
 				app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
 				app.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
 				app.ID_Card_Fee_Discount__c += ((app.ID_Card_Fee__c + app.Physical_Card_Fee__c) - (app.ID_Card_Fee__c + app.Physical_Card_Fee__c) * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100));
 				app.ID_Card_Fee__c = app.ID_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
 				app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
-				app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
+		//		app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
 				
 				if (app.ID_Card_Fee__c != null)
 					tPrice += app.Applicable_Fee__c;
