@@ -7565,7 +7565,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CheckList_ErrorMessage2</name>
     </customLabels>
     <customLabels>
-        <label>Siguiente</label>
+        <label>Siguiente...</label>
         <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>

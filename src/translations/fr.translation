@@ -8978,7 +8978,7 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Continuer</label>
+        <label>Continuer...</label>
         <name>IDCard_Continue_Button</name>
     </customLabels>
     <customLabels>

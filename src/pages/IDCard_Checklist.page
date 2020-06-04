@@ -17,17 +17,13 @@
         font-size: 11pt;
         padding-left: 3px;
         padding-right: 3px;
-        position: absolute;
+        position: fixed;
         z-index: 9999;
         width: 300px;
         height: 150px;
         color: #000;
     } 
-    .closeButton {
-        float: right;
-        border: 0 !important;
-        background: none !important;;
-    }
+
     .continueButton {
         float: right;
     }
@@ -105,7 +101,7 @@
 
         <apex:outputPanel id="popup" style="display:none">
             <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block">
-                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="closeButton" />
+                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="continueButton" />
                 <div class="checkBoxStyle">{!$Label.IDCard_CheckBox}</div>             
                 <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" />                             
             </apex:outputPanel> 

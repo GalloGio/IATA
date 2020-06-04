@@ -12623,7 +12623,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Continue</shortDescription>
-        <value>Continue</value>
+        <value>Continue...</value>
     </labels>
     <labels>
         <fullName>IDCard_Continue_Button</fullName>
