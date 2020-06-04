@@ -42,6 +42,26 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>MRO_externals</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Opportunities shared with MRO smarthub partner vendor</description>
+        <label>MRO externals</label>
+        <sharedTo>
+            <group>MRO_SmartHub_External_Users</group>
+        </sharedTo>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>contains</operation>
+            <value>MRO</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>contains</operation>
+            <value>smarthub</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Opportunites</fullName>
         <accessLevel>Read</accessLevel>
         <label>DFS - MACS OPPS</label>
