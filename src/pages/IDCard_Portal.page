@@ -15,32 +15,21 @@
 				document.cookie="apex__idcard_portal_lang" + "=" + c_value;
 				callRefresh();
 			}
-		   
-			function getSelectedApplicationType(type)
-			{           
-				if(type == "{!renewal}" && {!isRenewable} == false)
-				{
-					if ("{!renewalDate}" != "")
-					{
+
+			function getSelectedApplicationType(type) {
+				if(type == "{!renewal}"){
+					if({!isRenewable}) openPopupJS(type);
+					else if ("{!renewalDate}" != "") {
 						alert("{!$Label.IDCard_RenewalOptionAllowedMonths} {!$Label.IDCard_RenewalAvailableDate_PopUpMessage} {!renewalDate}");
-						return;
+					}else{
+						alert("{!$Label.IDCard_RenewalOptionAllowedMonths}");
 					}
-					else
-					{
-						alert("{!$Label.IDCard_RenewalOptionAllowedMonths}");   
-						return;
-					}   
 				}
-				if (type == "{!reissue}" && {!isReplacementAvailable} == false)
-				{
-					alert("{!$Label.IDCard_PortalPage_SubMenu_ReplaceNotActive}");
-					return;
+				else if (type == "{!reissue}") {
+					if({!isReplacementAvailable}) openPopupJS(type);
+					else alert("{!$Label.IDCard_PortalPage_SubMenu_ReplaceNotActive}");
 				}
-				else 
-				{            
-					openPopupJS(type);
-					return;
-				}        
+				else next(type);
 			}
 		</script>
 
@@ -135,7 +124,10 @@
 						<apex:actionFunction name="openPopupJS" action="{!openPopup}" rerender="Msgs,popup">
 							<apex:param name="p1" value="" assignTo="{!selectedAction}" />
 						</apex:actionFunction>
-		
+						<apex:actionFunction name="next" action="{!next}" rerender="Msgs">
+							<apex:param name="p1" value="" assignTo="{!selectedAction}" />
+						</apex:actionFunction>
+
 						<table cellpadding="20">
 							<tr style="display:{!IF(accountStatusTerminated,'none','')}"> <!--INC183592-->
 								<td align="center" valign="top">
