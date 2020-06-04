@@ -500,16 +500,8 @@
                                 <apex:actionSupport event="onchange" rerender="CommissionFields" status="WaitingStatus"/>
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
-                        <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
 
-                        <apex:pageBlockSectionItem helpText="Standard Commission will be applied where AWB Billing record indicates a Commission is to be paid on the billing file uploaded in CASSlink."
-                            rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes'}">
-                            <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
-                            <apex:inputField value="{!newForm.Pay_Standard_Commission__c}">
-                                <apex:actionSupport event="onchange" rerender="CommissionFields" status="WaitingStatus"/>
-                            </apex:inputField>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes' && LOWER(newForm.Pay_Standard_Commission__c)='yes'}">
+                        <apex:pageBlockSectionItem rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes'}">
                             <apex:outputLabel value="Standard Commission Rate (%)" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Commission_Rate__c}"/>
                         </apex:pageBlockSectionItem>

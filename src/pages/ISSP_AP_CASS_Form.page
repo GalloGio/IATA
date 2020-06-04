@@ -704,11 +704,6 @@
                         <apex:outputLabel value="* Does the Airline pay commission to Agents?" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Pay_Commission_to_agents__c}" label=""/>
                     </apex:pageBlockSectionItem>            
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
-                    <apex:pageBlockSectionItem helpText="Standard Commission will be applied where AWB Billing record indicates a Commission is to be paid on the billing file uploaded in CASSlink.">
-                        <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
-                        <apex:inputField value="{!newForm.Pay_Standard_Commission__c}" label=""/>
-                    </apex:pageBlockSectionItem>                      
                     <apex:inputField label="Standard Commission Rate (%)" value="{!newForm.Commission_Rate__c}"/>
                 </apex:pageBlockSection>    
                 
