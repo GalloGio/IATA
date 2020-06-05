@@ -2,10 +2,11 @@
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>29.0</apiVersion>
     <available>true</available>
+    <description>IATA Internal User Rejects access to Service</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>Notify contact of access granted VF</name>
+    <name>Notify contact of access rejected VF_INT</name>
     <style>none</style>
-    <subject>IATA Customer Portal - Access to  granted</subject>
+    <subject>IATA Customer Portal - Access to  rejected</subject>
     <type>visualforce</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>
