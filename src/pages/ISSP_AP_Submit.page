@@ -88,10 +88,10 @@
                             </div>
                         </p>
 
-                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size=0}">
+                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
                             As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
                         </apex:outputPanel>
-                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size>0}">
+                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size>0}">
                             <p>
                                 Kindly note the bank mandate must be issued from your Company's Head Office and signed by two (2) officers that are authorized as per your company's IATA FDS Authorized Signatories Package (ASP).
                                 The following authorized officers can sign:
@@ -136,7 +136,7 @@
                                 </div>
                             </p>
 
-                            <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size=0}">
+                            <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
                                 As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
                                 <ul style="display:lock;list-style-type: disc;">
                                     <li>Chief Financial Officer (CFO) or</li>
