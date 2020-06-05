@@ -10708,6 +10708,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -17872,7 +17876,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Chúng tôi rất tiếc thông báo cho bạn biết rằng yêu cầu của bạn để truy cập vào</label>
+        <label>Đây là một thông tin quan trọng liên quan đến truy cập của bạn vào các dịch vụ trên Cổng thông tin khách hàng của IATA.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17884,12 +17888,20 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>Dịch vụ đã bị Bộ phận Dịch vụ Khách hàng IATA của bạn từ chối</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Truy cập vào</label>
@@ -33705,6 +33717,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

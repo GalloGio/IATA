@@ -15,6 +15,7 @@
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>
+        <members>ContentVersion</members>
         <members>Contract</members>
         <members>ContractContactRole</members>
         <members>Event</members>
