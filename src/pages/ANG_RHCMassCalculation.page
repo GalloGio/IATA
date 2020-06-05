@@ -5,7 +5,6 @@
 		function startLoading(LoadingStep){
 			$('#' + LoadingStep + '').show();
 			$('#loading').show();
-			//https://stackoverflow.com/questions/11867269/replace-only-text-inside-a-div-using-jquery
 		}
 		function stopLoading(LoadingStep){
 			$('#' + LoadingStep + '').hide();
@@ -17,34 +16,24 @@
 			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
 		}
 
-		function ProvisionalRMEWrapper(hasProvResult, hasProvError, ProvErrorDesc, RHCId, ProvAmnt){
-            this.hasProvResult = hasProvResult;
-            this.hasProvError = hasProvError;
-            this.ProvErrorDesc = ProvErrorDesc;
+		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional){
+			this.bIsSuccess = bIsSuccess;
+			this.ErrorDescription = ErrorDescription;
 			this.RHCId = RHCId;
-			this.ProvAmnt = ProvAmnt
+			this.ANG_RHC_Amount_Forecasted = ANG_RHC_Amount_Forecasted;
+			this.ANG_RHC_Amount_Provisional = ANG_RHC_Amount_Provisional;
 		}
-		
-		function CalculateRHCWrapper(hasRHCResult, hasRHCError, RHCErrorDesc, RHCId, ForecastedRHC){
-            this.hasRHCResult = hasRHCResult;
-			this.hasRHCError = hasRHCError;
-			this.RHCErrorDesc = RHCErrorDesc;
-			this.RHCId = RHCId;
-			this.ForecastedRHC = ForecastedRHC;
-        }
-		
-		var lsProvisionalRMEWrapper = [];
-		var lsCalculateRHCWrapper = [];
+
+		var lsResponseWrapper = [];
 		var nProcessed = 0;
 		var nToProcess = 0;
-		var nRHCProcessed = 0;
-		var nRHCToProcess = 0;
 
-		function SubmitRequestProvisional() {
+		function processAgencies(bCommitRHC){
 			var RHCIds = document.querySelectorAll('input.RHCId');
 			var checkboxes = document.querySelectorAll('input.itemCheck');
 
 			nToProcess = 0;
+
 			for(var i = 0; i < checkboxes.length; i++){
 				if(checkboxes[i].checked){
 					nToProcess = nToProcess+1;
@@ -55,137 +44,56 @@
 			for(var i = 0; i < checkboxes.length; i++){
 				if(checkboxes[i].checked){
 					var RHCId = RHCIds[i].value;
-					invokeRME(RHCId, i);
+					doRemoteAction(RHCId, bCommitRHC);
 				}
 			}
 		}
 		
-		function invokeRME(RHCId, iCount){
-			startLoading('ProvisionalInProgress');
-			var ProvisionalAmounts = document.querySelectorAll('input.ProvisionalAmount');
-			//var hasResults = document.querySelectorAll('input.hasResult');
-			//var checkboxes = document.querySelectorAll('input.itemCheck');
+		function doRemoteAction(RHCId, bCommitRHC){
+			if(bCommitRHC) startLoading('ApplyRHCInProgress');
+			else startLoading('Processing');
 
 			Visualforce.remoting.Manager.invokeAction(
-				'{!$RemoteAction.ANG_RHCMassCalculation.RequestProvisionalToRME}',
+				'{!$RemoteAction.ANG_RHCMassCalculation.RequestProvisionalAndCalculateRHC}',
 				RHCId,
-				function(result, event){
-					var tmpWrap = new ProvisionalRMEWrapper(false, false, '', RHCId, null);
-					if(event.type == 'exception'){ 
-						tmpWrap.hasProvError = true;
-						tmpWrap.ProvErrorDesc = event.message;
-					}else{
-						if(result!=null){
-							if(result.isSuccess){
-								tmpWrap.hasProvResult = true;
-								tmpWrap.hasProvError = false;
-								tmpWrap.ProvAmnt = result.res.provisionalRHC;
-								ProvisionalAmounts[iCount].value = result.res.provisionalRHC;
-								//hasResults[iCount].checked = true;
-							}else{
-								tmpWrap.ProvErrorDesc = result.description;
-							}
-						}
-					}
-					nProcessed++;
-					lsProvisionalRMEWrapper.push(tmpWrap);
-
-					if(nProcessed>nToProcess){
-						AfterProvisional(JSON.stringify(lsProvisionalRMEWrapper));
-					}
-				},{buffer: false, escape: false, timeout: 120000}
-			);
-		}
-
-		function CalculateRHC(bCommitRHC) {
-			var RHCIds = document.querySelectorAll('input.RHCId');
-			var checkboxes = document.querySelectorAll('input.itemCheck');
-			var ProvisionalAmounts = document.querySelectorAll('input.ProvisionalAmount');
-			//var hasResults = document.querySelectorAll('input.hasResult');
-
-			nRHCToProcess = 0;
-			for(var i = 0; i < checkboxes.length; i++){
-				if(checkboxes[i].checked){
-					nRHCToProcess = nRHCToProcess+1;
-				}
-			}
-			nRHCProcessed = 1;
-			
-			for(var i = 0; i < checkboxes.length; i++){
-				if(checkboxes[i].checked){
-					//if(hasResults[iCount].checked){
-						var RHCId = RHCIds[i].value;
-						var ProvisAmount = ProvisionalAmounts[i].value;
-						RHCHelper(RHCId, ProvisAmount, false);
-					//}
-				}
-			}
-		}
-
-		function RHCHelper(RHCId, ProvisAmount, bCommitRHC){
-			startLoading('RHCInProgress');
-			Visualforce.remoting.Manager.invokeAction(
-				'{!$RemoteAction.ANG_RHCMassCalculation.CalculateRHCAmount}',
-				RHCId,
-				ProvisAmount,
 				bCommitRHC,
 				function(result, event){
-					var tmpWrap = new CalculateRHCWrapper(false, false, null, RHCId, null);
-					console.log('result --> ' + result);
-					console.log('event --> ' + event);
+					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null);
 					if(event.type == 'exception'){ 
-						tmpWrap.hasRHCError = true;
-						tmpWrap.RHCErrorDesc = event.message;
+						tmpWrap.bIsSuccess = false;
+						tmpWrap.ErrorDescription = event.message;
 					}else{
-						if(result!=null){
-							if(result.hasRHCResult){
-								tmpWrap.hasRHCResult = true;
-								tmpWrap.ForecastedRHC = result.ForecastedRHC;
-							}
-							else{
-								tmpWrap.hasRHCError = true;
-								tmpWrap.RHCErrorDesc = result.RHCErrorDesc;
-							}
-						}
+						tmpWrap.bIsSuccess = result.bIsSuccess;
+						tmpWrap.ErrorDescription = result.ErrorDescription;
+						tmpWrap.ANG_RHC_Amount_Forecasted = result.ANG_RHC_Amount_Forecasted;
+						tmpWrap.ANG_RHC_Amount_Provisional = result.ANG_RHC_Amount_Provisional;
 					}
-					nRHCProcessed++;
-					lsCalculateRHCWrapper.push(tmpWrap);
+					nProcessed++;
+					lsResponseWrapper.push(tmpWrap);
 
-					if(nRHCProcessed>nRHCToProcess){
-						AfterRHCCalculation(JSON.stringify(lsCalculateRHCWrapper));
+					if(nProcessed>nToProcess){
+						afterProcess(JSON.stringify(lsResponseWrapper));
 					}
 				},{buffer: false, escape: false, timeout: 120000}
 			);
 		}
 	</script>
-	<style>
-		.txt-hidden {
-			display: none;
-		}
-	</style>
 
 	<apex:sectionHeader title="RHC Mass Recalculation"/>
 
 	<apex:form >
-		<apex:actionFunction action="{!doNothing}" name="refreshTable" reRender="tables, btnPnl, resultTable"/>
-
-		<apex:actionFunction action="{!AfterProvisional}" name="AfterProvisional" oncomplete="refreshTable();stopLoading('ProvisionalInProgress');CalculateRHC(false);">
-			<apex:param name="myParam" assignTo="{!theSerializedProvisional}" value=""/>
+		<apex:actionFunction action="{!afterProcess}" name="afterProcess" oncomplete="stopLoading('Processing');stopLoading('ApplyRHCInProgress');" reRender="tables">
+			<apex:param name="myParam" assignTo="{!theSerializedResponse}" value=""/>
 		</apex:actionFunction>
 
-		<apex:actionFunction action="{!AfterRHCCalculation}" name="AfterRHCCalculation" oncomplete="refreshTable();stopLoading('RHCInProgress');">
-			<apex:param name="myParamRHC" assignTo="{!theSerializedRHCWrapper}" value=""/>
-		</apex:actionFunction>
-		
 		<div id="loading" style="display: none">
             <div style="height:100%;width:100%;z-index:100; position:fixed;background:black;opacity:0.5; top:0; left:0;"></div>
             <div style="border:1px solid black; background:white; text-align:center;
                         display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
                         position: fixed; top:400px; left:50%; z-index:101;">
-				<div id="SearchInProgress" style="display: none">Search in progress...</div>
-				<div id="ProvisionalInProgress" style="display: none">Request provisional in progress...</div>
-				<div id="RHCInProgress" style="display: none">Calculate RHC in progress...</div>
-				<div id="ApplyRHCInProgress" style="display: none">Apply Forecasted RHC in progress...</div>
+				<div id="SearchInProgress" style="display: none">Search in progress.</div>
+				<div id="Processing" style="display: none">Request provisional and calculate RHC in progress. <br/> The operation may take a while. Do not close the browser</div>
+				<div id="ApplyRHCInProgress" style="display: none">Apply Forecasted RHC in progress. <br/> The operation may take a while. Do not close the browser</div>
             </div>
 		</div>
 		
@@ -262,8 +170,6 @@
 						<apex:inputCheckbox value="{!agents[mapKey].selected}" disabled="{!bProvisionalRequested}" styleClass="itemCheck"/>
 						<div style="display:none">
 							<apex:inputText value="{!agents[mapKey].rhcInfo.Id}" styleClass="RHCId"/>
-							<apex:inputText value="{!agents[mapKey].ANG_RHC_Amount_ProvisionalTMP}" styleClass="ProvisionalAmount"/>
-							<apex:inputCheckbox value="{!agents[mapKey].hasProvResult}" styleClass="hasProvResult"/>
 						</div>
 					</apex:column>
 
@@ -272,8 +178,8 @@
 					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.IATACode__c}"/>
 					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.IATA_ISO_Country__c}"/>
 					<apex:column headerValue="Current RHC Amount">
-						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].currentAmount))}">
-							<apex:param value="{!agents[mapKey].currentAmount}"/>
+						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].rhcInfo.ANG_RHC_Amount__c))}">
+							<apex:param value="{!agents[mapKey].rhcInfo.ANG_RHC_Amount__c}"/>
 						</apex:outputText>
 					</apex:column>
 					
@@ -298,15 +204,14 @@
 						</apex:outputText>
 					</apex:column>
 					
-					<apex:column headerValue="Calculated new Consumed RHC %">
+					<apex:column headerValue="Cacl.New Cons.RHC">
 						<apex:outputText value="{0, number, ###,###,###,##0.00}%" rendered="{!NOT(ISBLANK(agents[mapKey].calculatedConsumedRHC))}">
 							<apex:param value="{!agents[mapKey].calculatedConsumedRHC}"/>
 						</apex:outputText>
 					</apex:column>
 
 					<apex:column headerValue="Error">
-						<apex:outputText value="{!agents[mapKey].ProvErrorDesc}" rendered="{!agents[mapKey].hasProvError}"/>
-						<apex:outputText value="{!agents[mapKey].RHCErrorDesc}" rendered="{!agents[mapKey].hasRHCError}"/>
+						<apex:outputText value="{!agents[mapKey].ErrorDescription}" rendered="{!!agents[mapKey].bIsSuccess}"/>
 					</apex:column>
 
 				</apex:pageBlockTable>
@@ -378,8 +283,8 @@
 				</apex:outputPanel>
 
 				<apex:pageBlockButtons id="btnPnl">
-					<apex:commandButton value="Calculate Forecasted RHC" action="{!doNothing}" onclick="SubmitRequestProvisional();return false;" reRender="tables, btnPnl" disabled="{!bProvisionalRequested}"/>
-					<apex:commandButton value="Confirm Forecasted RHC" action="{!doNothing}" onclick="CalculateRHC(true);return false;"  reRender="tables, btnPnl" disabled="{!!bProvisionalRequested}"/>
+					<apex:commandButton value="Calculate Forecasted RHC" action="{!doNothing}" onclick="processAgencies(false);return false;" reRender="tables, btnPnl" disabled="{!bProvisionalRequested}"/>
+					<apex:commandButton value="Confirm Forecasted RHC" action="{!doNothing}" onclick="processAgencies(true);return false;"  reRender="tables, btnPnl" disabled="{!!bProvisionalRequested}"/>
 					<!-- <apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>-->
 				</apex:pageBlockButtons>
 			</apex:pageBlock>
