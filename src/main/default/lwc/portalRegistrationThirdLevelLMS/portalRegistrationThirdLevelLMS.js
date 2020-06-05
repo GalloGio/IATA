@@ -39,6 +39,9 @@ import CSP_L3_Email_Validation_LMS                   from '@salesforce/label/c.C
 import CSP_L3_Note_F4_LMS                   from '@salesforce/label/c.CSP_L3_Note_F4_LMS';
 
 
+
+
+
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	/* Images */
 	youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
@@ -212,6 +215,15 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				.then(result2 => {
 					if(result2 !== undefined && result2 !== null){
 						this.contactInfoLMS = JSON.parse(JSON.stringify(result2));
+						// if(this.contactInfoLMS.UserId__c !== undefined && this.contactInfoLMS.UserId__c !== null && this.contactInfoLMS.UserId__c !== ''){
+						// 	this.contactInfo.UserId = this.contactInfoLMS.UserId__c;
+						// 	this.contactInfo.Username = this.contactInfo.Id.substring(0,15);
+						// }else{
+						// 	this.contactInfo.UserId = '';
+						// 	this.contactInfo.Username = '';
+						// }
+						console.log('connectedCallback - getLMSContactInfo - this.contactInfo: ',this.contactInfo);
+						
 						
 						if(this.contactInfoLMS.Country_Reference__c != null &&
 							this.contactInfoLMS.Country_Reference__c != undefined &&

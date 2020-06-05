@@ -1,6 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable vars-on-top */
-
 import { LightningElement, track, api} from 'lwc';
 
 /* ==============================================================================================================*/
@@ -218,8 +215,6 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 			
 				this.openMessageModalFlowRegister = true;
 				this.message = CSP_L2_RegistrationFailed_LMS + error;
-				console.log('Error: ', JSON.parse(JSON.stringify(error)));
-				console.log('Error2: ', error);
 			});
 		}
 
@@ -241,7 +236,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 		this.haveTrainingUser = event.target.value;
 		this.inputModified = true;
 		this.localContactInfo.UserId = '';
-		this.localContactInfo.Username = ''
+		this.localContactInfo.Username = '';
 		this.validated = false;
 		this.existingUsernameVisibility = false;
 		this.notMatchingVisibility = false;
@@ -260,7 +255,6 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 			this.matchingVisibility = false;
 			
 			window.clearTimeout(this.delayTimeout);
-			// eslint-disable-next-line @lwc/lwc/no-async-operation
 			this.delayTimeout = setTimeout(() => {
 				this.validateUserId();
 			}, DELAY);

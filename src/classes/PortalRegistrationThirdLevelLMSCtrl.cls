@@ -3,6 +3,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	}
 
+	public static String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+	public static String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
+	public static String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+
+
 	public class returnWrapper{
 		@AuraEnabled
 		public String userInfo {get;set;}
@@ -14,15 +19,17 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		public String message{get;set;}
 	}
 
+	public static string auxUserId;
+	public static string auxUsername;
+
 	@AuraEnabled
 	public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
 		User loggedUser = CSP_Utils.getLoggedUser();
 
 		String RECTYPE_lms = '';
-		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
+		
 		if(lms == 'yas'){
-			RECTYPE_lms = RECTYPE_Trainee_YASContDet;
+			RECTYPE_lms = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet;
 		}
 
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
@@ -37,7 +44,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 															Postal_Code__c
 														FROM Training_Contact_Role_Details__c
 														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId
-														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
+														AND RecordTypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet
 														LIMIT 1];
 
 		if(con.isEmpty()){
@@ -80,10 +87,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			RegistrationParamsWrapper regParam = new RegistrationParamsWrapper(extraValues);
 
-			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
-			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
-			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
 			//Create Account Role if not existing
 			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
 											FROM Account_Role__c
@@ -96,7 +99,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				ar = listAR[0];
 			}else{
 				ar.Account__c = con.AccountId;
-				ar.RecordTypeId = RECTYPE_Master_AccRole;
+				ar.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Master_AccRole;
 				ar.Account_Role_Name__c =  'Training';
 				ar.Functional_Role__c =  'Training';
 				insert ar;
@@ -118,22 +121,26 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
+			Set<Id> acrIds = new Set<Id>();
 			for(Account_Contact_Role__c acrItem : listACR){
 				if(acrItem.Contact__c == con.Id){
 					acrNew = acrItem;
+					acrIds.add(acrItem.Id);
 				}else if(acrItem.Contact__c == regParam.existingTrainingId){
 					acrOld = acrItem;
+					acrIds.add(acrItem.Id);
 				}
 			}
 
 			if(acrOld != null && acrOld.Id != null){
+				//swap Account Contact Roles between the new contact and the existing one
 				acr = acrOld;
 				acr.Account_Role__c = ar.Id;
 				acr.Contact__c = con.Id;
-
 				update acr;
 
-				delete acrNew;
+				acrNew.Contact__c = regParam.existingTrainingId;
+				update acrNew;
 			}else if(acrNew != null && acrNew.Id != null){
 				acr = acrNew;
 			}else{
@@ -141,20 +148,23 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				acr.Contact__c = con.Id;
 				acr.Contact_Role_Name__c = 'Trainee';
 				acr.Functional_Role__c =  'Training';
-				acr.RecordTypeId = RECTYPE_Master_AccContRole;
+				acr.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Master_AccContRole;
 				acr.Service_Rendered__c = 'Other';
 
 				insert acr;
 			}
 
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
-				Contact conToInactivate = new Contact(Id = regParam.existingTrainingId);
+				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
+													AccountId,Email,Additional_Email__c,Phone,
+													OtherPhone,Salutation,Birthdate
+											FROM Contact WHERE Id = :regParam.existingTrainingId];
 				
 				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = '';
+					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 				}
 
 				conToInactivate.status__c = 'Inactive';
@@ -164,13 +174,38 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			//Create Yardstick Contact Role Detail
 			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
 																FROM Training_Contact_Role_Details__c
-																WHERE Account_Contact_Role__c = :acr.Id
-																AND RecordtypeId = :RECTYPE_Trainee_YASContDet
+																WHERE Account_Contact_Role__c in :acrIds
+																AND RecordtypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet
 																LIMIT 1];
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
+			Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
 			
 			if(listYCD.size() > 0){
-				 ycd = listYCD[0];
+				if(listYCD.size() > 1){
+					for(Training_Contact_Role_Details__c auxTcrd : listYCD){
+						if(auxTcrd.Account_Contact_Role__c == acr.id){
+							ycd = auxTcrd;
+						}else{
+							ycdOld = auxTcrd;
+						}
+					}
+					ycdOld.Postal_Code__c = '00000';
+					ycdOld.OwnerId = loggedUser.Id;
+					update ycdOld;
+
+					//wait fot data to update on YAS via mulesoft, otherwise we can have a clash of emails in YAS
+					Long startingTime = System.now().getTime(); // Num milliseconds since Jan 1 1970
+					Integer delayInMilliseconds = 5000; // One-second delay
+					while (System.now().getTime() - startingTime < delayInMilliseconds)  {
+						// Do nothing until desired delay has passed
+					}
+						
+				}else{
+					ycd = listYCD[0];
+					PortalRegistrationThirdLevelLMSCtrl.auxUserId = ycd.UserId__c;
+					PortalRegistrationThirdLevelLMSCtrl.auxUsername = ycd.Username__c;
+				}
+				
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
 				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
@@ -178,13 +213,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				}
 			}else{
 				ycd.Account_Contact_Role__c = acr.Id;
-				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
+				ycd.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet;
 				ycd.Username__c = regParam.sUsername;
 				ycd.UserId__c = regParam.sUserId;
 				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
 					ycd.Preferred_Course__c = regParam.sCourse;
 				}
 			}
+		
 
 			//Check State
 			if(regParam.sStateId != ''){
@@ -247,14 +283,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				insert portalApplicationRight;
 			}
 
-			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c
-										FROM Contact WHERE Id =: con.Id];
-
-			String loggedUserId = UserInfo.getUserId();
-
 			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
 
-			assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
+			assignPermissionSet(psYardstick.Id, (Id)loggedUser.Id);
 
 			//Update Contact
 			update con;
@@ -267,7 +298,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getMessage() +' - '+ e.getStackTraceString() ;
 			Database.rollback(sp);
-			return result;
 		}
 		return result;
 	}
@@ -284,11 +314,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		try{
 			UserInformationWrapper contactInfo = getDataToMail(params);
-
-			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
-			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
-			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
 			List<String> extraValues = new List<String>();
 			extraValues.add(contactInfo.Username);
 			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow4' || contactInfo.flow == 'flow5'){
@@ -328,11 +353,13 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = '';
+					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 				}
 				update conToInactivate;
-			}
 
+			}
+			
+		
 			Id contIdToSearch = contactInfo.Id;
 			if(contactInfo.flow == 'flow4'){
 				contIdToSearch = contactInfo.existingContactId;
@@ -387,7 +414,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
 																	FROM Training_Contact_Role_Details__c
 																	WHERE Account_Contact_Role__c in :acrIds
-																	AND RecordTypeId = :RECTYPE_Trainee_YASContDet];
+																	AND RecordTypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet];
 					Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
 					Training_Contact_Role_Details__c ycdNew = new Training_Contact_Role_Details__c();
 
@@ -478,11 +505,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
 					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 
+					Set<Id> acrIds = new Set<Id>();
 					for(Account_Contact_Role__c acr : listACR){
 						if(acr.Contact__c == con.Id){
 							acrNew = acr;
+							acrIds.add(acr.Id);
 						}else if(acr.Contact__c == contactInfo.existingContactId){
 							acrOld = acr;
+							acrIds.add(acr.Id);
 						}
 					}
 
@@ -491,19 +521,43 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						acrOld.Account_Role__c = acrNew.Account_Role__c;
 						update acrOld;
 
-						delete acrNew;
+						acrNew.Contact__c = contactInfo.existingContactId;
+						update acrNew;
 					}
 
 					//Create Yardstick Contact Role Detail
 					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
 																	FROM Training_Contact_Role_Details__c
-																	WHERE Account_Contact_Role__c = :acrOld.Id
-																	AND RecordtypeId = :RECTYPE_Trainee_YASContDet
-																	LIMIT 1];
+																	WHERE Account_Contact_Role__c in :acrIds
+																	AND RecordtypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet];
 					Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
-
+					Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
+					
 					if(listYCD.size() > 0){
-						ycd = listYCD[0];
+						if(listYCD.size() > 1){
+							for(Training_Contact_Role_Details__c auxTcrd : listYCD){
+								if(auxTcrd.Account_Contact_Role__c == acrOld.id){
+									ycd = auxTcrd;
+								}else{
+									ycdOld = auxTcrd;
+								}
+							}
+							ycdOld.UserId__c = PortalRegistrationThirdLevelLMSCtrl.auxUserId;
+							ycdOld.Username__c = PortalRegistrationThirdLevelLMSCtrl.auxUsername;
+							ycdOld.Postal_Code__c = '00000';
+							ycdOld.OwnerId = loggedUser.Id;
+							update ycdOld;
+		
+							//wait fot data to update on YAS via mulesoft, otherwise we can have a clash of emails in YAS
+							Long startingTime = System.now().getTime(); // Num milliseconds since Jan 1 1970
+							Integer delayInMilliseconds = 5000; // One-second delay
+							while (System.now().getTime() - startingTime < delayInMilliseconds)  {
+								// Do nothing until desired delay has passed
+							}
+						}else{
+							ycd = listYCD[0];
+						}
+						
 						ycd.Username__c = contactInfo.Username != ''? contactInfo.Username : ycd.Username__c;
 						ycd.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycd.UserId__c;
 						ycd.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycd.Preferred_Course__c;
@@ -566,66 +620,60 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	@AuraEnabled
 	public static UserInformationWrapper getDataToMail(string registrationForm){
-		try{
-			Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+		Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
 
-			UserInformationWrapper params = new UserInformationWrapper();
-			params.Email     = (inputMap.get('Email') != null) ? string.valueOf(inputMap.get('Email')) : '';
-			params.Additional_Email = (inputMap.get('Additional_Email__c') != null) ? string.valueOf(inputMap.get('Additional_Email__c')) : '';
-			if(params.Additional_Email == ''){
-				params.Additional_Email = (inputMap.get('Additional_Email') != null) ? string.valueOf(inputMap.get('Additional_Email')) : '';
-			}
-			params.FirstName = (inputMap.get('FirstName') != null) ? string.valueOf(inputMap.get('FirstName')) : '';
-			params.LastName  = (inputMap.get('LastName') != null) ? string.valueOf(inputMap.get('LastName')) : '';
-			params.Birthdate   = (inputMap.get('Birthdate') != null) ? string.valueOf(inputMap.get('Birthdate')) : '';
-			params.Date_of_Birth   = (inputMap.get('Date_of_Birth__c') != null) ? string.valueOf(inputMap.get('Date_of_Birth__c')) : '';
-			if(params.Date_of_Birth == ''){
-				params.Date_of_Birth = (inputMap.get('Date_of_Birth') != null) ? string.valueOf(inputMap.get('Date_of_Birth')) : '';
-			}
-			params.Phone   = (inputMap.get('Phone') != null) ? string.valueOf(inputMap.get('Phone')) : '';
-			params.language   = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
-			params.Id   = (inputMap.get('Id') != null) ? string.valueOf(inputMap.get('Id')) : '';
-			params.AccountId   = (inputMap.get('AccountId') != null) ? string.valueOf(inputMap.get('AccountId')) : '';
-			params.OtherPhone   = (inputMap.get('OtherPhone') != null) ? string.valueOf(inputMap.get('OtherPhone')) : '';
-			params.Salutation   = (inputMap.get('Salutation') != null) ? string.valueOf(inputMap.get('Salutation')) : '';
-			params.Title   = (inputMap.get('Title') != null) ? string.valueOf(inputMap.get('Title')) : '';
-			params.UserId   = (inputMap.get('UserId') != null) ? string.valueOf(inputMap.get('UserId')) : '';
-			params.Username   = (inputMap.get('Username') != null) ? string.valueOf(inputMap.get('Username')) : '';
-			params.User_Portal_Status   = (inputMap.get('User_Portal_Status__c') != null) ? string.valueOf(inputMap.get('User_Portal_Status__c')) : '';
-			if(params.User_Portal_Status == ''){
-				params.User_Portal_Status = (inputMap.get('User_Portal_Status') != null) ? string.valueOf(inputMap.get('User_Portal_Status')) : '';
-			}
-			params.existingContactId = (inputMap.get('existingContactId') != null) ? string.valueOf(inputMap.get('existingContactId')) : '';
-			params.existingContactName = (inputMap.get('existingContactName') != null) ? string.valueOf(inputMap.get('existingContactName')) : '';
-			params.existingContactEmail = (inputMap.get('existingContactEmail') != null) ? string.valueOf(inputMap.get('existingContactEmail')) : '';
-			params.existingContactAccount = (inputMap.get('existingContactAccount') != null) ? string.valueOf(inputMap.get('existingContactAccount')) : '';
-			params.lms  = (inputMap.get('lms') != null) ? string.valueOf(inputMap.get('lms')) : '';
-			params.lmsCourse  = (inputMap.get('lmsCourse') != null && inputMap.get('lmsCourse') != 'undefined') ? string.valueOf(inputMap.get('lmsCourse')) : '';
-			params.hasExistingContact = (inputMap.get('hasExistingContact') != null) ? string.valueOf(inputMap.get('hasExistingContact')) : '';
-			params.hasExistingContactPersonalEmail = (inputMap.get('hasExistingContactPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingContactPersonalEmail')) : '';
-			params.hasExistingUser = (inputMap.get('hasExistingUser') != null) ? string.valueOf(inputMap.get('hasExistingUser')) : '';
-			params.hasExistingUserPersonalEmail = (inputMap.get('hasExistingUserPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingUserPersonalEmail')) : '';
-			params.existingTrainingId = (inputMap.get('existingTrainingId') != null) ? string.valueOf(inputMap.get('existingTrainingId')) : '';
-			params.flow = (inputMap.get('flow') != null) ? string.valueOf(inputMap.get('flow')) : '';
-
-			params.isPoBox = (inputMap.get('isPoBox') != null) ? string.valueOf(inputMap.get('isPoBox')) : '';
-			params.countryId = (inputMap.get('countryId') != null) ? string.valueOf(inputMap.get('countryId')) : '';
-			params.countryCode = (inputMap.get('countryCode') != null) ? string.valueOf(inputMap.get('countryCode')) : '';
-			params.countryName = (inputMap.get('countryName') != null) ? string.valueOf(inputMap.get('countryName')) : '';
-			params.stateId = (inputMap.get('stateId') != null) ? string.valueOf(inputMap.get('stateId')) : '';
-			params.stateName = (inputMap.get('stateName') != null) ? string.valueOf(inputMap.get('stateName')) : '';
-			params.cityId = (inputMap.get('cityId') != null) ? string.valueOf(inputMap.get('cityId')) : '';
-			params.cityName = (inputMap.get('cityName') != null) ? string.valueOf(inputMap.get('cityName')) : '';
-			params.street = (inputMap.get('street') != null) ? string.valueOf(inputMap.get('street')) : '';
-			params.zip = (inputMap.get('zip') != null) ? string.valueOf(inputMap.get('zip')) : '';
-			params.serviceid = (inputMap.get('serviceid') != null) ? string.valueOf(inputMap.get('serviceid')) : '';
-			params.street2 = (inputMap.get('street2') != null) ? string.valueOf(inputMap.get('street2')) : '';
-			return params;
-
-		}catch(Exception e){
-			return null;
+		UserInformationWrapper params = new UserInformationWrapper();
+		params.Email     = (inputMap.get('Email') != null) ? string.valueOf(inputMap.get('Email')) : '';
+		params.Additional_Email = (inputMap.get('Additional_Email__c') != null) ? string.valueOf(inputMap.get('Additional_Email__c')) : '';
+		if(params.Additional_Email == ''){
+			params.Additional_Email = (inputMap.get('Additional_Email') != null) ? string.valueOf(inputMap.get('Additional_Email')) : '';
 		}
+		params.FirstName = (inputMap.get('FirstName') != null) ? string.valueOf(inputMap.get('FirstName')) : '';
+		params.LastName  = (inputMap.get('LastName') != null) ? string.valueOf(inputMap.get('LastName')) : '';
+		params.Birthdate   = (inputMap.get('Birthdate') != null) ? string.valueOf(inputMap.get('Birthdate')) : '';
+		params.Date_of_Birth   = (inputMap.get('Date_of_Birth__c') != null) ? string.valueOf(inputMap.get('Date_of_Birth__c')) : '';
+		if(params.Date_of_Birth == ''){
+			params.Date_of_Birth = (inputMap.get('Date_of_Birth') != null) ? string.valueOf(inputMap.get('Date_of_Birth')) : '';
+		}
+		params.Phone   = (inputMap.get('Phone') != null) ? string.valueOf(inputMap.get('Phone')) : '';
+		params.language   = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
+		params.Id   = (inputMap.get('Id') != null) ? string.valueOf(inputMap.get('Id')) : '';
+		params.AccountId   = (inputMap.get('AccountId') != null) ? string.valueOf(inputMap.get('AccountId')) : '';
+		params.OtherPhone   = (inputMap.get('OtherPhone') != null) ? string.valueOf(inputMap.get('OtherPhone')) : '';
+		params.Salutation   = (inputMap.get('Salutation') != null) ? string.valueOf(inputMap.get('Salutation')) : '';
+		params.Title   = (inputMap.get('Title') != null) ? string.valueOf(inputMap.get('Title')) : '';
+		params.UserId   = (inputMap.get('UserId') != null) ? string.valueOf(inputMap.get('UserId')) : '';
+		params.Username   = (inputMap.get('Username') != null) ? string.valueOf(inputMap.get('Username')) : '';
+		params.User_Portal_Status   = (inputMap.get('User_Portal_Status__c') != null) ? string.valueOf(inputMap.get('User_Portal_Status__c')) : '';
+		if(params.User_Portal_Status == ''){
+			params.User_Portal_Status = (inputMap.get('User_Portal_Status') != null) ? string.valueOf(inputMap.get('User_Portal_Status')) : '';
+		}
+		params.existingContactId = (inputMap.get('existingContactId') != null) ? string.valueOf(inputMap.get('existingContactId')) : '';
+		params.existingContactName = (inputMap.get('existingContactName') != null) ? string.valueOf(inputMap.get('existingContactName')) : '';
+		params.existingContactEmail = (inputMap.get('existingContactEmail') != null) ? string.valueOf(inputMap.get('existingContactEmail')) : '';
+		params.existingContactAccount = (inputMap.get('existingContactAccount') != null) ? string.valueOf(inputMap.get('existingContactAccount')) : '';
+		params.lms  = (inputMap.get('lms') != null) ? string.valueOf(inputMap.get('lms')) : '';
+		params.lmsCourse  = (inputMap.get('lmsCourse') != null && inputMap.get('lmsCourse') != 'undefined') ? string.valueOf(inputMap.get('lmsCourse')) : '';
+		params.hasExistingContact = (inputMap.get('hasExistingContact') != null) ? string.valueOf(inputMap.get('hasExistingContact')) : '';
+		params.hasExistingContactPersonalEmail = (inputMap.get('hasExistingContactPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingContactPersonalEmail')) : '';
+		params.hasExistingUser = (inputMap.get('hasExistingUser') != null) ? string.valueOf(inputMap.get('hasExistingUser')) : '';
+		params.hasExistingUserPersonalEmail = (inputMap.get('hasExistingUserPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingUserPersonalEmail')) : '';
+		params.existingTrainingId = (inputMap.get('existingTrainingId') != null) ? string.valueOf(inputMap.get('existingTrainingId')) : '';
+		params.flow = (inputMap.get('flow') != null) ? string.valueOf(inputMap.get('flow')) : '';
 
+		params.isPoBox = (inputMap.get('isPoBox') != null) ? string.valueOf(inputMap.get('isPoBox')) : '';
+		params.countryId = (inputMap.get('countryId') != null) ? string.valueOf(inputMap.get('countryId')) : '';
+		params.countryCode = (inputMap.get('countryCode') != null) ? string.valueOf(inputMap.get('countryCode')) : '';
+		params.countryName = (inputMap.get('countryName') != null) ? string.valueOf(inputMap.get('countryName')) : '';
+		params.stateId = (inputMap.get('stateId') != null) ? string.valueOf(inputMap.get('stateId')) : '';
+		params.stateName = (inputMap.get('stateName') != null) ? string.valueOf(inputMap.get('stateName')) : '';
+		params.cityId = (inputMap.get('cityId') != null) ? string.valueOf(inputMap.get('cityId')) : '';
+		params.cityName = (inputMap.get('cityName') != null) ? string.valueOf(inputMap.get('cityName')) : '';
+		params.street = (inputMap.get('street') != null) ? string.valueOf(inputMap.get('street')) : '';
+		params.zip = (inputMap.get('zip') != null) ? string.valueOf(inputMap.get('zip')) : '';
+		params.serviceid = (inputMap.get('serviceid') != null) ? string.valueOf(inputMap.get('serviceid')) : '';
+		params.street2 = (inputMap.get('street2') != null) ? string.valueOf(inputMap.get('street2')) : '';
+		return params;
 	}
 
 	public static string generateEncoded(UserInformationWrapper params){
@@ -646,6 +694,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			//Get address
 			String address = emailAddr;
+			String addressEncoded = EncodingUtil.urlEncode(emailAddr, 'UTF-8');
 
 			if(address == null){
 				result.isSuccess = false;
@@ -665,7 +714,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			if(flow == 'flow4'){
-				sURL = sURLpath + '/login?email=' + address + '&startURL='+ EncodingUtil.urlEncode(sURL, 'UTF-8');
+				sURL = Network.getLoginURL(networkId) + '?email=' + addressEncoded + '&startURL='+ EncodingUtil.urlEncode(sURL, 'UTF-8');
 			}
 
 			String sEmailTemplateName = 'CSP_Verification_L3_Email_LMS_VF';
@@ -803,7 +852,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			return result;
 		}
 		return result;
 	}
@@ -818,8 +866,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		Double fullNameSize = fullName.length();
 		Double threshold = fullNameSize - ((fullNameSize * 60)/100);
 		Integer roundThreshold = Math.round(threshold);
-
-		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
 		List<Training_Contact_Role_Details__c> existingYadLst = new List<Training_Contact_Role_Details__c>(
 			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname,
