@@ -17888,7 +17888,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Dengan menyesal kami sampaikan bahwa permintaan Anda untuk mengakses</label>
+        <label>Ini adalah pesan penting terkait akses Anda ke layanan di Portal Pelanggan IATA.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17900,12 +17900,20 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>Layanan telah ditolak oleh Layanan Pelanggan IATA Anda</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Akses ke</label>

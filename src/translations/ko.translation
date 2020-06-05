@@ -17879,7 +17879,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>유감스럽게도, 귀하가 요청한 [placeholder]서비스에 대한 접속 신청이</label>
+        <label>본 메세지는 귀하의 포털 서비스 접속에 영향을 주는 중요한 메세지입니다.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17891,12 +17891,20 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 IATA 고객 서비스에서[placeholder]서비스 접속을 거부하였습니다</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>[placeholder]서비스 접속이</label>
