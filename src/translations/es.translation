@@ -9157,7 +9157,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_FirstName</name>
     </customLabels>
     <customLabels>
-        <label>&lt;b&gt;Importante&lt;/b&gt;: Por razones de seguridad y fraude, su tarjeta de identificación se enviará a la siguiente dirección, despuès de que la solicitud haya sido aprobada (a menos que usted estè solicitando el cambio de la agencia):</label>
+        <label>&lt;b&gt;Importante&lt;/b&gt;: Por razones de seguridad y fraude, su tarjeta de identificación se enviará a la siguiente dirección, despuès de que la solicitud haya sido aprobada:</label>
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
