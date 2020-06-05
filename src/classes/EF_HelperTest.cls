@@ -102,7 +102,7 @@ private class EF_HelperTest {
 		List<E_and_F_Account_Role_Detail__c> accrList = EF_Helper.getAccountContactRoles(contactId);
 		Test.stopTest();
 
-		List<E_and_F_Account_Role_Detail__c> expected = [SELECT Id, Account_Role__c, Account_Role__r.Account_Name__c, Account_Role__r.Account__c
+		List<E_and_F_Account_Role_Detail__c> expected = [SELECT Id, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.Name
 														   FROM E_and_F_Account_Role_Detail__c
 														  WHERE Account_Role__r.Functional_Role__c = 'E&F'
 															AND ID IN (
@@ -126,7 +126,7 @@ private class EF_HelperTest {
 
 		List<E_and_F_Contact_Role_Detail__c> expected = [SELECT Id, RecordTypeId, RecordType.DeveloperName, Account_name__c, E_F_Account_Role_Detail__c, E_F_Account_Role_Detail__r.RecordTypeId
 															  , E_F_Account_Role_Detail__r.RecordType.DeveloperName, E_F_Account_Role_Detail__r.Account_Role__c
-															  , E_F_Account_Role_Detail__r.Account_Role__r.Account__c, E_F_Account_Role_Detail__r.Account_Role__r.Account__r.Global_ID__c
+															  , E_F_Account_Role_Detail__r.Account_Role__r.Account__c
 														   FROM E_and_F_Contact_Role_Detail__c
 														  WHERE ContactFunctionalRole__c = 'E&F' AND Contact_Id__c =: String.valueOf(contactId).substring(0, 15) AND RecordType.DeveloperName = 'Service_Admin'];
 
