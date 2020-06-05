@@ -17878,7 +17878,7 @@ and
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>ขออภัย คำร้องของคุณเพื่อเข้าถึงบริการ</label>
+        <label>นี่เป็นข้อความสำคัญที่ส่งผลต่อการเข้าถึงบริการของคุณในพอร์ทัลลูกค้าของ IATA</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17890,12 +17890,20 @@ and
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>บริการได้รับการปฏิเสธโดยฝ่ายบริการลูกค้า IATA ของคุณ</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>การเข้าถึงยัง</label>
