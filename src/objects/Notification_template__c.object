@@ -440,20 +440,6 @@ Language__c ,
     </fields>
     <label>Notification template</label>
     <listViews>
-        <fullName>All_templates</fullName>
-        <columns>NAME</columns>
-        <columns>Subject__c</columns>
-        <columns>Identifier__c</columns>
-        <columns>Language__c</columns>
-        <columns>Type__c</columns>
-        <columns>Expire_in_days__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <label>All templates</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>All_templatesexp</fullName>
         <columns>NAME</columns>
         <columns>Subject__c</columns>
@@ -489,20 +475,6 @@ Language__c ,
             <value>1</value>
         </filters>
         <label>Eu agent consent templates</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Master_templates</fullName>
-        <columns>NAME</columns>
-        <columns>Subject__c</columns>
-        <columns>Language__c</columns>
-        <columns>Type__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Master_Notification_template__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>Master templates</label>
         <language>en_US</language>
     </listViews>
     <nameField>
