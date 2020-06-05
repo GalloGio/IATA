@@ -292,6 +292,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			for (ID_Card_Application__c idca : validatedApplication.values()) {
 				if (idca != null)
 					massUpdateApplication.CurrencyIsoCode = idca.CurrencyIsoCode;
+					massUpdateApplication.ID_Card_Fee_Discount__c = discountFee;
 					if(promotion.Promotion_Code__c != null && promotion.Promotion_Code__c != ''){
 						massUpdateApplication.Promotion_Code__c = promotion.Promotion_Code__c;
 					}
@@ -594,14 +595,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
 				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
 				app.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
-		//		app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
 				app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
 				app.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
 				app.ID_Card_Fee_Discount__c += ((app.ID_Card_Fee__c + app.Physical_Card_Fee__c) - (app.ID_Card_Fee__c + app.Physical_Card_Fee__c) * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100));
 				app.ID_Card_Fee__c = app.ID_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
 				app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
-		//		app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
+				app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
 				
 				if (app.ID_Card_Fee__c != null)
 					tPrice += app.Applicable_Fee__c;
