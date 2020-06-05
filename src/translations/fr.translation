@@ -10736,6 +10736,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16983,8 +16987,9 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>Je vous prie de constater que ces soldes sont mis à jour sur le portail clientèle au moins un jour ouvrable après que le compte IATA ait été crédité.
-Veuillez également noter que les informations visibles sur ICE sont mises à disposition d’IATA par des tiers à des intervalles de 24 heures, et de ce fait, elles peuvent être incorrectes, inexactes ou incomplètes.</label>
+        <label>Les soldes figurant sur le Portail clients sont actualisés le jour ouvrable suivant le jour où le compte de l’IATA a été crédité. Le jour où le compte de l’IATA est crédité dépend du mode de paiement que vous avez choisi. Les données de facturation figurant dans ICE sont communiquées à l’IATA par des tiers toutes les 24 heures et des retards indépendants de la volonté de l’IATA peuvent survenir. 
+
+En cas de suspension d’une compagnie aérienne donnant lieu à l’ajustement d’un montant de facturation, les agents peuvent se baser sur les montants contenus dans ICE et en cas de divergences, celles-ci peuvent être résolues par un paiement ultérieur par ou à l’agent.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31743,6 +31748,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33743,6 +33752,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

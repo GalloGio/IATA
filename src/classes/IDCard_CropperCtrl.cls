@@ -29,6 +29,10 @@ global class IDCard_CropperCtrl {
 	}
 
 	private void buildUploadAuthorization(){
+		if (controllerSessionId == null || controllerSessionId == 'NULL_SESSION_ID') {
+			controllerSessionId = IDCardUtil.NewGuid();
+			controllerFileName = controllerFileId.endsWith('.jpg') ? controllerFileId : controllerSessionId + '/' + controllerFileId + '.jpg';
+		}
 		String filenameupload = '/' + controllerFileId + (controllerFileId.endsWith('.jpg') ? '' : '.jpg'); // for changingin uploaded pictures, the name already contains the jpg extension
 		String uploadPath = UPLOAD_FOLDER + (controllerFileId.startsWith(controllerSessionId) || controllerFileId.endsWith('.jpg') ? '' : '/' + controllerSessionId); // for changingin uploaded pictures, the name already contains the sess Id as containing folder
 		uploadAuthorization = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(null /* Originaly ID but not actually used */, filenameupload, 'image/jpeg', 0 /* file size, but only used for validation, otherwise useless */, uploadPath, CREDENTIAL_NAME );

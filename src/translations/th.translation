@@ -10706,6 +10706,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16942,8 +16946,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>หมายเหตุ : ขอเรียนให้ทราบว่ายอดคงเหลือจะถูกปรับในพอร์ทัล อย่างน้อยหนึ่งวันทำการ หลังจากบัญชีของ IATA ได้รับเงินเรียบร้อยแล้ว 
-นอกจากนี้ขอเรียนให้ทราบว่าข้อมูลที่มีอยู่ใน ICE นั้นได้ถูกจัดเตรียมโดยหน่วยงานภายนอกในช่วงเวลา 24 ชั่วโมง ข้อมูลอาจไม่ทันปัจจุบัน หรือถูกต้องสมบูรณ์</label>
+        <label>ยอดคงเหลือในพอร์ทัลลูกค้ามีการปรับปรุงข้อมูลในวันทำการถัดไป หลังจากที่บัญชีของ IATA ได้รับเครดิต วันที่บัญชีของ IATA ได้รับเครดิตจะขึ้นอยู่กับช่องทางการชำระเงินที่คุณเลือก ข้อมูลการเรียกเก็บเงินที่แสดงใน ICE ได้รับการจัดหาให้ IATA โดยบุคคลภายนอกในระยะเวลา 24 ชั่วโมง และความล่าช้านอกเหนือการควบคุมของ IATA อาจเกิดขึ้นได้ 
+
+ในกรณีที่การหยุดชะงักของสายการบินส่งผลต่อจำนวนการเรียกเก็บเงินที่ปรับแล้ว ตัวแทนสามารถใช้จำนวนที่มีอยู่ใน ICE และในกรณีที่มีความคลาดเคลื่อนใด ๆ สามารถแก้ไขผ่านการชำระเงินในภายหลังโดยหรือกับตัวแทนดังกล่าว</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31703,6 +31708,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33703,6 +33712,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

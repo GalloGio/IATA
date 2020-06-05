@@ -10719,6 +10719,10 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16955,7 +16959,9 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>CATATAN: Mohon diperhatikan saldo akan diperbarui di portal setidaknya satu hari kerja setelah pembayaran di kreditkan ke rekening IATA. Perlu diketahui juga bahwa data yang terdapat dalam layanan ICE diterima oleh IATA dari pihak ketiga dalam interval 24 jam dan memungkinkan hasil yang tidak lancar, akurat atau lengkap.</label>
+        <label>Saldo di portal pelanggan diperbarui pada hari kerja berikutnya setelah akun IATA dikreditkan. Hari saat akun IATA dikreditkan bergantung pada bentuk pembayaran pilihan Anda. Data tagihan yang ditampilkan di ICE disediakan untuk IATA oleh pihak ketiga dengan rentang waktu 24 jam dan penundaan di luar kendali IATA bisa saja terjadi. 
+
+Jika penangguhan maskapai penerbangan menunjukkan nilai tagihan yang disesuaikan maka agen dapat mengandalkan nilai yang ada dalam ICE, dan jika ada perbedaan maka masalah tersebut dapat diselesaikan melalui pembayaran di lain waktu oleh atau ke agen.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31709,6 +31715,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33709,6 +33719,15 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

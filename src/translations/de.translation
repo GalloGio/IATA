@@ -10712,6 +10712,10 @@ and
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16948,7 +16952,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>HINWEIS: Bitte beachten Sie, dass die Salden auf dem Portal mindestens ein Tag nach Erhalt der Beträge aktualisiert werden. Bitte beachten Sie auch, dass die in ICE enthaltenen Daten, in 24-Stunden-Intervallen von Dritten erhalten werden und möglicherweise nicht aktuell, richtig oder vollständig sind</label>
+        <label>Die Salden im Kundenportal werden am folgenden Geschäftstag nach Gutschrift auf dem IATA-Konto aktualisiert. Der Tag der Gutschrift auf dem IATA-Konto hängt von der von Ihnen gewählten Zahlungsmethode ab. Die in ICE angezeigten Rechnungslegungsdaten werden IATA in 24-Stunden-Intervallen von Dritten zur Verfügung gestellt. Es kann zu Verzögerungen kommen, auf die IATA keinen Einfluss hat. 
+
+Im Fall einer Anpassung des Abrechnungsbetrags durch die Suspendierung einer Fluggesellschaft können sich die Reisebüros auf die im ICE angegebenen Summen verlassen. Bei Abweichungen können diese durch eine spätere Zahlung durch oder an das Reisebüro beglichen werden.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -31706,6 +31712,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33706,6 +33716,15 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>
