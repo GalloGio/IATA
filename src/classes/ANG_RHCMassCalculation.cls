@@ -136,9 +136,7 @@ public class ANG_RHCMassCalculation {
 
 		if(searched){
 			paginator = null;
-			
-			if(agents!=null)
-				agents.clear();
+			agents = null;
 			selectAll = false;
 
 			String query = '' // 
