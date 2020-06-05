@@ -264,6 +264,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Copy_IATACode</fullName>
+        <description>Makes a backup of the IATA Code in the field IATA_Code_duplicate_blocker__c</description>
         <field>IATA_Code_duplicate_blocker__c</field>
         <formula>IATACode__c</formula>
         <name>Copy IATACode</name>
