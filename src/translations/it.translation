@@ -17886,7 +17886,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Siamo spiacenti di comunicarle che la sua richiesta di accedere</label>
+        <label>Questo è un messaggio importante che riguarda il vostro accesso ai servizi del Portale Clienti IATA.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17898,12 +17898,20 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>L&apos;assistenza è stata rifiutata dall&apos;Assistenza clienti IATA</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Accesso a</label>

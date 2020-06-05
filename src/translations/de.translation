@@ -17881,7 +17881,7 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_AccessRejected1 --></label>
+        <label>Dies ist eine wichtige Nachricht, die Ihren Zugang zu den Dienstleistungen im IATA-Kundenportal betrifft.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17893,12 +17893,20 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>von Ihrem IATA-Kundenservice abgelehnt wurde.</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Zugriff auf</label>
