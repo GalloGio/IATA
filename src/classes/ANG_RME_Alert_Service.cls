@@ -340,7 +340,7 @@ global class ANG_RME_Alert_Service {
 		webservice String iataCode;
 		webservice ISSP_Web_Service_Log__c log;
 
-		private RHCMessage res;
+		public RHCMessage res;
 
 		private WebserviceResult(){
 			isSuccess = true;
@@ -405,36 +405,38 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
-		Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+	webservice static WebserviceResult requestProvisionalRHC(String accountId){
+		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
+										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov', acc.Location_Type__c); //results are saved on the private varible "result"
+		return requestProvisionalRHC(rhcInfo[0], true);
+		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+	}
+
+	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
+		WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != acc.IATACode__c){
-				log.Error_Code__c = 'Iata Code Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', acc.IATACode__c, log, result);
+			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
+				if(ProvisionalIsAppliedImmediately){
+					log.Error_Code__c = 'Iata Code Mismatch';
+					ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				}
 			}
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
-				log.Error_Code__c = 'Currency Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', acc.IATACode__c, log, result);
+			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
+				if(ProvisionalIsAppliedImmediately){
+					log.Error_Code__c = 'Currency Mismatch';
+					ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				}
 			}
-			//COMMENTED - we should not validate this for provisional RHC
-			/*else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
-				log.Error_Code__c = 'RHC Value Mismatch';
-				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-			}*/
 			else{
-				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 
-				if(flagUpdateProvisioning) {
-					rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c;
-				}
-
-				update rhcInfo;
+				if(ProvisionalIsAppliedImmediately)
+					update rhcInfo;
 			}
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
 		}

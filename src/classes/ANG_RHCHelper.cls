@@ -121,6 +121,12 @@ public class ANG_RHCHelper {
 		calculateRHCAmount(rhcInfo, true);
 	}
 
+	public static void calculateRHCAmount(ANG_RHC_Information__c rhcInfo, boolean ApplyRHC){
+		list<ANG_RHC_Information__c> ls = new list<ANG_RHC_Information__c>();
+		ls.add(rhcInfo);
+		calculateRHCAmount(ls, ApplyRHC);
+	}
+
 	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo, boolean ApplyRHC) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		Set<Id> accountsIds = new Set<Id>();

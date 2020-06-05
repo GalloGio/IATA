@@ -102,8 +102,8 @@ public class ANG_RHCInformationTriggerHandler{
 	}
 
 	private void sumRHCAmount() {
-		List<ANG_RHC_Information__c> rhcToSum = new List<ANG_RHC_Information__c>();
-		List<ANG_RHC_Information__c> rhcToNotRecalculate = new List<ANG_RHC_Information__c>();
+		map<id, ANG_RHC_Information__c> rhcToSum = new map<id, ANG_RHC_Information__c>();
+		map<id, ANG_RHC_Information__c> rhcToNotRecalculate = new map<id, ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhcInfo : triggerNew){
 			if(
 				rhcinfo.ANG_Enable_Calculation__c &&
@@ -116,16 +116,17 @@ public class ANG_RHCInformationTriggerHandler{
 					|| rhcInfo.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Equals_FS__c
 				)
 			){
-				rhcToSum.add(rhcInfo);
+				rhcToSum.put(rhcInfo.id, rhcInfo);
 			}
 
 			if(Trigger.isUpdate && rhcinfo.ANG_Enable_Calculation__c && (rhcInfo.ANG_RHC_Amount_Provisional__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Provisional__c)){
-				rhcToNotRecalculate.add(rhcInfo);
+				if(!rhcToSum.containsKey(rhcInfo.id))
+					rhcToNotRecalculate.put(rhcInfo.id, rhcInfo);
 			}
 		}
 
-		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
-		if(!rhcToNotRecalculate.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToNotRecalculate, false);
+		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum.values());
+		if(!rhcToNotRecalculate.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToNotRecalculate.values(), false);
 
 		for(ANG_RHC_Information__c rhc : triggerNew){
 			if(Trigger.isInsert || oldMap.get(rhc.id).ANG_RHC_Amount__c != rhc.ANG_RHC_Amount__c) rhc.ANG_RHC_Effective_Date__c=System.Today();
