@@ -15,6 +15,7 @@
         <members>Case</members>
         <members>CaseContactRole</members>
         <members>Contact</members>
+        <members>ContentVersion</members>
         <members>Contract</members>
         <members>ContractContactRole</members>
         <members>Event</members>
@@ -31,7 +32,6 @@
         <members>Solution</members>
         <members>Task</members>
         <members>User</members>
-        <members>ContentVersion</members>
         <name>CustomObject</name>
     </types>
     <types>
