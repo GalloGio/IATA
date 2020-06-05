@@ -855,7 +855,7 @@ global without sharing class ISSP_APProcess {
 			'BSP_Local_address__c,BSP_Local_Zip_Code__c,BSP_Local_City__c,Airline_Local_address_in_the_BSP_Country__c,'+
 			'BSP_Country_VAT_Tax_number__c,Other_TAX_Identification__c,Airline_s_Fiscal_Status__c,Name_Appearing_in_VAT__c,AP_BR_BankBeneficiary_Account_Holder__c,AP_BR_Address_To_Insert__c,'+
 			'Pay_Commission_to_agents__c,AP_BR_Address_CNP__c,Fin_Adm_Contact__c,Fin_Adm_Contact_F_Name__c,Fin_Adm_Contact_L_Name__c,'+
-			'HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c, HOT_File_Recipient_Remove_Email_4__c,'+
+			'HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c,'+
 			'Pay_Standard_Commission__c,Commission_Rate__c,Participate_in_AWB_Stock_Management__c,'+
 			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
 		}
@@ -865,7 +865,7 @@ global without sharing class ISSP_APProcess {
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
 			'Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,'+
-			'HOT_File_Recipient_Email_1__c,HOT_File_Recipient_Email_2__c,HOT_File_Recipient_Email_3__c,HOT_File_Recipient_Email_4__c,'+
+			'HOT_File_Recipient_Email_1__c,HOT_File_Recipient_Email_2__c,HOT_File_Recipient_Email_3__c,'+
 			'Receive_PDF_Reports__c,PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,Receive_XLS_Reports__c,'+
 			'Accept_Online_Corrections__c,CASSLink_New_User_1_Salutation__c,CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,'+
 			'CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,'+
