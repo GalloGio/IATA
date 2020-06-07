@@ -286,11 +286,18 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			this.localContactInfo.street2 = this.localAddress.street2;
 			this.localContactInfo.zip = this.localAddress.zip;
 
-			this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined && this.userInfo.existingContactTrainingUsername !== '' ? this.userInfo.existingContactTrainingUsername : this.localContactInfo.Username;
-			this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined && this.userInfo.existingContactTrainingUserId !== '' ? this.userInfo.existingContactTrainingUserId : this.localContactInfo.UserId;
+			if(this.localContactInfo.Username !== '' && this.localContactInfo.UserId !== ''
+				&& this.userInfo.existingContactTrainingUsername !== undefined && this.userInfo.existingContactTrainingUserId !== undefined){
+					this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+					this.localContactInfo.ExistingTrainingInfo = true;
+			}else{
+				this.localContactInfo.Username = this.localContactInfo.Username;
+				this.localContactInfo.UserId = this.localContactInfo.UserId;
 			
-			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
+			}
 
+			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 			let notificationEmail = this.localAdditionalEmail;
 			sendSingleEmail({contactName: contactName,
 								emailAddr: notificationEmail,
@@ -393,6 +400,11 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 											//validate the 60% on the name comparison
 											validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
 												.then(result4 => {
+
+													//TO REMOVE AFTER FIX ON MULESOFT FOR FLOWS 6 and 7
+													//the line of code below is set to do not execute FLOW6 and 7 on the Myprofile
+													result4 = 'not_matching';
+													
 													if(result4 === 'not_matching'){
 														this.isFullNameMatching = false;
 														if(this.flow === 'flow6'){
@@ -430,7 +442,11 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 												//validate the 60% on the name comparison
 												validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
 												.then(result4 => {
-												
+
+													//TO REMOVE AFTER FIX ON MULESOFT FOR FLOWS 6 and 7
+													//the line of code below is set to do not execute FLOW6 and 7 on the Myprofile
+													result4 = 'not_matching';
+
 													if(result4 === 'not_matching'){
 														this.isFullNameMatching = false;
 														this.existingUsernameNotMatchingF6Visibility = true;
