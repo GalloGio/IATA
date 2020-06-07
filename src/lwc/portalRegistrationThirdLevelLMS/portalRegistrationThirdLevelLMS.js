@@ -41,8 +41,7 @@ import CSP_L3_Note_F4_LMS                   from '@salesforce/label/c.CSP_L3_Not
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	/* Images */
-	youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+	alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
     homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
     crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
     stepValid = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
@@ -53,8 +52,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
     step3Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
 	@api trigger;
-	@api isTriggeredByRequest = false;
-
+	
 	@track openMessageModal = false;
 	@track registrationParams;
 	@track registerData = true;

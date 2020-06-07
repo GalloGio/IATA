@@ -1,10 +1,6 @@
-/* eslint-disable no-console */
 import { LightningElement, track, api} from 'lwc';
 
-/* eslint-disable no-alert */
-/* eslint-disable vars-on-top */
 import validateYasUserId                 from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
-// import getLMSContactInfo               from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
 //custom labels
 import ISSP_Registration_None                        from '@salesforce/label/c.ISSP_Registration_None';

@@ -14,7 +14,6 @@ import { ShowToastEvent }                       from 'lightning/platformShowToas
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
-//import getUserInformationFromAdditionalEmail    from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromAdditionalEmail';
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
@@ -277,7 +276,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							return;
 						}else{
 							//check localStorage
-							if (localStorage.length > 0) {
+							if (localStorage != undefined && localStorage.length > 0) {
 								this._restoreState();
 							}else{
 
@@ -308,7 +307,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										//this.displayContactForm = true;
 										//this._initializePhoneInput();
 										this.handleNext(null);
-										//return;
 									}
 									if(pageParams.startURL !== ''){
 
@@ -331,17 +329,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 											this.registrationForm.lmsCourse = paramsReturn.RelayState;
 											this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
 										}
-                                        
-                                    					}
-
-
-                                				}
-
-                                				this.isLoading = false;
-                            				}
-                        			}
-
-
+                                    }
+                   				}
+                            this.isLoading = false;
+                            }
+                        }
 					})
 					.catch(error => {
                         console.info('Error: ', JSON.parse(JSON.stringify(error)));
@@ -440,7 +432,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email}).then(result => {
+						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
 							var userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;

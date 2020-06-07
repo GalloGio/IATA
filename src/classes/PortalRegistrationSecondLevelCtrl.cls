@@ -23,7 +23,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static Contact getContactInfo() {
 		User loggedUser = CSP_Utils.getLoggedUser();
 
-		List<Contact> con = [SELECT Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c, , Additional_Email__c, Phone, OtherPhone
+		List<Contact> con = [SELECT Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c, Email, Additional_Email__c, Phone, OtherPhone
 		FROM Contact
 		WHERE Id = :loggedUser.contactId];
 

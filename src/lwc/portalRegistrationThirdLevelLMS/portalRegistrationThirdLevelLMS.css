@@ -19,38 +19,9 @@
 	background-color: #f7f8fa;
 }
 
-.scrollable-body{
-	height:70vh;
-	overflow:auto;
-}
-
-.slds-has-error input{
-	border-radius: 1px !important;
-	border: solid 2px rgba(240, 70, 50, 0.8) !important;
-	box-shadow: none !important;
-}
-
-.slds-has-error .slds-form-element__help{
-	color: #f04632 !important;
-	font-size: 14px !important;
-}
-
-.slds-has-error .slds-form-element__help div{
-	color: #f04632 !important;
-}
-
-.inputBackgroundGrey{
-	background-color: #f7f8fa !important;
-}
-
 .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
 	background-color: #f7f8fa;
 }
-
-.wrap{
-	white-space:unset;
-}
-
 .customPopupInteriorQuarterScreenCentered {
 	background-color: #F7F8FA;
 	width: 50%;
@@ -123,41 +94,6 @@
 	justify-content: center;
 }
 
-.previousItem{
-	color: #289632;
-  }
-
-.previousItem .itemIcon:before{
-	content: '';
-}
-
-.activeItem .itemIcon{
-	background-color: #289632;
-	color: #fff;
-}
-
-.nextItem .itemIcon{
-	background-color: #cccccc;
-	border: 2px solid #cccccc;
-	color: #fff;
-}
-
-.nextItem .itemTitle span{
-	color: #cccccc;
-}
-
-.firstItem .itemIcon:before{
-	content: '1';
-}
-
-.secondItem .itemIcon:before{
-	content: '2';
-}
-
-.thirdItem .itemIcon:before{
-	content: '3';
-}
-
 .itemTitle{
 	display: flex;
 	align-items: center;
@@ -169,12 +105,6 @@
 	font-stretch: normal;
 	letter-spacing: normal;
 	color: #525252;
-}
-
-
-
-.validIcon{
-	margin-bottom: -20px;
 }
 
 .outer {
@@ -200,23 +130,15 @@
 	margin-top: 10%;
   }
 
-
-
   .icon{
 	position:relative;
 	text-align:center;
 	top: -48px;
   }
 
-
-
   .btnModal{
 	display: inline-block;
 	width: 100%;
-  }
-
-  .buttonContainer{
-	width: 48%;
   }
 
   .buttonContainer100{
@@ -255,16 +177,6 @@
 
 .ProfileUpdateMessage{
 	word-wrap: normal;
-}
-
-.checkedIcon{
-	height: 24px;
-	width: 24px;
-}
-
-.uncheckedIcon{
-	height: 24px;
-	width: 24px;
 }
 
 @media only screen and (max-width: 800px) {

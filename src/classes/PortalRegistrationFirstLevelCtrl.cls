@@ -1305,7 +1305,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//Inactivate the registering Contact
 			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 												AccountId,Email,Additional_Email__c,Phone,
-												OtherPhone,Salutation,Birthdate,Shipping_Address__c
+												OtherPhone,Salutation,Birthdate
 										FROM Contact WHERE Id = :existingTrainingId];
 
 			conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';

@@ -215,15 +215,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				.then(result2 => {
 					if(result2 !== undefined && result2 !== null){
 						this.contactInfoLMS = JSON.parse(JSON.stringify(result2));
-						// if(this.contactInfoLMS.UserId__c !== undefined && this.contactInfoLMS.UserId__c !== null && this.contactInfoLMS.UserId__c !== ''){
-						// 	this.contactInfo.UserId = this.contactInfoLMS.UserId__c;
-						// 	this.contactInfo.Username = this.contactInfo.Id.substring(0,15);
-						// }else{
-						// 	this.contactInfo.UserId = '';
-						// 	this.contactInfo.Username = '';
-						// }
-						console.log('connectedCallback - getLMSContactInfo - this.contactInfo: ',this.contactInfo);
-						
 						
 						if(this.contactInfoLMS.Country_Reference__c != null &&
 							this.contactInfoLMS.Country_Reference__c != undefined &&
@@ -282,8 +273,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				
 					this.openMessageModalFlowRegister = true;
 					this.message = CSP_L2_RegistrationFailed_LMS + error;
-					// console.log('Error: ', JSON.parse(JSON.stringify(error)));
-					// console.log('Error2: ', error);
 				});
 				
 				// FOR LMS L3
@@ -387,8 +376,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							
 						})
 						.catch(error => {
-							// console.log('Error3: ', error);
-							// console.log('Error4: ', JSON.parse(JSON.stringify(error)));
 							this.errorModalMessage = JSON.parse(JSON.stringify(error));
 							this.isResLoading = false;
 							this.openMessageModalFlowRegister = true;
@@ -404,8 +391,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			// console.log('Error1: ', error);
-			// console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
 
 	}
