@@ -78,6 +78,7 @@ public class AMS_Irregularities_Utils{
 					decimal AccIrr = mapAccIRRperAgency.get(a);
 					decimal CurrAccIrr = accCurr.Accumulated_Irregularities__c == null ? 0 : accCurr.Accumulated_Irregularities__c;
 					mapCurrentIrr.put(a, CurrAccIrr);
+					if(AccIrr > CurrAccIrr) toUpdateAccts = true; // if New IRR Points > Current Acc IRR Point we need to checkIRRTreshold
 
 					if(AccIrr != CurrAccIrr) {
 						if(toUpdateAccts){

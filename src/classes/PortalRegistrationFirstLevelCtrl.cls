@@ -1305,7 +1305,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			//Inactivate the registering Contact
 			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
 												AccountId,Email,Additional_Email__c,Phone,
-												OtherPhone,Salutation,Birthdate,Shipping_Address__c
+												OtherPhone,Salutation,Birthdate
 										FROM Contact WHERE Id = :existingTrainingId];
 
 			conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
@@ -1334,12 +1334,22 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		public void execute(QueueableContext context) {
-			List<Contact> contactList = [select Id,status__c from Contact where Id in:IdsToDeactivate];
+			List<Contact> contactList = [select Id,status__c,email from Contact where Id in:IdsToDeactivate];
 			for(Contact cont : contactList){
 				cont.status__c = 'Inactive';
+				cont.User_Portal_Status__c = 'Deactivated';
 			}
 			if(!contactList.isEmpty())
 				update contactList;
+			
+
+			List <User> userList = [select Id, ContactId, contact.email, UserType from User where ContactId in :IdsToDeactivate];
+			for(User user : userList){
+				ISSP_PortalUserStatusChange.updateUser(user.ContactId, false, user.Contact.email, '', '');
+			}
+			if (!userList.isEmpty()){
+				ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
+			}
 		}
 	}
 	

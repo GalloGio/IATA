@@ -19580,6 +19580,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>

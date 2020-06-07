@@ -646,7 +646,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 				}
 			}
 			/*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
-			
+
 			//GCS-DI LMS for Platform Events
 			set<Id> setContactForEvents = trigger.newMap.keySet();
 			List<Training_Contact_Role_Details__c> lTCRD = [SELECT id FROM Training_Contact_Role_Details__c WHERE Account_Contact_Role__r.contact__c = :setContactForEvents];
@@ -660,11 +660,11 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 			}
 
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-                System.enqueueJob(new AccountRolesAlignBatch(trigger.isDelete?trigger.OldMap:Trigger.newMap));
-            }else{
-                AccountRolesAlignBatch.switchAccountRoles(trigger.isDelete?trigger.OldMap:Trigger.newMap);
-            }
-	
+				System.enqueueJob(new AccountRolesAlignBatch(trigger.isDelete?trigger.OldMap:Trigger.newMap));
+			}else{
+				AccountRolesAlignBatch.switchAccountRoles(trigger.isDelete?trigger.OldMap:Trigger.newMap);
+			}
+
 			ContactTriggerHandler contactTriggerHandler = new ContactTriggerHandler();
 			contactTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
 		}
@@ -699,6 +699,6 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 			/*Contacts Trigger.AfterUndelete*/
 		}
 		/*Trigger.AfterUndelete*/
-    }
-    /*AFTER*/
+	}
+	/*AFTER*/
 }
