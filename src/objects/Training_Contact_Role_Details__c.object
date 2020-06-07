@@ -281,20 +281,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Shipping_Address__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Shipping Address</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Shipping Address</inlineHelpText>
-        <label>Shipping Address</label>
-        <referenceTo>Address__c</referenceTo>
-        <relationshipLabel>Training Contact Details</relationshipLabel>
-        <relationshipName>Training_Contact_Role_Details</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>State_Name__c</fullName>
         <description>Populated by a workflow rule when the State Reference is changed.</description>
         <externalId>false</externalId>
