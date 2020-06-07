@@ -336,10 +336,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                         }
 					})
 					.catch(error => {
-                        console.info('Error: ', JSON.parse(JSON.stringify(error)));
-                        			this.isLoading = false;
-                    			});
-          		      }
+						console.info('Error: ', JSON.parse(JSON.stringify(error)));
+						this.isLoading = false;
+					});
+				}
          	});
 
 		}.bind(this));
@@ -432,7 +432,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
 							var userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
