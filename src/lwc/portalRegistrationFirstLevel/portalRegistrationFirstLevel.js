@@ -433,7 +433,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
 						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
-							var userInfo = JSON.parse(JSON.stringify(result));
+							let userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
 							if(userInfo.hasExistingContact == true){
