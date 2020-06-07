@@ -1,46 +1,11 @@
-/* eslint-disable no-alert */
-/* eslint-disable vars-on-top */
-
 import { LightningElement, track, api} from 'lwc';
 
-/* ==============================================================================================================*/
-/* Utils & Apex & Platform
-/* ==============================================================================================================*/
 import { navigateToNewPage } from'c/navigationUtils';
 
 import validateYasUserId				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
 import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
 //custom labels
-import CSP_L2_Account_Selection_Message from '@salesforce/label/c.CSP_L2_Account_Selection_Message';
-import CSP_L2_Account_Information from '@salesforce/label/c.CSP_L2_Account_Information';
-import CSP_L2_Account_Information_Message from '@salesforce/label/c.CSP_L2_Account_Information_Message';
-import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
-import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
-import CSP_L2_IATA_Codes from '@salesforce/label/c.CSP_L2_IATA_Codes';
-import CSP_L2_Back_to_Profile_Details from '@salesforce/label/c.CSP_L2_Back_to_Profile_Details';
-import CSP_L2_Search from '@salesforce/label/c.CSP_L2_Search';
-import CSP_L2_Search_Results from '@salesforce/label/c.CSP_L2_Search_Results';
-import CSP_L2_Select from '@salesforce/label/c.CSP_L2_Select';
-import CSP_L2_Select_Company_Message from '@salesforce/label/c.CSP_L2_Select_Company_Message';
-import CSP_L2_Did_Not_Find from '@salesforce/label/c.CSP_L2_Did_Not_Find';
-import CSP_L2_Did_Not_Find_Message from '@salesforce/label/c.CSP_L2_Did_Not_Find_Message';
-import CSP_L2_Create_Account_Message from '@salesforce/label/c.CSP_L2_Create_Account_Message';
-import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
-import CSP_L3_Next_Confirmation_LMS from '@salesforce/label/c.CSP_L2_Next_Confirmation';
-import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
-import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_Results';
-import CSP_L2_EmailValidationDescri_LMS from '@salesforce/label/c.CSP_L2_EmailValidationDescri_LMS';
-import CSP_L3_EmailInformation_LMS from '@salesforce/label/c.CSP_L3_EmailInformation_LMS';
-import CSP_L3_CompleteInformation_LMS from '@salesforce/label/c.CSP_L3_CompleteInformation_LMS';
-import CSP_L3_IsPersonalEmail_LMS from '@salesforce/label/c.CSP_L3_IsPersonalEmail_LMS';
-import CSP_L3_IsReversedEmail_LMS from '@salesforce/label/c.CSP_L3_IsReversedEmail_LMS';
-import CSP_L3_WorkEmail_LMS from '@salesforce/label/c.CSP_L3_WorkEmail_LMS';
-import CSP_L_PersonalEmail_LMS from '@salesforce/label/c.CSP_L_PersonalEmail_LMS';
-import CSP_L3_ExistingUser_LMS from '@salesforce/label/c.CSP_L3_ExistingUser_LMS';
-import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
-import CSP_L3_StillWorkingP1_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP1_LMS';
-import CSP_L3_StillWorkingP2_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP2_LMS';
 import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS';
 import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
 import CSP_L3_Training_Validation_LMS from '@salesforce/label/c.CSP_L3_Training_Validation_LMS';
@@ -56,10 +21,6 @@ import CSP_L3_NumericError_LMS from '@salesforce/label/c.CSP_L3_NumericError_LMS
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L3_ExistTrainUserId_LMS from '@salesforce/label/c.CSP_L3_ExistTrainUserId_LMS';
 import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
-
-
-
-
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 /** The delay used when debouncing input filters. */
@@ -129,35 +90,6 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 
 	// label variables
 	_labels = {
-		CSP_L2_Account_Selection_Message,
-		CSP_L2_Account_Information,
-		CSP_L2_Account_Information_Message,
-		ISSP_MyProfile_SECTOR,
-		ISSP_MyProfile_CATEGORY,
-		CSP_L2_Company_Name,
-		CSP_L2_IATA_Codes,
-		CSP_L2_Back_to_Profile_Details,
-		CSP_L2_Search,
-		CSP_L2_Search_Results,
-		CSP_L2_Select_Company_Message,
-		CSP_L2_Select,
-		CSP_L2_Create_Account_Message,
-		CSP_L2_Create_New_Account,
-		CSP_L3_Next_Confirmation_LMS,
-		CSP_L2_Did_Not_Find,
-		CSP_L2_Did_Not_Find_Message,
-		CSP_L2_No_Matching_Results,
-		CSP_L2_EmailValidationDescri_LMS,
-		CSP_L3_EmailInformation_LMS,
-		CSP_L3_CompleteInformation_LMS,
-		CSP_L3_IsPersonalEmail_LMS,
-		CSP_L3_IsReversedEmail_LMS,
-		CSP_L3_WorkEmail_LMS,
-		CSP_L_PersonalEmail_LMS,
-		CSP_L3_ExistingUser_LMS,
-		CSP_L3_ExistingContact_LMS,
-		CSP_L3_StillWorkingP1_LMS,
-		CSP_L3_StillWorkingP2_LMS,
 		CSP_L3_Training_Validation_LMS,
 		CSP_L3_TrainValidationDescri_LMS,
 		CSP_L3_Training_Information_LMS,
@@ -218,8 +150,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 			
 				this.openMessageModalFlowRegister = true;
 				this.message = CSP_L2_RegistrationFailed_LMS + error;
-				console.log('Error: ', JSON.parse(JSON.stringify(error)));
-				console.log('Error2: ', error);
+				console.error('error: ', JSON.parse(JSON.stringify(error))); 
 			});
 		}
 
@@ -241,7 +172,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 		this.haveTrainingUser = event.target.value;
 		this.inputModified = true;
 		this.localContactInfo.UserId = '';
-		this.localContactInfo.Username = ''
+		this.localContactInfo.Username = '';
 		this.validated = false;
 		this.existingUsernameVisibility = false;
 		this.notMatchingVisibility = false;
@@ -260,7 +191,6 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 			this.matchingVisibility = false;
 			
 			window.clearTimeout(this.delayTimeout);
-			// eslint-disable-next-line @lwc/lwc/no-async-operation
 			this.delayTimeout = setTimeout(() => {
 				this.validateUserId();
 			}, DELAY);
@@ -370,7 +300,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 			})
 			.catch((error) => {
 				this.stopLoading();
-				console.log('Error: ', JSON.parse(JSON.stringify(error)));
+				console.error('error: ', JSON.parse(JSON.stringify(error))); 
 			});
 		}
 	}

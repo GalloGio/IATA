@@ -415,6 +415,10 @@
                 <behavior>Edit</behavior>
                 <field>BusinessHoursId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

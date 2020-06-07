@@ -1,134 +1,64 @@
-.scrollable-body{
-	height:70vh;
-	overflow:auto;
-}
-
-.inputBackgroundGrey{
-	background-color: #f7f8fa !important;
-}
 
 .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
 	background-color: #f7f8fa;
 }
 
-.wrap{
-	white-space:unset;
-}
-
-.customPopupInteriorQuarterScreenCentered {
-	background-color: #F7F8FA;
-	width: 25%;
-	margin: auto;
-	box-shadow: 5px 5px 20px #808080;
-	border-radius: 1px;
-	border: solid 1px #e2e2e2;
-}
-
-.link_normal {
-	width: 336px;
-	height: 56px;
-}
-
-.textAlignCenter {
-text-align: center;
-}
-
-.-Title {
-	width: 304px;
-	height: 24px;
-	font-size: 14px;
-	font-weight: 500;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.71;
-	letter-spacing: normal;
-	color: #3333ff;
-}
-
-
 .stepText {
-	font-size: 16px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.63;
-	letter-spacing: normal;
-	color: #525252;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #525252;
 }
 
 .sectionTitle {
-	font-size: 22px;
-	font-weight: 500;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.45;
-	letter-spacing: normal;
-	color: #333333;
-}
-
-.sectionSubTitle {
-	font-size: 18px;
-	font-weight: 500;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.78;
-	letter-spacing: normal;
-	color: #333333;
+font-size: 22px;
+font-weight: 500;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.45;
+letter-spacing: normal;
+color: #333333;
 }
 
 .sectionDescription {
-	font-size: 16px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.63;
-	letter-spacing: normal;
-	color: #4a4d61;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #4a4d61;
 }
 
 .dataLabel {
-	font-size: 14px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.43;
-	letter-spacing: normal;
-	color: #999999;
+font-size: 14px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.43;
+letter-spacing: normal;
+color: #999999;
 }
 
 .dataValue {
-	width: 328px;
-	height: 26px;
-	font-size: 16px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.63;
-	letter-spacing: normal;
-	color: #525252;
-	word-wrap: break-word;
-}
-
-.urlValue {
-	width: 328px;
-	height: 26px;
-	font-size: 16px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.63;
-	letter-spacing: normal;
-	color: #1f32fa;
+width: 328px;
+height: 26px;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #525252;
+word-wrap: break-word;
 }
 
 .backButtonWrapper{
 	display: flex;
 	align-items: center;
-}
-
-.editButtonWrapper{
-	display: flex;
-	justify-content: flex-end;
 }
 
 .containedButton{
@@ -140,21 +70,21 @@ text-align: center;
 }
 
 .profileContainer{
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+width: 100%;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
 }
 
 .profileItem{
-	width: 50%;
-	padding: 7px;
-	margin-bottom: 20px;
+width: 50%;
+padding: 7px;
+margin-bottom: 20px;
 }
 
 .buttonsContainer{
-	margin-top: 30px;
-	width: 100%;
-	display: flex;
-	flex-direction: row;
+margin-top: 30px;
+width: 100%;
+display: flex;
+flex-direction: row;
 }

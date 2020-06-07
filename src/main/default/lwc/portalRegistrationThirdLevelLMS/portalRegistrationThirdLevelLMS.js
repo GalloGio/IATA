@@ -4,7 +4,7 @@ import getContactInfo               	from '@salesforce/apex/PortalRegistrationSe
 import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 import getParameters                	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
 import completeRegistration         	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
-import getPortalServiceId 				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId 				from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import verifyCompleteL3DataWithCourse 	from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
 
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
@@ -39,9 +39,13 @@ import CSP_L3_Email_Validation_LMS                   from '@salesforce/label/c.C
 import CSP_L3_Note_F4_LMS                   from '@salesforce/label/c.CSP_L3_Note_F4_LMS';
 
 
+
+
+
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	/* Images */
-	alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+	youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
     homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
     crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
     stepValid = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
@@ -52,7 +56,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
     step3Inactive = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
 	@api trigger;
-	
+	@api isTriggeredByRequest = false;
+
 	@track openMessageModal = false;
 	@track registrationParams;
 	@track registerData = true;
@@ -268,8 +273,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				
 					this.openMessageModalFlowRegister = true;
 					this.message = CSP_L2_RegistrationFailed_LMS + error;
-					// console.log('Error: ', JSON.parse(JSON.stringify(error)));
-					// console.log('Error2: ', error);
 				});
 				
 				// FOR LMS L3
@@ -373,8 +376,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							
 						})
 						.catch(error => {
-							// console.log('Error3: ', error);
-							// console.log('Error4: ', JSON.parse(JSON.stringify(error)));
 							this.errorModalMessage = JSON.parse(JSON.stringify(error));
 							this.isResLoading = false;
 							this.openMessageModalFlowRegister = true;
@@ -390,8 +391,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			// console.log('Error1: ', error);
-			// console.log('Error2: ', JSON.parse(JSON.stringify(error)));
 		})
 
 	}

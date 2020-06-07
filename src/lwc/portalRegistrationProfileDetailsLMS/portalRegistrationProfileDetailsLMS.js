@@ -1,10 +1,6 @@
-/* eslint-disable no-console */
 import { LightningElement, track, api} from 'lwc';
 
-/* eslint-disable no-alert */
-/* eslint-disable vars-on-top */
 import validateYasUserId                 from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
-// import getLMSContactInfo               from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
 //custom labels
 import ISSP_Registration_None                        from '@salesforce/label/c.ISSP_Registration_None';
@@ -55,6 +51,8 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 	@track classIE = 'IEFixDisplayContainer';
 	@track startIE;
 	@track endIE;
+
+	phoneRegExp = /^\(?[+]\)?([()\d]*)$/
 	
 	/* label variables */
 	_labels = {
@@ -169,10 +167,20 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 
 	}
 	changePhone(event){
-		this.localContactInfo.Phone = event.target.value;
+		this.localContactInfo.Phone = this.validatePhone( event.target.value);
 	}
+
 	changeOtherPhone(event){
-		this.localContactInfo.OtherPhone = event.target.value;
+		this.localContactInfo.OtherPhone = this.validatePhone( event.target.value);
+	}
+
+	validatePhone(phoneValue){
+		let inputValue = phoneValue;
+		let isValid = this.phoneRegExp.test(inputValue);
+		if(isValid == false){
+			inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
+		}
+		return inputValue;
 	}
 
 	next(){
