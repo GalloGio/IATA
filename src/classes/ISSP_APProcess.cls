@@ -2022,9 +2022,10 @@ global without sharing class ISSP_APProcess {
 		for(Services_Rendered__c service : [SELECT Id, ISO_Country_formula__c, ANG_IATA_EasyPay_Opt_out__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__c
 											FROM Services_Rendered__c
 											WHERE Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Airline_EasyPay_Opt_Out_Date__c <= :Date.today()
-												AND Services_Rendered_Type__c = 'BSP Participation'
-												AND Services_Rendered_By__c = :vHQAccountId
-												AND Services_Rendered_Status__c = 'Active']) {
+											AND Services_Rendered_Type__c = 'BSP Participation'
+											AND Services_Rendered_By__c = :vHQAccountId
+											AND Services_Rendered_Status__c = 'Active'
+											ORDER BY ISO_Country_formula__c ASC]) {
 			if (service.ANG_IATA_EasyPay_Opt_out__c) {
 				countriesIn.add(new SelectOption(service.Services_Rendered_to_Airline__r.IATA_ISO_Country__c, service.ISO_Country_formula__c));
 				hasCountriesIn = true;
@@ -2036,7 +2037,7 @@ global without sharing class ISSP_APProcess {
 
 		// get list countries for HOT selection
 		this.HOTCountries = new list<SelectOption>();
-		for ( IATA_ISO_Country__c country: [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ANG_Portal_Service__r.Name LIKE '%EasyPay%']) {
+		for ( IATA_ISO_Country__c country: [SELECT Id, Name FROM IATA_ISO_Country__c WHERE ANG_Portal_Service__r.Name LIKE '%EasyPay%' ORDER BY Name ASC]) {
 			this.HOTCountries.add(new SelectOption(country.Id, country.Name));
 		}
 	}

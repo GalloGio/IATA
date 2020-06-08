@@ -60,6 +60,10 @@
       position: relative;
       left: 50%;
     }
+
+    .bootstrap-select .text {
+        color: black;
+    }
   </style>
   <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
@@ -84,6 +88,9 @@
           document.querySelector("[Id$='coutriesIn']").style.display = '';
           document.querySelector("[Id$='coutriesInLabel']").style.display = '';
           document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+          document.querySelector("[Id$='optPayment']").style.display = '';
+          $("#datepicker").datepicker("destroy");
+          $("#datepicker").datepicker({minDate: daysIn});
         } else {
           document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
         }
@@ -94,6 +101,7 @@
             document.querySelector("[Id$='coutriesOut']").style.display = '';
             document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
             document.querySelector("[Id$='dateInfo']").style.display = '';
+            document.querySelector("[Id$='optPayment']").style.display = '';
             $("#datepicker").datepicker("destroy");
             $("#datepicker").datepicker({minDate: daysOut});
             document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
@@ -120,6 +128,7 @@
       document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
       document.querySelector("[Id$='coutriesOut']").style.display = 'none';
       document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
+      document.querySelector("[Id$='optPayment']").style.display = 'none';
       document.querySelector("[Id$='dateInfo']").style.display = 'none';
       document.querySelector("[Id$='HOTPaymentMsg']").style.display = 'none';
       document.querySelector("[Id$='hotPaymentPanel']").style.display = 'none';
@@ -135,7 +144,7 @@
 
         var effectiveDate = $('#datepicker').val();
 
-        var hotTypePayment = $("[id$='HotTypePaymentSelect']").val();
+        var hotTypePayment = "";
 
         if (optinOut == 'IN') {
           countries = $("[id$='countriesInList']").val();
@@ -162,9 +171,12 @@
               document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
               document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
           }
+          // check Type of Payment, for OPT in/out
+          hotTypePayment = $("[id$='optPaymentSelect']").val();
         }
         // check Type of Payment, only HOT
         if (optinOut == 'HOT') {
+          hotTypePayment = $("[id$='HotTypePaymentSelect']").val();
           if(hotTypePayment == undefined || hotTypePayment == null || hotTypePayment == "") {
             document.querySelector("[Id$='hotTypeErrorMsg']").style.display = '';
             ok = 0;
@@ -381,6 +393,22 @@
                     <div id="datepicker"></div>
                   </div>
                 </div>
+                <div class="row" id="optPayment" style="display: none">
+                  <div class="customTable" style="margin-left: 15px;">
+                    <div>
+                      <apex:outputLabel value="Select From Of Payment:"/>
+                    </div>
+                    <div>
+                      <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" id="optPaymentSelect">
+                        <apex:selectOption itemValue="" itemLabel="--None--"/>
+                        <apex:selectOption itemValue="CC" itemLabel="CC"/>
+                        <apex:selectOption itemValue="EP" itemLabel="EP"/>
+                      </apex:selectList>
+                    </div>
+                  </div>
+                </div>
+
+
               </apex:outputPanel>
               <!-- Inputs for Hot payment -->
               <apex:outputPanel id="hotPaymentPanel" style="display: none">
