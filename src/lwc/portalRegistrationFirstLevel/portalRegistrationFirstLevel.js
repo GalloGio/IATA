@@ -259,39 +259,39 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			getConfig().then(result => {
 				let config = JSON.parse(JSON.stringify(result));
 
-						this.config = config;
-						this._formatCountryOptions(config.countryInfo.countryList);
-						this.languageOptions = config.languageList;
-						this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
-						if(this.isSelfRegistrationEnabled == false){
-							this.isSelfRegistrationDisabled = true;
-							this.isLoading = false;
-						}else{
-							//check localStorage
-							if (localStorage != undefined && localStorage.length > 0) {
-								this._restoreState();
-							}else{
+				this.config = config;
+				this._formatCountryOptions(config.countryInfo.countryList);
+				this.languageOptions = config.languageList;
+				this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
+				if(this.isSelfRegistrationEnabled == false){
+					this.isSelfRegistrationDisabled = true;
+					this.isLoading = false;
+				}else{
+					//check localStorage
+					if (localStorage != undefined && localStorage.length > 0) {
+						this._restoreState();
+					}else{
 
-								if(this._pageParams){
-									if(this._pageParams.language){
-										this.registrationForm.language = this._pageParams.language.toLowerCase();;
+						if(this._pageParams){
+							if(this._pageParams.language){
+								this.registrationForm.language = this._pageParams.language.toLowerCase();;
+							}
+
+							getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
+								var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
+								this.gcsPortalServiceId = gcsPortalServiceId;
+
+								getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
+									var tcs = JSON.parse(JSON.stringify(result2));
+
+									var tcIds = [];
+
+									for(let i = 0; i < tcs.length; i++){
+										tcIds.push(tcs[i].id);
 									}
-
-									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
-										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-										this.gcsPortalServiceId = gcsPortalServiceId;
-
-										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
-											var tcs = JSON.parse(JSON.stringify(result2));
-
-											var tcIds = [];
-
-											for(let i = 0; i < tcs.length; i++){
-												tcIds.push(tcs[i].id);
-											}
-											this.registrationForm.termsAndUsageIds = tcIds.join();
-										});
-									});
+									this.registrationForm.termsAndUsageIds = tcIds.join();
+								});
+							});
 
 							if(this._pageParams.email !== undefined){
 								this.registrationForm.email = decodeURIComponent(this._pageParams.email);
@@ -307,13 +307,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							let	paramsMap = prmstr ? decodeURIComponent('{"' + prmstr.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') : '{}';
 							let paramsReturn = JSON.parse(paramsMap);
 
-
 							if(paramsReturn.lms){
 								this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
 								this.registrationForm.lmsCourse = paramsReturn.RelayState;
 								this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
 							}
-
 						}
 					}
 				}
@@ -322,7 +320,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 				console.error('Error: ', error);
 				this.isLoading = false;
 			});
-
 		}.bind(this));
 	}
 
