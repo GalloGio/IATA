@@ -160,8 +160,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 													OtherPhone,Salutation,Birthdate
 											FROM Contact WHERE Id = :regParam.existingTrainingId];
 				
-				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
 					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
@@ -349,8 +347,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 													OtherPhone,Salutation,Birthdate
 											FROM Contact WHERE Id = :contIdToInactivate];
 				
-				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
 					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
