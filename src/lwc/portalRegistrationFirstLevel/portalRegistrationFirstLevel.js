@@ -324,7 +324,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			});
 
 		}.bind(this));
-
 	}
 
 	/* ==============================================================================================================*/
