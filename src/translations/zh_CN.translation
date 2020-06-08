@@ -16954,10 +16954,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>代理总公司航协号</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>代理机构名称</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19857,10 +19853,6 @@ and
     <customLabels>
         <label>密码必须一致。</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>往期历史</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link 可以用信用卡支付IATA账单&lt;br/&gt;

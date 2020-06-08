@@ -16962,10 +16962,6 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Codice sede agenzia</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Nome dell’agenzia</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19866,10 +19862,6 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
     <customLabels>
         <label>Le password devono corrispondere.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Periodi precedenti</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Puo utilizzare Payment Link per pagare le fatture IATA con carta di credito&lt;br/&gt;

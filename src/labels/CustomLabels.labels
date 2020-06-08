@@ -27511,6 +27511,14 @@ This service is free of charge.</value>
         <value>In case of negative billing, IATA settles the amount back to the agents. Settlement date for this period is: {0,date,dd MMM yyyy}</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statements</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Statements</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements_Billing</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -33915,12 +33923,12 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>This file already exists</value>
     </labels>
     <labels>
-        <fullName>ISSP_RD_FilePDFOnly</fullName>
+        <fullName>ISSP_RD_FileExtensionError</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_RD_FilePDFOnly</shortDescription>
-        <value>PDF files only</value>
+        <shortDescription>ISSP_RD_FileExtensionError</shortDescription>
+        <value>Only PDF, JPG, PNG, DOCX, PPT files</value>
     </labels>
     <labels>
         <fullName>ISSP_RD_FileUploaded</fullName>

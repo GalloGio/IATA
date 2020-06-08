@@ -1,6 +1,3 @@
-/**
- * Created by ReDesign
- */
 @isTest
 public class ISSP_DragAndDropTest {
 
@@ -104,7 +101,7 @@ public class ISSP_DragAndDropTest {
 		result = ISSP_DragAndDrop.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
 		System.assert(result.length()>10);
 
-		boolean deletresult = ISSP_DragAndDrop.deleteFile(acc.Id , azFile.Name);
+		boolean deletresult = ISSP_DragAndDrop.deleteFile(acc.Id , azFile.Id, azFile.Name);
 
 		Test.StopTest();
 

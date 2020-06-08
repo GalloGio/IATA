@@ -16953,10 +16953,6 @@
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Код главного офиса агентства</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Наименование агентства</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19864,10 +19860,6 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Пароли должны совпадать.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Прошлые периоды</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Ссылку на оплату можно использовать для оплаты счетов IATA кредитной картой.&lt;br/&gt;

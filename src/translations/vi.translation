@@ -16956,10 +16956,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Mã số Văn phòng trụ sở chính</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Tên Đại lý</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19856,10 +19852,6 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Các mật khẩu phải khớp với nhau.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Các kỳ báo cáo trước</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link có thể được sử dụng để trả hóa đơn IATA bằng thẻ Credit Card&lt;br/&gt;

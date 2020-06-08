@@ -16955,10 +16955,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>รหัสของสำนักงานใหญ่</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>ชื่อบริษัทตัวแทน</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19860,10 +19856,6 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label>รหัสผ่านต้องตรงกัน</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>ช่วงเวลาที่ผ่านมา</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>PaymentLink สามารถใช้ในการชำระใบแจ้งหนี้ของ IATA ด้วยบัตรเครดิต&lt;br/&gt;

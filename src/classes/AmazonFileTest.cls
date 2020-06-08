@@ -132,36 +132,4 @@ public class AmazonFileTest {
 		Test.stopTest();
 	}
 
-	static testMethod void testgetRelatedAmazonFiles(){
-		Case cse = new Case();
-		insert cse;
-
-		Account account = new Account (Name = 'testAccount');
-		insert account;
-
-		Contact contact = new Contact(FirstName = 'firstname', LastName='lastname');
-		insert contact;
-
-		List<AmazonFile__c> listAmazonFile = new List<AmazonFile__c>();
-		listAmazonFile.add( new AmazonFile__c(
-			Name = 'f1',
-			Full_Name_Unique__c = 'f1',
-			Case__c = cse.Id));
-		listAmazonFile.add( new AmazonFile__c(
-			Name = 'f2',
-			Full_Name_Unique__c = 'f2',
-			Case__c = cse.Id));
-		listAmazonFile.add( new AmazonFile__c(
-			Name = 'f3',
-			Full_Name_Unique__c = 'f3',
-			Account__c = account.Id));
-		insert listAmazonFile;
-
-		Test.startTest();
-		System.assertEquals(2,AmazonFile.getRelatedAmazonFiles(cse.Id).size());
-		System.assertEquals(1,AmazonFile.getRelatedAmazonFiles(account.Id).size());
-		System.assertEquals(0,AmazonFile.getRelatedAmazonFiles(contact.Id).size());
-		Test.stopTest();
-	}
-
 }

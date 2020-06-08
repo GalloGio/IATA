@@ -1,6 +1,3 @@
-/**
- * Created by PC-RITS04 on 11/22/2018.
- */
 global with sharing class ISSP_DragAndDrop {
 
 	/*
@@ -28,7 +25,7 @@ global with sharing class ISSP_DragAndDrop {
 	// Get all files already uploaded
 	public List<WrapperAmazonFile> amazFileList{
 		get{
-			List<AmazonFile__c> listAttachments = AmazonFile.getRelatedAmazonFiles(parentId);
+			List<AmazonFile__c> listAttachments = AmazonFile.getMapAmazonFiles(parentId).values();
 
 			// create list to return
 			List<WrapperAmazonFile> amazFileList = new List<WrapperAmazonFile>();
@@ -88,7 +85,6 @@ global with sharing class ISSP_DragAndDrop {
 
 		private String calculePolicy(AmazonCredentials credential) {
 			this.timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
-			system.debug('@@@timestamp: ' +this.timestamp);
 			String policyString = 'PUT\n\n'
 					+ this.contentType + ';charset=UTF-8\n\n'
 					+ 'x-amz-date:' + this.timestamp + '\n'
@@ -202,24 +198,15 @@ global with sharing class ISSP_DragAndDrop {
 		}
 	}
 
-
 	/**
 		Delete a file in amazon record
 	**/
 	@RemoteAction
-	global static boolean deleteFile(String parentId, String filenamedelete) {
+	global static boolean deleteFile(String parentId, String fileId, String filenamedelete) {
 		String folder = WrapperAttach.getAmazonFolder(parentId);
-		list<AmazonRest.S3File> listFileLoc = AmazonRest.getListFiles(folder, AMAZON_CREDENTIAL);
-		list<AmazonFile__c> listAmazonFile = AmazonFile.getAmazonFileByUniqueName(folder+filenamedelete);
-
-		for (AmazonRest.S3File file : listFileLoc ) {
-			if (file.getName().equalsIgnoreCase(filenamedelete)) {
-				file.deleteFile();
-				if(listAmazonFile.size() == 1){
-					delete listAmazonFile;
-				}
-				return true;
-			}
+		AmazonFile amazonFile = AmazonFile.getFile(fileId, folder+filenamedelete, AMAZON_CREDENTIAL);
+		if (amazonFile!=null) {
+			return amazonFile.delFile();
 		}
 		return false;
 	}

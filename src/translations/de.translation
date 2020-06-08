@@ -16960,10 +16960,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>IATA Code des Head Office</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Name der Agentur</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19862,10 +19858,6 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label>Die Passwörter müssen übereinstimmen.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Vergangene Abrechnungsperioden</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&amp;nbsp;

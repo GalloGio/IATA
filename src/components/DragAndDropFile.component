@@ -146,7 +146,7 @@
                                 </apex:outputText>
                             </td>
                             <td class="RD-TableBody">
-                                <span class="RD-DropAreaAction RD-DropAreaActionIcon RD-deleteIcon" onclick="deleteFile('{!amFile.fileName}'); return null;"/>
+                                <span class="RD-DropAreaAction RD-DropAreaActionIcon RD-deleteIcon" onclick="deleteFile('{!amFile.afile.Id}','{!amFile.fileName}'); return null;"/>
                             </td>
                         </tr>
                     </apex:repeat>
@@ -295,7 +295,7 @@
 
             var allowedExtensions = /\.(pdf||jpg||jpeg||png||doc||docx||ppt||pptx)$/i;
             if(!allowedExtensions.exec(fileName)){
-                showThings('errorMsg','{!$Label.ISSP_RD_FilePDFOnly}','','');
+                showThings('errorMsg','{!$Label.ISSP_RD_FileExtensionError}','','');
                 return false;
             }
 
@@ -339,10 +339,10 @@
             stopLoading();
         }
 
-        function deleteFile(filenamedelete){
+        function deleteFile(recId, filenamedelete){
             startLoading();
-            var recId = "{!parentId}";
-            ISSP_DragAndDrop.deleteFile( recId, filenamedelete, function(result, event){
+            var parentId = "{!parentId}";
+            ISSP_DragAndDrop.deleteFile( parentId, recId, filenamedelete, function(result, event){
                 if(event.type == "exception") {
                     showThings('errorMsg','{!$Label.ISSP_RD_Exception}','','');
                 }

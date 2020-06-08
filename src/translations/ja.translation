@@ -16959,10 +16959,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>代理店HOコード</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>代理店名</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -19863,10 +19859,6 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
     <customLabels>
         <label>パスワードが一致しなければなりません。</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>過去のピリオド</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment LinkとはIATAの請求書をクレジットカードでお支払いされる際に使用されます&lt;br/&gt;
