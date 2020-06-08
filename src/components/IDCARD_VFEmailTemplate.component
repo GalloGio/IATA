@@ -196,6 +196,7 @@
             <tr>
                 <td>
                     <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!emailBody3}"></apex:outputText>
+                    <br/>
                     <apex:outputText rendered="{!hiderenewal != true}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="{!text6}"></apex:outputText>
                 </td>
             </tr>
