@@ -4,7 +4,7 @@ import getContactInfo               	from '@salesforce/apex/PortalRegistrationSe
 import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 import getParameters                	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
 import completeRegistration         	from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
-import getPortalServiceId 				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId 				from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import verifyCompleteL3DataWithCourse 	from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
 
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
