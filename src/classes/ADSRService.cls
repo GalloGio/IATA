@@ -78,7 +78,7 @@ public without sharing class ADSRService {
 		}
 
 		List<Case> cases = [SELECT Id, AccountId,
-								(SELECT Id, Amount_Expected__c, Amount_Received__c, Case__c, Due_date__c
+								(SELECT Id, Case__c, Due_date__c
 								 FROM Case_Details__r
 								 WHERE RecordType.DeveloperName = 'Repayment_Instalment'
 								 ORDER BY CreatedDate DESC

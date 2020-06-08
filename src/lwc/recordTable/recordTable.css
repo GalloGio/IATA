@@ -3,8 +3,9 @@
 	height: 3rem;
 }
 
-.slds-resizable__divider:before {
+.slds-resizable__divider::before {
 	border: 0;
+	background: none;
 }
 
 .slds-table_bordered {
