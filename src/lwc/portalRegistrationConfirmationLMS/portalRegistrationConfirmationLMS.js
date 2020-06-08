@@ -7,7 +7,7 @@ import registration                         from '@salesforce/apex/PortalRegistr
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
 import getLMSTermAndConditionAcceptance		from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance';
 import verifyCompleteL3DataWithCourse		from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3DataWithCourse';
-import getPortalServiceId 					from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId 					from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { navigateToPage } from'c/navigationUtils';
 

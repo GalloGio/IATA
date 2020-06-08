@@ -21,7 +21,7 @@ import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectCh
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
-import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';

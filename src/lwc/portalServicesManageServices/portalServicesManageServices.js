@@ -6,7 +6,7 @@ import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
-import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 
 //import labels
