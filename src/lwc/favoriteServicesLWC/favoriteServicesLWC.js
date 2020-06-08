@@ -5,7 +5,7 @@ import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLink
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
-import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { updateRecord } from 'lightning/uiRecordApi';
 
