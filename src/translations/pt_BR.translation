@@ -3345,7 +3345,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Have_Read_Terms</name>
     </customLabels>
     <customLabels>
-        <label>Alô [username]</label>
+        <label>Olá [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
@@ -3357,7 +3357,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Invoices --></label>
+        <label>Faturas IATA</label>
         <name>CSP_IATA_Invoices</name>
     </customLabels>
     <customLabels>
@@ -3933,7 +3933,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Outstanding_Invoices --></label>
+        <label>Faturas IATA</label>
         <name>CSP_Outstanding_Invoices</name>
     </customLabels>
     <customLabels>

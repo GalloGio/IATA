@@ -219,7 +219,7 @@
 
                                 <apex:pageBlockSectionItem >
                                     <apex:outputLabel value="Code of GSSA" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Code__c}" />
+                                    <apex:outputField value="{!newForm.GSSA_Code__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
