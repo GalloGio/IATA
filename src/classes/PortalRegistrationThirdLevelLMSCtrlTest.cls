@@ -154,7 +154,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	static void testAuraMethods(){
 
 		Contact existingContact = [SELECT Id, Name, Email FROM Contact where Email = 'dontest@test.com'];
-		String serviceId = ServiceTermsAndConditionsUtils.getPortalServiceId('Training Platform (LMS)');
+		String serviceId = PortalServicesCtrl.getPortalServiceId('Training Platform (LMS)');
 
 		Test.startTest();
 
