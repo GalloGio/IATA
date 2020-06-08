@@ -319,6 +319,7 @@ global without sharing class ISSP_APProcess {
 		//PASS
 		selectedPassCountries= new List<SelectOption>();
 		if(ApexPages.currentPage().getParameters().get('airline')==AMS_Utils.passParticipation){
+			ISSP_PASS_Participation_Checklist = PageReference.forResource('PASS_Airline_Joining_Checklist').getUrl();
 			isPassAirline=true;
 			passParam='&airline=PASS';
 		}else{
@@ -518,30 +519,30 @@ global without sharing class ISSP_APProcess {
 				}
 				if(isPASSGSSA){
 					if(String.isBlank(newForm.GSSA_Legal_Name__c)){
-						newForm.GSSA_Legal_Name__c = newCase.Account.Name;
+						newForm.GSSA_Legal_Name__c = con.Account.Name;
 					}
 					if(String.isBlank(newForm.GSSA_VAT_Id__c)){
 						newForm.GSSA_VAT_Id__c = '';
 					}
 					if(String.isBlank(newForm.GSSA_Code__c)){
-						newForm.GSSA_Code__c = '';
+						newForm.GSSA_Code__c = hqAccount.IATACode__c;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
-						newForm.GSSA_HQ_Address__c = strParentBillingStreet;
+						newForm.GSSA_HQ_Address__c = con.Account.BillingStreet + ', ' + con.Account.BillingCity + ', ' + con.Account.BillingState + ', ' + con.Account.BillingPostalCode + ', ' +  con.Account.BillingCountry;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_City__c)){
-						newForm.GSSA_HQ_City__c = strParentBillingCity;
+						newForm.GSSA_HQ_City__c = con.Account.BillingCity;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_State__c)){
-						newForm.GSSA_HQ_State__c = strParentBillingState;
+						newForm.GSSA_HQ_State__c = con.Account.BillingState;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Post_Code__c)){
-						newForm.GSSA_HQ_Post_Code__c = strParentBillingCode;
+						newForm.GSSA_HQ_Post_Code__c = con.Account.BillingPostalCode;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Country__c)){
-						newForm.GSSA_HQ_Country__c = strParentBillingCountry;
+						newForm.GSSA_HQ_Country__c = con.Account.BillingCountry;
 					}
-					
+
 				}
 				getCityData();//TF
 				newForm.Submitted_to_IATA__c = FALSE;
@@ -785,7 +786,14 @@ global without sharing class ISSP_APProcess {
 
 	private void popContact(){
 		User user = [SELECT Id,ContactId FROM USER WHERE Id=:Userinfo.getUserId()];
-		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c FROM Contact WHERE Id=:user.ContactId];
+		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c,
+						Account.BillingStreet,
+						Account.BillingCity,
+						Account.BillingState,
+						Account.BillingPostalCode,
+						Account.BillingCountry
+			   FROM Contact
+			   WHERE Id=:user.ContactId];
 
 	}
 
@@ -904,7 +912,13 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Contact retrieveContact (String vContactID){
-		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title FROM Contact where Id = :vContactID ];
+		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title,
+									Account.BillingStreet,
+									Account.BillingCity,
+									Account.BillingState,
+									Account.BillingPostalCode,
+									Account.BillingCountry
+								 FROM Contact where Id = :vContactID ];
 		if(contact.size()>0){
 			return contact[0];
 		}else{
@@ -2278,7 +2292,11 @@ global without sharing class ISSP_APProcess {
 
 		strParentAOCName = hqAccount.Name_on_AOC__c;
 		strParentDesignator = hqAccount.Airline_designator__c;
-		strParentIATACode = hqAccount.IATACode__c;
+		if(isPASSGSSA) {
+			strParentIATACode = hqAccount.Airline_Prefix__c;
+		} else {
+			strParentIATACode = hqAccount.IATACode__c;
+		}
 		strParentBillingStreet = hqAccount.BillingStreet;
 		strParentBillingCity = hqAccount.BillingCity;
 		strParentBillingState = hqAccount.BillingState;
