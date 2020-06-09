@@ -553,7 +553,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
-			if(field == '{!ID_Card__c.TDI_Courses_Fee__c}'){
+			if(field == '{!ID_Card__c.ITDI_Courses_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c != null && caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c != 0 )
 					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c.setScale(2));
 				else
@@ -562,6 +562,12 @@ public with sharing class IDCARD_VFEmailTemplateController {
 			if(field == '{!ID_Card__c.Applicable_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != null && caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != 0 )
 				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c.setScale(2));
+				else
+					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
+			}
+			if(field == '{!ID_Card__c.ID_Card_Fee_Discount__c}'){
+				if(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != null && caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != 0 )
+				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
@@ -623,7 +629,12 @@ public with sharing class IDCARD_VFEmailTemplateController {
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
-			if(field == '{!ID_Card__c.ID_Card_Fee_Discount__c}') returnText = caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != null ? caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.format() : '';
+			if(field == '{!ID_Card__c.ID_Card_Fee_Discount__c}'){
+				if(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != null && caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != 0 )
+				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
+				else
+					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
+			}
 			if(field == '{!ID_Card__c.Tax_1_Name__c}') returnText = caseAux.Related_ID_Card_Application__r.Tax_1_Name__c != null ? caseAux.Related_ID_Card_Application__r.Tax_1_Name__c : '';
 			if(field == '{!ID_Card__c.Tax_1_Value__c}') returnText = caseAux.Related_ID_Card_Application__r.Tax_1_Value__c != null ? caseAux.Related_ID_Card_Application__r.Tax_1_Value__c : '';
 			if(field == '{!ID_Card__c.Tax_2_Name__c}') returnText = caseAux.Related_ID_Card_Application__r.Tax_2_Name__c != null ? caseAux.Related_ID_Card_Application__r.Tax_2_Name__c : '';
