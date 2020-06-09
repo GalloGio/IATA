@@ -611,7 +611,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
-			if(field == '{!ID_Card__c.TDI_Courses_Fee__c}'){
+			if(field == '{!ID_Card__c.ITDI_Courses_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c != null && caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c != 0 )
 					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ITDI_Courses_Fee__c.setScale(2));
 				else
