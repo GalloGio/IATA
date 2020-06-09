@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>App Change Req DPC ACCA</label>
+    <label>CasesAmericas_3</label>
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Status NOT_IN</value>
+        <value xsi:type="xsd:string">Phone_Redirected_to_Web__c =</value>
     </values>
     <values>
         <field>Origin__c</field>
@@ -36,13 +36,10 @@
     </values>
     <values>
         <field>RecordTypeId__c</field>
-        <value xsi:type="xsd:string">01220000000PeqDAAS</value>
+        <value xsi:type="xsd:string">012200000000AQFAA2</value>
     </values>
     <values>
         <field>Status__c</field>
-        <value xsi:type="xsd:string">0. New - pending case assignment
-1.0 IE - Case Assigned
-1.1 IE - pending internal eval/approval
-1.2 IE - pending DPCM eval/ approval</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
