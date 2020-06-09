@@ -1779,7 +1779,7 @@ global class ANG_OscarProcessHelper {
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
-		sendEmailAndCreateSingleEmailMessage(mailListAux, emailsToSend);
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
 		
 		if(notificationTemplate <> null)
 			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
@@ -2079,14 +2079,14 @@ global class ANG_OscarProcessHelper {
 				List<Contact> contactIdList = new List<Contact>();
 				contactIdList.add(contacts.get(caseToProcess.ContactId));
 
-				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false), caseToProcess.Id, owea[0], false, false);
-				mailsToSend.put(accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, mailListAux);
+				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false), caseToProcess.Id, owea[0], false, null, false);
+				mailsToSend.put(caseToProcess.Id, mailListAux);
 				emailsToSend.addAll(mailListAux);
 			}
 		}
 
 		//Bulkified process to send emails and create SingleEmailMessage
-		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend);
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
 
 	}
 
@@ -2094,7 +2094,7 @@ global class ANG_OscarProcessHelper {
 	 * Bulkified process to send email 
 	 * PCI Renewal Cases & Annual Revalidation notifications
 	 */
-	private void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend){
+	private static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
 
 		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
 		if(!mailsToSend.isEmpty()) {
