@@ -500,7 +500,7 @@
                         </apex:pageBlockSectionItem>
 
                         <apex:pageBlockSectionItem rendered="{!LOWER(newForm.Pay_Commission_to_agents__c)='yes'}">
-                            <apex:outputLabel value="Standard Commission Rate (%)" styleclass="ap-required"/>
+                            <apex:outputLabel value="Commission Rate (%)" styleclass="ap-required"/>
                             <apex:inputField value="{!newForm.Commission_Rate__c}"/>
                         </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>

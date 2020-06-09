@@ -1289,7 +1289,6 @@ private class ISSP_APProcess_Test
 			ap.Receive_HOT_files__c= 'Yes – Billing Period HOT';
 			ap.Hot_files_delivery_format__c = 'E-mail and download';
 			ap.Pay_Commission_to_agents__c = 'Yes';
-			ap.Pay_Standard_Commission__c = 'Yes';
 			insert ap;
 
 			PageReference pr = Page.ISSP_APCases;
@@ -1835,7 +1834,6 @@ private class ISSP_APProcess_Test
 			ctrl.getAdditionalSignatoryFormUrl();
 			ctrl.getAdditionalSignatoryFormName();
 			ctrl.securityCheck();
-			ctrl.getShowJoinICCSQuestion();
 			ctrl.getShowJoinICCS();
 			ctrl.getShowFormOfConcurrence();
 			ctrl.getShowFormOfApplication();
@@ -2538,6 +2536,7 @@ private class ISSP_APProcess_Test
 			ctrl.strAreaType='Airline Joining';
 			ctrl.ICCSProductCountry = ctrl.retrieveICCSProductCountry('BSP', countryUS);
 			//ICCS_Join
+			ctrl.newForm.Type_of_Settlement__c = 'ICCS bank account';
 			set<String> result = new set<String>(ctrl.getMandatoryFileList());
 			System.assert( result.contains('ICCS_Join'), 'wrong result ' + result );
 
@@ -2548,12 +2547,13 @@ private class ISSP_APProcess_Test
 
 			//ICCS_Join_market
 			ctrl.newForm.Airline_wish_to_join_ICCS__c='Yes';
-			ctrl.newForm.Type_of_Settlement__c = 'Local Bank';
+			ctrl.newForm.Type_of_Settlement__c = 'ICCS bank account';
 			result = new set<String>(ctrl.getMandatoryFileList());
 			System.assert( result.contains('ICCS_Join_market'), 'wrong result ' + result );
 			
 			//Bank_Mandate
 			ctrl.newForm.Airline_wish_to_join_ICCS__c='No';
+			ctrl.newForm.Type_of_Settlement__c = 'Local Bank';
 			result = new set<String>(ctrl.getMandatoryFileList());
 			System.assert( result.contains('Bank_Mandate'), 'wrong result ' + result );
 			

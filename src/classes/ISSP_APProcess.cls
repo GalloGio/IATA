@@ -714,10 +714,7 @@ global without sharing class ISSP_APProcess {
 							if(newForm.Type_of_Change_Requested__c.contains('Commission')) {
 								ISSP_AP_fieldLists.changeMandatoryFields.put('Pay_Commission_to_agents__c', 'Pay_Commission_to_agents__c');
 								if (newForm.Pay_Commission_to_agents__c=='Yes') {
-									ISSP_AP_fieldLists.changeMandatoryFields.put('Pay_Standard_Commission__c', 'Pay_Standard_Commission__c');
-									if (newForm.Pay_Standard_Commission__c=='Yes') {
-										ISSP_AP_fieldLists.changeMandatoryFields.put('Commission_Rate__c', 'Commission_Rate__c');
-									}
+									ISSP_AP_fieldLists.changeMandatoryFields.put('Commission_Rate__c', 'Commission_Rate__c');
 								}
 							}
 							//Stock Management mandatory fields
