@@ -1574,4 +1574,113 @@ public with sharing class PortalServicesCtrl {
 		}
 		return toReturn;
 	}
+		
+	@AuraEnabled (cacheable=false)
+	public static String verifyCompleteL3Data(String serviceId){
+		return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, false);
+	}
+
+	@AuraEnabled (cacheable=false)
+	public static String verifyCompleteL3DataWithCourse(String serviceId){
+		return PortalServicesCtrl.verifyCompleteL3DataInternal(serviceId, true);
+	}
+
+	public static String verifyCompleteL3DataInternal(String serviceId, Boolean preferedCourse){
+	
+		Boolean requiredDataPopulated = true;
+		Boolean latestToSAccepted = true;
+		Boolean serviceExists = true;
+	
+		String resURL = '';
+	
+		User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+
+		Set<String> l3MandatoryFieldsContact = new Set<String>{
+			'Additional_Email__c','Birthdate'
+		};
+		Set<String> l3MandatoryFieldsTCRD = new Set<String>{
+			'City_Name__c','Country_Reference__c','PO_Box_Address__c','Street__c'
+		};
+
+		Contact c = [SELECT Id, Name, Additional_Email__c, Birthdate FROM Contact WHERE Id =: userAux.ContactId];
+		for(String apiName: l3MandatoryFieldsContact){
+			if(c.get(apiName) == null){
+				requiredDataPopulated = false;
+			}
+		}
+
+		List<Training_Contact_Role_Details__c> tcrdLst = [SELECT City_Name__c, Country_Reference__c, Id, Name, PO_Box_Address__c, Street__c, Preferred_Course__c
+												FROM Training_Contact_Role_Details__c
+												WHERE Account_Contact_Role__r.Contact__r.Id =: userAux.ContactId
+												LIMIT 1];
+
+		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
+		if(!tcrdLst.isEmpty()){
+			tcrd = tcrdLst[0];
+		}
+
+		for(String apiName: l3MandatoryFieldsTCRD){
+			if(tcrd.get(apiName) == null){
+				if(apiName == 'Street__c' || apiName == 'PO_Box_Address__c'){
+					if(tcrd.get('Street__c') == null && tcrd.get('PO_Box_Address__c') == null){
+						requiredDataPopulated = false;
+						break;
+					}
+				}else{
+					requiredDataPopulated = false;
+					break;
+				}
+			}
+		}
+
+		List<Term_and_Condition__c> tosList = [SELECT Id, (SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptances__r WHERE Is_Accepted__c = true AND Contact__c =: userAux.ContactId) FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+
+		if(tosList != null && !tosList.isEmpty()){
+			
+			for(Term_and_Condition__c tos: tosList){
+				if(tos.Term_and_Condition_Acceptances__r.IsEmpty()){
+					latestToSAccepted = false;
+					break;
+				}
+			}
+		}
+
+		List<Portal_Application_Right__c> parList = [SELECT Id FROM Portal_Application_Right__c 
+														WHERE Contact__c =: userAux.ContactId 
+														AND Portal_Application__c =: serviceId 
+														AND Right__c = 'Access Granted'];
+
+		if(parList.isEmpty()){
+			serviceExists = false;
+		}
+
+		String baseUrl = Site.getBaseSecureUrl();
+		baseUrl = baseUrl.replace('/s', '');
+		String pathPrefix = '';
+
+		if(requiredDataPopulated && latestToSAccepted && serviceExists){
+	
+			List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
+	
+			if(ami != null && !ami.isEmpty()){
+				resURL = baseUrl + pathPrefix + ami[0].StartUrl;
+				if(preferedCourse && tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
+					resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
+				}
+			}
+		}else{
+			resURL = 'not_complete';
+		}
+
+		return resURL;
+	}
+	
+		@AuraEnabled(cacheable=false)
+		public static String getPortalServiceId(string serviceName){
+	
+			List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
+			system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
+	
+			return pas[0].Id;
+		}
 }

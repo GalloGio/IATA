@@ -1,0 +1,36 @@
+.customMaxHeight {
+	max-height: 320px;
+}
+
+.breakWord{
+	word-break: break-all;
+}
+
+.contactListbox{
+	margin-top:0;
+	border-radius:0;
+	padding-bottom:0;
+}
+
+.citySuggestion{
+	font-size: 16px;
+	border: 0px 1px 1px 1px solid #d4d4d4;
+}
+
+.formLabelContainer{
+	padding-bottom: 11px;
+}
+
+.addressItem{
+	margin-bottom: 30px;
+	vertical-align: top;
+	width: 50%;
+    padding: 7px;
+}
+
+@media only screen and (max-width: 800px) {
+	.addressItem{
+		width: 100%;
+		padding: 0;
+	}
+  }

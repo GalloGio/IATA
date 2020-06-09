@@ -1,9 +1,7 @@
-/**
- * Created by ukaya01 on 26/08/2019.
- */
-
 @isTest
 public class PortalRegistrationFirstLevelCtrlTest {
+
+	private static Map<String, String> urlParams = new Map<String, String>{'startUrl' => Label.CSP_PortalPath};
 
 	@testSetup
 	static void setup(){
@@ -197,7 +195,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		Test.StartTest();
 
 		PortalRegistrationFirstLevelCtrl.RegistrationConfig config = PortalRegistrationFirstLevelCtrl.getConfig();
-		System.assertEquals(config != null, true);
+		System.assert(config != null);
 
 		Test.StopTest();
 
@@ -208,20 +206,39 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 		Test.StartTest();
 
-		PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com');
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com' , null);
 		System.assertEquals(userInfo1.hasExistingContact == true, true);
 		System.assertEquals(userInfo1.hasExistingUser == true, true);
 		System.assertEquals(userInfo1.isEmailAddressAvailable == false, true);
 
-		PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact2@bucketairline.com');
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact2@bucketairline.com', null);
 		System.assertEquals(userInfo2.hasExistingContact == true, true);
 		System.assertEquals(userInfo2.hasExistingUser == false, true);
 		System.assertEquals(userInfo2.isEmailAddressAvailable == true, true);
 
-		PortalRegistrationFirstLevelCtrl.UserInformation userInfo3 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com');
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo3 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com', null);
 		System.assertEquals(userInfo3.hasExistingContact == false, true);
 		System.assertEquals(userInfo3.hasExistingUser == false, true);
 		System.assertEquals(userInfo3.isEmailAddressAvailable == true, true);
+
+		Test.StopTest();
+
+	}
+
+	@isTest
+	static void testGetYASUserInformationFromEmail(){
+
+		Test.StartTest();
+
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com' , 'yas');
+		System.assertEquals(userInfo1.hasExistingContact == true, true);
+		System.assertEquals(userInfo1.hasExistingUser == true, true);
+		System.assertEquals(userInfo1.isEmailAddressAvailable == false, true);
+
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com', 'yas');
+		System.assertEquals(userInfo2.hasExistingContact == false, true);
+		System.assertEquals(userInfo2.hasExistingUser == false, true);
+		System.assertEquals(userInfo2.isEmailAddressAvailable == true, true);
 
 		Test.StopTest();
 
@@ -248,8 +265,10 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 		string customerTypeJson = '{}';
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId);
-		System.assertEquals(result.isSuccess == true, true);
+		string userInfoJson = '{}';
+
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId, urlParams, userInfoJson);
+		System.assert(result.isSuccess);
 
 		registrationJson = '{"category": "",' +
 				'"country": "",' +
@@ -263,8 +282,8 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"selectedCustomerType": "",' +
 				'"termsAndUsage": false}';
 
-		result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId);
-		System.assertEquals(result.isSuccess == false, true);
+		result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId, urlParams, userInfoJson);
+		System.assert(!result.isSuccess);
 
 		Test.stopTest();
 
@@ -306,10 +325,10 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"Search_Option__c": "User Search",' +
 				'"Type__c": "Category"}';
 
+		string userInfoJson = '{}';
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, urlParams, userInfoJson);
+		System.assert(result.isSuccess);
 
 		registrationJson = '{"category": "Passenger_and_Cargo",' +
 				'"country": "' + country.Id + '",' +
@@ -323,8 +342,8 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"selectedCustomerType": "Passenger_and_Cargo",' +
 				'"termsAndUsage": true}';
 
-		result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
-		System.assertEquals(result.isSuccess == false, true);
+		result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, urlParams, userInfoJson);
+		System.assert(!result.isSuccess);
 
 		Test.stopTest();
 
@@ -366,10 +385,10 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"Search_Option__c": "User Search",' +
 				'"Type__c": "Category"}';
 
+		string userInfoJson = '{}';
 
-		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, urlParams, userInfoJson);
+		System.assert(result.isSuccess);
 
 		Test.stopTest();
 
@@ -403,8 +422,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		System.assert(result.isSuccess);
 
 		Test.stopTest();
 	}
@@ -435,8 +453,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		System.assert(result.isSuccess);
 
 		Test.stopTest();
 	}
@@ -469,13 +486,11 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		System.assert(result.isSuccess);
 
 		params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
 		result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == false, true);
+		System.assert(!result.isSuccess);
 
 		Test.stopTest();
 
@@ -492,7 +507,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 			Test.StartTest();
 
 			PortalRegistrationFirstLevelCtrl.RegistrationConfirmationConfig config = PortalRegistrationFirstLevelCtrl.getRegistrationConfirmationConfig();
-			System.assertEquals(config != null, true);
+			System.assert(config != null);
 
 			Test.StopTest();
 		}
@@ -510,7 +525,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 			Test.StartTest();
 
 			PortalRegistrationFirstLevelCtrl.RegistrationConfirmationConfig config = PortalRegistrationFirstLevelCtrl.getRegistrationConfirmationConfig();
-			System.assertEquals(config != null, true);
+			System.assert(config != null);
 
 			Test.StopTest();
 		}
@@ -541,8 +556,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		string customerTypeJson = '{}';
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.updateContactInfo(registrationJson, customerTypeJson, true);
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == true, true);
+		System.assert(result.isSuccess);
 
 		registrationJson = '{"category": "Passenger_and_Cargo",' +
 				'"contactId": null,' +
@@ -557,8 +571,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"selectedCustomerType": "Passenger_and_Cargo"}';
 
 		result = PortalRegistrationFirstLevelCtrl.updateContactInfo(registrationJson, customerTypeJson, true);
-		system.debug('result: ' + result);
-		System.assertEquals(result.isSuccess == false, true);
+		System.assert(!result.isSuccess);
 
 		Test.stopTest();
 
