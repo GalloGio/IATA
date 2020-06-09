@@ -256,7 +256,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
 				// get last ID Card
 				ID_Card__c idcard = [SELECT Valid_To_Date__c, Related_Contact__r.Account.IDCard_Key_Account__c,FirstName__c,LastName__c,
 									Agency_IATA_Code__c,Name_on_ID_Card__c,Date_of_Birth__c,VER_Number__c, Card_Type__c
-									FROM ID_Card__c WHERE Related_Contact__r.Id = :contactID AND Card_Status__c = :IDCardUtil.CARDSTATUS_VALID
+									FROM ID_Card__c WHERE Related_Contact__r.Id = :contactID
 									AND Valid_To_Date__c != null
 									ORDER BY Valid_To_Date__c DESC LIMIT 1];
 
