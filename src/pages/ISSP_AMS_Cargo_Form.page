@@ -5,7 +5,7 @@
     applyBodyTag="false" 
     applyHtmlTag="false"  
     language="{!displayLanguage}"
-    action="{!securityCheck}">
+	action="{!securityCheck}">
     <html> 
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <c:iss_ap_css />
@@ -470,7 +470,7 @@
              }
     }
 
-    function toggleLegalStatus(myValue){
+    function toggleLegalStatus(myValue, target = null){
         var theValue = document.getElementById(myValue).value; 
         if (theValue == 'Sole Proprietorship' || theValue == 'State Owned Enterprise'){
             $j('[id$=multi-owners]').hide();
@@ -478,6 +478,11 @@
             $j('[id$=multi-owners]').show();
         }     
         setHeaderLabels(theValue.toLowerCase());
+
+		var hiddenField = document.getElementById(target);
+		if(hiddenField !== undefined && hiddenField !== null) {
+			hiddenField.value = theValue;
+		}
     }
 
     function toggleCurrencyCode(c) {
@@ -919,18 +924,22 @@
                     </apex:actionFunction>
                     <apex:pageBlockSectionItem labelStyle="width:30%">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}"/>
-                        <!--apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');"/-->
-                        <apex:selectList size="1" value="{!newForm.ISSP_AMS_Legal_Status__c}" onchange="toggleLegalStatus('{!$Component.LegalStatus}');">
-                            <apex:selectOptions value="{!legalStatusList}"/>
-                        </apex:selectList>
+						<apex:outputPanel >
+							<apex:selectList size="1" id="legalStatusPicklist" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Legal_Status__c==null), 'border:2px #c00 solid;', '')}" onchange="toggleLegalStatus('{!$Component.legalStatusPicklist}', '{!$Component.legalStatusInput}');">
+								<apex:selectOptions value="{!legalStatusList}"/>
+							</apex:selectList>
+							<apex:inputField id="legalStatusInput" style="visibility: hidden" value="{!newForm.ISSP_AMS_Legal_Status__c}" />
+						</apex:outputPanel>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_legal_establishment__c.Label}"/>
-                        <apex:inputField required="{!IF(isCNSAgency, true, false)}" showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" onclick="showPastDates()"/>
-                    </apex:pageBlockSectionItem>
+						<!--apex:inputField required="{!IF(isCNSAgency, true, false)}" showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" onclick="showPastDates()"/-->
+						<apex:inputField showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Date_legal_establishment__c==null), 'border:2px #c00 solid;', '')}" onclick="showPastDates()"/>
+					</apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!isCNSAgency}">
-                        <apex:outputLabel value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}"/>          
-                        <apex:inputField required="{!IF(isCNSAgency, true, false)}" label="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" />
+                        <apex:outputLabel value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}"/>
+						<!--apex:inputField required="{!IF(isCNSAgency, true, false)}" label="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" /-->
+						<apex:inputField id="ISSP_AMS_Number_of_Years_Traded__c" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Number_of_Years_Traded__c==null), 'border:2px #c00 solid;', '')}"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
                 
@@ -944,7 +953,7 @@
                                     </apex:pageBlockSectionItem>
                                         <apex:pageBlockSectionItem labelStyle="width:30%" rendered="{!NOT(isocountry.EACP_Country__c)}">
                                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Nominee_Trustee__c.Label}"/>
-                                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Nominee_Trustee__c==null), 'border:2px red solid;', '')}"  value="{!newForm.ISSP_AMS_Nominee_Trustee__c}" >
+                                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Nominee_Trustee__c==null), 'border:2px #c00 solid;', '')}"  value="{!newForm.ISSP_AMS_Nominee_Trustee__c}" >
                                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                                 <apex:actionSupport event="onchange" reRender="forWhom" />
@@ -973,11 +982,11 @@
                         </apex:outputPanel>    
                         <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Business_Activities_Field_Label}"/>                                                        
-                            <apex:inputField value="{!newForm.ISSP_AMS_Business_Activities__c}" style="width:200px;{!IF(AND(isValError, newForm.ISSP_AMS_Business_Activities__c==null), 'border:2px red solid;', '')}"/>
+                            <apex:inputField value="{!newForm.ISSP_AMS_Business_Activities__c}" style="width:200px;{!IF(AND(isValError, newForm.ISSP_AMS_Business_Activities__c==null), 'border:2px #c00 solid;', '')}"/>
                         </apex:pageBlockSectionItem>                   
                         <apex:pageBlockSectionItem labelStyle="width:30%" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Is_Applicant_Parent_Field_Label}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Is_Applicant_Parent__c==null), 'border:2px red solid;', '')}" id="isApplicant" value="{!newForm.ISSP_AMS_Is_Applicant_Parent__c}" >
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Is_Applicant_Parent__c==null), 'border:2px #c00 solid;', '')}" id="isApplicant" value="{!newForm.ISSP_AMS_Is_Applicant_Parent__c}" >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                 <apex:actionSupport event="onchange" reRender="names_addresses" />
@@ -999,7 +1008,7 @@
                         </apex:pageBlockSectionItem>
                          <apex:pageBlockSectionItem labelStyle="width:30%" rendered="{!isocountry.EACP_Country__c}">
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_your_firm_handling_Dangerous_Goods__c.Label}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_handling_Dangerous_Goods__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_handling_Dangerous_Goods__c}"  >
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_handling_Dangerous_Goods__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Is_your_firm_handling_Dangerous_Goods__c}"  >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                 <apex:actionSupport event="onchange" oncomplete="toggleDangerousGoods(this.value)" reRender="section6"/>
@@ -1377,25 +1386,25 @@
                                 {!$Label.ISSP_AMS_Step3_4_CNS_Agency_Title}
                             </apex:outputpanel>
                         </apex:facet>
-                        <apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q1_CNS}"/>
-                            <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px red solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_CNS.r2c2}');">
+                            <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_CNS.r2c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
                         </apex:pageBlockSectionItem>
                         <apex:outputPanel id="r2c2" style="display:{!IF(newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes', '', 'none')}">
-                            <apex:pageBlockSection>
+                            <apex:pageBlockSection >
                                 <apex:pageblocksectionitem >
                                     <apex:outputlabel value="*{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_USA_Account_Number__c.Label}" style="width:150px"/>
-                                    <apex:inputfield required="{!IF(AND(isCNSAgency, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'), true, false)}" value="{!newForm.CASS_USA_Account_Number__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" />
+                                    <apex:inputfield value="{!newForm.CASS_USA_Account_Number__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" />
                                 </apex:pageblocksectionitem>
                             </apex:pageBlockSection>
                         </apex:outputPanel>
 
-                        <apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q4}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_an_approved_IATA_Passenger__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_CNS.r4c2}');">
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_an_approved_IATA_Passenger__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_CNS.r4c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1404,7 +1413,7 @@
                             <apex:pageBlockSection columns="2">  
                                 <apex:pageblocksectionitem >
                                     <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Agents_Numeric_Code_of_your_Head_Office__c.Label}" style="width:150px"/>
-                                    <apex:inputfield required="{!IF(AND(isCNSAgency, newForm.Is_your_firm_an_approved_IATA_Passenger__c=='Yes'), true, false)}" value="{!newForm.Agents_Numeric_Code_of_your_Head_Office__c}" onblur="if(this.value!='') {fetchCargoAgent2(this.value.trim());}"/>
+                                    <apex:inputfield value="{!newForm.Agents_Numeric_Code_of_your_Head_Office__c}" onblur="if(this.value!='') {fetchCargoAgent2(this.value.trim());}"/>
                                 </apex:pageblocksectionitem>
 
                                 <apex:outputPanel id="cargoagentdetails2">
@@ -1440,9 +1449,9 @@
                             </apex:pageBlockSection>
                         </apex:outputPanel>
 					   
-					    <apex:pageBlockSectionItem>
+					    <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q14}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_insured_to_cover__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_insured_to_cover__c}" >
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_insured_to_cover__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Is_your_firm_insured_to_cover__c}" >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                                              
                             </apex:selectRadio>
@@ -1459,7 +1468,7 @@
                         </apex:facet>
                        <apex:pageBlockSectionItem rendered="{!NOT(isCNSAgency)}">
                             <apex:outputLabel value="{!IF(NOT(isocountry.EACP_Country__c),IF(newlabels, $Label.ISSP_AMS_Step3_4_Q1_Agency_New, $Label.ISSP_AMS_Step3_4_Q1_Agency),$Label.ISSP_AMS_Step3_4_Q1_Intermediary)}"/>
-                            <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px red solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r2c2}');">
+                            <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r2c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1511,7 +1520,7 @@
                        
                          <apex:pageBlockSectionItem rendered="{!isocountry.EACP_Country__c}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q2}"/>
-                            <apex:selectRadio id="changeItem2" style="width:100px;{!IF(AND(isValError, newForm.Has_your_form_ever_held_CASS_Assoc_etc__c==null), 'border:2px red solid;', '')}" value="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r3c2}');">
+                            <apex:selectRadio id="changeItem2" style="width:100px;{!IF(AND(isValError, newForm.Has_your_form_ever_held_CASS_Assoc_etc__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r3c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1557,7 +1566,7 @@
                        
                        <apex:pageBlockSectionItem labelStyle="width:35%" rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q3}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_intend_to_request__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_intend_to_request__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r1c2}');">
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_intend_to_request__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Does_your_firm_intend_to_request__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r1c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1573,7 +1582,7 @@
                        
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q4}"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_an_approved_IATA_Passenger__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r4c2}');">
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_an_approved_IATA_Passenger__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r4c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1602,7 +1611,7 @@
                        </apex:outputPanel>
                        <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q5}"/>
-                            <apex:selectRadio id="changeItem3" style="width:100px;{!IF(AND(isValError, newForm.Does_the_air_transportation_which_your__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_the_air_transportation_which_your__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r5c2}');">
+                            <apex:selectRadio id="changeItem3" style="width:100px;{!IF(AND(isValError, newForm.Does_the_air_transportation_which_your__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Does_the_air_transportation_which_your__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r5c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1618,7 +1627,7 @@
                        </apex:outputPanel>
                        <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.EACP_Country__c), NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q6}"/>
-                            <apex:selectRadio id="changeItem4" style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_sell_air_cargo__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_sell_air_cargo__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r6c2}');">
+                            <apex:selectRadio id="changeItem4" style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_sell_air_cargo__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Does_your_firm_sell_air_cargo__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r6c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -1659,7 +1668,7 @@
                        <apex:pageBlockSection columns="1">  
                         <apex:pageBlockSectionItem >
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_use_its_own_vehicles__c.Label}" style="width:200px"/>
-                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_use_its_own_vehicles__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_use_its_own_vehicles__c}" >
+                            <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_use_its_own_vehicles__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Does_your_firm_use_its_own_vehicles__c}" >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                 
                             </apex:selectRadio>
@@ -1738,7 +1747,7 @@
                        </apex:outputPanel>
                             <apex:pageBlockSectionItem rendered="{!NOT(isocountry.EACP_Country__c)}">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q13}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_now_share_or_intend__c==null), 'border:2px red solid;', '')}" value="{!newForm.Does_your_firm_now_share_or_intend__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r13c2}');">
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Does_your_firm_now_share_or_intend__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Does_your_firm_now_share_or_intend__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r13c2}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                  
                                 </apex:selectRadio>
@@ -1754,7 +1763,7 @@
                        
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q14}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_insured_to_cover__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_insured_to_cover__c}" >
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_insured_to_cover__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Is_your_firm_insured_to_cover__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                                              
                                 </apex:selectRadio>
@@ -1770,7 +1779,7 @@
                         
                             <apex:pageBlockSectionItem labelStyle="width:50%">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q17}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_found_guilty_of_infringements__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_found_guilty_of_infringements__c}" >
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_found_guilty_of_infringements__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Been_found_guilty_of_infringements__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                 
                                 </apex:selectRadio>
@@ -1779,7 +1788,7 @@
                         
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q18}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_involved_in_a_bankruptcy__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_involved_in_a_bankruptcy__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r15c2}');">
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_involved_in_a_bankruptcy__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Been_involved_in_a_bankruptcy__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r15c2}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                 </apex:selectRadio>
@@ -1788,7 +1797,7 @@
                            <apex:pageBlockSection columns="1">
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q18_F1}" style="width:300px"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.If_yes_are_you_fully_and_legally__c==null), 'border:2px red solid;', '')}" value="{!newForm.If_yes_are_you_fully_and_legally__c}" >
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.If_yes_are_you_fully_and_legally__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.If_yes_are_you_fully_and_legally__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                 
                                 </apex:selectRadio>
@@ -1798,14 +1807,14 @@
                         
                             <apex:pageBlockSectionItem labelStyle="text-align:left" rendered="{!NOT(isCNSAgency)}">
                                 <apex:outputLabel value="{!IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_New, $Label.ISSP_AMS_Step3_4_Q19)}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_a_sole_proprietor__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_a_sole_proprietor__c}" >
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_a_sole_proprietor__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Been_a_sole_proprietor__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                  
                                 </apex:selectRadio>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem labelStyle="text-align:left" rendered="{!isCNSAgency}">
                                 <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q19_CNS}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_a_sole_proprietor__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_a_sole_proprietor__c}" >
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_a_sole_proprietor__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Been_a_sole_proprietor__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                  
                                 </apex:selectRadio>
@@ -1814,7 +1823,7 @@
                         
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Agency_New, $Label.ISSP_AMS_Step3_4_20_Agency), IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Intermediary_New, $Label.ISSP_AMS_Step3_4_20_Intermediary))}"/>
-                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_director_or_had_a_financial__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_director_or_had_a_financial__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r17c2}');">
+                                <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_director_or_had_a_financial__c==null), 'border:2px #c00 solid;', '')}" value="{!newForm.Been_director_or_had_a_financial__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r17c2}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                 </apex:selectRadio>
@@ -1823,11 +1832,11 @@
                             <apex:pageBlockSection columns="1">
                             <apex:pageblocksectionitem >
                                <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.State_full_name_of_such_Agent__c.Label}" style="width:150px;"/>
-                               <apex:inputfield required="{!IF(AND(isCNSAgency, newForm.Been_director_or_had_a_financial__c=='Yes'), true, false)}" value="{!newForm.State_full_name_of_such_Agent__c}"/>
+                               <apex:inputfield value="{!newForm.State_full_name_of_such_Agent__c}"/>
                             </apex:pageblocksectionitem>
                             <apex:pageblocksectionitem >
                                <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Were_all_IATA_Members_fully_repaid__c.Label}" />
-                               <apex:selectRadio value="{!newForm.Were_all_IATA_Members_fully_repaid__c}" style="width:100px;{!IF(AND(isValError, newForm.Been_director_or_had_a_financial__c=='Yes' && newForm.Were_all_IATA_Members_fully_repaid__c==null), 'border:2px red solid;', '')}">
+                               <apex:selectRadio value="{!newForm.Were_all_IATA_Members_fully_repaid__c}" style="width:100px;{!IF(AND(isValError, newForm.Been_director_or_had_a_financial__c=='Yes' && newForm.Were_all_IATA_Members_fully_repaid__c==null), 'border:2px #c00 solid;', '')}">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                                 </apex:selectRadio>                 
@@ -2544,7 +2553,7 @@
                                     </td></tr>
                             
                             <tr id="validUntilQuestion" style="display:{!IF(NOT(AND(isocountry.EACP_Country__c,newForm.Is_your_firm_handling_Dangerous_Goods__c=='No')),'','none')}"><td class="modalrow">
-                                        <apex:selectRadio id="validUntilDate"  style="border-collapse:separate;padding-left:5px;width:100px;{!IF(trainedStaffContact.Training_dangerous_goods_completed__c==null, 'border:2px red solid;', '')}" value="{!trainedStaffContact.Training_dangerous_goods_completed__c}" onchange="togglePageItem(this.value,'validUntil')" >
+                                        <apex:selectRadio id="validUntilDate"  style="border-collapse:separate;padding-left:5px;width:100px;{!IF(trainedStaffContact.Training_dangerous_goods_completed__c==null, 'border:2px #c00 solid;', '')}" value="{!trainedStaffContact.Training_dangerous_goods_completed__c}" onchange="togglePageItem(this.value,'validUntil')" >
                                             <apex:selectOption itemValue="Yes" itemLabel="   {!$Label.ISSP_Yes}"/>
                                             <apex:selectOption itemValue="No" itemLabel="   {!$Label.ISSP_No}"/>
                                     </apex:selectRadio>
