@@ -1675,4 +1675,13 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 
 		return resURL;
 	}
+
+	@AuraEnabled(cacheable=false)
+	public static String getPortalServiceId(string serviceName){
+
+		List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
+		system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
+
+		return pas[0].Id;
+	}
 }
