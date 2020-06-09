@@ -22,6 +22,16 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 		theAccount.BillingPostalCode = 'H0H 0H0';
 		theAccount.Status__c = 'Approved';
 		insert theAccount;
+        
+        //create the contacts
+		Contact con = new Contact();
+		con.LastName = 'IDCard';
+		con.FirstName = 'Contact';
+		con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		con.AccountId = theAccount.Id;
+		con.Email = 'idcardcontact@test.idcard';
+		con.VER_Number_2__c = '1234';
+		insert con;
 
 		ID_Card_Application__c application = new ID_Card_Application__c();
 		application.IATA_Code__c = '5553567';
@@ -35,8 +45,8 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 		eTEN.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application');
 		eTEN.Name = 'ID Card Email Template Application Approval EN';
 		eTEN.greeting_line__c = 'Dear {!ID_Card_Application__c.Displayed_Name__c},';
-		eTEN.Body_Section_1__c = 'Your application has the First Name: {!ID_Card_Application__c.First_Name__c}.';
-		eTEN.Body_Section_2__c = 'Your application has the Last Name: {!ID_Card_Application__c.Last_Name__c}.';
+		eTEN.Body_Section_1__c = 'Your application has the First Name: {!Account.KeyCountact.First_Name__c}.';
+		eTEN.Body_Section_2__c = 'Your application has the Last Name: {!Account.KeyCountact.Last_Name__c}.';
 		eTEN.Signature_Details__c = 'Best Regards {!ID_Card_Application__c.Case_Number__c}.';
 		insert eTEN;
 	}
@@ -45,48 +55,54 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 	static void processText_Error_Test() {
 		//call the function without a field (Displayed_Name__c) in the app query
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
+        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
+        ctrl.recipientId = con.Id;
 		ctrl.language = 'English';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result = '';
-		String text = 'Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
+		String text = 'Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
 
 		Test.startTest();
-			result = ctrl.processText(text, app);
+			result = ctrl.processText(text, app, con);
 		Test.stopTest();
 
-		System.assert(result.contains('{!ID_Card_Application__c.First_Name__c}'));
-		System.assert(result.contains('{!ID_Card_Application__c.Last_Name__c}'));
+		System.assert(result.contains('{!Account.KeyCountact.First_Name__c}'));
+		System.assert(result.contains('{!Account.KeyCountact.Last_Name__c}'));
 		System.assert(result.contains('{!ID_Card_Application__c.Displayed_Name__c}'));
-		System.assert(result.equals('Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
+		System.assert(result.equals('Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
 	}
 
 	@isTest
 	static void processText_Success_Test() {
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c, Displayed_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
+        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
+        ctrl.recipientId = con.Id;
 		ctrl.language = 'English';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result = '';
-		String text = 'Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
+		String text = 'Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
 
 		Test.startTest();
-			result = ctrl.processText(text, app);
+			result = ctrl.processText(text, app, con);
 		Test.stopTest();
 
-		System.assert(!result.contains('{!ID_Card_Application__c.First_Name__c}'));
-		System.assert(!result.contains('{!ID_Card_Application__c.Last_Name__c}'));
+		System.assert(!result.contains('{!Account.KeyCountact.First_Name__c}'));
+		System.assert(!result.contains('{!Account.KeyCountact.Last_Name__c}'));
 		System.assert(!result.contains('{!ID_Card_Application__c.Displayed_Name__c}'));
-		System.assert(result.equals('Test for the Id Card with the First Name UTest, the Last Name Unit and the Display Name UTest Unit'));
+		System.assert(result.equals('Test for the Id Card with the First Name Contact, the Last Name IDCard and the Display Name UTest Unit'));
 	}
 
 	@isTest
 	static void replaceField_Test() {
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c, Displayed_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
+        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
+        ctrl.recipientId = con.Id;
 		ctrl.language = 'French';
 		ctrl.text1 = '';
 		ctrl.text2 = '';
@@ -94,32 +110,35 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 		ctrl.text4 = '';
 		ctrl.text5 = '';
 		ctrl.text6 = '';
+        ctrl.greeting = '';
+        ctrl.emailBody1 = '';
+        ctrl.emailBody2 = '';
 		ctrl.emailBody3 = '';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result1 = '';
 		String result2 = '';
 		String result3 = '';
-		String text = 'Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
+		String text = 'Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}';
 
 		Test.startTest();
-			result1 = ctrl.replaceField(text, '{!ID_Card_Application__c.First_Name__c}', app);
-			result2 = ctrl.replaceField(text, '{!ID_Card_Application__c.Last_Name__c}', app);
-			result3 = ctrl.replaceField(text, '{!ID_Card_Application__c.Displayed_Name__c}', app);
+			result1 = ctrl.replaceField(text, '{!Account.KeyCountact.First_Name__c}', app, con);
+			result2 = ctrl.replaceField(text, '{!Account.KeyCountact.Last_Name__c}', app, con);
+			result3 = ctrl.replaceField(text, '{!ID_Card_Application__c.Displayed_Name__c}', app, con);
 		Test.stopTest();
 
-		System.assert(!result1.contains('{!ID_Card_Application__c.First_Name__c}'));
-		System.assert(result1.contains('{!ID_Card_Application__c.Last_Name__c}'));
+		System.assert(!result1.contains('{!Account.KeyCountact.First_Name__c}'));
+		System.assert(result1.contains('{!Account.KeyCountact.Last_Name__c}'));
 		System.assert(result1.contains('{!ID_Card_Application__c.Displayed_Name__c}'));
-		System.assert(result1.equals('Test for the Id Card with the First Name UTest, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
+		System.assert(result1.equals('Test for the Id Card with the First Name Contact, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
 
-		System.assert(result2.contains('{!ID_Card_Application__c.First_Name__c}'));
-		System.assert(!result2.contains('{!ID_Card_Application__c.Last_Name__c}'));
+		System.assert(result2.contains('{!Account.KeyCountact.First_Name__c}'));
+		System.assert(!result2.contains('{!Account.KeyCountact.Last_Name__c}'));
 		System.assert(result2.contains('{!ID_Card_Application__c.Displayed_Name__c}'));
-		System.assert(result2.equals('Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name Unit and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
+		System.assert(result2.equals('Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name IDCard and the Display Name {!ID_Card_Application__c.Displayed_Name__c}'));
 
-		System.assert(result3.contains('{!ID_Card_Application__c.First_Name__c}'));
-		System.assert(result3.contains('{!ID_Card_Application__c.Last_Name__c}'));
+		System.assert(result3.contains('{!Account.KeyCountact.First_Name__c}'));
+		System.assert(result3.contains('{!Account.KeyCountact.Last_Name__c}'));
 		System.assert(!result3.contains('{!ID_Card_Application__c.Displayed_Name__c}'));
-		System.assert(result3.equals('Test for the Id Card with the First Name {!ID_Card_Application__c.First_Name__c}, the Last Name {!ID_Card_Application__c.Last_Name__c} and the Display Name UTest Unit'));
+		System.assert(result3.equals('Test for the Id Card with the First Name {!Account.KeyCountact.First_Name__c}, the Last Name {!Account.KeyCountact.Last_Name__c} and the Display Name UTest Unit'));
 	}
 }

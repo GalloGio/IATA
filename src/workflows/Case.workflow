@@ -4071,6 +4071,7 @@
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_idcard_is_approved</fullName>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
         <description>Send an email as soon as idcard is approved</description>
         <protected>false</protected>
         <recipients>
