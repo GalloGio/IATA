@@ -22,8 +22,8 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 		theAccount.BillingPostalCode = 'H0H 0H0';
 		theAccount.Status__c = 'Approved';
 		insert theAccount;
-        
-        //create the contacts
+		
+		//create the contacts
 		Contact con = new Contact();
 		con.LastName = 'IDCard';
 		con.FirstName = 'Contact';
@@ -55,10 +55,10 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 	static void processText_Error_Test() {
 		//call the function without a field (Displayed_Name__c) in the app query
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
-        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
+		Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
-        ctrl.recipientId = con.Id;
+		ctrl.recipientId = con.Id;
 		ctrl.language = 'English';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result = '';
@@ -77,10 +77,10 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 	@isTest
 	static void processText_Success_Test() {
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c, Displayed_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
-        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
+		Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
-        ctrl.recipientId = con.Id;
+		ctrl.recipientId = con.Id;
 		ctrl.language = 'English';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result = '';
@@ -99,10 +99,10 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 	@isTest
 	static void replaceField_Test() {
 		ID_Card_Application__c app = [SELECT Id, First_Name__c, Last_Name__c, Displayed_Name__c FROM ID_Card_Application__c WHERE IATA_Code__c = '5553567' LIMIT 1];
-        Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
+		Contact con = [SELECT ID, FirstName, LastName FROM Contact WHERE Email = 'idcardcontact@test.idcard'];
 		IDCARD_VFEmailTemplateKeyAccController ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		ctrl.myID = app.Id;
-        ctrl.recipientId = con.Id;
+		ctrl.recipientId = con.Id;
 		ctrl.language = 'French';
 		ctrl.text1 = '';
 		ctrl.text2 = '';
@@ -110,9 +110,9 @@ private class IDCARD_VFEmailTemplateKeyAccCtrlTest{
 		ctrl.text4 = '';
 		ctrl.text5 = '';
 		ctrl.text6 = '';
-        ctrl.greeting = '';
-        ctrl.emailBody1 = '';
-        ctrl.emailBody2 = '';
+		ctrl.greeting = '';
+		ctrl.emailBody1 = '';
+		ctrl.emailBody2 = '';
 		ctrl.emailBody3 = '';
 		ctrl = new IDCARD_VFEmailTemplateKeyAccController();
 		String result1 = '';
