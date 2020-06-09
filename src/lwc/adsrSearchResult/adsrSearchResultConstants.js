@@ -199,10 +199,10 @@ const TABLE_DETAIL_COLUMNS = [
 					+"Legal Action- Ongoing court case or other any legal formalities are linked to the agency<br>",
 		"info": (record, index, records) => {
 			if(record.agentStatus === "Repayment Agreement" && record.dueDate !== undefined && record.dueDate !== null){
-				return "AGREEMENT ON REPAYMENT SCHEDULE PLAN HAS BEEN REACHED.<br>"
-					+ "AGENT WILL BE REACTIVATED AFTER THE COMPLETION OF THE REPAYMENT PLAN AND SATISFYING THE CONDITIONS OF THE RESOLUTIONS.<br>"
-					+ "FAILURE TO HONOR THE REPAYMENT AGREEMENT WILL RESULT IN REMOVAL OF THE AGENT FROM THE AGENCY LIST.<br>"
-					+ "LAST INSTALLMENT WILL BE ON " + record.dueDate + ".";
+				return "Agreement on repayment schedule plan has been reached.<br>"
+					+ "Agent will be reactivated after the completion of the repayment plan and satisfying the conditions of the resolutions.<br>"
+					+ "Failure to honor the repayment agreement will result in removal of the agent from the agency list.<br>"
+					+ "Last installment will be on " + record.dueDate + ".";
 			}
 			return false;
 		},
