@@ -155,6 +155,13 @@ export default class RecordField extends LightningElement {
         return this.properties.info;
 	}
 
+	get infoStyle() {
+		if(this.properties.infoStyle === undefined) {
+			return null;
+		}
+		return this.properties.infoStyle;
+	}
+
     connectedCallback(){
         //console.log(JSON.parse(JSON.stringify(this.properties)));
     }

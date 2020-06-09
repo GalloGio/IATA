@@ -201,12 +201,15 @@ export default class IataDependentPicklist extends LightningElement {
 		this.dispatchEvent(
 			new CustomEvent("picklistopen", {detail: {name: e.target.name, label: e.target.label, top: e.target.offsetTop}})
 		);
+		this.closeAllOpenPicklists(e.target.name);
 	}
 
 	@api
-	closeAllOpenPicklists() {
+	closeAllOpenPicklists(excludedPicklist = null) {
 		this.template.querySelectorAll('c-iata-picklist').forEach(picklist => {
+			if(excludedPicklist !== picklist.name) {
 			picklist.close();
+			}
 		});
 	}
 

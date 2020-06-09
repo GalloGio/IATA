@@ -93,7 +93,7 @@ export default class IataButton extends LightningElement {
 
 	handleClick(event) {
         if (!this.disabled) {
-			
+			event.target.blur();
 		} else if (this.errormsg !== '') {
 			const evt = new ShowToastEvent({
 				title: 'Error.',

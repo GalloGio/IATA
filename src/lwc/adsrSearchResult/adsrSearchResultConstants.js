@@ -205,6 +205,11 @@ const TABLE_DETAIL_COLUMNS = [
 					+ "LAST INSTALLMENT WILL BE ON " + record.dueDate + ".";
 			}
 			return false;
+		},
+		infoStyle: {
+			width: '420px',
+			top: '- 55px',
+			left: '- 260px'
 		}
 	}
 ];

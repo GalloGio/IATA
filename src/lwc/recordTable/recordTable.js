@@ -133,8 +133,20 @@ export default class RecordTable extends RecordCollection {
 			left += currentElement.offsetLeft  - currentElement.scrollLeft;
 			top += currentElement.offsetTop;
 		}
-		e.detail.top = top;
-		e.detail.left = left;
+		e.detail.top === undefined ?
+			e.detail.top = '+ 0px' :
+			e.detail.top.indexOf('-') < 0 ?
+				'+ ' + e.detail.top :
+				e.detail.top;
+		e.detail.left === undefined ?
+			e.detail.left = '+ 0px' :
+			e.detail.left.indexOf('-') < 0 ?
+				'+ ' + e.detail.left :
+				e.detail.left;
+		
+		e.detail.top = `calc(${top}px ${e.detail.top})`;
+		e.detail.left = `calc(${left}px ${e.detail.left})`;
+		e.detail.width = e.detail.width;
 		this.template.querySelector("c-advanced-helptext[role=display]").show(e);
 	}
 

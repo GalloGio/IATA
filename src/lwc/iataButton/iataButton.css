@@ -16,6 +16,7 @@ button {
 	letter-spacing: normal;
 	word-break: break-word;
 	min-height: 2.5rem;
+	margin: 1px;
 }
 
 button[disabled] {
@@ -125,4 +126,8 @@ button[disabled] {
 
 .slds-text-body_regular {
 	font-size: 0.875rem;
+}
+button:focus {
+	outline-color: currentColor;
+	outline-style: outset;
 }

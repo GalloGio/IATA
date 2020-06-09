@@ -6,9 +6,11 @@ export default class AdvancedHelptext extends LightningElement {
 	@api content = "";
 	@api activator = false;
 	@api display = false;
+	@api customStyle = {};
 	@track _visible = false;
 	@track _offsetLeft = null;
 	@track _offsetTop = null;
+	@track _offsetWidth = null;
 
 	get displayLabel() {
 		return !this.display && !this.icon;
@@ -33,8 +35,9 @@ export default class AdvancedHelptext extends LightningElement {
 	}
 
 	get _tooltipStyle() {
-		return `left: ${this._offsetLeft}px; `
-				+`top: ${this._offsetTop}px;`;
+		return `left: ${this._offsetLeft}; `
+				+ `top: ${this._offsetTop}; `
+				+ (this._offsetWidth ? `width: ${this._offsetWidth}; max-width: unset;` : '');
 	}
 
 	@api show(event) {
@@ -42,6 +45,7 @@ export default class AdvancedHelptext extends LightningElement {
 		this._visible = true;
 		this._offsetLeft = event.detail.left;
 		this._offsetTop = event.detail.top;
+		this._offsetWidth = event.detail.width;
 	}
 
 	@api hide() {
@@ -61,8 +65,9 @@ export default class AdvancedHelptext extends LightningElement {
 					detail: {
 						name: this.name,
 						content: this.content,
-						left: this.offsetLeft,
-						top: this.offsetTop
+						left: this.customStyle.left,
+						top: this.customStyle.top,
+						width: this.customStyle.width
 					}
 				}
 			)

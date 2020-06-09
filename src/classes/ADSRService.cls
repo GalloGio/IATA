@@ -62,11 +62,11 @@ public without sharing class ADSRService {
 					 ORDER BY CreatedDate DESC),
 					(SELECT Id, Name, Security_Status__c
 					 FROM Financial_Securities__r
-					 WHERE Expiry_Date__c >= TODAY
+					 WHERE Expiry_Date__c >= TODAY OR Unlimited_Security__c = true
 					 ORDER BY CreatedDate DESC)
 				FROM Account
 				WHERE Recordtype.DeveloperName = 'IATA_Agency'
-					AND IRIS_Code__c IN :agentCodes];
+					AND (IRIS_Code__c IN :agentCodes OR IATACode__c IN :agentCodes)];
 
 		Set<Id> caseIds = new Set<Id>();
 		for(Account currentAgent : agents) {
@@ -376,7 +376,7 @@ public without sharing class ADSRService {
 						financialSecurityStatus = 'Financial Security Encashed';
 				} else if (isValidLocationType(info.agency.Location_Type__c) && info.agency.Status__c == 'Terminated'
 					&& isEnchashmentInProgress(info.agency.Financial_Securities__r)) {
-						financialSecurityStatus = 'First Claim Sent';
+						financialSecurityStatus = 'Final Claim Sent';
 				} else if (isFirstCallLetterSent(info.agency.Cases)) {
 					financialSecurityStatus = 'First Call Letter Sent';
 				}
