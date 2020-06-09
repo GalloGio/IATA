@@ -2,7 +2,8 @@
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
- <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+ <apex:image value="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1591112550000"/>
+ <BR/>
 <!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
 <i>{!$Label.ISSP_Email_do_not_reply}</i><p />
 <BR/>
@@ -40,19 +41,12 @@
 {!$Label.ISSP_Email_IataService}<BR/>
 
 <p>
-<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
-<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
-</a>
-</apex:outputPanel>
-
 <apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
 <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000056QFS&oid=00D2000000008TF "/>
 </apex:outputPanel>
-
 </p>
-
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+<BR/>
+<apex:image value="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1591112569000"/>
 <!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
 <BR/>
 
