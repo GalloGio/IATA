@@ -1,6 +1,7 @@
 <apex:component controller="IDCARD_VFEmailTemplateKeyAccController" access="global"  allowDML="true" rendered="true">
     <apex:attribute name="CID" type="String"  description="Related Case ID" assignTo="{!myID}" />
     <apex:attribute name="lang" type="String"  description="Template language" assignTo="{!language}"/>
+    <apex:attribute type="id" name="recipient_id" assignTo="{!recipientId}" description="Recipient" />
 
     <apex:componentBody >
     <table>

@@ -12,7 +12,7 @@
 <tr></tr>
 
 
-<tr><td><c:IDCARD_VFEmailTemplateKeyAccount CID="{!relatedTo.Id}" lang="English"/></td></tr>
+<tr><td><c:IDCARD_VFEmailTemplateKeyAccount recipient_id="{!recipient.id}" CID="{!relatedTo.Id}" lang="English"/></td></tr>
 
 <tr></tr>
 <tr></tr>
