@@ -551,13 +551,13 @@ public class ANG_RHCHelper {
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
+			//htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
+			//plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
 				emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
@@ -595,8 +595,8 @@ public class ANG_RHCHelper {
 			nt.Message__c = nt.Message__c
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
-							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmount) + ' ' + riuw.CurrencyIsoCode)
-							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
+							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmount) + ' ' + riuw.CurrencyIsoCode);
+//							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
 			notifications.add(nt);
 		}
 

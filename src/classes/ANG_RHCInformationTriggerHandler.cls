@@ -183,7 +183,7 @@ public class ANG_RHCInformationTriggerHandler{
 		Set<Id> toNotify = new Set<Id>();
 
 		for(ANG_RHC_Information__c rhc : triggerNew){
-			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount__c != oldMap.get(rhc.Id).ANG_RHC_Amount__c){
 				Boolean sendNotification = true;
 
 				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{rhc.ANG_Account_Country_ISO_Code__c}).get(0).AMS_Country_Specific_Attributes__r){
