@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>27.0</apiVersion>
+    <available>true</available>
+    <description>Send Renewal notice email to contacts with ID Cards that expire in 2 months</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IDCard_RenewalEmail</name>
+    <style>none</style>
+    <subject>Confirmation IATA/IATAN ID Card  Application</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -103,21 +103,18 @@ body a:hover {
     text-decoration:none !important; 
 }
 
-.customPopup {
-    background-color: white;
-    border-style: solid;
-    border-width: 2px;
-    left: 25%;
-    top: 30%;
-    font-size: 11pt;
-    padding: 10px;
-    position: absolute;
-    z-index: 9999;
-    width: 800px;
-}
-
 .btn {
     float: right;
+}
+td.MultipleAgentsLabels{
+    width: 100px;
+}
+.titleIdCards{
+    text-align: left !important; 
+    color: #028FD7; 
+    font-size: .9em; 
+    font-weight: bold; 
+    padding: 5px 2px 4px 5px; 
 }
 
 </style>
@@ -163,20 +160,6 @@ body a:hover {
 
         }
 
-        function getSelectedContact2(type)
-        {
-        
-            var $radio = $('input[name=group1]:checked');
-            var updateDay = $radio.val();
-            var id = $radio.attr('id');
-            showPopup(type,id);
-        }
-
-        function callClosePopup()
-        {
-            closePopup();
-            document.getElementById('{!$Component.idcardForm.theHiddenInput}').value = '';
-        }
         jQuery(document).ready(function (){
             
             $("input:radio[name=group1]").click(function() {
@@ -236,38 +219,6 @@ body a:hover {
                     <!--CONTATC SIZE {!myContacts.size}
                     <apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false"/><br/><br/>-->
 
-                    <apex:outputPanel id="popup">
-                        <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
-                            <apex:commandButton value="X" title="Close the popup" onclick="callClosePopup();" styleClass="closeButton" rerender="popInnerOutputPnl,Msgs"><!--action="{!closePopup}" -->
-                            </apex:commandButton>
-                            <apex:pageblockSection columns="1">
-                                <apex:pageBlockSectionItem >                         
-                                    <apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="color:black"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
-                                    <apex:outputText value="{!selectedContact.acc.Short_Name__c}" label="" style="color:black;"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
-                                    <apex:outputText value="{!selectedContact.theAddress[0]}" label="" style="color:black;"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
-                                    <apex:outputText value="{!selectedContact.theAddress[1]}" label="" style="color:black;"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
-                                    <apex:outputText value="{!selectedContact.theAddress[4]}, {!selectedContact.theAddress[2]}" label="" style="color:black;"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
-                                    <apex:outputText value="{!selectedContact.theAddress[3]}" label="" style="color:black;"/>
-                                </apex:pageblockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                 <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="color:black"/>
-                                </apex:pageblockSectionItem>
-                            </apex:pageblockSection>
-                            <apex:commandLink value="Continue..." onclick="getSelectedContact('RRR');" styleClass="btn" rerender="popInnerOutputPnl">
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:outputPanel>
-
                     <apex:pageBlockTable value="{!myContacts}" var="c" id="agents" styleClass="multipleAgenciesPBT">
 
                         <!--<apex:outputLabel value="{!$Label.IDCard_Details}:" styleClass="labels" />-->
@@ -280,8 +231,10 @@ body a:hover {
                         </apex:column>
 
                         <apex:column style="vertical-align: top" width="35%">
-                            <apex:facet name="header">{!$Label.IDCard_AgentDetails}</apex:facet>
-                            
+
+                            <div class="titleIdCards">
+                                    {!$Label.IDCard_AgentDetails}
+                            </div>
                             <table class="MultibleAgencyContacts">
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_LastName}:</td>
@@ -295,25 +248,11 @@ body a:hover {
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_MiddleInitial}:</td>
                                     <td class="MultipleAgentsValues">{!c.con.Middle_Initial__c}</td>
                                 </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_Email}:</td>
-                                    <td class="MultipleAgentsValues">{!c.con.Email__c}</td>
-                                </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_DOB}:</td>
-                                    <td class="MultipleAgentsValues">
-                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                            <apex:param value="{!c.con.Date_of_Birth__c}" /> 
-                                        </apex:outputText>
-                                    </td>
-                                </tr>
                             </table>
-
-                        </apex:column>
-
-                        <apex:column style="vertical-align: top" width="35%">
-                            <apex:facet name="header">{!$Label.IDCard_CompanyDetails} </apex:facet>
                             
+                            <div class="titleIdCards" style="margin-top:20px;">
+                                    {!$Label.IDCard_CompanyDetails}
+                            </div>
                             <table class="MultibleAgencyAccounts">
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_AgencyName}:</td>
@@ -326,11 +265,7 @@ body a:hover {
                                 <tr>
                                     <td class="MultipleAgentsLabels">{!$Label.IDCard_IATA_Code_Of_Location}:</td>
                                     <td class="MultipleAgentsValues">{!c.acc.IATACode__c}</td>
-                                </tr>
-                                <tr>
-                                    <td class="MultipleAgentsLabels">{!$Label.IDCard_Address}:</td>
-                                    <td class="MultipleAgentsValues"><div style="height: 40px; max-height: 40px; vertical-align: top; overflow-y: scroll;">{!c.theAddress[0]}<br />{!c.theAddress[4]}, {!c.theAddress[1]} {!c.theAddress[2]}<br />{!c.theAddress[3]}</div></td>
-                                </tr>                 
+                                </tr>       
                                 <script>
                                     var legalName  = '{!c.acc.Legal_name__c}';                                                        
                                     if (legalName == '' || legalName == '0' || legalName == '0.0' || legalName == '0.00'|| legalName == null)
@@ -340,17 +275,27 @@ body a:hover {
                                     }                                                   
                                 </script> 
                             </table>
-
-
                         </apex:column>
-                        
+                            
                         <apex:column >
                             <apex:facet name="header"></apex:facet>
                             <table id="reportAgencyIncorrectInfoTable_{!c.con.Id}" style="margin-top:1em; width: 100%; visibility:hidden;">                                
                                 <tr>                                
                                     <td><apex:outputLabel style="color:blue" value="{!$Label.IDCard_ReportAgencyIncorrectInfo}" escape="false"/></td>                                   
                                 </tr>
-                            </table>                            
+                            </table>     
+
+                        </apex:column>
+
+                        <apex:column style="vertical-align: top" width="35%">
+                            <div class="titleIdCards">
+                                {!$Label.ID_Card_Photo}
+                            </div>     
+                            <table class="MultibleAgencyAccounts">
+                                <tr>
+                                    <td><apex:image id="theImage" value="{!c.photo}" width="123" height="150"/></td>
+                                </tr>
+                            </table>                  
                         </apex:column>
 
 
@@ -364,12 +309,6 @@ body a:hover {
                             <apex:param name="myaction" value="" />
                             <apex:param name="selected" value="" />
                         </apex:actionFunction>
-                        <apex:actionFunction name="showPopup" action="{!showPopup}" >
-                            <apex:param name="myaction" value="" />
-                            <apex:param name="selected" value="" />
-                        </apex:actionFunction>
-                        <apex:actionFunction name="closePopup" action="{!closePopup}" rerender="popup">
-                        </apex:actionFunction>
                         <table>
                             <tr>
                                 <td>
@@ -381,12 +320,9 @@ body a:hover {
                             </tr>
                             <tr>
                                 <td>
-                                <apex:commandLink onclick="getSelectedContact2('RRR')" id="btn11" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="popInnerOutputPnl" rendered="true">
+                                    <apex:commandLink onclick="getSelectedContact('RRR');" id="btn11" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="Msgs" rendered="true">
                                         <span>{!$Label.IDCard_Match_IsTheAgent}</span>
                                     </apex:commandLink>
-                                    <!--<apex:commandLink onclick="getSelectedContact('RRR');" id="btn11" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="Msgs" rendered="true">
-                                        <span>{!$Label.IDCard_Match_IsTheAgent}</span>
-                                    </apex:commandLink>-->
                                     <!--<apex:commandButton onclick="getSelectedContact('RRR');" value="{!$Label.IDCard_Match_IsTheAgent}" id="btn11" rerender="Msgs" rendered="true" />-->
                                 </td>
                             </tr>

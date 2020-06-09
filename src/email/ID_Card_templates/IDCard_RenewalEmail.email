@@ -1,0 +1,50 @@
+<messaging:emailTemplate subject="IATA/IATAN ID Card Renewal Notice" recipientType="Contact"  relatedToType="Contact">
+<messaging:htmlEmailBody >
+
+<html>
+<header>
+<table align="center">
+    <tr align ="center">
+        <td >
+            <div >
+            <img src="{!$Label.IDCARD_VFEmailTemplate_Header}" height="161" width="698"/>
+            </div>
+        </td>
+    </tr>
+</table>
+</header>
+
+<body>
+<font face="arial">
+
+<table align="center">
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+<td colspan="1" rowspan="1">
+<c:IDCARD_VFEmailTemplate CID="{!relatedTo.Id}" isRenew="true"/>
+</td>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+</table>
+
+</font>
+</body>
+
+
+<footer>
+<table align="center">
+     <tr align ="center">
+        <td align="center" max-height="20%" max-width="20%">
+            <img src="{!$Label.IDCARD_VFEmailTemplate_Footer}" height="161" width="698"/>
+        </td>
+    </tr>
+</table>
+</footer>
+</html>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- *
+ * 
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -21,61 +21,61 @@
  */
 @isTest
 public class IDCardAgencyDetailsControllerTest{
-
+	
 	private static IDCardTestData testData;
-
+	
 	private static IDCardAgencyDetailsController iDCardAgencyDetailsController;
 	private static PageReference controllerPage;
-	private static PageReference nextPage;
-
+	private static PageReference nextPage;   
+	
 	public static void InitIDCardAgencyDetailsControllerTest() {
-
+		
 		testData = new IDCardTestData();
-
+		
 		// Test page without cookies
 		PageReference controllerPage_NoCookies = Page.IDCard_Agency_Details;
 		Test.setCurrentPage(controllerPage_NoCookies);
 		IDCardAgencyDetailsController iDCardAgencyDetailsController_NoCookies = new IDCardAgencyDetailsController();
-
+			  
 		// TestPage with cookies
 		Cookie languageCookies = new Cookie('idcard_portal_lang','en_US',null,-1,false);
-		controllerPage = Page.IDCard_Agency_Details;
-		controllerPage.setCookies(new Cookie[]{languageCookies});
-		// Set Inactive account parameters for the page.
-		Datetime dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c;
-		controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_NEW));
+		controllerPage = Page.IDCard_Agency_Details;        
+		controllerPage.setCookies(new Cookie[]{languageCookies});  
+		// Set Inactive account parameters for the page.  
+		Datetime dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c; 
+		controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_NEW));       
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[0].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_FNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[0].First_Name__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_LNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[0].Last_Name__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(dateTemp.format('yyyy-MM-dd')));
-		Test.setCurrentPage (controllerPage);
-		iDCardAgencyDetailsController = new IDCardAgencyDetailsController();
-
-		// Set valid account parameters for the page.
-		controllerPage = Page.IDCard_Agency_Details;
+		Test.setCurrentPage (controllerPage);       
+		iDCardAgencyDetailsController = new IDCardAgencyDetailsController();        
+		
+		// Set valid account parameters for the page.  
+		controllerPage = Page.IDCard_Agency_Details;        
 		controllerPage.setCookies(new Cookie[]{languageCookies});
-		dateTemp = testData.IDCards_IDCardApplications[2].Date_of_Birth__c;
+		dateTemp = testData.IDCards_IDCardApplications[2].Date_of_Birth__c;         
 		controllerPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_NEW));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[2].IATA_Code__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter('1111111'));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_FNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[2].First_Name__c));
 		controllerPage.getParameters().put(IDCardUtil.PARAM_LNAME, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[2].Last_Name__c));
-		controllerPage.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(dateTemp.format('yyyy-MM-dd')));
-		Test.setCurrentPage (controllerPage);
-		iDCardAgencyDetailsController = new IDCardAgencyDetailsController();
-
+		controllerPage.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(dateTemp.format('yyyy-MM-dd')));                   
+		Test.setCurrentPage (controllerPage);       
+		iDCardAgencyDetailsController = new IDCardAgencyDetailsController();  
+		
 		//Test LangItems, HasError and getErrMsg
 		iDCardAgencyDetailsController.getLangItems();
 		iDCardAgencyDetailsController.getHasError();
 		iDCardAgencyDetailsController.getErrMsg();
 	}
-
+	
 	public static TestMethod void TestNext(){
 		InitIDCardAgencyDetailsControllerTest();
-
-		// Test selectedLanguage()
+		
+		// Test selectedLanguage()           
 		iDCardAgencyDetailsController.setSelectedLanguage('en_US');
-		string t = iDCardAgencyDetailsController.getSelectedLanguage();
+		string t = iDCardAgencyDetailsController.getSelectedLanguage(); 
 
 		 Account acc = new Account(Name ='testAccount',
 			IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
@@ -86,21 +86,21 @@ public class IDCardAgencyDetailsControllerTest{
 		insert acc;
 
 		iDCardAgencyDetailsController.theAccount = acc;
-
+		 
 		// Next page
-		nextPage = iDCardAgencyDetailsController.next();
+		nextPage = iDCardAgencyDetailsController.next();      
 	}
-
+	
 	public static TestMethod void TestPrevious(){
-		InitIDCardAgencyDetailsControllerTest();
-
+		InitIDCardAgencyDetailsControllerTest();      
+		 
 		// Login page
-		nextPage = iDCardAgencyDetailsController.previous();
+		nextPage = iDCardAgencyDetailsController.previous();      
 	}
-
+	
 	public static TestMethod void TestPopUp(){
-		InitIDCardAgencyDetailsControllerTest();
-
+		InitIDCardAgencyDetailsControllerTest();      
+		
 		Account acc = new Account(Name ='testAccount',
 			IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
 			ID_Card_KeyAccount_features__c = 'Prohibit Applicant to Apply',
@@ -121,17 +121,17 @@ public class IDCardAgencyDetailsControllerTest{
 		iDCardAgencyDetailsController.theAccount = acc;
 		iDCardAgencyDetailsController.showPopup();
 		iDCardAgencyDetailsController.closePopup();
-		nextPage = iDCardAgencyDetailsController.next();
+		nextPage = iDCardAgencyDetailsController.next();     
 	}
-
+	
 	public static TestMethod void TestAccountAddress(){
-		 InitIDCardAgencyDetailsControllerTest();
-
+		 InitIDCardAgencyDetailsControllerTest();      
+		
 		iDCardAgencyDetailsController.showPopup();
 
 		 Account acc = new Account(name ='testAccount');
 		 iDCardAgencyDetailsController.ShippingAddress sAddr = new iDCardAgencyDetailsController.ShippingAddress(acc);
-
+		 
 		 acc.ShippingCity = 'Lisbon';
 		 sAddr = new iDCardAgencyDetailsController.ShippingAddress(acc);
 	}
@@ -152,9 +152,9 @@ public class IDCardAgencyDetailsControllerTest{
 	}
 
 	public static TestMethod void TestRefresh(){
-		InitIDCardAgencyDetailsControllerTest();
-
-		nextPage = iDCardAgencyDetailsController.refresh();
+		InitIDCardAgencyDetailsControllerTest();      
+		
+		nextPage = iDCardAgencyDetailsController.refresh();      
 	}
 
 }
