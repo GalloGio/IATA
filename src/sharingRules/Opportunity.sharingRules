@@ -58,7 +58,7 @@
         <criteriaItems>
             <field>Name</field>
             <operation>contains</operation>
-            <value>smarthub</value>
+            <value>smarthub,SmartHub</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
