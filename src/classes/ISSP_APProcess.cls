@@ -454,12 +454,7 @@ global without sharing class ISSP_APProcess {
 				vHQAccountId = newCase.Account_Concerned__r.Top_Parent__c;
 			}
 
-
-			if(isPassAirline && isGSSAUser){
-				retrieveHQAccountDetails(con.AccountId);
-			}else{
-				retrieveHQAccountDetails(vHQAccountId);
-			}
+			retrieveHQAccountDetails(vHQAccountId);
 
 			if (isGSSAUser){  //For GSSA display Airline details
 				strGSSAName = newCase.Account.Name;
