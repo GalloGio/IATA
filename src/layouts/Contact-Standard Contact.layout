@@ -782,10 +782,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Term_and_Condition_Acceptance__c.Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>Card_Status__c</fields>
         <fields>Nature_of_ID_Card__c</fields>
         <fields>Valid_To_Date__c</fields>

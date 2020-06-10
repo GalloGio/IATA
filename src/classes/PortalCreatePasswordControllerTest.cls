@@ -26,13 +26,13 @@ public class PortalCreatePasswordControllerTest {
 
 		string paramsJson = '{"phone":"","lastName":"test","language":"en_us","firstName":"test","email":"test+xx@gmail.com","country":"' + isoCountry.id + '","contactId":"","accountId":"' + acc.Id + '", "registrationTime":"2019-10-02 09:29:02", "lms":"yas"}';
 		string enc = EncodingUtil.urlEncode(PortalPasswordHandler.EncryptString(paramsJson), 'UTF-8');
-		PortalCreatePasswordController.returnWrapper result = PortalCreatePasswordController.getParameters(enc);
+		PortalCreatePasswordController.returnWrapper result = PortalCreatePasswordController.getParameters('https://a.a.com/s/createPassword?c=' + enc);
 		boolean success = PortalCreatePasswordController.isUserExist('test@iata.com','');
 
-		Map<String, String> params = new Map<String, String>{'d'=>'d'};
-		PortalRegistrationFirstLevelCtrl.RegistrationResult createResult = PortalCreatePasswordController.createUserAndSetPassword(result.registrationParameters, 'test', Label.CSP_PortalPath, params);
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
+		PortalRegistrationFirstLevelCtrl.RegistrationResult createResult = PortalCreatePasswordController.createUserAndSetPassword(paramsJson, 'test');
 
-		Boolean bRes = PortalCreatePasswordController.resendEmail(JSON.serialize(result), params);
+		Boolean bRes = PortalCreatePasswordController.resendEmail(JSON.serialize(result));
 		System.assertEquals(true,bRes,'Send Mail Failed');
 	}
 
