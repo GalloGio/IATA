@@ -9,7 +9,7 @@
         <fullName>Training</fullName>
         <default>false</default>
         <label>Training</label>
-    </customValue>    
+    </customValue>
     <customValue>
         <fullName>MedAire</fullName>
         <default>false</default>
