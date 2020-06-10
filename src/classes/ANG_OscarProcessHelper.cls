@@ -2063,7 +2063,7 @@ global class ANG_OscarProcessHelper {
 
 		//send emails
 		OrgWideEmailAddress[] owea;
-		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		owea = [select Id, Address, DisplayName  from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
 
