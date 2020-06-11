@@ -281,7 +281,7 @@
         <fullName>Subject__c</fullName>
         <externalId>false</externalId>
         <label>Subject</label>
-        <length>140</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

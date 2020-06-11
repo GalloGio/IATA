@@ -31,6 +31,10 @@ Chat
 IATA Internal User</value>
     </values>
     <values>
+        <field>OwnerID__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Reason1__c</field>
         <value xsi:type="xsd:string">CHC – Change of Shareholding
 CHG – Data Maintenance
@@ -68,7 +72,9 @@ PCI DSS Compliant
 Onboarding IEP Model A
 IEP Bank account setup
 Major Changes
-Major Change</value>
+Major Change
+MCH – Minor Change of Shareholding
+Bank Detail Update</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>

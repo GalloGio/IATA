@@ -10734,6 +10734,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>IFAP_Please_Contact_CS</name>
     </customLabels>
     <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>http://portal.iata.org</label>
         <name>IFAP_Portal_URL_default_value</name>
     </customLabels>
@@ -16972,7 +16976,9 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>NOTA: Tengan en cuenta que los saldos son actualizados en el portal al menos un día laborable tras el ingreso en la cuenta de IATA. También es importante que tengan en cuenta que la información de ICE es facilitada a IATA por terceras partes en intervalos de 24 horas, lo cual implica que puede no estar actualizada, correcta o completa.</label>
+        <label>Los balances del portal de clientes se actualizan el siguiente día hábil tras la recepción del abono en la cuenta de IATA. La fecha de abono en la cuenta de IATA dependerá del método de pago que elija. IATA recibe los datos de facturación mostrados en ICE de terceros en intervalos de 24 horas, y podrían producirse retrasos que escapen al control de IATA. 
+
+Si se produce un ajuste del importe de facturación como consecuencia de la suspensión de una compañía aérea, los agentes pueden servirse de las cantidades incluidas en el ICE y, en caso de discrepancia, estas se resolverán mediante un pago o cobro posterior por parte del agente.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -17903,7 +17909,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Sentimos comunicarle que su petición de acceso al servicio</label>
+        <label>Este es un mensaje importante que afecta a su acceso a los servicios del Portal del Cliente de la IATA.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17915,12 +17921,20 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>ha sido denegado por el Servicio al cliente de IATA</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label>Para obtener información adicional, puede consultar al usuario administrador de su empresa.</label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Acceso a</label>
@@ -31732,6 +31746,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33732,6 +33750,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>

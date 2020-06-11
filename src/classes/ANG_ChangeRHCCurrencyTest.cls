@@ -165,6 +165,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		controller.rhc.CurrencyIsoCode = 'USD';
 		controller.caseToUpdate.ParentId = cse.Id;
 
+		controller.forecast();
 		controller.save();
 
 		cse =
