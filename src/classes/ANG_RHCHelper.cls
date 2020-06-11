@@ -548,7 +548,7 @@ public class ANG_RHCHelper {
 			if(template == null) template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE);
 
 			Decimal rhcAmount = Decimal.valueOf(wrap.rhcAmount.remove(','));
-			
+
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
@@ -592,14 +592,13 @@ public class ANG_RHCHelper {
 
 		List<Notification__c> notifications = new List<Notification__c>();
 
-		Decimal rhcAmount = Decimal.valueOf(wrap.rhcAmount.remove(','));
-
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
 			RiskInformationUpdateWrapper riuw = riuwNotificationsMap.get(nt.Contact__c);
+			Decimal rhcAmount = Decimal.valueOf(riuw.rhcAmount.remove(','));
 			nt.Message__c = nt.Message__c
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
-							.replace('#RHC_AMOUNT#', rhcAmount.setScale(2) + ' ' + riuw.CurrencyIsoCode)
+							.replace('#RHC_AMOUNT#', rhcAmount.setScale(2) + ' ' + riuw.CurrencyIsoCode);
 //							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
 			notifications.add(nt);
 		}
