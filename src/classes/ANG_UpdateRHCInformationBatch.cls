@@ -51,7 +51,7 @@ public class ANG_UpdateRHCInformationBatch implements Database.Batchable<sObject
 
 		for(Account account : scope) {
 			if(p == Process.PROVISIONAL) {
-				result = ANG_RME_Alert_Service.requestProvisionalRHC(String.valueOf(account.id), true);
+				result = ANG_RME_Alert_Service.requestProvisionalRHC(String.valueOf(account.id));
 			} else {
 				result = ANG_RME_Alert_Service.requestBalanceUpdate(String.valueOf(account.id));
 			}
