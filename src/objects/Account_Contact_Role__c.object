@@ -826,11 +826,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>MedAire</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Training</fullName>
+                <default>false</default>
+            </values>            
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -853,6 +853,10 @@
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>

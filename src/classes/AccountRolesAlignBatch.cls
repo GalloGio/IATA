@@ -98,8 +98,7 @@ public class AccountRolesAlignBatch implements Queueable {
 
 		}catch(exception e){
 			Database.rollback(sp);
-			System.debug('[AccountRolesAlignBatch] switchAccountRoles : Exception : ' + e);
-			System.debug('[AccountRolesAlignBatch] switchAccountRoles : Exception stack : ' + e.getStackTraceString());
+			TransformationHelper.sendEmailSupport( 'AccountRolesAlignBatch Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
 		}
 
 	}
