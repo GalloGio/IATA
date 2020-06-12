@@ -451,7 +451,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userId = userList.get(0).Id;
 		}
 
-		Boolean result = false;
 		if(params.existingContactName != null && params.existingContactName != '' && params.hasExistingContactPersonalEmail){
 			String prefix = '';
 			if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
