@@ -829,6 +829,10 @@
                 <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>

@@ -77,10 +77,6 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Origin</field>
             </layoutItems>

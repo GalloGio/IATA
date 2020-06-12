@@ -36,7 +36,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     }
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+    searchIconNoResultsUrl = CSP_PortalPath+'CSPortal/Images/Icons/searchNoResult.svg';
 
     connectedCallback() {
         let pageParams = getParamsFromPage();
