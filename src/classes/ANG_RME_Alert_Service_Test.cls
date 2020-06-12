@@ -202,7 +202,7 @@ public class ANG_RME_Alert_Service_Test {
 
 		Test.startTest();
 
-		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id, false);
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 

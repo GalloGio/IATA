@@ -426,7 +426,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			String prefix = '';
 			if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
 			String existingContactURL = '';
-			String sufix = 'email=' + params.existingContactEmail + '&startURL=%2Fcsportal%2Fs%2F%3Flms%3Dyas%26RelayState%3D' + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
+			String sufix = 'email=' + params.existingContactEmail + ISSP_CS__c.getValues('LMS_Encoded_RelayState') + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
 			if(params.existingContactUsername != null && params.existingContactUsername != ''){
 				existingContactURL = prefix + '/login?' + sufix;
 			}else{
@@ -1303,20 +1303,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(existingTrainingId != ''){
 
 			//Inactivate the registering Contact
-			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-												AccountId,Email,Additional_Email__c,Phone,
-												OtherPhone,Salutation,Birthdate
-										FROM Contact WHERE Id = :existingTrainingId];
-
-			conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-			conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
-			conToInactivate.Email = conToInactivate.Email + '.inactive';
-			if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-				conToInactivate.Additional_Email__c = '';
-			}
-
-			conToInactivate.status__c = 'Inactive';
-			update conToInactivate;
+			UpdateContactEmailsToInactivate(existingTrainingId);
 		}
 
 		//deactivate user
@@ -1324,6 +1311,16 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
 
 	}
+
+	public static void UpdateContactEmailsToInactivate(String contactId){
+		Contact conToInactivate = [SELECT Id,Email,Additional_Email__c FROM Contact WHERE Id = :contactId];
+		conToInactivate.Email = conToInactivate.Email + '.inactive';
+		if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+			conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+		}
+		update conToInactivate;
+	}
+
 
 	public class AsyncDeactivateUser implements Queueable {
 

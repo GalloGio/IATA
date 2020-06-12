@@ -64,10 +64,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		//get registration information
 		UserInformationWrapper registrationParameters = (UserInformationWrapper) JSON.deserialize(parameters, UserInformationWrapper.class);
 
-		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace('@@##', '+');
-		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
-		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace('@@##', '+') : '';
-		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace('@@##', '+') : '';
+		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace(PortalPasswordHandler.plusReplacer, '+');
+		registrationParameters.Email = registrationParameters.Email.replace(PortalPasswordHandler.plusReplacer, '+');
+		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace(PortalPasswordHandler.plusReplacer, '+') : '';
+		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace(PortalPasswordHandler.plusReplacer, '+') : '';
 
 		result.userInfo = JSON.serialize(registrationParameters);
 
@@ -155,18 +155,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
-				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-													AccountId,Email,Additional_Email__c,Phone,
-													OtherPhone,Salutation,Birthdate
-											FROM Contact WHERE Id = :regParam.existingTrainingId];
-				
-				conToInactivate.Email = conToInactivate.Email + '.inactive';
-				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
-				}
-
-				conToInactivate.status__c = 'Inactive';
-				update conToInactivate;
+				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(regParam.existingTrainingId);
 			}
 
 			//Create Yardstick Contact Role Detail
@@ -336,25 +325,14 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			//Need to liberate the additional email 1st to empty in order not to give duplicate error
 			Contact conToInactivate = new Contact();
 			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
-				Id contIdToInactivate;
+				String contIdToInactivate;
 				if(contactInfo.flow == 'flow4'){
 					contIdToInactivate = contactInfo.Id;
 				}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 					contIdToInactivate = contactInfo.existingContactId;
 				}
-				conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-													AccountId,Email,Additional_Email__c,Phone,
-													OtherPhone,Salutation,Birthdate
-											FROM Contact WHERE Id = :contIdToInactivate];
-				
-				conToInactivate.Email = conToInactivate.Email + '.inactive';
-				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
-				}
-				update conToInactivate;
-
+				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(contIdToInactivate);
 			}
-			
 		
 			Id contIdToSearch = contactInfo.Id;
 			if(contactInfo.flow == 'flow4'){
@@ -814,11 +792,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
 					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
 
-					if(flow == 'flow4'){
-						plainBody = plainBody.replace('[Email]',address);
-						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
-						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
-					}else if(flow == 'flow6'){
+					if(flow == 'flow4' || flow == 'flow6'){
 						plainBody = plainBody.replace('[Email]',address);
 						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
 						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
@@ -852,16 +826,35 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		return result;
 	}
 
-	@AuraEnabled(cacheable=false)
-	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
-		String sRes = '';
+	//check if names are 60% equal, if not returns -1, if equal or above 80% returns the # of diferences
+	public static Boolean getNameMatch(String firstname, String lastname, String existingFirstname, String existingLastname){
+		Boolean bRes = false;
 		String fullName = firstname + lastname;
 		String fullNameReverse = lastname + firstname;
 		fullName = AMS_Utils.cleanSpecialChars(fullName.toUpperCase(), false);
 		fullNameReverse = AMS_Utils.cleanSpecialChars(fullNameReverse.toUpperCase(), false);
 		Double fullNameSize = fullName.length();
-		Double threshold = fullNameSize - ((fullNameSize * 60)/100);
+		Double threshold = fullNameSize - ((fullNameSize * 60)/100); //calculate 60%
 		Integer roundThreshold = Math.round(threshold);
+
+		String existingFullName = existingFirstname + existingLastname;
+		String existingFullNameReverse = existingLastname + existingFirstname;
+		existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
+		existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
+
+		Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
+		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+
+		if(compareResult >= 0 || compareResultReverse >= 0){
+			bRes = true;
+		}
+		return bRes;
+	}
+
+
+	@AuraEnabled(cacheable=false)
+	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
+		String sRes = '';
 
 		List<Training_Contact_Role_Details__c> existingYadLst = new List<Training_Contact_Role_Details__c>(
 			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname,
@@ -876,16 +869,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			if(existingTCRD.Username__c.equalsIgnoreCase(username) ){
 
-				String existingFullName = existingTCRD.Account_Contact_Role__r.contact__r.firstname + existingTCRD.Account_Contact_Role__r.contact__r.lastname;
-				String existingFullNameReverse = existingTCRD.Account_Contact_Role__r.contact__r.lastname + existingTCRD.Account_Contact_Role__r.contact__r.firstname;
-				existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
-				existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
-
-				//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences
-				Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-				Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
-
-				if(compareResult < 0 && compareResultReverse < 0){
+				if(getNameMatch(firstname, lastname, existingTCRD.Account_Contact_Role__r.contact__r.firstname, existingTCRD.Account_Contact_Role__r.contact__r.lastname)){
 					sRes = 'not_matching';
 				}else{
 
@@ -912,13 +896,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	public static String validateFullName(String existingContactId, String firstname, String lastname){
 
 		String sRes = '';
-		String fullName = firstname + lastname;
-		String fullNameReverse = lastname + firstname;
-		fullName = AMS_Utils.cleanSpecialChars(fullName.toUpperCase(), false);
-		fullNameReverse = AMS_Utils.cleanSpecialChars(fullNameReverse.toUpperCase(), false);
-		Double fullNameSize = fullName.length();
-		Double threshold = fullNameSize - ((fullNameSize * 60)/100);
-		Integer roundThreshold = Math.round(threshold);
 
 		List<contact> existingContactLst = new List<contact>(
 			[SELECT Id, FirstName, LastName
@@ -928,16 +905,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		if(!existingContactLst.isEmpty()){
 			contact existingContact = existingContactLst[0];
-			String existingFullName = existingContact.FirstName + existingContact.LastName;
-			String existingFullNameReverse = existingContact.LastName + existingContact.FirstName;
-			existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
-			existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
-			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences
-			Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullName, roundThreshold);
-
-			if(compareResult < 0 && compareResultReverse < 0){
+			if(getNameMatch(firstname, lastname, existingContact.FirstName, existingContact.LastName)){
 				sRes = 'not_matching';
 			}else{
 				sRes = 'existing_user';

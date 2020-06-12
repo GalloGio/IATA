@@ -1655,16 +1655,12 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 			serviceExists = false;
 		}
 
-		String baseUrl = Site.getBaseSecureUrl();
-		baseUrl = baseUrl.replace('/s', '');
-		String pathPrefix = '';
-
 		if(requiredDataPopulated && latestToSAccepted && serviceExists){
 	
 			List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
 	
 			if(ami != null && !ami.isEmpty()){
-				resURL = baseUrl + pathPrefix + ami[0].StartUrl;
+					resURL = CSP_Utils.redirectfromPortalHeader(ami[0].StartUrl.removeStart('/')).replace('/s/','/');
 				if(preferedCourse && tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
 					resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
 				}
