@@ -388,7 +388,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		Test.stopTest();
@@ -423,7 +422,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		Test.stopTest();
@@ -455,7 +453,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		Test.stopTest();
@@ -489,12 +486,10 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		params.termsAndUsageIds = tcs[0].Id;
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		params = new PortalRegistrationFirstLevelCtrl.RegistrationParameters();
 		result = PortalRegistrationFirstLevelCtrl.register(params, 'Admin1234!');
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == false, true);
 
 		Test.stopTest();
@@ -561,7 +556,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		string customerTypeJson = '{}';
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.updateContactInfo(registrationJson, customerTypeJson, true);
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		registrationJson = '{"category": "Passenger_and_Cargo",' +
@@ -577,7 +571,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"selectedCustomerType": "Passenger_and_Cargo"}';
 
 		result = PortalRegistrationFirstLevelCtrl.updateContactInfo(registrationJson, customerTypeJson, true);
-		system.debug('result: ' + result);
 		System.assertEquals(result.isSuccess == false, true);
 
 		Test.stopTest();
