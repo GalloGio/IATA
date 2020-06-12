@@ -1,6 +1,7 @@
 @isTest
 public class ANG_ISSP_AfpWrapper_Test {
-	@testSetup static void testSetup() {
+	@testSetup 
+	static void testSetup() {
 		Test.startTest();
 
 		Portal_Applications__c s1 = new Portal_Applications__c (Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
@@ -196,7 +197,8 @@ public class ANG_ISSP_AfpWrapper_Test {
 		Test.stopTest();
 	}
 
-	@isTest static void testCountrySpecificsWithClass() {
+	@isTest 
+	static void testCountrySpecificsWithClass() {
 		User indonesiaUser = fetchUserFromEmail('indonesia@international.com');
 
 		Test.startTest();
@@ -210,12 +212,14 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
 			System.assert(wrapper.isInternational, 'This is an International account.');
 			System.assert(!wrapper.isDomestic, 'This is an International account.');
+			System.assert(wrapper.isIEPFlag, 'There should be an IEP authorization');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void testCountrySpecificsWithoutClass() {
+	@isTest 
+	static void testCountrySpecificsWithoutClass() {
 		User indiaUser = fetchUserFromEmail('india@acc.com');
 
 		Test.startTest();
@@ -226,12 +230,15 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assertEquals('#', wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_IEP_ModelBanking_link, wrapper.iepLinkLabel, 'The label should be the Model Banking one.');
 			System.assertEquals(Label.ANG_ISSP_IEP_ModelBanking_India_msg, wrapper.modalErrorMessage, 'The message should be the specified one in the Country Specifics record.');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void testCountrySpecificsWithoutMatch() {
+	@isTest 
+	static void testCountrySpecificsWithoutMatch() {
 		User indonesiaUser = fetchUserFromEmail('indonesia@domestic.com');
 
 		Test.startTest();
@@ -241,28 +248,32 @@ public class ANG_ISSP_AfpWrapper_Test {
 
 			System.assertEquals(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD, wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_Request_Access_IATA_EasyPay, wrapper.iepLinkLabel, 'The label should be the Model Banking one.');
-			System.assert(wrapper.isIEPFlag, 'There should be IEP authorizaation');
+			System.assert(wrapper.isIEPFlag, 'There should be an IEP authorization');
+			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void testNoCountrySpecificsNoIEPWithRedirect() {
+	@isTest 
+	static void testNoCountrySpecificsNoIEPWithRedirect() {
 		User portugalUser = fetchUserFromEmail('portugal@acc.com');
 
 		Test.startTest();
 
 		System.runAs(portugalUser) {
 			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(portugalUser.Contact, portugalUser.Contact.Account);
-
 			System.assertEquals(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD, wrapper.iepLink, 'The link should redirect to services page.');
 			System.assertEquals(Label.ANG_ISSP_Open_IATA_EasyPay_Account, wrapper.iepLinkLabel, 'The label should be the default Request IEP one');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void testNoCountrySpecificsNoIEPWithoutRedirect() {
+	@isTest 
+	static void testNoCountrySpecificsNoIEPWithoutRedirect() {
 		User portugalUser = fetchUserFromEmail('portugal2@acc.com');
 
 		Test.startTest();
@@ -273,13 +284,16 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assertEquals('#', wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_Open_IATA_EasyPay_Account, wrapper.iepLinkLabel, 'The label should be the default IEP one');
 			System.assertEquals(Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg, wrapper.modalErrorMessage, 'The message should be the HE one.');
-			System.assert(wrapper.displayIcons, 'Icons should be displayed in this scneario');
+			System.assert(wrapper.displayIcons, 'Icons should be displayed in this scenario');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
 		}
 
 		Test.stopTest();
 	}
 
-	@isTest static void testChinaAuthorizations() {
+	@isTest 
+	static void testChinaAuthorizations() {
 		User chinaUser = fetchUserFromEmail('china@acc.com');
 
 		Test.startTest();
@@ -291,6 +305,72 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assert(wrapper.isBOPFlag, 'There should be BOP authorization.');
 			System.assert(wrapper.isCreditCardFlag, 'There should be Credit Card authorization.');
 			System.assert(wrapper.isCashFlag, 'There should be Cash authorization.');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
+		}
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void chinaAgencySearchTest() {
+		User chinaUser = fetchUserFromEmail('china@acc.com');
+
+		Test.startTest();
+
+		System.runAs(chinaUser) {
+			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(chinaUser.Contact.Account);
+			System.assertEquals(3, wrapper.authQuantity, 'There should be three authorizations. Including BOP.');
+			System.assert(wrapper.isBOPFlag, 'There should be BOP authorization.');
+			System.assert(wrapper.isCreditCardFlag, 'There should be Credit Card authorization.');
+			System.assert(wrapper.isCashFlag, 'There should be Cash authorization.');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+			System.assert(wrapper.isSearch, 'This is the Agency Code Search.');
+		}
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void bankingModelAgencySearchTest() {
+		User indiaUser = fetchUserFromEmail('india@acc.com');
+
+		Test.startTest();
+
+		System.runAs(indiaUser) {
+			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(indiaUser.Contact.Account);
+			System.assert(wrapper.isSearch, 'This is the Agency Code Search');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+		}
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void noEasyPayAccountAgencySearchTest() {
+		User portugalUser = fetchUserFromEmail('portugal@acc.com');
+
+		Test.startTest();
+
+		System.runAs(portugalUser) {
+			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(portugalUser.Contact.Account);
+			System.assert(wrapper.isSearch, 'This is the Agency Code Search');
+			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
+		}
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void openEasyPayAccountAgencySearchTest() {
+		User indonesiaUser = fetchUserFromEmail('indonesia@international.com');
+
+		Test.startTest();
+
+		System.runAs(indonesiaUser) {
+			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(indonesiaUser.Contact.Account);
+			System.assert(wrapper.isSearch, 'This is the Agency Code Search');
+			System.assert(wrapper.isIEPFlag, 'There should be an IEP authorization');
 		}
 
 		Test.stopTest();

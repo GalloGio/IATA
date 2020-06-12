@@ -1,7 +1,9 @@
 public with sharing class ANG_ISSP_AfpWrapper {
+	private static final String BANKING_MODEL = 'Banking Model';
 	public static final String DOMESTIC = AMS_Utils.CATEGORY_DOMESTIC_AGENT;
 	public static final String INTERNATIONAL = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
-	@TestVisible private static final String AVAILABLE_SERVICES_OLD = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
+	@TestVisible 
+	private static final String AVAILABLE_SERVICES_OLD = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
 
 	private Contact contact {get; set;}
 	private Account account {get; set;}
@@ -112,7 +114,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 	public ANG_ISSP_AfpWrapper(Account account) {
 		this.account = account;
-
+		this.isIEPFlag = !isChinaAgent && iepModel != BANKING_MODEL && account.ANG_IEP_Status_FF__c == AMS_Utils.OPEN;
 		calculateAuthorizationFlags(account.Id);
 	}
 
@@ -132,17 +134,17 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 		if (isChinaAgent) {
 			this.iepLink = Label.ANG_ISSP_BOP_China_URL;
-		} else if (iepModel == 'Banking Model') {
+		} else if (iepModel == BANKING_MODEL) {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
-		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
+		} else if (account.ANG_IEP_Status_FF__c == AMS_Utils.OPEN) {
 			this.isIEPFlag = true;
 
 			if (contact != null) {
 				Boolean hasAccess = false;
 
 				for(Portal_Application_Right__c par: services) {
-					if(par.Application_Name__c.startsWith(Label.ANG_ISSP_IATA_EasyPay) && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
+					if(par.Application_Name__c.startsWith(Label.ANG_ISSP_IATA_EasyPay) && par.Right__c == AMS_Utils.PORTAL_APP_ACCESS_GRANTED) {
 						hasAccess = true;
 						this.iepLinkLabel = Label.ANG_ISSP_REH_AccessEasyPay;
 						this.iepLink = par.Application_Start_URL__c;
@@ -155,7 +157,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 					this.iepLink = availableServicesLink;
 				}
 			}
-		} else if(account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
+		} else if(account.ANG_IEP_Status_FF__c == AMS_Utils.NO_IEP_ACCOUNT) {
 			List<Profile> profileList = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()];
 
 			Boolean isAdmin = false;
@@ -229,17 +231,17 @@ public with sharing class ANG_ISSP_AfpWrapper {
 										FROM Agency_Authorization__c
 										WHERE Account__c = :accountId
 										AND (Status__c = :AMS_Utils.ACTIVE OR Status__c = :AMS_Utils.AUTHORIZED)]) {
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CA && !this.isCashless) {
 				this.isCashFlag = true;
 				this.authQuantity++;
 			}
 
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CC) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
 				this.isCreditCardFlag = true;
 				this.authQuantity++;
 			}
 
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.BOP) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.BOP) {
 				this.isBOPFlag = true;
 				this.authQuantity++;
 			}
