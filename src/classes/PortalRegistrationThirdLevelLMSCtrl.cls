@@ -154,8 +154,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				insert acr;
 			}
 
+			String contIdToInactivate = '';
 			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
-				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(regParam.existingTrainingId);
+				contIdToInactivate = regParam.existingTrainingId;
+				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(contIdToInactivate);
 			}
 
 			//Create Yardstick Contact Role Detail
@@ -270,6 +272,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				insert portalApplicationRight;
 			}
 
+			if(contIdToInactivate != ''){
+				Set<String> conIdSet = new Set<String>();
+				conIdSet.add(contIdToInactivate);
+				System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+			}
+
 			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
 
 			assignPermissionSet(psYardstick.Id, (Id)loggedUser.Id);
@@ -323,9 +331,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			//Inactivate the registering Contact
 			//Need to liberate the additional email 1st to empty in order not to give duplicate error
-			Contact conToInactivate = new Contact();
+			String contIdToInactivate = '';
 			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
-				String contIdToInactivate;
 				if(contactInfo.flow == 'flow4'){
 					contIdToInactivate = contactInfo.Id;
 				}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
@@ -449,9 +456,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						delete acrNew;
 					}
 
-					Set<String> conIdSet = new Set<String>();
-					conIdSet.add(conToInactivate.Id);
-					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					if(contIdToInactivate != ''){
+						Set<String> conIdSet = new Set<String>();
+						conIdSet.add(contIdToInactivate);
+						System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					}
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -568,9 +577,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						update ycd;
 					}
 
-					Set<String> conIdSet = new Set<String>();
-					conIdSet.add(conToInactivate.Id);
-					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					if(contIdToInactivate != ''){
+						Set<String> conIdSet = new Set<String>();
+						conIdSet.add(contIdToInactivate);
+						System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					}
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -869,7 +880,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			if(existingTCRD.Username__c.equalsIgnoreCase(username) ){
 
-				if(getNameMatch(firstname, lastname, existingTCRD.Account_Contact_Role__r.contact__r.firstname, existingTCRD.Account_Contact_Role__r.contact__r.lastname)){
+				if(!getNameMatch(firstname, lastname, existingTCRD.Account_Contact_Role__r.contact__r.firstname, existingTCRD.Account_Contact_Role__r.contact__r.lastname)){
 					sRes = 'not_matching';
 				}else{
 
@@ -906,7 +917,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		if(!existingContactLst.isEmpty()){
 			contact existingContact = existingContactLst[0];
 
-			if(getNameMatch(firstname, lastname, existingContact.FirstName, existingContact.LastName)){
+			if(!getNameMatch(firstname, lastname, existingContact.FirstName, existingContact.LastName)){
 				sRes = 'not_matching';
 			}else{
 				sRes = 'existing_user';
