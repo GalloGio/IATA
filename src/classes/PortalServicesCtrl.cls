@@ -1654,16 +1654,12 @@ public with sharing class PortalServicesCtrl {
 			serviceExists = false;
 		}
 
-		String baseUrl = Site.getBaseSecureUrl();
-		baseUrl = baseUrl.replace('/s', '');
-		String pathPrefix = '';
-
 		if(requiredDataPopulated && latestToSAccepted && serviceExists){
 	
 			List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
 	
 			if(ami != null && !ami.isEmpty()){
-				resURL = baseUrl + pathPrefix + ami[0].StartUrl;
+					resURL = CSP_Utils.redirectfromPortalHeader(ami[0].StartUrl.removeStart('/')).replace('/s/','/');
 				if(preferedCourse && tcrd != null && tcrd.Preferred_Course__c != null && tcrd.Preferred_Course__c != ''){
 					resURL = resURL + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
 				}
@@ -1674,13 +1670,13 @@ public with sharing class PortalServicesCtrl {
 
 		return resURL;
 	}
-	
-		@AuraEnabled(cacheable=false)
-		public static String getPortalServiceId(string serviceName){
-	
-			List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
-			system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
-	
-			return pas[0].Id;
-		}
+
+	@AuraEnabled(cacheable=false)
+	public static String getPortalServiceId(string serviceName){
+
+		List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
+		system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
+
+		return pas[0].Id;
+	}
 }

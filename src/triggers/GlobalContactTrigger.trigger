@@ -647,15 +647,18 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
 			}
 			/*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
 
-			//GCS-DI LMS for Platform Events
-			set<Id> setContactForEvents = trigger.newMap.keySet();
-			List<Training_Contact_Role_Details__c> lTCRD = [SELECT id FROM Training_Contact_Role_Details__c WHERE Account_Contact_Role__r.contact__c = :setContactForEvents];
-			if(!lTCRD.isEmpty()){
-				//Publish the platform events
-				if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-					System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
-				} else {
-					PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+			//Trigger the platform events if bypass custom permission is not assigned
+			if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){		
+				//GCS-DI LMS for Platform Events
+				set<Id> setContactForEvents = trigger.newMap.keySet();
+				List<Training_Contact_Role_Details__c> lTCRD = [SELECT id FROM Training_Contact_Role_Details__c WHERE Account_Contact_Role__r.contact__c = :setContactForEvents];
+				if(!lTCRD.isEmpty()){
+					//Publish the platform events
+					if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+						System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+					} else {
+						PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+					}
 				}
 			}
 
