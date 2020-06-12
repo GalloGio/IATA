@@ -78,12 +78,14 @@ trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after ins
 			}		   
 		}
 
-		 //Trigger the platform events  
-		ShareObjectsToExternalUsers.shareObjectsByRoleOnAccountContactRoleChange(Trigger.new ,Trigger.oldMap);
-		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-			System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
-		} else {
-			PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		//Trigger the platform events if bypass custom permission is not assigned
+		if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
+			ShareObjectsToExternalUsers.shareObjectsByRoleOnAccountContactRoleChange(Trigger.new ,Trigger.oldMap);
+			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+				System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+			} else {
+				PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+			}
 		}
 	}
 	
