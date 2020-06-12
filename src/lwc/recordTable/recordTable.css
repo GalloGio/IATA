@@ -4,8 +4,7 @@
 }
 
 .slds-resizable__divider::before {
-	border: 0;
-	background: none;
+	background-color: transparent;
 }
 
 .slds-table_bordered {
