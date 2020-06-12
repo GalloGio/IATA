@@ -1313,8 +1313,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public static void UpdateContactEmailsToInactivate(String contactId){
-		Contact conToInactivate = new Contact();
-		conToInactivate.Id = contactId;
+		Contact conToInactivate = [SELECT Id,Email,Additional_Email__c FROM Contact WHERE Id = :contactId];
 		conToInactivate.Email = conToInactivate.Email + '.inactive';
 		if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
 			conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
