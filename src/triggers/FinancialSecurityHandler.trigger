@@ -4,7 +4,7 @@
 trigger FinancialSecurityHandler on Financial_Security__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
 
 	//WMO-470
-	if(FinancialSecurityUtil.acknowledgeRunning || FinancialSecurityUtil.convertedAmountUpdateFlag) {
+	if(FinancialSecurityUtil.acknowledgeRunning) {
 		return;
 	}
 
