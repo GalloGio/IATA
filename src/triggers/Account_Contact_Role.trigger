@@ -1,4 +1,7 @@
 trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
+	
+	if (!AMS_TriggerExecutionManager.checkExecution(Account_Contact_Role__c.getSObjectType(), 'Account_Contact_Role')) { return; }
+
 	if(trigger.isBefore){
 		if(trigger.isInsert || trigger.isUpdate){
 
