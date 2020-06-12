@@ -126,13 +126,21 @@ export default class RecordTable extends RecordCollection {
 
 	handleTooltipOver(e) {
 		let left = e.target.offsetLeft - e.target.scrollLeft;
-		let top = e.target.offsetTop + e.target.offsetHeight;
 		let currentElement = e.target;
+		let rowNumber = 0, rowHeight = 0, headerHeight = 0;
 		while(currentElement.parentElement !== undefined && currentElement.parentElement !== null) {
 			currentElement = currentElement.parentElement;
 			left += currentElement.offsetLeft  - currentElement.scrollLeft;
-			top += currentElement.offsetTop;
+			if(currentElement.tagName === 'TR') {
+				rowNumber = parseInt(currentElement.dataset.index) + 1;
+				rowHeight = currentElement.offsetHeight;
 		}
+			if(currentElement.tagName === 'TABLE') {
+				headerHeight = currentElement.querySelector('thead').offsetHeight;
+			}
+		}
+		let baseTop = currentElement.offsetTop;
+		let top = baseTop + headerHeight + rowHeight * rowNumber;
 		e.detail.top === undefined ?
 			e.detail.top = '+ 0px' :
 			e.detail.top.indexOf('-') < 0 ?
