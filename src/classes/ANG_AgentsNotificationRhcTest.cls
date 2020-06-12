@@ -236,7 +236,7 @@ private class ANG_AgentsNotificationRhcTest {
 			 LIMIT 1
 			];
 
-		System.assert(no2.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
+		System.assert(no2.Message__c.contains('RHC Amount: ' + String.valueOf([select ANG_RHC_Amount__c from ANG_RHC_Information__c  where id =:rhcInfo.Id limit 1].get(0).ANG_RHC_Amount__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
 
 		//Now checking that the blocking is working
 		Integer size = [SELECT Id FROM Notification__c ].size();
