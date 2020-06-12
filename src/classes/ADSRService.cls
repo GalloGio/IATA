@@ -80,8 +80,8 @@ public without sharing class ADSRService {
 		List<Case> cases = [SELECT Id, AccountId,
 								(SELECT Id, Case__c, Due_date__c
 								 FROM Case_Details__r
-								 WHERE RecordType.DeveloperName = 'Repayment_Instalment'
-								 ORDER BY CreatedDate DESC
+								 WHERE RecordType.DeveloperName = 'Repayment_Instalment' AND Due_date__c != null
+								 ORDER BY Due_date__c DESC
 								 LIMIT 1)
 							FROM Case
 							WHERE Id IN :caseIds
