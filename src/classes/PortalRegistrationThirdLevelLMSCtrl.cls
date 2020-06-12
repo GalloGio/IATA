@@ -854,7 +854,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
 		Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullName, roundThreshold);
 
 		if(compareResult >= 0 || compareResultReverse >= 0){
 			bRes = true;

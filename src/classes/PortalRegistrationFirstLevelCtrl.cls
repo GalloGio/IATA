@@ -456,7 +456,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			String prefix = '';
 			if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
 			String existingContactURL = '';
-			String sufix = 'email=' + params.existingContactEmail + ISSP_CS__c.getValues('LMS_Encoded_RelayState') + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
+			String sufix = 'email=' + params.existingContactEmail + ISSP_CS__c.getValues('LMS_Encoded_RelayState').value__c + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
 			if(params.existingContactUsername != null && params.existingContactUsername != ''){
 				existingContactURL = prefix + '/login?' + sufix;
 			}else{
