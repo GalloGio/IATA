@@ -167,7 +167,7 @@
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
         <label>Account Name</label>
-        <length>80</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -649,6 +649,10 @@ The Account Role record should be named after the functional capability for whic
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
