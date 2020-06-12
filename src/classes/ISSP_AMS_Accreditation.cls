@@ -471,7 +471,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public String portalRedirectToCaseList {
 		get {
-			return (!isNewPortal) ? '/ISSP_CaseList' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '') : CSP_Utils.redirectfromPortalHeader('cases-list');
+			return (!isNewPortal) ? '/ISSP_CaseList?' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '') : CSP_Utils.redirectfromPortalHeader('cases-list');
 		}
 		set;
 	}
