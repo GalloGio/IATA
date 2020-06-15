@@ -21,6 +21,8 @@ import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectCh
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 import getGCSServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
@@ -128,7 +130,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // l2 registration
     level2RegistrationTrigger = 'homepage';
+	level3LMSRegistrationTrigger = 'homepage';
     
+	@track registrationlevel = ''; //FOR LMS L3
+	@track thirdLoginLMS = false; //FOR LMS L3
+	@track serviceid = ''; //FOR LMS L3
+	@wire(CurrentPageReference) pageRef;
+
     // company tab on profile
     @track displayCompanyTab = false;
 
@@ -318,6 +326,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if(pageParams !== undefined && pageParams.firstLogin !== undefined){
             if(pageParams.firstLogin == "true"){
                 this.firstLogin = true;
+				this.displayFirstLogin = true;
             }
         }
 
@@ -327,7 +336,54 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
         //WMO-696 - ACAMBAS: End
 
-        this.redirectChangePassword();
+	// FOR LMS L3
+	if(pageParams !== undefined &&
+		(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
+	
+		if(pageParams.lms === 'yas'){
+	
+			if(pageParams.firstLogin === "true"){
+				this.thirdLoginLMS = true;
+				this.registrationlevel = '3';
+				this.displayFirstLogin = true;
+			}else{
+	
+				getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
+					.then(serviceId => {
+	
+						verifyCompleteL3Data({serviceId: serviceId})
+						.then(result => {
+							if(result !== 'not_complete'){
+								if(pageParams.RelayState !== ''){
+									let sURL = result.split('RelayState');
+										result = sURL[0] + '&RelayState=' + pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26');
+								}
+									window.open(result);
+							}
+							else{
+								this.thirdLoginLMS = true;
+								this.registrationlevel = '3';
+								this.displayThirdLevelRegistrationLMS= true; 
+							}
+							this.toggleSpinner();
+						})
+						.catch(error => {
+							this.error = error;
+						});
+					})
+					.catch(error => {
+						this.error = error;
+					});
+				
+			}
+			}else if(pageParams.lmsflow.indexOf('flow') > -1){
+			this.thirdLoginLMS = true;
+			this.registrationlevel = '3';
+			this.displayFirstLogin = false;
+			this.triggerThirdLevelRegistrationLMS();
+		}
+	}
+	this.redirectChangePassword();
 
         getNotifications().then(result => {
             this.baseURL = window.location.href;
@@ -827,6 +883,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     secondLevelRegistrationCompleted(){
         navigateToPage(CSP_PortalPath,{});
     }
+
+	@track displayThirdLevelRegistrationLMS = false;
+
+	triggerThirdLevelRegistrationLMS(){
+		this.displayFirstLogin = false;
+		this.firstLogin = false;
+		this.displayThirdLevelRegistrationLMS= true;
+	}
+
+	closeThirdLevelRegistrationLMS(){
+		this.displayThirdLevelRegistrationLMS = false;
+	}
+
+	ThirdLevelRegistrationLMSCompleted(){
+		navigateToPage(CSP_PortalPath,{});
+	}
 
     setCookie(name, value, days) {
         let expires = "";
