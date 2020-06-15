@@ -586,6 +586,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			Map<String, decimal> detailledFees = new Map<String, decimal>();
 			Decimal discountPercentage = discountPerKeyAccount.get(app.IATA_Code__c);
 
+			if(discountPercentage != null && discountPercentage != 0){
+				Promotion__c discount = new Promotion__c(Promotion_Value__c = discountPercentage);
+				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, discount, isToPrint);
+
+			} else {
+				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+			}
+
 			if(validatedApplication.isEmpty()){
 				validPromotion = validatePromotion(app);
 			}			
@@ -595,7 +603,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
 				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
 				app.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
-				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
 				app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
 				app.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
