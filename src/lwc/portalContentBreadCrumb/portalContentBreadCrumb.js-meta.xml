@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="portalContentBreadCrumb">
+    <apiVersion>48.0</apiVersion>
+    <description>Content Page BreadCrumb</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Content Page BreadCrumb</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    
+</LightningComponentBundle>
