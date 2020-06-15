@@ -6925,7 +6925,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 		//EO Travel Agency Form Validation, start of CGO HO validation
-		} else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') && amsOfficeType == AMS_Utils.HO) {
+		} else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary' || newForm.Agent_Type__c == 'CNS Endorsement HO') && amsOfficeType == AMS_Utils.HO) {
 			Integer cntFacilities = [SELECT COUNT()
 									FROM AMS_Facility__c
 									WHERE AMS_Online_Accreditation__c = :newForm.Id];
@@ -7028,11 +7028,6 @@ public without sharing class ISSP_AMS_Accreditation {
 					errorFound = true;
 				}
 			} else {
-				if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null && !isCNSAgency) {
-					newForm.ISSP_AMS_Number_of_Years_Traded__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
 				if (newForm.Is_your_firm_handling_Dangerous_Goods__c == null) {
 					newForm.Is_your_firm_handling_Dangerous_Goods__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -7047,6 +7042,11 @@ public without sharing class ISSP_AMS_Accreditation {
 					newForm.Has_your_form_ever_held_CASS_Assoc_etc__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
+			}
+
+			if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null && (isocountry.EACP_Country__c || isCNSAgency)) {
+				newForm.ISSP_AMS_Number_of_Years_Traded__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
 			}
 
 			if (CountryCheckList != null && CountryCheckList.License_required__c) {
@@ -7108,6 +7108,11 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (newForm.Has_your_firm_ever_held_a_Cargo_Agency__c == 'Yes') {
 				if (newForm.IATA_Agents_Numeric_Code__c == null) {
 					newForm.IATA_Agents_Numeric_Code__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+
+				if(isCNSAgency && (newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null)){
+					newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
 
@@ -7456,11 +7461,6 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
 		Boolean errorFound = false;
 
-		if(isCNSAgency && newForm.Has_your_firm_ever_held_a_Cargo_Agency__c =='Yes' && (newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null)){
-			newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
-
 		if(isCNSAgency){
 			if(newForm.Total_Freight_Charges_monetary_value__c == null){
 				newForm.Total_Freight_Charges_monetary_value__c.addError(Label.ISSP_YouMustEnter);
@@ -7489,86 +7489,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		if(isCNSAgency && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO)){
-			if(newForm.ISSP_AMS_Legal_Status__c == null) {
-				newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.ISSP_AMS_Date_legal_establishment__c == null) {
-				newForm.ISSP_AMS_Date_legal_establishment__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.ISSP_AMS_Number_of_Years_Traded__c == null) {
-				newForm.ISSP_AMS_Number_of_Years_Traded__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if (newForm.Has_your_firm_ever_held_a_Cargo_Agency__c == null) {
-				newForm.Has_your_firm_ever_held_a_Cargo_Agency__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Has_your_firm_ever_held_a_Cargo_Agency__c == 'Yes' && newForm.CASS_USA_Account_Number__c == null) {
-				newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Is_your_firm_an_approved_IATA_Passenger__c == null) {
-				newForm.Is_your_firm_an_approved_IATA_Passenger__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Is_your_firm_an_approved_IATA_Passenger__c == 'Yes' && newForm.Agents_Numeric_Code_of_your_Head_Office__c == null) {
-				newForm.Agents_Numeric_Code_of_your_Head_Office__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Is_your_firm_a_General_Sales_Agent_GSA__c == 'Yes' && newForm.List_carriers__c == null) {
-				newForm.List_carriers__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Is_your_firm_insured_to_cover__c == null) {
-				newForm.Is_your_firm_insured_to_cover__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_found_guilty_of_infringements__c == null) {
-				newForm.Been_found_guilty_of_infringements__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_involved_in_a_bankruptcy__c == null) {
-				newForm.Been_involved_in_a_bankruptcy__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_involved_in_a_bankruptcy__c == 'Yes' && newForm.If_yes_are_you_fully_and_legally__c == null) {
-				newForm.If_yes_are_you_fully_and_legally__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_a_sole_proprietor__c == null) {
-				newForm.Been_a_sole_proprietor__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_director_or_had_a_financial__c == null) {
-				newForm.Been_director_or_had_a_financial__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if(newForm.Been_director_or_had_a_financial__c == 'Yes') {
-				if(newForm.State_full_name_of_such_Agent__c == null) {
-					newForm.State_full_name_of_such_Agent__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if(newForm.Were_all_IATA_Members_fully_repaid__c == null) {
-					newForm.Were_all_IATA_Members_fully_repaid__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			}
 			
 			Boolean haveSecurityContact = false;
 			Boolean havePortalAdministrator = false;
