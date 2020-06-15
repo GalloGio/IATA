@@ -5286,6 +5286,14 @@ You can easily create a company account in two steps</value>
         <value>Postal Code</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Profile_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details</shortDescription>
+        <value>Profile Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Profile_Details_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
