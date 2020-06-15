@@ -720,7 +720,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 			Promotion__c[] listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c where Promotion_Code__c = :promotion.Promotion_Code__c];
 			if (listPromotion == null || listPromotion.size() == 0) {
-		//		promotion.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c}));
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}

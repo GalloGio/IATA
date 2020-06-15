@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata"/>
+
+<?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
         <label><!-- ACLI --></label>
@@ -8806,7 +8809,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformationTitle</name>
     </customLabels>
     <customLabels>
-        <label>Tous les articles doivent être coché avant de procéder à la page suivante.</label>
+        <label>Le ou les documents suivants pourraient être nécessaires afin de compléter la demande de carte d&apos;identité. À des fins de vérification, il est possible que IATA vous demande des informations ou des documents supplémentaires. Une fausse déclaration entraînera une annulation et bloquera toute demande future.</label>
         <name>IDCard_CheckList_ErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -9976,10 +9979,6 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label>J’ai lu la liste des documents requis.</label>
         <name>IDCard_CheckBox</name>
-    </customLabels>
-    <customLabels>
-        <label>Le ou les documents suivants pourraient être nécessaires afin de compléter la demande de carte d&apos;identité. À des fins de vérification, il est possible que IATA vous demande des informations ou des documents supplémentaires. Une fausse déclaration entraînera une annulation et bloquera toute demande future.</label>
-        <name>IDCard_CheckList_ErrorMessage2</name>
     </customLabels>
     <customLabels>
         <label>Continuer</label>

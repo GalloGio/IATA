@@ -7561,10 +7561,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CheckBox</name>
     </customLabels>
     <customLabels>
-        <label>Es posible que necesite los siguientes documentos para completar la solicitud de la tarjeta ID Card. Con fines de verificación, IATA podrá pedir documentos o información adicionales al solicitante. Una declaración falsa dará lugar a la cancelación y bloqueo futuro de la solicitud de la tarjeta ID Card.</label>
-        <name>IDCard_CheckList_ErrorMessage2</name>
-    </customLabels>
-    <customLabels>
         <label>Siguiente...</label>
         <name>IDCard_Continue</name>
     </customLabels>
@@ -8817,7 +8813,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformationTitle</name>
     </customLabels>
     <customLabels>
-        <label>Todos los artículos deben ser marcados antes de pasar a la página siguiente.</label>
+        <label>Es posible que necesite los siguientes documentos para completar la solicitud de la tarjeta ID Card. Con fines de verificación, IATA podrá pedir documentos o información adicionales al solicitante. Una declaración falsa dará lugar a la cancelación y bloqueo futuro de la solicitud de la tarjeta ID Card.</label>
         <name>IDCard_CheckList_ErrorMessage</name>
     </customLabels>
     <customLabels>
