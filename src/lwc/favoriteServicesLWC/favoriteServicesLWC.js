@@ -4,6 +4,8 @@ import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavo
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { updateRecord } from 'lightning/uiRecordApi';
 
@@ -337,7 +339,29 @@ export default class FavoriteServicesLWC extends LightningElement {
                                     this.toggleSpinner();
                                 });
 
-                        } else {
+                        } else if(recordName.value === 'Training Platform (LMS)'){
+							getPortalServiceId({ serviceName: recordName.value })
+								.then(serviceId => {
+									verifyCompleteL3Data({serviceId: serviceId})
+									.then(result => {
+										if(result !== 'not_complete'){
+											window.open(result);
+										}
+										else{
+											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+										}
+										this.toggleSpinner();
+									})
+									.catch(error => {
+										this.error = error;
+									});
+								})
+								.catch(error => {
+									this.error = error;
+							});
+
+						}
+						else{
                             if (!myUrl.startsWith('http')) {
                                 myUrl = window.location.protocol + '//' + myUrl;
                             }

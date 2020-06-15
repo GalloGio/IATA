@@ -2,6 +2,9 @@
 private class ANG_RHCMassCalculationTest {
 
 	@testSetup static void setup() {
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Prov', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/calculatedrhc/{agencyId}/v1', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+		insert customsettings;
 
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
@@ -237,7 +240,6 @@ private class ANG_RHCMassCalculationTest {
 
 		Integer days = controller.days;
 		List<SelectOption> regions = controller.regions;
-		Integer totalPages = controller.totalPages;
 
 		controller.search();
 		controller.next();
@@ -247,10 +249,10 @@ private class ANG_RHCMassCalculationTest {
 		controller.first();
 		controller.selectAll = true;
 		
-		System.assertEquals(2, controller.agents.size(), 'Expected two results');
+		System.assertEquals(1, controller.agents.size(), 'Expected one result');
 		
-		controller.calculate(); // no account selected, no work for the batch
-		controller.fetchResults();
+		//controller.calculate(); // no account selected, no work for the batch
+		//controller.fetchResults();
 
 		Test.stopTest();
 	}
@@ -274,7 +276,6 @@ private class ANG_RHCMassCalculationTest {
 
 		Integer days = controller.days;
 		List<SelectOption> regions = controller.regions;
-		Integer totalPages = controller.totalPages;
 
 		controller.search();
 		controller.next();
@@ -284,12 +285,13 @@ private class ANG_RHCMassCalculationTest {
 		controller.first();
 		controller.selectAll = true;
 		
-		System.assertEquals(2, controller.agents.size(), 'Expected two results');
-
+		System.assertEquals(1, controller.agents.size(), 'Expected one result');
+		
+		id RHCGEAccount = [SELECT ANG_AccountId__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__r.Location_Type__c = :AMS_Utils.GE].Id;
+		system.debug('dtullo --> RHCGEAccount ' + RHCGEAccount);
 		Id geAccount = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE].Id;
-		for (ANG_RHCMassCalculation.Agent i : controller.agents) {
-			System.assertNotEquals(geAccount, i.rhcInfo.ANG_AccountId__c, 'GE Accounts should not be retrieved in rhcQuery()');
-		}
+		for(id i:controller.agents.keySet())
+			System.assertNotEquals(geAccount, i, 'GE Accounts should not be retrieved in rhcQuery()');
 
 		Test.stopTest();
 	}
@@ -310,8 +312,41 @@ private class ANG_RHCMassCalculationTest {
 		System.assertNotEquals(0, controller.countries.size());
 		
 		System.assertEquals(1, controller.agents.size(), 'Expected one result');
-		System.assertEquals('50%', controller.agents.get(0).calculatedConsumedRHC);
 
 		Test.stopTest();
+	}
+
+	@isTest
+	static void RequestProvisional(){
+		ANG_RME_Alert_Service.WebserviceResult wsRes = ANG_RME_Alert_Service.testWebserviceResult();
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '11111111';
+		message.eventTime = System.now();
+		message.storedRHCValue = 15;
+
+		wsRes.isSuccess = true;
+		wsRes.iataCode = '11111111';
+		wsRes.res = message;
+
+
+		list<ANG_RHC_Information__c> lsRHC = [SELECT id FROM ANG_RHC_Information__c where ANG_IATA_Code__c='11111111'];
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+		
+		Test.startTest();
+		ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
+		controller.userRegion = 'Europe';
+		controller.regionSelected();
+		controller.country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'AA'].Id;
+
+		controller.search();
+		
+		list<ANG_RHCMassCalculation.ResponseWrapper> lsWR = new list<ANG_RHCMassCalculation.ResponseWrapper>();
+		ANG_RHCMassCalculation.ResponseWrapper wr  = ANG_RHCMassCalculation.RequestProvisionalAndCalculateRHC(lsRHC.get(0).Id, false);
+		
+		lsWR.add(wr);
+
+		controller.theSerializedResponse = JSON.serialize(lsWR);
+		controller.AfterProcess();
+		test.stopTest();
 	}
 }

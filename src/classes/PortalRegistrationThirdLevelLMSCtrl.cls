@@ -1,0 +1,1074 @@
+public without sharing class PortalRegistrationThirdLevelLMSCtrl {
+	public PortalRegistrationThirdLevelLMSCtrl() {
+
+	}
+
+	public static String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+	public static String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
+	public static String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+
+
+	public class returnWrapper{
+		@AuraEnabled
+		public String userInfo {get;set;}
+	}
+	public class RegistrationResult{
+		@AuraEnabled
+		public Boolean isSuccess{get;set;}
+		@AuraEnabled
+		public String message{get;set;}
+	}
+
+	public static string auxUserId;
+	public static string auxUsername;
+
+	@AuraEnabled
+	public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
+		User loggedUser = CSP_Utils.getLoggedUser();
+
+		String RECTYPE_lms = '';
+		
+		if(lms == 'yas'){
+			RECTYPE_lms = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet;
+		}
+
+		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
+
+
+		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId,
+															City_Name__c, City_Reference__c,
+															State_Name__c, State_Reference__c,
+															State_Reference__r.iso_code__c, PO_Box_Address__c,
+															Country__c, Country_Reference__c,
+															Street__c, Street2__c,
+															Postal_Code__c
+														FROM Training_Contact_Role_Details__c
+														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId
+														AND RecordTypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet
+														LIMIT 1];
+
+		if(con.isEmpty()){
+			return null;
+		}
+
+		return con[0];
+	}
+
+	@AuraEnabled
+	public static returnWrapper getParameters(String urlExtension){
+		returnWrapper result  = new returnWrapper();
+		PageReference pageRef = new PageReference(urlExtension);
+		String parameters     = pageRef.getParameters().get('c');
+		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
+
+		//get registration information
+		UserInformationWrapper registrationParameters = (UserInformationWrapper) JSON.deserialize(parameters, UserInformationWrapper.class);
+
+		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace(PortalPasswordHandler.plusReplacer, '+');
+		registrationParameters.Email = registrationParameters.Email.replace(PortalPasswordHandler.plusReplacer, '+');
+		registrationParameters.Phone = registrationParameters.Phone != null ? registrationParameters.Phone.replace(PortalPasswordHandler.plusReplacer, '+') : '';
+		registrationParameters.OtherPhone = registrationParameters.OtherPhone != null ? registrationParameters.OtherPhone.replace(PortalPasswordHandler.plusReplacer, '+') : '';
+
+		result.userInfo = JSON.serialize(registrationParameters);
+
+
+		return result;
+	}
+
+	@AuraEnabled
+	public static RegistrationResult registration(Contact con, List<String> extraValues){
+
+		User loggedUser = CSP_Utils.getLoggedUser();
+
+		RegistrationResult result = new RegistrationResult();
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+
+			RegistrationParamsWrapper regParam = new RegistrationParamsWrapper(extraValues);
+
+			//Create Account Role if not existing
+			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
+											FROM Account_Role__c
+											WHERE Account__c = :con.AccountId
+											AND Account_Role_Name__c = 'Training'
+											AND Functional_Role__c =  'Training' LIMIT 1];
+			Account_Role__c ar = new Account_Role__c();
+
+			if(listAR.size() > 0){
+				ar = listAR[0];
+			}else{
+				ar.Account__c = con.AccountId;
+				ar.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Master_AccRole;
+				ar.Account_Role_Name__c =  'Training';
+				ar.Functional_Role__c =  'Training';
+				insert ar;
+			}
+
+			Set<String> contIds = new Set<String>();
+			contIds.add(con.Id);
+			if(regParam.existingTrainingId != ''){
+				contIds.add(regParam.existingTrainingId);
+			}
+
+			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+													FROM Account_Contact_Role__c
+													WHERE Contact__c in :contIds
+													AND Contact_Role_Name__c = 'Trainee'
+													AND Functional_Role__c =  'Training'];
+			Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
+			Account_Contact_Role__c acr = new Account_Contact_Role__c();
+
+			Set<Id> acrIds = new Set<Id>();
+			for(Account_Contact_Role__c acrItem : listACR){
+				if(acrItem.Contact__c == con.Id){
+					acrNew = acrItem;
+					acrIds.add(acrItem.Id);
+				}else if(acrItem.Contact__c == regParam.existingTrainingId){
+					acrOld = acrItem;
+					acrIds.add(acrItem.Id);
+				}
+			}
+
+			if(acrOld != null && acrOld.Id != null){
+				//swap Account Contact Roles between the new contact and the existing one
+				acr = acrOld;
+				acr.Account_Role__c = ar.Id;
+				acr.Contact__c = con.Id;
+				update acr;
+
+				acrNew.Contact__c = regParam.existingTrainingId;
+				update acrNew;
+			}else if(acrNew != null && acrNew.Id != null){
+				acr = acrNew;
+			}else{
+				acr.Account_Role__c = ar.Id;
+				acr.Contact__c = con.Id;
+				acr.Contact_Role_Name__c = 'Trainee';
+				acr.Functional_Role__c =  'Training';
+				acr.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Master_AccContRole;
+				acr.Service_Rendered__c = 'Other';
+
+				insert acr;
+			}
+
+			String contIdToInactivate = '';
+			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
+				contIdToInactivate = regParam.existingTrainingId;
+				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(contIdToInactivate);
+			}
+
+			//Create Yardstick Contact Role Detail
+			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+																FROM Training_Contact_Role_Details__c
+																WHERE Account_Contact_Role__c in :acrIds
+																AND RecordtypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet
+																LIMIT 1];
+			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
+			Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
+			
+			if(listYCD.size() > 0){
+				if(listYCD.size() > 1){
+					for(Training_Contact_Role_Details__c auxTcrd : listYCD){
+						if(auxTcrd.Account_Contact_Role__c == acr.id){
+							ycd = auxTcrd;
+						}else{
+							ycdOld = auxTcrd;
+						}
+					}
+					ycdOld.Postal_Code__c = '00000';
+					ycdOld.OwnerId = loggedUser.Id;
+					update ycdOld;
+
+					//wait fot data to update on YAS via mulesoft, otherwise we can have a clash of emails in YAS
+					Long startingTime = System.now().getTime(); // Num milliseconds since Jan 1 1970
+					Integer delayInMilliseconds = 5000; // One-second delay
+					while (System.now().getTime() - startingTime < delayInMilliseconds)  {
+						// Do nothing until desired delay has passed
+					}
+						
+				}else{
+					ycd = listYCD[0];
+					PortalRegistrationThirdLevelLMSCtrl.auxUserId = ycd.UserId__c;
+					PortalRegistrationThirdLevelLMSCtrl.auxUsername = ycd.Username__c;
+				}
+				
+				ycd.Username__c = regParam.sUsername;
+				ycd.UserId__c = regParam.sUserId;
+				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
+					ycd.Preferred_Course__c = regParam.sCourse;
+				}
+			}else{
+				ycd.Account_Contact_Role__c = acr.Id;
+				ycd.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet;
+				ycd.Username__c = regParam.sUsername;
+				ycd.UserId__c = regParam.sUserId;
+				if(regParam.sCourse != null && regParam.sCourse != '' && regParam.sCourse != 'undefined'){
+					ycd.Preferred_Course__c = regParam.sCourse;
+				}
+			}
+		
+
+			//Check State
+			if(regParam.sStateId != ''){
+				List<IATA_ISO_State__c> listStates = [SELECT Id,ISO_Code__c,Name,Valid_for_Address__c
+										FROM IATA_ISO_State__c
+										WHERE Id = :regParam.sStateId
+										OR ISO_Code__c = :regParam.sStateId LIMIT 1];
+				if(listStates.size() > 0){
+					ycd.State_Reference__c = listStates[0].Id;
+					ycd.State_Name__c = listStates[0].Name;
+				}else{
+					ycd.State_Name__c = regParam.sStateName;
+				}
+			}else{
+				ycd.State_Name__c = regParam.sStateName;
+			}
+
+			if(regParam.isPoBox){
+				ycd.PO_Box_Address__c = (regParam.sStreet != null) ? regParam.sStreet : '';
+			}else{
+				ycd.Street__c = (regParam.sStreet != null) ? regParam.sStreet : '';
+			}
+
+			ycd.Street2__c = (regParam.sStreet2 != null) ? regParam.sStreet2 : '';
+			ycd.Postal_Code__c = (regParam.sZipCode != null && regParam.sZipCode != '') ? regParam.sZipCode : '00000';
+			ycd.Country_Reference__c = (regParam.sCountryId != null && regParam.sCountryId != '') ? regParam.sCountryId : null;
+			ycd.City_Reference__c = (regParam.sCityId != null && regParam.sCityId != '') ? regParam.sCityId : null;
+			ycd.City_Name__c = (regParam.sCity != null && regParam.sCity != '') ? regParam.sCity : null;
+			ycd.OwnerId = loggedUser.Id;
+
+
+			if(listYCD.size() > 0){
+				update ycd;
+			}else{
+				insert ycd;
+			}
+
+			//Create Portal Application Right
+			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+
+		   	//Create ToS Acceptance
+			createToSAcceptance(pa.id, con.Id);
+
+			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c
+															FROM Portal_Application_Right__c
+															WHERE Contact__c = :con.Id
+															AND Portal_Application__c = :pa.id
+															LIMIT 1];
+			Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c();
+
+			if(listPAR.size() > 0){
+				portalApplicationRight = listPAR[0];
+			}else{
+				portalApplicationRight = new Portal_Application_Right__c(
+							Portal_Application__c = pa.id,
+							Right__c = 'Access Granted',
+							Contact__c = con.Id,
+							Favourite_Service__c = true
+						);
+				insert portalApplicationRight;
+			}
+
+			if(contIdToInactivate != ''){
+				Set<String> conIdSet = new Set<String>();
+				conIdSet.add(contIdToInactivate);
+				System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+			}
+
+			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
+
+			assignPermissionSet(psYardstick.Id, (Id)loggedUser.Id);
+
+			//Update Contact
+			update con;
+
+			result.isSuccess = true;
+			result.message = 'Regitration Completed!';
+
+		}
+		catch(Exception e){
+			result.isSuccess = false;
+			result.message = 'An Error Occurred - '+ e.getMessage() +' - '+ e.getStackTraceString() ;
+			Database.rollback(sp);
+		}
+		return result;
+	}
+
+
+
+	@AuraEnabled
+	public static RegistrationResult completeRegistration(String params){
+
+		User loggedUser = CSP_Utils.getLoggedUser();
+
+		RegistrationResult result = new RegistrationResult();
+		Savepoint sp = Database.setSavepoint();
+
+		try{
+			UserInformationWrapper contactInfo = getDataToMail(params);
+			List<String> extraValues = new List<String>();
+			extraValues.add(contactInfo.Username);
+			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow4' || contactInfo.flow == 'flow5'){
+				extraValues.add(contactInfo.UserId);
+			}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				extraValues.add('');
+			}
+			extraValues.add(contactInfo.lmsCourse);
+			extraValues.add(contactInfo.street);
+			extraValues.add(contactInfo.zip);
+			extraValues.add(contactInfo.countryId);
+			extraValues.add(contactInfo.stateId);
+			extraValues.add(contactInfo.stateName);
+			extraValues.add(contactInfo.cityId);
+			extraValues.add(contactInfo.cityName);
+			extraValues.add(contactInfo.isPoBox);
+			extraValues.add(contactInfo.serviceid);
+			extraValues.add(contactInfo.street2);
+			extraValues.add(contactInfo.existingTrainingId);
+
+			//Inactivate the registering Contact
+			//Need to liberate the additional email 1st to empty in order not to give duplicate error
+			String contIdToInactivate = '';
+			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				if(contactInfo.flow == 'flow4'){
+					contIdToInactivate = contactInfo.Id;
+				}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+					contIdToInactivate = contactInfo.existingContactId;
+				}
+				PortalRegistrationFirstLevelCtrl.UpdateContactEmailsToInactivate(contIdToInactivate);
+			}
+		
+			Id contIdToSearch = contactInfo.Id;
+			if(contactInfo.flow == 'flow4'){
+				contIdToSearch = contactInfo.existingContactId;
+			}
+			
+			Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate 
+							FROM Contact WHERE Id = :contIdToSearch];
+							con.Email = contactInfo.Email;
+							con.Additional_Email__c = contactInfo.Additional_Email;
+							con.Phone = contactInfo.Phone;
+							con.OtherPhone = contactInfo.OtherPhone;
+							con.Salutation = contactInfo.Salutation;
+							con.Birthdate = Date.valueOf(contactInfo.Birthdate);
+
+			RegistrationResult regRes = new RegistrationResult();
+			if(contactInfo.flow == 'flow3' || contactInfo.flow == 'flow5'){
+				return registration(con, extraValues);
+			}else if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+				regRes = registration(con, extraValues);
+			}
+
+			if(contactInfo.flow == 'flow4'){
+
+				Set<String> contIds = new Set<String>();
+				contIds.add(contactInfo.Id);
+				contIds.add(con.Id);
+
+				if(regRes.isSuccess){
+
+					//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+															FROM Account_Contact_Role__c
+															WHERE Contact__c in :contIds
+															AND Contact_Role_Name__c = 'Trainee'
+															AND Functional_Role__c =  'Training'];
+					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
+
+					for(Account_Contact_Role__c acr : listACR){
+						if(acr.Contact__c == contactInfo.Id){
+							acrNew = acr;
+						}else if(acr.Contact__c == contactInfo.existingContactId){
+							acrOld = acr;
+						}
+					}
+
+					Set<String> acrIds = new Set<String>();
+					acrIds.add(acrNew.Id);
+					acrIds.add(acrOld.Id);
+
+					//Create Yardstick Contact Role Detail
+					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+																	FROM Training_Contact_Role_Details__c
+																	WHERE Account_Contact_Role__c in :acrIds
+																	AND RecordTypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet];
+					Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
+					Training_Contact_Role_Details__c ycdNew = new Training_Contact_Role_Details__c();
+
+					for(Training_Contact_Role_Details__c ycd : listYCD){
+						if(ycd.Account_Contact_Role__c == acrNew.Id){
+							ycdNew = ycd;
+						}else if(ycd.Account_Contact_Role__c == acrOld.Id){
+							ycdOld = ycd;
+						}
+					}
+
+					//Check if Training_Contact_Role_Details__c exist on the contact to keep
+					if(ycdOld != null){
+
+						List<Contact_Role_Certification__c> listCRC = [SELECT Id,Training_Contact_Role_Detail__c
+																	FROM Contact_Role_Certification__c
+																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
+
+						if(listCRC.size() > 0){
+							for(Contact_Role_Certification__c crc : listCRC){
+								crc.Training_Contact_Role_Detail__c = ycdOld.Id;
+							}
+							update listCRC;
+						}
+
+						List<Course_Assignment__c> listCA = [SELECT Id,Training_Contact_Role_Detail__c
+																	FROM Course_Assignment__c
+																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
+
+						if(listCA.size() > 0){
+							for(Course_Assignment__c ca : listCA){
+								ca.Training_Contact_Role_Detail__c = ycdOld.Id;
+							}
+							update listCA;
+						}
+
+						if(ycdNew != null && ycdNew.Id != null){
+							delete ycdNew;
+						}
+
+						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
+						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
+						ycdOld.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
+						ycdOld.OwnerId = loggedUser.Id;
+						update ycdOld;
+
+					}else{
+						ycdNew.Account_Contact_Role__c = acrOld.Id;
+						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
+						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
+						ycdNew.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
+						ycdNew.OwnerId = loggedUser.Id;
+						update ycdNew;
+					}
+
+					//Delete Account Contact Role from the registering Contact
+					if(acrNew != null && acrNew.Id != null){
+						delete acrNew;
+					}
+
+					if(contIdToInactivate != ''){
+						Set<String> conIdSet = new Set<String>();
+						conIdSet.add(contIdToInactivate);
+						System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					}
+
+					regRes.isSuccess = true;
+					regRes.message = 'Regitration Completed!';
+				}else{
+					regRes.isSuccess = false;
+					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
+					Database.rollback(sp);
+				}
+				return regRes;
+			}
+			if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+
+				Set<String> contIds = new Set<String>();
+				contIds.add(contactInfo.existingContactId);
+				contIds.add(con.Id);
+
+				if(regRes.isSuccess){
+
+					//Getting existing Account Contact Role to set it up to the new Contact
+					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+															FROM Account_Contact_Role__c
+															WHERE Contact__c in :contIds
+															AND Contact_Role_Name__c = 'Trainee'
+															AND Functional_Role__c =  'Training'];
+					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
+
+					Set<Id> acrIds = new Set<Id>();
+					for(Account_Contact_Role__c acr : listACR){
+						if(acr.Contact__c == con.Id){
+							acrNew = acr;
+							acrIds.add(acr.Id);
+						}else if(acr.Contact__c == contactInfo.existingContactId){
+							acrOld = acr;
+							acrIds.add(acr.Id);
+						}
+					}
+
+					if(acrNew != null && acrOld != null){
+						acrOld.Contact__c = con.Id;
+						acrOld.Account_Role__c = acrNew.Account_Role__c;
+						update acrOld;
+
+						acrNew.Contact__c = contactInfo.existingContactId;
+						update acrNew;
+					}
+
+					//Create Yardstick Contact Role Detail
+					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+																	FROM Training_Contact_Role_Details__c
+																	WHERE Account_Contact_Role__c in :acrIds
+																	AND RecordtypeId = :PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Trainee_YASContDet];
+					Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
+					Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
+					
+					if(listYCD.size() > 0){
+						if(listYCD.size() > 1){
+							for(Training_Contact_Role_Details__c auxTcrd : listYCD){
+								if(auxTcrd.Account_Contact_Role__c == acrOld.id){
+									ycd = auxTcrd;
+								}else{
+									ycdOld = auxTcrd;
+								}
+							}
+							ycdOld.UserId__c = PortalRegistrationThirdLevelLMSCtrl.auxUserId;
+							ycdOld.Username__c = PortalRegistrationThirdLevelLMSCtrl.auxUsername;
+							ycdOld.Postal_Code__c = '00000';
+							ycdOld.OwnerId = loggedUser.Id;
+							update ycdOld;
+		
+							//wait fot data to update on YAS via mulesoft, otherwise we can have a clash of emails in YAS
+							Long startingTime = System.now().getTime(); // Num milliseconds since Jan 1 1970
+							Integer delayInMilliseconds = 5000; // One-second delay
+							while (System.now().getTime() - startingTime < delayInMilliseconds)  {
+								// Do nothing until desired delay has passed
+							}
+						}else{
+							ycd = listYCD[0];
+						}
+						
+						ycd.Username__c = contactInfo.Username != ''? contactInfo.Username : ycd.Username__c;
+						ycd.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycd.UserId__c;
+						ycd.Preferred_Course__c = (contactInfo.lmsCourse != null && contactInfo.lmsCourse != '' && contactInfo.lmsCourse != 'undefined')? contactInfo.lmsCourse : ycd.Preferred_Course__c;
+						ycd.OwnerId = loggedUser.Id;
+
+						//Check State
+						if(contactInfo.stateId != ''){
+							List<IATA_ISO_State__c> listStates = [SELECT Id,ISO_Code__c,Name,Valid_for_Address__c
+													FROM IATA_ISO_State__c
+													WHERE Id = :contactInfo.stateId
+													OR ISO_Code__c = :contactInfo.stateId LIMIT 1];
+							if(listStates.size() > 0){
+								ycd.State_Reference__c = listStates[0].Id;
+								ycd.State_Name__c = listStates[0].Name;
+							}else{
+								ycd.State_Name__c = contactInfo.stateName;
+							}
+						}else{
+							ycd.State_Name__c = contactInfo.stateName;
+						}
+
+						if(Boolean.valueOf(contactInfo.isPoBox)){
+							ycd.PO_Box_Address__c = (contactInfo.street != null) ? contactInfo.street : '';
+						}else{
+							ycd.Street__c = (contactInfo.street != null) ? contactInfo.street : '';
+						}
+
+						ycd.Street2__c = (contactInfo.street2 != null) ? contactInfo.street2 : '';
+						ycd.Postal_Code__c = (contactInfo.zip != null && contactInfo.zip != '') ? contactInfo.zip : '00000';
+						ycd.Country_Reference__c = (contactInfo.countryId != null && contactInfo.countryId != '') ? contactInfo.countryId : null;
+						ycd.City_Reference__c = (contactInfo.cityId != null && contactInfo.cityId != '') ? contactInfo.cityId : null;
+						ycd.City_Name__c = (contactInfo.cityName != null && contactInfo.cityName != '') ? contactInfo.cityName : null;
+
+						update ycd;
+					}
+
+					if(contIdToInactivate != ''){
+						Set<String> conIdSet = new Set<String>();
+						conIdSet.add(contIdToInactivate);
+						System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
+					}
+
+					regRes.isSuccess = true;
+					regRes.message = 'Regitration Completed!';
+				}else{
+					regRes.isSuccess = false;
+					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
+					Database.rollback(sp);
+				}
+				return regRes;
+			}
+		}
+		catch(Exception e){
+			result.isSuccess = false;
+			result.message = 'An Error Occurred - '+ e.getMessage() +' - '+ e.getStackTraceString() ;
+			Database.rollback(sp);
+			return result;
+		}
+		return result;
+	}
+
+
+	@AuraEnabled
+	public static UserInformationWrapper getDataToMail(string registrationForm){
+		Map<String, Object> inputMap = (Map<String, Object>)JSON.deserializeUntyped(registrationForm);
+
+		UserInformationWrapper params = new UserInformationWrapper();
+		params.Email     = (inputMap.get('Email') != null) ? string.valueOf(inputMap.get('Email')) : '';
+		params.Additional_Email = (inputMap.get('Additional_Email__c') != null) ? string.valueOf(inputMap.get('Additional_Email__c')) : '';
+		if(params.Additional_Email == ''){
+			params.Additional_Email = (inputMap.get('Additional_Email') != null) ? string.valueOf(inputMap.get('Additional_Email')) : '';
+		}
+		params.FirstName = (inputMap.get('FirstName') != null) ? string.valueOf(inputMap.get('FirstName')) : '';
+		params.LastName  = (inputMap.get('LastName') != null) ? string.valueOf(inputMap.get('LastName')) : '';
+		params.Birthdate   = (inputMap.get('Birthdate') != null) ? string.valueOf(inputMap.get('Birthdate')) : '';
+		params.Date_of_Birth   = (inputMap.get('Date_of_Birth__c') != null) ? string.valueOf(inputMap.get('Date_of_Birth__c')) : '';
+		if(params.Date_of_Birth == ''){
+			params.Date_of_Birth = (inputMap.get('Date_of_Birth') != null) ? string.valueOf(inputMap.get('Date_of_Birth')) : '';
+		}
+		params.Phone   = (inputMap.get('Phone') != null) ? string.valueOf(inputMap.get('Phone')) : '';
+		params.language   = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
+		params.Id   = (inputMap.get('Id') != null) ? string.valueOf(inputMap.get('Id')) : '';
+		params.AccountId   = (inputMap.get('AccountId') != null) ? string.valueOf(inputMap.get('AccountId')) : '';
+		params.OtherPhone   = (inputMap.get('OtherPhone') != null) ? string.valueOf(inputMap.get('OtherPhone')) : '';
+		params.Salutation   = (inputMap.get('Salutation') != null) ? string.valueOf(inputMap.get('Salutation')) : '';
+		params.Title   = (inputMap.get('Title') != null) ? string.valueOf(inputMap.get('Title')) : '';
+		params.UserId   = (inputMap.get('UserId') != null) ? string.valueOf(inputMap.get('UserId')) : '';
+		params.Username   = (inputMap.get('Username') != null) ? string.valueOf(inputMap.get('Username')) : '';
+		params.User_Portal_Status   = (inputMap.get('User_Portal_Status__c') != null) ? string.valueOf(inputMap.get('User_Portal_Status__c')) : '';
+		if(params.User_Portal_Status == ''){
+			params.User_Portal_Status = (inputMap.get('User_Portal_Status') != null) ? string.valueOf(inputMap.get('User_Portal_Status')) : '';
+		}
+		params.existingContactId = (inputMap.get('existingContactId') != null) ? string.valueOf(inputMap.get('existingContactId')) : '';
+		params.existingContactName = (inputMap.get('existingContactName') != null) ? string.valueOf(inputMap.get('existingContactName')) : '';
+		params.existingContactEmail = (inputMap.get('existingContactEmail') != null) ? string.valueOf(inputMap.get('existingContactEmail')) : '';
+		params.existingContactAccount = (inputMap.get('existingContactAccount') != null) ? string.valueOf(inputMap.get('existingContactAccount')) : '';
+		params.lms  = (inputMap.get('lms') != null) ? string.valueOf(inputMap.get('lms')) : '';
+		params.lmsCourse  = (inputMap.get('lmsCourse') != null && inputMap.get('lmsCourse') != 'undefined') ? string.valueOf(inputMap.get('lmsCourse')) : '';
+		params.hasExistingContact = (inputMap.get('hasExistingContact') != null) ? string.valueOf(inputMap.get('hasExistingContact')) : '';
+		params.hasExistingContactPersonalEmail = (inputMap.get('hasExistingContactPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingContactPersonalEmail')) : '';
+		params.hasExistingUser = (inputMap.get('hasExistingUser') != null) ? string.valueOf(inputMap.get('hasExistingUser')) : '';
+		params.hasExistingUserPersonalEmail = (inputMap.get('hasExistingUserPersonalEmail') != null) ? string.valueOf(inputMap.get('hasExistingUserPersonalEmail')) : '';
+		params.existingTrainingId = (inputMap.get('existingTrainingId') != null) ? string.valueOf(inputMap.get('existingTrainingId')) : '';
+		params.flow = (inputMap.get('flow') != null) ? string.valueOf(inputMap.get('flow')) : '';
+
+		params.isPoBox = (inputMap.get('isPoBox') != null) ? string.valueOf(inputMap.get('isPoBox')) : '';
+		params.countryId = (inputMap.get('countryId') != null) ? string.valueOf(inputMap.get('countryId')) : '';
+		params.countryCode = (inputMap.get('countryCode') != null) ? string.valueOf(inputMap.get('countryCode')) : '';
+		params.countryName = (inputMap.get('countryName') != null) ? string.valueOf(inputMap.get('countryName')) : '';
+		params.stateId = (inputMap.get('stateId') != null) ? string.valueOf(inputMap.get('stateId')) : '';
+		params.stateName = (inputMap.get('stateName') != null) ? string.valueOf(inputMap.get('stateName')) : '';
+		params.cityId = (inputMap.get('cityId') != null) ? string.valueOf(inputMap.get('cityId')) : '';
+		params.cityName = (inputMap.get('cityName') != null) ? string.valueOf(inputMap.get('cityName')) : '';
+		params.street = (inputMap.get('street') != null) ? string.valueOf(inputMap.get('street')) : '';
+		params.zip = (inputMap.get('zip') != null) ? string.valueOf(inputMap.get('zip')) : '';
+		params.serviceid = (inputMap.get('serviceid') != null) ? string.valueOf(inputMap.get('serviceid')) : '';
+		params.street2 = (inputMap.get('street2') != null) ? string.valueOf(inputMap.get('street2')) : '';
+		return params;
+	}
+
+	public static string generateEncoded(UserInformationWrapper params){
+
+		string paramsJson = JSON.serialize(params);
+		paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
+		string encryptedStr = PortalPasswordHandler.EncryptString(paramsJson);
+		String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
+
+		return encodedPart;
+	}
+
+	@AuraEnabled
+	public static RegistrationResult sendSingleEmail(String contactName, String emailAddr, String flow, String params){
+		RegistrationResult result = new RegistrationResult();
+		//MAX 150 adresses
+		try{
+
+			//Get address
+			String address = emailAddr;
+			String addressEncoded = EncodingUtil.urlEncode(emailAddr, 'UTF-8');
+
+			if(address == null){
+				result.isSuccess = false;
+				result.message = 'An Error Occurred!';
+				return result;
+			}
+
+			Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
+			string sURLpath = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
+			string sURL = '';
+			sURL = sURLpath + '?lmsflow='+flow;
+			
+			UserInformationWrapper wUserInfo = getDataToMail(params);
+			String encodedData = generateEncoded(wUserInfo);
+			if(encodedData != ''){
+				sURL = sURL + '&'+encodedData;
+			}
+
+			if(flow == 'flow4'){
+				sURL = Network.getLoginURL(networkId) + '?email=' + addressEncoded + '&startURL='+ EncodingUtil.urlEncode(sURL, 'UTF-8');
+			}
+
+			String sEmailTemplateName = 'CSP_Verification_L3_Email_LMS_VF';
+			if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
+					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
+				sEmailTemplateName = 'CSP_Verification_L3_EmailUserExistLMS_VF';
+			}
+
+			//Get email template and orgWideEmail
+			EmailTemplate emailTemplate = [SELECT Id,Subject,Description,HtmlValue,DeveloperName,Body
+											FROM EmailTemplate
+											WHERE DeveloperName = :sEmailTemplateName];
+			OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
+
+			Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, null, null);
+
+			message.setReplyTo('noreply@iata.org');
+			message.setUseSignature(false);
+			message.setBccSender(false);
+			message.setSaveAsActivity(false);
+			message.setTemplateID(emailTemplate.Id);
+			if(orgWideEmail != null){
+				message.setOrgWideEmailAddressId(orgWideEmail.Id);
+			}else{
+				message.setSenderDisplayName('IATA Noreply');
+			}
+
+			message.setToAddresses(new List<String>{address});
+
+			String plainBody = message.getPlainTextBody();
+
+			if(plainBody != null) {
+				String headerImageName = Label.CSP_Email_Header_Image_LMS;
+				String footerImageName = Label.CSP_Email_Footer_Image;
+				String headerImageUrl;
+				String footerImageUrl;
+				Map<String,Id> docNameIdMap = new Map<String,Id>();
+
+				String sEmail_Confirmation_Body = '';
+
+				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
+					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
+
+					if(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail)){
+						if(flow == 'flow5'){
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
+													Label.CSP_Verification_L3_Email_PE_2_F5_LMS;
+						}else{
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_PE_1_LMS +
+													Label.CSP_Verification_L3_Email_PE_2_LMS;
+						}
+					}else{
+						if(flow == 'flow4'){
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_F4_LMS +
+													Label.CSP_Verification_L3_Email_UE_2_LMS;
+						}else{
+							sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_UE_1_LMS +
+													Label.CSP_Verification_L3_Email_UE_2_LMS;
+						}
+					}
+				}else{
+					//All other Flows that don't match a email or Aditional Email
+					sEmail_Confirmation_Body = Label.CSP_Verification_L3_Email_LMS;
+				}
+
+				for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+					docNameIdMap.put(doc.name,doc.id);
+				}
+
+				if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
+				if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+
+				Map<String, String> mapBodyParams = new map<String, String>{
+						'{!HeaderUrl}'                                   => headerImageUrl,
+						'{!FooterUrl}'                                   => footerImageUrl,
+						'{!Receiving_User.FirstName}'                    => contactName,
+						'{!Community_Url}'                               => sURL,
+						'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
+						'{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
+						'{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
+						'{!$Label.CSP_Email_Welcome_Part_1}'             => Label.CSP_Email_Welcome_Part_1,
+						'{!$Label.CSP_Email_Welcome_Part_2}'             => Label.CSP_Email_Welcome_Part_2,
+						'{!$Label.CSP_Email_Welcome_Part_3}'             => Label.CSP_Email_Welcome_Part_3,
+						'{!$Label.CSP_Email_Welcome_Part_4}'             => Label.CSP_Email_Welcome_Part_4,
+						'{!$Label.CSP_Email_Welcome_Part_5}'             => Label.CSP_Email_Welcome_Part_5,
+						'{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
+						'{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2,
+						'{!ExistingContactName}'                         => wUserInfo.existingContactName,
+						'{!ExistingContactEmail}'                        => wUserInfo.existingContactEmail,
+						'{!ExistingContactAccount}'                      => wUserInfo.existingContactAccount,
+						'{!ExistingContactUsername}'                     => sEmail_Confirmation_Body
+
+				};
+
+				for(String key : mapBodyParams.keySet()) {
+					plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
+				}
+
+				plainBody = plainBody.replace('[URL]',sURL);
+
+				if(( wUserInfo.hasExistingContact != null && wUserInfo.hasExistingContact != '' && Boolean.valueOf( wUserInfo.hasExistingContact)) ||
+					(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail) ) ){
+
+					if(flow == 'flow4' || flow == 'flow6'){
+						plainBody = plainBody.replace('[Email]',address);
+						plainBody = plainBody.replace('[LoginEmail]',wUserInfo.Email);
+						plainBody = plainBody.replace('[personalEmail]',wUserInfo.Additional_Email);
+					}else{
+						plainBody = plainBody.replace('[Email]',wUserInfo.Email);
+						plainBody = plainBody.replace('[ExistingEmail]',wUserInfo.existingContactEmail);
+					}
+
+				}else{
+					//All other Flows that don't match a email or Aditional Email
+					plainBody = plainBody.replace('[Email]',address);
+				}
+
+			}
+			message.setHtmlBody(plainBody);
+
+			Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
+			Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
+
+			if (results[0].success){
+				result.isSuccess = true;
+				result.message = 'Send Mail Successfull!';
+			} else {
+				result.isSuccess = false;
+				result.message = 'An Error Occurred!';
+			}
+		}catch(Exception e ){
+			result.isSuccess = false;
+			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
+		}
+		return result;
+	}
+
+	//check if names are 60% equal, if not returns -1, if equal or above 80% returns the # of diferences
+	public static Boolean getNameMatch(String firstname, String lastname, String existingFirstname, String existingLastname){
+		Boolean bRes = false;
+		String fullName = firstname + lastname;
+		String fullNameReverse = lastname + firstname;
+		fullName = AMS_Utils.cleanSpecialChars(fullName.toUpperCase(), false);
+		fullNameReverse = AMS_Utils.cleanSpecialChars(fullNameReverse.toUpperCase(), false);
+		Double fullNameSize = fullName.length();
+		Double threshold = fullNameSize - ((fullNameSize * 60)/100); //calculate 60%
+		Integer roundThreshold = Math.round(threshold);
+
+		String existingFullName = existingFirstname + existingLastname;
+		String existingFullNameReverse = existingLastname + existingFirstname;
+		existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
+		existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
+
+		Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
+		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullName, roundThreshold);
+
+		if(compareResult >= 0 || compareResultReverse >= 0){
+			bRes = true;
+		}
+		return bRes;
+	}
+
+
+	@AuraEnabled(cacheable=false)
+	public static String validateYasUserId(String userId, String username, String firstname, String lastname){
+		String sRes = '';
+
+		List<Training_Contact_Role_Details__c> existingYadLst = new List<Training_Contact_Role_Details__c>(
+			[SELECT Id, Username__c, Account_Contact_Role__r.contact__c, Account_Contact_Role__r.contact__r.firstname,
+					Account_Contact_Role__r.contact__r.lastname
+				FROM Training_Contact_Role_Details__c
+				WHERE UserId__c = :userId
+				LIMIT 1]);
+
+		if(!existingYadLst.isEmpty() && existingYadLst.size() > 0){
+
+			Training_Contact_Role_Details__c existingTCRD = existingYadLst[0];
+
+			if(existingTCRD.Username__c.equalsIgnoreCase(username) ){
+
+				if(!getNameMatch(firstname, lastname, existingTCRD.Account_Contact_Role__r.contact__r.firstname, existingTCRD.Account_Contact_Role__r.contact__r.lastname)){
+					sRes = 'not_matching';
+				}else{
+
+					//check if have active user
+					List<User> existingUserLst = new List<User>(
+						[SELECT Id FROM User WHERE ContactId = :existingTCRD.Account_Contact_Role__r.contact__c LIMIT 1]);
+
+					if(!existingUserLst.isEmpty()){
+						sRes = 'existing_user';
+					}else{
+						sRes = existingTCRD.Account_Contact_Role__r.contact__c;
+					}
+				}
+			}else{
+				sRes = 'already_existing_userid';
+			}
+		}else{
+			sRes = 'not_existing';
+		}
+		return sRes;
+	}
+
+	@AuraEnabled(cacheable=false)
+	public static String validateFullName(String existingContactId, String firstname, String lastname){
+
+		String sRes = '';
+
+		List<contact> existingContactLst = new List<contact>(
+			[SELECT Id, FirstName, LastName
+				FROM contact
+				WHERE Id = :existingContactId
+				LIMIT 1]);
+
+		if(!existingContactLst.isEmpty()){
+			contact existingContact = existingContactLst[0];
+
+			if(!getNameMatch(firstname, lastname, existingContact.FirstName, existingContact.LastName)){
+				sRes = 'not_matching';
+			}else{
+				sRes = 'existing_user';
+			}
+
+		}else{
+			sRes = 'not_existing';
+		}
+		return sRes;
+	}
+
+	public static void createToSAcceptance(Id serviceId, Id contactId){
+
+		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =:serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
+
+		//check if the tos has already been accepted
+		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: contactId];
+
+		if(tosAccept.isEmpty()){
+			Term_and_Condition_Acceptance__c tosNew = new Term_and_Condition_Acceptance__c();
+			tosNew.Is_Accepted__c = true;
+			tosNew.Date_Accepted__c = Date.today();
+			tosNew.Term_Condition__c = tos[0].Id;
+			tosNew.Contact__c = contactId;
+
+			insert tosNew;
+		}
+		else{
+			if(!tosAccept[0].Is_Accepted__c){
+				tosAccept[0].Is_Accepted__c = true;
+				tosAccept[0].Date_Accepted__c = Date.today();
+				update tosAccept[0];
+			}
+		}
+	}
+
+	@AuraEnabled
+	public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
+
+		if(serviceId == 'yas'){
+			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+			serviceId = pa.Id;
+		}
+
+		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =:serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
+
+		//check if the tos has already been accepted
+		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: contactId];
+
+		if(tosAccept.isEmpty()){
+			return false;
+		}
+
+		return tosAccept[0].Is_Accepted__c;
+	}
+
+	@future
+	private static void assignPermissionSet(Id yasId, Id userId){
+
+		List<PermissionSetAssignment> listPSA = [SELECT Id FROM PermissionSetAssignment
+											WHERE PermissionSetId = :yasId
+											AND AssigneeId = :userId];
+
+		if(listPSA.size() <= 0){
+			PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = yasId, AssigneeId = userId);
+			insert psa;
+		}
+	}
+
+	public class UserInformationWrapper{
+		public string Email{get;set;}
+		public string Additional_Email{get;set;}
+		public string FirstName{get;set;}
+		public string LastName{get;set;}
+		public string Date_of_Birth{get;set;}
+		public string Birthdate{get;set;}
+		public string Phone{get;set;}
+		public string language{get;set;}
+		public string Id{get;set;}
+		public string AccountId{get;set;}
+		public string OtherPhone{get;set;}
+		public string Salutation {get;set;}
+		public string Title {get;set;}
+		public string UserId {get;set;}
+		public string Username {get;set;}
+		public string User_Portal_Status {get;set;}
+
+		public String lms{get;set;}
+		public String lmsCourse{get;set;}
+		public String serviceid{get;set;}
+		public String existingContactId{get;set;}
+		public String existingContactName{get;set;}
+		public String existingContactEmail{get;set;}
+		public String existingContactAccount{get;set;}
+		public String hasExistingContact{get;set;}
+		public String hasExistingContactPersonalEmail{get;set;}
+		public String hasExistingUser{get;set;}
+		public String hasExistingUserPersonalEmail{get;set;}
+		public String existingTrainingId{get;set;}
+		public String flow{get;set;}
+
+		public String isPoBox{get;set;}
+		public String countryId{get;set;}
+		public String countryCode{get;set;}
+		public String countryName{get;set;}
+		public String stateId{get;set;}
+		public String stateName{get;set;}
+		public String cityId{get;set;}
+		public String cityName{get;set;}
+		public String street{get;set;}
+		public String street2{get;set;}
+		public String zip{get;set;}
+
+	}
+
+	public class RegistrationParamsWrapper{
+
+		public String sUsername {get;set;}
+		public String sUserId {get;set;}
+		public String sCourse {get;set;}
+		public String sStreet {get;set;}
+		public String sZipCode {get;set;}
+		public String sCountryId {get;set;}
+		public String sStateId {get;set;}
+		public String sStateName {get;set;}
+		public String sCityId {get;set;}
+		public String sCity {get;set;}
+		public Boolean isPoBox {get;set;}
+		public String serviceid {get;set;}
+		public String sStreet2 {get;set;}
+		public String existingTrainingId {get;set;}
+
+		public RegistrationParamsWrapper(List<String> extraValues){
+			this.sUsername = extraValues[0];
+			this.sUserId = extraValues[1];
+			this.sCourse = extraValues[2];
+			this.sStreet = extraValues[3];
+			this.sZipCode = extraValues[4];
+			this.sCountryId = extraValues[5];
+			this.sStateId = (extraValues[6] != null && extraValues[6] != '') ? extraValues[6] : extraValues[7];
+			this.sStateName = extraValues[7];
+			this.sCityId = extraValues[8];
+			this.sCity = extraValues[9];
+			this.isPoBox = Boolean.valueOf(extraValues[10]);
+			this.serviceid = extraValues[11];
+			this.sStreet2 = extraValues[12];
+			this.existingTrainingId = extraValues[13];
+		}
+
+	}
+
+}

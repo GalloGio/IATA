@@ -1,0 +1,68 @@
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+
+.profileContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.profileItem{
+    width: 50%;
+    padding: 7px;
+    margin-bottom: 20px;
+}
+
+.profileItem:nth-child(odd){
+    padding-left: 0;
+}
+
+.profileItem:nth-child(even){
+    padding-right: 0;
+}
+
+.nextBtn{
+    padding-left: 7px;
+    /*Temporary*/
+    margin-bottom: 30px;
+}
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+@media only screen and (max-width: 900px){
+
+    .profileItem{
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+.itemIcon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #289632;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
