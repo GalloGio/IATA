@@ -45,7 +45,7 @@ public without sharing class PortalMyProfileCtrl {
 			Training_Contact_Role_Details__c tcrd = trainingList[0];
 			wrapper.trainingUserId = (tcrd.UserId__c != null) ? tcrd.UserId__c : '';
 			wrapper.trainingUsername = (tcrd.Username__c != null) ? tcrd.Username__c : '';
-			wrapper.shippingCountryRef = (tcrd.Country_Reference__c != null) ? tcrd.Country_Reference__c : '';
+			wrapper.shippingCountryRef = (tcrd.Country_Reference__c != null) ? (String)tcrd.Country_Reference__c : '';
 			wrapper.shippingCountry = (tcrd.Country__c != null) ? tcrd.Country__c : '';
 			wrapper.shippingStateRef = ((String)tcrd.State_Reference__c != null) ? (String)tcrd.State_Reference__c : '';
 			wrapper.shippingState = (tcrd.State_Name__c != null) ? tcrd.State_Name__c : '';
