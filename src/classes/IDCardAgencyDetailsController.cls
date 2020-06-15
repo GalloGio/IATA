@@ -18,7 +18,7 @@ public with sharing class IDCardAgencyDetailsController extends IDCardAbstractCo
 	public  String applicationType {get; set;}
 
 	public String ver {get; set;}
-	
+
 	public Boolean displayPopup {get; set;}
 
 
