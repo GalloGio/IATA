@@ -12317,7 +12317,7 @@ Credit cards accepted are:&lt;br&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_ErrorMessage</shortDescription>
-        <value>All Items must be checked before proceeding to the next page.</value>
+        <value>You may need the following document(s) in order to complete the ID Card application. For verification purposes, IATA may request for additional information or documents from the applicant. False declaration will lead to cancellation and blacklisting of ID Card application in the future.</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckList_PageTitle</fullName>
