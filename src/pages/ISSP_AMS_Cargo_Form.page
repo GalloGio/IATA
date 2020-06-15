@@ -923,22 +923,20 @@
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />
                     </apex:actionFunction>
                     <apex:pageBlockSectionItem labelStyle="width:30%">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}"/>
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" for="legalStatusPicklist"/>
 						<apex:outputPanel >
-							<apex:selectList size="1" id="legalStatusPicklist" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Legal_Status__c==null), 'border:2px #c00 solid;', '')}" onchange="toggleLegalStatus('{!$Component.legalStatusPicklist}', '{!$Component.legalStatusInput}');">
+							<apex:selectList size="1" id="legalStatusPicklist" value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Legal_Status__c==null), 'border:2px #c00 solid;', '')}" onchange="toggleLegalStatus('{!$Component.legalStatusPicklist}', '{!$Component.legalStatusInput}');">
 								<apex:selectOptions value="{!legalStatusList}"/>
 							</apex:selectList>
 							<apex:inputField id="legalStatusInput" style="visibility: hidden" value="{!newForm.ISSP_AMS_Legal_Status__c}" />
 						</apex:outputPanel>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_legal_establishment__c.Label}"/>
-						<!--apex:inputField required="{!IF(isCNSAgency, true, false)}" showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" onclick="showPastDates()"/-->
-						<apex:inputField showDatePicker="true" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Date_legal_establishment__c==null), 'border:2px #c00 solid;', '')}" onclick="showPastDates()"/>
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_legal_establishment__c.Label}" for="ISSP_AMS_Date_legal_establishment__c"/>
+						<apex:inputField showDatePicker="true" id="ISSP_AMS_Date_legal_establishment__c" value="{!newForm.ISSP_AMS_Date_legal_establishment__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Date_legal_establishment__c==null), 'border:2px #c00 solid;', '')}" onclick="showPastDates()"/>
 					</apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!isCNSAgency}">
-                        <apex:outputLabel value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}"/>
-						<!--apex:inputField required="{!IF(isCNSAgency, true, false)}" label="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" /-->
+                        <apex:outputLabel value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" for="ISSP_AMS_Number_of_Years_Traded__c"/>
 						<apex:inputField id="ISSP_AMS_Number_of_Years_Traded__c" value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Number_of_Years_Traded__c==null), 'border:2px #c00 solid;', '')}"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
@@ -1444,7 +1442,7 @@
                             <apex:pageBlockSection columns="1">  
                                 <apex:pageblocksectionitem labelStyle="50%">
                                     <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.List_carriers__c.Label}" />
-                                    <apex:inputfield required="{!IF(AND(isCNSAgency, newForm.Is_your_firm_a_General_Sales_Agent_GSA__c=='Yes'), true, false)}" value="{!newForm.List_carriers__c}" style="width:100%;height:90px"/>
+                                    <apex:inputfield value="{!newForm.List_carriers__c}" style="width:100%;height:90px"/>
                                 </apex:pageblocksectionitem>
                             </apex:pageBlockSection>
                         </apex:outputPanel>
