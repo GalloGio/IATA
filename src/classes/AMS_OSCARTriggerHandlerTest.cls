@@ -352,8 +352,19 @@ private class AMS_OSCARTriggerHandlerTest {
 			Location_Class__c= 'T'
 		);
 		insert account;
-		account = [SELECT Id, Location_Class__c FROM Account WHERE Id=:account.Id];
-		System.assertEquals('T',account.Location_Class__c);
+
+		Contact contact = new Contact (
+			FirstName = 'fname',
+			LastName = 'lname',
+			AccountId = account.Id
+		);
+		insert contact;
+
+		Case cse = new Case(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			ContactId = contact.Id
+		);
+		insert cse;
 
 		// adding fake metadata for testing
 		Oscar_Promotion__mdt promotion = new Oscar_Promotion__mdt(
@@ -363,7 +374,6 @@ private class AMS_OSCARTriggerHandlerTest {
 			End_Date__c = Date.today()
 		);
 		
-		Test.startTest();
 		AMS_OSCARTriggerHandler.getMapActivePromotions();
 		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
@@ -371,6 +381,13 @@ private class AMS_OSCARTriggerHandlerTest {
 			Account__c = account.Id
 		);
 		insert oscar;
+		
+		Test.startTest();
+		cse.OSCAR__c = oscar.Id;
+		update cse;
+
+		oscar.Oscar_Communication_Case_Id__c = cse.Id;
+		update oscar;
 		Test.stopTest();
 
 		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];

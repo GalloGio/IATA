@@ -218,6 +218,7 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+		setPromotions(Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
 
 	}
 
@@ -231,7 +232,6 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
 		performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
-		setPromotions((List<AMS_OSCAR__c>)Trigger.New);
 	}
 
 	public static void handleAfterInsert() {
@@ -5056,17 +5056,31 @@ public class AMS_OSCARTriggerHandler {
 	/**
 	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
 	 */
-	private static void setPromotions(list<AMS_Oscar__c> triggerNew) {
-		// get all account Ids
-		set<Id> setAccountId = new set<Id>();
-		for(AMS_Oscar__c oscar: triggerNew){
-			if ( oscar.Account__c!=null ) {
-				addAccountId(oscar.Account__c);
+	private static void setPromotions(list<AMS_Oscar__c> listNew, map<Id,AMS_Oscar__c> mapOld) {
+		// find only those oscar where we are updating the field Oscar_Communication_Case_Id__c
+		list<AMS_Oscar__c> listOscar = new list<AMS_Oscar__c>();
+		for (AMS_Oscar__c newOscar: listNew) {
+			AMS_Oscar__c oldOscar = mapOld.get(newOscar.Id);
+			if (oldOscar.Oscar_Communication_Case_Id__c==null && newOscar.Oscar_Communication_Case_Id__c!=null) {
+				listOscar.add(newOscar);
+			}
+		}
+		if (listOscar.isEmpty()) return;
+
+		// get Case.contact.accounts for each OSCAR
+		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
+		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
+			FROM Case
+			WHERE OSCAR__c IN :listOscar];
+		for (Case cse: listCase) {
+			if (cse.Contact!=null) {
+				Account account = cse.Contact.Account;
+				mapOscarAccounts.put(cse.OSCAR__c, account);
 			}
 		}
 		// assign promotions, if applicable, for the incoming oscar records
-		for(AMS_Oscar__c oscar: triggerNew){
-			Account acc = accounts.get(oscar.Account__c);
+		for(AMS_Oscar__c oscar: listOscar){
+			Account acc = mapOscarAccounts.get(oscar.Id);
 			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
 				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
 				if (promotion != null) {
