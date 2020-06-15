@@ -204,11 +204,25 @@
         <externalId>false</externalId>
         <formula>Account_Contact_Role__r.Company_Code__c + &quot; &quot; + Certification__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Contact Role certification name Formula</label>
+        <label>Contact Role certification Name Formula</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Course_Assignment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>LMS	Course Assignment Lookup</description>
+        <externalId>false</externalId>
+        <inlineHelpText>LMS	Course Assignment Lookup</inlineHelpText>
+        <label>Course Assignment</label>
+        <referenceTo>Course_Assignment__c</referenceTo>
+        <relationshipLabel>Contact Role Certifications</relationshipLabel>
+        <relationshipName>Contact_Role_Certifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Enrolled__c</fullName>
@@ -307,6 +321,46 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <description>LMS Certification Status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>LMS Certification Status</inlineHelpText>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed Success</fullName>
+                    <default>false</default>
+                    <label>Completed Success</label>
+                </value>
+                <value>
+                    <fullName>Completed Failed</fullName>
+                    <default>false</default>
+                    <label>Completed Failed</label>
+                </value>
+                <value>
+                    <fullName>Dropped</fullName>
+                    <default>false</default>
+                    <label>Dropped</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Stopped__c</fullName>
         <description>Describes if a expired assessment is to be rewed or if it has been stopped</description>
         <externalId>false</externalId>
@@ -330,6 +384,20 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Training_Contact_Role_Detail__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Training Contact Role Detail reference</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Training Contact Role Detail reference</inlineHelpText>
+        <label>Training Contact Role Detail</label>
+        <referenceTo>Training_Contact_Role_Details__c</referenceTo>
+        <relationshipLabel>Contact Role Certifications</relationshipLabel>
+        <relationshipName>Contact_Role_Certifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <label>Contact Role Certification</label>
     <listViews>

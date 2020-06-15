@@ -2752,6 +2752,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CRMfusionDBR101__DB_Warning_Task_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSL_L2_Got_It --></label>
+        <name>CSL_L2_Got_It</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -2802,6 +2806,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Add_User --></label>
         <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Age Verification --></label>
+        <name>CSP_Age_Verification</name>
     </customLabels>
     <customLabels>
         <label>Bạn có thể gửi chi tiết thay đổi tài khoản của bạn thông qua &lt;a href= &apos;/s/support-reach-us&apos;&gt; Trang liên hệ với chúng tôi&lt;/a&gt;</label>
@@ -3008,6 +3016,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Complete Profile LMS --></label>
+        <name>CSP_Complete_Profile_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có chắc chắn muốn từ chối quyền truy cập vào &lt; b &gt; {0} &lt; / b &gt; cho &lt; b &gt; {1} &lt; / b &gt; không?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
@@ -3136,12 +3148,68 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1a --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1a</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1b --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1b</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1c --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1c</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1d --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1e --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1e</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1f --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1f</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1g --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1g</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1h --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1h</name>
+    </customLabels>
+    <customLabels>
         <label>Xin quý khách vui lòng xác nhận địa chỉ Email của mình bằng cách nhấn vào</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
         <label>Vì lý do bảo mật, liên kết này chỉ có hiệu lực trong vòng 8 giờ tới. Sau khoảng thời gian trên, quý khách sẽ phải gửi lại yêu cầu xác minh tài khoản đến địa chỉ Email của mình.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 LMS --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 1 --></label>
+        <name>CSP_Email_Confirmation_Note_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 2 --></label>
+        <name>CSP_Email_Confirmation_Note_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 3 --></label>
+        <name>CSP_Email_Confirmation_Note_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 4 --></label>
+        <name>CSP_Email_Confirmation_Note_4</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
@@ -3154,6 +3222,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Email Header Image --></label>
         <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image LMS --></label>
+        <name>CSP_Email_Header_Image_LMS</name>
     </customLabels>
     <customLabels>
         <label>đây</label>
@@ -3180,8 +3252,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Signature Part 1 LMS --></label>
+        <name>CSP_Email_Signature_Part_1_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Signature Part 2 --></label>
         <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 LMS --></label>
+        <name>CSP_Email_Signature_Part_2_LMS</name>
     </customLabels>
     <customLabels>
         <label>Chúng tôi rất hân hạnh khi có quý khách tham gia vào Cổng thông tin Khách hàng IATA của chúng tôi!</label>
@@ -3296,8 +3376,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc LMS --></label>
+        <name>CSP_First_Login_Desc_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Desc LMS --></label>
+        <name>CSP_First_Login_Desc_LMS_IE</name>
+    </customLabels>
+    <customLabels>
         <label>Chào mừng quý khách,</label>
         <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title_IE</name>
     </customLabels>
     <customLabels>
         <label>Cho bạn</label>
@@ -3404,6 +3496,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L1_Last_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L1_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L1_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_Phone_LMS --></label>
+        <name>CSP_L1_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_TrainingEmail_LMS --></label>
+        <name>CSP_L1_TrainingEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_TrainingUser_LMS --></label>
+        <name>CSP_L1_TrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_WorkPhone_LMS --></label>
+        <name>CSP_L1_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Thông tin tài khoản doanh nghiệp</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3456,6 +3572,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Back_to_Profile_Details --></label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Lựa chọn tài khoản &amp; Chi tiết bổ sung</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3464,8 +3584,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Business_Address_Information_LMS --></label>
+        <name>CSP_L2_Business_Address_Information_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Vui lòng cung cấp địa chỉ nơi làm việc của bạn</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Business_Address_Information_Message_LMS --></label>
+        <name>CSP_L2_Business_Address_Information_Message_LMS</name>
     </customLabels>
     <customLabels>
         <label>Lĩnh vực, ngành nghề kinh doanh</label>
@@ -3540,6 +3668,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Details_Saved_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Details_Saved_Message_LMS --></label>
+        <name>CSP_L2_Details_Saved_Message_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Bây giờ quý khách có thể tiếp tục gửi cho chúng tôi yêu cầu về các dịch vụ mà chúng tôi hiện đang cung cấp.</label>
         <name>CSP_L2_Details_Saved_Service_Message</name>
     </customLabels>
@@ -3564,6 +3696,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Edit_Company_Information_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L2_EmailValidationDescri_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ Email</label>
         <name>CSP_L2_Email_Address</name>
     </customLabels>
@@ -3580,6 +3716,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Go_To_Homepage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Go_To_Homepage_LMS --></label>
+        <name>CSP_L2_Go_To_Homepage_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Quay trở lại Hồ sơ</label>
         <name>CSP_L2_Go_To_Profile</name>
     </customLabels>
@@ -3588,12 +3728,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Go_To_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Go_To_Service_LMS --></label>
+        <name>CSP_L2_Go_To_Service_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Quay trở lại Chủ đề</label>
         <name>CSP_L2_Go_To_Topic</name>
     </customLabels>
     <customLabels>
         <label>Mã IATA</label>
         <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_IdAlready_LMS --></label>
+        <name>CSP_L2_IdAlready_LMS</name>
     </customLabels>
     <customLabels>
         <label>Đây có phải là địa chỉ đến Hòm thư bưu điện của quý khách không?</label>
@@ -3664,8 +3812,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Profile_Details --></label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Bổ sung những thông tin còn thiếu trên Hồ sơ cá nhân của quý khách để IATA có thể đề xuất các nội dung và dịch vụ được cá nhân hóa dành riêng cho quý khách.</label>
         <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Profile_Details_Message --></label>
+        <name>CSP_L2_Profile_Details_Message_LMS</name>
     </customLabels>
     <customLabels>
         <label>Hồ sơ cá nhân của quý khách chưa được cập nhật đầy đủ.</label>
@@ -3676,12 +3832,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_RegistrationFailed_LMS --></label>
+        <name>CSP_L2_RegistrationFailed_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Thật không may, đã xảy ra lỗi khi tạo tài khoản của bạn. Để giúp bạn thêm, xin vui lòng liên hệ với nhóm hỗ trợ của chúng tôi.</label>
         <name>CSP_L2_Registration_Error_Message</name>
     </customLabels>
     <customLabels>
         <label>Đã xảy ra lỗi</label>
         <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Registration_Failed_LMS --></label>
+        <name>CSP_L2_Registration_Failed_LMS</name>
     </customLabels>
     <customLabels>
         <label>Chúng tôi đã xây dựng Cổng thông tin Khách hàng IATA để đề xuất một số sản phẩm và dịch vụ của IATA dành riêng cho nhu cầu mua sắm và thị hiếu của quý khách. Để chúng tôi có thể tiến hành việc này, chúng tôi muốn biết thêm một vài thông tin chi tiết về bản thân quý khách và tổ chức của quý khách.</label>
@@ -3760,6 +3924,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdateOnly_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdate_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdate_Title_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Danh xưng</label>
         <name>CSP_L2_Title</name>
     </customLabels>
@@ -3772,6 +3948,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_VerificationToP1_LMS --></label>
+        <name>CSP_L2_VerificationToP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_VerificationToP2_LMS --></label>
+        <name>CSP_L2_VerificationToP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_VerificationToP3_LMS --></label>
+        <name>CSP_L2_VerificationToP3_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ Trang web doanh nghiệp</label>
         <name>CSP_L2_Website</name>
     </customLabels>
@@ -3782,6 +3970,226 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Có</label>
         <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Back_to_Email_Validation_LMS --></label>
+        <name>CSP_L3_Back_to_Email_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Information --></label>
+        <name>CSP_L3_CompleteInformation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Confirmation_Message_LMS --></label>
+        <name>CSP_L3_Confirmation_Message_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_ContactSupport_LMS --></label>
+        <name>CSP_L3_ContactSupport_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Infoermation --></label>
+        <name>CSP_L3_EmailInformation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Validation --></label>
+        <name>CSP_L3_Email_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistTrainNameMatch_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile Training section --></label>
+        <name>CSP_L3_ExistTrainUserId_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistTrainUserMatch_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_ExistTrainUser_LMS --></label>
+        <name>CSP_L3_ExistTrainUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistingContact_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistingContact_LMS2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing User --></label>
+        <name>CSP_L3_ExistingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Have_Work_Email --></label>
+        <name>CSP_L3_Have_Work_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Header_Title --></label>
+        <name>CSP_L3_Header_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP homepage --></label>
+        <name>CSP_L3_HomePage_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_IsPersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_IsReversedEmail_LMS --></label>
+        <name>CSP_L3_IsReversedEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L3_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile New Login Email --></label>
+        <name>CSP_L3_NewLoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Next_Confirmation_LMS --></label>
+        <name>CSP_L3_Next_Confirmation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F4_LMS --></label>
+        <name>CSP_L3_Note_F4_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F5_LMS --></label>
+        <name>CSP_L3_Note_F5_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F6_LMS --></label>
+        <name>CSP_L3_Note_F6_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F7_LMS --></label>
+        <name>CSP_L3_Note_F7_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Note --></label>
+        <name>CSP_L3_Note_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_NumericError_LMS --></label>
+        <name>CSP_L3_NumericError_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L3_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Update --></label>
+        <name>CSP_L3_ProfileUpdate_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Work Email --></label>
+        <name>CSP_L3_ProvideWorkEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Salutation_LMS --></label>
+        <name>CSP_L3_Salutation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Still Working --></label>
+        <name>CSP_L3_StillWorkingP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Still Working P2 --></label>
+        <name>CSP_L3_StillWorkingP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Title_LMS --></label>
+        <name>CSP_L3_Title_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Validation Description --></label>
+        <name>CSP_L3_TrainValidationDescri_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Information --></label>
+        <name>CSP_L3_Training_Information_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Validation --></label>
+        <name>CSP_L3_Training_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating Initial Message --></label>
+        <name>CSP_L3_UpdatingProfileInitialMessage_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating P1 --></label>
+        <name>CSP_L3_UpdatingProfileP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating P1 --></label>
+        <name>CSP_L3_UpdatingProfileP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_UserId_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_Username_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Verification Mail Title --></label>
+        <name>CSP_L3_VerificationMailTitle_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Work Email --></label>
+        <name>CSP_L3_WorkEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_Zip_Mandatory_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_haveTrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP LMS Privacy Policy --></label>
+        <name>CSP_LMS_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_Phone_LMS --></label>
+        <name>CSP_L_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_TrainingEmail_LMS --></label>
+        <name>CSP_L_TrainingEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_TrainingUser_LMS --></label>
+        <name>CSP_L_TrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_WorkPhone_LMS --></label>
+        <name>CSP_L_WorkPhone_LMS</name>
     </customLabels>
     <customLabels>
         <label>Cập nhật cuối cùng</label>
@@ -3890,6 +4298,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Kế tiếp</label>
         <name>CSP_Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Next_EmailValidation_LMS --></label>
+        <name>CSP_Next_EmailValidation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Next_LMS --></label>
+        <name>CSP_Next_LMS</name>
     </customLabels>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
@@ -4074,6 +4490,42 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Quý khách đang cố gắng đăng ký một tài khoản mới trùng với một tài khoản đăng nhập khác sẵn có, xin vui lòng thay đổi địa chỉ Email đăng ký hoặc nhấn vào nút đăng nhập để đi đến trang đăng nhập</label>
         <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F4_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS_F8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS_Profile</name>
     </customLabels>
     <customLabels>
         <label>Trước tiên, quý khách cần kiểm tra thư mục thư rác của mình. Trong trường hợp quý khách vẫn không thể tìm thấy bất kỳ thư nào trong thư mục thư rác, xin quý khách vui lòng thử đăng ký lại với chúng tôi bằng cách nhấn vào nút Thử lại.</label>
@@ -4432,6 +4884,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Track</name>
     </customLabels>
     <customLabels>
+        <label><!-- Profile Training section --></label>
+        <name>CSP_Training_Section</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Xin quý khách vui lòng nhấn vào đây để truy cập trực tiếp trang Cấp giấy phép IATA và Dịch vụ thay đổi &lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
@@ -4470,6 +4926,42 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Tạo tài khoản</label>
         <name>CSP_User_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_3_LMS --></label>
+        <name>CSP_Verification_L3_Email_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LMS verification email --></label>
+        <name>CSP_Verification_L3_Email_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_1_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_2_F5_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_2_F5_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_2_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_1_F4_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_1_F4_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_1_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_2_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_3_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_3_LMS</name>
     </customLabels>
     <customLabels>
         <label>Chào mừng quý khách đến với Cổng thông tin Chăm sóc Khách hàng của IATA</label>
@@ -4732,12 +5224,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>ContactDirectSalesMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Contact Account --></label>
+        <name>Contact_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Contact Information --></label>
         <name>Contact_Information</name>
     </customLabels>
     <customLabels>
         <label>Tên Liên Hệ</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Username --></label>
+        <name>Contact_Username</name>
     </customLabels>
     <customLabels>
         <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
@@ -10706,6 +11210,10 @@ and
     <customLabels>
         <label>&quot;Please contact &lt;a href=&quot;&quot;http://www.iata.org/cs&quot;&quot;&gt;IATA Customer Support&lt;/a&gt;.&quot;</label>
         <name>IFAP_Please_Contact_CS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
     </customLabels>
     <customLabels>
         <label>http://portal.iata.org</label>
@@ -16944,7 +17452,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>Lưu ý: Số tiền cân đối thanh toán được cập nhật trên cổng thông tin ít nhất một ngày làm việc sau khi tài khoản của IATA được ghi có. Thông tin trên ICE được cung cấp cho IATA bởi đối tác trung gian cứ mỗi 24 giờ và do đó có thể chưa phản ánh thông tin mới nhất, chuẩn xác và hoàn chỉnh.</label>
+        <label>Số dư trên cổng thông tin khách hàng được cập nhật vào ngày làm việc tiếp theo sau khi tài khoản IATA được ghi có. Ngày tài khoản IATA được ghi có tùy thuộc vào hình thức thanh toán bạn chọn. Dữ liệu thanh toán hiển thị trong ICE được các bên thứ ba cung cấp cho IATA trong khoảng thời gian 24 giờ và có thể xảy ra sự chậm trễ ngoài tầm kiểm soát của IATA. 
+
+Trong trường hợp hãng hàng không tạm dừng hoạt động dẫn đến việc số tiền thanh toán được điều chỉnh, thì các đại lý có thể dựa vào số tiền có trong ICE và trong trường hợp có bất kỳ sự chênh lệch nào, thì khoản chênh lệch này có thể được xử lý bằng cách bù trừ thanh toán sau với đại lý.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -17870,7 +18380,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>Chúng tôi rất tiếc thông báo cho bạn biết rằng yêu cầu của bạn để truy cập vào</label>
+        <label>Đây là một thông tin quan trọng liên quan đến truy cập của bạn vào các dịch vụ trên Cổng thông tin khách hàng của IATA.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17882,12 +18392,20 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>Dịch vụ đã bị Bộ phận Dịch vụ Khách hàng IATA của bạn từ chối</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>Truy cập vào</label>
@@ -31699,6 +32217,38 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <columns>
+                <label><!-- Created By (if Contact) First Community --></label>
+                <name>Created By (if Contact) First Community</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Full Name --></label>
+                <name>Created By Full Name</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Profile --></label>
+                <name>Created By Profile</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Role --></label>
+                <name>Created By Role</name>
+            </columns>
+            <columns>
+                <label><!-- Created By User License --></label>
+                <name>Created By User License</name>
+            </columns>
+            <columns>
+                <label><!-- Created By User Type --></label>
+                <name>Created By User Type</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Username --></label>
+                <name>Created By Username</name>
+            </columns>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts custom --></description>
@@ -33699,6 +34249,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>
