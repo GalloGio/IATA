@@ -175,4 +175,16 @@ public with sharing class PortalRecommendationCtrl {
 		return URL.getSalesforceBaseUrl().toExternalForm();
 	}
 
+
+	//returns information about the recommendation related to the content reference
+	@AuraEnabled
+	public static Recommendations_Visibility__c getRecomendationDetails(string urlName) {
+
+		if(String.isEmpty(urlName)) return null;
+
+		Recommendations_Visibility__c rec=[select RecommendationTitle__c, PortalService__c, Is_Contact_Request_Visible__c, Is_More_Info_Banner_Visible__c,	More_Info_Banner_Link__c from Recommendations_Visibility__c where Content_Reference__c=:urlName];
+
+		return rec;
+	}
+
 }
