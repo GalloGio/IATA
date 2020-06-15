@@ -312,7 +312,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 										let prmstr = decodeURIComponent(pageParams.startURL);
 
-										prmstr = prmstr.replace('/csportal/s/?','');
+										prmstr = prmstr.replace(CSP_PortalPath+'?','');
                                         
 										let paramsReturn = {};
 
