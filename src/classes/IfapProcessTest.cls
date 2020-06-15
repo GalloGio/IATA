@@ -149,6 +149,7 @@ public class IfapProcessTest {
 		// prepare json String
 		list<String> listJson = new list<String>();
 		Integer errorCode = 0;
+		String caseNumber;
 		for ( Case c: [Select CaseNumber from Case] ) {
 			String jsonCase =
 				'{'+
@@ -158,9 +159,11 @@ public class IfapProcessTest {
 				'}';
 			listJson.add(jsonCase);
 			errorCode++;
+			caseNumber = c.CaseNumber;
 		}
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"'+caseNumber+'","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+caseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 
 		//Test the batch
@@ -179,6 +182,7 @@ public class IfapProcessTest {
 		loadTestCases('Submitted',false);
 		//prepare json String
 		list<String> listJson = new list<String>();
+		String caseNumber;
 		for ( Case c: [Select CaseNumber from Case] ) {
 			String jsonCase =
 				'{'+
@@ -187,8 +191,10 @@ public class IfapProcessTest {
 				'"success":true'+
 				'}';
 			listJson.add(jsonCase);
+			caseNumber = c.CaseNumber;
 		}
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"'+caseNumber+'","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+caseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -207,6 +213,7 @@ public class IfapProcessTest {
 
 		// prepare json String
 		list<String> listJson = new list<String>();
+		String caseNumber;
 		for ( Case c: [Select CaseNumber from Case] ) {
 			String jsonCase =
 				'{'+
@@ -215,9 +222,11 @@ public class IfapProcessTest {
 				'"success":false'+
 				'}';
 			listJson.add(jsonCase);
+			caseNumber = c.CaseNumber;
 		}
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"'+caseNumber+'","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+caseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -300,12 +309,14 @@ public class IfapProcessTest {
 		insert country;
 
 		Id caseId;
+		String caseNumber;
 
 		// prepare json String
 		list<String> listJson = new list<String>();
 		for ( Case c: [Select CaseNumber, AccountId from Case LIMIT 1] ) {
 
 			caseId = c.Id;
+			caseNumber = c.CaseNumber;
 
 			String jsonCase =
 				'{'+
@@ -321,6 +332,7 @@ public class IfapProcessTest {
 		}
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"123","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>123</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -332,8 +344,9 @@ public class IfapProcessTest {
 		Case caseReturned = [Select Id, Financial_Assessment_Points__c from Case where Id = :caseId];
 
 		system.assertEquals(100,caseReturned.Financial_Assessment_Points__c);
-		system.assertEquals(true,batch.errors.isEmpty());
-
+		//system.assertEquals(true,batch.errors.isEmpty());
+		System.assertEquals(1, batch.errors.size());
+		System.assertEquals('[Result File "null" ] Case with CaseNumber 123 not found in database.', batch.errors[0]);
 
 	}
 
@@ -348,13 +361,14 @@ public class IfapProcessTest {
 		insert country;
 
 		Id caseId;
+		String caseNumber;
 
 		// prepare json String
 		list<String> listJson = new list<String>();
 		for ( Case c: [Select CaseNumber, AccountId from Case LIMIT 1] ) {
 
 			caseId = c.Id;
-
+			caseNumber = c.CaseNumber;
 			String jsonCase =
 				'{'+
 				'"caseNumber": "'+c.CaseNumber+'",'+
@@ -369,6 +383,7 @@ public class IfapProcessTest {
 		}
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"'+caseNumber+'","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+caseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -428,6 +443,7 @@ public class IfapProcessTest {
 		update acct;
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"'+c.CaseNumber+'","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -444,7 +460,8 @@ public class IfapProcessTest {
 		Test.stopTest();
 
 		//Method call just to increase coverage
-		IfapProcessResultsBatch.deleteResults(new List<String>{'file#1', 'file#2'});
+		IfapProcessResultsBatch.deleteResults(new List<String>{'file#1', 'file#2'},true);
+		IfapProcessResultsBatch.deleteResults(new List<String>{'file#1', 'file#2'},false);
 
 	}
 

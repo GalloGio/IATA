@@ -92,6 +92,14 @@ public class WSToolmasterIfap {
 				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
 				private String[] field_order_type_info = new String[]{'confName','maxResults'};
 		}
+		public class processPWCResultsGxA_element {
+				public String confName;
+				public Integer maxResults;
+				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
+				private String[] maxResults_type_info = new String[]{'maxResults','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] field_order_type_info = new String[]{'confName','maxResults'};
+		}
 		public class processPWCRejectionsResponse_element {
 				public String processPWCRejectionsReturn;
 				private String[] processPWCRejectionsReturn_type_info = new String[]{'processPWCRejectionsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
@@ -127,6 +135,12 @@ public class WSToolmasterIfap {
 				private String[] processPWCResultsReturn_type_info = new String[]{'processPWCResultsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
 				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
 				private String[] field_order_type_info = new String[]{'processPWCResultsReturn'};
+		}
+		public class processPWCdocumentsGXAResponse_element {
+				public String processPWCdocumentsGXAReturn;
+				private String[] processPWCdocumentsGXAReturn_type_info = new String[]{'processPWCdocumentsGXAReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] field_order_type_info = new String[]{'processPWCdocumentsGXAReturn'};
 		}
 		public class submitCaseParametersToMFT_element {
 				public String confName;
@@ -181,6 +195,33 @@ public class WSToolmasterIfap {
 						);
 						response_x = response_map_x.get('response_x');
 						return response_x.processPWCResultsReturn;
+				}
+				public String processPWCdocumentsGXA(String confName,Integer maxResults) {
+						WSToolmasterIfap.processPWCResultsGxA_element request_x = new WSToolmasterIfap.processPWCResultsGxA_element();
+						request_x.confName = confName;
+						request_x.maxResults = maxResults;
+						WSToolmasterIfap.processPWCdocumentsGXAResponse_element response_x;
+						Map<String, WSToolmasterIfap.processPWCdocumentsGXAResponse_element> response_map_x = new Map<String, WSToolmasterIfap.processPWCdocumentsGXAResponse_element>();
+						response_map_x.put('response_x', response_x);
+
+						WebServiceCallout.invoke(
+						this,
+						request_x,
+						response_map_x,
+						new String[]{endpoint_x,
+						'',
+						'http://webservice.toolmaster.ifap.iata.org',
+						'processPWCdocumentsGXA',
+						'http://webservice.toolmaster.ifap.iata.org',
+						'processPWCdocumentsGXAResponse',
+						'WSToolmasterIfap.processPWCdocumentsGXAResponse_element'}
+						);
+						response_x = response_map_x.get('response_x');
+						System.debug('this::: ' + this);
+						System.debug('request_x::: ' + request_x);
+						System.debug('endpoint_x::: ' + endpoint_x);
+						System.debug('response_x::: ' + response_x.processPWCdocumentsGXAReturn);
+						return response_x.processPWCdocumentsGXAReturn;
 				}
 				public String mergeAllPDFForCase(String confName,String caseNumber,String mergedFileName) {
 						WSToolmasterIfap.mergeAllPDFForCase_element request_x = new WSToolmasterIfap.mergeAllPDFForCase_element();
@@ -250,6 +291,28 @@ public class WSToolmasterIfap {
 						);
 						response_x = response_map_x.get('response_x');
 						return response_x.deletePWCResultsReturn;
+				}
+				public String deletePWCdocumentsGXA(String confName,String jsonFileNames) {
+					WSToolmasterIfap.deletePWCResults_element request_x = new WSToolmasterIfap.deletePWCResults_element();
+					request_x.confName = confName;
+					request_x.jsonFileNames = jsonFileNames;
+					WSToolmasterIfap.deletePWCResultsResponse_element response_x;
+					Map<String, WSToolmasterIfap.deletePWCResultsResponse_element> response_map_x = new Map<String, WSToolmasterIfap.deletePWCResultsResponse_element>();
+					response_map_x.put('response_x', response_x);
+					WebServiceCallout.invoke(
+					this,
+					request_x,
+					response_map_x,
+					new String[]{endpoint_x,
+					'',
+					'http://webservice.toolmaster.ifap.iata.org',
+					'deletePWCdocumentsGXA',
+					'http://webservice.toolmaster.ifap.iata.org',
+					'deletePWCResultsResponse',
+					'WSToolmasterIfap.deletePWCResultsResponse_element'}
+					);
+					response_x = response_map_x.get('response_x');
+					return response_x.deletePWCResultsReturn;
 				}
 				public String deletePWCRejections(String confName,String jsonFileNames) {
 						WSToolmasterIfap.deletePWCRejections_element request_x = new WSToolmasterIfap.deletePWCRejections_element();

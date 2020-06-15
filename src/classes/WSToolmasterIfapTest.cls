@@ -43,6 +43,10 @@ public with sharing class WSToolmasterIfapTest {
 				WSToolmasterIfap.mergeAndSubmitParametersResponse_element responseElem = new WSToolmasterIfap.mergeAndSubmitParametersResponse_element();
 				response.put('response_x', responseElem);
 			}
+			if(request instanceof WSToolmasterIfap.processPWCResultsGxA_element) {
+				WSToolmasterIfap.processPWCdocumentsGXAResponse_element responseElem = new WSToolmasterIfap.processPWCdocumentsGXAResponse_element();
+				response.put('response_x', responseElem);
+			}
 			return;
 		}
 	}
@@ -86,6 +90,7 @@ public with sharing class WSToolmasterIfapTest {
 		new WSToolmasterIfap.processPWCResultsResponse_element();
 		new WSToolmasterIfap.submitCaseParametersToMFT_element();
 		new WSToolmasterIfap.deletePWCRejections_element();
+		new WSToolmasterIfap.processPWCdocumentsGXAResponse_element();
 		test.stopTest();
 	}
 
@@ -111,9 +116,11 @@ public with sharing class WSToolmasterIfapTest {
 		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
 		WSToolmasterIfap.IfapToolMaster ifapToolMaster = new WSToolmasterIfap.IfapToolMaster();
 		ifapToolMaster.processPWCResults(null,1);
+		ifapToolMaster.processPWCdocumentsGXA(null,1);
 		ifapToolMaster.mergeAllPDFForCase(null, null, null);
 		ifapToolMaster.submitCaseQualityIssuesToMFT(null, null, null, null);
 		ifapToolMaster.deletePWCResults(null, null);
+		ifapToolMaster.deletePWCdocumentsGXA(null, null);
 		ifapToolMaster.deletePWCRejections(null, null);
 		ifapToolMaster.submitCaseCancellationToMFT(null, null, null, null);
 		ifapToolMaster.submitCaseParametersToMFT(null, null, null, null);

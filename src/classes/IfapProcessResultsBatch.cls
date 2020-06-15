@@ -4,6 +4,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 	public List<String> errors;
 	public Map<String, IfapToolManager.PWCResponse> IdToXml;
 	public List<String> filesToBeDeleted;
+	public List<String> filesToBeDeletedGxA;
 	public List<AmazonFile__c> amazonFilesToInsert;
 	public map<String,AmazonFile__c> setAmazonFilesToInsert;
 	global Map<Id, String> errorMap {get; set;}
@@ -14,6 +15,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 		this.errors = new list<String>();
 		this.IdToXml = new Map<String, IfapToolManager.PWCResponse>();
 		this.filesToBeDeleted = new List<String>();
+		this.filesToBeDeletedGxA = new List<String>();
 		this.amazonFilesToInsert = new List<AmazonFile__c>();
 		this.setAmazonFilesToInsert = new map<String,AmazonFile__c>();
 		listObjectsToProcess = processPWCResults(pwcress);
@@ -112,16 +114,41 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
 			if(!sr.isSuccess()){
 				System.debug(LoggingLevel.ERROR, '     ----> (IfapProcessResultsBatch) ERROR ON ' + label + ' ' +objType+': '+sr.getErrors()[0]);
-				errors.add('[Result File "' + IdToXml.get(caseId).originalFileName + '" ] ERROR on ' + label + ' '+objType+' related to case with ID '+ caseId +': '+sr.getErrors()[0] + '\nXML = '+IdToXml.get(caseId).xml);
+				if(IdToXml.get(caseId).originalFileName != null){
+					errors.add('[Result File "' + IdToXml.get(caseId).originalFileName + '" ] ERROR on ' + label + ' '+objType+' related to case with ID '+ caseId +': '+sr.getErrors()[0] + '\nXML = '+IdToXml.get(caseId).xml);
+				}
+				else {
+					errors.add('[Result Files "' + IdToXml.get(caseId).originalFileNames + '" ] ERROR on ' + label + ' '+objType+' related to case with ID '+ caseId +': '+sr.getErrors()[0] + '\nXML = '+IdToXml.get(caseId).xml);
+				}
+
 			}else if(sr.isSuccess()){
 				// if the case was successful add the file to delete
 				IfapToolManager.PWCResponse pwcResponse = IdToXml.get(caseId);
-				filesToBeDeleted.add(pwcResponse.originalFileName.substring(0,12)+'.zip');
+				if(pwcResponse.originalFileName != null){
+					filesToBeDeleted.add(pwcResponse.originalFileName.substring(0,12)+'.zip');
+				}
+				else {
+					for(String fileName : pwcResponse.originalFileNames){
+						filesToBeDeletedGxA.add(fileName.substring(0,12)+'.zip');
+					}
+				}
+
 				if(!pwcResponse.originalFileName.contains('.xml')){
-					AmazonFile__c amazonFile = getAmazonFile( pwcResponse.originalFileName, 0, caseId);
+					if(pwcResponse.originalFileName != null){
+						AmazonFile__c amazonFile = getAmazonFile( pwcResponse.originalFileName, 0, caseId, IdToXml.get(caseId).caseNumber, true);
 						if ( amazonFile != null ) {
 							this.setAmazonFilesToInsert.put(amazonFile.Full_Name_Unique__c, amazonFile);
 							}
+					}
+					else {
+						for(String fileName : pwcResponse.originalFileNames){
+							AmazonFile__c amazonFile = getAmazonFile( fileName, 0, caseId, IdToXml.get(caseId).caseNumber, false);
+							if ( amazonFile != null ) {
+								this.setAmazonFilesToInsert.put(amazonFile.Full_Name_Unique__c, amazonFile);
+							}
+						}
+					}
+
 				}
 				//  TransformationHelper.sendEmailSupport('SALVATORE DEBUG', 'amazonFile ' + amazonFile);
 				system.debug(LoggingLevel.ERROR,'########### can delete file '+pwcResponse.originalFileName);
@@ -141,7 +168,8 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
 	global void finish(Database.BatchableContext BC){
 		try{
-			deleteResults(filesToBeDeleted);
+			deleteResults(filesToBeDeleted, false);
+			deleteResults(filesToBeDeletedGxA, true);
 			//  insert AmazonFile__c objects
 			amazonFilesToInsert.addAll( setAmazonFilesToInsert.values());
 			Database.SaveResult[] listInsertResult = Database.insert(setAmazonFilesToInsert.values(),false);
@@ -202,12 +230,13 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 		System.enqueueJob(new IfapProcessResultsQueueable());
 	}
 
-	private AmazonFile__c getAmazonFile(string filename, Long filesize, String caseId ) {
+	private AmazonFile__c getAmazonFile(string filename, Long filesize, String caseId, String caseNumber, Boolean financialResult ) {
 		try {
-			case c = [SELECT ID, CASENUMBER FROM CASE WHERE ID =: caseID];
+			String filePath = financialResult ? '/IFAP/FinancialResults/' : '/IFAP/FinancialDocumentsGxA/';
+
 			AmazonFile__c amazonFile = new AmazonFile__c(
 				Name = filename,
-				Full_Name_Unique__c ='/IFAP/FinancialResults/'+c.caseNumber+'/'+filename,
+				Full_Name_Unique__c = filePath+caseNumber+'/'+filename,
 				Size_MB__c = filesize* 0.000001, //convert to MB
 				Case__c = caseId
 			);
@@ -429,14 +458,15 @@ System.debug('############ theCase.Status final ' + theCase.Status);
 		}
 	}
 
-	public static void deleteResults( List<String> filesToBeDeleted ) {
+	public static void deleteResults( List<String> filesToBeDeleted, Boolean isGxA ) {
 		String json = '{"filenames" : [';
 		for(integer i=0; i<filesToBeDeleted.size(); i++)
 			json += (i==0?'':', ') + '"'+filesToBeDeleted[i]+'"';
 		json += '] }';
 
 		system.debug(LoggingLevel.INFO,'########################## WEB SERVICE CALL TO DELETE RESULTS. json: '+json);
-		IfapToolManager.submitPWCResultDeletions(json);
+
+		IfapToolManager.submitPWCResultDeletions(json, isGxA);
 	}
 
 }
