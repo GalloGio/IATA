@@ -1,0 +1,235 @@
+<template>
+	<lightning-layout multiple-rows vertical-align="stretch">
+		<div  class="IEFixDisplayContainer">
+
+			<!-- COUNTRY -->
+			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
+						{labels.CSP_L2_Country}
+					</div>
+				</div>
+
+				<div class="slds-form-element">
+					<div class="slds-form-element__control custTextInputSmall">
+						<lightning-combobox
+							class="cursorPointerComboBox text-xxsmall"
+							value={localAddress.countryId}
+							variant="label-hidden"
+							options={countryOptions}
+							data-fieldname="Country"
+							dropdown-alignment="auto"
+							onchange={handleFieldChange}>
+						</lightning-combobox>
+						<div class="slds-align_absolute-center slds-p-top_medium" if:true={isCountryLoading}>
+							<div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+								<span class="slds-assistive-text">Loading</span>
+								<div class="slds-spinner__dot-a"></div>
+								<div class="slds-spinner__dot-b"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</lightning-layout-item>
+
+			<!-- STATE -->
+			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						<template if:true={isStateRequired}>
+							<abbr class="slds-required" title="required">*</abbr>
+						</template>
+						{labels.CSP_L2_State}
+					</div>
+				</div>
+
+				<template if:true={displayStateComboBox}>
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInputSmall">
+							<lightning-combobox
+								class="cursorPointerComboBox text-xxsmall"
+								value={localAddress.stateId}
+								variant="label-hidden"
+								options={stateOptions}
+								data-fieldname="StateId"
+								dropdown-alignment="auto"
+								onchange={handleFieldChange}>
+							</lightning-combobox>
+							<div class="slds-align_absolute-center slds-p-top_medium" if:true={isStateLoading}>
+								<div role="status" class="slds-spinner slds-spinner_x-small slds-spinner_inline">
+									<span class="slds-assistive-text">Loading</span>
+									<div class="slds-spinner__dot-a"></div>
+									<div class="slds-spinner__dot-b"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+
+				<template if:false={displayStateComboBox}>
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								data-id="stateName"
+								class="slds-input"
+								placeholder=" "
+								data-address="true"
+								data-fieldname="StateName"
+								value={localAddress.stateName}
+								autocomplete="no"
+								onkeyup={handleFieldChange}/>
+						</div>
+					</div>
+				</template>
+			</lightning-layout-item>
+
+			<!-- CITY INPUT WITH SUGGESTIONS -->
+			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
+						{labels.CSP_L2_City}
+					</div>
+				</div>
+
+				<div class="slds-form-element">
+					<div class="slds-form-element__control custTextInput custTextInputSmall">
+						<input
+							id="cityInput"
+							name="cityInput"
+							type="text"
+							list="cities"
+							data-id="cityName"
+							class="slds-input"
+							placeholder=" "
+							data-address="true"
+							key={localAddress.countryId}
+							data-fieldname="City"
+							value={localAddress.cityName}
+							autocomplete="no"
+							onkeyup={handleFieldChange}
+							maxlength="25"/>
+
+						<template if:true={showCitySuggestions}>
+							<div id="listbox" role="listbox" tabindex="0" class="contactListbox slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid customMaxHeight slds-scrollable_y">
+								<ul role="presentation">
+									<template for:each={citySuggestions} for:item="city">
+										<li
+											key={city.value}
+											role="presentation"
+											class="slds-listbox__item citySuggestion"
+											data-value={city.value}
+											data-name={city.name}
+											data-stateid={city.stateid}>
+
+											<div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid"
+												data-value={city.value} data-name={city.name} data-stateid={city.stateid}
+												role="option" onmousedown={handleCityChange}>
+
+												<div data-value={city.value} data-name={city.name} data-stateid={city.stateid} class="slds-col breakWord">
+													{city.label}
+												</div>
+											</div>
+										</li>
+									</template>
+								</ul>
+							</div>
+						</template>
+					</div>
+				</div>
+			</lightning-layout-item>
+
+			<!-- ZIP -->
+			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
+						{labels.CSP_L2_Postal_Code}
+						
+					</div>
+				</div>
+
+				<div class="slds-form-element">
+					<div class="slds-form-element__control custTextInput custTextInputSmall">
+						<input
+							type="text"
+							data-id="zip"
+							class="slds-input"
+							placeholder=" "
+							data-fieldname="Zip"
+							value={localAddress.zip}
+							autocomplete="no"
+							onkeyup={handleFieldChange}
+							maxlength="10"/>
+					</div>
+					<div class="text-xxsmall">
+						{labels.CSP_L3_Zip_Mandatory_LMS}
+					</div>
+				</div>
+				
+			</lightning-layout-item>
+
+			<!-- STREET -->
+			<lightning-layout-item size="6" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						<abbr class="slds-required" title="required">*</abbr>
+						<template if:true={localAddress.isPoBox}>
+							{labels.CSP_L2_PO_Box_Number}
+						</template>
+						<template if:false={localAddress.isPoBox}>
+                            {labels.CSP_L2_Street} 1
+						</template>
+					</div>
+				</div>
+
+				<div class="slds-form-element">
+					<div class="slds-form-element__control custTextInput custTextInputXsmall">
+						<input
+							type="text"
+							data-id="street"
+							class="slds-input"
+							placeholder=" "
+							data-fieldname="Street"
+							value={localAddress.street}
+							onkeyup={handleFieldChange}
+							autocomplete="no"
+							maxlength="32"/>
+					</div>
+				</div>
+
+				<lightning-layout-item padding="around-small" size="6" class="IEFixDisplay">
+				</lightning-layout-item>
+
+				<template if:false={localAddress.isPoBox}>
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							{labels.CSP_L2_Street} 2
+						</div>
+					</div>
+
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputXsmall">
+							<input
+								type="text"
+								data-id="street2"
+								class="slds-input"
+								placeholder=" "
+								data-fieldname="Street2"
+								value={localAddress.street2}
+								onkeyup={handleFieldChange}
+								autocomplete="no"
+								maxlength="32"/>
+						</div>
+					</div>
+				</template>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="6" class="IEFixDisplay">
+			</lightning-layout-item>
+
+		</div>
+	</lightning-layout>
+</template>
