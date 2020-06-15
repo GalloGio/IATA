@@ -132,7 +132,7 @@ export default class EF_Invitation extends LightningElement {
 		}, true);
 		
 		if(allValid) {
-			let fields = {};
+			let fields = {}, that = this;
 			fields[EMAIL_FIELD.fieldApiName] = this.email;
 			fields[ACCOUNTROLEID_FIELD.fieldApiName] = this.accountRoleId;
 			fields[ROLE_FIELD.fieldApiName] = this.roleId;
@@ -140,7 +140,7 @@ export default class EF_Invitation extends LightningElement {
 			fields[SERVICEID_FIELD.fieldApiName] = this.serviceId;
 
 			createRecord({ fields })
-			.then(
+			.then(success => {
 				this.dispatchEvent(
 					new ShowToastEvent({
 						title: this.label.Success,
@@ -148,6 +148,8 @@ export default class EF_Invitation extends LightningElement {
 						variant: 'success'
 					})
 				)
+				if(this.isCommunity) window.setTimeout(function() {that.cancel()}, 2000);
+			}
 			).catch(error => {
 				console.error(`error: ${error.body.message}`);
 				this.dispatchEvent(
