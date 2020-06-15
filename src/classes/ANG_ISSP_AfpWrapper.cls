@@ -2,8 +2,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	private static final String BANKING_MODEL = 'Banking Model';
 	public static final String DOMESTIC = AMS_Utils.CATEGORY_DOMESTIC_AGENT;
 	public static final String INTERNATIONAL = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
-	@TestVisible 
-	private static final String AVAILABLE_SERVICES_OLD = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
+	@TestVisible
+	private static final String AVAILABLE_SERVICES_OLD_PATH_CS_NAME = 'ISSP Available Services Old Path';
 
 	private Contact contact {get; set;}
 	private Account account {get; set;}
@@ -122,7 +122,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.contact = contact;
 		this.account = account;
 
-		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : AVAILABLE_SERVICES_OLD;
+		String availableServicesOldPath = ISSP_CS__c.getValues(AVAILABLE_SERVICES_OLD_PATH_CS_NAME).value__c;
+		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : availableServicesOldPath;
 
 		calculateAuthorizationFlags(account.Id);
 

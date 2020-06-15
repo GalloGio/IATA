@@ -4,6 +4,12 @@ public class ANG_ISSP_AfpWrapper_Test {
 	static void testSetup() {
 		Test.startTest();
 
+		insert new ISSP_CS__c(
+			Name = ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD_PATH_CS_NAME, 
+			value__c = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1',
+			defaultValue__c = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1'
+		);
+
 		Portal_Applications__c s1 = new Portal_Applications__c (Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
 			ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
 			ANG_Accredited_Agents_Only__c = false,
@@ -245,8 +251,10 @@ public class ANG_ISSP_AfpWrapper_Test {
 
 		System.runAs(indonesiaUser) {
 			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(indonesiaUser.Contact, indonesiaUser.Contact.Account);
+			
+			String availableServicesOldPath = ISSP_CS__c.getValues(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD_PATH_CS_NAME).value__c;
 
-			System.assertEquals(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD, wrapper.iepLink, 'The link should not redirect to another page.');
+			System.assertEquals(availableServicesOldPath, wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_Request_Access_IATA_EasyPay, wrapper.iepLinkLabel, 'The label should be the Model Banking one.');
 			System.assert(wrapper.isIEPFlag, 'There should be an IEP authorization');
 			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
@@ -263,7 +271,10 @@ public class ANG_ISSP_AfpWrapper_Test {
 
 		System.runAs(portugalUser) {
 			ANG_ISSP_AfpWrapper wrapper = new ANG_ISSP_AfpWrapper(portugalUser.Contact, portugalUser.Contact.Account);
-			System.assertEquals(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD, wrapper.iepLink, 'The link should redirect to services page.');
+
+			String availableServicesOldPath = ISSP_CS__c.getValues(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD_PATH_CS_NAME).value__c;
+
+			System.assertEquals(availableServicesOldPath, wrapper.iepLink, 'The link should redirect to services page.');
 			System.assertEquals(Label.ANG_ISSP_Open_IATA_EasyPay_Account, wrapper.iepLinkLabel, 'The label should be the default Request IEP one');
 			System.assert(!wrapper.isIEPFlag, 'The should not be an IEP authorization');
 			System.assert(!wrapper.isSearch, 'This is the RHC Constructor.');
