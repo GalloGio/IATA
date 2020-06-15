@@ -187,6 +187,10 @@
                 <field>Email</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Email__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ValidContactDomainImage__c</field>
             </layoutItems>
