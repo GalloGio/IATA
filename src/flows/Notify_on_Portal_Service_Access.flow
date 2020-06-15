@@ -1826,7 +1826,7 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
         <object>Portal_Application_Right__c</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

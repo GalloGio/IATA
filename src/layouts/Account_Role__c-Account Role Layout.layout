@@ -48,7 +48,7 @@
                 <behavior>Edit</behavior>
                 <field>Account_Role_Name__c</field>
             </layoutItems>
-	        <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OJT_file_validated__c</field>
             </layoutItems>
