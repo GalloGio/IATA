@@ -169,6 +169,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	}
 
+	@AuraEnabled(cacheable=true)
 	public static CountryInformation getISOCountries() {
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 		IATA_ISO_Country__c noCountry;

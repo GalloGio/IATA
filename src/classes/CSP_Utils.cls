@@ -74,14 +74,33 @@ public with sharing class CSP_Utils {
 		return loggedUser;
 	}
 
+
+	/*
+	* @description Return current user information
+	* @return User 
+	* If guest User, return null
+	*/
+	@AuraEnabled
+	public static User getCurrentUserInfo() {
+		User loggedUser=null;
+		if(!isGuestUser()){
+			loggedUser=getLoggedUser();
+		}
+
+		return loggedUser;
+	}
+
 	/*
 	* @description Return the type of the User.
 	* @return String User Portal Status
 	*/
 	@AuraEnabled
 	public static Boolean isAdmin() {
-		User loggedUser = getLoggedUser();
-		return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
+		Boolean isAdmin =false ;
+		if(!isGuestUser()){
+			isAdmin=getLoggedUser().Contact.User_Portal_Status__c == 'Approved Admin';
+		}
+		return isAdmin;
 	}
 
 	/*
