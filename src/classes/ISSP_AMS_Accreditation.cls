@@ -6961,7 +6961,9 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
+			if(!isCNSAgency){
 			if (!isocountry.EACP_Country__c) {
+
 				if (newForm.Does_the_air_transportation_which_your__c == null) {
 					newForm.Does_the_air_transportation_which_your__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -7043,6 +7045,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					errorFound = true;
 				}
 			}
+			}
 
 			if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null && (isocountry.EACP_Country__c || isCNSAgency)) {
 				newForm.ISSP_AMS_Number_of_Years_Traded__c.addError(Label.ISSP_YouMustEnter);
@@ -7090,12 +7093,12 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if (!isocountry.EACP_Country__c && newForm.Does_your_firm_intend_to_request__c == null) {
+			if (!isocountry.EACP_Country__c && !isCNSAgency && newForm.Does_your_firm_intend_to_request__c == null) {
 				newForm.Does_your_firm_intend_to_request__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
 
-			if (newForm.Does_your_firm_intend_to_request__c == 'Yes' && !isocountry.EACP_Country__c && newForm.List_the_airport_s_to_be_authorized__c == null) {
+			if (newForm.Does_your_firm_intend_to_request__c == 'Yes' && !isocountry.EACP_Country__c && !isCNSAgency && newForm.List_the_airport_s_to_be_authorized__c == null) {
 				newForm.List_the_airport_s_to_be_authorized__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
@@ -7106,13 +7109,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			if (newForm.Has_your_firm_ever_held_a_Cargo_Agency__c == 'Yes') {
+				if(!isCNSAgency) {
 				if (newForm.IATA_Agents_Numeric_Code__c == null) {
 					newForm.IATA_Agents_Numeric_Code__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if(isCNSAgency && (newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null)){
-					newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
 
@@ -7129,6 +7128,13 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (newForm.Reason_for_cancellation__c == null) {
 					newForm.Reason_for_cancellation__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
+				}
+			}
+				else {
+					if(newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null){
+						newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 				}
 			}
 
@@ -7217,6 +7223,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
+			if(!isCNSAgency) {
 			if (newForm.ISSP_AMS_Registered_Capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY)) {
 				newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
@@ -7226,6 +7233,9 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
+		
+			}
+
 			if (newForm.ISSP_AMS_Amount_of_credit_requested__c == null && isocountry.EACP_Country__c) {
 				newForm.ISSP_AMS_Amount_of_credit_requested__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
@@ -7291,6 +7301,12 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if (!(isocountry.EACP_Country__c && newForm.Is_your_firm_handling_Dangerous_Goods__c == 'No') && !validateDangerousGoods(2))
 				errorFound = true;
+
+			if(newForm.Agent_Type__c == 'CNS Endorsement HO') {
+				if(validateCGOCASSAssociate(cntIFAPContacts, cntAuthorisedSig, cntCASSContact)) {
+					errorFound = true;
+				}
+			}
 
 		} else if (sector!= null && amsOfficeType != null && isNoticeOfChange != null && sector.StartsWith(AMS_Utils.SECTOR_CARGO) && amsOfficeType == 'Branch' && !isNoticeOfChange) { //All CGO Branches share the same form, exept that Only IATA / EACP CGO agents require DGR trained staff
 			if (!validateBROfficeDetails())
