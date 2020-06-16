@@ -6167,7 +6167,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		redirectToStepE = false;
 
 		//Need to refresh CGO requirements on validation to include Signed Application from STEP E in list
-		if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange) {
+		if(isCNSAgency) {
+			fetchCountryRequirements();
+		} else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange) {
 			retNoCCargoCountryReqments(true);
 		} else if (sectorValue.startsWith('Cargo_Agent') && !isNoticeOfChange) {
 			retCargoCountryReqments(true);
