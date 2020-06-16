@@ -296,7 +296,7 @@ public class ANG_RHCAlertTriggerHandler{
 				if(!String.isEmpty(config.Email_Template_Internal_Stakeholders__c)) {
 					//Ensure that the agency is a MC key
 					if(accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && accounts.get(a.ANG_Account__c).Multicountry_Key_Hierarchy__c) {
-						List<String> stakeholdersMailingList = getMailingListFromCustomSetting('Risk_Alert_Stakeholders__c');
+						List<String> stakeholdersMailingList = fetchRiskAlertStakeholdersAddresses(false);
 						sendEmailToMailingList(alertsToNotify, stakeholdersMailingList);
 					}
 				}
@@ -1078,19 +1078,23 @@ public class ANG_RHCAlertTriggerHandler{
 
 	}
 
-	//ACAMBAS - NEWGEN-4466 - Start
-	//Returns a list of emails configured in a specific custom setting
-	private List<String> getMailingListFromCustomSetting(String customSettingAPIName) {
-		List<String> toAddresses = new List<String>();
-		List<sObject> customSettingRecords = Database.query('SELECT Id, Email__c FROM ' + customSettingAPIName);
-
-		for (sObject emailRecord: customSettingRecords) {
-			String email = string.valueOf(emailRecord.get('Email__c'));
-			if(String.isNotBlank(email))
-				toAddresses.add(email);
+	private List<String> fetchRiskAlertStakeholdersAddresses(boolean onlyRhcExceptionalMonitoring) {
+		List<Risk_Alert_Stakeholders__c> stakeholdersLst = Risk_Alert_Stakeholders__c.getAll().values();
+		if(stakeholdersLst.isEmpty()){
+			System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - fetchRiskAlertStakeholdersAddresses] No Risk Alert Stakeholders found');
+			return new List<String>();
 		}
 
-		return toAddresses;
+		Set<String> emailAddressesSet = new Set<String>();
+
+		for(Risk_Alert_Stakeholders__c stakeholder : stakeholdersLst) {
+			if(String.isNotBlank(stakeholder.Email__c) && stakeholder.RHC_Exceptional_Monitoring_Stakeholder__c == onlyRhcExceptionalMonitoring) {
+				emailAddressesSet.add(stakeholder.Email__c);
+			}
+		}
+
+		return new List<String>(emailAddressesSet);
+
 	}
 
 	//Returns a map <risk alert id, template>
