@@ -5130,6 +5130,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId))
 				AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO,
 										:AMS_Utils.CASE_REASON_BR_IP,
+										:AMS_Utils.CASE_REASON_BR_INDEPENDENT,
 										:AMS_Utils.CASE_REASON_BR_ABROAD,
 										'CHL - Change of Location', 'CHN - Change of Name',
 										'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update',
