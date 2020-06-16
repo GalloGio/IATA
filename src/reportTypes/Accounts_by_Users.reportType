@@ -2456,36 +2456,43 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By User License</displayNameOverride>
             <field>Cargo_Agency__c.CreatedBy.Profile.UserLicense</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By Role</displayNameOverride>
             <field>CreatedBy.UserRole</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By Username</displayNameOverride>
             <field>CreatedBy.Username</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By (if Contact) First Community</displayNameOverride>
             <field>CreatedBy.Contact.Community__c</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By Profile</displayNameOverride>
             <field>Cargo_Agency__c.CreatedBy.Profile.Name</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By User Type</displayNameOverride>
             <field>Cargo_Agency__c.CreatedBy.Profile.UserType</field>
             <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Created By Full Name</displayNameOverride>
             <field>CreatedBy.Name</field>
             <table>Account</table>
         </columns>

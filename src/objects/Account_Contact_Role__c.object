@@ -826,11 +826,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </values>            
-            <values>
                 <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -856,11 +856,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other</fullName>
+                <fullName>Medaire</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Medaire</fullName>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>
