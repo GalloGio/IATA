@@ -356,7 +356,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 							if(result !== 'not_complete'){
 								if(pageParams.RelayState !== ''){
 									let sURL = result.split('RelayState');
-										result = sURL[0] + '&RelayState=' + pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26');
+										result = sURL[0] + '&RelayState=' + encodeURIComponent(pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26'));
 								}
 									window.open(result);
 							}
