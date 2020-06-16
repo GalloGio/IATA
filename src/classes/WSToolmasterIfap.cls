@@ -2,12 +2,13 @@
 public class WSToolmasterIfap {
 		//
 		 public static Integer DEFAULT_TIMEOUT = 120000;
+		public static String webserviceURL = 'http://webservice.toolmaster.ifap.iata.org';
 
 
 		public class mergeAndSubmitParametersResponse_element {
 				public String mergeAndSubmitParametersReturn;
-				private String[] mergeAndSubmitParametersReturn_type_info = new String[]{'mergeAndSubmitParametersReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] mergeAndSubmitParametersReturn_type_info = new String[]{'mergeAndSubmitParametersReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'mergeAndSubmitParametersReturn'};
 		}
 		public class submitCaseQualityIssuesToMFT_element {
@@ -15,27 +16,27 @@ public class WSToolmasterIfap {
 				public String caseNumber;
 				public String xmlFilName;
 				public String xmlString;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] caseNumber_type_info = new String[]{'caseNumber','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlFilName_type_info = new String[]{'xmlFilName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlString_type_info = new String[]{'xmlString','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] caseNumber_type_info = new String[]{'caseNumber',webserviceURL,null,'1','1','false'};
+				private String[] xmlFilName_type_info = new String[]{'xmlFilName',webserviceURL,null,'1','1','false'};
+				private String[] xmlString_type_info = new String[]{'xmlString',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','caseNumber','xmlFilName','xmlString'};
 		}
 		public class submitCaseCancellationToMFTResponse_element {
 				public String submitCaseCancellationToMFTReturn;
-				private String[] submitCaseCancellationToMFTReturn_type_info = new String[]{'submitCaseCancellationToMFTReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] submitCaseCancellationToMFTReturn_type_info = new String[]{'submitCaseCancellationToMFTReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'submitCaseCancellationToMFTReturn'};
 		}
 		public class mergeAllPDFForCase_element {
 				public String confName;
 				public String caseNumber;
 				public String mergedFileName;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] caseNumber_type_info = new String[]{'caseNumber','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] mergedFileName_type_info = new String[]{'mergedFileName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] caseNumber_type_info = new String[]{'caseNumber',webserviceURL,null,'1','1','false'};
+				private String[] mergedFileName_type_info = new String[]{'mergedFileName',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','caseNumber','mergedFileName'};
 		}
 		public class submitCaseCancellationToMFT_element {
@@ -43,27 +44,27 @@ public class WSToolmasterIfap {
 				public String caseNumber;
 				public String xmlFilName;
 				public String xmlString;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] caseNumber_type_info = new String[]{'caseNumber','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlFilName_type_info = new String[]{'xmlFilName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlString_type_info = new String[]{'xmlString','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] caseNumber_type_info = new String[]{'caseNumber',webserviceURL,null,'1','1','false'};
+				private String[] xmlFilName_type_info = new String[]{'xmlFilName',webserviceURL,null,'1','1','false'};
+				private String[] xmlString_type_info = new String[]{'xmlString',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','caseNumber','xmlFilName','xmlString'};
 		}
 		public class processPWCRejections_element {
 				public String confName;
 				public Integer maxRejections;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] maxRejections_type_info = new String[]{'maxRejections','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] maxRejections_type_info = new String[]{'maxRejections',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','maxRejections'};
 		}
 		public class deletePWCResults_element {
 				public String confName;
 				public String jsonFileNames;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] jsonFileNames_type_info = new String[]{'jsonFileNames','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] jsonFileNames_type_info = new String[]{'jsonFileNames',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','jsonFileNames'};
 		}
 		public class mergeAndSubmitParameters_element {
@@ -71,75 +72,75 @@ public class WSToolmasterIfap {
 				public String caseNumber;
 				public String mergedFileName;
 				public String xmlString;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] caseNumber_type_info = new String[]{'caseNumber','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] mergedFileName_type_info = new String[]{'mergedFileName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlString_type_info = new String[]{'xmlString','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] caseNumber_type_info = new String[]{'caseNumber',webserviceURL,null,'1','1','false'};
+				private String[] mergedFileName_type_info = new String[]{'mergedFileName',webserviceURL,null,'1','1','false'};
+				private String[] xmlString_type_info = new String[]{'xmlString',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','caseNumber','mergedFileName','xmlString'};
 		}
 		public class deletePWCRejectionsResponse_element {
 				public String deletePWCRejectionsReturn;
-				private String[] deletePWCRejectionsReturn_type_info = new String[]{'deletePWCRejectionsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] deletePWCRejectionsReturn_type_info = new String[]{'deletePWCRejectionsReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'deletePWCRejectionsReturn'};
 		}
 		public class processPWCResults_element {
 				public String confName;
 				public Integer maxResults;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] maxResults_type_info = new String[]{'maxResults','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] maxResults_type_info = new String[]{'maxResults',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','maxResults'};
 		}
 		public class processPWCResultsGxA_element {
 				public String confName;
 				public Integer maxResults;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] maxResults_type_info = new String[]{'maxResults','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] maxResults_type_info = new String[]{'maxResults',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','maxResults'};
 		}
 		public class processPWCRejectionsResponse_element {
 				public String processPWCRejectionsReturn;
-				private String[] processPWCRejectionsReturn_type_info = new String[]{'processPWCRejectionsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] processPWCRejectionsReturn_type_info = new String[]{'processPWCRejectionsReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'processPWCRejectionsReturn'};
 		}
 		public class mergeAllPDFForCaseResponse_element {
 				public String mergeAllPDFForCaseReturn;
-				private String[] mergeAllPDFForCaseReturn_type_info = new String[]{'mergeAllPDFForCaseReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] mergeAllPDFForCaseReturn_type_info = new String[]{'mergeAllPDFForCaseReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'mergeAllPDFForCaseReturn'};
 		}
 		public class submitCaseQualityIssuesToMFTResponse_element {
 				public String submitCaseQualityIssuesToMFTReturn;
-				private String[] submitCaseQualityIssuesToMFTReturn_type_info = new String[]{'submitCaseQualityIssuesToMFTReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] submitCaseQualityIssuesToMFTReturn_type_info = new String[]{'submitCaseQualityIssuesToMFTReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'submitCaseQualityIssuesToMFTReturn'};
 		}
 		public class deletePWCResultsResponse_element {
 				public String deletePWCResultsReturn;
-				private String[] deletePWCResultsReturn_type_info = new String[]{'deletePWCResultsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] deletePWCResultsReturn_type_info = new String[]{'deletePWCResultsReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'deletePWCResultsReturn'};
 		}
 		public class submitCaseParametersToMFTResponse_element {
 				public String submitCaseParametersToMFTReturn;
-				private String[] submitCaseParametersToMFTReturn_type_info = new String[]{'submitCaseParametersToMFTReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] submitCaseParametersToMFTReturn_type_info = new String[]{'submitCaseParametersToMFTReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'submitCaseParametersToMFTReturn'};
 		}
 		public class processPWCResultsResponse_element {
 				public String processPWCResultsReturn;
-				private String[] processPWCResultsReturn_type_info = new String[]{'processPWCResultsReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] processPWCResultsReturn_type_info = new String[]{'processPWCResultsReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'processPWCResultsReturn'};
 		}
 		public class processPWCdocumentsGXAResponse_element {
 				public String processPWCdocumentsGXAReturn;
-				private String[] processPWCdocumentsGXAReturn_type_info = new String[]{'processPWCdocumentsGXAReturn','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] processPWCdocumentsGXAReturn_type_info = new String[]{'processPWCdocumentsGXAReturn',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'processPWCdocumentsGXAReturn'};
 		}
 		public class submitCaseParametersToMFT_element {
@@ -147,19 +148,19 @@ public class WSToolmasterIfap {
 				public String caseNumber;
 				public String pdfName;
 				public String xmlString;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] caseNumber_type_info = new String[]{'caseNumber','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] pdfName_type_info = new String[]{'pdfName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] xmlString_type_info = new String[]{'xmlString','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] caseNumber_type_info = new String[]{'caseNumber',webserviceURL,null,'1','1','false'};
+				private String[] pdfName_type_info = new String[]{'pdfName',webserviceURL,null,'1','1','false'};
+				private String[] xmlString_type_info = new String[]{'xmlString',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','caseNumber','pdfName','xmlString'};
 		}
 		public class deletePWCRejections_element {
 				public String confName;
 				public String jsonFileNames;
-				private String[] confName_type_info = new String[]{'confName','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] jsonFileNames_type_info = new String[]{'jsonFileNames','http://webservice.toolmaster.ifap.iata.org',null,'1','1','false'};
-				private String[] apex_schema_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org','true','false'};
+				private String[] confName_type_info = new String[]{'confName',webserviceURL,null,'1','1','false'};
+				private String[] jsonFileNames_type_info = new String[]{'jsonFileNames',webserviceURL,null,'1','1','false'};
+				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'confName','jsonFileNames'};
 		}
 		public class IfapToolMaster {
@@ -173,7 +174,8 @@ public class WSToolmasterIfap {
 				public String clientCert_x;
 				public String clientCertPasswd_x;
 				public Integer timeout_x = DEFAULT_TIMEOUT ;
-				private String[] ns_map_type_info = new String[]{'http://webservice.toolmaster.ifap.iata.org', 'WSToolmasterIfap'};
+				private String[] ns_map_type_info = new String[]{webserviceURL, 'WSToolmasterIfap'};
+
 				public String processPWCResults(String confName,Integer maxResults) {
 						WSToolmasterIfap.processPWCResults_element request_x = new WSToolmasterIfap.processPWCResults_element();
 						request_x.confName = confName;
@@ -187,9 +189,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'processPWCResults',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'processPWCResultsResponse',
 							'WSToolmasterIfap.processPWCResultsResponse_element'}
 						);
@@ -210,9 +212,9 @@ public class WSToolmasterIfap {
 						response_map_x,
 						new String[]{endpoint_x,
 						'',
-						'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 						'processPWCdocumentsGXA',
-						'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 						'processPWCdocumentsGXAResponse',
 						'WSToolmasterIfap.processPWCdocumentsGXAResponse_element'}
 						);
@@ -237,9 +239,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'mergeAllPDFForCase',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'mergeAllPDFForCaseResponse',
 							'WSToolmasterIfap.mergeAllPDFForCaseResponse_element'}
 						);
@@ -261,9 +263,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseQualityIssuesToMFT',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseQualityIssuesToMFTResponse',
 							'WSToolmasterIfap.submitCaseQualityIssuesToMFTResponse_element'}
 						);
@@ -283,9 +285,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'deletePWCResults',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'deletePWCResultsResponse',
 							'WSToolmasterIfap.deletePWCResultsResponse_element'}
 						);
@@ -305,9 +307,9 @@ public class WSToolmasterIfap {
 					response_map_x,
 					new String[]{endpoint_x,
 					'',
-					'http://webservice.toolmaster.ifap.iata.org',
+					webserviceURL,
 					'deletePWCdocumentsGXA',
-					'http://webservice.toolmaster.ifap.iata.org',
+					webserviceURL,
 					'deletePWCResultsResponse',
 					'WSToolmasterIfap.deletePWCResultsResponse_element'}
 					);
@@ -327,9 +329,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'deletePWCRejections',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'deletePWCRejectionsResponse',
 							'WSToolmasterIfap.deletePWCRejectionsResponse_element'}
 						);
@@ -351,9 +353,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseCancellationToMFT',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseCancellationToMFTResponse',
 							'WSToolmasterIfap.submitCaseCancellationToMFTResponse_element'}
 						);
@@ -375,9 +377,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseParametersToMFT',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'submitCaseParametersToMFTResponse',
 							'WSToolmasterIfap.submitCaseParametersToMFTResponse_element'}
 						);
@@ -397,9 +399,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'processPWCRejections',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'processPWCRejectionsResponse',
 							'WSToolmasterIfap.processPWCRejectionsResponse_element'}
 						);
@@ -421,9 +423,9 @@ public class WSToolmasterIfap {
 							response_map_x,
 							new String[]{endpoint_x,
 							'',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'mergeAndSubmitParameters',
-							'http://webservice.toolmaster.ifap.iata.org',
+						webserviceURL,
 							'mergeAndSubmitParametersResponse',
 							'WSToolmasterIfap.mergeAndSubmitParametersResponse_element'}
 						);
