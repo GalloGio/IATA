@@ -344,7 +344,6 @@ public class IfapProcessTest {
 		Case caseReturned = [Select Id, Financial_Assessment_Points__c from Case where Id = :caseId];
 
 		system.assertEquals(100,caseReturned.Financial_Assessment_Points__c);
-		//system.assertEquals(true,batch.errors.isEmpty());
 		System.assertEquals(1, batch.errors.size());
 		System.assertEquals('[Result File "null" ] Case with CaseNumber 123 not found in database.', batch.errors[0]);
 
